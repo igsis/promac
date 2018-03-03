@@ -1,0 +1,36 @@
+@charset "utf-8";
+/* CSS Document */
+
+thead { display: table-header-group; } 
+tfoot { display: table-footer-group; 
+        overflow: visible;
+		font-size: 12px;} 
+		   
+body {	margin: 0px;
+		font-family: Arial, Helvetica, sans-serif;}
+
+p {		font-size: 12px;}
+
+.content {font-size:12px;}
+
+#externo{
+	position:absolute;
+	margin-left:30mm;
+	margin-top:20mm;
+	margin-bottom:30mm;
+	margin-right:20mm;
+	height:950px;
+	width:600px;
+}
+#smc{
+	position:absolute;
+	height:90px;
+	width:50%;
+}
+#dec{
+	position: static;
+	height: 90px;
+	width: 50%;
+	margin-right: 0px;
+	nav-right: auto;
+}
