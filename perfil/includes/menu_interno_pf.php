@@ -4,9 +4,9 @@
 			<strong>
 			| <a href="?perfil=informacoes_iniciais_pf">Informações Iniciais</a>
 			| <a href="?perfil=endereco_pf">Endereço</a>
-			| <a href="?perfil=informacoes_complementares_pf">Informações Complementares</a>
-			| <a href="?perfil=dados_bancarios_pf">Dados Bancários</a>
-			| <a href="?perfil=anexos_pf">Demais Anexos</a>
+			| <a href="?perfil=arquivos_pf">Anexos</a>
+			| <a href="?perfil=projeto">Projeto</a>
+			| <a href="?perfil=informacoes_administrativas_pf">Informações Administrativas</a>
 			<?php
 			if(isset($_SESSION['idEvento']))
 			{
