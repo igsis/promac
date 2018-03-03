@@ -1,128 +1,37 @@
 ﻿<?php
 
 $con = bancoMysqli();
-$idUser = $_SESSION['idUser'];
-$tipoPessoa = "1";
+$idPf = $_SESSION['idUser'];
 
-
-if(isset($_POST['cadastrarFisica']))
-{
-	$nome = addslashes($_POST['nome']);
-	$nomeArtistico = addslashes($_POST['nomeArtistico']);
-	$idTipoDocumento = $_POST['idTipoDocumento'];
-	$rg = $_POST['rg'];
-	$cpf = $_POST['cpf'];
-	$ccm = $_POST['ccm'];
-	$telefone1 = $_POST['telefone1'];
-	$telefone2 = $_POST['telefone2'];
-	$telefone3 = $_POST['telefone3'];
-	$email = $_POST['email'];
-	$dataNascimento = exibirDataMysql($_POST['dataNascimento']);
-	$pis = $_POST['pis'];
-	$dataAtualizacao = date("Y-m-d H:i:s");
-
-	$sql_cadastra_pf = "INSERT INTO `pessoa_fisica`(`nome`, `nomeArtistico`, `idTipoDocumento`, `rg`, `cpf`, `ccm`, `telefone1`, `telefone2`, `telefone3`, `email`, `dataNascimento`, `idEstadoCivil`, `nacionalidade`, `pis`, `dataAtualizacao`, `idUsuario`) VALUES ('$nome', '$nomeArtistico', '$idTipoDocumento', '$rg', '$cpf', '$ccm', '$telefone1', '$telefone2', '$telefone3', '$email', '$dataNascimento', '$idEstadoCivil', '$nacionalidade', '$pis', '$dataAtualizacao', '$idUser')";
-	if(mysqli_query($con,$sql_cadastra_pf))
-	{
-		$mensagem = "<font color='#01DF3A'><strong>Cadastrado com sucesso!</strong></font>";
-		gravarLog($sql_cadastra_pf);
-		if(isset($_SESSION['idEvento']))
-		{
-			$idEvento = $_SESSION['idEvento'];
-			$sql_ultimo = "SELECT id FROM pessoa_fisica WHERE idUsuario = '$idUser' ORDER BY id DESC LIMIT 0,1";
-			$query_ultimo = mysqli_query($con,$sql_ultimo);
-			$ultimoPf = mysqli_fetch_array($query_ultimo);
-			$idPf = $ultimoPf['id'];
-
-			$sql_atualiza_evento = "UPDATE evento SET idPf = '$idPf', idTipoPessoa = '$tipoPessoa' WHERE id = '$idEvento'";
-			if(mysqli_query($con,$sql_atualiza_evento))
-			{
-				$mensagem .= "<font color='#01DF3A'><strong>Pessoa inserida no evento.</strong></font><br/>";
-				$_SESSION['idPf'] = $idPf;
-				gravarLog($sql_atualiza_evento);
-			}
-			else
-			{
-				$mensagem .= "<font color='#FF0000'><strong>Erro ao cadastrar evento!</strong></font>";
-			}
-		}
-		else
-		{
-			$sql_ultimo = "SELECT id FROM pessoa_fisica WHERE idUsuario = '$idUser' ORDER BY id DESC LIMIT 0,1";
-			$query_ultimo = mysqli_query($con,$sql_ultimo);
-			$ultimoPf = mysqli_fetch_array($query_ultimo);
-			$_SESSION['idPf'] = $ultimoPf['id'];
-			$idPf = $_SESSION['idPf'];
-		}
-	}
-	else
-	{
-		$mensagem = "<font color='#FF0000'><strong>Erro ao cadastrar!</strong></font>";
-	}
-}
 
 if(isset($_POST['atualizarFisica']))
 {
 	$nome = addslashes($_POST['nome']);
-	$nomeArtistico = addslashes($_POST['nomeArtistico']);
-	$idTipoDocumento = $_POST['idTipoDocumento'];
 	$rg = $_POST['rg'];
-	$ccm = $_POST['ccm'];
-	$telefone1 = $_POST['telefone1'];
-	$telefone2 = $_POST['telefone2'];
-	$telefone3 = $_POST['telefone3'];
+	$telefone = $_POST['telefone'];
+	$celular = $_POST['celular'];
 	$email = $_POST['email'];
-	$dataNascimento = exibirDataMysql($_POST['dataNascimento']);
-	$pis = $_POST['pis'];
-	$dataAtualizacao = date("Y-m-d H:i:s");
-	$idPf = $_SESSION['idPf'];
+	$cooperado = $_POST['cooperado'];
 
 	$sql_atualiza_pf = "UPDATE pessoa_fisica SET
 	`nome` = '$nome',
-	`nomeArtistico` = '$nomeArtistico',
-	`idTipoDocumento` = '$idTipoDocumento',
 	`rg` = '$rg',
-	`ccm` = '$ccm',
-	`telefone1` = '$telefone1',
-	`telefone2` = '$telefone2',
-	`telefone3` = '$telefone3',
+	`telefone` = '$telefone',
+	`celular` = '$celular',
 	`email` = '$email',
-	`dataNascimento` = '$dataNascimento',
-	`pis` = '$pis',
-	`dataAtualizacao` = 'dataAtualizacao'
-	WHERE `id` = '$idPf'";
+	`cooperado` = '$cooperado'
+	WHERE `idPf` = '$idPf'";
 
 	if(mysqli_query($con,$sql_atualiza_pf))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
 		gravarLog($sql_atualiza_pf);
-		if(isset($_SESSION['idEvento']))
-		{
-			$idEvento = $_SESSION['idEvento'];
-			$sql_atualiza_evento = "UPDATE evento SET idPf = '$idPf', idTipoPessoa = '$tipoPessoa' WHERE id = '$idEvento'";
-			if(mysqli_query($con,$sql_atualiza_evento))
-			{
-				$mensagem .= "<font color='#01DF3A'><strong>Pessoa inserida no evento.</strong></font>";
-				gravarLog($sql_atualiza_evento);
-
-			}
-			else
-			{
-				$mensagem .= "<font color='#01DF3A'><strong>Erro ao cadastrar evento.</strong></font>";
-			}
-		}
 	}
 	else
 	{
-		$mensagem .= "<font color='#01DF3A'><strong>Erro ao atualizar! Tente novamente.</strong></font>";
+		$mensagem = "<font color='#01DF3A'><strong>Erro ao atualizar! Tente novamente.</strong></font> <br/>".$sql_atualiza_pf;
 	}
 }
-
-if(isset($_POST['carregar']))
-{
-	$_SESSION['idPf'] = $_POST['carregar'];
-}
-
 
 if(isset($_POST["enviar"]))
 {
@@ -199,43 +108,18 @@ if(isset($_POST['apagar']))
 	}
 }
 
-
-$idPf = $_SESSION['idPf'];
-
-$pf = recuperaDados("pessoa_fisica","id",$idPf);
+$pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 ?>
-<!-- Chamamento Alert-->
-<thead>
-	<script src="js/sweetalert.min.js"></script>
-    <link href="css/sweetalert.css" rel="stylesheet" type="text/css"/>
-  </thead>
+
 <section id="list_items" class="home-section bg-white">
 	<div class="container"><?php include 'includes/menu_interno_pf.php'; ?>
 		<div class="form-group">
-			<h4>PASSO 6: Informações Iniciais</h4>
+			<h4>Informações Iniciais</h4>
 				<h5><?php if(isset($mensagem)){echo $mensagem;};?></h5>
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
 			<form class="form-horizontal" role="form" action="?perfil=informacoes_iniciais_pf" method="post">
-			<!-- Botão para inserir pessoa no evento -->
-			<?php
-				if(isset($_SESSION['idEvento']))
-				{
-					$evento = recuperaDados("evento","id",$_SESSION['idEvento']);
-					if($evento['idPf'] == NULL)
-					{
-			?>
-						<div class="form-group">
-							<div class="col-md-offset-2 col-md-8">
-								<input type="hidden" name="atualizarFisica" value="<?php echo $idPf ?>">
-								<input type="submit" value="Inserir Pessoa no evento" class="btn btn-theme btn-md btn-block">
-							</div>
-						</div>
-			<?php
-					}
-				}
-			?>
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8"><strong>Nome *:</strong><br/>
 						<input type="text" class="form-control" name="nome" placeholder="Nome" value="<?php echo $pf['nome']; ?>" >
@@ -243,16 +127,8 @@ $pf = recuperaDados("pessoa_fisica","id",$idPf);
 				</div>
 
 				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8"><strong>Nome Artístico*:</strong><br/>
-						<input type="text" class="form-control" name="nomeArtistico" placeholder="Nome Artístico" value="<?php echo $pf['nomeArtistico']; ?>" >
-					</div>
-				</div>
-
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-6"><strong>Tipo de documento *:</strong><br/>
-						<select class="form-control" id="idTipoDocumento" name="idTipoDocumento" >
-							<?php geraOpcao("tipo_documento",$pf['idTipoDocumento']); ?>
-						</select>
+					<div class="col-md-offset-2 col-md-6"><strong>CPF *:</strong><br/>
+						<input type="text" readonly class="form-control" id="cpf" name="cpf" placeholder="CPF" value="<?php echo $pf['cpf']; ?>" >
 					</div>
 					<div class="col-md-6"><strong>Nº do documento *:</strong><br/>
 						<input type="text" class="form-control" name="rg" placeholder="Número do Documento" value="<?php echo $pf['rg']; ?>">
@@ -260,46 +136,25 @@ $pf = recuperaDados("pessoa_fisica","id",$idPf);
 				</div>
 
 				<div class="form-group">
-					<div class="col-md-offset-2 col-md-6"><strong>CPF *:</strong><br/>
-						<input type="text" readonly class="form-control" id="cpf" name="cpf" placeholder="CPF" value="<?php echo $pf['cpf']; ?>" >
-					</div>
-					<div class="col-md-6"><strong>CCM:</strong><br/>
-						<input type="text" class="form-control" id="ccm" name="ccm" placeholder="CCM" value="<?php echo $pf['ccm']; ?>">
+					<div class="col-md-offset-2 col-md-8"><strong>E-mail *:</strong><br/>
+						<input type="text" class="form-control" name="email" placeholder="E-mail" value="<?php echo $pf['email']; ?>">
 					</div>
 				</div>
 
 				<div class="form-group">
-					<div class="col-md-offset-2 col-md-6"><strong>Celular *:</strong><br/>
-						<input type="text" class="form-control" name="telefone1" id="telefone" onkeyup="mascara( this, mtel );" maxlength="15" placeholder="Exemplo: (11) 98765-4321" value="<?php echo $pf['telefone1']; ?>">
+					<div class="col-md-offset-2 col-md-6"><strong>Telefone *:</strong><br/>
+						<input type="text" class="form-control" name="telefone" id="telefone" onkeyup="mascara( this, mtel );" maxlength="15" placeholder="Exemplo: (11) 98765-4321" value="<?php echo $pf['telefone']; ?>">
 					</div>
-					<div class="col-md-6"><strong>Telefone #2:</strong><br/>
-						<input type="text" class="form-control" name="telefone2" id="telefone" onkeyup="mascara( this, mtel );" maxlength="15" placeholder="Exemplo: (11) 98765-4321" value="<?php echo $pf['telefone2']; ?>">
+					<div class="col-md-6"><strong>Celular:</strong><br/>
+						<input type="text" class="form-control" name="celular" id="telefone" onkeyup="mascara( this, mtel );" maxlength="15" placeholder="Exemplo: (11) 98765-4321" value="<?php echo $pf['celular']; ?>">
 					</div>
 				</div>
 
 				<div class="form-group">
-					<div class="col-md-offset-2 col-md-6"><strong>Telefone #3:</strong><br/>
-						<input type="text" class="form-control" name="telefone3" id="telefone" onkeyup="mascara( this, mtel );" maxlength="15" placeholder="Exemplo: (11) 98765-4321" value="<?php echo $pf['telefone3']; ?>" >
+					<div class="col-md-offset-4 col-md-2"><strong>É cooperado?</strong>
 					</div>
-					<div class="col-md-6"><strong>E-mail *:</strong><br/>
-							<input type="text" class="form-control" name="email" placeholder="E-mail" value="<?php echo $pf['email']; ?>">
-						</div>
-				</div>
-
-				<div class="form-group">
-						<div class="col-md-offset-2 col-md-6"><strong>Data Nascimento *:</strong><br/>
-							<script>
-						       swal({   title: "Atenção!", 
-						             text: "Para maiores informações sobre contratação de artistas com idade inferior a 18 anos, entrar em contato com o programador do seu evento.",
-						             timer: 10000,   
-						             confirmButtonColor:	"#20B2AA",
-						             showConfirmButton: true });
-						    </script>
-
-							<input type="text" class="form-control" name="dataNascimento" id="datepicker01" placeholder="Data de Nascimento" value = "<?php echo exibirDataBr($pf['dataNascimento']) ?>">
-						</div>
-					<div class="col-md-6"><strong>PIS/PASEP/NIT:</strong><br/>
-						<input type="text" class="form-control" name="pis" placeholder="Nº do PIS/PASEP/NIT" value="<?php echo $pf['pis']; ?>">
+					<div class="col-md-2">
+						<input type="checkbox" name="cooperado" value="on" checked="checked">
 					</div>
 				</div>
 
