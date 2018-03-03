@@ -25,7 +25,7 @@
 					session_start();
 					$_SESSION['login'] = $user['cpf'];
 					$_SESSION['nome'] = $user['nome'];
-					$_SESSION['idUser'] = $user['id'];
+					$_SESSION['idUser'] = $user['idPf'];
 					$log = "Fez login.";
 					//gravarLog($log);
 					header("Location: visual/index_pf.php");
