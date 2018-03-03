@@ -119,189 +119,53 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
-			<form class="form-horizontal" role="form" action="?perfil=informacoes_iniciais_pf" method="post">
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8"><strong>Nome *:</strong><br/>
-						<input type="text" class="form-control" name="nome" placeholder="Nome" value="<?php echo $pf['nome']; ?>" >
-					</div>
-				</div>
-
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-6"><strong>CPF *:</strong><br/>
-						<input type="text" readonly class="form-control" id="cpf" name="cpf" placeholder="CPF" value="<?php echo $pf['cpf']; ?>" >
-					</div>
-					<div class="col-md-6"><strong>Nº do documento *:</strong><br/>
-						<input type="text" class="form-control" name="rg" placeholder="Número do Documento" value="<?php echo $pf['rg']; ?>">
-					</div>
-				</div>
-
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8"><strong>E-mail *:</strong><br/>
-						<input type="text" class="form-control" name="email" placeholder="E-mail" value="<?php echo $pf['email']; ?>">
-					</div>
-				</div>
-
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-6"><strong>Telefone *:</strong><br/>
-						<input type="text" class="form-control" name="telefone" id="telefone" onkeyup="mascara( this, mtel );" maxlength="15" placeholder="Exemplo: (11) 98765-4321" value="<?php echo $pf['telefone']; ?>">
-					</div>
-					<div class="col-md-6"><strong>Celular:</strong><br/>
-						<input type="text" class="form-control" name="celular" id="telefone" onkeyup="mascara( this, mtel );" maxlength="15" placeholder="Exemplo: (11) 98765-4321" value="<?php echo $pf['celular']; ?>">
-					</div>
-				</div>
-
-				<div class="form-group">
-					<div class="col-md-offset-4 col-md-2"><strong>É cooperado?</strong>
-					</div>
-					<div class="col-md-2">
-						<input type="checkbox" name="cooperado" value="on" checked="checked">
-					</div>
-				</div>
-
-				<!-- Botão para Gravar -->
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
-						<input type="hidden" name="atualizarFisica" value="<?php echo $idPf ?>">
-						<input type="submit" value="GRAVAR" class="btn btn-theme btn-lg btn-block">
-					</div>
-				</div>
-			</form>
-
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8"><hr/></div>
-				</div>
-
-				<!-- Links emissão de documentos -->
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
-						<h6>Gerar Arquivo(s)</h6>
-						<p>Para gerar alguns dos arquivos online, utilize os links abaixo:</p>
-						<p align="justify">
-							<a href="https://www.receita.fazenda.gov.br/Aplicacoes/SSL/ATCTA/cpf/ImpressaoComprovante/ConsultaImpressao.asp" target="_blank">Cartão CPF</a><br/>
-							<a href="https://ccm.prefeitura.sp.gov.br/login/contribuinte?tipo=F" target="_blank">FDC CCM - Ficha de Dados Cadastrais de Contribuintes Mobiliários</a><br/>
-							<a href='<?php echo $link1 ?>' target="_blank">Declaração CCM</a>
-						</p>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8"><hr/><br/></div>
-				</div>
-
-				<!-- Exibir arquivos -->
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
-						<div class="table-responsive list_info"><h6>Arquivo(s) Anexado(s) Somente em PDF</h6>
-							<?php listaArquivoCamposMultiplos($idPf,$tipoPessoa,"","informacoes_iniciais_pf",1); ?>
+				<form class="form-horizontal" role="form" action="?perfil=informacoes_iniciais_pf" method="post">
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8"><strong>Nome *:</strong><br/>
+							<input type="text" class="form-control" name="nome" placeholder="Nome" value="<?php echo $pf['nome']; ?>" >
 						</div>
 					</div>
-				</div>
 
-				<!-- Upload de arquivo 1 -->
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
-						<div class = "center">
-						<form method="POST" action="?perfil=informacoes_iniciais_pf" enctype="multipart/form-data">
-							<table>
-								<tr>
-									<td width="50%"><td>
-								</tr>
-								<?php
-									$sql_arquivos = "SELECT * FROM upload_lista_documento WHERE idTipoUpload = '$tipoPessoa' AND id = '2'";
-									$query_arquivos = mysqli_query($con,$sql_arquivos);
-									while($arq = mysqli_fetch_array($query_arquivos))
-									{
-								?>
-										<tr>
-											<td><label><?php echo $arq['documento']?></label></td><td><input type='file' name='arquivo[<?php echo $arq['sigla']; ?>]'></td>
-										</tr>
-								<?php
-									}
-								?>
-							</table><br>
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-6"><strong>CPF *:</strong><br/>
+							<input type="text" readonly class="form-control" id="cpf" name="cpf" placeholder="CPF" value="<?php echo $pf['cpf']; ?>" >
+						</div>
+						<div class="col-md-6"><strong>RG ou RNE *:</strong><br/>
+							<input type="text" class="form-control" name="rg" placeholder="Número do Documento" value="<?php echo $pf['rg']; ?>">
 						</div>
 					</div>
-				</div>
 
-				<!-- Upload de arquivo 2 -->
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
-						<div class = "center">
-							<table>
-								<tr>
-									<td width="50%"><td>
-								</tr>
-								<?php
-									$sql_arquivos = "SELECT * FROM upload_lista_documento WHERE idTipoUpload = '$tipoPessoa' AND id = '3'";
-									$query_arquivos = mysqli_query($con,$sql_arquivos);
-									while($arq = mysqli_fetch_array($query_arquivos))
-									{
-								?>
-										<tr>
-											<td><label><?php echo $arq['documento']?></label></td><td><input type='file' name='arquivo[<?php echo $arq['sigla']; ?>]'></td>
-										</tr>
-								<?php
-									}
-								?>
-							</table><br>
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8"><strong>E-mail *:</strong><br/>
+							<input type="text" class="form-control" name="email" placeholder="E-mail" value="<?php echo $pf['email']; ?>">
 						</div>
 					</div>
-				</div>
 
-				<!-- Upload de arquivo 3 -->
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
-						<div class = "center">
-							<table>
-								<tr>
-									<td width="50%"><td>
-								</tr>
-								<?php
-									$sql_arquivos = "SELECT * FROM upload_lista_documento WHERE idTipoUpload = '$tipoPessoa' AND id = '25'";
-									$query_arquivos = mysqli_query($con,$sql_arquivos);
-									while($arq = mysqli_fetch_array($query_arquivos))
-									{
-								?>
-										<tr>
-											<td><label><?php echo $arq['documento']?></label></td><td><input type='file' name='arquivo[<?php echo $arq['sigla']; ?>]'></td>
-										</tr>
-								<?php
-									}
-								?>
-							</table><br>
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-6"><strong>Telefone :</strong><br/>
+							<input type="text" class="form-control" name="telefone" id="telefone" onkeyup="mascara( this, mtel );" maxlength="15" placeholder="Exemplo: (11) 98765-4321" value="<?php echo $pf['telefone']; ?>">
+						</div>
+						<div class="col-md-6"><strong>Celular:</strong><br/>
+							<input type="text" class="form-control" name="celular" id="telefone" onkeyup="mascara( this, mtel );" maxlength="15" placeholder="Exemplo: (11) 98765-4321" value="<?php echo $pf['celular']; ?>">
 						</div>
 					</div>
-				</div>
 
-				<!-- Upload de arquivo 4 -->
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
-						<div class = "center">
-							<table>
-								<tr>
-									<td width="50%"><td>
-								</tr>
-								<?php
-									$sql_arquivos = "SELECT * FROM upload_lista_documento WHERE idTipoUpload = '$tipoPessoa' AND id = '31'";
-									$query_arquivos = mysqli_query($con,$sql_arquivos);
-									while($arq = mysqli_fetch_array($query_arquivos))
-									{
-								?>
-										<tr>
-											<td><label><?php echo $arq['documento']?></label></td><td><input type='file' name='arquivo[<?php echo $arq['sigla']; ?>]'></td>
-										</tr>
-								<?php
-									}
-								?>
-							</table><br>
-							<input type="hidden" name="idPessoa" value="<?php echo $idPf; ?>"  />
-							<input type="hidden" name="tipoPessoa" value="<?php echo $tipoPessoa; ?>"  />
-							<input type="submit" name="enviar" class="btn btn-theme btn-lg btn-block" value='Enviar'>
-						</form>
+					<div class="form-group">
+						<div class="col-md-offset-4 col-md-2"><strong>É cooperado? *</strong> não ta gravando
+						</div>
+						<div class="col-md-2">
+							<input type="checkbox" name="cooperado" value="on" checked="checked">
 						</div>
 					</div>
-				</div>
-				<!-- Fim Upload de arquivo -->
+
+					<!-- Botão para Gravar -->
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8">
+							<input type="hidden" name="atualizarFisica" value="<?php echo $idPf ?>">
+							<input type="submit" value="GRAVAR" class="btn btn-theme btn-lg btn-block">
+						</div>
+					</div>
+				</form>
 
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8"><hr/><br/></div>
@@ -309,7 +173,7 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 
 				<!-- Botão para Prosseguir -->
 				<div class="form-group">
-					<form class="form-horizontal" role="form" action="?perfil=endereco_pf" method="post">
+					<form class="form-horizontal" role="form" action="?perfil=arquivos_pf" method="post">
 						<div class="col-md-offset-8 col-md-2">
 							<input type="submit" value="Avançar" class="btn btn-theme btn-lg btn-block"  value="<?php echo $idPf ?>">
 						</div>
