@@ -33,81 +33,6 @@ if(isset($_POST['atualizarFisica']))
 	}
 }
 
-if(isset($_POST["enviar"]))
-{
-	$sql_arquivos = "SELECT * FROM upload_lista_documento WHERE idTipoUpload = '$tipoPessoa' AND id IN (2,3,25,31)";
-	$query_arquivos = mysqli_query($con,$sql_arquivos);
-	while($arq = mysqli_fetch_array($query_arquivos))
-	{
-		$idPf = $_SESSION['idPf'];
-		$y = $arq['id'];
-		$x = $arq['sigla'];
-		$nome_arquivo = $_FILES['arquivo']['name'][$x];
-		$f_size = $_FILES['arquivo']['size'][$x];
-
-		//Extensões permitidas
-		$ext = array("PDF","pdf");
-
-		if($f_size > 3145728) // 3MB em bytes
-		{
-			$mensagem = "<font color='#01DF3A'><strong>Erro! Tamanho de arquivo excedido! Tamanho máximo permitido: 03 MB.</strong></font>";
-		}
-		else
-		{
-			if($nome_arquivo != "")
-			{
-				$nome_temporario = $_FILES['arquivo']['tmp_name'][$x];
-				$new_name = date("YmdHis")."_".semAcento($nome_arquivo); //Definindo um novo nome para o arquivo
-				$hoje = date("Y-m-d H:i:s");
-				$dir = '../uploadsdocs/'; //Diretório para uploads
-				$allowedExts = array(".pdf", ".PDF"); //Extensões permitidas
-				$ext = strtolower(substr($nome_arquivo,-4));
-
-				if(in_array($ext, $allowedExts)) //Pergunta se a extensão do arquivo, está presente no array das extensões permitidas
-				{
-					if(move_uploaded_file($nome_temporario, $dir.$new_name))
-					{
-						$sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipoPessoa`, `idPessoa`, `idUploadListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('$tipoPessoa', '$idPf', '$y', '$new_name', '$hoje', '1'); ";
-						$query = mysqli_query($con,$sql_insere_arquivo);
-						if($query)
-						{
-							$mensagem = "<font color='#01DF3A'><strong>Arquivo recebido com sucesso!</strong></font>";
-							gravarLog($sql_insere_arquivo);
-						}
-						else
-						{
-							$mensagem = "<font color='#FF0000'><strong>Erro ao gravar no banco.</strong></font>";
-						}
-					}
-					else
-					{
-						$mensagem = "<font color='#FF0000'><strong>Erro no upload! Tente novamente.</strong></font>";
-					}
-				}
-				else
-				{
-					$mensagem = "<font color='#FF0000'><strong>Erro no upload! Anexar documentos somente no formato PDF.</strong></font>";
-				}
-			}
-		}
-	}
-}
-
-if(isset($_POST['apagar']))
-{
-	$idArquivo = $_POST['apagar'];
-	$sql_apagar_arquivo = "UPDATE upload_arquivo SET publicado = 0 WHERE id = '$idArquivo'";
-	if(mysqli_query($con,$sql_apagar_arquivo))
-	{
-		$mensagem = "<font color='#01DF3A'><strong>Arquivo apagado com sucesso!</strong></font>";
-		gravarLog($sql_apagar_arquivo);
-	}
-	else
-	{
-		$mensagem = "<font color='#FF0000'><strong>Erro ao apagar arquivo!</strong></font>";
-	}
-}
-
 $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 ?>
 
@@ -173,7 +98,7 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 
 				<!-- Botão para Prosseguir -->
 				<div class="form-group">
-					<form class="form-horizontal" role="form" action="?perfil=arquivos_pf" method="post">
+					<form class="form-horizontal" role="form" action="?perfil=endereco_pf" method="post">
 						<div class="col-md-offset-8 col-md-2">
 							<input type="submit" value="Avançar" class="btn btn-theme btn-lg btn-block"  value="<?php echo $idPf ?>">
 						</div>
