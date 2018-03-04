@@ -29,7 +29,7 @@
 							<p><strong><?php if(isset($mensagem)){echo $mensagem;} ?></strong></p>
 							<p><strong>Vamos verificar se você já possui cadastro no sistema.</strong></p>
 							<br/>
-							<p><strong>Insira o CPF</p>
+							<p><strong>Insira o CPF</strong></p>
 						</div>
 					</div>
 					<div class="form-group">
