@@ -16,7 +16,7 @@ if(isset($_POST['busca']))
 	else
 	{
 		$busca = $_POST['busca'];
-		$sql_busca = "SELECT * FROM usuario_pj WHERE login = '$busca' ORDER BY razaoSocial";
+		$sql_busca = "SELECT * FROM pessoa_juridica WHERE cnpj = '$busca' ORDER BY razaoSocial";
 		$query_busca = mysqli_query($con,$sql_busca);
 		$num_busca = mysqli_num_rows($query_busca);
 	}
@@ -64,7 +64,7 @@ if($num_busca > 0)
 											echo "
 												<tr>
 													<td class='list_description'><b>".$descricao['razaoSocial']."</b></td>
-													<td class='list_description'>".$descricao['login']."</td>
+													<td class='list_description'>".$descricao['cnpj']."</td>
 													<td><a href='https://goo.gl/forms/AM7jU1XVDUBUVJXE3'><input type='submit' value='Esqueci a Senha' class='btn btn-theme btn-block'></a></td>
 												</tr>
 											";

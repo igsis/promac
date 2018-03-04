@@ -65,8 +65,8 @@
 					// compara as senhas
 					session_start();
 					$_SESSION['login'] = $user['cnpj'];
-					$_SESSION['nome'] = $user['nome'];
-					$_SESSION['idUser'] = $user['id'];
+					$_SESSION['nome'] = $user['razaoSocial'];
+					$_SESSION['idUser'] = $user['idPj'];
 					$log = "Fez login.";
 					//gravarLog($log);
 					header("Location: visual/index_pj.php");

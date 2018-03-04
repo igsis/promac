@@ -29,11 +29,11 @@
 							<p><strong><?php if(isset($mensagem)){echo $mensagem;} ?></strong></p>
 							<p><strong>Vamos verificar se você já possui cadastro no sistema.</strong></p>
 							<br/>
-							<p><strong>Insira o CNPJ</p>
+							<p><strong>Insira o CNPJ</strong></p>
 						</div>
 					</div>
 					<div class="form-group">
-						<form method="POST" action="login_resultado_pf.php" class="form-horizontal" role="form">
+						<form method="POST" action="login_resultado_pj.php" class="form-horizontal" role="form">
 							<div class="col-md-offset-4 col-md-2">
 								<input type="text" name="busca" class="form-control" placeholder="CNPJ" id="cnpj" >
 							</div>

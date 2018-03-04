@@ -5,7 +5,7 @@ $busca = $_POST['cnpj'];
 $con = bancoMysqli(); // conecta no banco
 
 if(isset($_POST['cadastraNovoPj']))
-{		
+{
 	$razaoSocial = addslashes($_POST['razaoSocial']);
 	$email = $_POST['email'];
 	if($email == '' OR $razaoSocial == '')
@@ -13,20 +13,20 @@ if(isset($_POST['cadastraNovoPj']))
 		$mensagem = "Por favor, preencha todos os campos.";
 	}
 	else
-	{	
+	{
 		//verifica se há um post
 		if(($_POST['senha01'] != "") AND (strlen($_POST['senha01']) >= 5))
 		{
 			if($_POST['senha01'] == $_POST['senha02'])
-			{				
+			{
 				$login = $_POST['cnpj'];
 				$senha01 = md5($_POST['senha01']);
-				$sql_senha = "INSERT INTO `usuario_pj`(razaoSocial, cnpj, email, login, senha) VALUES ('$razaoSocial', '$login', '$email', '$login', '$senha01')";
+				$sql_senha = "INSERT INTO `pessoa_juridica`(razaoSocial, cnpj, email, senha, idNivelAcesso, publicado) VALUES ('$razaoSocial', '$login', '$email', '$senha01', '1', '1')";
 				$query_senha = mysqli_query($con,$sql_senha);
-				$sql_select = "SELECT * FROM usuario_pj WHERE login = '$login'";
+				$sql_select = "SELECT * FROM pessoa_juridica WHERE cnpj = '$login'";
 				$query_select = mysqli_query($con,$sql_select);
 				$sql_array = mysqli_fetch_array($query_select);
-				$idPessoaJuridica = $sql_array['id'];
+				$idPessoaJuridica = $sql_array['idPj'];
 				if($query_senha)
 				{
 					$mensagem = "Usuário cadastrado com sucesso! Aguarde que você será redirecionado para a página de login";
@@ -36,7 +36,7 @@ if(isset($_POST['cadastraNovoPj']))
 				}
 				else
 				{
-					$mensagem = "Erro ao cadastrar. Tente novamente.";	
+					$mensagem = "Erro ao cadastrar. Tente novamente.";
 				}
 			}
 			else
@@ -47,11 +47,11 @@ if(isset($_POST['cadastraNovoPj']))
 		}
 		else
 		{
-			$mensagem = "A senha não pode estar em branco e deve conter mais de 5 caracteres";	
+			$mensagem = "A senha não pode estar em branco e deve conter mais de 5 caracteres";
 		}
 	}
 }
-?>	
+?>
 
 <html>
 	<head>
@@ -66,7 +66,7 @@ if(isset($_POST['cadastraNovoPj']))
 		<section id="contact" class="home-section bg-white">
 			<div class="container">
 				<div class="form-group">
-					<h3>CADASTRO DE PESSOA JURÍDICA</h3>				
+					<h4>Cadastro de Pessoa Jurídica</h4>
 					<h5><?php if(isset($mensagem)){echo $mensagem;};?></h5>
 				</div>
 				<div class="row">
@@ -77,7 +77,7 @@ if(isset($_POST['cadastraNovoPj']))
 								<input type="text" class="form-control" name="razaoSocial" placeholder="Razão Social">
 							</div>
 						</div>
-						  
+
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-6"><strong>Senha: *</strong>
 								<input type="password" name="senha01" class="form-control" id="inputName" placeholder="">
@@ -86,8 +86,8 @@ if(isset($_POST['cadastraNovoPj']))
 								<input type="password" name="senha02" class="form-control" id="inputEmail" placeholder="">
 							</div>
 						</div>
-						
-						<div class="form-group">	
+
+						<div class="form-group">
 							<div class="col-md-offset-2 col-md-6"><strong>CNPJ: *</strong><br/>
 								<input type="text" readonly class="form-control" name="cnpj" value="<?php echo $busca ?>" placeholder="CNPJ">
 							</div>
@@ -95,7 +95,7 @@ if(isset($_POST['cadastraNovoPj']))
 								<input type="text" class="form-control" name="email" placeholder="E-mail">
 							</div>
 						</div>
-							  
+
 						<!-- Botão para Gravar -->
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8">
@@ -104,11 +104,9 @@ if(isset($_POST['cadastraNovoPj']))
 							</div>
 						</div>
 					</form>
-					
+
 					</div>
 				</div>
 			</div>
-		</section> 
+		</section>
 		<?php include "visual/rodape.php" ?>
-	</body>
-</html>	

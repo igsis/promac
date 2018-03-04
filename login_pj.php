@@ -40,7 +40,7 @@ if(isset($_POST['login']))
 				<div class="row">
 					<div class="col-md-offset-2 col-md-8">
 						<div class="text-hide">
-							<h4>Mapeamento e Cadastro de Artistas e Profissionais de Arte e Cultura</h4>
+							<h4>ProMAC - Programa Municipal de Apoio a Projetos Culturais</h4>
 						</div>
 					</div>
 				</div>
