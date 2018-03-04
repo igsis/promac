@@ -32,13 +32,11 @@ if(isset($_POST['atualizarJuridica']))
 	}
 }
 
-$idPj = $_SESSION['idPj'];
-
 $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 ?>
 
 <section id="list_items" class="home-section bg-white">
-	<div class="container"><?php include 'includes/menu_evento.php'; ?>
+	<div class="container"><?php include 'includes/menu_interno_pj.php'; ?>
 		<div class="form-group">
 			<h4>Informações Iniciais</h4>
 			<h5><?php if(isset($mensagem)){echo $mensagem;};?></h5>
@@ -63,10 +61,10 @@ $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-6"><strong>Telefone :</strong><br/>
-							<input type="text" class="form-control" name="telefone" id="telefone" onkeyup="mascara( this, mtel );" maxlength="15" placeholder="Exemplo: (11) 98765-4321" value="<?php echo $pf['telefone']; ?>">
+							<input type="text" class="form-control" name="telefone" id="telefone" onkeyup="mascara( this, mtel );" maxlength="15" placeholder="Exemplo: (11) 98765-4321" value="<?php echo $pj['telefone']; ?>">
 						</div>
 						<div class="col-md-6"><strong>Celular:</strong><br/>
-							<input type="text" class="form-control" name="celular" id="telefone" onkeyup="mascara( this, mtel );" maxlength="15" placeholder="Exemplo: (11) 98765-4321" value="<?php echo $pf['celular']; ?>">
+							<input type="text" class="form-control" name="celular" id="telefone" onkeyup="mascara( this, mtel );" maxlength="15" placeholder="Exemplo: (11) 98765-4321" value="<?php echo $pj['celular']; ?>">
 						</div>
 					</div>
 
