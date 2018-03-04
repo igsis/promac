@@ -2,6 +2,13 @@
 
 $con = bancoMysqli();
 $idPf = $_SESSION['idUser'];
+$tipoPessoa = '1';
+
+// Gerar documentos
+$server = "http://".$_SERVER['SERVER_NAME']."/promac/";
+$http = $server."/pdf/";
+$link1 = $http."rlt_declaracao_vinculo_pf.php";
+
 
 if(isset($_POST["enviar"]))
 {
@@ -93,12 +100,21 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
 						<h6>Gerar Arquivo(s)</h6>
-						<p>Para gerar alguns dos arquivos online, utilize os links abaixo:</p>
-						<p align="justify">
-							<a href="https://www.receita.fazenda.gov.br/Aplicacoes/SSL/ATCTA/cpf/ImpressaoComprovante/ConsultaImpressao.asp" target="_blank">Cartão CPF</a><br/>
-							<a href="https://ccm.prefeitura.sp.gov.br/login/contribuinte?tipo=F" target="_blank">FDC CCM - Ficha de Dados Cadastrais de Contribuintes Mobiliários</a><br/>
-							<a href='<?php echo $link1 ?>' target="_blank">Declaração CCM</a>
-						</p>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-8">
+						<p align="justify"><font color="red"><strong>A declaração deve ser impressa, datada e assinada nos campos indicados no documento. Logo após, deve-se digitaliza-la e então anexa-la ao sistema através do campo abaixo.</strong></font></p>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-5">
+						<p align="left">Declaração de Vínculo.</p>
+					</div>
+					<div class="col-md-3">
+						<a href='<?php echo $link1; ?>' target='_blank' class="btn btn-theme btn-md btn-block"><strong>Gerar</strong></a>
 					</div>
 				</div>
 
@@ -227,11 +243,16 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 
 				<!-- Botão para Prosseguir -->
 				<div class="form-group">
-					<form class="form-horizontal" role="form" action="?perfil=endereco_pf" method="post">
-						<div class="col-md-offset-8 col-md-2">
+					<div class="col-md-offset-2 col-md-2">
+						<form class="form-horizontal" role="form" action="?perfil=endereco_pf" method="post">
+							<input type="submit" value="Voltar" class="btn btn-theme btn-lg btn-block"  value="<?php echo $idPf ?>">
+						</form>
+					</div>
+					<div class="col-md-offset-4 col-md-2">
+						<form class="form-horizontal" role="form" action="?perfil=projeto" method="post">
 							<input type="submit" value="Avançar" class="btn btn-theme btn-lg btn-block"  value="<?php echo $idPf ?>">
-						</div>
-					</form>
+						</form>
+					</div>
 				</div>
 
 			</div>
