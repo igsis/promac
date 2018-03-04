@@ -22,7 +22,7 @@ if(isset($_POST['cadastraNovoPf']))
 				$senha01 = md5($_POST['senha01']);
 				$login = $_POST['cpf'];
 				$dataAtualizacao = date("Y-m-d");
-				$sql_senha = "INSERT INTO `pessoa_fisica`(nome, cpf, email, senha, publicado) VALUES ('$nome', '$login', '$email', '$senha01', '1')";
+				$sql_senha = "INSERT INTO `pessoa_fisica`(nome, cpf, email, senha, idNivelAcesso, publicado) VALUES ('$nome', '$login', '$email', '$senha01', '1', '1')";
 				$query_senha = mysqli_query($con,$sql_senha);
 				$sql_select = "SELECT * FROM pessoa_fisica WHERE cpf = '$login'";
 				$query_select = mysqli_query($con,$sql_select);
