@@ -12,12 +12,11 @@ $link1 = $http."rlt_declaracao_vinculo_pf.php";
 
 if(isset($_POST["enviar"]))
 {
-	$sql_arquivos = "SELECT * FROM upload_lista_documento WHERE idTipoUpload = '$tipoPessoa' AND id IN (2,3,25,31)";
+	$sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa'";
 	$query_arquivos = mysqli_query($con,$sql_arquivos);
 	while($arq = mysqli_fetch_array($query_arquivos))
 	{
-		$idPf = $_SESSION['idPf'];
-		$y = $arq['id'];
+		$y = $arq['idListaDocumento'];
 		$x = $arq['sigla'];
 		$nome_arquivo = $_FILES['arquivo']['name'][$x];
 		$f_size = $_FILES['arquivo']['size'][$x];
@@ -44,7 +43,7 @@ if(isset($_POST["enviar"]))
 				{
 					if(move_uploaded_file($nome_temporario, $dir.$new_name))
 					{
-						$sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipoPessoa`, `idPessoa`, `idUploadListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('$tipoPessoa', '$idPf', '$y', '$new_name', '$hoje', '1'); ";
+						$sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('$tipoPessoa', '$idPf', '$y', '$new_name', '$hoje', '1'); ";
 						$query = mysqli_query($con,$sql_insere_arquivo);
 						if($query)
 						{
@@ -73,7 +72,7 @@ if(isset($_POST["enviar"]))
 if(isset($_POST['apagar']))
 {
 	$idArquivo = $_POST['apagar'];
-	$sql_apagar_arquivo = "UPDATE upload_arquivo SET publicado = 0 WHERE id = '$idArquivo'";
+	$sql_apagar_arquivo = "UPDATE upload_arquivo SET publicado = 0 WHERE idUploadArquivo = '$idArquivo'";
 	if(mysqli_query($con,$sql_apagar_arquivo))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Arquivo apagado com sucesso!</strong></font>";
@@ -91,8 +90,8 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 <section id="list_items" class="home-section bg-white">
 	<div class="container"><?php include 'includes/menu_interno_pf.php'; ?>
 		<div class="form-group">
-			<h4>Informações Iniciais</h4>
-				<h5><?php if(isset($mensagem)){echo $mensagem;};?></h5>
+			<h4>Arquivos Pessoais</h4>
+			<h5><?php if(isset($mensagem)){echo $mensagem;};?></h5>
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
@@ -125,104 +124,30 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 				<!-- Exibir arquivos -->
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
-						<div class="table-responsive list_info"><h6>Arquivo(s) Anexado(s) Somente em PDF</h6>
-							<?php listaArquivoCamposMultiplos($idPf,$tipoPessoa,"","informacoes_iniciais_pf",1); ?>
+						<div class="table-responsive list_info"><h6>Arquivo(s) Anexado(s)</h6>
+							<?php listaArquivosPessoa($idPf,$tipoPessoa,"arquivos_pf"); ?>
 						</div>
 					</div>
 				</div>
 
-				<!-- Upload de arquivo 1 -->
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
-						<div class = "center">
-						<form method="POST" action="?perfil=informacoes_iniciais_pf" enctype="multipart/form-data">
-							<table>
-								<tr>
-									<td width="50%"><td>
+						<div class="table-responsive list_info"><h6>Upload de Arquivo(s) Somente em PDF</h6>
+						<form method="POST" action="?perfil=arquivos_pf" enctype="multipart/form-data">
+							<table class='table table-condensed'>
+								<tr class='list_menu'>
+									<td width="50%">Tipo de Arquivo</td>
+									<td></td>
 								</tr>
 								<?php
-									$sql_arquivos = "SELECT * FROM upload_lista_documento WHERE idTipoUpload = '$tipoPessoa' AND id = '2'";
+									$sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa'";
 									$query_arquivos = mysqli_query($con,$sql_arquivos);
 									while($arq = mysqli_fetch_array($query_arquivos))
 									{
 								?>
 										<tr>
-											<td><label><?php echo $arq['documento']?></label></td><td><input type='file' name='arquivo[<?php echo $arq['sigla']; ?>]'></td>
-										</tr>
-								<?php
-									}
-								?>
-							</table><br>
-						</div>
-					</div>
-				</div>
-
-				<!-- Upload de arquivo 2 -->
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
-						<div class = "center">
-							<table>
-								<tr>
-									<td width="50%"><td>
-								</tr>
-								<?php
-									$sql_arquivos = "SELECT * FROM upload_lista_documento WHERE idTipoUpload = '$tipoPessoa' AND id = '3'";
-									$query_arquivos = mysqli_query($con,$sql_arquivos);
-									while($arq = mysqli_fetch_array($query_arquivos))
-									{
-								?>
-										<tr>
-											<td><label><?php echo $arq['documento']?></label></td><td><input type='file' name='arquivo[<?php echo $arq['sigla']; ?>]'></td>
-										</tr>
-								<?php
-									}
-								?>
-							</table><br>
-						</div>
-					</div>
-				</div>
-
-				<!-- Upload de arquivo 3 -->
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
-						<div class = "center">
-							<table>
-								<tr>
-									<td width="50%"><td>
-								</tr>
-								<?php
-									$sql_arquivos = "SELECT * FROM upload_lista_documento WHERE idTipoUpload = '$tipoPessoa' AND id = '25'";
-									$query_arquivos = mysqli_query($con,$sql_arquivos);
-									while($arq = mysqli_fetch_array($query_arquivos))
-									{
-								?>
-										<tr>
-											<td><label><?php echo $arq['documento']?></label></td><td><input type='file' name='arquivo[<?php echo $arq['sigla']; ?>]'></td>
-										</tr>
-								<?php
-									}
-								?>
-							</table><br>
-						</div>
-					</div>
-				</div>
-
-				<!-- Upload de arquivo 4 -->
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
-						<div class = "center">
-							<table>
-								<tr>
-									<td width="50%"><td>
-								</tr>
-								<?php
-									$sql_arquivos = "SELECT * FROM upload_lista_documento WHERE idTipoUpload = '$tipoPessoa' AND id = '31'";
-									$query_arquivos = mysqli_query($con,$sql_arquivos);
-									while($arq = mysqli_fetch_array($query_arquivos))
-									{
-								?>
-										<tr>
-											<td><label><?php echo $arq['documento']?></label></td><td><input type='file' name='arquivo[<?php echo $arq['sigla']; ?>]'></td>
+											<td class="list_description"><label><?php echo $arq['documento']?></label></td>
+											<td class="list_description"><input type='file' name='arquivo[<?php echo $arq['sigla']; ?>]'></td>
 										</tr>
 								<?php
 									}
@@ -244,7 +169,7 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 				<!-- Botão para Prosseguir -->
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-2">
-						<form class="form-horizontal" role="form" action="?perfil=endereco_pf" method="post">
+						<form class="form-horizontal" role="form" action="?perfil=informacoes_iniciais_pf" method="post">
 							<input type="submit" value="Voltar" class="btn btn-theme btn-lg btn-block"  value="<?php echo $idPf ?>">
 						</form>
 					</div>
