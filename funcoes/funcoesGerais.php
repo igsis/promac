@@ -32,17 +32,17 @@
 				}
 				else
 				{
-					echo "A senha está incorreta.";
+					return "<font color='#FF0000'><strong>A senha está incorreta!</strong></font>";
 				}
 			}
 			else
 			{
-				echo "O usuário não existe.";
+				return "<font color='#FF0000'><strong>O usuário não existe.</strong></font>";
 			}
 		}
 		else
 		{
-			echo "Erro no banco de dados";
+			return "<font color='#FF0000'><strong>Erro no banco de dados!</strong></font>";
 		}
 	}
 
@@ -73,17 +73,17 @@
 				}
 				else
 				{
-					echo "A senha está incorreta.";
+					return "<font color='#FF0000'><strong>A senha está incorreta!</strong></font>";
 				}
 			}
 			else
 			{
-				echo "O usuário não existe.";
+				return "<font color='#FF0000'><strong>O usuário não existe.</strong></font>";
 			}
 		}
 		else
 		{
-			echo "Erro no banco de dados";
+			return "<font color='#FF0000'><strong>Erro no banco de dados!</strong></font>";
 		}
 	}
 

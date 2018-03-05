@@ -41,6 +41,7 @@ if(isset($_POST['login']))
 					<div class="col-md-offset-2 col-md-8">
 						<div class="text-hide">
 							<h4>ProMAC - Programa Municipal de Apoio a Projetos Culturais</h4>
+							<h5><?php if(isset($_POST['login'])){ echo autenticaloginpj($login, $senha); } ?></h5>
 						</div>
 					</div>
 				</div>
