@@ -101,12 +101,12 @@ $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 				<!-- Botão para Voltar e Prosseguir -->
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-2">
-						<form class="form-horizontal" role="form" action="?perfil=arquivos_pj" method="post">
+						<form class="form-horizontal" role="form" action="?perfil=informacoes_iniciais_pj" method="post">
 							<input type="submit" value="Voltar" class="btn btn-theme btn-lg btn-block"  value="<?php echo $idPj ?>">
 						</form>
 					</div>
 					<div class="col-md-offset-4 col-md-2">
-						<form class="form-horizontal" role="form" action="?perfil=representante1_pj" method="post">
+						<form class="form-horizontal" role="form" action="?perfil=representante_pj" method="post">
 							<input type="submit" value="Avançar" class="btn btn-theme btn-lg btn-block"  value="<?php echo $idPj ?>">
 						</form>
 					</div>
