@@ -125,10 +125,11 @@ $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 					</div>
 
 					<div class="form-group">
-						<div class="col-md-offset-4 col-md-2"><strong>É cooperativa? *</strong> não ta gravando
+						<div class="col-md-offset-4 col-md-2">
+							<strong>É cooperativa? *</strong>
 						</div>
 						<div class="col-md-2">
-							<input type="checkbox" name="cooperativa" value="on" checked="checked">
+							<input type="checkbox" name="cooperativa" value="1" <?php checar($pj['cooperativa']) ?> >
 						</div>
 					</div>
 
