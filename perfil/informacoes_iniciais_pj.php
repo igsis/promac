@@ -11,6 +11,13 @@ if(isset($_POST['atualizarJuridica']))
 	$telefone = $_POST['telefone'];
 	$celular = $_POST['celular'];
 	$email = $_POST['email'];
+	$Endereco = $_POST['Endereco'];
+	$Bairro = $_POST['Bairro'];
+	$Cidade = $_POST['Cidade'];
+	$Estado = $_POST['Estado'];
+	$CEP = $_POST['CEP'];
+	$Numero = $_POST['Numero'];
+	$Complemento = $_POST['Complemento'];
 	$cooperativa = $_POST['cooperativa'];
 
 	$sql_atualiza_pj = "UPDATE pessoa_juridica SET
@@ -18,6 +25,13 @@ if(isset($_POST['atualizarJuridica']))
 	`telefone` = '$telefone',
 	`celular` = '$celular',
 	`email` = '$email',
+	`logradouro` = '$Endereco',
+	`bairro` = '$Bairro',
+	`cidade` = '$Cidade',
+	`estado` = '$Estado',
+	`cep` = '$CEP',
+	`numero` = '$Numero',
+	`complemento` = '$Complemento',
 	`cooperativa` = '$cooperativa'
 	WHERE `idPj` = '$idPj'";
 
@@ -69,6 +83,48 @@ $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 					</div>
 
 					<div class="form-group">
+							<div class="col-md-offset-2 col-md-8"><hr/></div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-6"><strong>CEP *:</strong><br/>
+							<input type="text" class="form-control" id="CEP" name="CEP" placeholder="CEP" value="<?php echo $pj['cep']; ?>">
+						</div>
+						<div class="col-md-6" align="left"><br/><i>Pressione a tecla Tab para carregar</i>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8"><strong>Endereço:</strong><br/>
+							<input type="text" readonly class="form-control" id="Endereco" name="Endereco" placeholder="Endereço" value="<?php echo $pj['logradouro']; ?>">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-6"><strong>Número *:</strong><br/>
+							<input type="text" class="form-control" id="Numero" name="Numero" placeholder="Numero" value="<?php echo $pj['numero']; ?>">
+						</div>
+						<div class=" col-md-6"><strong>Complemento:</strong><br/>
+							<input type="text" class="form-control" id="Complemento" name="Complemento" placeholder="Complemento" value="<?php echo $pj['complemento']; ?>">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8"><strong>Bairro:</strong><br/>
+							<input type="text" readonly class="form-control" id="Bairro" name="Bairro" placeholder="Bairro" value="<?php echo $pj['bairro']; ?>">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-6"><strong>Cidade:</strong><br/>
+							<input type="text" readonly class="form-control" id="Cidade" name="Cidade" placeholder="Cidade" value="<?php echo $pj['cidade']; ?>">
+						</div>
+						<div class="col-md-6"><strong>Estado:</strong><br/>
+							<input type="text" readonly class="form-control" id="Estado" name="Estado" placeholder="Estado" value="<?php echo $pj['estado']; ?>">
+						</div>
+					</div>
+
+					<div class="form-group">
 						<div class="col-md-offset-4 col-md-2"><strong>É cooperativa? *</strong> não ta gravando
 						</div>
 						<div class="col-md-2">
@@ -84,9 +140,15 @@ $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 					</div>
 				</div>
 			</form>
+
+
+				<div class="form-group">
+						<div class="col-md-offset-2 col-md-8"><hr/><br/></div>
+				</div>
+
 				<!-- Botão para Prosseguir -->
 				<div class="form-group">
-					<form class="form-horizontal" role="form" action="?perfil=endereco_pj" method="post">
+					<form class="form-horizontal" role="form" action="?perfil=representante_pj" method="post">
 						<div class="col-md-offset-8 col-md-2">
 							<input type="submit" value="Avançar" class="btn btn-theme btn-lg btn-block"  value="<?php echo $idPj ?>">
 						</div>
