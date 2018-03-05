@@ -11,6 +11,13 @@ if(isset($_POST['atualizarFisica']))
 	$telefone = $_POST['telefone'];
 	$celular = $_POST['celular'];
 	$email = $_POST['email'];
+	$Endereco = $_POST['Endereco'];
+	$Bairro = $_POST['Bairro'];
+	$Cidade = $_POST['Cidade'];
+	$Estado = $_POST['Estado'];
+	$CEP = $_POST['CEP'];
+	$Numero = $_POST['Numero'];
+	$Complemento = $_POST['Complemento'];
 	$cooperado = $_POST['cooperado'];
 
 	$sql_atualiza_pf = "UPDATE pessoa_fisica SET
@@ -19,6 +26,13 @@ if(isset($_POST['atualizarFisica']))
 	`telefone` = '$telefone',
 	`celular` = '$celular',
 	`email` = '$email',
+	`logradouro` = '$Endereco',
+	`bairro` = '$Bairro',
+	`cidade` = '$Cidade',
+	`estado` = '$Estado',
+	`cep` = '$CEP',
+	`numero` = '$Numero',
+	`complemento` = '$Complemento',
 	`cooperado` = '$cooperado'
 	WHERE `idPf` = '$idPf'";
 
@@ -76,10 +90,53 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 					</div>
 
 					<div class="form-group">
-						<div class="col-md-offset-4 col-md-2"><strong>É cooperado? *</strong> não ta gravando
+						<div class="col-md-offset-2 col-md-8"><hr/></div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-6"><strong>CEP *:</strong><br/>
+							<input type="text" class="form-control" id="CEP" name="CEP" placeholder="CEP" value="<?php echo $pf['cep']; ?>">
+						</div>
+						<div class="col-md-6" align="left"><i>Clique no número do CEP e pressione a tecla Tab para carregar</i>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8"><strong>Endereço:</strong><br/>
+							<input type="text" readonly class="form-control" id="Endereco" name="Endereco" placeholder="Endereço" value="<?php echo $pf['logradouro']; ?>">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-6"><strong>Número *:</strong><br/>
+							<input type="text" class="form-control" id="Numero" name="Numero" placeholder="Numero" value="<?php echo $pf['numero']; ?>">
+						</div>
+						<div class=" col-md-6"><strong>Complemento:</strong><br/>
+							<input type="text" class="form-control" id="Complemento" name="Complemento" placeholder="Complemento" value="<?php echo $pf['complemento']; ?>">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8"><strong>Bairro:</strong><br/>
+							<input type="text" readonly class="form-control" id="Bairro" name="Bairro" placeholder="Bairro" value="<?php echo $pf['bairro']; ?>">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-6"><strong>Cidade:</strong><br/>
+							<input type="text" readonly class="form-control" id="Cidade" name="Cidade" placeholder="Cidade" value="<?php echo $pf['cidade']; ?>">
+						</div>
+						<div class="col-md-6"><strong>Estado:</strong><br/>
+							<input type="text" readonly class="form-control" id="Estado" name="Estado" placeholder="Estado" value="<?php echo $pf['estado']; ?>">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-offset-4 col-md-2">
+							<strong>É cooperado? *</strong>
 						</div>
 						<div class="col-md-2">
-							<input type="checkbox" name="cooperado" value="on" checked="checked">
+							<input type="checkbox" name="cooperado" value="1" <?php checar($pf['cooperado']) ?> >
 						</div>
 					</div>
 
@@ -98,7 +155,7 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 
 				<!-- Botão para Prosseguir -->
 				<div class="form-group">
-					<form class="form-horizontal" role="form" action="?perfil=endereco_pf" method="post">
+					<form class="form-horizontal" role="form" action="?perfil=arquivos_pf" method="post">
 						<div class="col-md-offset-8 col-md-2">
 							<input type="submit" value="Avançar" class="btn btn-theme btn-lg btn-block"  value="<?php echo $idPf ?>">
 						</div>
