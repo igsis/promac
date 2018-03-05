@@ -12,10 +12,11 @@
 			?>
 				| <a href="?perfil=evento_edicao">Evento</a>
 				| <a href="?perfil=finalizar">Finalizar</a>
+				| <a href="?perfil=informacoes_administrativas_pf">Informações Administrativas</a>
 			<?php
 			}
 			?>
-			| <a href="?perfil=informacoes_administrativas_pf">Informações Administrativas</a><br/>
+			<br/>
 			| <a href="?secao=perfil">Início</a>
 			| <a href="../manual" target="_blank">Ajuda</a>
 			| <a href="../include/logoff.php">Sair</a> |</strong><br/>
