@@ -3,7 +3,6 @@
 		<div class="col-md-offset-2 col-md-8">
 			<strong>
 			| <a href="?perfil=informacoes_iniciais_pf">Informações Iniciais</a>
-			| <a href="?perfil=endereco_pf">Endereço</a>
 			| <a href="?perfil=arquivos_pf">Arquivos Pessoais</a>
 			| <a href="?perfil=projeto">Projeto</a>
 			<?php

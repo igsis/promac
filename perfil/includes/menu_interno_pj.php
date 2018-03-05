@@ -3,7 +3,6 @@
 		<div class="col-md-offset-2 col-md-8">
 			<strong>
 			| <a href="?perfil=informacoes_iniciais_pj">Informações Iniciais</a>
-			| <a href="?perfil=endereco_pj">Endereço</a>
 			| <a href="?perfil=representante_pj">Representante</a>
 			| <a href="?perfil=arquivos_pj">Arquivos Pessoais</a>
 			| <a href="?perfil=projeto">Projeto</a> |
