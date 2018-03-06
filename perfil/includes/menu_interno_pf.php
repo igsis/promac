@@ -4,7 +4,7 @@
 			<strong>
 			| <a href="?perfil=informacoes_iniciais_pf">Informações Iniciais</a>
 			| <a href="?perfil=arquivos_pf">Arquivos Pessoais</a>
-			| <a href="?perfil=projeto">Projeto</a>
+			| <a href="?perfil=projeto_pf">Projeto</a>
 			<?php
 			if(isset($_SESSION['idProjeto']))
 			{

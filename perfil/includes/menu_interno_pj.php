@@ -5,7 +5,7 @@
 			| <a href="?perfil=informacoes_iniciais_pj">Informações Iniciais</a>
 			| <a href="?perfil=representante_pj">Representante</a>
 			| <a href="?perfil=arquivos_pj">Arquivos Pessoais</a>
-			| <a href="?perfil=projeto">Projeto</a> |
+			| <a href="?perfil=projeto_pj">Projeto</a> |
 			<?php
 			if(isset($_SESSION['idProjeto']))
 			{
