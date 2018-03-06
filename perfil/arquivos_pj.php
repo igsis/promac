@@ -7,7 +7,7 @@ $tipoPessoa = '2';
 // Gerar documentos
 $server = "http://".$_SERVER['SERVER_NAME']."/promac/";
 $http = $server."/pdf/";
-$link1 = $http."rlt_declaracao_vinculo_pf.php";
+$link1 = $http."rlt_declaracao_vinculo_pj.php";
 $link2 = $http."rlt_declaracao_os.php";
 
 
@@ -147,7 +147,7 @@ $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
 						<div class="table-responsive list_info"><h6>Upload de Arquivo(s) Somente em PDF</h6>
-						<form method="POST" action="?perfil=arquivos_pf" enctype="multipart/form-data">
+						<form method="POST" action="?perfil=arquivos_pj" enctype="multipart/form-data">
 							<table class='table table-condensed'>
 								<tr class='list_menu'>
 									<td width="50%">Tipo de Arquivo</td>
@@ -184,12 +184,12 @@ $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-2">
 						<form class="form-horizontal" role="form" action="?perfil=informacoes_iniciais_pj" method="post">
-							<input type="submit" value="Voltar" class="btn btn-theme btn-lg btn-block"  value="<?php echo $idPf ?>">
+							<input type="submit" value="Voltar" class="btn btn-theme btn-lg btn-block"  value="<?php echo $idPj ?>">
 						</form>
 					</div>
 					<div class="col-md-offset-4 col-md-2">
 						<form class="form-horizontal" role="form" action="?perfil=projeto" method="post">
-							<input type="submit" value="Avançar" class="btn btn-theme btn-lg btn-block"  value="<?php echo $idPf ?>">
+							<input type="submit" value="Avançar" class="btn btn-theme btn-lg btn-block"  value="<?php echo $idPj ?>">
 						</form>
 					</div>
 				</div>
