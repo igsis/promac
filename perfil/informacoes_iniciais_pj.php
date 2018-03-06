@@ -18,7 +18,14 @@ if(isset($_POST['atualizarJuridica']))
 	$CEP = $_POST['CEP'];
 	$Numero = $_POST['Numero'];
 	$Complemento = $_POST['Complemento'];
-	$cooperativa = $_POST['cooperativa'];
+	if(isset($_POST['cooperativa']))
+	{
+		$cooperativa = $_POST['cooperativa'];
+	}
+	else
+	{
+		$cooperativa = 0;
+	}
 
 	$sql_atualiza_pj = "UPDATE pessoa_juridica SET
 	`razaoSocial` = '$razaoSocial',

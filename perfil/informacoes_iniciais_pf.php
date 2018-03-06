@@ -18,7 +18,14 @@ if(isset($_POST['atualizarFisica']))
 	$CEP = $_POST['CEP'];
 	$Numero = $_POST['Numero'];
 	$Complemento = $_POST['Complemento'];
-	$cooperado = $_POST['cooperado'];
+	if(isset($_POST['cooperado']))
+	{
+		$cooperado = $_POST['cooperado'];
+	}
+	else
+	{
+		$cooperado = 0;
+	}
 
 	$sql_atualiza_pf = "UPDATE pessoa_fisica SET
 	`nome` = '$nome',
