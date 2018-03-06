@@ -28,17 +28,16 @@ if(isset($_POST['cadastraRepresentante']))
 	}
 	else
 	{
-		$sql_insere_rep1 = "INSERT INTO representante_legal (nome, rg, cpf, telefone, celular, email, logradouro, bairro, cidade, estado, cep, numero, complemento) VALUES ('$nome', '$rg', '$cpf', '$telefone', '$celular', '$email', '$Endereco', '$Bairro', '$Cidade', '$Estado', '$CEP', '$Número', '$Complemento') ";
+		$sql_insere_rep1 = "INSERT INTO representante_legal (nome, rg, cpf, telefone, celular, email, logradouro, bairro, cidade, estado, cep, numero, complemento) VALUES ('$nome', '$rg', '$cpf', '$telefone', '$celular', '$email', '$Endereco', '$Bairro', '$Cidade', '$Estado', '$CEP', '$Numero', '$Complemento') ";
 
 		if(mysqli_query($con,$sql_insere_rep1))
 		{
-			$mensagem .= "<font color='#01DF3A'><strong>Cadastrado com sucesso!</strong></font>";
+			$mensagem = "<font color='#01DF3A'><strong>Cadastrado com sucesso!</strong></font><br/>";
 			$idrep1 = recuperaUltimo("representante_legal");
 			$sql_representante1_empresa = "UPDATE pessoa_juridica SET idRepresentanteLegal = '$idrep1' WHERE idPj = '$idPj'";
-			$query_representante1_empresa = mysqli_query($con,$sql_representante1_empresa);
-			if(mysqli_query($con,$sql_insere_rep1))
+			if(mysqli_query($con,$sql_representante1_empresa))
 			{
-				$mensagem = "<font color='#01DF3A'><strong>Representante inserido com sucesso na empresa!</strong></font>";
+				$mensagem .= "<font color='#01DF3A'><strong>Representante inserido com sucesso na empresa!</strong></font>";
 				gravarLog($sql_representante1_empresa);
 			}
 			else
@@ -98,10 +97,17 @@ if(isset($_POST['editaRepresentante']))
 
 		if(mysqli_query($con,$sql_atualiza_rep1))
 		{
-			$mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
+			$mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font><br/>";
 			$sql_representante1_empresa = "UPDATE pessoa_juridica SET idRepresentanteLegal = '$idrep1' WHERE idPj = '$idPj'";
-			$query_representante1_empresa = mysqli_query($con,$sql_representante1_empresa);
-			gravarLog($sql_atualiza_rep1);
+			if(mysqli_query($con,$sql_representante1_empresa))
+			{
+				$mensagem .= "<font color='#01DF3A'><strong>Representante inserido com sucesso na empresa!</strong></font>";
+				gravarLog($sql_representante1_empresa);
+			}
+			else
+			{
+				$mensagem = "<font color='#FF0000'><strong>Erro ao inserir o representante na empresa! Tente novamente.</strong></font>";
+			}
 		}
 		else
 		{
