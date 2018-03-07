@@ -25,7 +25,7 @@
 }
 
 .breadcrumbs .breadcrumb li a {
-  background:#4a6f22;
+  background:#5b6533;
   color: #FFFFFF;
   padding: 3px 7px;
 }
@@ -36,7 +36,7 @@
   width: auto;
   border-width: 8px;
   border-style: solid;
-  border-color:transparent transparent transparent #4a6f22;
+  border-color:transparent transparent transparent #5b6533;
   position: absolute;
   top: 11px;
   left:48px;
@@ -54,7 +54,7 @@
 
 
 #list_items .list_info .list_menu {
-	background: #4a6f22;
+	background: #5b6533;
 	color: #fff;
 	font-size: 16px;
 	font-family: 'Open Sans', sans-serif;
@@ -113,7 +113,7 @@ table td {
 
 
 #list_items .list_info .list_total_price {
-  color: #4a6f22;
+  color: #5b6533;
   font-size: 24px;
 }
 
@@ -160,7 +160,7 @@ table td {
 }
 
 .list_delete a:hover {
-  background:#4a6f22
+  background:#5b6533
 }
 
 
@@ -265,7 +265,7 @@ table td {
 }
 
 .update, .check_out {
-  background: #4a6f22;
+  background: #5b6533;
   border-radius: 0;
   color: #FFFFFF;
   margin-top: 18px;

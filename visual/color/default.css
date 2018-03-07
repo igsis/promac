@@ -1,39 +1,39 @@
 a, a:hover{
-	color: #4a6f22;
+	color: #5b6533;
 }
 .navbar-default{
-	background: #4a6f22;
+	background: #5b6533;
 }
 
 .form-control:focus {
-  border-color: #4a6f22;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 2px #4a6f22;
-          box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 2px #4a6f22;
+  border-color: #5b6533;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 2px #5b6533;
+          box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 2px #5b6533;
 }
 
 .service .carousel-indicators .active {
-	background: #4a6f22;
+	background: #5b6533;
 }
 
 .btn-theme {
-	background: #4a6f22;
+	background: #5b6533;
 }
 
 .lb-album li > a span{
-	background: #4a6f22;
-	background: -moz-radial-gradient(center, ellipse cover, rgba(255,255,255,0.56) 0%, #4a6f22 100%);
-	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(255,255,255,0.56)), color-stop(100%,#4a6f22));
-	background: -webkit-radial-gradient(center, ellipse cover, rgba(255,255,255,0.56) 0%,#4a6f22 100%);
-	background: -o-radial-gradient(center, ellipse cover, rgba(255,255,255,0.56) 0%,#4a6f22 100%);
-	background: -ms-radial-gradient(center, ellipse cover, rgba(255,255,255,0.56) 0%,#4a6f22 100%);
-	background: radial-gradient(center, ellipse cover, rgba(255,255,255,0.56) 0%,#4a6f22 100%);
+	background: #5b6533;
+	background: -moz-radial-gradient(center, ellipse cover, rgba(255,255,255,0.56) 0%, #5b6533 100%);
+	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(255,255,255,0.56)), color-stop(100%,#5b6533));
+	background: -webkit-radial-gradient(center, ellipse cover, rgba(255,255,255,0.56) 0%,#5b6533 100%);
+	background: -o-radial-gradient(center, ellipse cover, rgba(255,255,255,0.56) 0%,#5b6533 100%);
+	background: -ms-radial-gradient(center, ellipse cover, rgba(255,255,255,0.56) 0%,#5b6533 100%);
+	background: radial-gradient(center, ellipse cover, rgba(255,255,255,0.56) 0%,#5b6533 100%);
 }
 .lb-overlay{
-	background: #4a6f22;
-	background: -moz-radial-gradient(center, ellipse cover, rgba(255,255,255,0.56) 0%, #4a6f22 100%);
-	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(255,255,255,0.56)), color-stop(100%,#4a6f22));
-	background: -webkit-radial-gradient(center, ellipse cover, rgba(255,255,255,0.56) 0%,#4a6f22 100%);
-	background: -o-radial-gradient(center, ellipse cover, rgba(255,255,255,0.56) 0%,#4a6f22 100%);
-	background: -ms-radial-gradient(center, ellipse cover, rgba(255,255,255,0.56) 0%,#4a6f22 100%);
-	background: radial-gradient(center, ellipse cover, rgba(255,255,255,0.56) 0%,#4a6f22 100%);
+	background: #5b6533;
+	background: -moz-radial-gradient(center, ellipse cover, rgba(255,255,255,0.56) 0%, #5b6533 100%);
+	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(255,255,255,0.56)), color-stop(100%,#5b6533));
+	background: -webkit-radial-gradient(center, ellipse cover, rgba(255,255,255,0.56) 0%,#5b6533 100%);
+	background: -o-radial-gradient(center, ellipse cover, rgba(255,255,255,0.56) 0%,#5b6533 100%);
+	background: -ms-radial-gradient(center, ellipse cover, rgba(255,255,255,0.56) 0%,#5b6533 100%);
+	background: radial-gradient(center, ellipse cover, rgba(255,255,255,0.56) 0%,#5b6533 100%);
 }
