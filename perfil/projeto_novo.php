@@ -97,7 +97,7 @@ if(isset($_POST['insereAtuacao']))
 					</form>
 				<?php
 				}
-				elseif($_SESSION['tipoPessoa'] == 1 && $cooperado = 1) //Pessoa Física Cooperado
+				elseif($_SESSION['tipoPessoa'] == 1 && $cooperado == 1) //Pessoa Física Cooperado
 				{
 					if(!isset($_SESSION['idProjeto']))
 					{
@@ -105,7 +105,7 @@ if(isset($_POST['insereAtuacao']))
 						<div class="form-group">
 							<form method="POST" action="?perfil=projeto_novo" class="form-horizontal" role="form">
 								<div class="col-md-offset-2 col-md-5">
-									<label>Área de atuação *</label><br/><?php var_dump($pf) ?>
+									<label>Área de atuação *</label><br/>
 									<select class="form-control" name="idAreaAtuacao" >
 										<option value="1"></option>
 										<?php echo geraOpcao("area_atuacao","") ?>
@@ -143,13 +143,13 @@ if(isset($_POST['insereAtuacao']))
 				}
 				else
 				{
-					if($_SESSION['tipoPessoa'] == 1 && $cooperado = 0 && !isset($_SESSION['idProjeto']))
+					if($_SESSION['tipoPessoa'] == 1 && $cooperado == 0 && !isset($_SESSION['idProjeto']))
 					{
 				?>
 						<div class="form-group">
 							<form method="POST" action="?perfil=projeto_novo" class="form-horizontal" role="form">
 								<div class="col-md-offset-2 col-md-5">
-									<label>Área de atuação ****</label><br/><?php echo $cooperado ?>
+									<label>Área de atuação *</label><br/>
 									<select class="form-control" name="idAreaAtuacao" >
 										<option value="1"></option>
 										<?php echo geraOpcao("area_atuacao","") ?>
