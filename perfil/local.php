@@ -1,36 +1,7 @@
 <?php
 $con = bancoMysqli();
 $idProjeto = $_SESSION['idProjeto'];
-/*
 
-if(isset($_POST['apagar']))
-{
-	$idEvento = $_POST['apagar'];
-	$sql_apaga = "UPDATE evento SET publicado = '0' WHERE id = '$idEvento'";
-	if(mysqli_query($con,$sql_apaga))
-	{
-		$mensagem = "<font color='#01DF3A'><strong>Evento apagado com sucesso!</strong></font>";
-		gravarLog($sql_apaga);
-	}
-	else
-	{
-		$mensagem = "<font color='#FF0000'><strong>Erro ao apagar evento! Tente novamente.</strong></font>";
-	}
-}
-
-$tipoPessoa = '2';
-
-if($tipoPessoa = 2)
-{
-	$idPj = $_SESSION['idUser'];
-	$pj = recuperaDados("pessoa_juridica","idPj",$idPj);
-}
-else
-{
-	$idPf = $_SESSION['idUser'];
-	$pf = recuperaDados("pessoa_fisica","idPf",$idPf);
-}
-*/
 ?>
 <section id="list_items" class="home-section bg-white">
 	<div class="container"><?php include '../perfil/includes/menu_interno_pf.php'; ?>
@@ -64,9 +35,9 @@ else
 							<table class='table table-condensed'>
 								<thead>
 									<tr class='list_menu'>
-										<td width='10%'>Zona</td>
 										<td>Local</td>
 										<td>Público estimado</td>
+										<td>Zona</td>
 										<td width='10%'></td>
 										<td width='10%'></td>
 									</tr>
@@ -75,21 +46,19 @@ else
 								while($campo = mysqli_fetch_array($query))
 								{
 									echo "<tr>";
-									echo "<td class='list_description'>".$campo['id']."</td>";
-									echo "<td class='list_description'>".$campo['nomeEvento']."</td>";
-									echo "<td class='list_description'>".retornaTipo($campo['idTipoEvento'])."</td>";
-									echo "<td class='list_description'>".exibirDataHoraBr($campo['dataCadastro'])."</td>";
-									echo "S
-										<td class='list_description'>
+									echo "<td class='list_description'>".$campo['local']."</td>";
+									echo "<td class='list_description'>".$campo['estimativaPublico']."</td>";
+									echo "<td class='list_description'>".retornaTipo($campo['idZona'])."</td>";
+									echo "<td class='list_description'>
 											<form method='POST' action='?perfil=local_edicao'>
-												<input type='hidden' name='editar' value='".$campo['id']."' />
+												<input type='hidden' name='editar' value='".$campo['idLocal']."' />
 												<input type ='submit' class='btn btn-theme btn-block' value='carregar'>
 											</form>
 										</td>";
 									echo "
 											<td class='list_description'>
 												<form method='POST' action='?perfil=local'>
-													<input type='hidden' name='apagar' value='".$campo['id']."' />
+													<input type='hidden' name='apagar' value='".$campo['idLocal']."' />
 													<input type ='submit' class='btn btn-theme  btn-block' value='apagar'>
 												</form>
 											</td>";
