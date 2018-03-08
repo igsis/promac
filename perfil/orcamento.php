@@ -11,7 +11,7 @@ if(isset($_POST['insereOrcamento']))
 	$idUnidadeMedida = $_POST['idUnidadeMedida'];
 	$quantidadeUnidade = $_POST['quantidadeUnidade'];
 	$valorUnitario = $_POST['valorUnitario'];
-	$valorTotal = $valorUnitario * $quantidadeUnidade
+	$valorTotal = $valorUnitario * $quantidadeUnidade;
 	$sql_insere = "INSERT INTO `orcamento`(`idProjeto`, `idEtapa`, `descricao`, `quantidade`, `idUnidadeMedida`, `quantidadeUnidade`, `valorUnitario`, `valorTotal`) VALUES ('$idProjeto', '$idEtapa', '$quantidade', '$idUnidadeMedida', '$quantidadeUnidade', '$valorUnitario', '$valorTotal')";
 	if(mysqli_query($con,$sql_insere))
 	{
@@ -48,7 +48,7 @@ if(isset($_POST['insereOrcamento']))
 				<div class="table-responsive list_info">
 				<?php
 					$sql = "SELECT * FROM orcamento
-							WHERE publicado > 0 AND idUsuario ='$idUser'
+							WHERE publicado > 0 AND idProjeto ='$idProjeto'
 							ORDER BY id DESC";
 					$query = mysqli_query($con,$sql);
 					$num = mysqli_num_rows($query);
@@ -58,11 +58,13 @@ if(isset($_POST['insereOrcamento']))
 							<table class='table table-condensed'>
 								<thead>
 									<tr class='list_menu'>
-										<td width='10%'>ID evento</td>
-										<td>Nome do evento</td>
-										<td>Tipo de evento</td>
-										<td>Data cadastro</td>
-										<td>Enviado</td>
+										<td width='10%'>Etapa</td>
+										<td>Descrição</td>
+										<td>Quantidade</td>
+										<td>Unidade de Medida</td>
+										<td>Quantidade Unidade</td>
+										<td>Valor Unitário</td>
+										<td>Valor Total</td>
 										<td width='10%'></td>
 										<td width='10%'></td>
 									</tr>
@@ -71,35 +73,25 @@ if(isset($_POST['insereOrcamento']))
 								while($campo = mysqli_fetch_array($query))
 								{
 									echo "<tr>";
-									echo "<td class='list_description'>".$campo['id']."</td>";
-									echo "<td class='list_description'>".$campo['nomeEvento']."</td>";
-									echo "<td class='list_description'>".retornaTipo($campo['idTipoEvento'])."</td>";
-									echo "<td class='list_description'>".exibirDataHoraBr($campo['dataCadastro'])."</td>";
-									if($campo['publicado'] == 2)
-									{
-										echo "<td class='list_description'>Sim</td>";
-									}
-									else
-									{
-										echo "<td class='list_description'>Não</td>";
-									}
-									echo "
-										<td class='list_description'>
+									echo "<td class='list_description'>".$campo['idEtapa']."</td>";
+									echo "<td class='list_description'>".$campo['descricao']."</td>";
+									echo "<td class='list_description'>".$campo['quantidade']."</td>";
+									echo "<td class='list_description'>".$campo['idUnidadeMedida']."</td>";
+									echo "<td class='list_description'>".$campo['quantidadeMedida']."</td>";
+									echo "<td class='list_description'>".dinheiroParaBr($campo['valorUnitario'])."</td>";
+									echo "<td class='list_description'>".dinheiroParaBr($campo['valorTotal'])."</td>";
+									echo "<td class='list_description'>
 											<form method='POST' action='?perfil=evento_edicao'>
-												<input type='hidden' name='carregar' value='".$campo['id']."' />
+												<input type='hidden' name='carregar' value='".$campo['idOrcamento']."' />
 												<input type ='submit' class='btn btn-theme btn-block' value='carregar'>
 											</form>
 										</td>";
-									if($campo['publicado'] == 1)
-									{
-										echo "
-											<td class='list_description'>
-												<form method='POST' action='?perfil=evento'>
-													<input type='hidden' name='apagar' value='".$campo['id']."' />
-													<input type ='submit' class='btn btn-theme  btn-block' value='apagar'>
-												</form>
-											</td>";
-									}
+									echo "<td class='list_description'>
+											<form method='POST' action='?perfil=evento'>
+												<input type='hidden' name='apagar' value='".$campo['idOrcamento']."' />
+												<input type ='submit' class='btn btn-theme  btn-block' value='apagar'>
+											</form>
+										</td>";
 									echo "</tr>";
 								}
 								echo "
