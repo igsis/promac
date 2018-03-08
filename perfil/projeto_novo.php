@@ -51,7 +51,7 @@ $idPf= $_SESSION['idUser'];
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<label>Resumo do projeto*</label>
-							<textarea name="resumoProjeto" class="form-control" rows="10" maxlength="1"></textarea>
+							<textarea name="resumoProjeto" class="form-control" rows="10" maxlength="500"></textarea>
 						</div>
 					</div>
 
@@ -59,7 +59,7 @@ $idPf= $_SESSION['idUser'];
 						<div class="col-md-offset-2 col-md-8">
 							<label>Currículo do proponente*</label>
 							<p>Experiências na área, parcerias anteriores</p>
-							<textarea name="curriculo" class="form-control" rows="10" maxlength="10000"></textarea>
+							<textarea name="curriculo" class="form-control" rows="10" maxlength="25000"></textarea>
 						</div>
 					</div>
 
@@ -92,6 +92,34 @@ $idPf= $_SESSION['idUser'];
 							<label>Metodologia*</label>
 							<p>Parâmetros a serem utilizados para aferição do cumprimento das metas.</p>
 							<textarea name="metodologia" class="form-control" rows="10" maxlength="10000"></textarea>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8">
+							<label>Local de realização*</label>
+							<p>Fazer botão.</p>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8">
+							<label>Público alvo*</label>
+							<textarea name="publicoAlvo" class="form-control" rows="10"></textarea>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8">
+							<label>Plano de divulgação*</label>
+							<textarea name="planoDivulgacao" class="form-control" rows="10" maxlength="15000"></textarea>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8">
+							<label>Ficha técnica*</label>
+							<p>Fazer botão.</p>
 						</div>
 					</div>
 
