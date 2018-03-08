@@ -47,12 +47,12 @@ if ($pj['idRepresentanteLegal'] == 0) // Não possui representante legal cadastr
 				<div class="col-md-offset-1 col-md-10">
 					<form method="POST" action="?perfil=representante_pj_resultado_busca" class="form-horizontal" role="form">
 						<div class="form-group">
-								<div class="col-md-offset-4 col-md-2">
-									<input type="text" name="busca" class="form-control" id="cpf" >
-								</div>
-								<div class="col-md-2">
-									<input type="submit" name="pesquisar" class="btn btn-theme btn-md btn-block" value="Pesquisar">
-								</div>
+							<div class="col-md-offset-4 col-md-2">
+								<input type="text" name="busca" class="form-control" id="cpf" >
+							</div>
+							<div class="col-md-2">
+								<input type="submit" name="pesquisar" class="btn btn-theme btn-md btn-block" value="Pesquisar">
+							</div>
 						</div>
 					</form>
 				</div>
