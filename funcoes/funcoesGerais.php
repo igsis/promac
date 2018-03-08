@@ -26,8 +26,8 @@ function autenticaloginpf($login, $senha)
 				$_SESSION['login'] = $user['cpf'];
 				$_SESSION['nome'] = $user['nome'];
 				$_SESSION['idUser'] = $user['idPf'];
+				$_SESSION['tipoPessoa'] = '1';
 				$log = "Fez login.";
-				//gravarLog($log);
 				header("Location: visual/index_pf.php");
 			}
 			else
@@ -67,8 +67,8 @@ function autenticaloginpj($login, $senha)
 				$_SESSION['login'] = $user['cnpj'];
 				$_SESSION['nome'] = $user['razaoSocial'];
 				$_SESSION['idUser'] = $user['idPj'];
+				$_SESSION['tipoPessoa'] = '2';
 				$log = "Fez login.";
-				//gravarLog($log);
 				header("Location: visual/index_pj.php");
 			}
 			else
