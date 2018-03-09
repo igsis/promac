@@ -8,12 +8,14 @@ if(isset($_POST['insere']))
 	$valorIncentivo = dinheiroDeBr($_POST['valorIncentivo']);
 	$valorFinanciamento = dinheiroDeBr($_POST['valorFinanciamento']);
 	$idRenunciaFiscal = $_POST['idRenunciaFiscal'];
+	$exposicaoMarca = $_POST['exposicaoMarca'];
 
 	$sql_insere = "UPDATE projeto SET
 		valorProjeto = '$valorProjeto',
 		valorIncentivo = '$valorIncentivo',
 		valorFinanciamento = '$valorFinanciamento',
-		idRenunciaFiscal = '$idRenunciaFiscal'
+		idRenunciaFiscal = '$idRenunciaFiscal',
+		exposicaoMarca = '$exposicaoMarca'
 		WHERE idProjeto = '$idProjeto'";
 	if(mysqli_query($con,$sql_insere))
 	{
@@ -61,7 +63,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 						</div>
 						<div class="col-md-2">
 							<label>Valor de outros financiamentos</label>
-							<input type="text" name="valorFinanciamento" class="form-control" 	value="<?php echo dinheiroParaBr($projeto['valorFinanciamento']) ?>" />
+							<input type="text" name="valorFinanciamento" class="form-control" value="<?php echo dinheiroParaBr($projeto['valorFinanciamento']) ?>" />
 						</div>
 					</div>
 
@@ -72,6 +74,13 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 								<option value="0"></option>
 								<?php echo geraOpcao("renuncia_fiscal","") ?>
 							</select>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8">
+							<label>Descrição da exposição da marca*</label>
+							<textarea name="exposicaoMarca" class="form-control" rows="10" maxlength="5000"><?php echo $projeto['exposicaoMarca'] ?></textarea>
 						</div>
 					</div>
 
