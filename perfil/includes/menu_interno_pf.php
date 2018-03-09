@@ -9,8 +9,8 @@
 			if(isset($_SESSION['idProjeto']))
 			{
 			?>
-				| <a href="?perfil=evento_edicao">Evento</a>
-				| <a href="?perfil=finalizar">Finalizar</a>
+				| <a href="?perfil=projeto_novo_pf">Projeto Novo</a>
+				| <a href="?perfil=projeto_2">Projeto 2</a>
 				| <a href="?perfil=informacoes_administrativas_pf">Informações Administrativas</a>
 			<?php
 			}
