@@ -67,7 +67,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
-							<label>Enquadramento da renúncia fiscal *</label> <button class='btn btn-theme' type='button' data-toggle='modal' data-target='#infoRenunciaFiscal'><i class="fas fa-info"></i></button>
+							<label>Enquadramento da renúncia fiscal *</label> <button class='btn btn-default' type='button' data-toggle='modal' data-target='#infoRenunciaFiscal' style="border-radius: 30px;"><i class="fa fa-info-circle"></i></button>
 							<select class="form-control" name="idRenunciaFiscal" >
 								<option value="0"></option>
 								<?php echo geraOpcao("renuncia_fiscal","") ?>
@@ -101,54 +101,13 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 						<div class="modal-body" style="text-align: left;">
 							<div role="tabpanel">
 								<ul class="nav nav-tabs">
-	        						<li class="nav active"><a href="#artigo" data-toggle="tab">Artigo</a></li>
+	        						<li class="nav active"><a href="#tabela" data-toggle="tab">Tabela para Consulta</a></li>
+	        						<li class="nav"><a href="#artigo" data-toggle="tab">Artigo</a></li>
 	        						<li class="nav"><a href="#informacoes" data-toggle="tab">Informações Importantes</a></li>
-	        						<li class="nav"><a href="#tabela" data-toggle="tab">Tabela para Consulta</a></li>
 	    						</ul>
 	    						<div class="tab-content">
-	    						<!-- ARTIGO -->
-		    						<div role="tabpanel" class="tab-pane fade in active" id="artigo">
-		        							<br>
-		        							<ul class="list-group">
-												<li class="list-group-item list-group-item-success"><b>100% (cem por cento) de renúncia fiscal</b></li>
-												<li class="list-group-item">Os projetos que obtiverem pelo menos 9 (nove) pontos e os que somarem 8 (oite) pontos nas categorias "valor do ingresso" e "exposição da marca";</li>
-											</ul>
-											<ul class="list-group">
-												<li class="list-group-item list-group-item-success"><b>80% (oitenta por cento) de renúncia fiscal</b></li>
-												<li class="list-group-item">Os projetos que obtiverem 7 (sete) e 8 (oite) pontos;</li>
-											</ul>
-											<ul class="list-group">
-												<li class="list-group-item list-group-item-success"><b>50% (cinquenta por cento) de renúncia fiscal</b></li>
-												<li class="list-group-item">Os projetos que obtiverem 5 (cinco) e 6 (seis) pontos;</li>
-											</ul>
-											<ul class="list-group">
-												<li class="list-group-item list-group-item-success"><b>20% (cinquenta por cento) de renúncia fiscal</b></li>
-												<li class="list-group-item">Os projetos que obtiverem 5 (cinco) e 6 (seis) pontos;</li>
-											</ul>
-											<a class="btn btn-success btnNext" >Próximo</a>
-									</div>
-
-									<!-- INFORMAÇÕES IMPORTANTES -->
-									<div role="tabpanel" class="tab-pane fade" id="informacoes">
-	        							<br>
-	        							<div class="well">
-	        								Os projetos de Plano Anual de Atividades não serão avaliados em função do orçamento integral do projeto e já obterão 4 (quatro) pontos iniciais.
-	        							</div>
-	        							<div class="well">
-	        								Terão direita a 100% (cem por cento) de renúncia fiscal as doações para o FEPAC.
-	        							</div>
-										<div class="well">
-											As doações para o FEPAC não implicarão divulgação ou exposição da marca do Contribuinte Incentivador.
-										</div>
-										<div class="well">
-											É vedado o uso de recursos provenientes dos mecanismos previstos neste decreto em projetos que se caracterizem exclusivamente como peças promocionais e institucionais de empresas patrocinadoras.
-										</div>
-        								<a class="btn btn-success btnPrevious" >Anterior</a>
-										<a class="btn btn-success btnNext" >Próximo</a>
-		        					</div>
-
-		    						<!-- TABELA -->
-		    						<div role="tabpanel" class="tab-pane fade" id="tabela">
+	    							<!-- TABELA -->
+		    						<div role="tabpanel" class="tab-pane fade in active" id="tabela">
 	        							<br>
 	        							<table class="table table-bordered">
 		        							<thead>
@@ -184,13 +143,53 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 		        								</tr>
 		        							</tbody>
 	        							</table>
-	        							<a class="btn btn-success btnPrevious" >Anterior</a>
+	        							<a class="btn btn-success btnNext" >Próximo</a>
+		        					</div>
+	    						<!-- ARTIGO -->
+		    						<div role="tabpanel" class="tab-pane fade" id="artigo">
+		        							<br>
+		        							<ul class="list-group">
+												<li class="list-group-item list-group-item-success"><b>100% (cem por cento) de renúncia fiscal</b></li>
+												<li class="list-group-item">Os projetos que obtiverem pelo menos 9 (nove) pontos e os que somarem 8 (oite) pontos nas categorias "valor do ingresso" e "exposição da marca";</li>
+											</ul>
+											<ul class="list-group">
+												<li class="list-group-item list-group-item-success"><b>80% (oitenta por cento) de renúncia fiscal</b></li>
+												<li class="list-group-item">Os projetos que obtiverem 7 (sete) e 8 (oite) pontos;</li>
+											</ul>
+											<ul class="list-group">
+												<li class="list-group-item list-group-item-success"><b>50% (cinquenta por cento) de renúncia fiscal</b></li>
+												<li class="list-group-item">Os projetos que obtiverem 5 (cinco) e 6 (seis) pontos;</li>
+											</ul>
+											<ul class="list-group">
+												<li class="list-group-item list-group-item-success"><b>20% (cinquenta por cento) de renúncia fiscal</b></li>
+												<li class="list-group-item">Os projetos que obtiverem 4 (quatro) ou menos pontos;</li>
+											</ul>
+											<a class="btn btn-success btnPrevious" >Anterior</a>
+											<a class="btn btn-success btnNext" >Próximo</a>
+									</div>
+
+									<!-- INFORMAÇÕES IMPORTANTES -->
+									<div role="tabpanel" class="tab-pane fade" id="informacoes">
+	        							<br>
+	        							<div class="well">
+	        								Os projetos de Plano Anual de Atividades não serão avaliados em função do orçamento integral do projeto e já obterão 4 (quatro) pontos iniciais.
+	        							</div>
+	        							<div class="well">
+	        								Terão direita a 100% (cem por cento) de renúncia fiscal as doações para o FEPAC.
+	        							</div>
+										<div class="well">
+											As doações para o FEPAC não implicarão divulgação ou exposição da marca do Contribuinte Incentivador.
+										</div>
+										<div class="well">
+											É vedado o uso de recursos provenientes dos mecanismos previstos neste decreto em projetos que se caracterizem exclusivamente como peças promocionais e institucionais de empresas patrocinadoras.
+										</div>
+        								<a class="btn btn-success btnPrevious" >Anterior</a>
 		        					</div>
 		        				</div>
 		        			</div>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+							<button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
 						</div>
 					</div>
 				</div>
