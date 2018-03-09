@@ -24,6 +24,7 @@ ini_set('session.gc_maxlifetime', 60*60); // 60 minutos
 		<link href="css/style.css" rel="stylesheet" media="screen">
 		<link href="color/default.css" rel="stylesheet" media="screen">
 		<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+		<link rel="stylesheet" href="css/font-awesome.min.css">
 		<?php include "../include/script.php"; ?>
     </head>
 	<body>
