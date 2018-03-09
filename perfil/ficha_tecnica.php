@@ -31,7 +31,7 @@ if(isset($_POST['editaFicha']))
 	`nome`= '$nome',
 	`cpf`= '$cpf',
 	`funcao`= '$funcao'
-	WHERE idFichaTecnica = 'idFichaTecnica'";
+	WHERE idFichaTecnica = '$idFichaTecnica'";
 	if(mysqli_query($con,$sql_edita_ficha))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso!</strong></font>";
