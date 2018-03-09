@@ -106,8 +106,6 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 		{
 			$idPf= $_SESSION['idUser'];
 			include '../perfil/includes/menu_interno_pf.php';
-			$pf = recuperaDados("pessoa_fisica","idPf",$idPf);
-			$cooperado = $pf['cooperado'];
 		}
 		else
 		{
