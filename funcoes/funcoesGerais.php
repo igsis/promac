@@ -46,6 +46,16 @@ function autenticaloginpf($login, $senha)
 	}
 }
 
+function verificaArquivosExistentesPF($idPessoa,$idDocumento)
+{
+	$con = bancoMysqli();
+	$verificacaoArquivo = "SELECT arquivo FROM upload_arquivo WHERE idPessoa = '$idPessoa' AND idListaDocumento = '$idDocumento' AND publicado = '1'";
+	$envio = mysqli_query($con, $verificacaoArquivo);
+	if (mysqli_num_rows($envio) > 0) {
+		return true;
+	}
+}
+
 function autenticaloginpj($login, $senha)
 {
 	$sql = "SELECT * FROM pessoa_juridica AS pj
@@ -387,7 +397,7 @@ function valorPorExtenso($valor=0)
 		$t = count($inteiro)-1-$i;
 		$r .= $r ? " ".($valor > 1 ? $plural[$t] : $singular[$t]) : "";
 		if ($valor == "000")$z++; elseif ($z > 0) $z--;
-		if (($t==1) && ($z>0) && ($inteiro[0] > 0)) $r .= (($z>1) ? " de " : "").$plural[$t]; 
+		if (($t==1) && ($z>0) && ($inteiro[0] > 0)) $r .= (($z>1) ? " de " : "").$plural[$t];
 		if ($r) $rt = $rt . ((($i > 0) && ($i <= $fim) && ($inteiro[0] > 0) && ($z < 1)) ? ( ($i < $fim) ? ", " : " e ") : " ") . $r;
 	}
 	return($rt ? $rt : "zero");

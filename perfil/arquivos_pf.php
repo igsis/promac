@@ -18,8 +18,8 @@ if(isset($_POST["enviar"]))
 	{
 		$y = $arq['idListaDocumento'];
 		$x = $arq['sigla'];
-		$nome_arquivo = $_FILES['arquivo']['name'][$x];
-		$f_size = $_FILES['arquivo']['size'][$x];
+		$nome_arquivo = isset($_FILES['arquivo']['name'][$x]) ? $_FILES['arquivo']['name'][$x] : null;
+		$f_size = isset($_FILES['arquivo']['size'][$x]) ? $_FILES['arquivo']['size'][$x] : null;
 
 		//Extensões permitidas
 		$ext = array("PDF","pdf");
@@ -49,6 +49,7 @@ if(isset($_POST["enviar"]))
 						{
 							$mensagem = "<font color='#01DF3A'><strong>Arquivo recebido com sucesso!</strong></font>";
 							gravarLog($sql_insere_arquivo);
+							echo '<script>window.location = "?perfil=arquivos_pf"</script>';
 						}
 						else
 						{
@@ -146,8 +147,19 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 									{
 								?>
 										<tr>
+											<?php
+											$doc = $arq['documento'];
+											$query = "SELECT idListaDocumento FROM lista_documento WHERE documento='$doc' AND publicado='1' AND idTipoUpload='1'";
+											$envio = $con->query($query);
+											$row = $envio->fetch_array(MYSQLI_ASSOC);
+
+											if(verificaArquivosExistentesPF($idPf,$row['idListaDocumento'])){
+												echo '<div class="alert alert-success">O arquivo ' . $doc . ' já foi enviado.</div>';
+											}
+											else{ ?>
 											<td class="list_description"><label><?php echo $arq['documento']?></label></td>
 											<td class="list_description"><input type='file' name='arquivo[<?php echo $arq['sigla']; ?>]'></td>
+											<?php } ?>
 										</tr>
 								<?php
 									}
