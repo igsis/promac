@@ -10,7 +10,18 @@
 			{
 			?>
 				| <a href="?perfil=projeto_novo_pf">Projeto Novo</a>
-				| <a href="?perfil=projeto_2">Projeto 2</a>
+				| <a href="?perfil=projeto_2">2</a>
+				| <a href="?perfil=projeto_3">3</a>
+				| <a href="?perfil=projeto_4">4</a>
+				| <a href="?perfil=projeto_5">5</a>
+				| <a href="?perfil=projeto_6">6</a>
+				| <a href="?perfil=local">7 Local</a>
+				| <a href="?perfil=projeto_8">8</a>
+				| <a href="?perfil=ficha_tecnica">9 Ficha Técnica</a>
+				| <a href="?perfil=cronograma">10 Cronograma</a>
+				| <a href="?perfil=orcamento">11 Orçamento</a>
+				| <a href="?perfil=anexos">12 PDF</a>
+				| <a href="?perfil=projeto_13">13 Link do Youtube</a>
 				| <a href="?perfil=informacoes_administrativas_pf">Informações Administrativas</a>
 			<?php
 			}
