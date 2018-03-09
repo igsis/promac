@@ -2,8 +2,8 @@
 $con = bancoMysqli();
 $idProjeto = $_SESSION['idProjeto'];
 
-$idLocaisRealizacao = $_POST['editarLocal'];
-$local = recuperaDados("locais_realizacao", "idLocaisRealizacao", $idLocaisRealizacao);
+$idFichaTecnica = $_POST['editaFicha'];
+$fichaTecnica = recuperaDados("ficha_tecnica", "idFichaTecnica", $idFichaTecnica);
 ?>
 <section id="list_items" class="home-section bg-white">
     <div class="container">
@@ -25,30 +25,27 @@ $local = recuperaDados("locais_realizacao", "idLocaisRealizacao", $idLocaisReali
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
-				<form method="POST" action="?perfil=local" class="form-horizontal" role="form">
+				<form method="POST" action="?perfil=ficha_tecnica" class="form-horizontal" role="form">
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-4">
-							<label>Local *</label><br/>
-							<input type="text" name="local" class="form-control" maxlength="100" value="<?php echo $local['local'] ?>">
+							<label>Nome *</label><br/>
+							<input type="text" name="nome" class="form-control" maxlength="150" value="<?php echo $fichaTecnica['nome'] ?>">
 						</div>
 
-						<div class="col-md-2"><label>Público Estimado *</label><br/>
-							<input type="text" name="estimativaPublico" class="form-control" value="<?php echo $local['estimativaPublico'] ?>">
+						<div class="col-md-2"><label>CPF *</label><br/>
+							<input type="text" name="cpf" id="cpf" class="form-control" value="<?php echo $fichaTecnica['cpf'] ?>">
 						</div>
 
 						<div class="col-md-2">
-							<label>Zona *</label>
-							<select class="form-control" name="idZona" >
-								<option value="1"></option>
-								<?php echo geraOpcao("zona","idZona") ?>
-							</select>
+							<label>Função *</label>
+							<input type="text" name="funcao" class="form-control" maxlength="50" value="<?php echo $fichaTecnica['funcao'] ?>">
 						</div>
 					</div>
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
-							<input type="submit" name="editaLocal" class="btn btn-theme btn-lg btn-block" value="Inserir">
+							<input type="submit" name="editaFicha" class="btn btn-theme btn-lg btn-block" value="Inserir">
 						</div>
 					</div>
 				</form>
