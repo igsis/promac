@@ -59,7 +59,7 @@ if(isset($_POST['apagaFicha']))
 
 ?>
 <section id="list_items" class="home-section bg-white">
-	<div class="container"
+	<div class="container">
 		<?php
     	if($_SESSION['tipoPessoa'] == 1)
 		{
