@@ -4,8 +4,8 @@ $idProjeto = $_SESSION['idProjeto'];
 
 if(isset($_POST['insere']))
 {
-	$inicioCronograma = $_POST['inicioCronograma'];
-	$fimCronograma = $_POST['fimCronograma'];
+	$inicioCronograma = exibirDataMysql($_POST['inicioCronograma']);
+	$fimCronograma = exibirDataMysql($_POST['fimCronograma']);
 
 	$sql_insere = "UPDATE projeto SET
 		inicioCronograma = '$inicioCronograma',
@@ -82,13 +82,13 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 							<label>Data Início</label>
 						</div>
 						<div class="col-md-2">
-							<input type="text" name="inicioCronograma" class="form-control" id="datepicker01" value="<?php echo $projeto['fimCronograma'] ?>" />
+							<input type="text" name="inicioCronograma" class="form-control" id="datepicker01" value="<?php echo exibirDataBr($projeto['inicioCronograma']) ?>" />
 						</div>
 						<div class="col-md-2" align="right">
 							<label>Data fim</label>
 						</div>
 						<div class="col-md-2">
-							<input type="text" name="fimCronograma" class="form-control" id="datepicker02" value="<?php echo $projeto['fimCronograma'] ?>" />
+							<input type="text" name="fimCronograma" class="form-control" id="datepicker02" value="<?php echo exibirDataBr($projeto['fimCronograma']) ?>" />
 						</div>
 					</div>
 
@@ -103,20 +103,32 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 					<div class="col-md-offset-2 col-md-8"><br/></div>
 				</div>
 
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
-						<form class="form-horizontal" role="form" action="?perfil=cronograma_novo" method="post">
-							<input type="submit" value="Inserir novo cronograma" class="btn btn-theme btn-lg btn-block">
-						</form>
-					</div>
-				</div>
-
-				<div class="table-responsive list_info">
 				<?php
-					if($projeto['idCronograma'] > 0)
-					{
-						$cronograma = recuperaDados("cronograma","idCronograma",$idCronograma);
-					?>
+				if($projeto['idCronograma'] == 0)
+				{
+				?>
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8">
+							<form class="form-horizontal" role="form" action="?perfil=cronograma_novo" method="post">
+								<input type="submit" value="Inserir novo cronograma" class="btn btn-theme btn-lg btn-block">
+							</form>
+						</div>
+					</div>
+				<?php
+				}
+				if($projeto['idCronograma'] > 0)
+				{
+					$cronograma = recuperaDados("cronograma","idCronograma",$projeto['idCronograma']);
+				?>
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8">
+							<form class="form-horizontal" role="form" action="?perfil=cronograma_edicao" method="post">
+								<input type="submit" value="Editar cronograma" class="btn btn-theme btn-md btn-block">
+							</form>
+						</div>
+					</div>
+
+					<div class="table-responsive list_info">
 						<table class='table table-condensed'>
 							<thead>
 								<tr class='list_menu'>
@@ -150,10 +162,10 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 								</tr>
 							</tbody>
 						</table>
-					<?php
-					}
-					?>
-				</div>
+					</div>
+				<?php
+				}
+				?>
 			</div>
 		</div>
 	</div>

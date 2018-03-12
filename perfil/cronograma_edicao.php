@@ -17,7 +17,7 @@ if(isset($_POST['editaCronograma']))
 	posProducao = '$posProducao',
 	prestacaoContas = '$prestacaoContas'
 	WHERE idCronograma = 'idCronograma'";
-	if(mysqli_query($con,$sql_edita_local))
+	if(mysqli_query($con,$sql_edita_cronograma))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso!</strong></font>";
 	}
@@ -26,8 +26,8 @@ if(isset($_POST['editaCronograma']))
 		$mensagem = "<font color='#FF0000'><strong>Erro ao gravar! Tente novamente.</strong></font>";
 	}
 }
-
-$cronograma = recuperaDados("cronograma","idCronograma",$idCronograma);
+$projeto = recuperaDados("projeto","idProjeto",$idProjeto);
+$cronograma = recuperaDados("cronograma","idCronograma",$projeto['idCronograma']);
 ?>
 <section id="list_items" class="home-section bg-white">
     <div class="container">
@@ -48,7 +48,7 @@ $cronograma = recuperaDados("cronograma","idCronograma",$idCronograma);
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
-				<form method="POST" action="?perfil=cronogrma_edicao" class="form-horizontal" role="form">
+				<form method="POST" action="?perfil=cronograma_edicao" class="form-horizontal" role="form">
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-6">

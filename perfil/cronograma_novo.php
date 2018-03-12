@@ -23,7 +23,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
-				<form method="POST" action="?perfil=cronogrma" class="form-horizontal" role="form">
+				<form method="POST" action="?perfil=cronograma" class="form-horizontal" role="form">
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-6">
