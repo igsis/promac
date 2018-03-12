@@ -2,31 +2,66 @@
 $con = bancoMysqli();
 $idProjeto = $_SESSION['idProjeto'];
 
-
-if(isset($_POST['insereOrcamento']))
+if(isset($_POST['insereOrcamento']) || isset($_POST['editaOrcamento']))
 {
 	$idEtapa = $_POST['idEtapa'];
 	$descricao = $_POST['descricao'];
 	$quantidade = $_POST['quantidade'];
 	$idUnidadeMedida = $_POST['idUnidadeMedida'];
 	$quantidadeUnidade = $_POST['quantidadeUnidade'];
-	$valorUnitario = $_POST['valorUnitario'];
+	$valorUnitario = dinheiroDeBr($_POST['valorUnitario']);
 	$valorTotal = $valorUnitario * $quantidadeUnidade;
-	$sql_insere = "INSERT INTO `orcamento`(`idProjeto`, `idEtapa`, `descricao`, `quantidade`, `idUnidadeMedida`, `quantidadeUnidade`, `valorUnitario`, `valorTotal`) VALUES ('$idProjeto', '$idEtapa', '$quantidade', '$idUnidadeMedida', '$quantidadeUnidade', '$valorUnitario', '$valorTotal')";
+}
+
+if(isset($_POST['insereOrcamento']))
+{
+	$sql_insere = "INSERT INTO `orcamento`(`idProjeto`, `idEtapa`, `descricao`, `quantidade`, `idUnidadeMedida`, `quantidadeUnidade`, `valorUnitario`, `valorTotal`, `publicado`) VALUES ('$idProjeto', '$idEtapa', '$descricao', '$quantidade', '$idUnidadeMedida', '$quantidadeUnidade', '$valorUnitario', '$valorTotal', 1)";
 	if(mysqli_query($con,$sql_insere))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Inserido com sucesso!</strong></font>";
 	}
 	else
 	{
-		$mensagem = "<font color='#FF0000'><strong>Erro ao inserir! Tente novamente.</strong></font>";
+		$mensagem = "<font color='#FF0000'><strong>Erro ao inserir! Tente novamente.</strong></font>" .$sql_insere;
 	}
 }
 
-
+if(isset($_POST['editaOrcamento']))
+{
+	$idOrcamento = $_POST['editaOrcamento'];
+	$sql_edita = "UPDATE orcamento SET
+	idEtapa = '$idEtapa',
+	descricao = '$descricao',
+	quantidade = '$quantidade',
+	idUnidadeMedida = '$idUnidadeMedida',
+	quantidadeUnidade = '$quantidadeUnidade',
+	valorUnitario = '$valorUnitario',
+	valorTotal = '$valorTotal'
+	WHERE idOrcamento = '$idOrcamento'";
+	if(mysqli_query($con,$sql_edita))
+	{
+		$mensagem = "<font color='#01DF3A'><strong>Editado com sucesso!</strong></font>";
+	}
+	else
+	{
+		$mensagem = "<font color='#FF0000'><strong>Erro ao editar! Tente novamente.</strong></font>";
+	}
+}
 ?>
 <section id="list_items" class="home-section bg-white">
-	<div class="container"><?php include '../perfil/includes/menu_evento.php'; ?>
+	<div class="container">
+		<?php
+    	if($_SESSION['tipoPessoa'] == 1)
+		{
+			$idPf= $_SESSION['idUser'];
+			include '../perfil/includes/menu_interno_pf.php';
+		}
+		else
+		{
+			$idPj= $_SESSION['idUser'];
+			include '../perfil/includes/menu_interno_pj.php';
+		}
+    	?>
 		<div class="form-group">
 			<h4>Orçamento</h4>
 			<h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
@@ -36,7 +71,7 @@ if(isset($_POST['insereOrcamento']))
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
 						<form class="form-horizontal" role="form" action="?perfil=orcamento_novo" method="post">
-							<input type="submit" value="Inserir novo evento" class="btn btn-theme btn-lg btn-block">
+							<input type="submit" value="Inserir novo item" class="btn btn-theme btn-lg btn-block">
 						</form>
 					</div>
 				</div>
@@ -49,7 +84,7 @@ if(isset($_POST['insereOrcamento']))
 				<?php
 					$sql = "SELECT * FROM orcamento
 							WHERE publicado > 0 AND idProjeto ='$idProjeto'
-							ORDER BY id DESC";
+							ORDER BY idEtapa";
 					$query = mysqli_query($con,$sql);
 					$num = mysqli_num_rows($query);
 					if($num > 0)
@@ -77,17 +112,17 @@ if(isset($_POST['insereOrcamento']))
 									echo "<td class='list_description'>".$campo['descricao']."</td>";
 									echo "<td class='list_description'>".$campo['quantidade']."</td>";
 									echo "<td class='list_description'>".$campo['idUnidadeMedida']."</td>";
-									echo "<td class='list_description'>".$campo['quantidadeMedida']."</td>";
+									echo "<td class='list_description'>".$campo['quantidadeUnidade']."</td>";
 									echo "<td class='list_description'>".dinheiroParaBr($campo['valorUnitario'])."</td>";
 									echo "<td class='list_description'>".dinheiroParaBr($campo['valorTotal'])."</td>";
 									echo "<td class='list_description'>
-											<form method='POST' action='?perfil=evento_edicao'>
+											<form method='POST' action='?perfil=orcamento_edicao'>
 												<input type='hidden' name='carregar' value='".$campo['idOrcamento']."' />
 												<input type ='submit' class='btn btn-theme btn-block' value='carregar'>
 											</form>
 										</td>";
 									echo "<td class='list_description'>
-											<form method='POST' action='?perfil=evento'>
+											<form method='POST' action='?perfil=orcamento'>
 												<input type='hidden' name='apagar' value='".$campo['idOrcamento']."' />
 												<input type ='submit' class='btn btn-theme  btn-block' value='apagar'>
 											</form>

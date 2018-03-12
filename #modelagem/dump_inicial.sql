@@ -58,32 +58,12 @@ INSERT INTO `lista_documento` (`idListaDocumento`, `idTipoUpload`, `documento`, 
 (16, 2, 'Declaração [modelo para download]', 'de', 1),
 (17, 2, 'Declaração exclusiva para Organização Social com Termo de Colaboração a SMC [modelo para download]', 'deost', 1);
 
---
--- Extraindo dados da tabela `area_atuacao`
---
-
-INSERT INTO `area_atuacao` (`idArea`, `areaAtuacao`, `tipo`) VALUES
-(1, 'Artes Plásticas, Visuais e Design', NULL),
-(2, 'Bibliotecas, Arquivos, Centros Culturais e Espaços Culturais Independentes', 3),
-(3, 'Cinema e Séries de Televisão', 2),
-(4, 'Circo', 3),
-(5, 'Cultura Popular e Artesanato', 3),
-(6, 'Dança', 2),
-(7, 'Eventos Carnavalescos e Escolas de Samba', 2),
-(8, 'Hip-Hop', 3),
-(9, 'Literatura', 3),
-(10, 'Museu', 2),
-(11, 'Música', 3),
-(12, 'Ópera', 2),
-(13, 'Patrimônio Histórico e Artístico', 2),
-(14, 'Pesquisa e Documentação', 3),
-(15, 'Teatro', 2),
-(16, 'Vídeo e Fotografia', 3),
-(17, 'Bolsas de estudo para cursos de caráter cultural ou artístico, ministrados em instituições nacionais ou internacionais sem fins lucrativos.', 3),
-(18, 'Programas de rádio e de televisão com finalidade cultural, social e de prestação de serviços à comunidade.\r\n', 2),
-(19, 'Restauração e conservação de bens protegidos por órgão oficial de preservação.', 2),
-(20, 'Cultura Digital', 3),
-(21, 'Design de Moda', 3);
-COMMIT;
-
-
+-- Etapas --
+INSERT INTO `etapa` (`idEtapa`, `etapa`) VALUES 
+(NULL, 'Pré-Produção'), 
+(NULL, 'Produção'), 
+(NULL, 'Assessoria de Imprensa, Divulgação e Mídia'), 
+(NULL, 'Custos Administrativos'), 
+(NULL, 'Impostos, taxas, tarifas bancárias, contribuições e seguros'), 
+(NULL, 'Elaboração e Agenciamento'), 
+(NULL, 'Outros Financiamentos');

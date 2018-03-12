@@ -4,14 +4,26 @@ $idProjeto = $_SESSION['idProjeto'];
 ?>
 
 <section id="list_items" class="home-section bg-white">
-	<div class="container"><?php include 'includes/menu_interno_pj.php'; ?>
+	<div class="container">
+		<?php
+    	if($_SESSION['tipoPessoa'] == 1)
+		{
+			$idPf= $_SESSION['idUser'];
+			include '../perfil/includes/menu_interno_pf.php';
+		}
+		else
+		{
+			$idPj= $_SESSION['idUser'];
+			include '../perfil/includes/menu_interno_pj.php';
+		}
+    	?>
 		<div class="form-group">
 			<h4>Orçamento</h4>
 			<h5><?php if(isset($mensagem)){echo $mensagem;};?></h5>
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
-				<form class="form-horizontal" role="form" action="?perfil=#" method="post">
+				<form class="form-horizontal" role="form" action="?perfil=orcamento" method="post">
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
@@ -54,24 +66,6 @@ $idProjeto = $_SESSION['idProjeto'];
 						</div>
 					</div>
 				</form>
-
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8"><hr/><br/></div>
-				</div>
-
-				<!-- Botão para Voltar e Prosseguir -->
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-2">
-						<form class="form-horizontal" role="form" action="?perfil=endereco_pj" method="post">
-							<input type="submit" value="Voltar" class="btn btn-theme btn-lg btn-block"  value="<?php echo $idPj ?>">
-						</form>
-					</div>
-					<div class="col-md-offset-4 col-md-2">
-						<form class="form-horizontal" role="form" action="?perfil=arquivos_pj" method="post">
-							<input type="submit" value="Avançar" class="btn btn-theme btn-lg btn-block"  value="<?php echo $idPj ?>">
-						</form>
-					</div>
-				</div>
 
 			</div>
 		</div>
