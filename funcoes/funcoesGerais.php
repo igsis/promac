@@ -561,9 +561,6 @@ function verificaArquivosExistentes($idPessoa,$idDocumento)
 
 function listaArquivosPessoa($idPessoa,$tipoPessoa,$pagina)
 {
-	echo $idPessoa . "\n";
-	echo $tipoPessoa . "\n";
-	echo $pagina . "\n";
 	$con = bancoMysqli();
 	$sql = "SELECT *
 			FROM lista_documento as list
