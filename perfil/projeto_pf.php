@@ -100,10 +100,9 @@ if(isset($_POST['apagar']))
 									<thead>
 										<tr class='list_menu'>
 											<td width='10%'>ID projeto</td>
-											<td>Nome do evento</td>
-											<td>Tipo de evento</td>
-											<td>Data cadastro</td>
-											<td>Enviado</td>
+											<td>Descrição</td>
+											<td>Área de Atuação</td>
+											<td>Status</td>
 											<td width='10%'></td>
 											<td width='10%'></td>
 										</tr>
@@ -111,39 +110,29 @@ if(isset($_POST['apagar']))
 									<tbody>";
 									while($campo = mysqli_fetch_array($query))
 									{
+										$area = recuperaDados("area_atuacao","idArea",$campo['idAreaAtuacao']);
 										echo "<tr>";
 										echo "<td class='list_description'>".$campo['idProjeto']."</td>";
 										echo "<td class='list_description'>".$campo['descricao']."</td>";
-										echo "<td class='list_description'>".retornaTipo($campo['idAreaAtuacao'])."</td>";
-										echo "<td class='list_description'>".exibirDataHoraBr($campo['dataCadastro'])."</td>";
-										if($campo['publicado'] == 2)
-										{
-											echo "<td class='list_description'>Sim</td>";
-										}
-										else
-										{
-											echo "<td class='list_description'>Não</td>";
-										}
+										echo "<td class='list_description'>".$area['areaAtuacao']."</td>";
+										echo "<td class='list_description'> STATUS </td>";
 										echo "
 											<td class='list_description'>
-												<form method='POST' action='?perfil=evento_edicao'>
-													<input type='hidden' name='carregar' value='".$campo['id']."' />
+												<form method='POST' action='?perfil=projeto_edicao'>
+													<input type='hidden' name='carregar' value='".$campo['idProjeto']."' />
 													<input type ='submit' class='btn btn-theme btn-block' value='carregar'>
 												</form>
 											</td>";
-										if($campo['publicado'] == 1)
-										{
-											echo "
-												<td class='list_description'>
-													<form method='POST' action='?perfil=evento'>
-														<input type='hidden' name='apagar' value='".$campo['id']."' />
-														<input type ='submit' class='btn btn-theme  btn-block' value='apagar'>
-													</form>
-												</td>";
-										}
+										echo "
+											<td class='list_description'>
+												<form method='POST' action='?perfil=projeto'>
+													<input type='hidden' name='apagar' value='".$campo['idProjeto']."' />
+													<input type ='submit' class='btn btn-theme  btn-block' value='apagar'>
+												</form>
+											</td>";
 										echo "</tr>";
 									}
-									echo "
+							echo "
 								</tbody>
 								</table>";
 						}
