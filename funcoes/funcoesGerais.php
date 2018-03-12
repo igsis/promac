@@ -590,11 +590,12 @@ function listaArquivosPessoa($idPessoa,$tipoPessoa,$pagina)
 					echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>".$arquivo['arquivo']."</a></td>";
 					echo "
 						<td class='list_description'>
-							<form method='POST' action='?perfil=".$pagina."'>
+							<form id='apagarArq' method='POST' action='?perfil=".$pagina."'>
 								<input type='hidden' name='idPessoa' value='".$idPessoa."' />
 								<input type='hidden' name='tipoPessoa' value='".$tipoPessoa."' />
 								<input type='hidden' name='apagar' value='".$arquivo['idUploadArquivo']."' />
-								<input type ='submit' class='btn btn-theme  btn-block' value='apagar'></td>
+								<button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Excluir Arquivo?' data-message='Desejar realmente excluir o arquivo ".$arquivo['documento']."?'>Apagar
+								</button></td>
 							</form>";
 					echo "</tr>";
 				}

@@ -1,7 +1,6 @@
 <?php
 $con = bancoMysqli();
 $idProjeto = $_SESSION['idProjeto'];
-
 if(isset($_POST['insere']))
 {
 	$resumoProjeto = $_POST['resumoProjeto'];
