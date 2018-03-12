@@ -47,6 +47,21 @@ if(isset($_POST['editaOrcamento']))
 		$mensagem = "<font color='#FF0000'><strong>Erro ao editar! Tente novamente.</strong></font>";
 	}
 }
+
+if(isset($_POST['apagaOrcamento']))
+{
+	$idOrcamento = $_POST['apagaOrcamento'];
+	$sql_apaga = "UPDATE orcamento SET publicado = 0 WHERE idOrcamento = '$idOrcamento'";
+	if(mysqli_query($con,$sql_apaga))
+	{
+		$mensagem = "<font color='#01DF3A'><strong>Apagado com sucesso!</strong></font>";
+	}
+	else
+	{
+		$mensagem = "<font color='#FF0000'><strong>Erro ao apagar! Tente novamente.</strong></font>";
+	}
+}
+
 ?>
 <section id="list_items" class="home-section bg-white">
 	<div class="container">
@@ -68,6 +83,32 @@ if(isset($_POST['editaOrcamento']))
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-8" align="left">
+						<ul class='list-group'>
+							<li class='list-group-item list-group-item-success'>Resumo
+							<?php
+								for ($i = 1; $i <= 7; $i++)
+								{
+									$sql_etapa = "SELECT idEtapa, SUM(valorTotal) AS tot FROM orcamento
+										WHERE publicado > 0 AND idProjeto ='$idProjeto' AND idEtapa = '$i'
+										ORDER BY idOrcamento";
+									$query_etapa = mysqli_query($con,$sql_etapa);
+									$lista = mysqli_fetch_array($query_etapa);
+
+									$etapa = recuperaDados("etapa","idEtapa",$lista['idEtapa']);
+									echo "<li class='list-group-item'><strong>".$etapa['etapa'].":</strong> R$ ".dinheiroParaBr($lista['tot'])."</li>";
+								}
+							?>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-8"><br></div>
+				</div>
+
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
 						<form class="form-horizontal" role="form" action="?perfil=orcamento_novo" method="post">
@@ -93,12 +134,12 @@ if(isset($_POST['editaOrcamento']))
 							<table class='table table-condensed'>
 								<thead>
 									<tr class='list_menu'>
-										<td width='10%'>Etapa</td>
+										<td width='25%'>Etapa</td>
 										<td>Descrição</td>
-										<td>Quantidade</td>
-										<td>Unidade de Medida</td>
-										<td>Quantidade Unidade</td>
-										<td>Valor Unitário</td>
+										<td width='5%'>Qtde</td>
+										<td width='5%'>Unid. Med.</td>
+										<td width='5%'>Qtde Unid.</td>
+										<td>Valor Unit.</td>
 										<td>Valor Total</td>
 										<td width='10%'></td>
 										<td width='10%'></td>
@@ -107,8 +148,9 @@ if(isset($_POST['editaOrcamento']))
 								<tbody>";
 								while($campo = mysqli_fetch_array($query))
 								{
+									$etapa = recuperaDados("etapa","idEtapa",$campo['idEtapa']);
 									echo "<tr>";
-									echo "<td class='list_description'>".$campo['idEtapa']."</td>";
+									echo "<td class='list_description'>".$etapa['etapa']."</td>";
 									echo "<td class='list_description'>".$campo['descricao']."</td>";
 									echo "<td class='list_description'>".$campo['quantidade']."</td>";
 									echo "<td class='list_description'>".$campo['idUnidadeMedida']."</td>";
@@ -123,7 +165,7 @@ if(isset($_POST['editaOrcamento']))
 										</td>";
 									echo "<td class='list_description'>
 											<form method='POST' action='?perfil=orcamento'>
-												<input type='hidden' name='apagar' value='".$campo['idOrcamento']."' />
+												<input type='hidden' name='apagaOrcamento' value='".$campo['idOrcamento']."' />
 												<input type ='submit' class='btn btn-theme  btn-block' value='apagar'>
 											</form>
 										</td>";
