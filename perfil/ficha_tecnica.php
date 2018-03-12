@@ -8,16 +8,24 @@ if(isset($_POST['insereFicha']))
 	$cpf = $_POST['cpf'];
 	$funcao = $_POST['funcao'];
 
-	$sql_insere_nome = "INSERT INTO `ficha_tecnica`(`idProjeto`, `nome`, `cpf`, `funcao`, `publicado`) VALUES ('$idProjeto', '$nome', '$cpf', '$funcao', 1)";
+		$validacao = validaCPF($_POST['cpf']);
+		if($validacao == false)
+		{
+			echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=erro_login_projeto.php'>";
+		}
+		else
+		{
+			$sql_insere_nome = "INSERT INTO `ficha_tecnica`(`idProjeto`, `nome`, `cpf`, `funcao`, `publicado`) VALUES ('$idProjeto', '$nome', '$cpf', '$funcao', 1)";
 
-	if(mysqli_query($con,$sql_insere_nome))
-	{
-		$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso!</strong></font>";
-	}
-	else
-	{
-		$mensagem = "<font color='#FF0000'><strong>Erro ao gravar! Tente novamente.</strong></font>";
-	}
+			if(mysqli_query($con,$sql_insere_nome))
+			{
+				$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso!</strong></font>";
+			}
+			else
+			{
+				$mensagem = "<font color='#FF0000'><strong>Erro ao gravar! Tente novamente.</strong></font>";
+			}
+		}
 }
 
 if(isset($_POST['editaFicha']))

@@ -68,7 +68,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<label>Enquadramento da renúncia fiscal *</label> <button class='btn btn-default' type='button' data-toggle='modal' data-target='#infoRenunciaFiscal' style="border-radius: 30px;"><i class="fa fa-info-circle"></i></button>
-							<select class="form-control" name="idRenunciaFiscal" >
+							<select required class="form-control" name="idRenunciaFiscal">
 								<option value="0"></option>
 								<?php echo geraOpcao("renuncia_fiscal","") ?>
 							</select>
@@ -78,7 +78,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<label>Descrição da exposição da marca*</label>
-							<textarea name="exposicaoMarca" class="form-control" rows="10" maxlength="5000"><?php echo $projeto['exposicaoMarca'] ?></textarea>
+							<textarea name="exposicaoMarca" class="form-control" rows="10" maxlength="5000" required><?php echo $projeto['exposicaoMarca'] ?></textarea>
 						</div>
 					</div>
 
