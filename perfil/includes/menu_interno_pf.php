@@ -9,7 +9,6 @@
 			if(isset($_SESSION['idProjeto']))
 			{
 			?>
-				| <a href="?perfil=projeto_novo_pf">Projeto Novo</a>
 				| <a href="?perfil=projeto_2">2</a>
 				| <a href="?perfil=projeto_3">3</a>
 				| <a href="?perfil=projeto_4">4</a>
