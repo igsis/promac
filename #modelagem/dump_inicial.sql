@@ -58,12 +58,36 @@ INSERT INTO `lista_documento` (`idListaDocumento`, `idTipoUpload`, `documento`, 
 (16, 2, 'Declaração [modelo para download]', 'de', 1),
 (17, 2, 'Declaração exclusiva para Organização Social com Termo de Colaboração a SMC [modelo para download]', 'deost', 1);
 
--- Etapas --
-INSERT INTO `etapa` (`idEtapa`, `etapa`) VALUES 
-(NULL, 'Pré-Produção'), 
-(NULL, 'Produção'), 
-(NULL, 'Assessoria de Imprensa, Divulgação e Mídia'), 
-(NULL, 'Custos Administrativos'), 
-(NULL, 'Impostos, taxas, tarifas bancárias, contribuições e seguros'), 
-(NULL, 'Elaboração e Agenciamento'), 
-(NULL, 'Outros Financiamentos');
+--
+-- Extraindo dados da tabela `renuncia_fiscal`
+--
+
+INSERT INTO `renuncia_fiscal` (`idRenuncia`, `renunciaFiscal`) VALUES
+(1, '100%'),
+(2, '80%'),
+(3, '50%'),
+(4, '20%');
+
+--
+-- Extraindo dados da tabela `etapa`
+--
+
+INSERT INTO `etapa` (`idEtapa`, `etapa`) VALUES
+(1, 'Pré-Produção'),
+(2, 'Produção'),
+(3, 'Assessoria de Imprensa, Divulgação e Mídia'),
+(4, 'Custos Administrativos'),
+(5, 'Impostos, taxas, tarifas bancárias, contribuições e seguros'),
+(6, 'Elaboração e Agenciamento'),
+(7, 'Outros Financiamentos');
+
+--
+-- Extraindo dados da tabela `zona`
+--
+
+INSERT INTO `zona` (`idZona`, `zona`) VALUES
+(1, 'Norte'),
+(2, 'Sul'),
+(3, 'Centro'),
+(4, 'Leste'),
+(5, 'Oeste');
