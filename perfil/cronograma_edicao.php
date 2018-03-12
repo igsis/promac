@@ -2,6 +2,9 @@
 $con = bancoMysqli();
 $idProjeto = $_SESSION['idProjeto'];
 
+$projeto = recuperaDados("projeto","idProjeto",$idProjeto);
+$idCronograma = $projeto['idCronograma'];
+
 if(isset($_POST['editaCronograma']))
 {
 	$captacaoRecurso = $_POST['captacaoRecurso'];
@@ -16,7 +19,7 @@ if(isset($_POST['editaCronograma']))
 	producao = '$producao',
 	posProducao = '$posProducao',
 	prestacaoContas = '$prestacaoContas'
-	WHERE idCronograma = 'idCronograma'";
+	WHERE idCronograma = '$idCronograma'";
 	if(mysqli_query($con,$sql_edita_cronograma))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso!</strong></font>";
@@ -26,8 +29,8 @@ if(isset($_POST['editaCronograma']))
 		$mensagem = "<font color='#FF0000'><strong>Erro ao gravar! Tente novamente.</strong></font>";
 	}
 }
-$projeto = recuperaDados("projeto","idProjeto",$idProjeto);
-$cronograma = recuperaDados("cronograma","idCronograma",$projeto['idCronograma']);
+
+$cronograma = recuperaDados("cronograma","idCronograma",$idCronograma);
 ?>
 <section id="list_items" class="home-section bg-white">
     <div class="container">
@@ -45,6 +48,7 @@ $cronograma = recuperaDados("cronograma","idCronograma",$projeto['idCronograma']
     	?>
 		<div class="form-group">
 			<h4>Cronograma</h4>
+			<p><strong><?php if(isset($mensagem)){echo $mensagem;} ?></strong></p>
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
@@ -106,7 +110,7 @@ $cronograma = recuperaDados("cronograma","idCronograma",$projeto['idCronograma']
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
-							<input type="submit" name="editaCronograma" class="btn btn-theme btn-lg btn-block" value="Inserir">
+							<input type="submit" name="editaCronograma" class="btn btn-theme btn-lg btn-block" value="Gravar">
 						</div>
 					</div>
 				</form>
