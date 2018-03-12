@@ -10,9 +10,19 @@
 			if(isset($_SESSION['idProjeto']))
 			{
 			?>
-				 <a href="?perfil=artista_pj">Artista</a>
-				| <a href="?perfil=grupo">Integrantes do Elenco</a>
-				| <a href="?perfil=informacoes_administrativas_pj">Informações Administrativas</a><br/>
+				| <a href="?perfil=projeto_2">2</a>
+				| <a href="?perfil=projeto_3">3</a>
+				| <a href="?perfil=projeto_4">4</a>
+				| <a href="?perfil=projeto_5">5</a>
+				| <a href="?perfil=projeto_6">6</a>
+				| <a href="?perfil=local">7 Local</a>
+				| <a href="?perfil=projeto_8">8</a>
+				| <a href="?perfil=ficha_tecnica">9 Ficha Técnica</a>
+				| <a href="?perfil=cronograma">10 Cronograma</a>
+				| <a href="?perfil=orcamento">11 Orçamento</a>
+				| <a href="?perfil=anexos">12 PDF</a>
+				| <a href="?perfil=projeto_13">13 Link do Youtube</a>
+				| <a href="?perfil=informacoes_administrativas_pj">Informações Administrativas</a>
 			<?php
 			}
 			?>
