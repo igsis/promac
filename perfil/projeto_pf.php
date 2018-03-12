@@ -19,22 +19,20 @@ if(isset($_POST['liberacao']))
 	}
 }
 
-/*
 if(isset($_POST['apagar']))
 {
-	$idEvento = $_POST['apagar'];
-	$sql_apaga = "UPDATE evento SET publicado = '0' WHERE id = '$idEvento'";
+	$idProjeto = $_POST['apagar'];
+	$sql_apaga = "UPDATE projeto SET publicado = '0' WHERE idProjeto = '$idProjeto'";
 	if(mysqli_query($con,$sql_apaga))
 	{
-		$mensagem = "<font color='#01DF3A'><strong>Evento apagado com sucesso!</strong></font>";
+		$mensagem = "<font color='#01DF3A'><strong>Projeto apagado com sucesso!</strong></font>";
 		gravarLog($sql_apaga);
 	}
 	else
 	{
-		$mensagem = "<font color='#FF0000'><strong>Erro ao apagar evento! Tente novamente.</strong></font>";
+		$mensagem = "<font color='#FF0000'><strong>Erro ao apagar projeto! Tente novamente.</strong></font>";
 	}
 }
-*/
 
 ?>
 <section id="list_items" class="home-section bg-white">
@@ -125,9 +123,9 @@ if(isset($_POST['apagar']))
 											</td>";
 										echo "
 											<td class='list_description'>
-												<form method='POST' action='?perfil=projeto'>
+												<form method='POST' action='?perfil=projeto_pf'>
 													<input type='hidden' name='apagar' value='".$campo['idProjeto']."' />
-													<input type ='submit' class='btn btn-theme  btn-block' value='apagar'>
+													<input type='submit' class='btn btn-theme  btn-block' value='apagar'>
 												</form>
 											</td>";
 										echo "</tr>";
