@@ -57,3 +57,13 @@ INSERT INTO `lista_documento` (`idListaDocumento`, `idTipoUpload`, `documento`, 
 (15, 2, 'Comprovante de endereço de pelo menos 2 anos atrás', 'ce2', 1),
 (16, 2, 'Declaração [modelo para download]', 'de', 1),
 (17, 2, 'Declaração exclusiva para Organização Social com Termo de Colaboração a SMC [modelo para download]', 'deost', 1);
+
+-- Etapas --
+INSERT INTO `etapa` (`idEtapa`, `etapa`) VALUES 
+(NULL, 'Pré-Produção'), 
+(NULL, 'Produção'), 
+(NULL, 'Assessoria de Imprensa, Divulgação e Mídia'), 
+(NULL, 'Custos Administrativos'), 
+(NULL, 'Impostos, taxas, tarifas bancárias, contribuições e seguros'), 
+(NULL, 'Elaboração e Agenciamento'), 
+(NULL, 'Outros Financiamentos');
