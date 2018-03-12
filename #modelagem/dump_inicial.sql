@@ -56,7 +56,12 @@ INSERT INTO `lista_documento` (`idListaDocumento`, `idTipoUpload`, `documento`, 
 (14, 2, 'Comprovante de endereço atual (até últimos 3 meses)', 'ce', 1),
 (15, 2, 'Comprovante de endereço de pelo menos 2 anos atrás', 'ce2', 1),
 (16, 2, 'Declaração [modelo para download]', 'de', 1),
-(17, 2, 'Declaração exclusiva para Organização Social com Termo de Colaboração a SMC [modelo para download]', 'deost', 1);
+(17, 2, 'Declaração exclusiva para Organização Social com Termo de Colaboração a SMC [modelo para download]', 'deost', 1),
+(18, 3, 'Carta de Intenção de Incentivo (Caso houver)', 'cii', 1),
+(19, 3, 'Carta de Anuência do Local [modelo para download]', 'cal', 1),
+(20, 3, 'CV dos principais participantes [no máximo 20 linhas de cada participante]', 'cvpp', 1),
+(21, 3, 'Declaração de Responsabilidade por Direitos Autorais [modelo para download]', 'drda', 1),
+(22, 3, 'Informações adicionais, de acordo com a especificidade do segmento artístico do projeto (exemplo: roteiro do espetáculo)', 'ia', 1);
 
 --
 -- Extraindo dados da tabela `renuncia_fiscal`

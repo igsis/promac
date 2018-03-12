@@ -4,7 +4,8 @@ $con = bancoMysqli();
 if(isset($_POST['busca']))
 {
 	//validação
-	$validacao = validaCNPJ($_POST['busca']); 
+	$validacao = validaCNPJ($_POST['busca']);
+	$validacao = true;
 	if($validacao == false)
 	{
 		echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=?perfil=erros&p=erro_cooperativa'>";
