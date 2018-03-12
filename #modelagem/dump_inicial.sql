@@ -91,3 +91,13 @@ INSERT INTO `zona` (`idZona`, `zona`) VALUES
 (3, 'Centro'),
 (4, 'Leste'),
 (5, 'Oeste');
+
+--
+-- Extraindo dados da tabela `unidade_medida`
+--
+
+INSERT INTO `unidade_medida` (`idUnidadeMedida`, `unidadeMedida`) VALUES
+(1, 'Cachê'),
+(2, 'Diária'),
+(3, 'Serviço'),
+(4, 'Unidade');
