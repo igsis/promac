@@ -28,7 +28,7 @@ $ano = date('Y');
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
 				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
+					<div class="col-md-offset-2 col-md-8" align="left">
 						<ul class='list-group'>
 							<li class='list-group-item list-group-item-success'>
 								<li class='list-group-item'><strong>Protocolo:</strong> <?php echo $ano." - ".$idProjeto ?></li>
@@ -57,7 +57,7 @@ $ano = date('Y');
 
 									while($campo = mysqli_fetch_array($query))
 									{
-										echo "<li class='list-group-item'>".$campo['notas']."</li>";
+										echo "<li class='list-group-item'><strong>".exibirDataHoraBr($campo['data'])."</strong><br/>".$campo['nota']."</li>";
 									}
 								}
 								else
