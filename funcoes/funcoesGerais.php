@@ -565,9 +565,9 @@ function listaArquivosEvento($idPessoa, $tipoPessoa, $pagina)
 	$sql = "SELECT * FROM lista_documento as list
 			INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
 			WHERE arq.idPessoa = '$idPessoa'
+			AND arq.publicado = '1'
 			AND arq.idTipo = '$tipoPessoa'
-			AND arq.idListaDocumento = '18' OR arq.idListaDocumento = '19'
-			AND arq.publicado = '1'";
+			AND arq.idListaDocumento IN (18,19)";
 			$query = mysqli_query($con,$sql);
 			$linhas = mysqli_num_rows($query);
 
