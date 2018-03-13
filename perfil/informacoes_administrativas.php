@@ -40,8 +40,33 @@ $ano = date('Y');
 				</div>
 
 				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
-						<strong>Notas:</strong>
+					<div class="col-md-offset-2 col-md-8"><hr/></div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-8" align="left">
+						<ul class='list-group'>
+							<li class='list-group-item list-group-item-success'>Notas
+							<?php
+								$sql = "SELECT * FROM notas
+										WHERE idProjeto = '$idProjeto'";
+								$query = mysqli_query($con,$sql);
+								$num = mysqli_num_rows($query);
+								if($num > 0)
+								{
+
+									while($campo = mysqli_fetch_array($query))
+									{
+										echo "<li class='list-group-item'>".$campo['notas']."</li>";
+									}
+								}
+								else
+								{
+									echo "<li class='list-group-item'>Não há notas disponíveis.</li>";
+								}
+							?>
+							</li>
+						</ul>
 					</div>
 				</div>
 
