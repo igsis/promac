@@ -1,9 +1,7 @@
 <?php
 $con = bancoMysqli();
-//$idProjeto = $_SESSION['idProjeto'];
-$idProjeto = '2';
+$idProjeto = $_SESSION['idProjeto'];
 $idPf = $_SESSION['idUser'];
-$arquivo = 0;
 
 if(isset($_POST['insere']))
 {
