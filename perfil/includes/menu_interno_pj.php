@@ -22,7 +22,7 @@
 				| <a href="?perfil=orcamento">11 Orçamento</a>
 				| <a href="?perfil=anexos">12 PDF</a>
 				| <a href="?perfil=projeto_13">13 Link do Youtube</a>
-				| <a href="?perfil=informacoes_administrativas_pj">Informações Administrativas</a>
+				| <a href="?perfil=informacoes_administrativas">Informações Administrativas</a>
 			<?php
 			}
 			?>
