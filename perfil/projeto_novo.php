@@ -13,7 +13,7 @@ if(isset($_POST['novoPj'])) //tipoePessoa = 2
 	{
 		$contratoGestao = 0;
 	}
-	$sql_insere_projeto = "INSERT INTO projeto (idPj, contratoGestao, tipoPessoa, idAreaAtuacao, publicado) VALUES ('$idPj', '$contratoGestao', 2, '$idAreaAtuacao', 1)";
+	$sql_insere_projeto = "INSERT INTO projeto (idPj, contratoGestao, tipoPessoa, idAreaAtuacao, idStatus, publicado) VALUES ('$idPj', '$contratoGestao', 2, '$idAreaAtuacao', 1, 1)";
 	if(mysqli_query($con,$sql_insere_projeto))
 	{
 		$sql_ultimo = "SELECT idProjeto FROM projeto ORDER BY idProjeto DESC LIMIT 0,1";
@@ -33,7 +33,7 @@ if(isset($_POST['insereAtuacao']))
 {
 	$idPf = $_SESSION['idUser'];
 	$idAreaAtuacao = $_POST['idAreaAtuacao'];
-	$sql_insere_projeto = "INSERT INTO projeto (idPf, tipoPessoa, idAreaAtuacao, publicado) VALUES ('$idPf', 1, '$idAreaAtuacao', 1)";
+	$sql_insere_projeto = "INSERT INTO projeto (idPf, tipoPessoa, idAreaAtuacao, idStatus, publicado) VALUES ('$idPf', 1, '$idAreaAtuacao', 1, 1)";
 	if(mysqli_query($con,$sql_insere_projeto))
 	{
 		$sql_ultimo = "SELECT idProjeto FROM projeto ORDER BY idProjeto DESC LIMIT 0,1";
