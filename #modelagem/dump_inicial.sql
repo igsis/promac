@@ -4,18 +4,6 @@
 
 use promac;
 
-
---
--- Extraindo dados da tabela `lista_documento`
---
-
-INSERT INTO `lista_documento` (`idListaDocumento`, `idTipoUpload`, `documento`, `sigla`, `publicado`) VALUES
-(1, 1, 'RG/RNE', 'rg', 1),
-(2, 1, 'CPF', 'cpf', 1),
-(3, 1, 'CCM', 'ccm', 1),
-(4, 1, 'Comprovante de endereço', 'cde', 1),
-(6, 1, 'Declaração', 'dec', 1);
-
 -- --------------------------------------------------------
 
 --
