@@ -94,3 +94,15 @@ INSERT INTO `unidade_medida` (`idUnidadeMedida`, `unidadeMedida`) VALUES
 (2, 'Diária'),
 (3, 'Serviço'),
 (4, 'Unidade');
+
+--
+-- Extraindo dados da tabela `status`
+--
+
+INSERT INTO `status`(`idStatus`, `status`) VALUES
+(1, 'em elaboração'),
+(2, 'enviado'),
+(3, 'em análise'),
+(4, 'diligência'),
+(5, 'aprovado'),
+(6, 'indeferido');
