@@ -53,15 +53,15 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 					<div class="form-group">
 						<div class="col-md-offset-3 col-md-2">
 							<label>Valor total do <br/>projeto</label>
-							<input type="text" name="valorProjeto" class="form-control" id="valor" value="<?php echo dinheiroParaBr($projeto['valorProjeto']) ?>" />
+							<input type="text" name="valorProjeto" class="form-control" id="valor1" value="<?php echo dinheiroParaBr($projeto['valorProjeto']) ?>" />
 						</div>
 						<div class="col-md-2">
 							<label>Valor solicitado como incentivo</label>
-							<input type="text" name="valorIncentivo" class="form-control" value="<?php echo dinheiroParaBr($projeto['valorIncentivo']) ?>" />
+							<input type="text" name="valorIncentivo" class="form-control" id="valor2" value="<?php echo dinheiroParaBr($projeto['valorIncentivo']) ?>" />
 						</div>
 						<div class="col-md-2">
 							<label>Valor de outros financiamentos</label>
-							<input type="text" name="valorFinanciamento" class="form-control" value="<?php echo dinheiroParaBr($projeto['valorFinanciamento']) ?>" />
+							<input type="text" name="valorFinanciamento" class="form-control" id="valor3" value="<?php echo dinheiroParaBr($projeto['valorFinanciamento']) ?>" />
 						</div>
 					</div>
 

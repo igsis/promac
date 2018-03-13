@@ -9,21 +9,13 @@
 	$( "#hora" ).mask("99:99");
   });
  
-    $(function() {
-    $('#valor').maskMoney({thousands:'', decimal:',', allowZero:true, suffix: ''});
-  });
-      $(function() {
+  $(function() {
     $('.valor').maskMoney({thousands:'', decimal:',', allowZero:true, suffix: ''});
   });
-    $(function() {
-    $('#valor01').maskMoney({thousands:'', decimal:',', allowZero:true, suffix: ''});
-  });
-      $(function() {
-    $('#valor_individual').maskMoney({thousands:'', decimal:',', allowZero:true, suffix: ''});
-  });
   $(function() {
-    $('#duracao').maskMoney({thousands:'', decimal:'', allowZero:true, suffix: ''});
-  })
+    $('#valor,#valor1,#valor2,#valor3,#valor01,#valor_individual,#duracao')
+      .maskMoney({thousands:'', decimal:',', allowZero:true, suffix: ''});
+  });
   $(function(){
 	$("#CEP").mask("99999-999");
   });
@@ -282,6 +274,10 @@ function mtel(v){
 		return false;
 	});	
   </script>
-
-  <!-- SCRIPT MODAL -->
   
+  <!-- Exibir Modal Orçamento -->
+    <script type="text/javascript">
+      $(window).load(function(){        
+          $('#infoOrcamento').modal('show');
+      });
+    </script>

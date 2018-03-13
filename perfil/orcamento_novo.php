@@ -69,5 +69,27 @@ $idProjeto = $_SESSION['idProjeto'];
 
 			</div>
 		</div>
+		<!-- Inicio Modal Informações Orçamento -->
+			<div class="modal fade" id="infoOrcamento" role="dialog" aria-labelledby="infoOrcamentoLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							<h4 class="modal-title">Atenção aos limites!!</h4>
+						</div>
+						<div class="modal-body" style="text-align: left;">
+							<ul class="list-group">
+								<li class="list-group-item list-group-item-success"><b>Conforme art. 53 do Decreto 58.041/2017</b></li>
+								<li class="list-group-item">Os projetos culturais poderão acolher despesas de administração de até 20% (vinte por cento) do valor total do projeto, englobando gastos administrativos e serviços de captação de recursos.</li>
+								<li class="list-group-item">Para fins de composição das despesas de administração, deverão ser considerados os tetos de 15% (quinze por cento) para gastos administrativos e de 10% (dez por cento) para o serviço de captação de recursos</li>
+							</ul>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		<!-- Fim Modal Informações Orçamento -->
 	</div>
 </section>
