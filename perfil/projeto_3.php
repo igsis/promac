@@ -1,6 +1,10 @@
 <?php
 $con = bancoMysqli();
-$idProjeto = $_SESSION['idProjeto'];
+//$idProjeto = $_SESSION['idProjeto'];
+$idProjeto = '2';
+$idPf = $_SESSION['idUser'];
+$arquivo = 0;
+
 if(isset($_POST['insere']))
 {
 	$resumoProjeto = $_POST['resumoProjeto'];
@@ -22,11 +26,11 @@ if(isset($_POST['insere']))
 
 if(isset($_POST["enviar"]))
 {
-	$sql_arquivos = "SELECT * FROM upload_lista_documento WHERE idTipoPessoa = '$tipoPessoa' AND id = '$idCampo'";
+	$sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '2' AND idListaDocumento IN (18,19)";
 	$query_arquivos = mysqli_query($con,$sql_arquivos);
 	while($arq = mysqli_fetch_array($query_arquivos))
 	{
-		$y = $arq['id'];
+		$y = $arq['idListaDocumento'];
 		$x = $arq['sigla'];
 		$nome_arquivo = $_FILES['arquivo']['name'][$x];
 		$f_size = $_FILES['arquivo']['size'][$x];
@@ -55,7 +59,7 @@ if(isset($_POST["enviar"]))
 				{
 					if(move_uploaded_file($nome_temporario, $dir.$new_name))
 					{
-						$sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipoPessoa`, `idPessoa`, `idUploadListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('$tipoPessoa', '$idPessoaFisica', '$idCampo', '$new_name', '$hoje', '1'); ";
+						$sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('2', '$idPf', '$y', '$new_name', '$hoje', '1'); ";
 						$query = mysqli_query($con,$sql_insere_arquivo);
 
 						if($query)
@@ -84,7 +88,7 @@ if(isset($_POST["enviar"]))
 if(isset($_POST['apagar']))
 {
 	$idArquivo = $_POST['apagar'];
-	$sql_apagar_arquivo = "UPDATE upload_arquivo SET publicado = 0 WHERE id = '$idArquivo'";
+	$sql_apagar_arquivo = "UPDATE upload_arquivo SET publicado = 0 WHERE idUploadArquivo = '$idArquivo'";
 	if(mysqli_query($con,$sql_apagar_arquivo))
 	{
 		$mensagem =	"Arquivo apagado com sucesso!";
@@ -136,7 +140,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
-							<input type="submit" name="insere" class="btn btn-theme btn-lg btn-block" value="Gravar">
+							<input type="submit" name="insere" class="btn  btn-theme btn-lg btn-block" value="Gravar">
 						</div>
 					</div>
 				</form>
@@ -149,7 +153,9 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
 						<div class="table-responsive list_info"><h6>Arquivo(s) Anexado(s)</h6>
-							<?php //listaArquivoCamposMultiplos($idPessoaFisica,$tipoPessoa,$idCampo,"endereco_pf",3); ?>
+							<?php 
+							$pagina = "projeto_3";
+							listaArquivosEvento($idPf, '2', $pagina) ?>
 						</div>
 					</div>
 				</div>
@@ -158,17 +164,27 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
 						<div class = "center">
-						<form method="POST" action="?perfil=endereco_pf" enctype="multipart/form-data">
+						<form method="POST" action="?perfil=projeto_3" enctype="multipart/form-data">
 							<table>
 								<tr>
 									<td width="50%"><td>
 								</tr>
 								<?php
-									$sql_arquivos = "SELECT * FROM upload_lista_documento WHERE idTipoPessoa = '$tipoPessoa' AND id = '$idCampo'";
+									$sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '2' AND idListaDocumento = '18'";
 									$query_arquivos = mysqli_query($con,$sql_arquivos);
 									while($arq = mysqli_fetch_array($query_arquivos))
 									{
-								?>
+									?>
+										<tr>
+											<td><label><?php echo $arq['documento']?></label></td><td><input type='file' name='arquivo[<?php echo $arq['sigla']; ?>]'></td>
+										</tr>
+								<?php
+									}
+									$sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '2' AND idListaDocumento = '19'";
+									$query_arquivos = mysqli_query($con,$sql_arquivos);
+									while($arq = mysqli_fetch_array($query_arquivos))
+									{
+									?>
 										<tr>
 											<td><label><?php echo $arq['documento']?></label></td><td><input type='file' name='arquivo[<?php echo $arq['sigla']; ?>]'></td>
 										</tr>
@@ -177,13 +193,32 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 								?>
 							</table><br>
 							<input type="hidden" name="idPessoa" value="<?php echo $idPessoaFisica; ?>"  />
-							<input type="hidden" name="tipoPessoa" value="<?php echo $tipoPessoa; ?>"  />
+							<input type="hidden" name="tipoPessoa" value="<?php echo "2"; ?>"  />
 							<input type="submit" name="enviar" class="btn btn-theme btn-lg btn-block" value='Enviar'>
 						</form>
 						</div>
 					</div>
 				</div>
 				<!-- Fim Upload de arquivo -->
+				<!-- Confirmação de Exclusão -->
+					<div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+									<h4 class="modal-title">Excluir Arquivo?</h4>
+								</div>
+								<div class="modal-body">
+									<p>Confirma?</p>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+									<button type="button" class="btn btn-danger" id="confirm">Apagar</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				<!-- Fim Confirmação de Exclusão -->
 
 			</div>
 		</div>

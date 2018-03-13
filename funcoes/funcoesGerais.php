@@ -559,6 +559,56 @@ function verificaArquivosExistentes($idPessoa,$idDocumento)
 	}
 }
 
+function listaArquivosEvento($idPessoa, $tipoPessoa, $pagina)
+{
+	$con = bancoMysqli();
+	$sql = "SELECT * FROM lista_documento as list
+			INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
+			WHERE arq.idPessoa = '$idPessoa'
+			AND arq.idTipo = '$tipoPessoa'
+			AND arq.idListaDocumento = '18' OR arq.idListaDocumento = '19'
+			AND arq.publicado = '1'";
+			$query = mysqli_query($con,$sql);
+			$linhas = mysqli_num_rows($query);
+
+		if ($linhas > 0)
+		{
+			echo "
+			<table class='table table-condensed'>
+			<thead>
+			<tr class='list_menu'>
+			<td>Tipo de arquivo</td>
+			<td>Nome do arquivo</td>
+			<td width='15%'></td>
+			</tr>
+			</thead>
+			<tbody>";
+			while($arquivo = mysqli_fetch_array($query))
+			{
+				echo "<tr>";
+				echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
+				echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>".$arquivo['arquivo']."</a></td>";
+				echo "
+				<td class='list_description'>
+				<form id='apagarArq' method='POST' action='?perfil=projeto_3'>
+				<input type='hidden' name='idPessoa' value='".$idPessoa."' />
+				<input type='hidden' name='tipoPessoa' value='2' />
+				<input type='hidden' name='apagar' value='".$arquivo['idUploadArquivo']."' />
+				<button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Excluir Arquivo?' data-message='Deseja realmente excluir o arquivo ".$arquivo['documento']."?'>Apagar
+															</button></td>
+				</form>";
+				echo "</tr>";
+			}
+			echo "
+			</tbody>
+			</table>";
+		}
+		else
+		{
+			echo "<p>Não há arquivo(s) inserido(s).<p/><br/>";
+	}
+}
+
 function listaArquivosPessoa($idPessoa,$tipoPessoa,$pagina)
 {
 	$con = bancoMysqli();
