@@ -1,6 +1,7 @@
 <?php
 $con = bancoMysqli();
 $idProjeto = $_SESSION['idProjeto'];
+$bool = false;
 
 if(isset($_POST['insere']))
 {
@@ -20,6 +21,7 @@ if(isset($_POST['insere']))
 	if(mysqli_query($con,$sql_insere))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso!</strong></font>";
+		$bool = true;
 	}
 	else
 	{
@@ -88,6 +90,26 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 						</div>
 					</div>
 				</form>
+				<!-- Botão para Prosseguir -->
+				<div class="form-group">
+					<form class="form-horizontal" role="form" action="?perfil=projeto_3" method="post">
+						<div class="col-md-offset-8 col-md-2">
+							<?php if($bool == true)
+							{ ?>
+							<input type="submit" value="Avançar" class="btn btn-theme btn-lg btn-block">
+							<?php } 
+							else { ?>
+						</div>
+					</form>
+				</div>
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-8">
+						<div class="alert alert-info">
+							Grave suas informações para prosseguir o formulário.
+						</div>
+					</div>
+				</div>
+				<?php } ?>
 			</div>
 		</div>
 		<!-- Inicio Modal Informações Renuncia fiscal -->

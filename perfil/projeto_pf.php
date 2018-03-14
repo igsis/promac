@@ -125,7 +125,8 @@ if(isset($_POST['apagar']))
 											<td class='list_description'>
 												<form method='POST' action='?perfil=projeto_pf'>
 													<input type='hidden' name='apagar' value='".$campo['idProjeto']."' />
-													<input type='submit' class='btn btn-theme  btn-block' value='apagar'>
+													<button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Excluir Projeto?' data-message='Deseja realmente excluir o projeto nº ".$campo['idProjeto']."?'>Apagar
+															</button>
 												</form>
 											</td>";
 										echo "</tr>";
@@ -141,5 +142,24 @@ if(isset($_POST['apagar']))
 				?>
 			</div>
 		</div>
+		<!-- Confirmação de Exclusão -->
+			<div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							<h4 class="modal-title">Excluir Arquivo?</h4>
+						</div>
+						<div class="modal-body">
+							<p>Confirma?</p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+							<button type="button" class="btn btn-danger" id="confirm">Apagar</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		<!-- Fim Confirmação de Exclusão -->
 	</div>
 </section>

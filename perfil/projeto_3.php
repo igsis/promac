@@ -218,6 +218,19 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 					</div>
 				<!-- Fim Confirmação de Exclusão -->
 
+			<!-- Botão para Prosseguir -->
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-2">
+						<form class="form-horizontal" role="form" action="?perfil=projeto_2" method="post">
+							<input type="submit" value="Voltar" class="btn btn-theme btn-lg btn-block">
+						</form>
+					</div>
+					<div class="col-md-offset-4 col-md-2">
+						<form class="form-horizontal" role="form" action="?perfil=projeto_4" method="post">
+							<input type="submit" value="Avançar" class="btn btn-theme btn-lg btn-block">
+						</form>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
