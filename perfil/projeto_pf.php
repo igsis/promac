@@ -178,7 +178,7 @@ if(isset($_POST['apagar']))
 											</td>";
 											break;
 											case 6:
-												echo "<td class='list_description'> ".$rowStatus['status']." </td>";
+												echo "<td class='list_description'> <a href='?perfil=informacoes_administrativas'>".$rowStatus['status']." </a></td>";
 												echo "
 											<td class='list_description'>
 												<form method='POST' action='?perfil=projeto_edicao'>
