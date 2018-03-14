@@ -5,6 +5,14 @@ $idPf = $_SESSION['idUser'];
 $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 $idProjeto = $_SESSION['idProjeto'];
 $tipoPessoa = '1';
+$alterar = 0;
+
+$select = "SELECT idStatus FROM projeto WHERE idProjeto='$idProjeto' AND publicado='1'";
+$send = mysqli_query($con, $select);
+$row = mysqli_fetch_array($send);
+
+if($row['idStatus'] == 6)
+	$alterar = 1;
 
 ?>
 <section id="list_items" class="home-section bg-white">
@@ -132,6 +140,10 @@ $tipoPessoa = '1';
 		</div>
 		<div class="col-md-offset-4 col-md-2">
 			<form class="form-horizontal" role="form" action="?perfil=informacoes_administrativas" method="post">
+			<?php 
+			if($alterar == 1){ ?>
+				<input type="hidden" name="alterar" value="1">
+				<?php } ?>
 				<input type="submit" value="Enviar" class="btn btn-theme btn-lg btn-block">
 			</form>
 		</div>
