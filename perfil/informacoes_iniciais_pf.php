@@ -74,10 +74,10 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-6"><strong>CPF *:</strong><br/>
-							<input type="text" readonly class="form-control" id="cpf" name="cpf" placeholder="CPF" value="<?php echo $pf['cpf']; ?>" >
+							<input type="text" readonly class="form-control" id="cpf" name="cpf" placeholder="CPF" value="<?php echo $pf['cpf']; ?>" required>
 						</div>
 						<div class="col-md-6"><strong>RG ou RNE *:</strong><br/>
-							<input type="text" class="form-control" name="rg" placeholder="Número do Documento" value="<?php echo $pf['rg']; ?>">
+							<input type="text" class="form-control" name="rg" placeholder="Número do Documento" value="<?php echo $pf['rg']; ?>" required>
 						</div>
 					</div>
 
@@ -102,7 +102,7 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-6"><strong>CEP *:</strong><br/>
-							<input type="text" class="form-control" id="CEP" name="CEP" placeholder="CEP" value="<?php echo $pf['cep']; ?>">
+							<input type="text" class="form-control" id="CEP" name="CEP" placeholder="CEP" value="<?php echo $pf['cep']; ?>" required>
 						</div>
 						<div class="col-md-6" align="left"><i>Clique no número do CEP e pressione a tecla Tab para carregar</i>
 						</div>
@@ -116,7 +116,7 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-6"><strong>Número *:</strong><br/>
-							<input type="text" class="form-control" id="Numero" name="Numero" placeholder="Numero" value="<?php echo $pf['numero']; ?>">
+							<input type="text" class="form-control" id="Numero" name="Numero" placeholder="Numero" value="<?php echo $pf['numero']; ?>" required>
 						</div>
 						<div class=" col-md-6"><strong>Complemento:</strong><br/>
 							<input type="text" class="form-control" id="Complemento" name="Complemento" placeholder="Complemento" value="<?php echo $pf['complemento']; ?>">
