@@ -95,7 +95,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 												<tbody>
 									<?php
 									foreach ($v as $m)
-									{	
+									{
 										if (!empty($m))
 										{
 											$desc = "https://www.youtube.com/oembed?format=json&url=".$m;
@@ -133,7 +133,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 						</form>
 					</div>
 					<div class="col-md-offset-4 col-md-2">
-						<form class="form-horizontal" role="form" action="?perfil=informacoes_administrativas" method="post">
+						<form class="form-horizontal" role="form" action="?perfil=finalProjeto" method="post">
 							<input type="submit" value="Avançar" class="btn btn-theme btn-lg btn-block">
 						</form>
 					</div>
