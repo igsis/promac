@@ -50,7 +50,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 						<div class="col-md-offset-2 col-md-8">
 							<label>Descrição do objeto*</label>
 							<p align="justify">Considerando a realidade no qual está inserido, devendo ser demonstrado o nexo entre essa realidade e as atividades ou projetos e metas a serem atingias.</p>
-							<textarea name="descricao" class="form-control" rows="25"><?php echo $projeto['descricao'] ?></textarea>
+							<textarea name="descricao" class="form-control" rows="25" required><?php echo $projeto['descricao'] ?></textarea>
 						</div>
 					</div>
 
@@ -63,16 +63,21 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 
 				<!-- Botão para Prosseguir -->
 				<div class="form-group">
-					<form class="form-horizontal" role="form" action="?perfil=projeto_5" method="post">
-						<div class="col-md-offset-8 col-md-2">
-							<?php if($bool == true)
-							{ ?>
+					<?php if($bool == true)
+					{ ?>
+					<div class="col-md-offset-2 col-md-2">
+						<form class="form-horizontal" role="form" action="?perfil=projeto_3" method="post">
+							<input type="submit" value="Voltar" class="btn btn-theme btn-lg btn-block">
+						</form>
+					</div>
+					<div class="col-md-offset-4 col-md-2">
+						<form class="form-horizontal" role="form" action="?perfil=projeto_5" method="post">
 							<input type="submit" value="Avançar" class="btn btn-theme btn-lg btn-block">
-							<?php } 
-							else { ?>
-						</div>
-					</form>
+						</form>
+					</div>
 				</div>
+				<?php } 
+				else { ?>
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
 						<div class="alert alert-info">

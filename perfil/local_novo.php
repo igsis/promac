@@ -29,7 +29,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-4">
 							<label>Local *</label><br/>
-							<input type="text" name="local" class="form-control" maxlength="100">
+							<input type="text" name="local" class="form-control" maxlength="100" required>
 						</div>
 
 						<div class="col-md-2"><label>Público Estimado *</label><br/>

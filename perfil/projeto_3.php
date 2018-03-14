@@ -125,14 +125,14 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<label>Resumo do projeto*</label>
-							<textarea name="resumoProjeto" class="form-control" rows="5" maxlength="500"><?php echo $projeto['resumoProjeto'] ?></textarea>
+							<textarea name="resumoProjeto" class="form-control" rows="5" maxlength="500" required><?php echo $projeto['resumoProjeto'] ?></textarea>
 						</div>
 					</div>
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<label>Currículo do proponente *</label>
-							<textarea name="curriculo" class="form-control" rows="10" maxlength="5000"><?php echo $projeto['curriculo'] ?></textarea>
+							<textarea name="curriculo" class="form-control" rows="10" maxlength="5000" required><?php echo $projeto['curriculo'] ?></textarea>
 						</div>
 					</div>
 
