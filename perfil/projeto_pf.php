@@ -113,15 +113,17 @@ if(isset($_POST['apagar']))
 										echo "<td class='list_description'>".$campo['idProjeto']."</td>";
 										echo "<td class='list_description'>".$campo['descricao']."</td>";
 										echo "<td class='list_description'>".$area['areaAtuacao']."</td>";
-										echo "<td class='list_description'> STATUS </td>";
-										echo "
+										switch($campo['idStatus']){
+											case 1:
+												echo "<td class='list_description'> Em análise </td>";
+												echo "
 											<td class='list_description'>
 												<form method='POST' action='?perfil=projeto_edicao'>
 													<input type='hidden' name='carregar' value='".$campo['idProjeto']."' />
 													<input type ='submit' class='btn btn-theme btn-block' value='carregar'>
 												</form>
 											</td>";
-										echo "
+											echo "
 											<td class='list_description'>
 												<form method='POST' action='?perfil=projeto_pf'>
 													<input type='hidden' name='apagar' value='".$campo['idProjeto']."' />
@@ -129,6 +131,29 @@ if(isset($_POST['apagar']))
 															</button>
 												</form>
 											</td>";
+												break;
+											case 2:
+												echo "<td class='list_description'> Negado </td>";
+												echo "
+											<td class='list_description'>
+												<form method='POST' action='?perfil=projeto_pf'>
+													<input type='hidden' name='apagar' value='".$campo['idProjeto']."' />
+													<button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Excluir Projeto?' data-message='Deseja realmente excluir o projeto nº ".$campo['idProjeto']."?'>Apagar
+															</button>
+												</form>
+											</td>";
+												break;
+											case 3:
+												echo "<td class='list_description'> Aceito </td>";
+												echo "
+											<td class='list_description'>
+												<form method='POST' action='?perfil=projeto_visualizacao'>
+													<input type='hidden' name='carregar' value='".$campo['idProjeto']."' />
+													<input type ='submit' class='btn btn-theme btn-block' value='visualizar'>
+												</form>
+											</td>";
+												break;
+										}
 										echo "</tr>";
 									}
 							echo "

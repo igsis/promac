@@ -11,8 +11,8 @@ $tipoPessoa = '1';
 		<div class="form-group">
 
 			<h4>Resumo do Projeto</h4>
-			<div class="alert alert-warning">
-				<strong>Atenção!</strong> Confirme atentamente se os dados abaixo estão corretos!
+			<div class="alert alert-success">
+				<strong>Parabéns!</strong> Seu projeto foi aceito, confira os dados acordados!
 			</div>
 		</div>
 		 <div class = "page-header">
@@ -21,7 +21,7 @@ $tipoPessoa = '1';
 		 </div>
 
 		 <?php
-			 $query = "SELECT * FROM projeto WHERE idPf='$idPf' AND publicado='1' ORDER BY idProjeto desc";
+			 $query = "SELECT * FROM projeto WHERE idPf='$idPf' AND publicado='1' AND idStatus='3'";
 			 $en = mysqli_query($con, $query);
 			 while($row = mysqli_fetch_array($en, MYSQLI_ASSOC)){
 		 ?>
@@ -124,13 +124,8 @@ $tipoPessoa = '1';
 <!-- Botão para Prosseguir -->
 	<div class="form-group">
 		<div class="col-md-offset-2 col-md-2">
-			<form class="form-horizontal" role="form" action="?perfil=projeto_13" method="post">
+			<form class="form-horizontal" role="form" action="?perfil=projeto_pf" method="post">
 				<input type="submit" value="Voltar" class="btn btn-theme btn-lg btn-block">
-			</form>
-		</div>
-		<div class="col-md-offset-4 col-md-2">
-			<form class="form-horizontal" role="form" action="?perfil=informacoes_administrativas" method="post">
-				<input type="submit" value="Avançar" class="btn btn-theme btn-lg btn-block">
 			</form>
 		</div>
 	</div>
