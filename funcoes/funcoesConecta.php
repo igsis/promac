@@ -2,7 +2,7 @@
 	// Conexão de Banco MySQLi
 	function bancoMysqli()
 	{
-		$servidor = 'localhost:3307';
+		$servidor = 'localhost';
 		$usuario = 'root';
 		$senha = '';
 		$banco = 'promac';
@@ -13,7 +13,7 @@
 	// Conexão de Banco com PDO
 	function bancoPDO()
 	{
-		$host = 'localhost:3307';
+		$host = 'localhost';
 		$user = 'root';
 		$pass = '';
 		$db = 'promac';
