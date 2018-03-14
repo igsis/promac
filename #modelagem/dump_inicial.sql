@@ -130,7 +130,7 @@ INSERT INTO `area_atuacao` (`idArea`, `areaAtuacao`, `tipo`) VALUES
 (15, 'Teatro', 2),
 (16, 'Vídeo e Fotografia', 3),
 (17, 'Bolsas de estudo para cursos de caráter cultural ou artístico, ministrados em instituições nacionais ou internacionais sem fins lucrativos.', 3),
-(18, 'Programas de rádio e de televisão com finalidade cultural, social e de prestação de serviços à comunidade.\r\n', 2),
+(18, 'Programas de rádio e de televisão com finalidade cultural, social e de prestação de serviços à comunidade.', 2),
 (19, 'Restauração e conservação de bens protegidos por órgão oficial de preservação.', 2),
 (20, 'Cultura Digital', 3),
 (21, 'Design de Moda', 3);
