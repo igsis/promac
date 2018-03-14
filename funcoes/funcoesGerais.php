@@ -274,12 +274,12 @@ function geraOption($tabela,$tipoPessoa){
 		if ($tipoPessoa == 1) {
 			if($row['tipo'] == 1) // pj 
 			{
-				echo "<option value='".$row['areaAtuacao']."' selected >".$row['areaAtuacao']."</option>";
+				echo "<option value='".$row['idArea']."' selected >".$row['areaAtuacao']."</option>";
 			}
 		}elseif($tipoPessoa == 2){
 			if($row['tipo']) // pj e pf
 			{
-				echo "<option value='".$row['areaAtuacao']."' selected >".$row['areaAtuacao']."</option>";
+				echo "<option value='".$row['idArea']."' selected >".$row['areaAtuacao']."</option>";
 			}
 		}
 	}
