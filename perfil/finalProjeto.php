@@ -3,6 +3,7 @@
 $con = bancoMysqli();
 $idPf = $_SESSION['idUser'];
 $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
+$idProjeto = $_SESSION['idProjeto'];
 $tipoPessoa = '1';
 
 ?>
@@ -22,7 +23,7 @@ $tipoPessoa = '1';
 
 		 <?php
 
-			 $query = "SELECT * FROM projeto WHERE idPf='$idPf' AND publicado='1' AND idProjeto=(SELECT MAX(idProjeto) FROM projeto)";
+			 $query = "SELECT * FROM projeto WHERE idPf='$idPf' AND publicado='1' AND idProjeto='$idProjeto'";
 			 $en = mysqli_query($con, $query);
 			 while($row = mysqli_fetch_array($en, MYSQLI_ASSOC)){
 		 ?>
