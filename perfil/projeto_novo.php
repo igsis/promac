@@ -152,7 +152,10 @@ if(isset($_POST['insereAtuacao']))
 									<label>Área de atuação *</label><br/>
 									<select class="form-control" name="idAreaAtuacao" >
 										<option value="0"></option>
-										<?php echo geraOpcao("area_atuacao","") ?>
+										<?php 
+											echo geraOpcao("area_atuacao","") 
+											// echo geraOption("area_atuacao", 2)
+										?>
 									</select>
 								</div>
 								<div class="col-md-3"><label>&nbsp;</label><br/>

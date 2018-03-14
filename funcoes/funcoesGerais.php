@@ -265,6 +265,26 @@ function geraOpcao($tabela,$select)
 		}
 	}
 }
+function geraOption($tabela,$tipoPessoa){
+	$sql = "SELECT * FROM $tabela";
+	$conn = bancoPDO();
+	$stmt = $conn->query($sql);
+
+	while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+		if ($tipoPessoa == 1) {
+			if($row['tipo'] == 1) // pj 
+			{
+				echo "<option value='".$row['areaAtuacao']."' selected >".$row['areaAtuacao']."</option>";
+			}
+		}elseif($tipoPessoa == 2){
+			if($row['tipo']) // pj e pf
+			{
+				echo "<option value='".$row['areaAtuacao']."' selected >".$row['areaAtuacao']."</option>";
+			}
+		}
+	}
+}
+
 
 function geraCombobox($tabela,$campo,$order,$select)
 {
