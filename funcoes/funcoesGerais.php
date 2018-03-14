@@ -28,7 +28,19 @@ function autenticaloginpf($login, $senha)
 				$_SESSION['idUser'] = $user['idPf'];
 				$_SESSION['tipoPessoa'] = "1";
 				$log = "Fez login.";
-				header("Location: visual/index_pf.php");
+				$cpf = $user['cpf'];
+				$query = "SELECT idNivelAcesso FROM pessoa_fisica WHERE cpf='$cpf'";
+				$envio = mysqli_query($con, $query);
+				while($row = mysqli_fetch_array($envio))
+				{
+					$nAcesso = $row['idNivelAcesso'];
+				}
+				if($nAcesso == 1)
+					header("Location: visual/index_pf.php");
+				else if($nAcesso == 2)
+					header("Location: perfil/smc_index.php");
+				else if($nAcesso == 3)
+					header("Location: perfil/comissao_index.php");
 			}
 			else
 			{
