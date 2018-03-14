@@ -4,9 +4,10 @@ $con = bancoMysqli();
 $idPf = $_SESSION['idUser'];
 $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 $tipoPessoa = '1';
+$id = $_POST['carregar'];
 
 ?>
-<section id="list_items" class="home-section bg-white">
+ <section id="list_items" class="home-section bg-white">
 	<div class="container"><?php include 'includes/menu_interno_pf.php'; ?>
 		<div class="form-group">
 
@@ -21,7 +22,7 @@ $tipoPessoa = '1';
 		 </div>
 
 		 <?php
-			 $query = "SELECT * FROM projeto WHERE idPf='$idPf' AND publicado='1' AND idStatus='3'";
+			 $query = "SELECT * FROM projeto WHERE idPf='$idPf' AND publicado='1' AND idProjeto='$id'";
 			 $en = mysqli_query($con, $query);
 			 while($row = mysqli_fetch_array($en, MYSQLI_ASSOC)){
 		 ?>
