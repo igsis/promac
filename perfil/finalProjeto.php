@@ -21,7 +21,8 @@ $tipoPessoa = '1';
 		 </div>
 
 		 <?php
-			 $query = "SELECT * FROM projeto WHERE idPf='$idPf' AND publicado='1' ORDER BY idProjeto desc";
+
+			 $query = "SELECT * FROM projeto WHERE idPf='$idPf' AND publicado='1' AND idProjeto=(SELECT MAX(idProjeto) FROM projeto)";
 			 $en = mysqli_query($con, $query);
 			 while($row = mysqli_fetch_array($en, MYSQLI_ASSOC)){
 		 ?>
@@ -130,7 +131,7 @@ $tipoPessoa = '1';
 		</div>
 		<div class="col-md-offset-4 col-md-2">
 			<form class="form-horizontal" role="form" action="?perfil=informacoes_administrativas" method="post">
-				<input type="submit" value="Avançar" class="btn btn-theme btn-lg btn-block">
+				<input type="submit" value="Enviar" class="btn btn-theme btn-lg btn-block">
 			</form>
 		</div>
 	</div>
