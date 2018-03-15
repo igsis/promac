@@ -205,7 +205,7 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 								echo "<td class='list_description'>".$x[$h]['areaAtuacao']."</td>";
 								echo "<td class='list_description'>".$x[$h]['status']."</td>";
 								echo "<td class='list_description'>
-										<form method='POST' action='?perfil=smc_detalhes'>
+										<form method='POST' action='?perfil=smc_detalhes_projeto'>
 											<input type='hidden' name='idProjeto' value='".$x[$h]['idProjeto']."' />
 											<input type ='submit' class='btn btn-theme btn-block' value='detalhes'>
 										</form>
