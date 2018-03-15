@@ -108,7 +108,7 @@ if(isset($_POST['insereAtuacao']))
 									<label>Área de atuação *</label><br/>
 									<select class="form-control" name="idAreaAtuacao" >
 										<option value="0"></option>
-										<?php echo geraAreaAtuacao("area_atuacao",2) ?>
+										<?php echo geraAreaAtuacao("area_atuacao",1) ?>
 									</select>
 								</div>
 								<div class="col-md-3"><label>&nbsp;</label><br/>
@@ -143,7 +143,7 @@ if(isset($_POST['insereAtuacao']))
 				}
 				else
 				{
-					if($_SESSION['tipoPessoa'] == 1 && $cooperado == 0 && !isset($_SESSION['idProjeto']))
+					if($_SESSION['tipoPessoa'] == 1 && $cooperado == 0 && !isset($_SESSION['idProjeto'])) // pessoa fisica
 					{
 				?>
 						<div class="form-group">
@@ -152,7 +152,7 @@ if(isset($_POST['insereAtuacao']))
 									<label>Área de atuação *</label><br/>
 									<select class="form-control" name="idAreaAtuacao" >
 										<option value="0"></option>
-										<?php echo geraAreaAtuacao("area_atuacao", 2) ?>
+										<?php echo geraAreaAtuacao("area_atuacao", 1) ?>
 									</select>
 								</div>
 								<div class="col-md-3"><label>&nbsp;</label><br/>
