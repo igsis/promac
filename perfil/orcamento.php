@@ -149,11 +149,12 @@ if(isset($_POST['apagaOrcamento']))
 								while($campo = mysqli_fetch_array($query))
 								{
 									$etapa = recuperaDados("etapa","idEtapa",$campo['idEtapa']);
+									$medida = recuperaDados("unidade_medida","idUnidadeMedida",$campo['idUnidadeMedida']);
 									echo "<tr>";
 									echo "<td class='list_description'>".$etapa['etapa']."</td>";
 									echo "<td class='list_description'>".$campo['descricao']."</td>";
 									echo "<td class='list_description'>".$campo['quantidade']."</td>";
-									echo "<td class='list_description'>".$campo['idUnidadeMedida']."</td>";
+									echo "<td class='list_description'>".$medida['unidadeMedida']."</td>";
 									echo "<td class='list_description'>".$campo['quantidadeUnidade']."</td>";
 									echo "<td class='list_description'>".dinheiroParaBr($campo['valorUnitario'])."</td>";
 									echo "<td class='list_description'>".dinheiroParaBr($campo['valorTotal'])."</td>";

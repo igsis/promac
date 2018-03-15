@@ -39,7 +39,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 							<label>Captação de recursos *</label>
 						</div>
 						<div class="col-md-6">
-							<input type="text" name="captacaoRecurso" class="form-control" maxlength="50">
+							<input type="text" name="captacaoRecurso" class="form-control" maxlength="50" placeholder="DD/MM/AA a DD/MM/AA" required>
 						</div>
 					</div>
 
@@ -48,7 +48,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 							<label>Pré-Produção *</label>
 						</div>
 						<div class="col-md-6">
-							<input type="text" name="preProducao" class="form-control" maxlength="50">
+							<input type="text" name="preProducao" class="form-control" maxlength="50" placeholder="DD/MM/AA a DD/MM/AA" required>
 						</div>
 					</div>
 
@@ -57,7 +57,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 							<label>Produção *</label>
 						</div>
 						<div class="col-md-6">
-							<input type="text" name="producao" class="form-control" maxlength="50">
+							<input type="text" name="producao" class="form-control" maxlength="50" placeholder="DD/MM/AA a DD/MM/AA" required>
 						</div>
 					</div>
 
@@ -66,7 +66,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 							<label>Pós-Produção *</label>
 						</div>
 						<div class="col-md-6">
-							<input type="text" name="posProducao" class="form-control" maxlength="50">
+							<input type="text" name="posProducao" class="form-control" maxlength="50" placeholder="DD/MM/AA a DD/MM/AA" required>
 						</div>
 					</div>
 
@@ -75,7 +75,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 							<label>Prestação de Contas *</label>
 						</div>
 						<div class="col-md-6">
-							<input type="text" name="prestacaoContas" class="form-control" maxlength="50">
+							<input type="text" name="prestacaoContas" class="form-control" maxlength="50" placeholder="DD/MM/AA a DD/MM/AA" required>
 						</div>
 					</div>
 
