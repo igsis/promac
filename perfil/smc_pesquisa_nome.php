@@ -6,9 +6,7 @@
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
 				<form method="POST" action="?perfil=smc_liberacao_acesso" class="form-horizontal" role="form">
-
 					<hr/>
-
 					<!-- <label>PESSOA FÍSICA</label> -->
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-5"><label>Nome</label>
@@ -24,7 +22,6 @@
 							<input type="submit" name="pesquisar" class="btn btn-theme btn-lg btn-block" value="Pesquisar">
 						</div>
 					</div>
-		
 				</form>
 			</div>
 		</div>
