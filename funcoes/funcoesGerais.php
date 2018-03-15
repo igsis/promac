@@ -277,7 +277,7 @@ function geraOpcao($tabela,$select)
 		}
 	}
 }
-function geraOption($tabela,$tipoPessoa){
+function geraAreaAtuacao($tabela,$tipoPessoa){
 	$sql = "SELECT * FROM $tabela";
 	$conn = bancoPDO();
 	$stmt = $conn->query($sql);
