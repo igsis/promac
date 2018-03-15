@@ -52,7 +52,7 @@ if(isset($_POST['editaFicha']))
 
 if(isset($_POST['apagaFicha']))
 {
-	$idFichaTecnica = $_POST['apagaLocal'];
+	$idFichaTecnica = $_POST['apagaFicha'];
 
 	$sql_apaga_ficha = "UPDATE `ficha_tecnica` SET publicado = 0 WHERE idFichaTecnica = '$idFichaTecnica'";
 	if(mysqli_query($con,$sql_apaga_ficha))
@@ -132,8 +132,9 @@ if(isset($_POST['apagaFicha']))
 										</td>";
 									echo "<td class='list_description'>
 												<form method='POST' action='?perfil=ficha_tecnica'>
-													<input type='hidden' name='apagaLocal' value='".$campo['idFichaTecnica']."' />
-													<input type ='submit' class='btn btn-theme  btn-block' value='apagar'>
+													<input type='hidden' name='apagaFicha' value='".$campo['idFichaTecnica']."' />
+													<button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Excluir Integrante?' data-message='Deseja realmente excluir o integrante ".$campo['nome']."?'>Apagar
+															</button>
 												</form>
 											</td>";
 									echo "</tr>";
@@ -146,5 +147,24 @@ if(isset($_POST['apagaFicha']))
 				</div>
 			</div>
 		</div>
+		<!-- Confirmação de Exclusão -->
+			<div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							<h4 class="modal-title">Excluir Arquivo?</h4>
+						</div>
+						<div class="modal-body">
+							<p>Confirma?</p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+							<button type="button" class="btn btn-danger" id="confirm">Apagar</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		<!-- Fim Confirmação de Exclusão -->
 	</div>
 </section>
