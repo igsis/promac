@@ -5,7 +5,11 @@ $alterar = isset($_POST['alterar']) ? $_POST['alterar'] : null;
 
 if($alterar == 1)
 {
-	//query de alteração para status 2
+	/*
+		Caso esteja alterando após indeferimento, muda o status para enviado
+	*/
+	$queryInsert = "UPDATE projeto SET idStatus='2' WHERE idProjeto='$idProjeto'";
+	$sendValue = mysqli_query($con, $queryInsert);
 }
 
 $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
