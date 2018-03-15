@@ -100,10 +100,11 @@ if(isset($_POST['apagaLocal']))
 								<tbody>";
 								while($campo = mysqli_fetch_array($query))
 								{
+									$zona = recuperaDados("zona","idZona",$campo['idZona']);
 									echo "<tr>";
 									echo "<td class='list_description'>".$campo['local']."</td>";
 									echo "<td class='list_description'>".$campo['estimativaPublico']."</td>";
-									echo "<td class='list_description'>".$campo['idZona']."</td>";
+									echo "<td class='list_description'>".$zona['zona']."</td>";
 									echo "<td class='list_description'>
 											<form method='POST' action='?perfil=local_edicao'>
 												<input type='hidden' name='editarLocal' value='".$campo['idLocaisRealizacao']."' />

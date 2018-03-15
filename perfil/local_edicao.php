@@ -48,7 +48,8 @@ $local = recuperaDados("locais_realizacao", "idLocaisRealizacao", $idLocaisReali
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
-							<input type="submit" name="editaLocal" class="btn btn-theme btn-lg btn-block" value="Inserir">
+							<input type="hidden" name="editaLocal" value="<?php echo $idLocaisRealizacao ?>">
+							<input type="submit" class="btn btn-theme btn-lg btn-block" value="Inserir">
 						</div>
 					</div>
 				</form>
