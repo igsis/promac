@@ -31,7 +31,7 @@ if(isset($_POST['editaLocal']))
 	`local`= '$local',
 	`estimativaPublico`= '$estimativaPublico',
 	`idZona`= '$idZona'
-	WHERE idLocaisRealizacao = 'idLocaisRealizacao'";
+	WHERE idLocaisRealizacao = '$idLocaisRealizacao'";
 	if(mysqli_query($con,$sql_edita_local))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso!</strong></font>";

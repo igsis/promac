@@ -40,7 +40,8 @@ if(isset($_POST['insereAtuacao']))
 		$query_ultimo = mysqli_query($con,$sql_ultimo);
 		$ultimoProjeto = mysqli_fetch_array($query_ultimo);
 		$_SESSION['idProjeto']  = $ultimoProjeto['idProjeto'];
-		$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso! </strong></font>";
+		$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso! Aguarde...</strong></font>";
+		echo "<meta HTTP-EQUIV='refresh' CONTENT='0.5;URL=?perfil=projeto_2'>";
 	}
 	else
 	{
@@ -66,6 +67,7 @@ if(isset($_POST['insereAtuacao']))
     	?>
 		<div class="form-group">
 			<h4>Cadastro de Projeto</h4>
+			<p><strong><?php if(isset($mensagem)){echo $mensagem;} ?></strong></p>
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
