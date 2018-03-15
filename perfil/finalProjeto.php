@@ -130,4 +130,17 @@ if($row['idStatus'] == 6)
 	 }
 	 }?>
 	</div>
+
+<!-- Botão para Prosseguir -->
+	<div class="form-group">
+		<div class="col-md-offset-5 col-md-2">
+			<form class="form-horizontal" role="form" action="?perfil=informacoes_administrativas" method="post">
+			<?php 
+			if($alterar == 1){ ?>
+				<input type="hidden" name="alterar" value="1">
+				<?php } ?>
+				<input type="submit" value="Enviar" class="btn btn-theme btn-lg btn-block">
+			</form>
+		</div>
+	</div>
 </section>
