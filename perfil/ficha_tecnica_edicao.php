@@ -45,7 +45,8 @@ $fichaTecnica = recuperaDados("ficha_tecnica", "idFichaTecnica", $idFichaTecnica
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
-							<input type="submit" name="editaFicha" class="btn btn-theme btn-lg btn-block" value="Inserir">
+							<input type="hidden" name="editaFicha" value="<?php echo $idFichaTecnica ?>">
+							<input type="submit" class="btn btn-theme btn-lg btn-block" value="Inserir">
 						</div>
 					</div>
 				</form>
