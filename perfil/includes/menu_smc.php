@@ -20,6 +20,12 @@ $pasta = "?perfil=";
 					<li><a href="<?php echo $pasta ?>smc_pesquisa_prazos">Prazos</a></li>
 				</ul>
 			</li>
+			<li><a href="#">Nivel de acesso</a>
+				<ul class="dl-submenu">
+					<li><a href="<?php echo $pasta ?>smc_pesquisa_nome">Tipo de Acesso</a></li>
+					
+				</ul>
+			</li>
 			<li style="color:white;">-------------------------</li>
 			<li><a href="index.php?secao=perfil">Início</a></li>
 			<li><a href="../manual" target="_blank">Ajuda</a></li>
