@@ -26,7 +26,8 @@ if(isset($_POST['novoPj'])) //tipoePessoa = 2
 		WHERE idProjeto = '$idProjeto'";
 	if(mysqli_query($con,$sql_insere_projeto))
 	{
-		$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso!</strong></font>";
+		$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso! Aguarde...</strong></font>";
+		echo "<meta HTTP-EQUIV='refresh' CONTENT='0.5;URL=?perfil=projeto_2'>";
 	}
 	else
 	{
@@ -43,7 +44,8 @@ if(isset($_POST['insereAtuacao']))
 		WHERE idProjeto = '$idProjeto'";
 	if(mysqli_query($con,$sql_insere_projeto))
 	{
-		$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso!</strong></font>";
+		$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso! Aguarde...</strong></font>";
+		echo "<meta HTTP-EQUIV='refresh' CONTENT='0.5;URL=?perfil=projeto_2'>";
 	}
 	else
 	{
@@ -71,6 +73,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
     	?>
 		<div class="form-group">
 			<h4>Cadastro de Projeto</h4>
+			<p><strong><?php if(isset($mensagem)){echo $mensagem;} ?></strong></p>
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
