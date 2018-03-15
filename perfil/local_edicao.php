@@ -31,7 +31,7 @@ $local = recuperaDados("locais_realizacao", "idLocaisRealizacao", $idLocaisReali
 						<div class="col-md-offset-2 col-md-4">
 							<label>Local *</label><br/>
 							<input type="text" name="local" class="form-control" maxlength="100" value="<?php echo $local['local'] ?>">
-						</div>
+						</div> 
 
 						<div class="col-md-2"><label>Público Estimado *</label><br/>
 							<input type="text" name="estimativaPublico" class="form-control" value="<?php echo $local['estimativaPublico'] ?>">
@@ -41,7 +41,7 @@ $local = recuperaDados("locais_realizacao", "idLocaisRealizacao", $idLocaisReali
 							<label>Zona *</label>
 							<select class="form-control" name="idZona" >
 								<option value="1"></option>
-								<?php echo geraOpcao("zona","idZona") ?>
+								<?php echo geraOpcao("zona", $local['idZona']) ?>
 							</select>
 						</div>
 					</div>
