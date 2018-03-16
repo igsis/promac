@@ -13,7 +13,6 @@ if(isset($_POST['gravarPrazos']))
 	$fimExecucao = $_POST['fimExecucao'];
 	$prorrogacaoExecucao = $_POST['prorrogacaoExecucao'];
 	$finalProjeto = $_POST['finalProjeto'];
-	$prestarContas = $_POST['prestarContas'];
 
 	$prazos = recuperaDados("prazos_projeto","idProjeto",$idProjeto);
 	if($prazos == NULL)
