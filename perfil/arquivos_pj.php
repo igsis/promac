@@ -7,7 +7,7 @@ $tipoPessoa = '2';
 // Gerar documentos
 $server = "http://".$_SERVER['SERVER_NAME']."/promac/";
 $http = $server."/pdf/";
-$link1 = $http."rlt_declaracao_vinculo_pj.php";
+$link1 = $http."rlt_declaracao_inscricao_pj.php";
 $link2 = $http."rlt_declaracao_os.php";
 
 
@@ -112,7 +112,7 @@ $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-5">
-						<p align="left">Declaração de Vínculo.</p>
+						<p align="left"><strong>Declaração de Inscrição</strong></p>
 					</div>
 					<div class="col-md-3">
 						<a href='<?php echo $link1; ?>' target='_blank' class="btn btn-theme btn-md btn-block"><strong>Obter modelo</strong></a>
