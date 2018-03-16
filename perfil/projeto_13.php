@@ -23,6 +23,23 @@ if(isset($_POST['insere']))
 	}
 }
 
+if(isset($_POST['apagar']))
+{
+	$indice = "video".$_POST['videoApagar'];
+	$video[$indice] = "";
+
+	$sql_insere = "UPDATE projeto SET
+		$indice = '$video[$indice]'
+		WHERE idProjeto = '$idProjeto'";
+	if(mysqli_query($con,$sql_insere))
+	{
+		$mensagem = "<font color='#01DF3A'><strong>Apagado com sucesso!</strong></font>";
+	}
+	else
+	{
+		$mensagem = "<font color='#FF0000'><strong>Erro ao gravar! Tente novamente.</strong></font>";
+	}
+}
 
 $video = recuperaDados("projeto","idProjeto",$idProjeto);
 $v = array($video['video1'], $video['video2'], $video['video3']);
@@ -94,7 +111,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 												</thead>
 												<tbody>
 									<?php
-									foreach ($v as $m)
+									foreach ($v as $key => $m)
 									{
 										if (!empty($m))
 										{
@@ -107,6 +124,12 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 														</td>
 														<td>
 															<?php echo $obj['title']; ?>
+														</td>
+														<td>
+															<form method="POST" action="?perfil=projeto_13">
+															<input type="hidden" name="videoApagar" value="<?php echo $key+1; ?>">
+															<input type="submit" name="apagar" class="btn btn-theme" value="Apagar">
+															</form>
 														</td>
 													</tr>
 									<?php

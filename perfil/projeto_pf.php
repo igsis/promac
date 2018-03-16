@@ -5,6 +5,15 @@ $tipoPessoa = '1';
 
 $idPf = $_SESSION['idUser'];
 $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
+$campos = array($pf['nome'], $pf['cpf'], $pf['rg'], $pf['email'], $pf['cep'], $pf['numero']);
+$cpo = false;
+
+foreach ($campos as $cpos) {
+	if ($cpos == null)
+	{
+		$cpo = true;
+	}
+}
 
 if(isset($_POST['liberacao']))
 {
@@ -38,21 +47,33 @@ if(isset($_POST['apagar']))
 <section id="list_items" class="home-section bg-white">
 	<div class="container"><?php include '../perfil/includes/menu_interno_pf.php'; ?>
 		<div class="form-group">
-			<h4>Projetos</h4>
+			<?php
+			if($pf['liberado'] != 0)
+			echo "<h4>Projetos</h4>";
+			?>
 			<h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
 			<?php
-				if($pf['liberado'] == 0)// ainda não foi solicitado liberação
+				if($pf['liberado'] == 0) // ainda não foi solicitado liberação
 				{
+
+				include 'includes/resumo_pf.php';
 				?>
-					<p>Após o preenchimento de todos os dados pessoais, solicite liberação para envio de projetos mediante a liberação da Secretaria MUnicipal de Cultura.</p>
+				<div class="alert alert-info">
+					Após o preenchimento de todos os dados pessoais, solicite liberação para envio de projetos mediante a liberação da Secretaria Municipal de Cultura.
+				</div>
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
+							<?php
+							if ($cpo == false)
+							{?>
 							<form class="form-horizontal" role="form" action="?perfil=projeto_pf" method="post">
 								<input type="submit" name="liberacao" value="Solicitar liberação de acesso" class="btn btn-theme btn-lg btn-block">
 							</form>
+							<?php
+							}?>
 						</div>
 					</div>
 			</div>
@@ -61,13 +82,17 @@ if(isset($_POST['apagar']))
 				elseif($pf['liberado'] == 1)// foi solicitado liberação, porém a SMC não analisou ainda.
 				{
 			?>
-				<p><font color='#01DF3A'><strong>Sua solicitação para a liberação de envio de projetos foi enviada à Secretaria MUnicipal de Cultura. Aguarde a análise da sua documentação e liberação.</strong></font></p>
+				<div class="alert alert-success">
+					<strong>Sua solicitação para a liberação de envio de projetos foi enviada à Secretaria Municipal de Cultura. Aguarde a análise da sua documentação e liberação.</strong>
+				</div>
 			<?php
 				}
 				elseif($pf['liberado'] == 2)// a liberação de projetos foi rejeitada pela SMC.
 				{
 			?>
-				<p><font color='#01DF3A'><strong>Sua solicitação para a liberação de envio de projetos foi enviada à Secretaria MUnicipal de Cultura. Aguarde a análise da sua documentação e liberação.</strong></font></p>
+				<div class="alert alert-danger">
+					<strong>Sua solicitação para a liberação de envio de projetos foi rejeitada pela Secretaria Municipal de Cultura.</strong>
+				</div>
 			<?php
 				}
 				else // liberação concedida pela SMC - liberado = 3
