@@ -669,7 +669,7 @@ function listaArquivosPessoa($idPessoa,$tipoPessoa,$pagina)
 				{
 					echo "<tr>";
 					echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
-					echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>".$arquivo['arquivo']."</a></td>";
+					echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
 					echo "
 						<td class='list_description'>
 							<form id='apagarArq' method='POST' action='?perfil=".$pagina."'>
