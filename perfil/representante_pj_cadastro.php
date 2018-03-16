@@ -131,22 +131,22 @@ $representante1 = recuperaDados("representante_legal","idRepresentanteLegal",$pj
 				<form class="form-horizontal" role="form" action="?perfil=representante_pj_cadastro" method="post">
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><strong>Nome: *</strong><br/>
-							<input type="text" class="form-control" name="nome" placeholder="Nome completo" value="<?php echo $representante1['nome']; ?>" >
+							<input type="text" class="form-control" name="nome" placeholder="Nome completo" value="<?php echo $representante1['nome']; ?>" required >
 						</div>
 					</div>
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-6"><strong>RG/RNE/PASSAPORTE: *</strong><br/>
-							<input type="text" class="form-control" name="rg" placeholder="RG/RNE/PASSAPORTE" value="<?php echo $representante1['rg']; ?>" >
+							<input type="text" class="form-control" name="rg" placeholder="RG/RNE/PASSAPORTE" value="<?php echo $representante1['rg']; ?>" required>
 						</div>
 						<div class="col-md-6"><strong>CPF: *</strong><br/>
-							<input type="text" readonly class="form-control" name="cpf" placeholder="CPF" value="<?php echo $representante1['cpf']; ?>" >
+							<input type="text" readonly class="form-control" name="cpf" placeholder="CPF" value="<?php echo $representante1['cpf']; ?>" required>
 						</div>
 					</div>
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><strong>E-mail *:</strong><br/>
-							<input type="text" class="form-control" name="email" placeholder="E-mail" value="<?php echo $representante1['email']; ?>">
+							<input type="text" class="form-control" name="email" placeholder="E-mail" value="<?php echo $representante1['email']; ?>" required>
 						</div>
 					</div>
 
@@ -165,7 +165,7 @@ $representante1 = recuperaDados("representante_legal","idRepresentanteLegal",$pj
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-6"><strong>CEP *:</strong><br/>
-							<input type="text" class="form-control" id="CEP" name="CEP" placeholder="CEP" value="<?php echo $representante1['cep']; ?>">
+							<input type="text" class="form-control" id="CEP" name="CEP" placeholder="CEP" value="<?php echo $representante1['cep']; ?>" required>
 						</div>
 						<div class="col-md-6" align="left"><i>Clique no número do CEP e pressione a tecla Tab para carregar</i>
 						</div>
@@ -173,7 +173,7 @@ $representante1 = recuperaDados("representante_legal","idRepresentanteLegal",$pj
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><strong>Endereço:</strong><br/>
-							<input type="text" readonly class="form-control" id="Endereco" name="Endereco" placeholder="Endereço" value="<?php echo $representante1['logradouro']; ?>">
+							<input type="text" readonly class="form-control" id="Endereco" name="Endereco" placeholder="Endereço" value="<?php echo $representante1['logradouro']; ?>" required>
 						</div>
 					</div>
 
