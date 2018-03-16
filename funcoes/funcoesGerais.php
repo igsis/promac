@@ -162,8 +162,9 @@ function returnEmptyDate($VCAM, $idProjeto)
 	$con = bancoMysqli();
 	$sql = "SELECT " . $VCAM ." FROM prazos_projeto WHERE idProjeto = '" . $idProjeto ."' LIMIT 0,1";
 	$query = mysqli_query($con,$sql);
+	$rnow = mysqli_num_rows($query);
 	while($campo = mysqli_fetch_array($query)){
-		return isset($campo[$VCAM]) ? $campo[$VCAM] : "00/00/0000";
+		return $campo[$VCAM];
 	}
 }
 //retorna hora H:i de um datetime
