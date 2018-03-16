@@ -143,6 +143,12 @@ function mtel(v){
     });
   });
   $(function() {
+    $( "#datepicker06" ).datepicker({ 
+      changeMonth: true,
+      changeYear: true
+    });
+  });
+  $(function() {
     $( "#datepicker10" ).datepicker({ 
       changeMonth: true,
       changeYear: true,
