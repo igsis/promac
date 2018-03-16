@@ -50,7 +50,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
-							<label>Justficativa do projeto*</label>
+							<label>Justificativa do projeto*</label>
 							<textarea name="justificativa" class="form-control" rows="10" required><?php echo $projeto['justificativa'] ?></textarea>
 						</div>
 					</div>
