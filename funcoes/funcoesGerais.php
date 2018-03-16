@@ -155,6 +155,10 @@ function exibirDataHoraBr($data)
 	$timestamp = strtotime($data);
 	return date('d/m/y - H:i:s', $timestamp);
 }
+function returnEmptyDate()
+{
+	return "00/00/0000";
+}
 //retorna hora H:i de um datetime
 function exibirHora($data)
 {

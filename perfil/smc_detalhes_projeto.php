@@ -91,7 +91,7 @@ $cronograma = recuperaDados("cronograma","idCronograma",$projeto['idCronograma']
 								<div class="form-group">
 									<div class="col-md-offset-2 col-md-3">
 										<label>Prazo Captação</label><br/>
-										<input type="text" name="prazoCaptacao" id="datepicker01" class="form-control" value="<?php echo exibirDataBr($prazos['prazoCaptacao']) ?>">
+										<input type="text" name="prazoCaptacao" id="datepicker01" class="form-control" value="00/00/0000">
 									</div>
 
 									<div class="col-md-2"><label>Prorrogação</label><br/>
@@ -109,16 +109,16 @@ $cronograma = recuperaDados("cronograma","idCronograma",$projeto['idCronograma']
 
 									<div class="col-md-3">
 										<label>Data Final da Captação</label>
-										<input type="text" name="finalCaptacao" id="datepicker02" class="form-control" value="<?php echo exibirDataBr($prazos['finalCaptacao']) ?>">
+										<input type="text" name="finalCaptacao" id="datepicker02" class="form-control" value="<?php echo returnEmptyDate() ?>">
 									</div>
 								</div>
 
 								<div class="form-group">
 									<div class="col-md-offset-2 col-md-6"><label>Início da execução do projeto</label>
-										<input type="text" name="inicioExecucao" id="datepicker03" class="form-control" value="<?php echo exibirDataBr($prazos['inicioExecucao']) ?>">
+										<input type="text" name="inicioExecucao" id="datepicker03" class="form-control" value="<?php echo returnEmptyDate() ?>">
 									</div>
 									<div class="col-md-6"><label>Fim da execução do projeto</label>
-										<input type="text" name="fimExecucao" id="datepicker04" class="form-control" value="<?php echo exibirDataBr($prazos['fimExecucao']) ?>">
+										<input type="text" name="fimExecucao" id="datepicker04" class="form-control" value="<?php echo returnEmptyDate() ?>">
 									</div>
 								</div>
 
@@ -136,10 +136,10 @@ $cronograma = recuperaDados("cronograma","idCronograma",$projeto['idCronograma']
 										</select>
 									</div>
 									<div class="col-md-3"><label>Data final do projeto</label>
-										<input type="text" name="finalProjeto" id="datepicker05" class="form-control" value="<?php echo exibirDataBr($prazos['finalProjeto']) ?>">
+										<input type="text" name="finalProjeto" id="datepicker05" class="form-control" value="<?php echo returnEmptyDate() ?>">
 									</div>
 									<div class="col-md-3"><label>Data para prestar contas</label>
-										<input type="text" name="prestarContas" id="datepicker06" class="form-control" value="<?php echo exibirDataBr($prazos['prestarContas']) ?>">
+										<input type="text" name="prestarContas" id="datepicker06" class="form-control" value="<?php echo returnEmptyDate() ?>">
 									</div>
 								</div>
 
