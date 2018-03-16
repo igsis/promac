@@ -33,7 +33,7 @@ if($tipoUsuario != 2)
 }
 ?>
 <section id="list_items" class="home-section bg-white">
-	<div class="container"><?php include '../perfil/includes/menu_interno_pf.php'; ?>
+	<div class="container"><?php include 'includes/menu_smc.php'; ?>
 		<center><div class= "alert alert-success" style="width: 70%">
 			<strong>ATENÇÃO!</strong> Você deseja liberar <b><a href="../visual/index_pf.php?perfil=smc_lista_liberacao&tipo=1">pessoas físicas</a></b> ou <b><a href="index_pf.php?perfil=smc_lista_liberacao&tipo=2"> pessoas jurídicas</a></b>?
 		</div>
