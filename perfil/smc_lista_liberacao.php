@@ -3,6 +3,7 @@ $con = bancoMysqli();
 unset($_SESSION['idProjeto']);
 $tipoPessoa = '1';
 $tipoLiberacao = $_GET['tipo'];
+$tipoUsuario = $_SESSION['tipoUsuario'];
 $liberado = isset($_GET['liberado']) ? $_GET['liberado'] : null;
 
 $idPf = $_SESSION['idUser'];
@@ -26,11 +27,15 @@ if(isset($_POST['liberacaoPJ']))
 		echo "<script>alert('O usuário foi ativo com sucesso');</script>";
 }
 
+if($tipoUsuario != 2)
+{
+	header("Location: visual/index_pf.php");
+}
 ?>
 <section id="list_items" class="home-section bg-white">
 	<div class="container"><?php include '../perfil/includes/menu_interno_pf.php'; ?>
 		<center><div class= "alert alert-success" style="width: 70%">
-			<strong>ATENÇÃO!</strong> Você deseja liberar <b><a href="index_pf.php?perfil=lista_liberacao&tipo=1">pessoas físicas</a></b> ou <b><a href="index_pf.php?perfil=lista_liberacao&tipo=2"> pessoas jurídicas</a></b>?
+			<strong>ATENÇÃO!</strong> Você deseja liberar <b><a href="../visual/index_pf.php?perfil=smc_lista_liberacao&tipo=1">pessoas físicas</a></b> ou <b><a href="index_pf.php?perfil=smc_lista_liberacao&tipo=2"> pessoas jurídicas</a></b>?
 		</div>
 		<?php
 		if($tipoLiberacao == 1){ ?>
@@ -78,14 +83,14 @@ if(isset($_POST['liberacaoPJ']))
 											echo "<td class='list_description'>".$campo['telefone']."</td>";
 											echo "
 												<td class='list_description'>
-													<form method='POST' action='?perfil=visualiza_perfil_pf'>
+													<form method='POST' action='?perfil=smc_visualiza_perfil_pf'>
 														<input type='hidden' name='liberado' value='".$campo['idPf']."' />
 														<input type ='submit' class='btn btn-theme btn-block' value='Visualizar'>
 													</form>
 												</td>";
 											echo "
 												<td class='list_description'>
-													<form method='POST' action='?perfil=lista_liberacao'>
+													<form method='POST' action='?perfil=smc_lista_liberacao'>
 														<input type='hidden' name='LIBPF' value='".$campo['idPf']."' />
 														<input type ='submit' name='liberacaoPF' class='btn btn-theme btn-block' value='Liberar'>
 													</form>
@@ -142,19 +147,19 @@ if(isset($_POST['liberacaoPJ']))
 											echo "<tr>";
 											echo "<td class='list_description'>".$campo['razaoSocial']."</td>";
 											echo "<td class='list_description'>".$campo['cnpj']."</td>";
-											echo "<td class='list_description'>".$campo['ccm']."</td>";
+											echo "<td class='list_description'>".$campo['ccm']."</td>";	
 											echo "<td class='list_description'>".$campo['email']."</td>";
 											echo "<td class='list_description'>".$campo['telefone']."</td>";
 											echo "
 												<td class='list_description'>
-													<form method='POST' action='?perfil=visualiza_perfil_pj'>
+													<form method='POST' action='?perfil=smc_visualiza_perfil_pj'>
 														<input type='hidden' name='liberado' value='".$campo['idPj']."' />
 														<input type ='submit' class='btn btn-theme btn-block' value='Visualizar'>
 													</form>
 												</td>";
 											echo "
 												<td class='list_description'>
-													<form method='POST' action='?perfil=lista_liberacao'>
+													<form method='POST' action='?perfil=smc_lista_liberacao'>
 													<input type='hidden' name='LIBPJ' value='".$campo['idPj']."' />
 														<input type ='submit' name='liberacaoPJ' class='btn btn-theme btn-block' value='Liberar'>
 													</form>

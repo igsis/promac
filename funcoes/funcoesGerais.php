@@ -37,8 +37,10 @@ function autenticaloginpf($login, $senha)
 				}
 				if($nAcesso == 1)
 					header("Location: visual/index_pf.php");
-				else if($nAcesso == 2)
-					header("Location: perfil/smc_index.php");
+				else if($nAcesso == 2){
+					header("Location: visual/index_pf.php?perfil=smc_lista_liberacao");
+					$_SESSION['tipoUsuario'] = 2;
+				}
 				else if($nAcesso == 3)
 					header("Location: perfil/comissao_index.php");
 			}

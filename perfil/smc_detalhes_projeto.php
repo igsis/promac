@@ -91,7 +91,7 @@ $cronograma = recuperaDados("cronograma","idCronograma",$projeto['idCronograma']
 								<div class="form-group">
 									<div class="col-md-offset-2 col-md-3">
 										<label>Prazo Captação</label><br/>
-										<input type="text" name="prazoCaptacao" id="datepicker01" class="form-control" value="00/00/0000">
+										<input type="text" name="prazoCaptacao" id="datepicker01" class="form-control" value="<?php echo returnEmptyDate() ?>">
 									</div>
 
 									<div class="col-md-2"><label>Prorrogação</label><br/>
