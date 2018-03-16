@@ -723,8 +723,9 @@ function listaArquivosPessoaEditor($idPessoa,$tipoPessoa,$pagina)
 				<tr class='list_menu'>
 					<td>Tipo de arquivo</td>
 					<td>Nome do arquivo</td>
-					<td width='15%'>Status</td>
-					<td width='15%'></td>
+					<td>Status</td>
+					<td>Observações</td>
+					<td>Ação</td>
 				</tr>
 			</thead>
 			<tbody>";
@@ -733,13 +734,20 @@ function listaArquivosPessoaEditor($idPessoa,$tipoPessoa,$pagina)
 					echo "<tr>";
 					echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
 					echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
+					echo "<td class='list_description'>
+					<select name='status' id='statusOpt'>
+								    <option value='0'>Aprovado</option>
+								    <option value='1'>Complementação</option>
+								    <option value='2'>Reprovado</option>
+								</select>
+								</td>";
+					echo "<td class='list_description'>
+					<input type='text' name='observ' maxlength='100'>
+					</td>";
+
 					echo "
 						<td class='list_description'>
-							<form id='apagarArq' method='POST' action='?perfil=".$pagina."'>
-								<input type='hidden' name='idPessoa' value='".$idPessoa."' />
-								<input type='hidden' name='tipoPessoa' value='".$tipoPessoa."' />
-								<input type='hidden' name='apagar' value='".$arquivo['idUploadArquivo']."' />
-								<button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Excluir Arquivo?' data-message='Deseja realmente excluir o arquivo ".$arquivo['documento']."?'>Apagar
+								<button class='btn btn-theme' type='button' data-toggle='modal'>Atualizar
 								</button></td>
 							</form>";
 					echo "</tr>";

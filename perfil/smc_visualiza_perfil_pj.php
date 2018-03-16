@@ -46,7 +46,7 @@ $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 			<p align="justify"><strong>Email:</strong> <?php echo isset($pj['email']) ? $pj['email'] : null; ?></p>
 		 </div>
 		 <div class="table-responsive list_info"><h6>Arquivo(s) de Pessoa Física</h6>
-		<?php listaArquivosPessoa($idPj,'2',"smc_visualiza_perfil_pj"); ?>
+		<?php listaArquivosPessoaEditor($idPj,'2',"smc_visualiza_perfil_pj"); ?>
 		</div>
 	</div>
 
