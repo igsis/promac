@@ -30,7 +30,7 @@ $cpf = $_POST['cpf'];
 ?>
 
 <section id="list_items" class="home-section bg-white">
-	<div class="container">
+	<div class="container"><?php include 'includes/menu_smc.php'; ?>
 		<div class="form-group">
 			<div class="col-md-offset-2 col-md-8">
 				<label>Selecione o tipo de acesso</label><br/>
