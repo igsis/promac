@@ -46,14 +46,14 @@ $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 			<p align="justify"><strong>Email:</strong> <?php echo isset($pj['email']) ? $pj['email'] : null; ?></p>
 		 </div>
 		 <div class="table-responsive list_info"><h6>Arquivo(s) de Pessoa Física</h6>
-		<?php listaArquivosPessoa($idPj,'2',"visualiza_perfil_pj"); ?>
+		<?php listaArquivosPessoa($idPj,'2',"smc_visualiza_perfil_pj"); ?>
 		</div>
 	</div>
 
 <!-- Botão para Prosseguir -->
 	<div class="form-group">
 		<div class="col-md-offset-5 col-md-2">
-			<form class="form-horizontal" role="form" action="?perfil=lista_liberacao" method="post">
+			<form class="form-horizontal" role="form" action="?perfil=smc_lista_liberacao" method="post">
 				<input type="submit" value="Voltar" class="btn btn-theme btn-lg btn-block">
 			</form>
 		</div>
