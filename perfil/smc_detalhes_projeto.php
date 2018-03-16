@@ -93,7 +93,10 @@ $cronograma = recuperaDados("cronograma","idCronograma",$projeto['idCronograma']
 										<label>Prazo Captação</label><br/>
 										<input type="text" name="prazoCaptacao" id="datepicker01" class="form-control" value="<?php 
 										if(returnEmptyDate('prazoCaptacao', $idProjeto) > 0 ){ 
-											echo exibirDataBr(returnEmptyDate('prazoCaptacao', $idProjeto));
+											$var = strtotime(returnEmptyDate('prazoCaptacao', $idProjeto));
+											echo date("d",$var) . "/";
+											echo date("m",$var) . "/";
+											echo date("Y",$var);
 										} else{
 											echo "00/00/0000";
 										}?>">
@@ -115,8 +118,11 @@ $cronograma = recuperaDados("cronograma","idCronograma",$projeto['idCronograma']
 									<div class="col-md-3">
 										<label>Data Final da Captação</label>
 										<input type="text" name="finalCaptacao" id="datepicker02" class="form-control" value="<?php
-										 if(returnEmptyDate('prazoCaptacao', $idProjeto) > 0 ){ 
-											echo exibirDataBr(returnEmptyDate('finalCaptacao', $idProjeto));
+										 if(returnEmptyDate('finalCaptacao', $idProjeto) > 0 ){ 
+											$var = strtotime(returnEmptyDate('finalCaptacao', $idProjeto));
+											echo date("d",$var) . "/";
+											echo date("m",$var) . "/";
+											echo date("Y",$var);
 										} else{
 											echo "00/00/0000";
 										}
@@ -127,8 +133,11 @@ $cronograma = recuperaDados("cronograma","idCronograma",$projeto['idCronograma']
 								<div class="form-group">
 									<div class="col-md-offset-2 col-md-6"><label>Início da execução do projeto</label>
 										<input type="text" name="inicioExecucao" id="datepicker03" class="form-control" value="<?php 
-										if(returnEmptyDate('prazoCaptacao', $idProjeto) > 0 ){ 
-											echo exibirDataBr(returnEmptyDate('inicioExecucao', $idProjeto));
+										if(returnEmptyDate('inicioExecucao', $idProjeto) > 0 ){ 
+											$var = strtotime(returnEmptyDate('inicioExecucao', $idProjeto));
+											echo date("d",$var) . "/";
+											echo date("m",$var) . "/";
+											echo date("Y",$var);
 										} else{
 											echo "00/00/0000";
 										}
@@ -136,8 +145,11 @@ $cronograma = recuperaDados("cronograma","idCronograma",$projeto['idCronograma']
 									</div>
 									<div class="col-md-6"><label>Fim da execução do projeto</label>
 										<input type="text" name="fimExecucao" id="datepicker04" class="form-control" value="<?php 
-										if(returnEmptyDate('prazoCaptacao', $idProjeto) > 0 ){ 
-											echo exibirDataBr(returnEmptyDate('fimExecucao', $idProjeto));
+										if(returnEmptyDate('fimExecucao', $idProjeto) > 0 ){ 
+											$var = strtotime(returnEmptyDate('fimExecucao', $idProjeto));
+											echo date("d",$var) . "/";
+											echo date("m",$var) . "/";
+											echo date("Y",$var);
 										} else{
 											echo "00/00/0000";
 										}
@@ -160,8 +172,11 @@ $cronograma = recuperaDados("cronograma","idCronograma",$projeto['idCronograma']
 									</div>
 									<div class="col-md-3"><label>Data final do projeto</label>
 										<input type="text" name="finalProjeto" id="datepicker05" class="form-control" value="<?php 
-										if(returnEmptyDate('prazoCaptacao', $idProjeto) > 0 ){ 
-											echo exibirDataBr(returnEmptyDate('finalProjeto', $idProjeto));
+										if(returnEmptyDate('finalProjeto', $idProjeto) > 0 ){ 
+											$var = strtotime(returnEmptyDate('finalProjeto', $idProjeto));
+											echo date("d",$var) . "/";
+											echo date("m",$var) . "/";
+											echo date("Y",$var);
 										} else{
 											echo "00/00/0000";
 										}
@@ -169,8 +184,11 @@ $cronograma = recuperaDados("cronograma","idCronograma",$projeto['idCronograma']
 									</div>
 									<div class="col-md-3"><label>Data para prestar contas</label>
 										<input type="text" name="prestarContas" id="datepicker06" class="form-control" value="<?php 
-										if(returnEmptyDate('prazoCaptacao', $idProjeto) > 0 ){ 
-											echo exibirDataBr(returnEmptyDate('prestarContas', $idProjeto));
+										if(returnEmptyDate('prestarContas', $idProjeto) > 0 ){ 
+											$var = strtotime(returnEmptyDate('prestarContas', $idProjeto));
+											echo date("d",$var) . "/";
+											echo date("m",$var) . "/";
+											echo date("Y",$var);
 										} else{
 											echo "00/00/0000";
 										}
