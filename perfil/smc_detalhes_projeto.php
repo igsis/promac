@@ -269,7 +269,6 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 										$sql = "SELECT * FROM locais_realizacao
 												WHERE publicado = 1 AND idProjeto = ".$projeto['idProjeto']."";
 										$query = mysqli_query($con,$sql);
-										$num = mysqli_num_rows($query);
 										while($campo = mysqli_fetch_array($query))
 										{
 											$zona = recuperaDados("zona","idZona",$campo['idZona']);
@@ -295,7 +294,23 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 								<li class="list-group-item list-group-item-success"><b>Ficha Técnica</b></li>
 								<li class="list-group-item">
 									<table class="table table-bordered">
-										
+										<tr>
+											<th>Nome</th>
+											<th>CPF</th>
+											<th>Função</th>
+										</tr>
+										<?php
+										$sql = "SELECT * FROM ficha_tecnica
+												WHERE publicado = 1 AND idProjeto = '$idProjeto'";
+										$query = mysqli_query($con,$sql);
+										while($campo = mysqli_fetch_array($query))
+										{
+											echo "<tr>";
+											echo "<td class='list_description'>".$campo['nome']."</td>";
+											echo "<td class='list_description'>".$campo['cpf']."</td>";
+											echo "<td class='list_description'>".$campo['funcao']."</td>";
+											echo "</tr>";
+										}?>
 									</table>
 								</li>
 							</ul>
@@ -304,8 +319,8 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 								<li class="list-group-item">
 									<table class="table table-bordered">
 										<tr>
-											<td><strong>Início do cronograma:</strong> <?php echo isset($projeto['inicioCronograma']) ? $projeto['inicioCronograma'] : null; ?></td>
-											<td><strong>Fim do cronograma:</strong> <?php echo isset($projeto['fimCronograma']) ? $projeto['fimCronograma'] : null; ?></td>
+											<td><strong>Início do cronograma:</strong> <?php echo exibirDataBr($projeto['inicioCronograma']) ?></td>
+											<td><strong>Fim do cronograma:</strong> <?php echo exibirDataBr($projeto['fimCronograma']) ?></td>
 										</tr>
 										<tr>
 											<td><strong>Captação de recursos:</strong> <?php echo $cronograma['captacaoRecurso'] ?></td>
@@ -323,9 +338,55 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 							</ul>
 							<ul class="list-group">
 								<li class="list-group-item list-group-item-success"><b>Orçamento</b></li>
+								<?php
+									for ($i = 1; $i <= 7; $i++)
+									{
+										$sql_etapa = "SELECT idEtapa, SUM(valorTotal) AS tot FROM orcamento
+											WHERE publicado > 0 AND idProjeto ='$idProjeto' AND idEtapa = '$i'
+											ORDER BY idOrcamento";
+										$query_etapa = mysqli_query($con,$sql_etapa);
+										$lista = mysqli_fetch_array($query_etapa);
+
+										$etapa = recuperaDados("etapa","idEtapa",$lista['idEtapa']);
+										echo "<li class='list-group-item'><strong>".$etapa['etapa'].":</strong> R$ ".dinheiroParaBr($lista['tot'])."</li>";
+									}
+									$sql_total = "SELECT SUM(valorTotal) AS tot FROM orcamento
+											WHERE publicado > 0 AND idProjeto ='$idProjeto'
+											ORDER BY idOrcamento";
+									$query_total = mysqli_query($con,$sql_total);
+									$total = mysqli_fetch_array($query_total);
+									echo "<li class='list-group-item'><strong>TOTAL:</strong> R$ ".dinheiroParaBr($total['tot'])."</li>";
+								?>
 								<li class="list-group-item">
 									<table class="table table-bordered">
-										
+										<tr>
+											<td width='25%'><strong>Etapa</strong></td>
+											<td><strong>Descrição</strong></td>
+											<td width='5%'><strong>Qtde</strong></td>
+											<td width='5%'><strong>Unid. Med.</strong></td>
+											<td width='5%'><strong>Qtde Unid.</strong></td>
+											<td><strong>Valor Unit.</strong></td>
+											<td><strong>Valor Total</strong></td>
+										</tr>
+										<?php
+										$sql = "SELECT * FROM orcamento
+												WHERE publicado > 0 AND idProjeto ='$idProjeto'
+												ORDER BY idEtapa";
+										$query = mysqli_query($con,$sql);
+										while($campo = mysqli_fetch_array($query))
+										{
+											$etapa = recuperaDados("etapa","idEtapa",$campo['idEtapa']);
+											$medida = recuperaDados("unidade_medida","idUnidadeMedida",$campo['idUnidadeMedida']);
+											echo "<tr>";
+											echo "<td class='list_description'>".$etapa['etapa']."</td>";
+											echo "<td class='list_description'>".$campo['descricao']."</td>";
+											echo "<td class='list_description'>".$campo['quantidade']."</td>";
+											echo "<td class='list_description'>".$medida['unidadeMedida']."</td>";
+											echo "<td class='list_description'>".$campo['quantidadeUnidade']."</td>";
+											echo "<td class='list_description'>".dinheiroParaBr($campo['valorUnitario'])."</td>";
+											echo "<td class='list_description'>".dinheiroParaBr($campo['valorTotal'])."</td>";
+											echo "</tr>";
+										}?>
 									</table>
 								</li>
 							</ul>
@@ -366,6 +427,10 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 									?>
 								</li>
 							</ul>
+							<ul class="list-group">
+								<li class="list-group-item list-group-item-success"><b>Arquivos do Projeto</b></li>
+								<li class="list-group-item"><?php exibirArquivos(3,$projeto['idProjeto']); ?></li>
+							</ul>
 						</div>
 
 						<!-- LABEL PESSOA FÍSICA -->
@@ -391,11 +456,16 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 									<td><strong>Cooperado:</strong> <?php if($pf['cooperado'] == 1){ echo "Sim"; } else { echo "Não"; } ?></td>
 								</tr>
 							</table>
+							<ul class="list-group">
+								<li class="list-group-item list-group-item-success"><b>Arquivos da Pessoa Física</b></li>
+								<li class="list-group-item"><?php exibirArquivos(1,$pf['idPf']); ?></li>
+							</ul>
 						</div>
 
 						<!-- LABEL PESSOA JURÍDICA -->
 						<div role="tabpanel" class="tab-pane fade" id="J">
 							<br>
+							<?php if($projeto['tipoPessoa'] == 2) { ?>
 							<table class="table table-bordered">
 								<tr>
 									<td colspan="2"><strong>Razão Social:</strong> <?php echo isset($pj['razaoSocial']) ? $pj['razaoSocial'] : null; ?></td>
@@ -405,7 +475,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 									<td><strong>CCM:</strong> <?php echo isset($pj['ccm']) ? $pj['ccm'] : null; ?></td>
 								</tr>
 								<tr>
-									<td colspan="2"><strong>Endereço:</strong> <?php echo isset($pj['logradouro']) ? $pj['logradouro'] : null; ?>, <?php echo isset($pf['numero']) ? $pf['numero'] : null; ?> <?php echo isset($pj['complemento']) ? $pj['complemento'] : null; ?> - <?php echo isset($pj['bairro']) ? $pj['bairro'] : null; ?> - <?php echo isset($pj['cidade']) ? $pj['cidade'] : null; ?> - <?php echo isset($pj['estado']) ? $pj['estado'] : null; ?> - CEP <?php echo isset($pj['cep']) ? $pj['cep'] : null; ?></td>
+									<td colspan="2"><strong>Endereço:</strong> <?php echo isset($pj['logradouro']) ? $pj['logradouro'] : null; ?>, <?php echo isset($pj['numero']) ? $pj['numero'] : null; ?> <?php echo isset($pj['complemento']) ? $pj['complemento'] : null; ?> - <?php echo isset($pj['bairro']) ? $pj['bairro'] : null; ?> - <?php echo isset($pj['cidade']) ? $pj['cidade'] : null; ?> - <?php echo isset($pj['estado']) ? $pj['estado'] : null; ?> - CEP <?php echo isset($pj['cep']) ? $pj['cep'] : null; ?></td>
 								</tr>
 								<tr>
 									<td><strong>Telefone:</strong> <?php echo isset($pj['telefone']) ? $pj['telefone'] : null; ?></td>
@@ -416,6 +486,11 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 									<td><strong>Cooperativa:</strong> <?php if($pj['cooperativa'] == 1){ echo "Sim"; } else { echo "Não"; } ?></td>
 								</tr>
 							</table>
+							<ul class="list-group">
+								<li class="list-group-item list-group-item-success"><b>Arquivos da Pessoa Jurídica</b></li>
+								<li class="list-group-item"><?php exibirArquivos(2,$pj['idPj']); ?></li>
+							</ul>
+							<?php } else { echo "<strong>Não há pessoa jurídica cadastrada.</strong>"; } ?>
 						</div>
 					</div><!-- class="tab-content" -->
 				</div><!-- role="tabpanel" -->
