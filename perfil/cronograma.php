@@ -54,6 +54,14 @@ if(isset($_POST['insereCronograma']))
 }
 
 $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
+if($projeto['fimCronograma'] == 0000-00-00)
+{
+	$fimCronograma = "";
+}
+else
+{
+	$fimCronograma = exibirDataBr($projeto['fimCronograma']);
+}
 ?>
 <section id="list_items" class="home-section bg-white">
 	<div class="container">
@@ -88,7 +96,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 							<label>Data fim</label>
 						</div>
 						<div class="col-md-2">
-							<input type="text" name="fimCronograma" class="form-control" id="datepicker02" value="<?php echo exibirDataBr($projeto['fimCronograma']) ?>" />
+							<input type="text" name="fimCronograma" class="form-control" id="datepicker02" value="<?php echo $fimCronograma ?>" />
 						</div>
 					</div>
 
