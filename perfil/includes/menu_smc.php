@@ -19,6 +19,7 @@ $pasta = "?perfil=";
 				</ul>
 			</li>
 			<li><a href="<?php echo $pasta ?>smc_pesquisa_nome">Nivel de acesso</a></li>
+			| <a href="?perfil=informacoes_iniciais_pf">Módulo Proponente</a>
 			<li style="color:white;">-------------------------</li>
 			<li><a href="index.php?secao=perfil">Início</a></li>
 			<li><a href="../manual" target="_blank">Ajuda</a></li>
