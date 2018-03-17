@@ -762,6 +762,33 @@ function listaArquivosPessoaEditor($idPessoa,$tipoPessoa,$pagina)
 	}
 }
 
+function exibirArquivos($tipoPessoa,$idPessoa)
+{
+	$con = bancoMysqli();
+	$sql = "SELECT *
+			FROM lista_documento as list
+			INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
+			WHERE arq.idPessoa = '$idPessoa'
+			AND arq.idTipo = '$tipoPessoa'
+			AND arq.publicado = '1'";
+	$query = mysqli_query($con,$sql);
+	echo "
+		<table class='table table-bordered'>
+			<tr>
+				<td><strong>Tipo de arquivo</strong></td>
+				<td><strong>Nome do arquivo</strong></td>
+			</tr>
+	";
+	while($arquivo = mysqli_fetch_array($query))
+	{
+		echo "<tr>";
+		echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
+		echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>".$arquivo['arquivo']."</a></td>";
+		echo "</tr>";
+	}
+	echo "</table>";
+}
+
 // Função que valida o CPF
 function validaCPF($cpf)
 {
