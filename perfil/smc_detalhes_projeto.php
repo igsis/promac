@@ -61,7 +61,11 @@ else
 }
 
 $prazos = recuperaDados("prazos_projeto","idProjeto",$idProjeto);
+$area = recuperaDados("area_atuacao","idArea",$projeto['idAreaAtuacao']);
+$renuncia = recuperaDados("renuncia_fiscal","idRenuncia",$projeto['idRenunciaFiscal']);
 $cronograma = recuperaDados("cronograma","idCronograma",$projeto['idCronograma']);
+$video = recuperaDados("projeto","idProjeto",$idProjeto);
+$v = array($video['video1'], $video['video2'], $video['video3']);
 ?>
 <section id="list_items" class="home-section bg-white">
 	<div class="container"><?php include 'includes/menu_smc.php'; ?>
@@ -91,8 +95,8 @@ $cronograma = recuperaDados("cronograma","idCronograma",$projeto['idCronograma']
 								<div class="form-group">
 									<div class="col-md-offset-2 col-md-3">
 										<label>Prazo Captação</label><br/>
-										<input type="text" name="prazoCaptacao" id="datepicker01" class="form-control" value="<?php 
-										if(returnEmptyDate('prazoCaptacao', $idProjeto) > 0 ){ 
+										<input type="text" name="prazoCaptacao" id="datepicker01" class="form-control" value="<?php
+										if(returnEmptyDate('prazoCaptacao', $idProjeto) > 0 ){
 											$var = strtotime(returnEmptyDate('prazoCaptacao', $idProjeto));
 											echo date("d",$var) . "/";
 											echo date("m",$var) . "/";
@@ -118,7 +122,7 @@ $cronograma = recuperaDados("cronograma","idCronograma",$projeto['idCronograma']
 									<div class="col-md-3">
 										<label>Data Final da Captação</label>
 										<input type="text" name="finalCaptacao" id="datepicker02" class="form-control" value="<?php
-										 if(returnEmptyDate('finalCaptacao', $idProjeto) > 0 ){ 
+										 if(returnEmptyDate('finalCaptacao', $idProjeto) > 0 ){
 											$var = strtotime(returnEmptyDate('finalCaptacao', $idProjeto));
 											echo date("d",$var) . "/";
 											echo date("m",$var) . "/";
@@ -132,8 +136,8 @@ $cronograma = recuperaDados("cronograma","idCronograma",$projeto['idCronograma']
 
 								<div class="form-group">
 									<div class="col-md-offset-2 col-md-6"><label>Início da execução do projeto</label>
-										<input type="text" name="inicioExecucao" id="datepicker03" class="form-control" value="<?php 
-										if(returnEmptyDate('inicioExecucao', $idProjeto) > 0 ){ 
+										<input type="text" name="inicioExecucao" id="datepicker03" class="form-control" value="<?php
+										if(returnEmptyDate('inicioExecucao', $idProjeto) > 0 ){
 											$var = strtotime(returnEmptyDate('inicioExecucao', $idProjeto));
 											echo date("d",$var) . "/";
 											echo date("m",$var) . "/";
@@ -144,8 +148,8 @@ $cronograma = recuperaDados("cronograma","idCronograma",$projeto['idCronograma']
 										?>">
 									</div>
 									<div class="col-md-6"><label>Fim da execução do projeto</label>
-										<input type="text" name="fimExecucao" id="datepicker04" class="form-control" value="<?php 
-										if(returnEmptyDate('fimExecucao', $idProjeto) > 0 ){ 
+										<input type="text" name="fimExecucao" id="datepicker04" class="form-control" value="<?php
+										if(returnEmptyDate('fimExecucao', $idProjeto) > 0 ){
 											$var = strtotime(returnEmptyDate('fimExecucao', $idProjeto));
 											echo date("d",$var) . "/";
 											echo date("m",$var) . "/";
@@ -171,8 +175,8 @@ $cronograma = recuperaDados("cronograma","idCronograma",$projeto['idCronograma']
 										</select>
 									</div>
 									<div class="col-md-3"><label>Data final do projeto</label>
-										<input type="text" name="finalProjeto" id="datepicker05" class="form-control" value="<?php 
-										if(returnEmptyDate('finalProjeto', $idProjeto) > 0 ){ 
+										<input type="text" name="finalProjeto" id="datepicker05" class="form-control" value="<?php
+										if(returnEmptyDate('finalProjeto', $idProjeto) > 0 ){
 											$var = strtotime(returnEmptyDate('finalProjeto', $idProjeto));
 											echo date("d",$var) . "/";
 											echo date("m",$var) . "/";
@@ -183,8 +187,8 @@ $cronograma = recuperaDados("cronograma","idCronograma",$projeto['idCronograma']
 										?>">
 									</div>
 									<div class="col-md-3"><label>Data para prestar contas</label>
-										<input type="text" name="prestarContas" id="datepicker06" class="form-control" value="<?php 
-										if(returnEmptyDate('prestarContas', $idProjeto) > 0 ){ 
+										<input type="text" name="prestarContas" id="datepicker06" class="form-control" value="<?php
+										if(returnEmptyDate('prestarContas', $idProjeto) > 0 ){
 											$var = strtotime(returnEmptyDate('prestarContas', $idProjeto));
 											echo date("d",$var) . "/";
 											echo date("m",$var) . "/";
@@ -208,7 +212,7 @@ $cronograma = recuperaDados("cronograma","idCronograma",$projeto['idCronograma']
 							<br>
 							<table class="table table-bordered">
 								<tr>
-									<td><strong>Protocolo:</strong> <?php echo $projeto['idProjeto']; ?></td>
+									<td><strong>Protocolo:</strong> <?php echo str_pad($projeto['idProjeto'], 5, "0", STR_PAD_LEFT) ?></td>
 									<td><strong>Tipo:</strong>
 										<?php if($projeto['tipoPessoa'] == 1){ echo "Pessoa Física"; } else { echo "Pessoa Jurídica"; } ?>
 									</td>
@@ -219,13 +223,13 @@ $cronograma = recuperaDados("cronograma","idCronograma",$projeto['idCronograma']
 									<?php } ?>
 								</tr>
 								<tr>
-									<td><strong>Valor do projeto:</strong> <?php echo isset($projeto['valorProjeto']) ? $projeto['valorProjeto'] : null; ?></td>
-									<td><strong>Valor do incentivo:</strong> <?php echo isset($projeto['valorIncentivo']) ? $projeto['valorIncentivo'] : null; ?></td>
-									<td><strong>Valor do financiamento:</strong> <?php echo isset($projeto['valorFinanciamento']) ? $projeto['valorFinanciamento'] : null; ?></td>
+									<td><strong>Valor do projeto:</strong> R$ <?php echo isset($projeto['valorProjeto']) ? $projeto['valorProjeto'] : null; ?></td>
+									<td><strong>Valor do incentivo:</strong> R$ <?php echo isset($projeto['valorIncentivo']) ? $projeto['valorIncentivo'] : null; ?></td>
+									<td><strong>Valor do financiamento:</strong> R$ <?php echo isset($projeto['valorFinanciamento']) ? $projeto['valorFinanciamento'] : null; ?></td>
 								</tr>
 								<tr>
-									<td><strong>Área de atuação:</strong></td>
-									<td colspan="2"><strong>Renúncia Fiscal:</strong> </td>
+									<td colspan="2"><strong>Área de atuação:</strong> <?php echo $area['areaAtuacao'] ?></td>
+									<td><strong>Renúncia Fiscal:</strong> <?php echo $renuncia['renunciaFiscal'] ?></td>
 								</tr>
 								<tr>
 									<td colspan="3"><strong>Exposição da Marca:</strong> <?php echo isset($projeto['exposicaoMarca']) ? $projeto['exposicaoMarca'] : null; ?></td>
@@ -256,7 +260,26 @@ $cronograma = recuperaDados("cronograma","idCronograma",$projeto['idCronograma']
 								<li class="list-group-item list-group-item-success"><b>Local</b></li>
 								<li class="list-group-item">
 									<table class="table table-bordered">
-										
+										<tr>
+											<th>Local</th>
+											<th>Público estimado</th>
+											<th>Zona</th>
+										</tr>
+										<?php
+										$sql = "SELECT * FROM locais_realizacao
+												WHERE publicado = 1 AND idProjeto = ".$projeto['idProjeto']."";
+										$query = mysqli_query($con,$sql);
+										$num = mysqli_num_rows($query);
+										while($campo = mysqli_fetch_array($query))
+										{
+											$zona = recuperaDados("zona","idZona",$campo['idZona']);
+											echo "<tr>";
+											echo "<td>".$campo['local']."</td>";
+											echo "<td>".$campo['estimativaPublico']."</td>";
+											echo "<td>".$zona['zona']."</td>";
+											echo "</tr>";
+										}
+										?>
 									</table>
 								</li>
 							</ul>
@@ -308,9 +331,40 @@ $cronograma = recuperaDados("cronograma","idCronograma",$projeto['idCronograma']
 							</ul>
 							<ul class="list-group">
 								<li class="list-group-item list-group-item-success"><b>Mídias sociais</b></li>
-								<li class="list-group-item"><strong>Vídeo 1:</strong> <?php echo isset($projeto['video1']) ? $projeto['video1'] : null; ?></li>
-								<li class="list-group-item"><strong>Vídeo 2:</strong> <?php echo isset($projeto['video2']) ? $projeto['video2'] : null; ?></li>
-								<li class="list-group-item"><strong>Vídeo 3:</strong> <?php echo isset($projeto['video3']) ? $projeto['video3'] : null; ?></li>
+								<li class="list-group-item">
+									<?php
+									if(!empty($video['video1'] || $video['video2'] || $video['video3']))
+									{?>
+										<table class='table table-condensed'>
+										<?php
+										foreach ($v as $key => $m)
+										{
+											if (!empty($m))
+											{
+												$desc = "https://www.youtube.com/oembed?format=json&url=".$m;
+												$obj =	json_decode(file_get_contents($desc), true);
+											?>
+												<tr>
+													<td>
+														<img src="<?php echo $obj['thumbnail_url']; ?>" style='width: 150px;'>
+													</td>
+													<td>
+														<?php echo $obj['title']; ?><br/>
+														<?php echo $m ?>
+													</td>
+												</tr>
+										<?php
+											}
+										}?>
+											</table>
+									<?php
+									}
+									else
+									{
+										echo "<p>Não há video(s) inserido(s).<p/><br/>";
+									}
+									?>
+								</li>
 							</ul>
 						</div>
 
