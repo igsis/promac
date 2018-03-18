@@ -157,6 +157,17 @@ function exibirDataHoraBr($data)
 	$timestamp = strtotime($data);
 	return date('d/m/y - H:i:s', $timestamp);
 }
+function returnEmptyDateCronograma($VCAM, $idProjeto)
+{
+	$con = bancoMysqli();
+	$sql = "SELECT " . $VCAM ." FROM projeto WHERE idProjeto = '" . $idProjeto ."' LIMIT 0,1";
+	$query = mysqli_query($con,$sql);
+	$rnow = mysqli_num_rows($query);
+	while($campo = mysqli_fetch_array($query)){
+		return $campo[$VCAM];
+	}
+}
+
 function returnEmptyDate($VCAM, $idProjeto)
 {
 	$con = bancoMysqli();

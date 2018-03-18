@@ -4,20 +4,26 @@ $idProjeto = $_SESSION['idProjeto'];
 
 if(isset($_POST['insere']))
 {
-	$inicioCronograma = exibirDataMysql($_POST['inicioCronograma']);
-	$fimCronograma = exibirDataMysql($_POST['fimCronograma']);
+	if($_POST['fimCronograma'] < $_POST['inicioCronograma'])
+	{
+		echo "<script>alert('ERRO: A data final não pode ser menor que a data inicial. ')</script>";
+		header("Location: index_pf.php?perfil=cronograma");
+	} else {
+		$inicioCronograma = exibirDataMysql($_POST['inicioCronograma']);
+		$fimCronograma = exibirDataMysql($_POST['fimCronograma']);
 
-	$sql_insere = "UPDATE projeto SET
-		inicioCronograma = '$inicioCronograma',
-		fimCronograma = '$fimCronograma'
-		WHERE idProjeto = '$idProjeto'";
-	if(mysqli_query($con,$sql_insere))
-	{
-		$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso!</strong></font>";
-	}
-	else
-	{
-		$mensagem = "<font color='#FF0000'><strong>Erro ao gravar! Tente novamente.</strong></font>";
+		$sql_insere = "UPDATE projeto SET
+			inicioCronograma = '$inicioCronograma',
+			fimCronograma = '$fimCronograma'
+			WHERE idProjeto = '$idProjeto'";
+		if(mysqli_query($con,$sql_insere))
+		{
+			$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso!</strong></font>";
+		}
+		else
+		{
+			$mensagem = "<font color='#FF0000'><strong>Erro ao gravar! Tente novamente.</strong></font>";
+		}
 	}
 }
 
@@ -90,13 +96,29 @@ else
 							<label>Data Início</label>
 						</div>
 						<div class="col-md-2">
-							<input type="text" name="inicioCronograma" class="form-control" id="datepicker01" value="<?php echo exibirDataBr($projeto['inicioCronograma']) ?>" />
+							<input type="text" name="inicioCronograma" class="form-control" id="datepicker01" value="<?php
+										if(returnEmptyDateCronograma('inicioCronograma', $idProjeto) > 0 ){
+											$var = strtotime(returnEmptyDateCronograma('inicioCronograma', $idProjeto));
+											echo date("d",$var) . "/";
+											echo date("m",$var) . "/";
+											echo date("Y",$var);
+										} else{
+											echo "00/00/0000";
+										}?>">
 						</div>
 						<div class="col-md-2" align="right">
 							<label>Data fim</label>
 						</div>
 						<div class="col-md-2">
-							<input type="text" name="fimCronograma" class="form-control" id="datepicker02" value="<?php echo $fimCronograma ?>" />
+							<input type="text" name="fimCronograma" class="form-control" id="datepicker02" value="<?php
+										if(returnEmptyDateCronograma('fimCronograma', $idProjeto) > 0 ){
+											$var = strtotime(returnEmptyDateCronograma('fimCronograma', $idProjeto));
+											echo date("d",$var) . "/";
+											echo date("m",$var) . "/";
+											echo date("Y",$var);
+										} else{
+											echo "00/00/0000";
+										}?>">
 						</div>
 					</div>
 
