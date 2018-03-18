@@ -5,8 +5,6 @@ $projeto = $_SESSION['idProjeto'];
 $idPf = isset($_POST['liberado']) ? $_POST['liberado'] : null;
 $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 
-
-
 ?>
 
 <section id="list_items" class="home-section bg-white">
@@ -48,7 +46,11 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 			<p align="justify"><strong>Email:</strong> <?php echo isset($pf['email']) ? $pf['email'] : null; ?></p>
 		 </div>
 		 <div class="table-responsive list_info"><h6>Arquivo(s) de Pessoa Física</h6>
-		<?php listaArquivosPessoaEditor($idPf,'1',"smc_visualiza_perfil_pf"); ?>
+		<?php 
+		$query = "SELECT idProjeto FROM projeto WHERE idPf='$idPf' AND publicado = '1'";
+		$send = mysqli_query($con, $query);
+		$row = mysqli_fetch_array($send);
+		listaArquivosPessoaEditor($row['idProjeto'],'3',"smc_visualiza_perfil_pf"); ?>
 		</div>
 	</div>
 

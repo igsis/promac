@@ -2,6 +2,7 @@
 
 $con = bancoMysqli();
 $idPf = $_SESSION['idUser'];
+$idProjeto = $_SESSION['idProjeto'];
 $tipoPessoa = '1';
 
 // Gerar documentos
@@ -43,7 +44,7 @@ if(isset($_POST["enviar"]))
 				{
 					if(move_uploaded_file($nome_temporario, $dir.$new_name))
 					{
-						$sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('3', '$idPf', '$y', '$new_name', '$hoje', '1'); ";
+						$sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('3', '$idProjeto', '$y', '$new_name', '$hoje', '1'); ";
 						$query = mysqli_query($con,$sql_insere_arquivo);
 						if($query)
 						{
@@ -126,7 +127,7 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
 						<div class="table-responsive list_info"><h6>Arquivo(s) Anexado(s)</h6>
-							<?php listaArquivosPessoa($idPf,'3',"anexos"); ?>
+							<?php listaArquivosPessoa($idProjeto,'3',"anexos"); ?>
 						</div>
 					</div>
 				</div>
@@ -153,7 +154,7 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 											$envio = $con->query($query);
 											$row = $envio->fetch_array(MYSQLI_ASSOC);
 
-											if(verificaArquivosExistentesPF($idPf,$row['idListaDocumento'])){
+											if(verificaArquivosExistentesPF($idProjeto,$row['idListaDocumento'])){
 												echo '<div class="alert alert-success">O arquivo ' . $doc . ' já foi enviado.</div>';
 											}
 											else{ ?>
@@ -165,7 +166,7 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 									}
 								?>
 							</table><br>
-							<input type="hidden" name="idPessoa" value="<?php echo $idPf; ?>"  />
+							<input type="hidden" name="idPessoa" value="<?php echo $idProjeto; ?>"  />
 							<input type="hidden" name="tipoPessoa" value="<?php echo $tipoPessoa; ?>"  />
 							<input type="submit" name="enviar" class="btn btn-theme btn-lg btn-block" value='Enviar'>
 						</form>
