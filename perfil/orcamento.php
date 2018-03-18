@@ -99,6 +99,12 @@ if(isset($_POST['apagaOrcamento']))
 									$etapa = recuperaDados("etapa","idEtapa",$lista['idEtapa']);
 									echo "<li class='list-group-item'><strong>".$etapa['etapa'].":</strong> R$ ".dinheiroParaBr($lista['tot'])."</li>";
 								}
+								$sql_total = "SELECT SUM(valorTotal) AS tot FROM orcamento
+											WHERE publicado > 0 AND idProjeto ='$idProjeto'
+											ORDER BY idOrcamento";
+									$query_total = mysqli_query($con,$sql_total);
+									$total = mysqli_fetch_array($query_total);
+									echo "<li class='list-group-item'><strong>TOTAL:</strong> R$ ".dinheiroParaBr($total['tot'])."</li>";
 							?>
 							</li>
 						</ul>
