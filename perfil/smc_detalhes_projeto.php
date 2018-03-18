@@ -4,6 +4,11 @@ $con = bancoMysqli();
 $idProjeto = 1; //$idProjeto = $_POST['idProjeto'];
 $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 
+// Gerar documentos
+$server = "http://".$_SERVER['SERVER_NAME']."/promac/";
+$http = $server."/pdf/";
+$link1 = $http."rlt_projeto.php";
+
 if(isset($_POST['gravarPrazos']))
 {
 	$prazoCaptacao = exibirDataMysql($_POST['prazoCaptacao']);
@@ -51,6 +56,36 @@ if(isset($_POST['gravarPrazos']))
 	}
 }
 
+if(isset($_POST['gravarAdm']))
+{
+	$idStatus = $_POST['idStatus'];
+	$valorAprovado = dinheiroDeBr($_POST['valorAprovado']);
+	$sql_gravarAdm = "UPDATE projeto SET idStatus = '$idStatus', valorAprovado = '$valorAprovado' WHERE idProjeto = '$idProjeto' ";
+	if(mysqli_query($con,$sql_gravarAdm))
+	{
+		$mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
+	}
+	else
+	{
+		$mensagem = "<font color='#FF0000'><strong>Erro ao atualizar! Tente novamente.</strong></font>";
+	}
+}
+
+if(isset($_POST['gravarNota']))
+{
+	$dateNow = date('Y:m:d h:i:s');
+	$nota = addslashes($_POST['nota']);
+	$sql_nota = "INSERT INTO notas (idProjeto, data, nota) VALUES ('$idProjeto', '$dateNow', '$nota')";
+	if(mysqli_query($con,$sql_nota))
+	{
+		$mensagem = "<font color='#01DF3A'><strong>Nota inserida com sucesso!</strong></font>";
+	}
+	else
+	{
+		$mensagem = "<font color='#FF0000'><strong>Erro ao inserir nota! Tente novamente.</strong></font>";
+	}
+}
+
 if($projeto['tipoPessoa'] == 1)
 {
 	$pf = recuperaDados("pessoa_fisica","idPf",$projeto['idPf']);
@@ -60,6 +95,7 @@ else
 	$pj = recuperaDados("pessoa_juridica","idPj",$projeto['idPj']);
 }
 
+$projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 $prazos = recuperaDados("prazos_projeto","idProjeto",$idProjeto);
 $area = recuperaDados("area_atuacao","idArea",$projeto['idAreaAtuacao']);
 $renuncia = recuperaDados("renuncia_fiscal","idRenuncia",$projeto['idRenunciaFiscal']);
@@ -77,15 +113,74 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 				<div role="tabpanel">
 					<!-- LABELS -->
 					<ul class="nav nav-tabs">
-						<li class="nav active"><a href="#prazo" data-toggle="tab">Prazos</a></li>
+						<li class="nav active"><a href="#adm" data-toggle="tab">Administrativo</a></li>
+						<li class="nav"><a href="#prazo" data-toggle="tab">Prazos</a></li>
 						<li class="nav"><a href="#projeto" data-toggle="tab">Projeto</a></li>
 						<li class="nav"><a href="#F" data-toggle="tab">Pessoa Fisica</a></li>
 						<li class="nav"><a href="#J" data-toggle="tab">Pessoa Jurídica</a></li>
 					</ul>
 
 					<div class="tab-content">
+						<!-- LABEL ADMINISTRATIVO-->
+						<div role="tabpanel" class="tab-pane fade in active" id="adm">
+							<form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
+								<h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
+								<div class="form-group">
+									<div class="col-md-offset-4 col-md-4">
+										<a href='<?php echo $link1; ?>' target='_blank' class="btn btn-theme btn-md btn-block"><strong>Gerar PDF do Projeto</strong></a><br/>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-md-offset-2 col-md-6"><label>Status</label><br/>
+										<select class="form-control" name="idStatus" >
+											<?php echo geraOpcao("status",$projeto['idStatus']) ?>
+										</select>
+									</div>
+									<div class="col-md-6"><label>Valor Aprovado</label><br/>
+										<input type="text" name="valorAprovado" id='valor' class="form-control" value="<?php echo dinheiroParaBr($projeto['valorAprovado']) ?>">
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-md-offset-2 col-md-8"><input type="submit" name="gravarAdm" class="btn btn-theme btn-md btn-block" value="Gravar"></div>
+								</div>
+							</form>
+							<form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
+								<div class="form-group">
+									<div class="col-md-offset-2 col-md-8"><label>Notas</label><br/>
+										<textarea name="nota" class="form-control" rows="10" placeholder="Insira nste campo informações de notificações para o usuário."></textarea>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-md-offset-2 col-md-8"><input type="submit" name="gravarNota" class="btn btn-theme btn-md btn-block" value="Gravar"></div>
+								</div>
+							</form>
+							<ul class='list-group'>
+								<li class='list-group-item list-group-item-success'>Notas
+								<?php
+									$sql = "SELECT * FROM notas WHERE idProjeto = '$idProjeto'";
+									$query = mysqli_query($con,$sql);
+									$num = mysqli_num_rows($query);
+									if($num > 0)
+									{
+										while($campo = mysqli_fetch_array($query))
+										{
+											echo "<li class='list-group-item' align='left'><strong>".exibirDataHoraBr($campo['data'])."</strong><br/>".$campo['nota']."</li>";
+										}
+									}
+									else
+									{
+										echo "<li class='list-group-item'>Não há notas disponíveis.</li>";
+									}
+								?>
+								</li>
+							</ul>
+						</div>
+
 						<!-- LABEL PRAZOS -->
-						<div role="tabpanel" class="tab-pane fade in active" id="prazo">
+						<div role="tabpanel" class="tab-pane fade" id="prazo">
 							<form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
 								<h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
 								<div class="form-group">
