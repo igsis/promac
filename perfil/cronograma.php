@@ -8,7 +8,7 @@ if(isset($_POST['insere']))
 	{
 		echo "<script>alert('ERRO: A data final não pode ser menor que a data inicial. ')</script>";
 		header("Location: index_pf.php?perfil=cronograma");
-	} else {
+		} else {
 		$inicioCronograma = exibirDataMysql($_POST['inicioCronograma']);
 		$fimCronograma = exibirDataMysql($_POST['fimCronograma']);
 
