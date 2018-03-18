@@ -28,14 +28,19 @@
 						<hr/>
 
 						<div class="form-group">
-							<div class="col-md-offset-1 col-md-3">
+							<div class="col-md-3">
 								<form method="POST" action="login_pf.php" class="form-horizontal" role="form">
 									<button type="submit" class="btn btn-theme btn-lg btn-block">Pessoa Física</button>
 								</form>
 							</div>
-							<div class="col-md-offset-4 col-md-3">
+							<div class="col-md-offset-1 col-md-3">
 								<form method="POST" action="login_pj.php" class="form-horizontal" role="form">
 									<button type="submit" class="btn btn-theme btn-lg btn-block">Pessoa Jurídica</button>
+								</form>
+							</div>
+							<div class="col-md-offset-1 col-md-3">
+								<form method="POST" action="consulta_publica.php" class="form-horizontal" role="form">
+									<button type="submit" class="btn btn-theme btn-lg btn-block">Consulta Pública</button>
 								</form>
 							</div>
 						</div>
