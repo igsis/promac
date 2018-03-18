@@ -1,7 +1,7 @@
 <?php
 $con = bancoMysqli();
 
-$idProjeto = 1; //$idProjeto = $_POST['idProjeto'];
+$idProjeto = $_POST['idProjeto'];
 $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 
 // Gerar documentos

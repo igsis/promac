@@ -7,11 +7,29 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 
 if(isset($_POST['liberacaoPF']))
 {
-	$idFisico = $_POST['LIBPF'];
-	$QueryPJ = "UPDATE pessoa_fisica SET liberado='3' WHERE idPf='$idFisico'";
-	$envio = mysqli_query($con, $QueryPJ);
-	if($envio)
-		echo "<script>alert('O usuário foi ativo com sucesso');</script>";
+	?>
+	<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<?php
 }
 
 if(isset($_POST['liberacaoPJ']))
@@ -38,7 +56,7 @@ if(isset($_POST['liberacaoPJ']))
 					<div class="col-md-offset-1 col-md-10">
 						<div class="table-responsive list_info">
 						<?php
-							$sql = "SELECT * FROM prazos_projeto WHERE finalCaptacao < DATE_ADD(now(), INTERVAL 30 DAY)";
+							$sql = "SELECT * FROM prazos_projeto WHERE finalCaptacao< DATE_ADD(now(), INTERVAL 30 DAY)";
 							$query = mysqli_query($con,$sql); 
 							$num = mysqli_num_rows($query);
 							if($num > 0)
@@ -65,11 +83,12 @@ if(isset($_POST['liberacaoPJ']))
 											echo "<td class='list_description'>".$campo['prazoCaptacao']."</td>";
 											echo "<td class='list_description'>".$campo['inicioExecucao']."</td>";
 											echo "<td class='list_description'>".$campo['fimExecucao']."</td>";
+											$idProjetos = $campo['idProjeto'];
 											echo "
 												<td class='list_description'>
-													<form method='POST' action='?perfil=smc_index'>
-														<input type='hidden' name='idProjetoVis' value='".$campo['idProjeto']."' />
-														<input type ='submit' name='liberacaoPF' class='btn btn-theme btn-block' value='Visualizar'>
+													<form method='POST' action='?perfil=smc_detalhes_projeto'>
+														<input type='hidden' name='idProjeto' value='".$idProjetos."'/>
+														<input type ='submit' class='btn btn-theme btn-block' value='Visualizar'>
 													</form>
 												</td>";
 											}
@@ -127,10 +146,11 @@ if(isset($_POST['liberacaoPJ']))
 											echo "<td class='list_description'>".$campo['prazoCaptacao']."</td>";
 											echo "<td class='list_description'>".$campo['inicioExecucao']."</td>";
 											echo "<td class='list_description'>".$campo['fimExecucao']."</td>";
+											$idProjetos = $campo['idProjeto'];
 											echo "
 												<td class='list_description'>
 													<form method='POST' action='?perfil=smc_index'>
-														<input type='hidden' name='idProjetoVis' value='".$campo['idProjeto']."' />
+														<input type='hidden' name='idProjeto' value='".$idProjetos."' />
 														<input type ='submit' name='liberacaoPF' class='btn btn-theme btn-block' value='Visualizar'>
 													</form>
 												</td>";
@@ -190,10 +210,11 @@ if(isset($_POST['liberacaoPJ']))
 											echo "<td class='list_description'>".$campo['prazoCaptacao']."</td>";
 											echo "<td class='list_description'>".$campo['inicioExecucao']."</td>";
 											echo "<td class='list_description'>".$campo['fimExecucao']."</td>";
+											$idProjetos = $campo['idProjeto'];
 											echo "
 												<td class='list_description'>
 													<form method='POST' action='?perfil=smc_index'>
-														<input type='hidden' name='idProjetoVis' value='".$campo['idProjeto']."' />
+														<input type='hidden' name='idProjeto' value='".$idProjetos."' />
 														<input type ='submit' name='liberacaoPF' class='btn btn-theme btn-block' value='Visualizar'>
 													</form>
 												</td>";
