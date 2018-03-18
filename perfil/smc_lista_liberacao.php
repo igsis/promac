@@ -27,10 +27,10 @@ if(isset($_POST['liberacaoPJ']))
 		echo "<script>alert('O usuário foi ativo com sucesso');</script>";
 }
 
-/*if($tipoUsuario != 2)
+if($tipoUsuario != 2)
 {
 	header("Location: visual/index_pf.php");
-} */
+}
 ?>
 <section id="list_items" class="home-section bg-white">
 	<div class="container"><?php include 'includes/menu_smc.php'; ?>
