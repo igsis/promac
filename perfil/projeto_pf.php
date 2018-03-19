@@ -62,7 +62,7 @@ if(isset($_POST['apagar']))
 				include 'includes/resumo_pf.php';
 				?>
 				<div class="alert alert-info">
-					Após o preenchimento de todos os dados pessoais, solicite liberação para envio de projetos a Secretaria Municipal de Cultura.
+					Após o preenchimento de todos os dados pessoais, conclua a inscrição do proponente e aguarde a análise da sua documentação pela Secretaria Municipal de Cultura.
 				</div>
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
@@ -70,7 +70,7 @@ if(isset($_POST['apagar']))
 							if ($cpo == false)
 							{?>
 							<form class="form-horizontal" role="form" action="?perfil=projeto_pf" method="post">
-								<input type="submit" name="liberacao" value="Solicitar liberação de acesso" class="btn btn-theme btn-lg btn-block">
+								<input type="submit" name="liberacao" value="Concluir inscrição do proponente" class="btn btn-theme btn-lg btn-block">
 							</form>
 							<?php
 							}?>
@@ -83,7 +83,7 @@ if(isset($_POST['apagar']))
 				{
 			?>
 				<div class="alert alert-success">
-					<strong>Sua solicitação para a liberação de envio de projetos foi enviada à Secretaria Municipal de Cultura. Aguarde a análise da sua documentação e liberação.</strong>
+					<strong>Sua solicitação de inscrição foi enviada com sucesso à Secretaria Municipal de Cultura. Aguarde a análise da documentação.</strong>
 				</div>
 			<?php
 				}
@@ -101,7 +101,7 @@ if(isset($_POST['apagar']))
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<form class="form-horizontal" role="form" action="?perfil=projeto_novo" method="post">
-								<input type="submit" value="Inserir novo projeto" class="btn btn-theme btn-lg btn-block">
+								<input type="submit" value="Inscrever Projeto" class="btn btn-theme btn-lg btn-block">
 							</form>
 						</div>
 					</div>
