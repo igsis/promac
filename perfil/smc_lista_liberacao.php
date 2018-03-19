@@ -2,8 +2,8 @@
 $con = bancoMysqli();
 unset($_SESSION['idProjeto']);
 $tipoPessoa = '1';
-$tipoLiberacao = $_GET['tipo'];
-$tipoUsuario = $_SESSION['tipoUsuario'];
+$tipoLiberacao = isset($_GET['tipo']) ? $_GET['tipo'] : null;
+$tipoUsuario = isset($_SESSION['tipoUsuario']) ? $_SESSION['tipoUsuario'] : null;
 $liberado = isset($_GET['liberado']) ? $_GET['liberado'] : null;
 
 $idPf = $_SESSION['idUser'];
@@ -29,7 +29,7 @@ if(isset($_POST['liberacaoPJ']))
 
 if($tipoUsuario != 2)
 {
-	header("Location: visual/index_pf.php");
+	echo "<script>window.location = 'index_pf.php';</script>";
 }
 ?>
 <section id="list_items" class="home-section bg-white">
