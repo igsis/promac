@@ -41,7 +41,7 @@ $ano = date('Y');
 					<div class="col-md-offset-2 col-md-8" align="left">
 						<ul class='list-group'>
 							<li class='list-group-item list-group-item-success'>
-								<li class='list-group-item'><strong>Protocolo:</strong> <?php echo $ano.".".str_pad($idProjeto, 5, "0", STR_PAD_LEFT) ?></li>
+								<li class='list-group-item'><strong>Protocolo (nº ISP):</strong> <?php echo $projeto['protocolo'] ?></li>
 								<li class='list-group-item'><strong>Status:</strong> <?php echo $status['status'] ?></li>
 								<li class='list-group-item'>
 									<strong>Valor Aprovado:</strong>
