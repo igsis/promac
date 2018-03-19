@@ -50,7 +50,7 @@ if(isset($_POST['login']))
 						<form method="POST" action="login_pj.php" class="form-horizontal" role="form">
 							<div class="form-group">
 								<div class="col-md-offset-2 col-md-6">
-									<input type="text" id="cnpj" name="login" class="form-control" placeholder="Usuário">
+									<input type="text" id="cnpj" name="login" class="form-control" placeholder="CNPJ">
 								</div>
 								<div class=" col-md-6">
 									<input type="password" name="senha" class="form-control" placeholder="Senha">
