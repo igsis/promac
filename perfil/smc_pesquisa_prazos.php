@@ -5,7 +5,7 @@
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
-				<form method="POST" action="?perfil=smc_pesquisa_geral_resultado" class="form-horizontal" role="form">
+				<form method="POST" action="?perfil=smc_pesquisa_prazos_resultado" class="form-horizontal" role="form">
 
 					<hr/>
 					<div class="form-group">
