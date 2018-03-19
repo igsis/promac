@@ -1,13 +1,8 @@
 <?php 
-# Barra pf
+# Barra pf 
 $con = bancoMysqli();
 $idPf = $_SESSION['idUser'];
 $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
-// if ($pf['liberado'] != 3) {
-//     echo 'Não mostrar barra';
-// }else {
-//     echo 'Mostrar barra';
-// }
 
 $urlPf = array(
     27 => '/promac/visual/index_pf.php?secao=perfil',
@@ -37,7 +32,8 @@ $urlPf = array(
     23 => '/promac/visual/index_pf.php?perfil=anexos',
     24 => '/promac/visual/index_pf.php?perfil=projeto_13',
     25 => '/promac/visual/index_pf.php?perfil=finalProjeto',
-    26 => '/promac/visual/index_pf.php?perfil=informacoes_administrativas'
+    26 => '/promac/visual/index_pf.php?perfil=informacoes_administrativas',
+    28 => '/promac/visual/index_pf.php?perfil=projeto_8' // Passo 8
 );
 for ($i = 0; $i < count($urlPf); $i++) {
     if ($uri == $urlPf[$i]) {
@@ -77,6 +73,8 @@ for ($i = 0; $i < count($urlPf); $i++) {
             $acionar17 = 'active loading';
         }elseif ($i == 26){
             $acionar18 = 'active loading';
+        }elseif ($i == 28){
+            $acionar19 = 'active loading';
         }
 
 ?>
@@ -130,6 +128,9 @@ for ($i = 0; $i < count($urlPf); $i++) {
             <ul>
                 <li class="<?php echo isset($acionar11) ? $acionar11 : 'clickable'; ?>">
                    <a onclick="location.href='index_pf.php?perfil=local'" href=""><br />Local</a>
+                </li>
+                <li class="<?php echo isset($acionar19) ? $acionar19 : 'clickable'; ?>">
+                   <a onclick="location.href='index_pf.php?perfil=projeto_8'" href=""><br />Público Alvo</a>
                 </li>
                 <li class="<?php echo isset($acionar12) ? $acionar12 : 'clickable'; ?>">
                    <a onclick="location.href='index_pf.php?perfil=ficha_tecnica'" href=""><br />Ficha Técnica</a>

@@ -27,7 +27,7 @@
         include_once 'barras_smart_wizard/barra_pf.php';
         //-------------------------------------------------------------------
         # Barra Evento Pessoa Juridica
-        // include_once 'barras_smart_wizard/barra_pj.php';
+        include_once 'barras_smart_wizard/barra_pj.php';
  
         ?>
 </div>
