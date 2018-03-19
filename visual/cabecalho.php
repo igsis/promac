@@ -32,3 +32,7 @@ else
 			<p id="p-bar"><img src="images/logo_cultura_h.png" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>ProMAC</b>
 			</p>
 		</div>
+<?php 
+# Menu progresso
+include_once '../visual/smart_wizard.php';
+?>		
