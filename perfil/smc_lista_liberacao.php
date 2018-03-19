@@ -64,7 +64,6 @@ if(isset($_POST['liberacaoPJ']))
 												<td>Email</td>
 												<td>Telefone</td>
 												<td width='10%'></td>
-												<td width='10%'></td>
 											</tr>
 										</thead>
 										<tbody>";
@@ -83,13 +82,13 @@ if(isset($_POST['liberacaoPJ']))
 														<input type ='submit' class='btn btn-theme btn-block' value='Visualizar'>
 													</form>
 												</td>";
-											echo "
+											/*echo "
 												<td class='list_description'>
 													<form method='POST' action='?perfil=smc_lista_liberacao'>
 														<input type='hidden' name='LIBPF' value='".$campo['idPf']."' />
 														<input type ='submit' name='liberacaoPF' class='btn btn-theme btn-block' value='Liberar'>
 													</form>
-												</td>";
+												</td>";*/
 										
 											}
 											echo "</tr>";
@@ -133,7 +132,6 @@ if(isset($_POST['liberacaoPJ']))
 												<td>Email</td>
 												<td>Telefone</td>
 												<td width='10%'></td>
-												<td width='10%'></td>
 											</tr>
 										</thead>
 										<tbody>";
@@ -152,13 +150,13 @@ if(isset($_POST['liberacaoPJ']))
 														<input type ='submit' class='btn btn-theme btn-block' value='Visualizar'>
 													</form>
 												</td>";
-											echo "
+											/*echo "
 												<td class='list_description'>
 													<form method='POST' action='?perfil=smc_lista_liberacao'>
 													<input type='hidden' name='LIBPJ' value='".$campo['idPj']."' />
 														<input type ='submit' name='liberacaoPJ' class='btn btn-theme btn-block' value='Liberar'>
 													</form>
-												</td>";
+												</td>";*/
 										
 											}
 											echo "</tr>";
