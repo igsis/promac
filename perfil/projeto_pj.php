@@ -70,7 +70,7 @@ if(isset($_POST['apagar']))
 							<?php
 							if ($cpo == false)
 							{?>
-							<form class="form-horizontal" role="form" action="?perfil=projeto_pf" method="post">
+							<form class="form-horizontal" role="form" action="?perfil=projeto_pj" method="post">
 								<input type="submit" name="liberacao" value="Solicitar liberação de acesso" class="btn btn-theme btn-lg btn-block">
 							</form>
 							<?php
@@ -105,67 +105,155 @@ if(isset($_POST['apagar']))
 							</form>
 						</div>
 					</div>
+			</div>
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><br></div>
 					</div>
 
-					<div class="table-responsive list_info">
-					<?php
-						$sql = "SELECT * FROM projeto
-								WHERE publicado > 0 AND idPj ='$idPj'
-								ORDER BY idProjeto DESC";
-						$query = mysqli_query($con,$sql);
-						$num = mysqli_num_rows($query);
-						if($num > 0)
-						{
-							echo "
-								<table class='table table-condensed'>
-									<thead>
-										<tr class='list_menu'>
-											<td width='10%'>ID projeto</td>
-											<td>Descrição</td>
-											<td>Área de Atuação</td>
-											<td>Status</td>
-											<td width='10%'></td>
-											<td width='10%'></td>
-										</tr>
-									</thead>
-									<tbody>";
-									while($campo = mysqli_fetch_array($query))
-									{
-										$area = recuperaDados("area_atuacao","idArea",$campo['idAreaAtuacao']);
-										echo "<tr>";
-										echo "<td class='list_description'>".$campo['idProjeto']."</td>";
-										echo "<td class='list_description'>".$campo['descricao']."</td>";
-										echo "<td class='list_description'>".$area['areaAtuacao']."</td>";
-										echo "<td class='list_description'> STATUS </td>";
-										echo "
-											<td class='list_description'>
-												<form method='POST' action='?perfil=projeto_edicao'>
-													<input type='hidden' name='carregar' value='".$campo['idProjeto']."' />
-													<input type ='submit' class='btn btn-theme btn-block' value='carregar'>
-												</form>
-											</td>";
-										echo "
-											<td class='list_description'>
-												<form method='POST' action='?perfil=projeto_pj'>
-													<input type='hidden' name='apagar' value='".$campo['idProjeto']."' />
-													<input type='submit' class='btn btn-theme  btn-block' value='apagar'>
-												</form>
-											</td>";
-										echo "</tr>";
-									}
-							echo "
-								</tbody>
-								</table>";
-						}
-						?>
+					<div class="col-md-offset-1 col-md-10">
+						<div class="table-responsive list_info">
+						<?php
+							$sql = "SELECT * FROM projeto
+									WHERE publicado > 0 AND idPj ='$idPj'
+									ORDER BY idProjeto DESC";
+							$query = mysqli_query($con,$sql);
+							$num = mysqli_num_rows($query);
+							if($num > 0)
+							{
+								echo "
+									<table class='table table-condensed'>
+										<thead>
+											<tr class='list_menu'>
+												<td width='10%'>ID projeto</td>
+												<td>Descrição</td>
+												<td>Área de Atuação</td>
+												<td>Status</td>
+												<td width='10%'></td>
+												<td width='10%'></td>
+											</tr>
+										</thead>
+										<tbody>";
+										while($campo = mysqli_fetch_array($query))
+										{
+											$area = recuperaDados("area_atuacao","idArea",$campo['idAreaAtuacao']);
+											echo "<tr>";
+											echo "<td class='list_description'>".$campo['idProjeto']."</td>";
+											echo "<td class='list_description'>".$campo['descricao']."</td>";
+											echo "<td class='list_description'>".$area['areaAtuacao']."</td>";
+											$idCampo = $campo['idStatus'];
+											
+											$status = "SELECT status FROM status WHERE idStatus='$idCampo'";
+											$envio = mysqli_query($con, $status);
+											$rowStatus = mysqli_fetch_array($envio);
+											switch($campo['idStatus']){
+												case 1:
+													echo "<td class='list_description'> ".$rowStatus['status']."</td>";
+													echo "
+												<td class='list_description'>
+													<form method='POST' action='?perfil=projeto_edicao'>
+														<input type='hidden' name='carregar' value='".$campo['idProjeto']."' />
+														<input type ='submit' class='btn btn-theme btn-block' value='carregar'>
+													</form>
+												</td>";
+												echo "
+												<td class='list_description'>
+													<form method='POST' action='?perfil=projeto_pf'>
+														<input type='hidden' name='apagar' value='".$campo['idProjeto']."' />
+														<button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Excluir Projeto?' data-message='Deseja realmente excluir o projeto nº ".$campo['idProjeto']."?'>Apagar
+																</button>
+													</form>
+												</td>";
+													break;
+												case 2:
+													echo "<td class='list_description'>".$rowStatus['status']." </td>";
+													echo "
+												<td class='list_description'>
+													<form method='POST' action='?perfil=projeto_visualizacao'>
+														<input type='hidden' name='carregar' value='".$campo['idProjeto']."' />
+														<input type ='submit' class='btn btn-theme btn-block' value='visualizar'>
+													</form>
+												</td>";
+													break;
+												case 3:
+													echo "<td class='list_description'> ".$rowStatus['status']." </td>";
+													echo "
+												<td class='list_description'>
+													<form method='POST' action='?perfil=projeto_visualizacao'>
+														<input type='hidden' name='carregar' value='".$campo['idProjeto']."' />
+														<input type ='submit' class='btn btn-theme btn-block' value='visualizar'>
+													</form>
+												</td>";
+													break;
+												case 4:
+													echo "<td class='list_description'> ".$rowStatus['status']." </td>";
+													echo "
+												<td class='list_description'>
+													<form method='POST' action='?perfil=projeto_edicao'>
+														<input type='hidden' name='carregar' value='".$campo['idProjeto']."' />
+														<input type ='submit' class='btn btn-theme btn-block' value='carregar'>
+													</form>
+												</td>";
+													break;
+												case 5:
+													echo "<td class='list_description'> ".$rowStatus['status']." </td>";
+													echo "
+												<td class='list_description'>
+													<form method='POST' action='?perfil=projeto_visualizacao'>
+														<input type='hidden' name='carregar' value='".$campo['idProjeto']."' />
+														<input type ='submit' class='btn btn-theme btn-block' value='visualizar'>
+													</form>
+												</td>";
+												break;
+												case 6:
+													echo "<td class='list_description'> <a href='?perfil=informacoes_administrativas'>".$rowStatus['status']." </a></td>";
+													echo "
+												<td class='list_description'>
+													<form method='POST' action='?perfil=projeto_edicao'>
+														<input type='hidden' name='carregar' value='".$campo['idProjeto']."' />
+														<input type ='submit' class='btn btn-theme btn-block' value='carregar'>
+													</form>
+												</td>";
+												echo "
+												<td class='list_description'>
+													<form method='POST' action='?perfil=projeto_pf'>
+														<input type='hidden' name='apagar' value='".$campo['idProjeto']."' />
+														<button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Excluir Projeto?' data-message='Deseja realmente excluir o projeto nº ".$campo['idProjeto']."?'>Apagar
+																</button>
+													</form>
+												</td>";
+											}
+											echo "</tr>";
+										}
+								echo "
+									</tbody>
+									</table>";
+							}
+							?>
+						</div>
 					</div>
 				<?php
 				}
 				?>
-			</div>
 		</div>
+		<!-- Confirmação de Exclusão -->
+			<div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							<h4 class="modal-title">Excluir Arquivo?</h4>
+						</div>
+						<div class="modal-body">
+							<p>Confirma?</p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+							<button type="button" class="btn btn-danger" id="confirm">Apagar</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		<!-- Fim Confirmação de Exclusão -->
 	</div>
 </section>

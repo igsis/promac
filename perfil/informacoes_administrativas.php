@@ -3,7 +3,7 @@ $con = bancoMysqli();
 $idProjeto = $_SESSION['idProjeto'];
 $alterar = isset($_POST['alterar']) ? $_POST['alterar'] : null;
 
-if($alterar == 1)
+if($alterar == 1 || $alterar == 0)
 {
 	/*
 		Caso esteja alterando após indeferimento, muda o status para enviado

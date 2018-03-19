@@ -1,10 +1,17 @@
 <?php
 
 $con = bancoMysqli();
-$idPf = $_SESSION['idUser'];
-$pf = recuperaDados("pessoa_fisica","idPf",$idPf);
+$idUsuario = $_SESSION['idUser'];
+$tipoPessoa = $_SESSION['tipoPessoa'];
+if ($tipoPessoa == "1")
+{
+	$pf = recuperaDados("pessoa_fisica","idPf",$idPf);
+}
+else
+{
+	$pj = recuperaDados("pessoa_juridica","idPj",$idUsuario);
+}
 $idProjeto = $_SESSION['idProjeto'];
-$tipoPessoa = '1';
 $alterar = 0;
 
 $select = "SELECT idStatus FROM projeto WHERE idProjeto='$idProjeto' AND publicado='1'";
@@ -16,7 +23,19 @@ if($row['idStatus'] == 6)
 
 ?>
 <section id="list_items" class="home-section bg-white">
-	<div class="container"><?php include 'includes/menu_interno_pf.php'; ?>
+	<div class="container">
+		<?php
+    	if($_SESSION['tipoPessoa'] == 1)
+		{
+			$idPf= $_SESSION['idUser'];
+			include '../perfil/includes/menu_interno_pf.php';
+		}
+		else
+		{
+			$idPj= $_SESSION['idUser'];
+			include '../perfil/includes/menu_interno_pj.php';
+		}
+    	?>
 		<div class="form-group">
 
 			<h4>Resumo do Projeto</h4>
@@ -30,8 +49,14 @@ if($row['idStatus'] == 6)
 		 </div>
 
 		 <?php
-
-			 $query = "SELECT * FROM projeto WHERE idPf='$idPf' AND publicado='1' AND idProjeto='$idProjeto'";
+		 	if ($tipoPessoa == "1") // Se Pessoa Fisica
+				{
+					$query = "SELECT * FROM projeto WHERE idPf='$idUsuario' AND publicado='1' AND idProjeto='$idProjeto'";
+				}
+				else // Se Pessoa Juridica
+				{
+					$query = "SELECT * FROM projeto WHERE idPj='$idUsuario' AND publicado='1' AND idProjeto='$idProjeto'";
+				}
 			 $en = mysqli_query($con, $query);
 			 while($row = mysqli_fetch_array($en, MYSQLI_ASSOC)){
 		 ?>
@@ -136,8 +161,8 @@ if($row['idStatus'] == 6)
 		<div class="col-md-offset-5 col-md-2">
 			<form class="form-horizontal" role="form" action="?perfil=informacoes_administrativas" method="post">
 			<?php 
-			if($alterar == 1){ ?>
-				<input type="hidden" name="alterar" value="1">
+			if($alterar == 1 || $alterar == 0){ ?>
+				<input type="hidden" name="alterar" value="<?php echo $alterar; ?>">
 				<?php } ?>
 				<input type="submit" value="Enviar" class="btn btn-theme btn-lg btn-block">
 			</form>

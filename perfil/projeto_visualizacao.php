@@ -8,7 +8,19 @@ $id = $_POST['carregar'];
 
 ?>
  <section id="list_items" class="home-section bg-white">
-	<div class="container"><?php include 'includes/menu_interno_pf.php'; ?>
+	<div class="container">
+		<?php
+    	if($_SESSION['tipoPessoa'] == 1)
+		{
+			$idPf= $_SESSION['idUser'];
+			include '../perfil/includes/menu_interno_pf.php';
+		}
+		else
+		{
+			$idPj= $_SESSION['idUser'];
+			include '../perfil/includes/menu_interno_pj.php';
+		}
+    	?>
 		<div class="form-group">
 
 			<h4>Resumo do Projeto</h4>
