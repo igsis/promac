@@ -149,14 +149,27 @@ function mtel(v){
     });
   });
   $(function() {
+    $( "#datepicker07" ).datepicker({ 
+      changeMonth: true,
+      changeYear: true
+    });
+  });
+  $(function() {
+    $( "#datepicker08" ).datepicker({ 
+      changeMonth: true,
+      changeYear: true
+    });
+  });
+  $(function() {
+    $( "#datepicker09" ).datepicker({ 
+      changeMonth: true,
+      changeYear: true
+    });
+  });
+  $(function() {
     $( "#datepicker10" ).datepicker({ 
       changeMonth: true,
-      changeYear: true,
-	  minDate: 0,
-      addSliderAccess: true,
-      sliderAccessArgs: {
-        touchonly: false
-      }
+      changeYear: true
     });
   });
   $(function() {
