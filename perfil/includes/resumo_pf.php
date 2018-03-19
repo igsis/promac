@@ -8,11 +8,15 @@
 	<?php
 		if ($cpo == true)
 		{
-			echo "<p><strong><font color='red'>Alguns campos obrigatórios não foram preenchidos corretamente.<br/> Revise seu cadastro.</font></strong></p>";
+			echo "<div class='alert alert-danger'>
+					Alguns campos obrigatórios não foram preenchidos corretamente.<br/> Revise seu cadastro.
+				</div>";
 		}
 		else
 		{
-			echo "<p><strong><font color='green'>Todos os campos obrigatórios foram preenchidos corretamente.<br/> Seu cadastro de Pessoa Física foi concluído com sucesso!<br> Envie sua solicitação à Secretaria Municipal de Cultura ao final da página!</font></strong></p>";
+			echo "<div class='alert alert-success'>
+					Todos os campos obrigatórios foram preenchidos corretamente.<br/> Seu cadastro de Pessoa Física foi concluído com sucesso!<br> Envie sua solicitação à Secretaria Municipal de Cultura ao final da página!
+				</div>";
 		}
 	?>
 	

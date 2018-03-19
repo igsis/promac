@@ -62,7 +62,7 @@ if(isset($_POST['apagar']))
 				include 'includes/resumo_pf.php';
 				?>
 				<div class="alert alert-info">
-					Após o preenchimento de todos os dados pessoais, solicite liberação para envio de projetos mediante a liberação da Secretaria Municipal de Cultura.
+					Após o preenchimento de todos os dados pessoais, solicite liberação para envio de projetos a Secretaria Municipal de Cultura.
 				</div>
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">

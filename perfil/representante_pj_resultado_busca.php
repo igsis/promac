@@ -64,7 +64,7 @@ if($num_busca > 0)
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
-							<a href="?perfil=representante_pj"><input type="submit" value="Inserir outro representante" class="btn btn-theme btn-block"></a>
+							<a href="?perfil=representante_pj_cadastro"><input type="submit" value="Inserir outro representante" class="btn btn-theme btn-block"></a>
 						</div>
 					</div>
 
@@ -89,22 +89,22 @@ else
 				<form class="form-horizontal" role="form" action="?perfil=representante_pj_cadastro" method="post">
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><strong>Nome: *</strong><br/>
-							<input type="text" class="form-control" name="nome" placeholder="Nome completo">
+							<input type="text" class="form-control" name="nome" placeholder="Nome completo" required>
 						</div>
 					</div>
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-6"><strong>RG/RNE/PASSAPORTE: *</strong><br/>
-							<input type="text" class="form-control" name="rg" placeholder="RG">
+							<input type="text" class="form-control" name="rg" placeholder="RG" required>
 						</div>
 						<div class="col-md-6"><strong>CPF: *</strong><br/>
-							<input type="text" readonly class="form-control" name="cpf" value="<?php echo $busca ?>" placeholder="CPF">
+							<input type="text" readonly class="form-control" name="cpf" value="<?php echo $busca ?>" placeholder="CPF" required>
 						</div>
 					</div>
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><strong>E-mail *:</strong><br/>
-							<input type="text" class="form-control" name="email" placeholder="E-mail">
+							<input type="text" class="form-control" name="email" placeholder="E-mail" required>
 						</div>
 					</div>
 
@@ -123,7 +123,7 @@ else
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-6"><strong>CEP *:</strong><br/>
-							<input type="text" class="form-control" id="CEP" name="CEP" placeholder="CEP" >
+							<input type="text" class="form-control" id="CEP" name="CEP" placeholder="CEP" required>
 						</div>
 						<div class="col-md-6" align="left"><i>Clique no número do CEP e pressione a tecla Tab para carregar</i>
 						</div>
@@ -137,7 +137,7 @@ else
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-6"><strong>Número *:</strong><br/>
-							<input type="text" class="form-control" id="Numero" name="Numero" placeholder="Numero">
+							<input type="text" class="form-control" id="Numero" name="Numero" placeholder="Numero" required>
 						</div>
 						<div class=" col-md-6"><strong>Complemento:</strong><br/>
 							<input type="text" class="form-control" id="Complemento" name="Complemento" placeholder="Complemento">

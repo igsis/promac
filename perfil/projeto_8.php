@@ -49,14 +49,14 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<label>Público alvo *</label>
-							<textarea name="publicoAlvo" class="form-control" rows="10"><?php echo $projeto['publicoAlvo'] ?></textarea>
+							<textarea name="publicoAlvo" class="form-control" rows="10" required><?php echo $projeto['publicoAlvo'] ?></textarea>
 						</div>
 					</div>
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<label>Plano de divulgação*</label>
-							<textarea name="planoDivulgacao" class="form-control" rows="10"><?php echo $projeto['planoDivulgacao'] ?></textarea>
+							<textarea name="planoDivulgacao" class="form-control" rows="10" required><?php echo $projeto['planoDivulgacao'] ?></textarea>
 						</div>
 					</div>
 

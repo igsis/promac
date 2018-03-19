@@ -83,7 +83,7 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><strong>E-mail *:</strong><br/>
-							<input type="email" class="form-control" name="email" placeholder="E-mail" value="<?php echo $pf['email']; ?>">
+							<input type="email" class="form-control" name="email" placeholder="E-mail" value="<?php echo $pf['email']; ?>" required>
 						</div>
 					</div>
 

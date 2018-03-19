@@ -1,10 +1,20 @@
 <?php
 $con = bancoMysqli();
 unset($_SESSION['idProjeto']);
-$tipoPessoa = '1';
+$tipoPessoa = '2';
 
 $idPj = $_SESSION['idUser'];
 $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
+$rl = recuperaDados("representante_legal","idRepresentanteLegal",$pj['idRepresentanteLegal']);
+$campos = array($pj['razaoSocial'], $pj['cnpj'], $pj['email'], $pj['cep'], $pj['numero']);
+$cpo = false;
+
+foreach ($campos as $cpos) {
+	if ($cpos == null)
+	{
+		$cpo = true;
+	}
+}
 
 if(isset($_POST['liberacao']))
 {
@@ -38,7 +48,10 @@ if(isset($_POST['apagar']))
 <section id="list_items" class="home-section bg-white">
 	<div class="container"><?php include '../perfil/includes/menu_interno_pj.php'; ?>
 		<div class="form-group">
-			<h4>Projetos</h4>
+			<?php
+			if($pj['liberado'] != 0)
+			echo "<h4>Projetos</h4>";
+			?>
 			<h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
 		</div>
 		<div class="row">
@@ -46,13 +59,22 @@ if(isset($_POST['apagar']))
 			<?php
 				if($pj['liberado'] == 0)// ainda não foi solicitado liberação
 				{
+
+				include 'includes/resumo_pj.php';
 				?>
-					<p>Após o preenchimento de todos os dados pessoais, solicite liberação para envio de projetos mediante a liberação da Secretaria MUnicipal de Cultura.</p>
+				<div class="alert alert-info">
+					Após o preenchimento de todos os dados pessoais, solicite liberação para envio de projetos mediante a Secretaria Municipal de Cultura.
+				</div>
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
-							<form class="form-horizontal" role="form" action="?perfil=projeto_pj" method="post">
+							<?php
+							if ($cpo == false)
+							{?>
+							<form class="form-horizontal" role="form" action="?perfil=projeto_pf" method="post">
 								<input type="submit" name="liberacao" value="Solicitar liberação de acesso" class="btn btn-theme btn-lg btn-block">
 							</form>
+							<?php
+							}?>
 						</div>
 					</div>
 			<?php
@@ -60,13 +82,17 @@ if(isset($_POST['apagar']))
 				elseif($pj['liberado'] == 1)// foi solicitado liberação, porém a SMC não analisou ainda.
 				{
 			?>
-				<p><font color='#01DF3A'><strong>Sua solicitação para a liberação de envio de projetos foi enviada à Secretaria MUnicipal de Cultura. Aguarde a análise da sua documentação e liberação.</strong></font></p>
+				<div class="alert alert-success">
+					<strong>Sua solicitação para a liberação de envio de projetos foi enviada à Secretaria Municipal de Cultura. Aguarde a análise da sua documentação e liberação.</strong>
+				</div>
 			<?php
 				}
 				elseif($pj['liberado'] == 2)// a liberação de projetos foi rejeitada pela SMC.
 				{
 			?>
-				<p><font color='#01DF3A'><strong>Sua solicitação para a liberação de envio de projetos foi enviada à Secretaria MUnicipal de Cultura. Aguarde a análise da sua documentação e liberação.</strong></font></p>
+				<div class="alert alert-danger">
+					<strong>Sua solicitação para a liberação de envio de projetos foi rejeitada pela Secretaria Municipal de Cultura.</strong>
+				</div>
 			<?php
 				}
 				else // liberação concedida pela SMC - liberado = 3

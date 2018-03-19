@@ -67,16 +67,16 @@ $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 				<form class="form-horizontal" role="form" action="?perfil=informacoes_iniciais_pj" method="post">
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><strong>Razão Social *:</strong><br/>
-							<input type="text" class="form-control" name="razaoSocial" placeholder="Razão Social" value="<?php echo $pj['razaoSocial']; ?>" >
+							<input type="text" class="form-control" name="razaoSocial" placeholder="Razão Social" value="<?php echo $pj['razaoSocial']; ?>" required>
 						</div>
 					</div>
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-6"><strong>CNPJ *:</strong><br/>
-							<input type="text" readonly class="form-control" id="cnpj" name="cnpj" placeholder="CNPJ" value="<?php echo $pj['cnpj']; ?>" >
+							<input type="text" readonly class="form-control" id="cnpj" name="cnpj" placeholder="CNPJ" value="<?php echo $pj['cnpj']; ?>" required>
 						</div>
 						<div class="col-md-6"><strong>E-mail *:</strong><br/>
-							<input type="text" class="form-control" name="email" placeholder="E-mail" value="<?php echo $pj['email']; ?>" >
+							<input type="text" class="form-control" name="email" placeholder="E-mail" value="<?php echo $pj['email']; ?>" required>
 						</div>
 					</div>
 
@@ -95,7 +95,7 @@ $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-6"><strong>CEP *:</strong><br/>
-							<input type="text" class="form-control" id="CEP" name="CEP" placeholder="CEP" value="<?php echo $pj['cep']; ?>">
+							<input type="text" class="form-control" id="CEP" name="CEP" placeholder="CEP" value="<?php echo $pj['cep']; ?>" required>
 						</div>
 						<div class="col-md-6" align="left"><br/><i>Pressione a tecla Tab para carregar</i>
 						</div>
@@ -109,7 +109,7 @@ $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-6"><strong>Número *:</strong><br/>
-							<input type="text" class="form-control" id="Numero" name="Numero" placeholder="Numero" value="<?php echo $pj['numero']; ?>">
+							<input type="text" class="form-control" id="Numero" name="Numero" placeholder="Numero" value="<?php echo $pj['numero']; ?>" required>
 						</div>
 						<div class=" col-md-6"><strong>Complemento:</strong><br/>
 							<input type="text" class="form-control" id="Complemento" name="Complemento" placeholder="Complemento" value="<?php echo $pj['complemento']; ?>">

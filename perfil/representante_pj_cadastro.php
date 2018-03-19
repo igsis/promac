@@ -131,7 +131,7 @@ $representante1 = recuperaDados("representante_legal","idRepresentanteLegal",$pj
 				<form class="form-horizontal" role="form" action="?perfil=representante_pj_cadastro" method="post">
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><strong>Nome: *</strong><br/>
-							<input type="text" class="form-control" name="nome" placeholder="Nome completo" value="<?php echo $representante1['nome']; ?>" required >
+							<input type="text" class="form-control" name="nome" placeholder="Nome completo" value="<?php echo $representante1['nome']; ?>" required>
 						</div>
 					</div>
 
@@ -140,7 +140,7 @@ $representante1 = recuperaDados("representante_legal","idRepresentanteLegal",$pj
 							<input type="text" class="form-control" name="rg" placeholder="RG/RNE/PASSAPORTE" value="<?php echo $representante1['rg']; ?>" required>
 						</div>
 						<div class="col-md-6"><strong>CPF: *</strong><br/>
-							<input type="text" readonly class="form-control" name="cpf" placeholder="CPF" value="<?php echo $representante1['cpf']; ?>" required>
+							<input type="text" class="form-control" name="cpf" placeholder="CPF" value="<?php echo $representante1['cpf']; ?>" required>
 						</div>
 					</div>
 
@@ -179,7 +179,7 @@ $representante1 = recuperaDados("representante_legal","idRepresentanteLegal",$pj
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-6"><strong>Número *:</strong><br/>
-							<input type="text" class="form-control" id="Numero" name="Numero" placeholder="Numero" value="<?php echo $representante1['numero']; ?>">
+							<input type="text" class="form-control" id="Numero" name="Numero" placeholder="Numero" value="<?php echo $representante1['numero']; ?>" required>
 						</div>
 						<div class=" col-md-6"><strong>Complemento:</strong><br/>
 							<input type="text" class="form-control" id="Complemento" name="Complemento" placeholder="Complemento" value="<?php echo $representante1['complemento']; ?>">
