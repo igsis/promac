@@ -5,6 +5,16 @@ $tipoPessoa = '2';
 $idPj = isset($_POST['liberado']) ? $_POST['liberado'] : null;
 $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 
+if(isset($_POST['liberar']))
+{
+	$id = $_POST['LIBPF'];
+	$QueryPJ = "UPDATE pessoa_juridica SET liberado='3' WHERE idPj='$id'";
+	$envio = mysqli_query($con, $QueryPJ);
+	if($envio)
+		echo "<script>alert('O usuário foi ativo com sucesso');</script>";
+		echo "<script>window.location = '?perfil=smc_lista_liberacao';</script>";
+}
+
 if(isset($_POST['atualizar']))
 {
 	$observacao = $_POST['observ'];
@@ -138,10 +148,16 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 
 <!-- Botão para Prosseguir -->
 	<div class="form-group">
-		<div class="col-md-offset-5 col-md-2">
+		<div class="col-md-offset-4 col-md-2">
 			<form class="form-horizontal" role="form" action="?perfil=smc_lista_liberacao" method="post">
 				<input type="submit" value="Voltar" class="btn btn-theme btn-lg btn-block">
 			</form>
 		</div>
+		<?php echo "<div class='col-md-2'>
+			<form class='form-horizontal' role='form' action='?perfil=smc_visualiza_perfil_pj' method='post'>
+				<input type='hidden' name='LIBPF' value='".$pj['idPj']."' />
+				<input type='submit' name='liberar' value='Liberar' class='btn btn-theme btn-lg btn-block'>
+			</form>
+		</div>"; ?>
 	</div>
 </section>

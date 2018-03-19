@@ -4,6 +4,16 @@ $tipoPessoa = '1';
 $idPf = isset($_POST['liberado']) ? $_POST['liberado'] : null;
 $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 
+if(isset($_POST['liberar']))
+{
+	$id = $_POST['LIBPF'];
+	$QueryPJ = "UPDATE pessoa_fisica SET liberado='3' WHERE idPf='$id'";
+	$envio = mysqli_query($con, $QueryPJ);
+	if($envio)
+		echo "<script>alert('O usuário foi ativo com sucesso');</script>";
+		echo "<script>window.location = '?perfil=smc_lista_liberacao';</script>";
+}
+
 if(isset($_POST['atualizar']))
 {
 	$observacao = $_POST['observ'];
@@ -137,16 +147,23 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 		$query = "SELECT idProjeto FROM projeto WHERE idPf='$idPf' AND publicado = '1'";
 		$send = mysqli_query($con, $query);
 		$row = mysqli_fetch_array($send);
-		listaArquivosPessoaEditorr($pf['idPf'],$tipoPessoa,"smc_visualiza_perfil_pf"); ?>
+		listaArquivosPessoaEditorr($pf['idPf'],$tipoPessoa,"smc_visualiza_perfil_pf");
+		$idFisica = $pf['idPf']; ?>
 		</div>
 	</div>
 
 <!-- Botão para Prosseguir -->
 	<div class="form-group">
-		<div class="col-md-offset-5 col-md-2">
+		<div class="col-md-offset-4 col-md-2">
 			<form class="form-horizontal" role="form" action="?perfil=smc_lista_liberacao" method="post">
 				<input type="submit" value="Voltar" class="btn btn-theme btn-lg btn-block">
 			</form>
 		</div>
+		<?php echo "<div class='col-md-2'>
+			<form class='form-horizontal' role='form' action='?perfil=smc_visualiza_perfil_pf' method='post'>
+				<input type='hidden' name='LIBPF' value='".$pf['idPf']."' />
+				<input type='submit' name='liberar' value='Liberar' class='btn btn-theme btn-lg btn-block'>
+			</form>
+		</div> "; ?>
 	</div>
 </section>
