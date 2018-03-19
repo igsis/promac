@@ -75,7 +75,7 @@ if(isset($_POST['apagar']))
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<form class="form-horizontal" role="form" action="?perfil=projeto_novo" method="post">
-								<input type="submit" value="Inserir novo evento" class="btn btn-theme btn-lg btn-block">
+								<input type="submit" value="Inserir novo projeto" class="btn btn-theme btn-lg btn-block">
 							</form>
 						</div>
 					</div>
