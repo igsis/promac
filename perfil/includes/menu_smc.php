@@ -6,7 +6,7 @@ $pasta = "?perfil=";
 		<button class="dl-trigger">Open Menu</button>
 		<ul class="dl-menu">
 			<li><a href="<?php echo $pasta ?>smc_index">Home</a></li>
-			<li><a href="#">Liberação de envio de projeto</a>
+			<li><a href="#">Inscrição de Projeto</a>
 				<ul class="dl-submenu">
 					<li><a href="<?php echo $pasta ?>smc_lista_liberacao&tipo=1">Pessoa Física</a></li>
 					<li><a href="<?php echo $pasta ?>smc_lista_liberacao&tipo=2">Pessoa Jurídica</a></li>
