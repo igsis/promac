@@ -745,19 +745,22 @@ function listaArquivosPessoaEditor($idPessoa,$tipoPessoa,$pagina)
 					echo "<tr>";
 					echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
 					echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
+					echo "<form id='atualizaDoc' method='POST' action='?perfil=".$pagina."'>";
 					echo "<td class='list_description'>
-					<select name='status' id='statusOpt'>
-								    <option value='0'>Aprovado</option>
-								    <option value='1'>Complementação</option>
-								    <option value='2'>Reprovado</option>
-								</select>
-								</td>";
+							<select name='status' id='statusOpt'>
+							    <option value='0'>Aprovado</option>
+							    <option value='1'>Complementação</option>
+							    <option value='2'>Reprovado</option>
+							</select>
+						</td>";
 					echo "<td class='list_description'>
 					<input type='text' name='observ' maxlength='100'>
 					</td>";
 
 					echo "
 						<td class='list_description'>
+								<input type='hidden' name='idPessoa' value='".$idPessoa."' />
+								<input type='hidden' name='tipoPessoa' value='".$tipoPessoa."' />
 								<button class='btn btn-theme' type='button' data-toggle='modal'>Atualizar
 								</button></td>
 							</form>";

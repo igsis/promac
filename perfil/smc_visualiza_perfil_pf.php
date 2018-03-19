@@ -1,14 +1,12 @@
 <?php
 $con = bancoMysqli();
 $tipoPessoa = '1';
-$projeto = $_SESSION['idProjeto'];
 $idPf = isset($_POST['liberado']) ? $_POST['liberado'] : null;
 $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
-
 ?>
 
 <section id="list_items" class="home-section bg-white">
-	<div class="container"><?php include 'includes/menu_interno_pf.php'; ?>
+	<div class="container"><?php include 'includes/menu_smc.php'; ?>
 		<div class="form-group">
 
 			<h4>Resumo do Usuário</h4>
@@ -50,7 +48,7 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 		$query = "SELECT idProjeto FROM projeto WHERE idPf='$idPf' AND publicado = '1'";
 		$send = mysqli_query($con, $query);
 		$row = mysqli_fetch_array($send);
-		listaArquivosPessoaEditor($row['idProjeto'],'3',"smc_visualiza_perfil_pf"); ?>
+		listaArquivosPessoaEditor($pf['idPf'],$tipoPessoa,"smc_visualiza_perfil_pf"); ?>
 		</div>
 	</div>
 
