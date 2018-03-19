@@ -10,7 +10,17 @@ if(isset($_POST['liberar']))
 	$QueryPJ = "UPDATE pessoa_fisica SET liberado='3' WHERE idPf='$id'";
 	$envio = mysqli_query($con, $QueryPJ);
 	if($envio)
-		echo "<script>alert('O usuário foi ativo com sucesso');</script>";
+		echo "<script>alert('O usuário foi liberado com sucesso');</script>";
+		echo "<script>window.location = '?perfil=smc_lista_liberacao';</script>";
+}
+
+if(isset($_POST['negar']))
+{
+	$id = $_POST['LIBPF'];
+	$QueryPJ = "UPDATE pessoa_fisica SET liberado='2' WHERE idPf='$id'";
+	$envio = mysqli_query($con, $QueryPJ);
+	if($envio)
+		echo "<script>alert('O usuário foi negado com sucesso');</script>";
 		echo "<script>window.location = '?perfil=smc_lista_liberacao';</script>";
 }
 
@@ -154,11 +164,17 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 
 <!-- Botão para Prosseguir -->
 	<div class="form-group">
-		<div class="col-md-offset-4 col-md-2">
+		<div class="col-md-offset-3 col-md-2">
 			<form class="form-horizontal" role="form" action="?perfil=smc_lista_liberacao" method="post">
 				<input type="submit" value="Voltar" class="btn btn-theme btn-lg btn-block">
 			</form>
 		</div>
+		<?php echo "<div class='col-md-2'>
+			<form class='form-horizontal' role='form' action='?perfil=smc_visualiza_perfil_pf' method='post'>
+				<input type='hidden' name='LIBPF' value='".$pf['idPf']."' />
+				<input type='submit' name='negar' value='Negar' class='btn btn-theme btn-lg btn-block'>
+			</form>
+		</div> "; ?>
 		<?php echo "<div class='col-md-2'>
 			<form class='form-horizontal' role='form' action='?perfil=smc_visualiza_perfil_pf' method='post'>
 				<input type='hidden' name='LIBPF' value='".$pf['idPf']."' />
