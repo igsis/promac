@@ -2,8 +2,89 @@
 $con = bancoMysqli();
 $tipoPessoa = '2';
 
-$idPj = $_POST['liberado'];
+$idPj = isset($_POST['liberado']) ? $_POST['liberado'] : null;
 $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
+
+if(isset($_POST['atualizar']))
+{
+	$observacao = $_POST['observ'];
+	$status = $_POST['status'];
+	$idArquivo = $_POST['idArquivo'];
+
+	$query = "UPDATE upload_arquivo SET idStatusDocumento = '$status', observacoes = '$observacao' WHERE idUploadArquivo='$idArquivo'";
+	$envia = mysqli_query($con, $query);
+
+	if($envia)
+	{
+		echo "<script>alert('O arquivo foi atualizado com sucesso.')</script>";
+		echo "<script>window.location = '?perfil=smc_lista_liberacao' </script>";
+	} else{
+		echo "<script>alert('Erro durante o processamento, entre em contato com os responsáveis pelo sistema para maiores informações.')</script>";
+		echo "<script>window.location = '?perfil=smc_lista_liberacao' </script>";
+	}
+}
+
+function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
+{
+
+	$con = bancoMysqli();
+	$sql = "SELECT *
+			FROM lista_documento as list
+			INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
+			WHERE arq.idPessoa = '$idPessoa'
+			AND arq.idTipo = '$tipoPessoa'
+			AND arq.publicado = '1'";
+	$query = mysqli_query($con,$sql);
+	$linhas = mysqli_num_rows($query);
+
+	if ($linhas > 0)
+	{
+	echo "
+		<table class='table table-condensed'>
+			<thead>
+				<tr class='list_menu'>
+					<td>Tipo de arquivo</td>
+					<td>Nome do arquivo</td>
+					<td>Status</td>
+					<td>Observações</td>
+					<td>Ação</td>
+				</tr>
+			</thead>
+			<tbody>";
+				while($arquivo = mysqli_fetch_array($query))
+				{
+					echo "<tr>";
+					echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
+					echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
+					echo "<form id='atualizaDoc' method='POST' action='?perfil=smc_visualiza_perfil_pj'>";
+					echo "<td class='list_description'>
+							<select name='status' id='statusOpt'>
+							    <option value='0'>Aprovado</option>
+							    <option value='1'>Complementação</option>
+							    <option value='2'>Reprovado</option>
+							</select>
+						</td>";
+					echo "<td class='list_description'>
+					<input type='text' name='observ' maxlength='100' id='observ'/>
+					</td>";
+
+					echo "
+						<td class='list_description'>
+								<input type='hidden' name='idPessoa' value='".$idPessoa."' />
+								<input type='hidden' name='idArquivo' value='".$arquivo['idUploadArquivo']."' />
+								<input type ='submit' name='atualizar' class='btn btn-theme btn-block' value='Atualizar'></td>
+							</form>";
+					echo "</tr>";
+				}
+				echo "
+		</tbody>
+		</table>";
+	}
+	else
+	{
+		echo "<p>Não há arquivo(s) inserido(s).<p/><br/>";
+	}
+}
 
 ?>
 
@@ -46,7 +127,7 @@ $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 			<p align="justify"><strong>Email:</strong> <?php echo isset($pj['email']) ? $pj['email'] : null; ?></p>
 		 </div>
 		 <div class="table-responsive list_info"><h6>Arquivo(s) de Pessoa Física</h6>
-		<?php listaArquivosPessoaEditor($idPj,'2',"smc_visualiza_perfil_pj"); ?>
+		<?php listaArquivosPessoaEditorr($idPj,'2',"smc_visualiza_perfil_pj"); ?>
 		</div>
 	</div>
 

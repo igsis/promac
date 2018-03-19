@@ -16,7 +16,7 @@ if(isset($_POST['liberacaoPF']))
 	$envio = mysqli_query($con, $QueryPJ);
 	if($envio)
 		echo "<script>alert('O usuário foi ativo com sucesso');</script>";
-}
+} 
 
 if(isset($_POST['liberacaoPJ']))
 {
@@ -25,11 +25,6 @@ if(isset($_POST['liberacaoPJ']))
 	$envio = mysqli_query($con, $QueryPJ);
 	if($envio)
 		echo "<script>alert('O usuário foi ativo com sucesso');</script>";
-}
-
-if($tipoUsuario != 2)
-{
-	echo "<script>window.location = 'index_pf.php';</script>";
 }
 ?>
 <section id="list_items" class="home-section bg-white">
