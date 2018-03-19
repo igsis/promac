@@ -56,16 +56,22 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 					echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
 					echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
 					echo "<form id='atualizaDoc' method='POST' action='?perfil=smc_visualiza_perfil_pf'>";
-					echo "<td class='list_description'>
-							<select name='status' id='statusOpt'>
-							    <option value='0'>Aprovado</option>
-							    <option value='1'>Complementação</option>
-							    <option value='2'>Reprovado</option>
-							</select>
+					$queryy = "SELECT idStatusDocumento FROM upload_arquivo WHERE idUploadArquivo = '".$arquivo['idUploadArquivo']."'";
+					$send = mysqli_query($con, $queryy);
+					$row = mysqli_fetch_array($send);
+
+						echo "<td class='list_description'>
+							<select name='status' id='statusOpt' value='teste'>";
+							geraOpcao('statusDocumento', $row['idStatusDocumento']);
+							echo " </select>
 						</td>";
+					$queryOBS = "SELECT observacoes FROM upload_arquivo WHERE idUploadArquivo = '".$arquivo['idUploadArquivo']."'";
+					$send = mysqli_query($con, $queryOBS);
+					$row = mysqli_fetch_array($send);
 					echo "<td class='list_description'>
-					<input type='text' name='observ' maxlength='100' id='observ'/>
+					<input type='text' name='observ' maxlength='100' id='observ' value='".$row['observacoes']."'/>
 					</td>";
+
 
 					echo "
 						<td class='list_description'>
