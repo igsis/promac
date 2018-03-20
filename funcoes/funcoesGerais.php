@@ -65,9 +65,8 @@ function geraProtocolo($id)
 	date_default_timezone_set('America/Sao_Paulo');
 	$date = date('Ymd');
 	$preencheZeros = str_pad($id, 5, '0', STR_PAD_LEFT);
-
-	$stringFinal = $date . $preencheZeros;
-	return $stringFinal;
+	
+	return $date . $preencheZeros;
 }
 
 function verificaArquivosExistentesPF($idPessoa,$idDocumento)
