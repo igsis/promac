@@ -114,7 +114,7 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 ?>
 
 <section id="list_items" class="home-section bg-white">
-	<div class="container"><?php include 'includes/menu_interno_pf.php'; ?>
+	<div class="container"><?php include 'includes/menu_smc.php'; ?>
 		<div class="form-group">
 
 			<h4>Resumo do Usuário</h4>
