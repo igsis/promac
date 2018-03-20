@@ -28,5 +28,6 @@
 <script src="js/wow.min.js"></script>
 <script src="js/custom.js"></script>
 <script src="js/scriptbaixo.js"></script>
+<script src="js/termoContrato.js"></script>
 </body>
 </html>

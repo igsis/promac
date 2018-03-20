@@ -643,6 +643,21 @@ input[type=checkbox].css-checkbox {
 	text-align: left !important; 	 
 }	 
 
+.termoContrato
+{
+  background-color: #D9E5E3;
+  margin: 15px 350px 10px 320px;
+  padding: 0.5em;
+  font-size: 15px;  
+  border: 5px solid #C2CCCA;
+ 
+}
+
+.termoContrato a{  
+  font-size: 20px;
+  font-family: "Open Sans Condensed", "Arial", sans-serif;
+}
+
 input[type=checkbox].css-checkbox {
 							position:absolute; z-index:-1000; left:-1000px; overflow: hidden; clip: rect(0 0 0 0); height:1px; width:1px; margin:-1px; padding:0; border:0;
 						}

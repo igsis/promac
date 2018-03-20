@@ -154,18 +154,57 @@ if($row['idStatus'] == 6)
 		 <?php }
 	 }
 	 }?>
-	</div>
-
-<!-- Botão para Prosseguir -->
-	<div class="form-group">
-		<div class="col-md-offset-5 col-md-2">
-			<form class="form-horizontal" role="form" action="?perfil=informacoes_administrativas" method="post">
-			<?php 
-			if($alterar == 1 || $alterar == 0){ ?>
-				<input type="hidden" name="alterar" value="<?php echo $alterar; ?>">
-				<?php } ?>
-				<input type="submit" value="Enviar" class="btn btn-theme btn-lg btn-block">
-			</form>
+	</div>	
+    <!--Termo do contrato-->	      
+      <div>
+        <a href="#">    
+          <div class="termoContrato">
+            <input type="hidden" name="termos" id="termo" 
+                   value="false">           	            
+            <a href="#" data-toggle="modal" data-target="#myModal">
+              Click aqui, para ler os termos do contrato.	
+            </a>                        
+          </div>  
+        </a>
+        <div class="modal fade" id="myModal" role="dialog">
+          <div class="modal-dialog">          
+            <div class="modal-content">                      
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Termos do acordo</h4>
+              </div>
+          
+              <div class="modal-body">
+                <p>Aqui deve ser incluso o texto dos termos</p>
+              </div>
+          
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" 
+                        data-dismiss="modal" id="btnRejeitar">Rejeitar
+                </button>
+                <button type="button" class="btn btn-success" 
+                        data-dismiss="modal" id="btnAceitar">Aceitar
+                </button>        
+              </div>
+            </div>      
+          </div>
+        </div>
+      </div> 
+    </div>    
+    <!-- Botão para Prosseguir -->	  
+	  <div class="form-group">
+	    <div class="col-md-offset-5 col-md-2">
+		  <form class="form-horizontal" role="form" action="?perfil=informacoes_administrativas" method="post">
+		   <?php 
+		     if($alterar == 1 || $alterar == 0){ ?>
+			    <input type="hidden" name="alterar" value="<?php echo $alterar; ?>">
+		    <?php } ?>
+			<input type="hidden" value="Enviar" id="inptEnviar" 
+			       class="btn btn-theme btn-lg btn-block">
+		  </form>
 		</div>
-	</div>
+	  </div>
 </section>
+
+
+
