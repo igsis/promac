@@ -136,26 +136,25 @@ if($tipoPessoa == 1)
 	$objPHPExcel->getActiveSheet()->getColumnDimension('I')->setAutoSize(true);
 
 	$objPHPExcel->getActiveSheet()->getStyle('A1')->getFont()->setBold(true); // negrito
-	$objPHPExcel->getActiveSheet()->getStyle('A4')->getFont()->setBold(true); // negrito
-	$objPHPExcel->getActiveSheet()->getStyle('B1')->getFont()->setBold(true); // A1 negrito
-	$objPHPExcel->getActiveSheet()->getStyle('B4')->getFont()->setBold(true); // A1 negrito
-	$objPHPExcel->getActiveSheet()->getStyle('C1')->getFont()->setBold(true); // A1 negrito
-	$objPHPExcel->getActiveSheet()->getStyle('C4')->getFont()->setBold(true); // A1 negrito
-	$objPHPExcel->getActiveSheet()->getStyle('D1')->getFont()->setBold(true); // A1 negrito
-	$objPHPExcel->getActiveSheet()->getStyle('D4')->getFont()->setBold(true); // A1 negrito
-	$objPHPExcel->getActiveSheet()->getStyle('E1')->getFont()->setBold(true); // A1 negrito
-	$objPHPExcel->getActiveSheet()->getStyle('E4')->getFont()->setBold(true); // A1 negrito
-	$objPHPExcel->getActiveSheet()->getStyle('F1')->getFont()->setBold(true); // A1 negrito
-	$objPHPExcel->getActiveSheet()->getStyle('F4')->getFont()->setBold(true); // A1 negrito
-	$objPHPExcel->getActiveSheet()->getStyle('G1')->getFont()->setBold(true); // A1 negrito
-	$objPHPExcel->getActiveSheet()->getStyle('G4')->getFont()->setBold(true); // A1 negrito
-	$objPHPExcel->getActiveSheet()->getStyle('H1')->getFont()->setBold(true); // A1 negrito
-	$objPHPExcel->getActiveSheet()->getStyle('H4')->getFont()->setBold(true); // A1 negrito
-	$objPHPExcel->getActiveSheet()->getStyle('I1')->getFont()->setBold(true); // A1 negrito
-	$objPHPExcel->getActiveSheet()->getStyle('I4')->getFont()->setBold(true); // A1 negrito
-	$objPHPExcel->getActiveSheet()->getStyle('J4')->getFont()->setBold(true); // A1 negrito
+	$objPHPExcel->getActiveSheet()->getStyle('A4')->getFont()->setBold(true); 
+	$objPHPExcel->getActiveSheet()->getStyle('B1')->getFont()->setBold(true); 
+	$objPHPExcel->getActiveSheet()->getStyle('B4')->getFont()->setBold(true);
+	$objPHPExcel->getActiveSheet()->getStyle('C1')->getFont()->setBold(true); 
+	$objPHPExcel->getActiveSheet()->getStyle('C4')->getFont()->setBold(true); 
+	$objPHPExcel->getActiveSheet()->getStyle('D1')->getFont()->setBold(true); 
+	$objPHPExcel->getActiveSheet()->getStyle('D4')->getFont()->setBold(true); 
+	$objPHPExcel->getActiveSheet()->getStyle('E1')->getFont()->setBold(true); 
+	$objPHPExcel->getActiveSheet()->getStyle('E4')->getFont()->setBold(true); 
+	$objPHPExcel->getActiveSheet()->getStyle('F1')->getFont()->setBold(true);
+	$objPHPExcel->getActiveSheet()->getStyle('F4')->getFont()->setBold(true); 
+	$objPHPExcel->getActiveSheet()->getStyle('G1')->getFont()->setBold(true); 
+	$objPHPExcel->getActiveSheet()->getStyle('G4')->getFont()->setBold(true); 
+	$objPHPExcel->getActiveSheet()->getStyle('H1')->getFont()->setBold(true); 
+	$objPHPExcel->getActiveSheet()->getStyle('H4')->getFont()->setBold(true); 
+	$objPHPExcel->getActiveSheet()->getStyle('I1')->getFont()->setBold(true); 
+	$objPHPExcel->getActiveSheet()->getStyle('I4')->getFont()->setBold(true); 
+	$objPHPExcel->getActiveSheet()->getStyle('J4')->getFont()->setBold(true);
 
-	$objPHPExcel->getActiveSheet()->getStyle('A1:A5')->getBorders()->getOutline()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN); // borda
 
 	$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5'); // indicação p criar ficheiro
 
@@ -320,33 +319,31 @@ else if($tipoPessoa == 2)
 	$objPHPExcel->getActiveSheet()->getColumnDimension('L')->setAutoSize(true);
 
 	$objPHPExcel->getActiveSheet()->getStyle('A1')->getFont()->setBold(true); // negrito
-	$objPHPExcel->getActiveSheet()->getStyle('A4')->getFont()->setBold(true); // negrito
-	$objPHPExcel->getActiveSheet()->getStyle('B1')->getFont()->setBold(true); // A1 negrito
-	$objPHPExcel->getActiveSheet()->getStyle('B4')->getFont()->setBold(true); // A1 negrito
-	$objPHPExcel->getActiveSheet()->getStyle('C1')->getFont()->setBold(true); // A1 negrito
-	$objPHPExcel->getActiveSheet()->getStyle('C4')->getFont()->setBold(true); // A1 negrito
-	$objPHPExcel->getActiveSheet()->getStyle('D1')->getFont()->setBold(true); // A1 negrito
-	$objPHPExcel->getActiveSheet()->getStyle('D4')->getFont()->setBold(true); // A1 negrito
-	$objPHPExcel->getActiveSheet()->getStyle('E1')->getFont()->setBold(true); // A1 negrito
-	$objPHPExcel->getActiveSheet()->getStyle('E4')->getFont()->setBold(true); // A1 negrito
-	$objPHPExcel->getActiveSheet()->getStyle('F1')->getFont()->setBold(true); // A1 negrito
-	$objPHPExcel->getActiveSheet()->getStyle('F4')->getFont()->setBold(true); // A1 negrito
-	$objPHPExcel->getActiveSheet()->getStyle('G1')->getFont()->setBold(true); // A1 negrito
-	$objPHPExcel->getActiveSheet()->getStyle('G4')->getFont()->setBold(true); // A1 negrito
-	$objPHPExcel->getActiveSheet()->getStyle('H1')->getFont()->setBold(true); // A1 negrito
-	$objPHPExcel->getActiveSheet()->getStyle('H4')->getFont()->setBold(true); // A1 negrito
-	$objPHPExcel->getActiveSheet()->getStyle('I1')->getFont()->setBold(true); // A1 negrito
-	$objPHPExcel->getActiveSheet()->getStyle('I4')->getFont()->setBold(true); // A1 negrito
-	$objPHPExcel->getActiveSheet()->getStyle('J1')->getFont()->setBold(true); // A1 negrito
-	$objPHPExcel->getActiveSheet()->getStyle('K1')->getFont()->setBold(true); // A1 negrito
-	$objPHPExcel->getActiveSheet()->getStyle('L1')->getFont()->setBold(true); // A1 negrito
-
-	$objPHPExcel->getActiveSheet()->getStyle('A1:A5')->getBorders()->getOutline()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN); // borda
+	$objPHPExcel->getActiveSheet()->getStyle('A4')->getFont()->setBold(true);
+	$objPHPExcel->getActiveSheet()->getStyle('B1')->getFont()->setBold(true);
+	$objPHPExcel->getActiveSheet()->getStyle('B4')->getFont()->setBold(true);
+	$objPHPExcel->getActiveSheet()->getStyle('C1')->getFont()->setBold(true); 
+	$objPHPExcel->getActiveSheet()->getStyle('C4')->getFont()->setBold(true); 
+	$objPHPExcel->getActiveSheet()->getStyle('D1')->getFont()->setBold(true);
+	$objPHPExcel->getActiveSheet()->getStyle('D4')->getFont()->setBold(true); 
+	$objPHPExcel->getActiveSheet()->getStyle('E1')->getFont()->setBold(true); 
+	$objPHPExcel->getActiveSheet()->getStyle('E4')->getFont()->setBold(true); 
+	$objPHPExcel->getActiveSheet()->getStyle('F1')->getFont()->setBold(true);
+	$objPHPExcel->getActiveSheet()->getStyle('F4')->getFont()->setBold(true);
+	$objPHPExcel->getActiveSheet()->getStyle('G1')->getFont()->setBold(true); 
+	$objPHPExcel->getActiveSheet()->getStyle('G4')->getFont()->setBold(true); 
+	$objPHPExcel->getActiveSheet()->getStyle('H1')->getFont()->setBold(true); 
+	$objPHPExcel->getActiveSheet()->getStyle('H4')->getFont()->setBold(true); 
+	$objPHPExcel->getActiveSheet()->getStyle('I1')->getFont()->setBold(true);
+	$objPHPExcel->getActiveSheet()->getStyle('I4')->getFont()->setBold(true); 
+	$objPHPExcel->getActiveSheet()->getStyle('J1')->getFont()->setBold(true); 
+	$objPHPExcel->getActiveSheet()->getStyle('K1')->getFont()->setBold(true); 
+	$objPHPExcel->getActiveSheet()->getStyle('L1')->getFont()->setBold(true); 
 
 	$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5'); // indicação p criar ficheiro
 
 	header('Content-Type: application/vnd.ms-excel');
-	header('Content-Disposition: attachment;filename="pessoaFisica.xls"');
+	header('Content-Disposition: attachment;filename="pessoaJuridica.xls"');
 	header('Cache-Control: max-age=0');
 
 }
