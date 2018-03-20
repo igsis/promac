@@ -125,22 +125,21 @@ $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 					</div>
 
 					<div class="form-group">
-						<div class="col-md-offset-4 col-md-2">
-							<strong>É cooperativa? *</strong>
-						</div>
-						<div class="col-md-2">
-							<select class="form-control" name="cooperativa'">
-								<option value="<?php echo $pj['cooperativa'] ?>" selected >
-									<?php
-										if($pj['cooperativa'] == 1){ echo "Sim"; }
-										else { echo "Não"; }
-									?>
-								</option>
-								<option value="0">Não</option>
-								<option value="1">Sim</option>
-							</select>
-						</div>
-					</div>
+					  <div class="col-md-offset-4 col-md-2">
+					    <strong>É cooperativa? *</strong>
+					  </div>
+					  <div class="col-md-2">
+					    <select class="form-control" name="cooperativa">
+                          <?php $tipos = ['Não', 'Sim'];
+                            foreach($tipos as $chave => $tipo):      
+                              $selected = $pj['cooperativa'] == $chave ?  
+                                              "selected='selected'" : ""; ?>
+  							    <?=$tipo ?>
+                              </option>                                 
+                          <?php endforeach ?>  
+                        </select>
+					  </div>
+					</div>    
 
 				<!-- Botão para Gravar -->
 				<div class="form-group">
