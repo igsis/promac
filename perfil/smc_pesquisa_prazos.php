@@ -14,7 +14,7 @@
 					<option data-region="prestarContas">Prestar Contas</option>
 				</select>
 				<hr/>
-				
+
 				<div class="content">
 					<form method="POST" action="?perfil=smc_pesquisa_prazos_resultado" class="form-horizontal" role="form">
 						<div id="prazoCaptacao" class="pesquisa">
@@ -34,7 +34,9 @@
 								</div>
 							</div>
 						</div>
+					</form>
 
+					<form method="POST" action="?perfil=smc_pesquisa_prazos_resultado" class="form-horizontal" role="form">
 						<div id="finalCaptacao" class="pesquisa">
 							<div class="form-group">
 								<div class="col-md-offset-2 col-md-2"><br/><label>Final captação</label></div>
@@ -52,7 +54,9 @@
 								</div>
 							</div>
 						</div>
+					</form>
 
+					<form method="POST" action="?perfil=smc_pesquisa_prazos_resultado" class="form-horizontal" role="form">
 						<div id="execucao" class="pesquisa">
 							<div class="form-group">
 								<div class="col-md-offset-2 col-md-2"><br/><label>Execução</label></div>
@@ -70,7 +74,9 @@
 								</div>
 							</div>
 						</div>
+					</form>
 
+					<form method="POST" action="?perfil=smc_pesquisa_prazos_resultado" class="form-horizontal" role="form">
 						<div id="finalProjeto" class="pesquisa">
 							<div class="form-group">
 								<div class="col-md-offset-2 col-md-2"><br/><label>Final do projeto</label></div>
@@ -88,7 +94,9 @@
 								</div>
 							</div>
 						</div>
+					</form>
 
+					<form method="POST" action="?perfil=smc_pesquisa_prazos_resultado" class="form-horizontal" role="form">
 						<div id="prestarContas" class="pesquisa">
 							<div class="form-group">
 								<div class="col-md-offset-2 col-md-2"><br/><label>Prestar Contas</label></div>
@@ -107,6 +115,7 @@
 							</div>
 						</div>
 					</form>
+
 				</div>
 			</div>
 		</div>

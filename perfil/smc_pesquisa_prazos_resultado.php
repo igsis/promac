@@ -75,6 +75,7 @@ if($num > 0)
 		$pf = recuperaDados("pessoa_fisica","idPf",$lista['idPf']);
 		$pj = recuperaDados("pessoa_juridica","idPj",$lista['idPj']);
 		$x[$i]['idProjeto'] = $lista['idProjeto'];
+		$x[$i]['protocolo'] = $lista['protocolo'];
 		if($lista['tipoPessoa'] == 1)
 		{
 			$x[$i]['proponente'] = $pf['nome'];
@@ -111,7 +112,7 @@ $mensagem = "Foram encontrados ".$x['num']." resultados.<br/>";
 					<table class='table table-condensed'>
 						<thead>
 							<tr class='list_menu'>
-								<td>Protocolo</td>
+								<td>Protocolo (nº ISP)</td>
 								<td>Proponente</td>
 								<td>Documento</td>
 								<td>Área de Atuação</td>
@@ -124,7 +125,7 @@ $mensagem = "Foram encontrados ".$x['num']." resultados.<br/>";
 							for($h = 0; $h < $x['num']; $h++)
 							{
 								echo "<tr>";
-								echo "<td class='list_description'>".$x[$h]['idProjeto']."</td>";
+								echo "<td class='list_description'>".$x[$h]['protocolo']."</td>";
 								echo "<td class='list_description'>".$x[$h]['proponente']."</td>";
 								echo "<td class='list_description'>".$x[$h]['documento']."</td>";
 								echo "<td class='list_description'>".$x[$h]['areaAtuacao']."</td>";
