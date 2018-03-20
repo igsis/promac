@@ -6,7 +6,7 @@
     <!-- <link href="../visual/dist/css/smart_wizard_theme_arrows.css" rel="stylesheet" type="text/css" /> -->
     <link href="../visual/dist/css/smart_wizard_theme_dots.css" rel="stylesheet" type="text/css" />
 </head>
-<div class="container-fluid">      
+<div class="container">      
     <form class="form-inline">
          <div class="form-group hidden">
           <label >Selecione o tema:</label>

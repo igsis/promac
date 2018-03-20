@@ -11,11 +11,11 @@ $urlPj = array(
     4 => '/promac/visual/index_pj.php?perfil=representante_pj_resultado_busca',
     5 => '/promac/visual/index_pj.php?perfil=representante_pj_cadastro',
     6 => '/promac/visual/index_pj.php?perfil=arquivos_pj',
-    7 => '/promac/visual/index_pj.php?perfil=projeto_pj',
-    8 => '/promac/visual/index_pj.php?perfil=projeto_visualizacao',
-    9 => '/promac/visual/index_pj.php?perfil=projeto_pf',
-    10 => '/promac/visual/index_pj.php?perfil=projeto_novo',
-    11 => '/promac/visual/index_pj.php?perfil=projeto_edicao',
+    7 => '/promac/visual/index_pj.php?perfil=projeto_pj', // projeto
+    8 => '/promac/visual/index_pj.php?perfil=projeto_visualizacao', // projeto
+    9 => '/promac/visual/index_pj.php?perfil=projeto_pf', // projeto
+    10 => '/promac/visual/index_pj.php?perfil=projeto_novo', // projeto
+    11 => '/promac/visual/index_pj.php?perfil=projeto_edicao', // projeto
     12 => '/promac/visual/index_pj.php?perfil=projeto_2',
     13 => '/promac/visual/index_pj.php?perfil=projeto_3',
     14 => '/promac/visual/index_pj.php?perfil=projeto_4',
@@ -49,12 +49,8 @@ for ($i = 0; $i < count($urlPj); $i++) {
             $ativa2 = 'active loading';
         }elseif ($i == 6) {                
             $ativa3 = 'active loading';
-        }elseif ($i == 7 || $i == 8 || $i == 9) {  // Projeto                
+        }elseif ($i == 7 || $i == 8 || $i == 9 || $i == 10 || $i == 11 || $i == 34) {  // Projeto                
             $ativa4 = 'active loading';
-        }elseif ($i == 10 || $i == 11) { // cadastro              
-            $ativa5 = 'active loading';
-        }elseif ($i == 34) {       // Empresa          
-            $ativa6 = 'active loading';
         }elseif ($i == 12) {       // Passo 2             
             $ativa7 = 'active loading';
         }elseif ($i == 13) {       // Passo 3              
@@ -114,12 +110,6 @@ for ($i = 0; $i < count($urlPj); $i++) {
                 ?>
                 <li class="<?php echo isset($ativa4) ? $ativa4 : 'clickable'; ?>">
                     <a onclick="location.href='index_pj.php?perfil=projeto_pj'" href=""><br /><small>Projetos</small></a>
-                </li>                
-                <li class="<?php echo isset($ativa5) ? $ativa5 : 'clickable'; ?>">
-                   <a onclick="location.href='index_pj.php?perfil=projeto_novo'" href=""><br />Cadastro de Projeto</a>
-                </li>
-                <li class="<?php echo isset($ativa6) ? $ativa6 : 'clickable'; ?>">
-                   <a onclick="location.href='index_pj.php?perfil=cooperativa_resultado_busca'" href=""><br />Empresa</a>
                 </li>
                 <li class="<?php echo isset($ativa7) ? $ativa7 : 'clickable'; ?>">
                    <a onclick="location.href='index_pj.php?perfil=projeto_2'" href=""><br />Passo 2</a>
@@ -132,18 +122,18 @@ for ($i = 0; $i < count($urlPj); $i++) {
                 </li> 
                 <li class="<?php echo isset($ativa10) ? $ativa10 : 'clickable'; ?>">
                    <a onclick="location.href='index_pj.php?perfil=projeto_5'" href=""><br />Passo 5</a>
-                </li>
-            </ul> <!-- Barra linha 2 -->
-            <ul>                
+                </li>               
                 <li class="<?php echo isset($ativa11) ? $ativa11 : 'clickable'; ?>">
                    <a onclick="location.href='index_pj.php?perfil=projeto_6'" href=""><br />Passo 6</a>
                 </li>
                 <li class="<?php echo isset($ativa12) ? $ativa12 : 'clickable'; ?>">
                    <a onclick="location.href='index_pj.php?perfil=local'" href=""><br />Local</a>
                 </li>
+            </ul> <!-- Barra linha 2 -->
+            <ul>                   
                 <li class="<?php echo isset($ativa20) ? $ativa20 : 'clickable'; ?>">
                    <a onclick="location.href='index_pj.php?perfil=projeto_8'" href=""><br />Passo 8</a>
-                </li>
+                </li>              
                 <li class="<?php echo isset($ativa13) ? $ativa13 : 'clickable'; ?>">
                    <a onclick="location.href='index_pj.php?perfil=ficha_tecnica'" href=""><br />Ficha Técnica</a>
                 </li>   
