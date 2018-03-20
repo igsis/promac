@@ -117,7 +117,7 @@ if(isset($_POST['liberacaoPJ']))
 					<div class="col-md-offset-1 col-md-10">
 						<div class="table-responsive list_info">
 						<?php
-							$sql = "SELECT * FROM prazos_projeto AS prz INNER JOIN projeto AS prj ON prj.idProjeto = prz.idProjeto WHERE prj.publicado = 1 AND finalProjeto < DATE_ADD(now(), INTERVAL 30 DAY)";
+							$sql = "SELECT * FROM prazos_projeto AS prz INNER JOIN projeto AS prj ON prj.idProjeto = prz.idProjeto WHERE prj.publicado = 1 AND finalProjeto< DATE_ADD(now(), INTERVAL 30 DAY)";
 							$query = mysqli_query($con,$sql);
 							$num = mysqli_num_rows($query);
 							if($num > 0)
@@ -167,7 +167,7 @@ if(isset($_POST['liberacaoPJ']))
 
 	<div class="container">
 		<div class="form-group">
-			<h5>Projetos com data final menor que 30 dias.</h5>
+			<h5>Projetos com data para prestar contas faltando 30 dias ou menos.</h5>
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
