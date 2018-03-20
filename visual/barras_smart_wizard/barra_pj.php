@@ -153,7 +153,7 @@ for ($i = 0; $i < count($urlPj); $i++) {
                    <a onclick="location.href='index_pj.php?perfil=finalProjeto'" href=""><br />Final Projeto</a>
                 </li>
                 <li class="<?php echo isset($ativa19) ? $ativa19 : 'clickable'; ?>">
-                   <a onclick="location.href='index_pj.php?perfil=informacoes_administrativas'" href=""><br />Informações Administrativas</a>
+                   <a onclick="location.href='index_pj.php?perfil=informacoes_administrativas'" href=""><br />Informações da Inscrição</a>
                 </li> 
             </ul> 
         </div>
