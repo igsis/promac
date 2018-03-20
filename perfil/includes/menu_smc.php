@@ -9,7 +9,7 @@ $pasta = "?perfil=";
 			<li><a href="#">Inscrição de Projeto</a>
 				<ul class="dl-submenu">
 					<li><a href="<?php echo $pasta ?>smc_pesquisa_pf">Pessoa Física</a></li>
-					<li><a href="<?php echo $pasta ?>smc_lista_liberacao&tipo=2">Pessoa Jurídica</a></li>
+					<li><a href="<?php echo $pasta ?>smc_pesquisa_pj">Pessoa Jurídica</a></li>
 				</ul>
 			</li>
 			<li><a href="#">Pesquisas</a>
