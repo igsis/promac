@@ -1,16 +1,18 @@
 <?php
 $con = bancoMysqli();
 
-$deCaptacao = exibirDataMysql($_POST['deCaptacao']);
-$ateCaptacao = exibirDataMysql($_POST['ateCaptacao']);
-$deFinalCaptacao = exibirDataMysql($_POST['deFinalCaptacao']);
-$ateFinalCaptacao = exibirDataMysql($_POST['ateFinalCaptacao']);
-$inicioExecucao = exibirDataMysql($_POST['inicioExecucao']);
-$fimExecucao = exibirDataMysql($_POST['fimExecucao']);
-$deFinal = exibirDataMysql($_POST['deFinal']);
-$ateFinal = exibirDataMysql($_POST['ateFinal']);
-$deContas = exibirDataMysql($_POST['deContas']);
-$ateContas = exibirDataMysql($_POST['ateContas']);
+empty($_POST['ateCaptacao']) ? "--" : exibirDataMysql($_POST['ateCaptacao']);
+
+$deCaptacao = empty($_POST['deCaptacao']) ? "--" : exibirDataMysql($_POST['deCaptacao']);
+$ateCaptacao = empty($_POST['ateCaptacao']) ? "--" : exibirDataMysql($_POST['ateCaptacao']);
+$deFinalCaptacao = empty($_POST['deFinalCaptacao']) ? "--" : exibirDataMysql($_POST['deFinalCaptacao']);
+$ateFinalCaptacao = empty($_POST['ateFinalCaptacao']) ? "--" : exibirDataMysql($_POST['ateFinalCaptacao']);
+$inicioExecucao = empty($_POST['inicioExecucao']) ? "--" : exibirDataMysql($_POST['inicioExecucao']);
+$fimExecucao = empty($_POST['fimExecucao']) ? "--" : exibirDataMysql($_POST['fimExecucao']);
+$deFinal = empty($_POST['deFinal']) ? "--" : exibirDataMysql($_POST['deFinal']);
+$ateFinal = empty($_POST['ateFinal']) ? "--" : exibirDataMysql($_POST['ateFinal']);
+$deContas = empty($_POST['deContas']) ? "--" : exibirDataMysql($_POST['deContas']);
+$ateContas = empty($_POST['ateContas']) ? "--" : exibirDataMysql($_POST['ateContas']);
 
 if($deCaptacao != '--' && $ateCaptacao != '--')
 {
