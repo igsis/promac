@@ -22,7 +22,8 @@ if(isset($_POST['cadastraNovoPj']))
 				$login = $_POST['cnpj'];
 				$senha01 = md5($_POST['senha01']);
 				$sql_senha = "INSERT INTO `pessoa_juridica`(razaoSocial, cnpj, email, senha, idNivelAcesso) VALUES ('$razaoSocial', '$login', '$email', '$senha01', '1')";
-				$query_senha = mysqli_query($con,$sql_senha);
+				$query_senha = mysqli_query($con,$sql_senha);	
+				
 				$sql_select = "SELECT * FROM pessoa_juridica WHERE cnpj = '$login'";
 				$query_select = mysqli_query($con,$sql_select);
 				$sql_array = mysqli_fetch_array($query_select);
