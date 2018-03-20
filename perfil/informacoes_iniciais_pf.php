@@ -18,14 +18,7 @@ if(isset($_POST['atualizarFisica']))
 	$CEP = $_POST['CEP'];
 	$Numero = $_POST['Numero'];
 	$Complemento = $_POST['Complemento'];
-	if(isset($_POST['cooperado']))
-	{
-		$cooperado = $_POST['cooperado'];
-	}
-	else
-	{
-		$cooperado = 0;
-	}
+	$cooperado = $_POST['cooperado'];
 
 	$sql_atualiza_pf = "UPDATE pessoa_fisica SET
 	`nome` = '$nome',
@@ -143,7 +136,16 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 							<strong>É cooperado? *</strong>
 						</div>
 						<div class="col-md-2">
-							<input type="checkbox" name="cooperado" value="1" <?php checar($pf['cooperado']) ?> >
+							<select class="form-control" name="cooperado">
+								<option value="<?php echo $pf['cooperado'] ?>" selected >
+									<?php
+										if($pf['cooperado'] == 1){ echo "Sim"; }
+										else { echo "Não"; }
+									?>
+								</option>
+								<option value="0">Não</option>
+								<option value="1">Sim</option>
+							</select>
 						</div>
 					</div>
 

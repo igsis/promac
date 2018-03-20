@@ -18,14 +18,7 @@ if(isset($_POST['atualizarJuridica']))
 	$CEP = $_POST['CEP'];
 	$Numero = $_POST['Numero'];
 	$Complemento = $_POST['Complemento'];
-	if(isset($_POST['cooperativa']))
-	{
-		$cooperativa = $_POST['cooperativa'];
-	}
-	else
-	{
-		$cooperativa = 0;
-	}
+	$cooperativa = $_POST['cooperativa'];
 
 	$sql_atualiza_pj = "UPDATE pessoa_juridica SET
 	`razaoSocial` = '$razaoSocial',
@@ -136,7 +129,16 @@ $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 							<strong>É cooperativa? *</strong>
 						</div>
 						<div class="col-md-2">
-							<input type="checkbox" name="cooperativa" value="1" <?php checar($pj['cooperativa']) ?> >
+							<select class="form-control" name="cooperativa'">
+								<option value="<?php echo $pj['cooperativa'] ?>" selected >
+									<?php
+										if($pj['cooperativa'] == 1){ echo "Sim"; }
+										else { echo "Não"; }
+									?>
+								</option>
+								<option value="0">Não</option>
+								<option value="1">Sim</option>
+							</select>
 						</div>
 					</div>
 
