@@ -16,7 +16,7 @@ else
 
 <html>
 	<head>
-		<title>SMC / ProMAC - Programa Municipal de Apoio a Projetos Culturais</title>
+		<title>SMC / Pro-Mac - Programa Municipal de Apoio a Projetos Culturais</title>
 		<meta charset="utf-8" />
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 		<!-- css -->
@@ -29,7 +29,7 @@ else
     </head>
 	<body>
 		<div id="bar">
-			<p id="p-bar"><img src="images/logo_cultura_h.png" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>ProMAC</b>
+			<p id="p-bar"><img src="images/logo_cultura_h.png" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Pro-Mac</b>
 			</p>
 		</div>
 <?php 
