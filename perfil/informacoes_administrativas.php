@@ -32,7 +32,7 @@ $ano = date('Y');
 		}
     	?>
 		<div class="form-group">
-			<h4>Informações Administrativas</h4>
+			<h4>Informações da Inscrição</h4>
 			<p><strong><?php if(isset($mensagem)){echo $mensagem;} ?></strong></p>
 		</div>
 		<div class="row">

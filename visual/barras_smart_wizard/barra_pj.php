@@ -91,13 +91,13 @@ for ($i = 0; $i < count($urlPj); $i++) {
                     <a href=""><br /></a>
                 </li>
                 <li class="<?php echo isset($ativa1) ? $ativa1 : 'clickable'; ?>">
-                    <a onclick="location.href='index_pj.php?perfil=informacoes_iniciais_pj'" href=""><br /><small>Informações Iniciais</small></a>
+                    <a onclick="location.href='index_pj.php?perfil=informacoes_iniciais_pj'" href=""><br /><small>Proponente</small></a>
                 </li> 
                 <li class="<?php echo isset($ativa2) ? $ativa2 : 'clickable'; ?>">
                     <a onclick="location.href='index_pj.php?perfil=representante_pj'" href=""><br /><small>Representante Legal</small></a>
                 </li>    
                 <li class="<?php echo isset($ativa3) ? $ativa3 : 'clickable'; ?>">
-                    <a onclick="location.href='index_pj.php?perfil=arquivos_pj'" href=""><br /><small>Arquivos Pessoais</small></a>
+                    <a onclick="location.href='index_pj.php?perfil=arquivos_pj'" href=""><br /><small>Documentos do Proponente</small></a>
                 </li>
                 <?php 
                     if ($pj['liberado'] != 3) {

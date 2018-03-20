@@ -85,10 +85,10 @@ for ($i = 0; $i < count($urlPf); $i++) {
                     <a href=""><br /></a>
                 </li>
                 <li class="<?php echo isset($acionar1) ? $acionar1 : 'clickable'; ?>">
-                    <a onclick="location.href='index_pf.php?perfil=informacoes_iniciais_pf'" href=""><br /> Informações Iniciais</a>
+                    <a onclick="location.href='index_pf.php?perfil=informacoes_iniciais_pf'" href=""><br />Proponente</a>
                 </li> 
                 <li class="<?php echo isset($acionar2) ? $acionar2 : 'clickable'; ?>">
-                   <a onclick="location.href='index_pf.php?perfil=arquivos_pf'" href=""><br />Arquivos Pessoais</a>
+                   <a onclick="location.href='index_pf.php?perfil=arquivos_pf'" href=""><br />Documentos do Proponente</a>
                 </li>
                 <?php 
                     if ($pf['liberado'] != 3) {
