@@ -24,20 +24,21 @@ $urlPj = array(
     17 => '/promac/visual/index_pj.php?perfil=local', // local
     18 => '/promac/visual/index_pj.php?perfil=local_novo', // local
     19 => '/promac/visual/index_pj.php?perfil=local_edicao', // local
-    20 => '/promac/visual/index_pj.php?perfil=projeto_8',
-    21 => '/promac/visual/index_pj.php?perfil=ficha_tecnica',
-    22 => '/promac/visual/index_pj.php?perfil=ficha_tecnica_novo',
-    23 => '/promac/visual/index_pj.php?perfil=ficha_tecnica_edicao',
-    24 => '/promac/visual/index_pj.php?perfil=cronograma',
-    25 => '/promac/visual/index_pj.php?perfil=cronograma_novo',
-    26 => '/promac/visual/index_pj.php?perfil=cronograma_edicao',
-    27 => '/promac/visual/index_pj.php?perfil=orcamento',
-    28 => '/promac/visual/index_pj.php?perfil=orcamento_novo',
-    29 => '/promac/visual/index_pj.php?perfil=orcamento_edicao',
-    30 => '/promac/visual/index_pj.php?perfil=anexos',
-    31 => '/promac/visual/index_pj.php?perfil=projeto_13',
-    32 => '/promac/visual/index_pj.php?perfil=finalProjeto',
-    33 => '/promac/visual/index_pj.php?perfil=informacoes_administrativas'
+    20 => '/promac/visual/index_pj.php?perfil=projeto_8', // puplico alvo Passo 8
+    21 => '/promac/visual/index_pj.php?perfil=ficha_tecnica', // Ficha Técnica
+    22 => '/promac/visual/index_pj.php?perfil=ficha_tecnica_novo', // Ficha Técnica
+    23 => '/promac/visual/index_pj.php?perfil=ficha_tecnica_edicao', // Ficha Técnica
+    24 => '/promac/visual/index_pj.php?perfil=cronograma', //  Cronograma  
+    25 => '/promac/visual/index_pj.php?perfil=cronograma_novo', //  Cronograma  
+    26 => '/promac/visual/index_pj.php?perfil=cronograma_edicao', //  Cronograma  
+    27 => '/promac/visual/index_pj.php?perfil=orcamento', //  Orçamento   
+    28 => '/promac/visual/index_pj.php?perfil=orcamento_novo', //  Orçamento   
+    29 => '/promac/visual/index_pj.php?perfil=orcamento_edicao', //  Orçamento   
+    30 => '/promac/visual/index_pj.php?perfil=anexos', //  Anexos  
+    31 => '/promac/visual/index_pj.php?perfil=projeto_13', //  Link do YouTube
+    32 => '/promac/visual/index_pj.php?perfil=finalProjeto', // Final Projeto  
+    33 => '/promac/visual/index_pj.php?perfil=informacoes_administrativas',
+    34 => '/promac/visual/index_pj.php?perfil=cooperativa_resultado_busca' // Empresa  
 );
 
 for ($i = 0; $i < count($urlPj); $i++) {
@@ -50,9 +51,9 @@ for ($i = 0; $i < count($urlPj); $i++) {
             $ativa3 = 'active loading';
         }elseif ($i == 7 || $i == 8 || $i == 9) {  // Projeto                
             $ativa4 = 'active loading';
-        }elseif ($i == 10 || $i == 11) {       // cadastro              
+        }elseif ($i == 10 || $i == 11) { // cadastro              
             $ativa5 = 'active loading';
-        }elseif ($i == 'a') {       // Empresa          
+        }elseif ($i == 34) {       // Empresa          
             $ativa6 = 'active loading';
         }elseif ($i == 12) {       // Passo 2             
             $ativa7 = 'active loading';
@@ -66,20 +67,22 @@ for ($i = 0; $i < count($urlPj); $i++) {
             $ativa11 = 'active loading';
         }elseif ($i == 17 || $i == 18 || $i == 19) { //  Local   
             $ativa12 = 'active loading';
-        }elseif ($i == 'a') {       //  Ficha Técnica             
+        }elseif ($i == 21 || $i == 22 || $i == 23) { //  Ficha Técnica             
             $ativa13 = 'active loading';
-        }elseif ($i == 'a') {       //  Cronograma             
+        }elseif ($i == 24 || $i == 25 || $i == 26) { //  Cronograma             
             $ativa14 = 'active loading';
-        }elseif ($i == 'a') {       //  Orçamento            
+        }elseif ($i == 27 || $i == 28 || $i == 29) { //  Orçamento            
             $ativa15 = 'active loading';
-        }elseif ($i == 'a') {       //  Anexos           
+        }elseif ($i == 30) {       //  Anexos           
             $ativa16 = 'active loading';
-        }elseif ($i == 'a') {       //  Link do YouTube             
+        }elseif ($i == 31) {       //  Link do YouTube             
             $ativa17 = 'active loading';
-        }elseif ($i == 'a') {       // Final Projeto              
+        }elseif ($i == 32) {       // Final Projeto              
             $ativa18 = 'active loading';
-        }elseif ($i == 'a') {       //  Informações Administrativas             
+        }elseif ($i == 33) {       //  Informações Administrativas             
             $ativa19 = 'active loading';
+        }elseif ($i == 20) {       //  Informações Administrativas             
+            $ativa20 = 'active loading';
         }
 
 ?>
@@ -137,6 +140,9 @@ for ($i = 0; $i < count($urlPj); $i++) {
                 </li>
                 <li class="<?php echo isset($ativa12) ? $ativa12 : 'clickable'; ?>">
                    <a onclick="location.href='index_pj.php?perfil=local'" href=""><br />Local</a>
+                </li>
+                <li class="<?php echo isset($ativa20) ? $ativa20 : 'clickable'; ?>">
+                   <a onclick="location.href='index_pj.php?perfil=projeto_8'" href=""><br />Passo 8</a>
                 </li>
                 <li class="<?php echo isset($ativa13) ? $ativa13 : 'clickable'; ?>">
                    <a onclick="location.href='index_pj.php?perfil=ficha_tecnica'" href=""><br />Ficha Técnica</a>

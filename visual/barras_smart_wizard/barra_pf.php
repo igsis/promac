@@ -73,7 +73,7 @@ for ($i = 0; $i < count($urlPf); $i++) {
             $acionar17 = 'active loading';
         }elseif ($i == 26){
             $acionar18 = 'active loading';
-        }elseif ($i == 28){
+        }elseif ($i == 28){ // passo 8
             $acionar19 = 'active loading';
         }
 
@@ -130,7 +130,7 @@ for ($i = 0; $i < count($urlPf); $i++) {
                    <a onclick="location.href='index_pf.php?perfil=local'" href=""><br />Local</a>
                 </li>
                 <li class="<?php echo isset($acionar19) ? $acionar19 : 'clickable'; ?>">
-                   <a onclick="location.href='index_pf.php?perfil=projeto_8'" href=""><br />Público Alvo</a>
+                   <a onclick="location.href='index_pf.php?perfil=projeto_8'" href=""><br />Passo 8</a>
                 </li>
                 <li class="<?php echo isset($acionar12) ? $acionar12 : 'clickable'; ?>">
                    <a onclick="location.href='index_pf.php?perfil=ficha_tecnica'" href=""><br />Ficha Técnica</a>
