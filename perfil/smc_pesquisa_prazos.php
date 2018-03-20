@@ -16,8 +16,8 @@
 				<hr/>
 				
 				<div class="content">
-					<div id="prazoCaptacao" class="pesquisa">
-						<form method="POST" action="?perfil=smc_pesquisa_prazos_resultado" class="form-horizontal" role="form">
+					<form method="POST" action="?perfil=smc_pesquisa_prazos_resultado" class="form-horizontal" role="form">
+						<div id="prazoCaptacao" class="pesquisa">
 							<div class="form-group">
 								<div class="col-md-offset-2 col-md-2"><br/><label>Prazo de captação</label></div>
 								<div class="col-md-3"><label>De</label>
@@ -29,14 +29,13 @@
 							</div>
 							<div class="form-group">
 								<div class="col-md-offset-2 col-md-8">
+									<input type="hidden" name="metodoPesquisa" value="1">
 									<input type="submit" name="pesquisarPrazos" class="btn btn-theme btn-lg btn-block" value="Pesquisar">
 								</div>
 							</div>
-						</form>
-					</div>
+						</div>
 
-					<div id="finalCaptacao" class="pesquisa">
-						<form method="POST" action="?perfil=smc_pesquisa_prazos_resultado" class="form-horizontal" role="form">
+						<div id="finalCaptacao" class="pesquisa">
 							<div class="form-group">
 								<div class="col-md-offset-2 col-md-2"><br/><label>Final captação</label></div>
 								<div class="col-md-3"><label>De</label>
@@ -48,14 +47,13 @@
 							</div>
 							<div class="form-group">
 								<div class="col-md-offset-2 col-md-8">
+									<input type="hidden" name="metodoPesquisa" value="finalCaptacao">
 									<input type="submit" name="pesquisarPrazos" class="btn btn-theme btn-lg btn-block" value="Pesquisar">
 								</div>
 							</div>
-						</form>
-					</div>
+						</div>
 
-					<div id="execucao" class="pesquisa">
-						<form method="POST" action="?perfil=smc_pesquisa_prazos_resultado" class="form-horizontal" role="form">
+						<div id="execucao" class="pesquisa">
 							<div class="form-group">
 								<div class="col-md-offset-2 col-md-2"><br/><label>Execução</label></div>
 								<div class="col-md-3"><label>De</label>
@@ -67,14 +65,13 @@
 							</div>
 							<div class="form-group">
 								<div class="col-md-offset-2 col-md-8">
+									<input type="hidden" name="metodoPesquisa" value="execucao">
 									<input type="submit" name="pesquisarPrazos" class="btn btn-theme btn-lg btn-block" value="Pesquisar">
 								</div>
 							</div>
-						</form>
-					</div>
+						</div>
 
-					<div id="finalProjeto" class="pesquisa">
-						<form method="POST" action="?perfil=smc_pesquisa_prazos_resultado" class="form-horizontal" role="form">
+						<div id="finalProjeto" class="pesquisa">
 							<div class="form-group">
 								<div class="col-md-offset-2 col-md-2"><br/><label>Final do projeto</label></div>
 								<div class="col-md-3"><label>De</label>
@@ -86,14 +83,13 @@
 							</div>
 							<div class="form-group">
 								<div class="col-md-offset-2 col-md-8">
+									<input type="hidden" name="metodoPesquisa" value="finalProjeto">
 									<input type="submit" name="pesquisarPrazos" class="btn btn-theme btn-lg btn-block" value="Pesquisar">
 								</div>
 							</div>
-						</form>
-					</div>
+						</div>
 
-					<div id="prestarContas" class="pesquisa">
-						<form method="POST" action="?perfil=smc_pesquisa_prazos_resultado" class="form-horizontal" role="form">
+						<div id="prestarContas" class="pesquisa">
 							<div class="form-group">
 								<div class="col-md-offset-2 col-md-2"><br/><label>Prestar Contas</label></div>
 								<div class="col-md-3"><label>De</label>
@@ -105,11 +101,12 @@
 							</div>
 							<div class="form-group">
 								<div class="col-md-offset-2 col-md-8">
+									<input type="hidden" name="metodoPesquisa" value="prestarContas">
 									<input type="submit" name="pesquisarPrazos" class="btn btn-theme btn-lg btn-block" value="Pesquisar">
 								</div>
 							</div>
-						</form>
-					</div>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>
