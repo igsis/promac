@@ -77,7 +77,7 @@ if(isset($_POST['apagaOrcamento']))
 		}
     	?>
 		<div class="form-group">
-			<h4>Orçamento</h4>
+			<h4>Orçamento <button class='btn btn-default' type='button' data-toggle='modal' data-target='#infoOrcamento' style="border-radius: 30px;"><i class="fa fa-info-circle"></i></button></h4>
 			<h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
 		</div>
 		<div class="row">
@@ -176,15 +176,6 @@ if(isset($_POST['apagaOrcamento']))
 
 				<div class="form-group"><br><hr/></div>
 
-				<!--
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
-						<form class="form-horizontal" role="form" action="?perfil=orcamento_novo" method="post">
-							<input type="submit" value="Inserir novo item" class="btn btn-theme btn-lg btn-block">
-						</form>
-					</div>
-				</div>
-				'-->
 			</div>
 			<div class="form-group">
 				<div class="col-md-offset-2 col-md-8"><br></div>
@@ -249,23 +240,45 @@ if(isset($_POST['apagaOrcamento']))
 			</div>
 		</div>
 		<!-- Confirmação de Exclusão -->
-					<div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel" aria-hidden="true">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-									<h4 class="modal-title">Excluir Arquivo?</h4>
-								</div>
-								<div class="modal-body">
-									<p>Confirma?</p>
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-									<button type="button" class="btn btn-danger" id="confirm">Apagar</button>
-								</div>
-							</div>
-						</div>
+		<div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title">Excluir Arquivo?</h4>
 					</div>
-				<!-- Fim Confirmação de Exclusão -->
+					<div class="modal-body">
+						<p>Confirma?</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+						<button type="button" class="btn btn-danger" id="confirm">Apagar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Fim Confirmação de Exclusão -->
+		<!-- Inicio Modal Informações Orçamento -->
+		<div class="modal fade" id="infoOrcamento" role="dialog" aria-labelledby="infoOrcamentoLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title">Atenção aos limites!!</h4>
+					</div>
+					<div class="modal-body" style="text-align: left;">
+						<ul class="list-group">
+							<li class="list-group-item list-group-item-success"><b>Conforme art. 53 do Decreto 58.041/2017</b></li>
+							<li class="list-group-item">Os projetos culturais poderão acolher despesas de administração de até 20% (vinte por cento) do valor total do projeto, englobando gastos administrativos e serviços de captação de recursos.</li>
+							<li class="list-group-item">Para fins de composição das despesas de administração, deverão ser considerados os tetos de 15% (quinze por cento) para gastos administrativos e de 10% (dez por cento) para o serviço de captação de recursos</li>
+						</ul>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Fim Modal Informações Orçamento -->
 	</div>
 </section>

@@ -293,10 +293,3 @@ function mtel(v){
 		return false;
 	});	
   </script>
-  
-  <!-- Exibir Modal Orçamento -->
-    <script type="text/javascript">
-      $(window).load(function(){        
-          $('#infoOrcamento').modal('show');
-      });
-    </script>
