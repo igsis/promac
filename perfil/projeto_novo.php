@@ -5,6 +5,7 @@ if(isset($_POST['novoPj'])) //tipoePessoa = 2
 {
 	$idPj = $_SESSION['idUser'];
 	$idAreaAtuacao = $_POST['idAreaAtuacao'];
+	$nomeProjeto = $_POST['nomeProjeto'];
 	if(isset($_POST['contratoGestao']))
 	{
 		$contratoGestao = $_POST['contratoGestao'];
@@ -13,7 +14,7 @@ if(isset($_POST['novoPj'])) //tipoePessoa = 2
 	{
 		$contratoGestao = 0;
 	}
-	$sql_insere_projeto = "INSERT INTO projeto (idPj, contratoGestao, tipoPessoa, idAreaAtuacao, idStatus, publicado) VALUES ('$idPj', '$contratoGestao', 2, '$idAreaAtuacao', 1, 1)";
+	$sql_insere_projeto = "INSERT INTO projeto (idPj, contratoGestao, tipoPessoa, nomeProjeto, idAreaAtuacao, idStatus, publicado) VALUES ('$idPj', '$contratoGestao', 2, '$nomeProjeto', '$idAreaAtuacao', 1, 1)";
 	if(mysqli_query($con,$sql_insere_projeto))
 	{
 		$sql_ultimo = "SELECT idProjeto FROM projeto ORDER BY idProjeto DESC LIMIT 0,1";
@@ -33,7 +34,8 @@ if(isset($_POST['insereAtuacao']))
 {
 	$idPf = $_SESSION['idUser'];
 	$idAreaAtuacao = $_POST['idAreaAtuacao'];
-	$sql_insere_projeto = "INSERT INTO projeto (idPf, tipoPessoa, idAreaAtuacao, idStatus, publicado) VALUES ('$idPf', 1, '$idAreaAtuacao', 1, 1)";
+	$nomeProjeto = $_POST['nomeProjeto'];
+	$sql_insere_projeto = "INSERT INTO projeto (idPf, tipoPessoa, nomeProjeto, idAreaAtuacao, idStatus, publicado) VALUES ('$idPf', 1, '$nomeProjeto', '$idAreaAtuacao', 1, 1)";
 	if(mysqli_query($con,$sql_insere_projeto))
 	{
 		$sql_ultimo = "SELECT idProjeto FROM projeto ORDER BY idProjeto DESC LIMIT 0,1";
@@ -82,6 +84,13 @@ if(isset($_POST['insereAtuacao']))
 								<strong>Possui Contrato de Gestão ou Termo de Colaboração com o Poder Público?* </strong>&nbsp;&nbsp;&nbsp;<input type="checkbox" name="contratoGestao" value="1">
 							</div>
 						</div>
+
+						<div class="form-group">
+							<div class="col-md-offset-2 col-md-8"><label>Nome do projeto</label>
+								<input type="text" name="nomeProjeto" class="form-control">
+							</div>
+						</div>
+
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8">
 								<label>Área de atuação *</label>
@@ -91,6 +100,7 @@ if(isset($_POST['insereAtuacao']))
 								</select>
 							</div>
 						</div>
+
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8">
 								<input type="submit" name="novoPj" class="btn btn-theme btn-md btn-block" value="gravar">
@@ -104,20 +114,29 @@ if(isset($_POST['insereAtuacao']))
 					if(!isset($_SESSION['idProjeto']))
 					{
 				?>
-						<div class="form-group">
-							<form method="POST" action="?perfil=projeto_novo" class="form-horizontal" role="form">
-								<div class="col-md-offset-2 col-md-5">
+						<form method="POST" action="?perfil=projeto_novo" class="form-horizontal" role="form">
+							<div class="form-group">
+								<div class="col-md-offset-2 col-md-8"><label>Nome do projeto</label>
+									<input type="text" name="nomeProjeto" class="form-control">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div class="col-md-offset-2 col-md-8">
 									<label>Área de atuação *</label><br/>
 									<select class="form-control" name="idAreaAtuacao" >
 										<option value="0"></option>
 										<?php echo geraAreaAtuacao("area_atuacao",1) ?>
 									</select>
 								</div>
-								<div class="col-md-3"><label>&nbsp;</label><br/>
+							</div>
+
+							<div class="form-group">
+								<div class="col-md-offset-2 col-md-8">
 									<input type="submit" name="insereAtuacao" class="btn btn-theme btn-md btn-block" value="Inserir">
 								</div>
-							</form>
-						</div>
+							</div>
+						</form>
 					<?php
 					}
 					if(isset($_SESSION['idProjeto']))
@@ -148,20 +167,29 @@ if(isset($_POST['insereAtuacao']))
 					if($_SESSION['tipoPessoa'] == 1 && $cooperado == 0 && !isset($_SESSION['idProjeto'])) // pessoa fisica
 					{
 				?>
-						<div class="form-group">
-							<form method="POST" action="?perfil=projeto_novo" class="form-horizontal" role="form">
-								<div class="col-md-offset-2 col-md-5">
+						<form method="POST" action="?perfil=projeto_novo" class="form-horizontal" role="form">
+							<div class="form-group">
+								<div class="col-md-offset-2 col-md-8"><label>Nome do projeto</label>
+									<input type="text" name="nomeProjeto" class="form-control">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div class="col-md-offset-2 col-md-8">
 									<label>Área de atuação *</label><br/>
 									<select class="form-control" name="idAreaAtuacao" >
 										<option value="0"></option>
 										<?php echo geraAreaAtuacao("area_atuacao", 1) ?>
 									</select>
 								</div>
-								<div class="col-md-3"><label>&nbsp;</label><br/>
+							</div>
+
+							<div class="form-group">
+								<div class="col-md-offset-2 col-md-8">
 									<input type="submit" name="insereAtuacao" class="btn btn-theme btn-md btn-block" value="Inserir">
 								</div>
-							</form>
-						</div>
+							</div>
+						</form>
 				<?php
 					}
 					else

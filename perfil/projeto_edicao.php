@@ -11,6 +11,7 @@ $idProjeto = $_SESSION['idProjeto'];
 if(isset($_POST['novoPj'])) //tipoePessoa = 2
 {
 	$idPj = $_SESSION['idUser'];
+	$nomeProjeto = $_POST['nomeProjeto'];
 	$idAreaAtuacao = $_POST['idAreaAtuacao'];
 	if(isset($_POST['contratoGestao']))
 	{
@@ -22,6 +23,7 @@ if(isset($_POST['novoPj'])) //tipoePessoa = 2
 	}
 	$sql_insere_projeto = "UPDATE projeto SET
 		contratoGestao = '$contratoGestao',
+		nomeProjeto = '$nomeProjeto',
 		idAreaAtuacao = '$idAreaAtuacao'
 		WHERE idProjeto = '$idProjeto'";
 	if(mysqli_query($con,$sql_insere_projeto))
@@ -38,8 +40,10 @@ if(isset($_POST['novoPj'])) //tipoePessoa = 2
 if(isset($_POST['insereAtuacao']))
 {
 	$idPf = $_SESSION['idUser'];
+	$nomeProjeto = $_POST['nomeProjeto'];
 	$idAreaAtuacao = $_POST['idAreaAtuacao'];
 	$sql_insere_projeto = "UPDATE projeto SET
+		nomeProjeto = '$nomeProjeto',
 		idAreaAtuacao = '$idAreaAtuacao'
 		WHERE idProjeto = '$idProjeto'";
 	if(mysqli_query($con,$sql_insere_projeto))
@@ -89,6 +93,11 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 							</div>
 						</div>
 						<div class="form-group">
+							<div class="col-md-offset-2 col-md-8"><label>Nome do projeto</label>
+								<input type="text" name="nomeProjeto" class="form-control">
+							</div>
+						</div>
+						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8">
 								<label>Área de atuação *</label>
 								<select class="form-control" name="idAreaAtuacao" >
@@ -108,20 +117,29 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 				if($projeto['tipoPessoa'] == 1) //Pessoa Física Cooperado
 				{
 				?>
-					<div class="form-group">
-						<form method="POST" action="?perfil=projeto_edicao" class="form-horizontal" role="form">
-							<div class="col-md-offset-2 col-md-5">
+					<form method="POST" action="?perfil=projeto_edicao" class="form-horizontal" role="form">
+						<div class="form-group">
+							<div class="col-md-offset-2 col-md-8"><label>Nome do projeto</label>
+								<input type="text" name="nomeProjeto" class="form-control">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="col-md-offset-2 col-md-8">
 								<label>Área de atuação *</label><br/>
 								<select class="form-control" name="idAreaAtuacao" >
 									<option value="1"></option>
 									<?php echo geraOpcao("area_atuacao",$projeto['idAreaAtuacao']) ?>
 								</select>
 							</div>
-							<div class="col-md-3"><label>&nbsp;</label><br/>
+						</div>
+
+						<div class="form-group">
+							<div class="col-md-offset-2 col-md-8">
 								<input type="submit" name="insereAtuacao" class="btn btn-theme btn-md btn-block" value="Inserir">
 							</div>
-						</form>
-					</div>
+						</div>
+					</form>
 					<?php
 					if($cooperado == 1)
 					{
