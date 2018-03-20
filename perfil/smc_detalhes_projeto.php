@@ -307,7 +307,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 							<br>
 							<table class="table table-bordered">
 								<tr>
-									<td><strong>Protocolo:</strong> <?php echo str_pad($projeto['idProjeto'], 5, "0", STR_PAD_LEFT) ?></td>
+									<td><strong>Protocolo (nº ISP):</strong> <?php echo $projeto['protocolo'] ?></td>
 									<td><strong>Tipo:</strong>
 										<?php if($projeto['tipoPessoa'] == 1){ echo "Pessoa Física"; } else { echo "Pessoa Jurídica"; } ?>
 									</td>
@@ -325,6 +325,9 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 								<tr>
 									<td colspan="2"><strong>Área de atuação:</strong> <?php echo $area['areaAtuacao'] ?></td>
 									<td><strong>Renúncia Fiscal:</strong> <?php echo $renuncia['renunciaFiscal'] ?></td>
+								</tr>
+								<tr>
+									<td colspan="3"><strong>Nome do Projeto:</strong> <?php echo isset($projeto['nomeProjeto']) ? $projeto['nomeProjeto'] : null; ?></td>
 								</tr>
 								<tr>
 									<td colspan="3"><strong>Exposição da Marca:</strong> <?php echo isset($projeto['exposicaoMarca']) ? $projeto['exposicaoMarca'] : null; ?></td>
