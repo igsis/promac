@@ -5,6 +5,7 @@ $nome = $_POST['nome'];
 $cpf = $_POST['cpf'];
 $razaoSocial = $_POST['razaoSocial'];
 $cnpj = $_POST['cnpj'];
+$nomeProjeto = $_POST['nomeProjeto'];
 $idProjeto = $_POST['idProjeto'];
 $idAreaAtuacao = $_POST['idAreaAtuacao'];
 $idStatus = $_POST['idStatus'];
@@ -44,6 +45,8 @@ if($nome != '' || $cpf != '')
 			$area = recuperaDados("area_atuacao","idArea",$lista['idAreaAtuacao']);
 			$status = recuperaDados("status","idStatus",$lista['idStatus']);
 			$x[$i]['idProjeto'] = $lista['idProjeto'];
+			$x[$i]['protocolo'] = $lista['protocolo'];
+			$x[$i]['nomeProjeto'] = $lista['nomeProjeto'];
 			$x[$i]['proponente'] = $lista['nome'];
 			$x[$i]['documento'] = $lista['cpf'];
 			$x[$i]['areaAtuacao'] = $area['areaAtuacao'];
@@ -91,6 +94,8 @@ elseif($razaoSocial != '' || $cnpj != '')
 			$area = recuperaDados("area_atuacao","idArea",$lista['idAreaAtuacao']);
 			$status = recuperaDados("status","idStatus",$lista['idStatus']);
 			$x[$i]['idProjeto'] = $lista['idProjeto'];
+			$x[$i]['protocolo'] = $lista['protocolo'];
+			$x[$i]['nomeProjeto'] = $lista['nomeProjeto'];
 			$x[$i]['proponente'] = $lista['razaSocial'];
 			$x[$i]['documento'] = $lista['cnpj'];
 			$x[$i]['areaAtuacao'] = $area['areaAtuacao'];
@@ -107,6 +112,15 @@ elseif($razaoSocial != '' || $cnpj != '')
 //Início Projeto
 else
 {
+	if($nomeProjeto != '')
+	{
+		$filtro_nomeProjeto = " AND nomeProjeto LIKE '%$nomeProjeto%'";
+	}
+	else
+	{
+		$filtro_nomeProjeto = "";
+	}
+
 	if($idProjeto != '')
 	{
 		$filtro_idProjeto = " AND idProjeto = '$idProjeto'";
@@ -136,7 +150,7 @@ else
 
 	$sql = "SELECT * FROM projeto AS prj
 			WHERE publicado = 1
-			$filtro_idProjeto $filtro_idAreaAtuacao $filtro_idStatus";
+			$filtro_nomeProjeto $filtro_idProjeto $filtro_idAreaAtuacao $filtro_idStatus";
 	$query = mysqli_query($con,$sql);
 	$num = mysqli_num_rows($query);
 	if($num > 0)
@@ -149,6 +163,8 @@ else
 			$pf = recuperaDados("pessoa_fisica","idPf",$lista['idPf']);
 			$pj = recuperaDados("pessoa_juridica","idPj",$lista['idPj']);
 			$x[$i]['idProjeto'] = $lista['idProjeto'];
+			$x[$i]['protocolo'] = $lista['protocolo'];
+			$x[$i]['nomeProjeto'] = $lista['nomeProjeto'];
 			if($lista['tipoPessoa'] == 1)
 			{
 				$x[$i]['proponente'] = $pf['nome'];
@@ -187,6 +203,7 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 						<thead>
 							<tr class='list_menu'>
 								<td>Protocolo</td>
+								<td>Nome Projeto</td>
 								<td>Proponente</td>
 								<td>Documento</td>
 								<td>Área de Atuação</td>
@@ -199,7 +216,8 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 							for($h = 0; $h < $x['num']; $h++)
 							{
 								echo "<tr>";
-								echo "<td class='list_description'>".$x[$h]['idProjeto']."</td>";
+								echo "<td class='list_description'>".$x[$h]['protocolo']."</td>";
+								echo "<td class='list_description'>".$x[$h]['nomeProjeto']."</td>";
 								echo "<td class='list_description'>".$x[$h]['proponente']."</td>";
 								echo "<td class='list_description'>".$x[$h]['documento']."</td>";
 								echo "<td class='list_description'>".$x[$h]['areaAtuacao']."</td>";
