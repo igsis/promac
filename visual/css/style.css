@@ -687,3 +687,9 @@ input[type=checkbox].css-checkbox {
 				-ms-user-select: none;
 				user-select: none;
 			}
+
+.pesquisa {
+	display:none;
+	position:absolute;
+	width:100%;
+}

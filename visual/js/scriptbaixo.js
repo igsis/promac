@@ -24,3 +24,10 @@
     {
         $(this).data('form').submit();
     });
+
+// Script Exibição Pesquisa
+    $('#metodoPesquisa').change(function(){
+        var region =  $(this).find(':selected').data('region');
+        $('.pesquisa').fadeOut(550);
+        $('#' + region).fadeIn(550);
+    });
