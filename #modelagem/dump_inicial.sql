@@ -136,8 +136,8 @@ INSERT INTO `area_atuacao` (`idArea`, `areaAtuacao`, `tipo`) VALUES
 (21, 'Design de Moda', 2);
 
 
-INSERT INTO `statusdocumento` (`ID`, `Status`) VALUES
-(0, 'Aprovado'),
-(1, 'Complementação'),
-(2, 'Reprovado');
+INSERT INTO `status_documento` (`idStatusDocumento`, `status`) VALUES
+(1, 'Aprovado'),
+(2, 'Complementação'),
+(3, 'Reprovado');
 
