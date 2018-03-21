@@ -47,6 +47,15 @@ if(isset($_POST['atualizarJuridica'])){
 }
 
 $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
+
+if($pj['liberado'] == 3)
+{
+	echo "<div class='alert alert-warning'>
+  	<strong>Aviso!</strong> Seus dados já foram aceitos, portanto, não podem ser alterados.</div>";
+
+  	include 'resumo_usuario.php';
+}
+else{
 ?>
 
 <section id="list_items" class="home-section bg-white">
@@ -142,7 +151,6 @@ $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
                         </select>
 					  </div>
 					</div>
-
 					<!-- Botão para Gravar -->
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
@@ -156,3 +164,4 @@ $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 		</div>
 	</div>
 </section>
+<?php } ?>
