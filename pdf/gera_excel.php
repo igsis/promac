@@ -50,6 +50,7 @@ if($tipoPessoa == 1)
 		$resumoProjeto = $rowP['resumoProjeto'];
 		$dataInicio = $rowP['inicioCronograma'];
 		$dataFim = $rowP['fimCronograma'];
+		$protocoloP = $rowP['protocolo'];
 
 	}
 	$envioLocal = mysqli_query($con, $queryLocal);
@@ -72,6 +73,9 @@ if($tipoPessoa == 1)
 
 	->setCellValue('A4', 'Área de Atuação')
 	->setCellValue('A5',  $atuacao)
+
+	->setCellValue('A7', 'Protocolo')
+	->setCellValue('A8',  $protocoloP)
 
 	->setCellValue('B1', 'CPF')
 	->setCellValue('B2', $cpf)
@@ -137,6 +141,7 @@ if($tipoPessoa == 1)
 
 	$objPHPExcel->getActiveSheet()->getStyle('A1')->getFont()->setBold(true); // negrito
 	$objPHPExcel->getActiveSheet()->getStyle('A4')->getFont()->setBold(true); 
+	$objPHPExcel->getActiveSheet()->getStyle('A7')->getFont()->setBold(true); 
 	$objPHPExcel->getActiveSheet()->getStyle('B1')->getFont()->setBold(true); 
 	$objPHPExcel->getActiveSheet()->getStyle('B4')->getFont()->setBold(true);
 	$objPHPExcel->getActiveSheet()->getStyle('C1')->getFont()->setBold(true); 
@@ -220,6 +225,7 @@ else if($tipoPessoa == 2)
 		$resumoProjeto = $rowP['resumoProjeto'];
 		$dataInicio = $rowP['inicioCronograma'];
 		$dataFim = $rowP['fimCronograma'];
+		$protocoloPP = $rowP['protocolo'];
 
 	}
 	$envioLocal = mysqli_query($con, $queryLocal);
@@ -239,6 +245,9 @@ else if($tipoPessoa == 2)
 	$objPHPExcel->setActiveSheetIndex(0) // define folha 0
 	->setCellValue('A1', 'Razão Social')
 	->setCellValue('A2', $razaoSocial)
+
+	->setCellValue('A7', 'Protocolo')
+	->setCellValue('A8', $protocoloPP)
 
 	->setCellValue('B1', 'CNPJ')
 	->setCellValue('B2',  $cnpj)
@@ -320,6 +329,7 @@ else if($tipoPessoa == 2)
 
 	$objPHPExcel->getActiveSheet()->getStyle('A1')->getFont()->setBold(true); // negrito
 	$objPHPExcel->getActiveSheet()->getStyle('A4')->getFont()->setBold(true);
+	$objPHPExcel->getActiveSheet()->getStyle('A7')->getFont()->setBold(true);
 	$objPHPExcel->getActiveSheet()->getStyle('B1')->getFont()->setBold(true);
 	$objPHPExcel->getActiveSheet()->getStyle('B4')->getFont()->setBold(true);
 	$objPHPExcel->getActiveSheet()->getStyle('C1')->getFont()->setBold(true); 
