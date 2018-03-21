@@ -47,10 +47,10 @@ if ($pj['idRepresentanteLegal'] == 0) // Não possui representante legal cadastr
 				<div class="col-md-offset-1 col-md-10">
 					<form method="POST" action="?perfil=representante_pj_resultado_busca" class="form-horizontal" role="form">
 						<div class="form-group">
-							<div class="col-md-offset-4 col-md-2">
+							<div class="col-md-offset-4 col-md-2"><label>Insira o CPF</label>
 								<input type="text" name="busca" class="form-control" id="cpf" >
 							</div>
-							<div class="col-md-2">
+							<div class="col-md-2"><label><br/></label>
 								<input type="submit" name="pesquisar" class="btn btn-theme btn-md btn-block" value="Pesquisar">
 							</div>
 						</div>
@@ -59,20 +59,6 @@ if ($pj['idRepresentanteLegal'] == 0) // Não possui representante legal cadastr
 
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8"><hr/><br/></div>
-				</div>
-
-				<!-- Botão para Voltar e Prosseguir -->
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-2">
-						<form class="form-horizontal" role="form" action="?perfil=informacoes_iniciais_pj" method="post">
-							<input type="submit" value="Voltar" class="btn btn-theme btn-lg btn-block"  value="<?php echo $idPj ?>">
-						</form>
-					</div>
-					<div class="col-md-offset-4 col-md-2">
-						<form class="form-horizontal" role="form" action="?perfil=arquivos_pj" method="post">
-							<input type="submit" value="Avançar" class="btn btn-theme btn-lg btn-block"  value="<?php echo $idPj ?>">
-						</form>
-					</div>
 				</div>
 
 			</div>

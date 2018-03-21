@@ -4,8 +4,8 @@ $con = bancoMysqli();
 $idPj = $_SESSION['idUser'];
 
 
-if(isset($_POST['atualizarJuridica']))
-{
+if(isset($_POST['atualizarJuridica'])){
+	
 	$razaoSocial = addslashes($_POST['razaoSocial']);
 	$cnpj = $_POST['cnpj'];
 	$telefone = $_POST['telefone'];
@@ -134,9 +134,16 @@ $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
                             foreach($tipos as $chave => $tipo):
                               $selected = $pj['cooperativa'] == $chave ?
                                               "selected='selected'" : ""; ?>
+<<<<<<< HEAD
+  							  <option value="<?=$chave?>" <?=$selected?>>
+  							    <?=$tipo?>
+                              </option>                                 
+                          <?php endforeach ?>  
+=======
   							    <?=$tipo ?>
                               </option>
                           <?php endforeach ?>
+>>>>>>> b7346c51e7b63fea7bc81e33b38e50408799bbdb
                         </select>
 					  </div>
 					</div>
