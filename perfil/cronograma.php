@@ -140,7 +140,7 @@ else
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<form class="form-horizontal" role="form" action="?perfil=cronograma_novo" method="post">
-								<input type="submit" value="Inserir novo cronograma" class="btn btn-theme btn-lg btn-block">
+								<input type="submit" value="Inserir detalhes do cronograma" class="btn btn-theme btn-lg btn-block">
 							</form>
 						</div>
 					</div>
@@ -153,7 +153,7 @@ else
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<form class="form-horizontal" role="form" action="?perfil=cronograma_edicao" method="post">
-								<input type="submit" value="Editar cronograma" class="btn btn-theme btn-md btn-block">
+								<input type="submit" value="Editar detalhes do cronograma" class="btn btn-theme btn-md btn-block">
 							</form>
 						</div>
 					</div>
