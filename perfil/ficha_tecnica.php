@@ -11,7 +11,7 @@ if(isset($_POST['insereFicha']))
 		$validacao = validaCPF($_POST['cpf']);
 		if($validacao == false)
 		{
-			echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=erro_login_projeto.php'>";
+			echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=?perfil=erros&p=erro_login_projeto'>";
 		}
 		else
 		{
