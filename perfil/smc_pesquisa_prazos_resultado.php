@@ -1,8 +1,6 @@
 <?php
 $con = bancoMysqli();
 
-empty($_POST['ateCaptacao']) ? "--" : exibirDataMysql($_POST['ateCaptacao']);
-
 $deCaptacao = empty($_POST['deCaptacao']) ? "--" : exibirDataMysql($_POST['deCaptacao']);
 $ateCaptacao = empty($_POST['ateCaptacao']) ? "--" : exibirDataMysql($_POST['ateCaptacao']);
 $deFinalCaptacao = empty($_POST['deFinalCaptacao']) ? "--" : exibirDataMysql($_POST['deFinalCaptacao']);

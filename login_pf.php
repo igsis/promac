@@ -79,4 +79,4 @@ if(isset($_POST['login']))
 				</div>
 			</div>
 		</section>
-	<?php include "visual/rodape.php" ?>
+	<?php include "visual/rodape_index.php" ?>
