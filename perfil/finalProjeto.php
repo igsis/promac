@@ -62,6 +62,7 @@ if($row['idStatus'] == 6)
 		 ?>
 		 <div class="well">
 			<p align="justify"><strong>Referência:</strong> <?php echo $row['idProjeto']; ?></p>
+			<p align="justify"><strong>Nome do Projeto:</strong> <?php echo isset($row['nomeProjeto']) ? $row['nomeProjeto'] : null; ?></p>
 			<p align="justify"><strong>Valor do projeto:</strong> <?php echo isset($row['valorProjeto']) ? $row['valorProjeto'] : null; ?></p>
 			<p align="justify"><strong>Valor do incentivo:</strong> <?php echo isset($row['valorIncentivo']) ? $row['valorIncentivo'] : null; ?><p>
 			<p align="justify"><strong>Valor do financiamento:</strong> <?php echo isset($row['valorFinanciamento']) ? $row['valorFinanciamento'] : null; ?><p>
