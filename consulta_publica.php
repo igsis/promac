@@ -50,136 +50,80 @@
 			<div class="form-group">
 				<h4>Consulta Pública</h4>
 			</div>
+
 			<div class="row">
 				<div class="col-md-offset-1 col-md-10">
-					<select class="form-control" id="metodoPesquisa">
-						<option>Escolha o modo de Pesquisa</option>
-						<option data-region="protocolo">Nº de Protocolo</option>
-						<option data-region="nomeProjeto">Nome do Projeto</option>
-						<option data-region="cp">CPF</option>
-						<option data-region="razaoSocial">Razão Social</option>
-						<option data-region="cnp">CNPJ</option>
-						<option data-region="areaAtuacao">Área de Atuação</option>
-						<option data-region="valorAprovado">Valor Aprovado</option>
-					</select>
-					<hr/>
-
-					<div class="content">
-						<form method="POST" action="consulta_publica_resultado.php" class="form-horizontal" role="form">
-							<div id="protocolo" class="pesquisa">
-								<div class="form-group">
-									<div class="col-md-offset-2 col-md-8">
-										<label>Nº de Protocolo</label>
-										<input class="form-control" type="text" name="protocolo" placeholder="Nº de Protocolo" style="text-align: center;">
-									</div>
-								</div>
-								<div class="form-group">
-									<div class="col-md-offset-2 col-md-8">
-										<input type="submit" name="consultaPublica" class="btn btn-theme btn-lg btn-block" value="Pesquisar">
-									</div>
-								</div>
-							</div>
-						</form>
-
-						<form method="POST" action="consulta_publica_resultado.php" class="form-horizontal" role="form">
-							<div id="nomeProjeto" class="pesquisa">
-								<div class="form-group">
-									<div class="col-md-offset-2 col-md-8">
-										<label>Nome do Projeto</label>
-										<input class="form-control" type="text" name="nomeProjeto" placeholder="Nome do Projeto" style="text-align: center;">
-									</div>
-								</div>
-								<div class="form-group">
-									<div class="col-md-offset-2 col-md-8">
-										<input type="submit" name="consultaPublica" class="btn btn-theme btn-lg btn-block" value="Pesquisar">
-									</div>
-								</div>
-							</div>
-						</form>
-
-						<form method="POST" action="consulta_publica_resultado.php" class="form-horizontal" role="form">
-							<div id="cp" class="pesquisa">
-								<div class="form-group">
-									<div class="col-md-offset-2 col-md-8">
-										<label>CPF</label>
-										<input type="text" id="cpf" name="cpf" class="form-control" placeholder="CPF" style="text-align: center;">
-									</div>
-								</div>
-								<div class="form-group">
-									<div class="col-md-offset-2 col-md-8">
-										<input type="submit" name="consultaPublica" class="btn btn-theme btn-lg btn-block" value="Pesquisar">
-									</div>
-								</div>
-							</div>
-						</form>
-
-						<form method="POST" action="consulta_publica_resultado.php" class="form-horizontal" role="form">
-							<div id="razaoSocial" class="pesquisa">
-								<div class="form-group">
-									<div class="col-md-offset-2 col-md-8">
-										<label>Razão Social</label>
-										<input class="form-control" type="text" name="razaoSocial" placeholder="Razão Social" style="text-align: center;">
-									</div>
-								</div>
-								<div class="form-group">
-									<div class="col-md-offset-2 col-md-8">
-										<input type="submit" name="consultaPublica" class="btn btn-theme btn-lg btn-block" value="Pesquisar">
-									</div>
-								</div>
-							</div>
-						</form>
-
-						<form method="POST" action="consulta_publica_resultado.php" class="form-horizontal" role="form">
-							<div id="cnp" class="pesquisa">
-								<div class="form-group">
-									<div class="col-md-offset-2 col-md-8">
-										<label>CNPJ</label>
-										<input type="text" id="cnpj" name="cnpj" class="form-control" placeholder="CNPJ" style="text-align: center;">
-									</div>
-								</div>
-								<div class="form-group">
-									<div class="col-md-offset-2 col-md-8">
-										<input type="submit" name="consultaPublica" class="btn btn-theme btn-lg btn-block" value="Pesquisar">
-									</div>
-								</div>
-							</div>
-						</form>
-
-						<form method="POST" action="consulta_publica_resultado.php" class="form-horizontal" role="form">
-							<div id="areaAtuacao" class="pesquisa">
-								<div class="form-group">
-									<div class="col-md-offset-2 col-md-8">
-										<label>Área de Atuação</label>
-										<input class="form-control" type="text" name="areaAtuacao" placeholder="Área de Atuação" style="text-align: center;">
-									</div>
-								</div>
-								<div class="form-group">
-									<div class="col-md-offset-2 col-md-8">
-										<input type="submit" name="consultaPublica" class="btn btn-theme btn-lg btn-block" value="Pesquisar">
-									</div>
-								</div>
-							</div>
-						</form>
-
-						<form method="POST" action="consulta_publica_resultado.php" class="form-horizontal" role="form">
-							<div id="valorAprovado" class="pesquisa">
-								<div class="form-group">
-									<div class="col-md-offset-2 col-md-8">
-										<label>Valor Aprovado</label>
-										<input class="form-control" type="text" name="valorAprovado" placeholder="Valor Aprovado" style="text-align: center;">
-									</div>
-								</div>
-								<div class="form-group">
-									<div class="col-md-offset-2 col-md-8">
-										<input type="submit" name="consultaPublica" class="btn btn-theme btn-lg btn-block" value="Pesquisar">
-									</div>
-								</div>
-							</div>
-						</form>
-
+					<div class="well">
+						Nesta área, você pode consultar os projetos já aprovados!
 					</div>
 				</div>
 			</div>
+			<div class="row">
+			<div class="col-md-offset-1 col-md-10">
+				<form method="POST" action="consulta_publica_resultado.php" class="form-horizontal" role="form">
+
+					<hr/>
+
+					<label>PESSOA FÍSICA</label>
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-5"><label>Nome</label>
+							<input type="text" name="nome" class="form-control" placeholder="">
+						</div>
+						<div class="col-md-3"><label>CPF</label>
+							<input type="text" name="cpf" id="cpf" class="form-control" placeholder="">
+						</div>
+					</div>
+
+					<hr/>
+
+					<label>PESSOA JURÍDICA</label>
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-5"><label>Razão Social</label>
+							<input type="text" name="razaoSocial" class="form-control" placeholder="">
+						</div>
+						<div class="col-md-3"><label>CNPJ</label>
+							<input type="text" name="cnpj" id="cnpj" class="form-control" placeholder="">
+						</div>
+					</div>
+
+					<hr/>
+
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8"><label>Nome do projeto</label>
+							<input type="text" name="nomeProjeto" class="form-control" placeholder="">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8"><label>Protocolo</label>
+							<input type="text" name="idProjeto" class="form-control" placeholder="">
+						</div>
+					</div>
+
+
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8"><label>Área atuação</label>
+							<select class="form-control" name="idAreaAtuacao" >
+								<option value="0"></option>
+								<?php echo geraOpcao("area_atuacao","") ?>
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8"><label>Valor Aprovado</label>
+							<input type="text" name="valorAprovado" class="form-control" placeholder="">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8">
+							<input type="submit" name="pesquisar" class="btn btn-theme btn-lg btn-block" value="Pesquisar">
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
 		</div>
 	</body>
 </html>
