@@ -221,7 +221,7 @@ if(isset($_POST['apagaOrcamento']))
 									echo "<td class='list_description'>".dinheiroParaBr($campo['valorTotal'])."</td>";
 									echo "<td class='list_description'>
 												<input type='hidden' name='editaOrcamento' value='".$campo['idOrcamento']."' />
-												<input type ='submit' class='btn btn-theme btn-block' value='Editar'></td>";
+												<input type ='submit' class='btn btn-theme btn-block' value='Gravar'></td>";
 									echo "</form>";
 									echo "<td class='list_description'>
 											<form method='POST' action='?perfil=orcamento'>
