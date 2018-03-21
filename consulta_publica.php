@@ -65,7 +65,7 @@
 					<hr/>
 
 					<div class="content">
-						<form method="POST" action="?perfil=consulta_publica_resultado" class="form-horizontal" role="form">
+						<form method="POST" action="consulta_publica_resultado.php" class="form-horizontal" role="form">
 							<div id="protocolo" class="pesquisa">
 								<div class="form-group">
 									<div class="col-md-offset-2 col-md-8">
@@ -81,7 +81,7 @@
 							</div>
 						</form>
 
-						<form method="POST" action="?perfil=consulta_publica_resultado" class="form-horizontal" role="form">
+						<form method="POST" action="consulta_publica_resultado.php" class="form-horizontal" role="form">
 							<div id="nomeProjeto" class="pesquisa">
 								<div class="form-group">
 									<div class="col-md-offset-2 col-md-8">
@@ -97,7 +97,7 @@
 							</div>
 						</form>
 
-						<form method="POST" action="?perfil=consulta_publica_resultado" class="form-horizontal" role="form">
+						<form method="POST" action="consulta_publica_resultado.php" class="form-horizontal" role="form">
 							<div id="cp" class="pesquisa">
 								<div class="form-group">
 									<div class="col-md-offset-2 col-md-8">
@@ -113,7 +113,7 @@
 							</div>
 						</form>
 
-						<form method="POST" action="?perfil=consulta_publica_resultado" class="form-horizontal" role="form">
+						<form method="POST" action="consulta_publica_resultado.php" class="form-horizontal" role="form">
 							<div id="razaoSocial" class="pesquisa">
 								<div class="form-group">
 									<div class="col-md-offset-2 col-md-8">
@@ -129,7 +129,7 @@
 							</div>
 						</form>
 
-						<form method="POST" action="?perfil=consulta_publica_resultado" class="form-horizontal" role="form">
+						<form method="POST" action="consulta_publica_resultado.php" class="form-horizontal" role="form">
 							<div id="cnp" class="pesquisa">
 								<div class="form-group">
 									<div class="col-md-offset-2 col-md-8">
@@ -145,7 +145,7 @@
 							</div>
 						</form>
 
-						<form method="POST" action="?perfil=consulta_publica_resultado" class="form-horizontal" role="form">
+						<form method="POST" action="consulta_publica_resultado.php" class="form-horizontal" role="form">
 							<div id="areaAtuacao" class="pesquisa">
 								<div class="form-group">
 									<div class="col-md-offset-2 col-md-8">
@@ -161,7 +161,7 @@
 							</div>
 						</form>
 
-						<form method="POST" action="?perfil=consulta_publica_resultado" class="form-horizontal" role="form">
+						<form method="POST" action="consulta_publica_resultado.php" class="form-horizontal" role="form">
 							<div id="valorAprovado" class="pesquisa">
 								<div class="form-group">
 									<div class="col-md-offset-2 col-md-8">
