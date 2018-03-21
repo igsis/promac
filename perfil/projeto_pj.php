@@ -142,7 +142,7 @@ if(isset($_POST['apagar']))
 											echo "<td class='list_description'>".$campo['descricao']."</td>";
 											echo "<td class='list_description'>".$area['areaAtuacao']."</td>";
 											$idCampo = $campo['idStatus'];
-											
+
 											$status = "SELECT status FROM status WHERE idStatus='$idCampo'";
 											$envio = mysqli_query($con, $status);
 											$rowStatus = mysqli_fetch_array($envio);

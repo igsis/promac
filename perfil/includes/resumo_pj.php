@@ -15,22 +15,27 @@
 		else
 		{
 			echo "<div class='alert alert-success'>
-					Todos os campos obrigatórios foram preenchidos corretamente.<br/> Seu cadastro de Pessoa Física foi concluído com sucesso!<br> Envie sua solicitação à Secretaria Municipal de Cultura ao final da página!
+					Todos os campos obrigatórios foram preenchidos corretamente.<br/> Seu cadastro de Pessoa Jurídica foi concluído com sucesso!<br> Envie sua solicitação à Secretaria Municipal de Cultura ao final da página!
 				</div>";
 		}
 	?>
-	
 </div>
  <div class="page-header">
- 	<h5>Informações Pessoais</h5>
+ 	<h5>Dados do Proponente</h5>
  </div>
  <div class="well">
-	<p align="justify"><strong>Referência:</strong> <?php echo $pj['idPj']; ?></p>
 	<p align="justify"><strong>Razão Social:</strong> <?php echo $pj['razaoSocial']; ?></p>
 	<p align="justify"><strong>CNPJ:</strong> <?php echo $pj['cnpj']; ?><p>
 	<p align="justify"><strong>Email:</strong> <?php echo $pj['email']; ?><p>
 	<p align="justify"><strong>Telefone:</strong> <?php echo $pj['telefone']; ?><p>
 	<p align="justify"><strong>Celular:</strong> <?php echo $pj['celular']; ?></p>
+	<p align="justify"><strong>Logradouro:</strong> <?php echo $pj['logradouro']; ?></p>
+	<p align="justify"><strong>Número:</strong> <?php echo $pj['numero']; ?></p>
+	<p align="justify"><strong>Complemento:</strong> <?php echo $pj['complemento']; ?></p>
+	<p align="justify"><strong>Bairro:</strong> <?php echo $pj['bairro']; ?></p>
+	<p align="justify"><strong>Cidade:</strong> <?php echo $pj['cidade']; ?></p>
+	<p align="justify"><strong>Estado:</strong> <?php echo $pj['estado']; ?></p>
+	<p align="justify"><strong>CEP:</strong> <?php echo $pj['cep']; ?></p>
 	<p align="justify"><strong>É Cooperativa?:</strong>
 		<?php
 			if ($pj['cooperativa'] == 0)
@@ -42,20 +47,6 @@
 				echo "Sim";
 			}
 		?></p>
-</div>
-<div class="table-responsive list_inf">
-	<div class = "page-header">
-		<h5>Endereço:</h5>
-	</div>
-	<div class="well">
-		<p align="justify"><strong>CEP:</strong> <?php echo $pj['cep']; ?></p>
-		<p align="justify"><strong>Logradouro:</strong> <?php echo $pj['logradouro']; ?></p>
-		<p align="justify"><strong>Número:</strong> <?php echo $pj['numero']; ?></p>
-		<p align="justify"><strong>Complemento:</strong> <?php echo $pj['complemento']; ?></p>
-		<p align="justify"><strong>Bairro:</strong> <?php echo $pj['bairro']; ?></p>
-		<p align="justify"><strong>Cidade:</strong> <?php echo $pj['cidade']; ?></p>
-		<p align="justify"><strong>Estado:</strong> <?php echo $pj['estado']; ?></p>
-	</div>
 </div>
 
 <div class="table-responsive list_inf">
@@ -76,6 +67,13 @@
 			<p align="justify"><strong>Email:</strong> <?php echo $rl['email']; ?><p>
 			<p align="justify"><strong>Telefone:</strong> <?php echo $rl['telefone']; ?><p>
 			<p align="justify"><strong>Celular:</strong> <?php echo $rl['celular']; ?></p>
+			<p align="justify"><strong>Logradouro:</strong> <?php echo $rl['logradouro']; ?></p>
+			<p align="justify"><strong>Número:</strong> <?php echo $rl['numero']; ?></p>
+			<p align="justify"><strong>Complemento:</strong> <?php echo $rl['complemento']; ?></p>
+			<p align="justify"><strong>Bairro:</strong> <?php echo $rl['bairro']; ?></p>
+			<p align="justify"><strong>Cidade:</strong> <?php echo $rl['cidade']; ?></p>
+			<p align="justify"><strong>Estado:</strong> <?php echo $rl['estado']; ?></p>
+			<p align="justify"><strong>CEP:</strong> <?php echo $rl['cep']; ?></p>
 		<?php
 		}
 		?>
