@@ -1,7 +1,6 @@
 <?php
 $con = bancoMysqli();
 $idProjeto = $_SESSION['idProjeto'];
-$bool = false;
 
 if(isset($_POST['insere']))
 {
@@ -15,14 +14,12 @@ if(isset($_POST['insere']))
 	if(mysqli_query($con,$sql_insere))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso!</strong></font>";
-		$bool = true;
 	}
 	else
 	{
 		$mensagem = "<font color='#FF0000'><strong>Erro ao gravar! Tente novamente.</strong></font>";
 	}
 }
-
 
 $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 ?>
@@ -68,31 +65,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 						</div>
 					</div>
 				</form>
-				<!-- Botão para Prosseguir -->
-				<div class="form-group">
-					<?php if($bool == true)
-					{ ?>
-					<div class="col-md-offset-2 col-md-2">
-						<form class="form-horizontal" role="form" action="?perfil=projeto_5" method="post">
-							<input type="submit" value="Voltar" class="btn btn-theme btn-lg btn-block">
-						</form>
-					</div>
-					<div class="col-md-offset-4 col-md-2">
-						<form class="form-horizontal" role="form" action="?perfil=local" method="post">
-							<input type="submit" value="Avançar" class="btn btn-theme btn-lg btn-block">
-						</form>
-					</div>
-				</div>
-				<?php } 
-				else { ?>
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
-						<div class="alert alert-info">
-							Grave suas informações para prosseguir o formulário.
-						</div>
-					</div>
-				</div>
-				<?php } ?>
+
 			</div>
 		</div>
 	</div>
