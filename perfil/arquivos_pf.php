@@ -104,12 +104,6 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 				</div>
 
 				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
-						<p align="justify"><font color="red"><strong>A declaração deve ser impressa, datada e assinada nos campos indicados no documento. Logo após, deve-se digitaliza-la e então anexa-la ao sistema através do campo abaixo.</strong></font></p>
-					</div>
-				</div>
-
-				<div class="form-group">
 					<div class="col-md-offset-2 col-md-5">
 						<p align="left"><strong>Declaração de Inscrição</strong></p>
 					</div>
@@ -124,7 +118,7 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 
 				<!-- Exibir arquivos -->
 				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
+					<div class="col-md-12">
 						<div class="table-responsive list_info"><h6>Arquivo(s) Anexado(s)</h6>
 							<?php listaArquivosPessoa($idPf,$tipoPessoa,"arquivos_pf"); ?>
 						</div>
@@ -132,12 +126,12 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 				</div>
 
 				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
+					<div class="col-md-12">
 						<div class="table-responsive list_info"><h6>Upload de Arquivo(s) Somente em PDF</h6>
 						<form method="POST" action="?perfil=arquivos_pf" enctype="multipart/form-data">
 							<table class='table table-condensed'>
 								<tr class='list_menu'>
-									<td width="50%">Tipo de Arquivo</td>
+									<td>Tipo de Arquivo</td>
 									<td></td>
 								</tr>
 								<?php
@@ -192,25 +186,6 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 						</div>
 					</div>
 				<!-- Fim Confirmação de Exclusão -->
-
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8"><hr/><br/></div>
-				</div>
-
-				<!-- Botão para Prosseguir -->
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-2">
-						<form class="form-horizontal" role="form" action="?perfil=informacoes_iniciais_pf" method="post">
-							<input type="submit" value="Voltar" class="btn btn-theme btn-lg btn-block"  value="<?php echo $idPf ?>">
-						</form>
-					</div>
-					<div class="col-md-offset-4 col-md-2">
-						<form class="form-horizontal" role="form" action="?perfil=projeto_pf" method="post">
-							<input type="submit" value="Avançar" class="btn btn-theme btn-lg btn-block"  value="<?php echo $idPf ?>">
-						</form>
-					</div>
-				</div>
-
 			</div>
 		</div>
 	</div>
