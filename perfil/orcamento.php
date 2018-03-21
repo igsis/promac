@@ -223,12 +223,12 @@ if(isset($_POST['apagaOrcamento']))
 												<input type='hidden' name='editaOrcamento' value='".$campo['idOrcamento']."' />
 												<input type ='submit' class='btn btn-theme btn-block' value='Editar'></td>";
 									echo "</form>";
-									echo "<form method='POST' action='?perfil=orcamento'>
-											<td class='list_description'>
+									echo "<td class='list_description'>
+											<form method='POST' action='?perfil=orcamento'>
 												<input type='hidden' name='apagaOrcamento' value='".$campo['idOrcamento']."' />
-												<button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Excluir Etapa?' data-message='Deseja realmente excluir a etapa ".$etapa['etapa']."?'>Apagar</button>
-											</td>
-										</form>";
+												<button style='margin-top: 13px' class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Excluir Etapa?' data-message='Deseja realmente excluir a etapa ".$etapa['etapa']."?'>Apagar</button>
+											</form>
+										</td>";
 									echo "</tr>";
 								}
 								echo "

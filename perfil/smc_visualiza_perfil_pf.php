@@ -21,7 +21,7 @@ if(isset($_POST['negar']))
 	$envio = mysqli_query($con, $QueryPJ);
 	if($envio)
 		echo "<script>alert('O usuário foi negado com sucesso');</script>";
-		echo "<script>window.location = '?perfil=smc_lista_liberacao';</script>";
+		echo "<script>window.location = '?perfil=smc_pesquisa_pf';</script>";
 }
 
 if(isset($_POST['atualizar']))
