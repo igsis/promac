@@ -580,10 +580,8 @@ class PDF extends FPDF
      $pdf->MultiCell(170,$l,utf8_decode("Descrição: " . $descricao));
 
      $pdf->SetX($x);
-     $pdf->SetFont('Arial','B', 10);
-     $pdf->Cell(22,$l,'Quantidade:',0,0,'L');
-     $pdf->SetFont('Arial','', 10);
-     $pdf->MultiCell(150,$l,utf8_decode($quantidade));
+     $pdf->SetFont('Arial','', 11);
+     $pdf->MultiCell(170,$l,utf8_decode("Quantidade: " . $quantidade));
 
      $pdf->SetX($x);
      $pdf->SetFont('Arial','', 11);
