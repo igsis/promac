@@ -43,7 +43,7 @@ if(isset($_POST['insereAtuacao']))
 		$ultimoProjeto = mysqli_fetch_array($query_ultimo);
 		$_SESSION['idProjeto']  = $ultimoProjeto['idProjeto'];
 		$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso! Aguarde...</strong></font>";
-		echo "<meta HTTP-EQUIV='refresh' CONTENT='0.5;URL=?perfil=projeto_2'>";
+		echo "<meta HTTP-EQUIV='refresh' CONTENT='0.5;URL=?perfil=projeto_edicao'>";
 	}
 	else
 	{
@@ -194,7 +194,7 @@ if(isset($_POST['insereAtuacao']))
 					}
 					else
 					{
-						echo "<meta HTTP-EQUIV='refresh' CONTENT='0.5;URL=?perfil=projeto_2'>";
+						echo "<meta HTTP-EQUIV='refresh' CONTENT='0.5;URL=?perfil=projeto_edicao'>";
 					}
 				}
 				?>

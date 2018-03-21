@@ -29,7 +29,7 @@ if(isset($_POST['novoPj'])) //tipoePessoa = 2
 	if(mysqli_query($con,$sql_insere_projeto))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso! Aguarde...</strong></font>";
-		echo "<meta HTTP-EQUIV='refresh' CONTENT='0.5;URL=?perfil=projeto_2'>";
+		echo "<meta HTTP-EQUIV='refresh' CONTENT='0.5;URL=?perfil=projeto_edicao'>";
 	}
 	else
 	{
@@ -49,7 +49,7 @@ if(isset($_POST['insereAtuacao']))
 	if(mysqli_query($con,$sql_insere_projeto))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso! Aguarde...</strong></font>";
-		echo "<meta HTTP-EQUIV='refresh' CONTENT='0.5;URL=?perfil=projeto_2'>";
+		echo "<meta HTTP-EQUIV='refresh' CONTENT='0.5;URL=?perfil=projeto_edicao'>";
 	}
 	else
 	{
