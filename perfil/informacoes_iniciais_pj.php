@@ -131,38 +131,24 @@ $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 					  <div class="col-md-2">
 					    <select class="form-control" name="cooperativa">
                           <?php $tipos = ['Não', 'Sim'];
-                            foreach($tipos as $chave => $tipo):      
-                              $selected = $pj['cooperativa'] == $chave ?  
+                            foreach($tipos as $chave => $tipo):
+                              $selected = $pj['cooperativa'] == $chave ?
                                               "selected='selected'" : ""; ?>
   							    <?=$tipo ?>
-                              </option>                                 
-                          <?php endforeach ?>  
+                              </option>
+                          <?php endforeach ?>
                         </select>
 					  </div>
-					</div>    
-
-				<!-- Botão para Gravar -->
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
-						<input type="hidden" name="atualizarJuridica" value="<?php echo $idPj ?>">
-						<input type="submit" value="GRAVAR" class="btn btn-theme btn-lg btn-block">
 					</div>
-				</div>
-			</form>
 
-
-				<div class="form-group">
-						<div class="col-md-offset-2 col-md-8"><hr/><br/></div>
-				</div>
-
-				<!-- Botão para Prosseguir -->
-				<div class="form-group">
-					<form class="form-horizontal" role="form" action="?perfil=representante_pj" method="post">
-						<div class="col-md-offset-8 col-md-2">
-							<input type="submit" value="Avançar" class="btn btn-theme btn-lg btn-block"  value="<?php echo $idPj ?>">
+					<!-- Botão para Gravar -->
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8">
+							<input type="hidden" name="atualizarJuridica" value="<?php echo $idPj ?>">
+							<input type="submit" value="GRAVAR" class="btn btn-theme btn-lg btn-block">
 						</div>
-					</form>
-				</div>
+					</div>
+				</form>
 
 			</div>
 		</div>
