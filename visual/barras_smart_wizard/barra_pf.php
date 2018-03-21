@@ -3,6 +3,7 @@
 $con = bancoMysqli();
 $idPf = $_SESSION['idUser'];
 $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
+$idProj = isset($_SESSION['idProjeto'])?$_SESSION['idProjeto']:null;
 
 $urlPf = array(
     27 => '/promac/visual/index_pf.php?secao=perfil',
@@ -96,12 +97,22 @@ for ($i = 0; $i < count($urlPf); $i++) {
                         break;
                     } 
                 ?>
+
                 <li class="<?php echo isset($acionar3) ? $acionar3 : 'clickable'; ?>">
                    <a onclick="location.href='index_pf.php?perfil=projeto_pf'" href=""><br />Projeto</a>
                 </li>
+                <?php 
+                    if ($idProj == true) {  
+                ?>
                 <li class="<?php echo isset($acionar6) ? $acionar6 : 'clickable'; ?>">
                    <a onclick="location.href='index_pf.php?perfil=projeto_2'" href=""><br />Passo 2</a>
-                </li>  
+                </li>
+                <?php 
+                    }else {   
+                                         
+                        break;
+                    }
+                ?>  
                 <li class="<?php echo isset($acionar7) ? $acionar7 : 'clickable'; ?>">
                    <a onclick="location.href='index_pf.php?perfil=projeto_3'" href=""><br />Passo 3</a>
                 </li> 
@@ -148,6 +159,4 @@ for ($i = 0; $i < count($urlPf); $i++) {
 <?php 
     }
 }
-
-
 ?>
