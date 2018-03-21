@@ -197,7 +197,7 @@ if($row['idStatus'] == 6)
 	    <div class="col-md-offset-5 col-md-2">
 		  <form class="form-horizontal" role="form" action="?perfil=informacoes_administrativas" method="post">
 		   <?php 
-		     if($alterar == 1 || $alterar == 0){ ?>
+		     if($alterar == 1){ ?>
 			    <input type="hidden" name="alterar" value="<?php echo $alterar; ?>">
 		    <?php } ?>
 			<input type="hidden" value="Enviar" id="inptEnviar" 
