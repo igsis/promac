@@ -16,7 +16,7 @@ if(isset($_POST['login']))
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title>Pro-Mac - Programa Municipal de Apoio a Projetos Culturais<br/>Secretaria Municipal de Cultura</title>
+		<title>SMC / Pro-Mac - Programa Municipal de Apoio a Projetos Culturais</title>
 		<link href="visual/css/bootstrap.min.css" rel="stylesheet" media="screen">
 		<link href="visual/css/style.css" rel="stylesheet" media="screen">
 		<link href="visual/color/default.css" rel="stylesheet" media="screen">
@@ -30,7 +30,7 @@ if(isset($_POST['login']))
 	</head>
 	<body>
 		<div id="bar">
-			<p id="p-bar"><img src="visual/images/logo_cultura_h.png" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>ProMAC</p>
+			<p id="p-bar"><img src="visual/images/logo_cultura_h.png" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Pro-Mac</p>
 		</div>
 		<p>&nbsp;</p>
 		<p>&nbsp;</p>
@@ -40,7 +40,7 @@ if(isset($_POST['login']))
 				<div class="row">
 					<div class="col-md-offset-2 col-md-8">
 						<div class="text-hide">
-							<h4>ProMAC - Programa Municipal de Apoio a Projetos Culturais</h4>
+							<h4>Pro-Mac - Programa Municipal de Apoio a Projetos Culturais</h4>
 							<h5><?php if(isset($_POST['login'])){ echo autenticaloginpj($login, $senha); } ?></h5>
 						</div>
 					</div>

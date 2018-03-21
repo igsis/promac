@@ -2,6 +2,7 @@
 $con = bancoMysqli();
 $idPj = $_SESSION['idUser'];
 $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
+$idProj = isset($_SESSION['idProjeto'])?$_SESSION['idProjeto']:null;
 # Barra nPessoa Juridica
 $urlPj = array(
     0 => '/promac/visual/index_pj.php?secao=perfil',
@@ -111,9 +112,18 @@ for ($i = 0; $i < count($urlPj); $i++) {
                 <li class="<?php echo isset($ativa4) ? $ativa4 : 'clickable'; ?>">
                     <a onclick="location.href='index_pj.php?perfil=projeto_pj'" href=""><br /><small>Projetos</small></a>
                 </li>
+                <?php 
+                    if ($idProj == true) {                    
+                ?>                
                 <li class="<?php echo isset($ativa7) ? $ativa7 : 'clickable'; ?>">
                    <a onclick="location.href='index_pj.php?perfil=projeto_2'" href=""><br />Passo 2</a>
-                </li>  
+                </li> 
+                <?php 
+                    }else {
+                        
+                        break;
+                    }
+                ?>                  
                 <li class="<?php echo isset($ativa8) ? $ativa8 : 'clickable'; ?>">
                    <a onclick="location.href='index_pj.php?perfil=projeto_3'" href=""><br />Passo 3</a>
                 </li> 
