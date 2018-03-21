@@ -1,6 +1,7 @@
 <?php
 $con = bancoMysqli();
 $idUser= $_SESSION['idUser'];
+$tipoPessoa= $_SESSION['tipoPessoa'];
 
 
 if(isset($_POST['atualizarCadastro']))
@@ -34,7 +35,10 @@ if(isset($_POST['atualizarCadastro']))
 	}
 }
 
-$usuario = recuperaDados("usuario","id",$idUser);
+if($tipoPessoa == 1)
+	$usuario = recuperaDados("pessoa_fisica","idPf",$idUser);
+else
+ 	$usuario = recuperaDados("pessoa_juridica","idPj",$idUser);
 ?>
 
 <section id="contact" class="home-section bg-white">

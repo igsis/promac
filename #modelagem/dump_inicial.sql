@@ -141,3 +141,8 @@ INSERT INTO `status_documento` (`idStatusDocumento`, `status`) VALUES
 (2, 'Complementação'),
 (3, 'Reprovado');
 
+INSERT INTO `frase_seguranca` (`id`, `frase_seguranca`) VALUES
+(1, 'Qual a sua cor favorita?'),
+(2, 'Qual o nome do seu primeiro animal?'),
+(3, 'Qual o nome do seu primeiro professor?'),
+(4, 'Qual o nome do seu melhor amigo de infância?');

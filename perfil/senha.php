@@ -1,6 +1,8 @@
 <?php
 $con = bancoMysqli();
 $idUser= $_SESSION['idUser'];
+$tipopessoa = $_SESSION['tipoPessoa'];
+
 
 if(isset($_POST['senha01']))
 {
@@ -67,7 +69,10 @@ if(isset($_POST['fraseSeguranca']))
 	}
 }
 
-$usuario = recuperaDados("usuario","id",$idUser);
+if($tipopessoa == 1)
+	$usuario = recuperaDados("pessoa_fisica","idPf",$idUser);
+else
+	$usuario = recuperaDados("pessoa_juridica","idPj",$idUser);
 ?>
 <section id="contact" class="home-section bg-white">
 	<div class="container"><?php include 'includes/menu_minhaconta.php'; ?>
