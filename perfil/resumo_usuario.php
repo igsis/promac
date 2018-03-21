@@ -11,15 +11,7 @@ else
 {
 	$pj = recuperaDados("pessoa_juridica","idPj",$idUsuario);
 }
-$idProjeto = $_SESSION['idProjeto'];
 $alterar = 0;
-
-$select = "SELECT idStatus FROM projeto WHERE idProjeto='$idProjeto' AND publicado='1'";
-$send = mysqli_query($con, $select);
-$row = mysqli_fetch_array($send);
-
-if($row['idStatus'] == 6)
-	$alterar = 1;
 
 ?>
 <section id="list_items" class="home-section bg-white">
@@ -71,9 +63,17 @@ if($row['idStatus'] == 6)
 						<p align='justify'><strong>Telefone:</strong> <?php echo isset($pj['telefone']) ? $pj['telefone'] : null; ?><p>
 						<p align='justify'><strong>Celular:</strong> <?php echo isset($pj['celular']) ? $pj['celular'] : null; ?><p>
 						<p align='justify'><strong>Email:</strong> <?php echo isset($pj['email']) ? $pj['email'] : null; ?><p>
+						</div>
+						
+						<div class="form-group">
+							<div class="col-md-12">
+								<div class="table-responsive list_info"><h6>Arquivo(s) Anexado(s)</h6>
+									<?php listaArquivosPessoa($pj['idPj'],'2',"resumo_usuario"); ?>
+								</div>
+							</div>
+						</div>
 				<?php }
 		 ?>
-	</div>
 </section>
 
 
