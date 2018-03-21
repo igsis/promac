@@ -127,19 +127,20 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 								<h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
 								<div class="form-group">
 									<div class="col-md-offset-3 col-md-3">
-										<a href='<?php echo $link1; ?>' target='_blank' class="btn btn-theme btn-md btn-block"><strong>Gerar PDF do Projeto</strong></a><br/>
+									<?php 
+										$id = $projeto['tipoPessoa']; 
+										$idP = $projeto['idProjeto'];
+										if($id == 1)
+										{
+											$idPess = $projeto['idPf'];
+										} else if($id == 2)
+										{
+											$idPess = $projeto['idPj'];
+										}
+									?>
+										<a href='<?php echo "../pdf/rlt_declaracao_inscricao.php?tipo=$id&projeto=$idP&pessoa=$idPess"; ?>' target='_blank' class="btn btn-theme btn-md btn-block"><strong>Gerar PDF do Projeto</strong></a><br/>
 									</div>
 									<div class="col-md-4">
-									<?php $id = $projeto['tipoPessoa']; 
-									$idP = $projeto['idProjeto'];
-									if($id == 1)
-									{
-										$idPess = $projeto['idPf'];
-									} else if($id == 2)
-									{
-										$idPess = $projeto['idPj'];
-									}
-									?>
 									<a href='<?php echo "../pdf/gera_excel.php?tipo=$id&projeto=$idP&pessoa=$idPess"; ?>' target='_blank' class="btn btn-theme btn-md btn-block"><strong>Gerar Excel do Projeto</strong></a><br/>
 									</form>
 
