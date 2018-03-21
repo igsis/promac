@@ -1,5 +1,4 @@
 <!-- Conteudo do documento sendo incluido no perfil projeto_pj -->
-
 <div class="form-group">
 	<h4>Resumo do Cadastro</h4>
 	<div class="alert alert-warning">
@@ -15,15 +14,16 @@
 		else
 		{
 			echo "<div class='alert alert-success'>
-					Todos os campos obrigatórios foram preenchidos corretamente.<br/> Seu cadastro de Pessoa Jurídica foi concluído com sucesso!<br> Envie sua solicitação à Secretaria Municipal de Cultura ao final da página!
+					Todos os campos obrigatórios foram preenchidos corretamente.<br/>
+					Conclua sua inscrição ao final da página para enviar suas informações à Secretaria Municipal de Cultura.
 				</div>";
 		}
 	?>
 </div>
- <div class="page-header">
+<div class="page-header">
  	<h5>Dados do Proponente</h5>
- </div>
- <div class="well">
+</div>
+<div class="well">
 	<p align="justify"><strong>Razão Social:</strong> <?php echo $pj['razaoSocial']; ?></p>
 	<p align="justify"><strong>CNPJ:</strong> <?php echo $pj['cnpj']; ?><p>
 	<p align="justify"><strong>Email:</strong> <?php echo $pj['email']; ?><p>

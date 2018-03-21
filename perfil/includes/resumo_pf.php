@@ -1,5 +1,4 @@
 <!-- Conteudo do documento sendo incluido no perfil projeto_pf -->
-
 <div class="form-group">
 	<h4>Resumo do Cadastro</h4>
 	<div class="alert alert-warning">
@@ -15,16 +14,16 @@
 		else
 		{
 			echo "<div class='alert alert-success'>
-					Todos os campos obrigatórios foram preenchidos corretamente.<br/> Seu cadastro de Pessoa Física foi concluído com sucesso!<br> Envie sua solicitação à Secretaria Municipal de Cultura ao final da página!
+					Todos os campos obrigatórios foram preenchidos corretamente.<br/>
+					Conclua sua inscrição ao final da página para enviar suas informações à Secretaria Municipal de Cultura.
 				</div>";
 		}
 	?>
-	
 </div>
- <div class="page-header">
+<div class="page-header">
  	<h5>Informações Pessoais</h5>
- </div>
- <div class="well">
+</div>
+<div class="well">
 	<p align="justify"><strong>Referência:</strong> <?php echo $pf['idPf']; ?></p>
 	<p align="justify"><strong>Nome:</strong> <?php echo $pf['nome']; ?></p>
 	<p align="justify"><strong>CPF:</strong> <?php echo $pf['cpf']; ?><p>
