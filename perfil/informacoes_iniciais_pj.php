@@ -133,17 +133,12 @@ $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
                           <?php $tipos = ['Não', 'Sim'];
                             foreach($tipos as $chave => $tipo):
                               $selected = $pj['cooperativa'] == $chave ?
-                                              "selected='selected'" : ""; ?>
-<<<<<<< HEAD
+                                          "selected='selected'" : ""; ?>
+
   							  <option value="<?=$chave?>" <?=$selected?>>
   							    <?=$tipo?>
                               </option>                                 
                           <?php endforeach ?>  
-=======
-  							    <?=$tipo ?>
-                              </option>
-                          <?php endforeach ?>
->>>>>>> b7346c51e7b63fea7bc81e33b38e50408799bbdb
                         </select>
 					  </div>
 					</div>
