@@ -1,5 +1,5 @@
 <?php
-
+ 
 $con = bancoMysqli();
 $idUsuario = $_SESSION['idUser'];
 $tipoPessoa = $_SESSION['tipoPessoa'];
@@ -32,21 +32,32 @@ $alterar = 0;
 		 <?php
 		 	if ($tipoPessoa == "1") // Se Pessoa Fisica
 			{
-					$query = "SELECT * FROM projeto WHERE idPf='$idUsuario' AND publicado='1' AND idProjeto='$idProjeto'";
-					$en = mysqli_query($con, $query);
-			 	while($row = mysqli_fetch_array($en, MYSQLI_ASSOC))
-			 	{?>
-						<div class='well'>
-						<p align='justify'><strong>Referência:</strong> <?php echo $row['idProjeto']; ?></p>
-						<p align='justify'><strong>Nome do Projeto:</strong> <?php echo isset($row['nomeProjeto']) ? $row['nomeProjeto'] : null; ?></p>
-						<p align='justify'><strong>Valor do projeto:</strong> <?php echo isset($row['valorProjeto']) ? $row['valorProjeto'] : null; ?></p>
-						<p align='justify'><strong>Valor do incentivo:</strong> <?php echo isset($row['valorIncentivo']) ? $row['valorIncentivo'] : null; ?><p>
-						<p align='justify'><strong>Valor do financiamento:</strong> <?php echo isset($row['valorFinanciamento']) ? $row['valorFinanciamento'] : null; ?><p>
-						<p align='justify'><strong>Marca:</strong> <?php echo isset($row['exposicaoMarca']) ? $row['exposicaoMarca'] : null; ?><p>
-					</div>
+				?>
+				<div class='well'>
+						<p align='justify'><strong>Nome:</strong> <?php echo isset($pf['nome']) ? $pf['nome'] : null; ?></p>
+						<p align='justify'><strong>CPF:</strong> <?php echo isset($pf['cpf']) ? $pf['cpf'] : null; ?></p>
+						<p align='justify'><strong>RG:</strong> <?php echo isset($pf['rg']) ? $pf['rg'] : null; ?></p>
+						<p align='justify'><strong>Endereço:</strong> <?php echo isset($pf['logradouro']) ? $pf['logradouro'] : null; ?><p>
+						<p align='justify'><strong>Bairro:</strong> <?php echo isset($pf['bairro']) ? $pf['bairro'] : null; ?><p>
+						<p align='justify'><strong>Cidade:</strong> <?php echo isset($pf['cidade']) ? $pf['cidade'] : null; ?><p>
+						<p align='justify'><strong>Estado:</strong> <?php echo isset($pf['estado']) ? $pf['estado'] : null; ?><p>
+						<p align='justify'><strong>CEP:</strong> <?php echo isset($pf['cep']) ? $pj['numero'] : null; ?><p>
+						<p align='justify'><strong>Número:</strong> <?php echo isset($pf['numero']) ? $pf['numero'] : null; ?><p>
+						<p align='justify'><strong>Complemento:</strong> <?php echo isset($pf['complemento']) ? $pf['complemento'] : null; ?><p>
+						<p align='justify'><strong>Telefone:</strong> <?php echo isset($pf['telefone']) ? $pf['telefone'] : null; ?><p>
+						<p align='justify'><strong>Celular:</strong> <?php echo isset($pf['celular']) ? $pf['celular'] : null; ?><p>
+						<p align='justify'><strong>Email:</strong> <?php echo isset($pf['email']) ? $pf['email'] : null; ?><p>
+						</div>
+						
+						<div class="form-group">
+							<div class="col-md-12">
+								<div class="table-responsive list_info"><h6>Arquivo(s) Anexado(s)</h6>
+									<?php listaArquivosPessoaSApagar($pf['idPf'],'1',"resumo_usuario"); ?>
+								</div>
+							</div>
+						</div>
+						<?php
 					
-					<?php
-				}
 			}
 				else // Se Pessoa Juridica
 				{ ?>
@@ -68,7 +79,7 @@ $alterar = 0;
 						<div class="form-group">
 							<div class="col-md-12">
 								<div class="table-responsive list_info"><h6>Arquivo(s) Anexado(s)</h6>
-									<?php listaArquivosPessoa($pj['idPj'],'2',"resumo_usuario"); ?>
+									<?php listaArquivosPessoaSApagar($pj['idPj'],'2',"resumo_usuario"); ?>
 								</div>
 							</div>
 						</div>

@@ -22,7 +22,7 @@ if(isset($_POST["enviar"]))
 		$f_size = isset($_FILES['arquivo']['size'][$x]) ? $_FILES['arquivo']['size'][$x] : null;
 
 		//Extensões permitidas
-		$ext = array("PDF","pdf");
+		$ext = array("PDF","pdf"); 
 
 		if($f_size > 3145728) // 3MB em bytes
 		{
@@ -86,6 +86,15 @@ if(isset($_POST['apagar']))
 }
 
 $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
+
+if($pf['liberado'] == 3)
+{
+	echo "<div class='alert alert-warning'>
+  	<strong>Aviso!</strong> Seus dados já foram aceitos, portanto, não podem ser alterados.</div>";
+
+  	include 'resumo_usuario.php';
+}
+else{
 ?>
 
 <section id="list_items" class="home-section bg-white">
@@ -185,6 +194,7 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 							</div>
 						</div>
 					</div>
+					<?php } ?>
 				<!-- Fim Confirmação de Exclusão -->
 			</div>
 		</div>

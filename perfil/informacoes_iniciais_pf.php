@@ -3,7 +3,7 @@
 $con = bancoMysqli();
 $idPf = $_SESSION['idUser'];
 
-
+ 
 if(isset($_POST['atualizarFisica']))
 {
 	$nome = addslashes($_POST['nome']);
@@ -48,6 +48,14 @@ if(isset($_POST['atualizarFisica']))
 }
 
 $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
+
+if($pf['liberado'] == 3)
+{
+	echo "<div class='alert alert-warning'>
+  	<strong>Aviso!</strong> Seus dados já foram aceitos, portanto, não podem ser alterados.</div>";
+
+  	include 'resumo_usuario.php';
+} else{
 ?>
 
 <section id="list_items" class="home-section bg-white">
@@ -157,7 +165,7 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 						</div>
 					</div>
 				</form>
-
+				<?php } ?>
 			</div>
 		</div>
 	</div>
