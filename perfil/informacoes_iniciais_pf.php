@@ -158,19 +158,6 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 					</div>
 				</form>
 
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8"><hr/><br/></div>
-				</div>
-
-				<!-- Botão para Prosseguir -->
-				<div class="form-group">
-					<form class="form-horizontal" role="form" action="?perfil=arquivos_pf" method="post">
-						<div class="col-md-offset-8 col-md-2">
-							<input type="submit" value="Avançar" class="btn btn-theme btn-lg btn-block"  value="<?php echo $idPf ?>">
-						</div>
-					</form>
-				</div>
-
 			</div>
 		</div>
 	</div>
