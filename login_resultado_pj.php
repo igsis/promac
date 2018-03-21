@@ -65,7 +65,7 @@ if($num_busca > 0)
 												<tr>
 													<td class='list_description'><b>".$descricao['razaoSocial']."</b></td>
 													<td class='list_description'>".$descricao['cnpj']."</td>
-													<td><a href='https://goo.gl/forms/AM7jU1XVDUBUVJXE3'><input type='submit' value='Esqueci a Senha' class='btn btn-theme btn-block'></a></td>
+													<td><a href='https://drive.google.com/open?id=11W-UF7HakT6lKZt-0qAJ9b0DCactPHsyuLCUSxdcWwo'><input type='submit' value='Esqueci a Senha' class='btn btn-theme btn-block'></a></td>
 												</tr>
 											";
 										}
