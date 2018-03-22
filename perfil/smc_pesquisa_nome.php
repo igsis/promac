@@ -8,7 +8,7 @@
 			<div class="col-md-offset-1 col-md-10">
 				<form method="POST" action="?perfil=smc_liberacao_acesso" class="form-horizontal" role="form">
 					<hr/>
-					<!-- <label>PESSOA FÍSICA</label> -->
+					<label>PESSOA FÍSICA</label>
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-5"><label>Nome</label>
 							<input type="text" name="nome" class="form-control" placeholder="">
@@ -20,7 +20,25 @@
 					<hr/>
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
-							<input type="submit" name="pesquisar" class="btn btn-theme btn-lg btn-block" value="Pesquisar">
+							<input type="submit" name="pesquisarPf" class="btn btn-theme btn-lg btn-block" value="Pesquisar">
+						</div>
+					</div>
+				</form>
+				<form method="POST" action="?perfil=smc_liberacao_acesso" class="form-horizontal" role="form">
+					<hr/>
+					<label>PESSOA JURÍDICA</label>
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-5"><label>Razao Social</label>
+							<input type="text" name="razaoSocial" class="form-control" placeholder="">
+						</div>
+						<div class="col-md-3"><label>CNPJ</label>
+							<input type="text" name="cnpj" id="cnpj" class="form-control" placeholder="">
+						</div>
+					</div>
+					<hr/>
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8">
+							<input type="submit" name="pesquisarPj" class="btn btn-theme btn-lg btn-block" value="Pesquisar">
 						</div>
 					</div>
 				</form>
