@@ -2,6 +2,7 @@
 $con = bancoMysqli();
 $conn = bancoPDO();
 
+
 $nome = isset($_POST['nome'])?$_POST['nome']:null;
 $cpf = isset($_POST['cpf'])?$_POST['cpf']:null;
 
@@ -26,41 +27,33 @@ if($nome != '' || $cpf != '')
 		$filtro_cpf = "";
 	}
 }
-
+if(isset($_POST['pesquisar'])){
 $sql = "SELECT * FROM pessoa_fisica 
-		WHERE :filtro_cpf :filtro_nome";
+		WHERE $filtro_cpf $filtro_nome";
 
 $stmt = $conn->prepare($sql);
-$stmt->bindValue(':filtro_cpf', $filtro_cpf);
-$stmt->bindValue(':filtro_nome', $filtro_nome);
 $stmt->execute();
 $result = $stmt->fetchAll();
 
-// $id = isset($result[0]['idPf'])?$result[0]['idPf']:null;
-
-// if(isset($_POST['atualizar'])){
-// 	$liberado = $_POST['liberado'];
-// 	$sql_atualizar = "UPDATE pessoa_fisica SET
-// 		liberado = '$liberado'
-// 		WHERE idPf = :idPf ";
-
-// 	$stmt = $conn->prepare($sql_atualizar);
-// 	$stmt->bindParam(':idPf', $_POST['id']);
-// 	$stmt->execute();
-// }
-if(isset($_POST['alterar'])){
+}
+if (isset($_POST['alterar'])) {
 	$id = $_POST['id'];
 	$liberado = $_POST['liberado'];
 	$sql_atualizar = "UPDATE pessoa_fisica SET
-		liberado = '$liberado'
+		liberado = :liberado
  		WHERE idPf = :idPf ";
  	$stmt = $conn->prepare($sql_atualizar);
  	$stmt->bindParam(':idPf', $id);
+ 	$stmt->bindParam(':liberado', $liberado);
  	$stmt->execute();
+
+ 	$sql = "SELECT * FROM pessoa_fisica 
+		WHERE idPf = $id ";
+	$stmt = $conn->prepare($sql);
+	$stmt->execute();
+	$result = $stmt->fetchAll();
 }
 
-// echo '<pre>';
-// print_r($result);
 ?>
 
 <section id="list_items" class="home-section bg-white">
@@ -90,7 +83,7 @@ if(isset($_POST['alterar'])){
 								echo "<td class='list_description'>".$value['cpf']."</td>";
 								echo "<td class='list_description'>
 										<select class='form-control' name='liberado'>
-											<option value='0'>".$value['liberado']."</option>
+											<option value='".$value['liberado']."'>".$value['liberado']."</option>
 											<option value='1'>1</option>
 											<option value='2'>2</option>
 											<option value='3'>3</option>									
@@ -98,7 +91,7 @@ if(isset($_POST['alterar'])){
 									</td>";
 								echo "<td class='list_description'>
 										<input type='hidden' name='id' value='".$value['idPf']."' />
-										<input type ='submit' class='btn btn-theme btn-block btn-sm' value='alterar'>						
+										<input type ='submit' name='alterar' class='btn btn-theme btn-block btn-sm' value='alterar'>						
 									</td>";				
 								echo "</tr>";
 								echo "</form>";
