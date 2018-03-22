@@ -5,6 +5,15 @@ function habilitarErro()
 	error_reporting(E_ALL);
 }
 
+function isYoutubeVideo($link)
+{
+	$find = "/youtube/";
+	$objetivo = array();
+
+	$resultado = preg_match($find, $link, $objetivo);
+	return isset($objetivo[0]) ? $objetivo[0] : null;
+}
+
 function autenticaloginpf($login, $senha)
 {
 	$sql = "SELECT * FROM pessoa_fisica AS pf

@@ -515,17 +515,26 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 								<li class="list-group-item list-group-item-success"><b>Mídias sociais</b></li>
 								<li class="list-group-item">
 									<?php
+
 									if(!empty($video['video1'] || $video['video2'] || $video['video3']))
-									{?>
+									{
+										 ?>
 										<table class='table table-condensed'>
 										<?php
 										foreach ($v as $key => $m)
 										{
 											if (!empty($m))
 											{
-												$desc = "https://www.youtube.com/oembed?format=json&url=".$m;
-												$obj =	json_decode(file_get_contents($desc), true);
-											?>
+												if(isYoutubeVideo($m) == "youtube")
+												{
+													$desc = "https://www.youtube.com/oembed?format=json&url=".$m;
+													$obj =	json_decode(file_get_contents($desc), true);
+												} else{
+													echo "<div class='alert alert-danger'>
+														  <strong>Erro!</strong> O link ($m) não pode ser aberto, a plataforma aceita somente YouTube.
+														</div>";
+												}
+														if(isYoutubeVideo($m) == "youtube"){ ?>
 												<tr>
 													<td>
 														<img src="<?php echo $obj['thumbnail_url']; ?>" style='width: 150px;'>
@@ -535,6 +544,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 														<?php echo $m ?>
 													</td>
 												</tr>
+												<?php } ?>
 										<?php
 											}
 										}?>
