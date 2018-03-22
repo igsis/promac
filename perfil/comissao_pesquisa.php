@@ -35,6 +35,12 @@
 					<hr/>
 
 					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8"><label>Nome do Projeto</label>
+							<input type="text" name="nomeProjeto" class="form-control" placeholder="">
+						</div>
+					</div>
+
+					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><label>Protocolo</label>
 							<input type="text" name="idProjeto" class="form-control" placeholder="">
 						</div>
