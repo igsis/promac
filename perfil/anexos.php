@@ -10,6 +10,71 @@ $server = "http://".$_SERVER['SERVER_NAME']."/promac/";
 $http = $server."/pdf/";
 $link1 = $http."rlt_declaracao_vinculo_pf.php";
 
+function pegaStatus($id)
+{
+	$con = bancoMysqli();
+	$pegaNome = "SELECT status FROM status WHERE idStatus = '$id'";
+	$enviaNome = mysqli_query($con, $pegaNome);
+	$row = mysqli_fetch_array($enviaNome);
+	return $row['status'];
+}
+
+function listaArquivosPessoaComStatus($idPessoa,$tipoPessoa,$pagina)
+{
+	
+	$con = bancoMysqli();
+	$sql = "SELECT *
+			FROM lista_documento as list
+			INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
+			WHERE arq.idPessoa = '$idPessoa'
+			AND arq.idTipo = '$tipoPessoa'
+			AND arq.publicado = '1'";
+	$query = mysqli_query($con,$sql);
+	$linhas = mysqli_num_rows($query);
+
+	if ($linhas > 0)
+	{
+	echo "
+		<table class='table table-condensed'>
+			<thead>
+				<tr class='list_menu'>
+					<td>Tipo de arquivo</td>
+					<td>Nome do arquivo</td>
+					<td>Status</td>
+					<td>Observações</td>
+					<td width='15%'></td>
+				</tr>
+			</thead>
+			<tbody>";
+				while($arquivo = mysqli_fetch_array($query))
+				{
+					echo "<tr>";
+					echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
+					echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
+					$status = pegaStatus($arquivo['idStatusDocumento']);
+
+					echo "<td class='list_description'>".$status."</td>";
+					echo "<td class='list_description'>".$arquivo['observacoes']."</td>";
+					echo "
+						<td class='list_description'>
+							<form id='apagarArq' method='POST' action='?perfil=".$pagina."'>
+								<input type='hidden' name='idPessoa' value='".$idPessoa."' />
+								<input type='hidden' name='tipoPessoa' value='".$tipoPessoa."' />
+								<input type='hidden' name='apagar' value='".$arquivo['idUploadArquivo']."' />
+								<button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Excluir Arquivo?' data-message='Deseja realmente excluir o arquivo ".$arquivo['documento']."?'>Apagar
+								</button></td>
+							</form>";
+					echo "</tr>";
+				}
+				echo "
+		</tbody>
+		</table>";
+	}
+	else
+	{
+		echo "<p>Não há arquivo(s) inserido(s).<p/><br/>";
+	}
+}
 
 if(isset($_POST["enviar"]))
 {
@@ -127,7 +192,7 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 				<div class="form-group">
 					<div class="col-md-12">
 						<div class="table-responsive list_info"><h6>Arquivo(s) Anexado(s)</h6>
-							<?php listaArquivosPessoa($idProjeto,'3',"anexos"); ?>
+							<?php listaArquivosPessoaComStatus($idProjeto,'3',"anexos"); ?>
 						</div>
 					</div>
 				</div>
