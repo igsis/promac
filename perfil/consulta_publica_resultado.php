@@ -121,6 +121,15 @@ else
 		$filtro_nomeProjeto = "";
 	}
 
+	if($protocolo != '')
+	{
+		$filtro_protocolo = " AND protocolo LIKE '%$protocolo%'";
+	}
+	else
+	{
+		$filtro_protocolo = "";
+	}
+
 	if($idAreaAtuacao != 0)
 	{
 		$filtro_idAreaAtuacao = " AND idAreaAtuacao = '$idAreaAtuacao'";
@@ -130,11 +139,18 @@ else
 		$filtro_idAreaAtuacao = "";
 	}
 
-
+	if($valorAprovado != '')
+	{
+		$filtro_valorAprovado = " AND valorAprovado LIKE '%$valorAprovado%'";
+	}
+	else
+	{
+		$filtro_valorAprovado = "";
+	}
 
 	$sql = "SELECT * FROM projeto AS prj
 			WHERE publicado = 1 AND idStatus = 5
-			$filtro_nomeProjeto $filtro_idAreaAtuacao";
+			$filtro_nomeProjeto $filtro_protocolo $filtro_idAreaAtuacao $filtro_valorAprovado";
 	$query = mysqli_query($con,$sql);
 	$num = mysqli_num_rows($query);
 	if($num > 0)

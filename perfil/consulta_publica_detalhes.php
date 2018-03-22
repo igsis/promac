@@ -4,88 +4,6 @@ $con = bancoMysqli();
 $idProjeto = $_POST['idProjeto'];
 $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 
-// Gerar documentos
-$server = "http://".$_SERVER['SERVER_NAME']."/promac/";
-$http = $server."/pdf/";
-$link1 = $http."rlt_projeto.php";
-
-if(isset($_POST['gravarPrazos']))
-{
-	$prazoCaptacao = exibirDataMysql($_POST['prazoCaptacao']);
-	$prorrogacaoCaptacao = $_POST['prorrogacaoCaptacao'];
-	$finalCaptacao = exibirDataMysql($_POST['finalCaptacao']);
-	$inicioExecucao = exibirDataMysql($_POST['inicioExecucao']);
-	$fimExecucao = exibirDataMysql($_POST['fimExecucao']);
-	$prorrogacaoExecucao = $_POST['prorrogacaoExecucao'];
-	$finalProjeto = exibirDataMysql($_POST['finalProjeto']);
-	$prestarContas = exibirDataMysql($_POST['prestarContas']);
-
-	$prazos = recuperaDados("prazos_projeto","idProjeto",$idProjeto);
-	if($prazos == NULL)
-	{
-		$sql_insere = "INSERT INTO prazos_projeto (idProjeto, prazoCaptacao, prorrogacaoCaptacao, finalCaptacao, inicioExecucao, fimExecucao, prorrogacaoExecucao, finalProjeto, prestarContas) VALUES ('$idProjeto', '$prazoCaptacao', '$prorrogacaoCaptacao', '$finalCaptacao', '$inicioExecucao', '$fimExecucao', '$prorrogacaoExecucao', '$finalProjeto', '$prestarContas')";
-		if(mysqli_query($con,$sql_insere))
-		{
-			$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso!</strong></font>";
-		}
-		else
-		{
-			$mensagem = "<font color='#FF0000'><strong>Erro ao gravar! Tente novamente.</strong></font>";
-		}
-	}
-	else
-	{
-		$sql_edita = "UPDATE prazos_projeto SET
-		prazoCaptacao = '$prazoCaptacao',
-		prorrogacaoCaptacao = '$prorrogacaoCaptacao',
-		finalCaptacao = '$finalCaptacao',
-		inicioExecucao = '$inicioExecucao',
-		fimExecucao = '$fimExecucao',
-		prorrogacaoExecucao = '$prorrogacaoExecucao',
-		finalProjeto = '$finalProjeto',
-		prestarContas = '$prestarContas'
-		WHERE idProjeto = '$idProjeto'";
-		if(mysqli_query($con,$sql_edita))
-		{
-			$mensagem = "<font color='#01DF3A'><strong>Editado com sucesso!</strong></font>";
-		}
-		else
-		{
-			$mensagem = "<font color='#FF0000'><strong>Erro ao editar! Tente novamente.</strong></font>";
-		}
-	}
-}
-
-if(isset($_POST['gravarAdm']))
-{
-	$idStatus = $_POST['idStatus'];
-	$valorAprovado = dinheiroDeBr($_POST['valorAprovado']);
-	$sql_gravarAdm = "UPDATE projeto SET idStatus = '$idStatus', valorAprovado = '$valorAprovado' WHERE idProjeto = '$idProjeto' ";
-	if(mysqli_query($con,$sql_gravarAdm))
-	{
-		$mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
-	}
-	else
-	{
-		$mensagem = "<font color='#FF0000'><strong>Erro ao atualizar! Tente novamente.</strong></font>";
-	}
-}
-
-if(isset($_POST['gravarNota']))
-{
-	$dateNow = date('Y:m:d h:i:s');
-	$nota = addslashes($_POST['nota']);
-	$sql_nota = "INSERT INTO notas (idProjeto, data, nota) VALUES ('$idProjeto', '$dateNow', '$nota')";
-	if(mysqli_query($con,$sql_nota))
-	{
-		$mensagem = "<font color='#01DF3A'><strong>Nota inserida com sucesso!</strong></font>";
-	}
-	else
-	{
-		$mensagem = "<font color='#FF0000'><strong>Erro ao inserir nota! Tente novamente.</strong></font>";
-	}
-}
-
 if($projeto['tipoPessoa'] == 1)
 {
 	$pf = recuperaDados("pessoa_fisica","idPf",$projeto['idPf']);
@@ -95,7 +13,6 @@ else
 	$pj = recuperaDados("pessoa_juridica","idPj",$projeto['idPj']);
 }
 
-$projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 $prazos = recuperaDados("prazos_projeto","idProjeto",$idProjeto);
 $area = recuperaDados("area_atuacao","idArea",$projeto['idAreaAtuacao']);
 $renuncia = recuperaDados("renuncia_fiscal","idRenuncia",$projeto['idRenunciaFiscal']);
@@ -123,7 +40,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 				<div role="tabpanel">
 					<!-- LABELS -->
 					<ul class="nav nav-tabs">
-						<li class="nav active"><a href="#projeto" data-toggle="tab">Projeto</a></li>
+						<li class="nav active"><a href="#projeto" data-toggle="tab">Resumo do Projeto</a></li>
 						<li class="nav"><a href="#F" data-toggle="tab">Pessoa Fisica</a></li>
 						<li class="nav"><a href="#J" data-toggle="tab">Pessoa Jurídica</a></li>
 					</ul>
@@ -145,7 +62,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 									<?php } ?>
 								</tr>
 								<tr>
-									<td><strong>Valor do projeto:</strong> R$ <?php echo isset($projeto['valorProjeto']) ? $projeto['valorProjeto'] : null; ?></td>
+									<td ><strong>Valor do projeto:</strong> R$ <?php echo isset($projeto['valorProjeto']) ? $projeto['valorProjeto'] : null; ?></td>
 									<td><strong>Valor do incentivo:</strong> R$ <?php echo isset($projeto['valorIncentivo']) ? $projeto['valorIncentivo'] : null; ?></td>
 									<td><strong>Valor do financiamento:</strong> R$ <?php echo isset($projeto['valorFinanciamento']) ? $projeto['valorFinanciamento'] : null; ?></td>
 								</tr>
@@ -154,7 +71,8 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 									<td><strong>Renúncia Fiscal:</strong> <?php echo $renuncia['renunciaFiscal'] ?></td>
 								</tr>
 								<tr>
-									<td colspan="3"><strong>Nome do Projeto:</strong> <?php echo isset($projeto['nomeProjeto']) ? $projeto['nomeProjeto'] : null; ?></td>
+									<td colspan="2"><strong>Nome do Projeto:</strong> <?php echo isset($projeto['nomeProjeto']) ? $projeto['nomeProjeto'] : null; ?></td>
+									<td><strong>Valor Aprovado:</strong> R$ <?php echo isset($projeto['valorAprovado']) ? $projeto['valorAprovado'] : null; ?></td>
 								</tr>
 								<tr>
 									<td colspan="3"><strong>Exposição da Marca:</strong> <?php echo isset($projeto['exposicaoMarca']) ? $projeto['exposicaoMarca'] : null; ?></td>
@@ -334,7 +252,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 													</td>
 													<td>
 														<?php echo $obj['title']; ?><br/>
-														<?php echo $m ?>
+														<a href="<?php echo $m ?>" target="_blank"><?php echo $m ?></a>
 													</td>
 												</tr>
 										<?php
@@ -349,10 +267,6 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 									}
 									?>
 								</li>
-							</ul>
-							<ul class="list-group">
-								<li class="list-group-item list-group-item-success"><b>Arquivos do Projeto</b></li>
-								<li class="list-group-item"><?php exibirArquivos(3,$projeto['idProjeto']); ?></li>
 							</ul>
 						</div>
 
@@ -379,10 +293,6 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 									<td><strong>Cooperado:</strong> <?php if($pf['cooperado'] == 1){ echo "Sim"; } else { echo "Não"; } ?></td>
 								</tr>
 							</table>
-							<ul class="list-group">
-								<li class="list-group-item list-group-item-success"><b>Arquivos da Pessoa Física</b></li>
-								<li class="list-group-item"><?php exibirArquivos(1,$pf['idPf']); ?></li>
-							</ul>
 						</div>
 
 						<!-- LABEL PESSOA JURÍDICA -->
