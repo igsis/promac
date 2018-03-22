@@ -3,6 +3,7 @@ $con = bancoMysqli();
 
 $razaoSocial = $_POST['razaoSocial'];
 $cnpj = $_POST['cnpj'];
+$liberado = $_POST['liberado'];
 
 if($razaoSocial != '')
 {
@@ -21,9 +22,19 @@ else
 {
 	$filtro_cnpj = "";
 }
+
+if($liberado != 0)
+{
+	$filtro_liberado = " AND liberado = '$liberado'";
+}
+else
+{
+	$filtro_liberado = "";
+}
+
 $sql = "SELECT * FROM pessoa_juridica
-		WHERE liberado = 1
-		$filtro_razaoSocial $filtro_cnpj
+		WHERE idNivelAcesso = 1
+		$filtro_razaoSocial $filtro_cnpj $filtro_liberado
 		ORDER BY idPj DESC";
 $query = mysqli_query($con,$sql);
 $num = mysqli_num_rows($query);
@@ -37,6 +48,7 @@ if($num > 0)
 		$x[$i]['cnpj'] = $lista['cnpj'];
 		$x[$i]['email'] = $lista['email'];
 		$x[$i]['telefone'] = $lista['telefone'];
+		$x[$i]['liberado'] = $lista['liberado'];
 		$i++;
 	}
 	$x['num'] = $i;
@@ -65,6 +77,7 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 								<td>CNPJ</td>
 								<td>Email</td>
 								<td>Telefone</td>
+								<td>Liberação</td>
 								<td width='10%'></td>
 							</tr>
 						</thead>
@@ -77,6 +90,9 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 								echo "<td class='list_description'>".$x[$h]['cnpj']."</td>";
 								echo "<td class='list_description'>".$x[$h]['email']."</td>";
 								echo "<td class='list_description'>".$x[$h]['telefone']."</td>";
+								if($x[$h]['liberado'] == 1) { echo "<td class='list_description'>Acesso aos dados cadastrais</td>";}
+								if($x[$h]['liberado'] == 2) { echo "<td class='list_description'>Acesso não aprovado</td>";}
+								if($x[$h]['liberado'] == 3) { echo "<td class='list_description'>Acesso ao projeto</td>";}
 								echo "<td class='list_description'>
 										<form method='POST' action='?perfil=smc_visualiza_perfil_pj'>
 											<input type='hidden' name='liberado' value='".$x[$h]['idPj']."' />
