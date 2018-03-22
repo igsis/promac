@@ -2,7 +2,7 @@
 $con = bancoMysqli();
 ?>
 <section id="list_items" class="home-section bg-white">
-	<div class="container"><?php include 'includes/menu_smc.php'; ?>
+	<div class="container"><?php include 'includes/menu_comissao.php'; ?>
 		<p align="left"><strong><?php echo saudacao(); ?>, <?php echo $_SESSION['nome']; ?></strong></p>
 		<div class="form-group">
 			<h5>Lista de projetos enviados.</h5>
@@ -11,7 +11,7 @@ $con = bancoMysqli();
 			<div class="col-md-offset-1 col-md-10">
 				<div class="table-responsive list_info">
 				<?php
-					$sql = $sql = "SELECT * FROM projeto AS prj WHERE publicado = 1 AND idStatus = 2";
+					$sql = $sql = "SELECT * FROM projeto WHERE publicado = 1 AND idStatus = 2";
 					$query = mysqli_query($con,$sql);
 					$num = mysqli_num_rows($query);
 					if($num > 0)
