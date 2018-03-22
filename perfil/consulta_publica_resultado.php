@@ -6,9 +6,9 @@ $cpf = $_POST['cpf'];
 $razaoSocial = $_POST['razaoSocial'];
 $cnpj = $_POST['cnpj'];
 $nomeProjeto = $_POST['nomeProjeto'];
-$idProjeto = $_POST['idProjeto'];
+$protocolo = $_POST['protocolo'];
 $idAreaAtuacao = $_POST['idAreaAtuacao'];
-$idStatus = $_POST['idStatus'];
+$valorAprovado = $_POST['valorAprovado'];
 
 // Inicio Pessoa Física
 if($nome != '' || $cpf != '')
@@ -121,15 +121,6 @@ else
 		$filtro_nomeProjeto = "";
 	}
 
-	if($idProjeto != '')
-	{
-		$filtro_idProjeto = " AND idProjeto = '$idProjeto'";
-	}
-	else
-	{
-		$filtro_idProjeto = "";
-	}
-
 	if($idAreaAtuacao != 0)
 	{
 		$filtro_idAreaAtuacao = " AND idAreaAtuacao = '$idAreaAtuacao'";
@@ -139,18 +130,11 @@ else
 		$filtro_idAreaAtuacao = "";
 	}
 
-	if($idStatus != 0)
-	{
-		$filtro_idStatus = " AND idStatus = '$idStatus'";
-	}
-	else
-	{
-		$filtro_idStatus = "";
-	}
+
 
 	$sql = "SELECT * FROM projeto AS prj
-			WHERE publicado = 1
-			$filtro_nomeProjeto $filtro_idProjeto $filtro_idAreaAtuacao $filtro_idStatus";
+			WHERE publicado = 1 AND idStatus = 5
+			$filtro_nomeProjeto $filtro_idAreaAtuacao";
 	$query = mysqli_query($con,$sql);
 	$num = mysqli_num_rows($query);
 	if($num > 0)
@@ -190,11 +174,11 @@ else
 $mensagem = "Foram encontrados ".$x['num']." resultados";
 ?>
 <section id="list_items" class="home-section bg-white">
-	<div class="container"><?php include 'includes/menu_smc.php'; ?>
+	<div class="container">
 		<div class="form-group">
 			<h4>Pesquisar Projetos</h4>
 			<h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
-			<h5><a href="?perfil=smc_pesquisa_geral">Fazer outra busca</a></h5>
+			<h5><a href="?perfil=consulta_publica">Fazer outra busca</a></h5>
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
@@ -223,7 +207,7 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 								echo "<td class='list_description'>".$x[$h]['areaAtuacao']."</td>";
 								echo "<td class='list_description'>".$x[$h]['status']."</td>";
 								echo "<td class='list_description'>
-										<form method='POST' action='?perfil=smc_detalhes_projeto'>
+										<form method='POST' action='?perfil=consulta_publica_detalhes'>
 											<input type='hidden' name='idProjeto' value='".$x[$h]['idProjeto']."' />
 											<input type ='submit' class='btn btn-theme btn-block' value='detalhes'>
 										</form>

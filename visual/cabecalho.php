@@ -4,8 +4,16 @@ session_start();
 
 if(!isset ($_SESSION['login']) == true) //verifica se há uma sessão, se não, volta para área de login
 {
-	unset($_SESSION['login']);
-	header('location:../index.php');
+	if(!isset($_POST['consulta']))
+	{
+		unset($_SESSION['login']);
+		header('location:../index.php');
+	}
+	else
+	{
+		$_SESSION['idUser'] = "Consulta Publica";
+		$_SESSION['consulta'] = true;
+	}
 }
 else
 {

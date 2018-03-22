@@ -39,7 +39,8 @@
 								</form>
 							</div>
 							<div class="col-md-offset-1 col-md-3">
-								<form method="POST" action="consulta_publica.php" class="form-horizontal" role="form">
+								<form method="POST" action="./visual/index.php" class="form-horizontal" role="form">
+									<input type="hidden" name="consulta" value="1">
 									<button type="submit" class="btn btn-theme btn-lg btn-block">Consulta Pública</button>
 								</form>
 							</div>
