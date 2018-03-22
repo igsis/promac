@@ -46,10 +46,12 @@ if(isset($_POST['atualizar']))
 	if($envia)
 	{
 		echo "<script>alert('O arquivo foi atualizado com sucesso.')</script>";
+		echo "<script>window.location.href = 'index_pf.php?perfil=smc_index';</script>";
 	}
 	else
 	{
 		echo "<script>alert('Erro durante o processamento, entre em contato com os responsáveis pelo sistema para maiores informações.')</script>";
+		echo "<script>window.location.href = 'index_pf.php?perfil=smc_index';</script>";
 	}
 }
 
@@ -91,7 +93,7 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 
 						echo "<td class='list_description'>
 							<select name='status' id='statusOpt' value='teste'>";
-							geraOpcao('statusDocumento', $row['idStatusDocumento']);
+							geraOpcao('status', $row['idStatusDocumento']);
 							echo " </select>
 						</td>";
 					$queryOBS = "SELECT observacoes FROM upload_arquivo WHERE idUploadArquivo = '".$arquivo['idUploadArquivo']."'";
