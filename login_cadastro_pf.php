@@ -22,7 +22,9 @@ if(isset($_POST['cadastraNovoPf']))
 				$senha01 = md5($_POST['senha01']);
 				$login = $_POST['cpf'];
 				$dataAtualizacao = date("Y-m-d");
-				$sql_senha = "INSERT INTO `pessoa_fisica`(nome, cpf, email, senha, idNivelAcesso) VALUES ('$nome', '$login', '$email', '$senha01', '1')";
+				$idFraseSeguranca = $_POST['idFraseSeguranca'];
+				$respostaFrase = $_POST['respostaFrase'];
+				$sql_senha = "INSERT INTO `pessoa_fisica`(nome, cpf, email, senha, idNivelAcesso, idFraseSeguranca, respostaFrase) VALUES ('$nome', '$login', '$email', '$senha01', '1', '$idFraseSeguranca', '$respostaFrase')";
 				$query_senha = mysqli_query($con,$sql_senha);
 				$sql_select = "SELECT * FROM pessoa_fisica WHERE cpf = '$login'";
 				$query_select = mysqli_query($con,$sql_select);
@@ -102,6 +104,22 @@ if(isset($_POST['cadastraNovoPf']))
 									<input type="text" class="form-control" name="email" placeholder="E-mail">
 								</div>
 							</div>
+
+							<div class="form-group">
+								<div class="col-md-offset-2 col-md-8"><strong>Escolha uma pergunta secreta, para casos de recuperação de senha:</strong><br/>
+									<select class="form-control" name="idFraseSeguranca" id="idFraseSeguranca" required>
+										<option>Selecione...</option>
+										<?php geraOpcao("frase_seguranca","");	?>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div class="col-md-offset-2 col-md-8"><strong>Resposta:</strong><br/>
+									<input type="text" class="form-control" id="respostaFrase" maxlength="10" name="respostaFrase" required/>
+								</div>
+							</div>
+
 
 							<!-- Botão para Gravar -->
 							<div class="form-group">
