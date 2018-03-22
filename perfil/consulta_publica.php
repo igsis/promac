@@ -77,6 +77,7 @@
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
+							<input type="hidden" name="consulta" value="1">
 							<input type="submit" name="pesquisar" class="btn btn-theme btn-lg btn-block" value="Pesquisar">
 						</div>
 					</div>
