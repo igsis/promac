@@ -1,9 +1,11 @@
 <?php 
 # Barra pf 
-$con = bancoMysqli();
+$con  = bancoMysqli();
 $idPf = $_SESSION['idUser'];
-$pf = recuperaDados("pessoa_fisica","idPf",$idPf);
-$idProj = isset($_SESSION['idProjeto'])?$_SESSION['idProjeto']:null;
+$pf   = recuperaDados("pessoa_fisica","idPf",$idPf);
+$idProj   = isset($_SESSION['idProjeto'])?$_SESSION['idProjeto']:null;
+$proj = recuperaDados("projeto","idProjeto",$idProj); // Para verificar status
+
 
 $urlPf = array(
     27 => '/promac/visual/index_pf.php?secao=perfil',
@@ -151,9 +153,21 @@ for ($i = 0; $i < count($urlPf); $i++) {
                 <li class="<?php echo isset($acionar17) ? $acionar17 : 'clickable'; ?>">
                    <a onclick="location.href='index_pf.php?perfil=finalProjeto'" href=""><br />Final Projeto</a>
                 </li>
+                <?php 
+                    if ($proj['idStatus'] != 1) {                        
+                ?>
                 <li class="<?php echo isset($acionar18) ? $acionar18 : 'clickable'; ?>">
                    <a onclick="location.href='index_pf.php?perfil=informacoes_administrativas'" href=""><br />Informações da Inscrição</a>
-                </li>                                  
+                </li>
+                <?php 
+                    }else{
+                ?> 
+                <li class="<?php echo isset($acionar18) ? $acionar18 : 'disabled'; ?>">
+                   <a><br />Informações da Inscrição</a>
+                </li>
+                <?php        
+                    }
+                ?>                                  
             </ul>
        	</div>
 <?php 
