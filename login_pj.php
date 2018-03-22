@@ -30,7 +30,7 @@ if(isset($_POST['login']))
 	</head>
 	<body>
 		<div id="bar">
-			<p id="p-bar"><img src="visual/images/logo_cultura_h.png" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Pro-Mac</p>
+			<p id="p-bar"><img src="visual/images/logo_cultura_h.png" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Pro-Mac</b></p>
 		</div>
 		<p>&nbsp;</p>
 		<p>&nbsp;</p>
@@ -72,7 +72,7 @@ if(isset($_POST['login']))
 								<br />
 							</div>
 							<div class="col-md-6">
-								<p>Esqueceu a senha? <a href="recuperar_senha_pj.php">Clique aqui.</a></p>
+								<p>Esqueceu a senha? <a href="recuperar_senha.php">Clique aqui.</a></p>
 								<br />
 							</div>
 						</div>
@@ -80,4 +80,4 @@ if(isset($_POST['login']))
 				</div>
 			</div>
 		</section>
-	<?php include "visual/rodape.php" ?>
+	<?php include "visual/rodape_index.php" ?>

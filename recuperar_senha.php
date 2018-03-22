@@ -8,17 +8,12 @@
 		<script src="visual/js/modernizr.custom.js"></script>
 	</head>
 	<body>
-		<section id="spacer1" class="home-section spacer">
-           <div class="container">
-				<div class="row">
-					<div class="col-md-12">
-						<div class="color-light">
-							<h1 class="wow bounceInDown" data-wow-delay="1s">Pro-Mac - PROGRAMA MUNICIPAL DE APOIO A PROJETOS CULTURAIS</h1>
-						</div>
-					</div>
-				</div>
-            </div>
-		</section>
+		<div id="bar">
+			<p id="p-bar"><img src="visual/images/logo_cultura_h.png" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Pro-Mac</b></p>
+		</div>
+		<p>&nbsp;</p>
+		<p>&nbsp;</p>
+		<p>&nbsp;</p>
 		<section id="contact" class="home-section bg-white">
 			<div class="container">
 				<div class="row">
@@ -43,16 +38,6 @@
 				</div>
 			</div>
 		</section>
-		<footer>
-			<div class="container">
-				<table width="100%">
-					<tr>
-						<td width="20%"><img src="visual/images/logo_promac_branco.png" align="left"/></td>
-						<td align="center"><font color="#ccc">2018 @ Pro-Mac - Programa Municipal de Apoio a Projetos Culturais<br/>Secretaria Municipal de Cultura<br/>Prefeitura de São Paulo</font></td>
-						<td width="20%"><img src="visual/images/logo_cultura_q.png" align="right"/></td>
-					</tr>
-				</table>
-			</div>
-		</footer>
+		<?php include "visual/rodape_index.php" ?>
     </body>
 </html>

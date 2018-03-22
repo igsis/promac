@@ -66,6 +66,12 @@ if(isset($_POST['cadastraNovoPj']))
 		<script src="visual/js/modernizr.custom.js"></script>
 	</head>
 	<body>
+		<div id="bar">
+			<p id="p-bar"><img src="visual/images/logo_cultura_h.png" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Pro-Mac</b></p>
+		</div>
+		<p>&nbsp;</p>
+		<p>&nbsp;</p>
+		<p>&nbsp;</p>
 		<section id="contact" class="home-section bg-white">
 			<div class="container">
 				<div class="form-group">
@@ -127,4 +133,4 @@ if(isset($_POST['cadastraNovoPj']))
 				</div>
 			</div>
 		</section>
-		<?php include "visual/rodape.php" ?>
+		<?php include "visual/rodape_index.php" ?>

@@ -67,7 +67,7 @@ if(isset($_POST['cadastraNovoPf']))
 	</head>
 	<body>
 		<div id="bar">
-			<p id="p-bar"><img src="visual/images/logo_cultura_h.png" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>ProMAC</p>
+			<p id="p-bar"><img src="visual/images/logo_cultura_h.png" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Pro-Mac</b></p>
 		</div>
 		<p>&nbsp;</p>
 		<p>&nbsp;</p>
@@ -134,4 +134,4 @@ if(isset($_POST['cadastraNovoPf']))
 				</div>
 			</div>
 		</section>
-		<?php include "visual/rodape.php" ?>
+		<?php include "visual/rodape_index.php" ?>
