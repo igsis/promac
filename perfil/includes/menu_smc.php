@@ -15,7 +15,8 @@ $pasta = "?perfil=";
 					<li><a href="<?php echo $pasta ?>smc_pesquisa_geral">Projetos</a></li>
 				</ul>
 			</li>
-			<li><a href="?perfil=informacoes_iniciais_pf">Módulo Proponente</a></li>
+			<li><a href="?perfil=informacoes_iniciais_pf">Módulo Proponente (provisório)</a></li>
+			<li><a href="<?php echo $pasta ?>comissao_index">Módulo Comissão (provisório)</a></li>
 			<li style="color:white;">-------------------------</li>
 			<li><a href="index.php?secao=perfil">Início</a></li>
 			<li><a href="<?php echo $pasta ?>minha_conta">Minha conta</a></li>
