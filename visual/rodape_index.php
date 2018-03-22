@@ -3,7 +3,9 @@
 	<div class="container">
 		<table width="100%">
 			<tr>
+				<td width="20%"><img src="visual/images/logo_promac_branco.png" align="left"/></td>
 				<td align="center"><font color="#ccc">2018 @ Pro-Mac - Programa Municipal de Apoio a Projetos Culturais<br/>Secretaria Municipal de Cultura<br/>Prefeitura de São Paulo</font></td>
+				<td width="20%"><img src="visual/images/logo_cultura_q.png" align="right"/></td>
 			</tr>
 		</table>
 		<div class="row">
