@@ -9,17 +9,33 @@ if(isset($_POST['senha01']))
 	//verifica se há um post
 	if(($_POST['senha01'] != "") AND (strlen($_POST['senha01']) >= 5))
 	{
+		if($tipopessoa == 1)
+		{
+			$queryPF = "SELECT senha FROM pessoa_fisica WHERE idPf = '$idUser'";
+			$envia = mysqli_query($con, $queryPF);
+		} else{
+			$queryPJ = "SELECT senha from pessoa_juridica WHERE idPk = '$idUser'";
+			$envia = mysqli_query($con, $queryPF);
+		}
+		$row = mysqli_fetch_array($envia);
+		$senha = $row['senha'];
 		if($_POST['senha01'] == $_POST['senha02'])
 		{
-			// verifica se a nova senha foi digitada corretamente duas vezes
-			$senha = recuperaDados("usuario","email",$_SESSION['login']);
-			if(md5($_POST['senha03']) == $senha['senha'])
+			if(md5($_POST['senha03']) == $senha)
 			{
 				$usuario = $_SESSION['idUser'];
 				$senha01 = md5($_POST['senha01']);
-				$sql_senha = "UPDATE `usuario` SET `senha` = '$senha01' WHERE `id` = '$usuario';";
-				$con = bancoMysqli();
-				$query_senha = mysqli_query($con,$sql_senha);
+				if($tipopessoa == 1){
+					$sql_senha = "UPDATE `pessoa_fisica` SET `senha` = '$senha01' WHERE `idPf` = '$usuario';";
+					$con = bancoMysqli();
+					$query_senha = mysqli_query($con,$sql_senha);
+				}
+				else
+				{
+					$sql_senha = "UPDATE `pessoa_juridica` SET `senha` = '$senha01' WHERE `idPj` = '$usuario';";
+					$con = bancoMysqli();
+					$query_senha = mysqli_query($con,$sql_senha);
+				}
 				if($query_senha)
 				{
 					$mensagem = "<font color='#01DF3A'><strong>Senha alterada com sucesso!</strong></font>";
@@ -52,11 +68,17 @@ if(isset($_POST['fraseSeguranca']))
 {
 	$idFraseSeguranca = $_POST['idFraseSeguranca'];
 	$respostaFrase = $_POST['respostaFrase'];
-
-	$sql_seguranca_pf = "UPDATE usuario SET
-	`idFraseSeguranca` = '$idFraseSeguranca',
-	`respostaFrase` = '$respostaFrase'
-	WHERE `id` = '$idUser'";
+	if($tipopessoa == 1){
+		$sql_seguranca_pf = "UPDATE pessoa_fisica SET
+		`idFraseSeguranca` = '$idFraseSeguranca',
+		`respostaFrase` = '$respostaFrase'
+		WHERE `idPf` = '$idUser'";
+	} else{
+		$sql_seguranca_pf = "UPDATE pessoa_juridica SET
+		`idFraseSeguranca` = '$idFraseSeguranca',
+		`respostaFrase` = '$respostaFrase'
+		WHERE `idPj` = '$idUser'";
+	}
 
 	if(mysqli_query($con,$sql_seguranca_pf))
 	{
