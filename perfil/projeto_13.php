@@ -23,7 +23,7 @@ if(isset($_POST['insere']))
 	}
 }
 
-if(isset($_POST['apagar']))
+if(isset($_POST['videoApagar']))
 {
 	$indice = "video".$_POST['videoApagar'];
 	$video[$indice] = "";
@@ -128,7 +128,8 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 														<td>
 															<form method="POST" action="?perfil=projeto_13">
 															<input type="hidden" name="videoApagar" value="<?php echo $key+1; ?>">
-															<input type="submit" name="apagar" class="btn btn-theme" value="Apagar">
+															<button name="apagar" class="btn btn-theme" type="button" data-toggle="modal" data-target="#confirmApagar" data-title="Excluir Projeto?" data-message="Deseja realmente excluir o video <?= $obj['title']; ?>?">Apagar
+																</button>
 															</form>
 														</td>
 													</tr>
@@ -148,6 +149,25 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 						</div>
 					</div>
 				<!-- Fim Exibir Arquivo -->
+				<!-- Confirmação de Exclusão -->
+		<div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title">Excluir Arquivo?</h4>
+					</div>
+					<div class="modal-body">
+						<p>Confirma?</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+						<button type="button" class="btn btn-danger" id="confirm">Apagar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Fim Confirmação de Exclusão -->
 			</div>
 		</div>
 	</div>

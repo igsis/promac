@@ -5,6 +5,7 @@
 				<li class="list-group-item list-group-item-success">
 					<strong>
 					| <a href="?secao=perfil">Início</a>
+					| <a href="?perfil=projeto_pf">Projetos</a>
 					| <a href="?perfil=minha_conta">Trocar minha senha</a>
 					| <a href="../manual" target="_blank">Ajuda</a>
 					| <a href="../include/logoff.php">Sair</a> |</strong><br/>
