@@ -51,7 +51,9 @@ INSERT INTO `lista_documento` (`idListaDocumento`, `idTipoUpload`, `documento`, 
 (21, 3, 'Carta de Anuência do Local [modelo para download]', 'cal', 1),
 (22, 3, 'CV dos principais participantes [no máximo 20 linhas de cada participante]', 'cvpp', 1),
 (23, 3, 'Declaração de Responsabilidade por Direitos Autorais [modelo para download]', 'drda', 1),
-(24, 3, 'Informações adicionais, de acordo com a especificidade do segmento artístico do projeto (exemplo: roteiro do espetáculo)', 'ia', 1);
+(24, 3, 'Informações adicionais, de acordo com a especificidade do segmento artístico do projeto (exemplo: roteiro do espetáculo)', 'ia', 1),
+(25, 1, 'Carnê IPTU', 'ciptu', 1),
+(26, 1, 'Contrato de locação', 'clcc', 1);
 --
 -- Extraindo dados da tabela `renuncia_fiscal`
 --
