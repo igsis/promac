@@ -38,13 +38,13 @@ $result = $stmt->fetchAll();
 }
 if (isset($_POST['alterar'])) {
 	$id = $_POST['id'];
-	$liberado = $_POST['liberado'];
+	$idNivelAcesso = $_POST['idNivelAcesso'];
 	$sql_atualizar = "UPDATE pessoa_fisica SET
-		liberado = :liberado
+		idNivelAcesso = :idNivelAcesso
  		WHERE idPf = :idPf ";
  	$stmt = $conn->prepare($sql_atualizar);
  	$stmt->bindParam(':idPf', $id);
- 	$stmt->bindParam(':liberado', $liberado);
+ 	$stmt->bindParam(':idNivelAcesso', $idNivelAcesso);
  	$stmt->execute();
 
  	$sql = "SELECT * FROM pessoa_fisica 
@@ -82,8 +82,8 @@ if (isset($_POST['alterar'])) {
 								echo "<td class='list_description'>".$value['nome']."</td>";
 								echo "<td class='list_description'>".$value['cpf']."</td>";
 								echo "<td class='list_description'>
-										<select class='form-control' name='liberado'>
-											<option value='".$value['liberado']."'>".$value['liberado']."</option>
+										<select class='form-control' name='idNivelAcesso'>
+											<option value='".$value['idNivelAcesso']."'>".$value['idNivelAcesso']."</option>
 											<option value='1'>1</option>
 											<option value='2'>2</option>
 											<option value='3'>3</option>									
