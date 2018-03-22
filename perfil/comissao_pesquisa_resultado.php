@@ -190,11 +190,11 @@ else
 $mensagem = "Foram encontrados ".$x['num']." resultados";
 ?>
 <section id="list_items" class="home-section bg-white">
-	<div class="container"><?php include 'includes/menu_smc.php'; ?>
+	<div class="container"><?php include 'includes/menu_comissao.php'; ?>
 		<div class="form-group">
 			<h4>Pesquisar Projetos</h4>
 			<h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
-			<h5><a href="?perfil=smc_pesquisa_geral">Fazer outra busca</a></h5>
+			<h5><a href="?perfil=comissao_pesquisa">Fazer outra busca</a></h5>
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
