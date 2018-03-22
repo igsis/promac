@@ -48,10 +48,12 @@ if(isset($_POST['atualizar']))
 	if($envia)
 	{
 		echo "<script>alert('O arquivo foi atualizado com sucesso.')</script>";
+		echo "<script>window.location.href = 'index_pf.php?perfil=smc_index';</script>";
 	}
 	else
 	{
 		echo "<script>alert('Erro durante o processamento, entre em contato com os responsáveis pelo sistema para maiores informações.')</script>";
+		echo "<script>window.location.href = 'index_pf.php?perfil=smc_index';</script>";
 	}
 }
 
