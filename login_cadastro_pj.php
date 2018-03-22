@@ -24,8 +24,8 @@ if(isset($_POST['cadastraNovoPj']))
 				$idFraseSeguranca = $_POST['idFraseSeguranca'];
 				$respostaFrase = $_POST['respostaFrase'];
 				$sql_senha = "INSERT INTO `pessoa_juridica`(razaoSocial, cnpj, email, senha, idNivelAcesso, idFraseSeguranca, respostaFrase) VALUES ('$razaoSocial', '$login', '$email', '$senha01', '1', '$idFraseSeguranca', '$respostaFrase' )";
-				$query_senha = mysqli_query($con,$sql_senha);	
-				
+				$query_senha = mysqli_query($con,$sql_senha);
+
 				$sql_select = "SELECT * FROM pessoa_juridica WHERE cnpj = '$login'";
 				$query_select = mysqli_query($con,$sql_select);
 				$sql_array = mysqli_fetch_array($query_select);
@@ -59,7 +59,7 @@ if(isset($_POST['cadastraNovoPj']))
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title>Pro-Mac - Programa Municipal de Apoio a Projetos Culturais<br/>Secretaria Municipal de Cultura</title>
+		<title>SMC / Pro-Mac - Programa Municipal de Apoio a Projetos Culturais</title>
 		<link href="visual/css/bootstrap.min.css" rel="stylesheet" media="screen">
 		<link href="visual/css/style.css" rel="stylesheet" media="screen">
 		<link href="visual/color/default.css" rel="stylesheet" media="screen">

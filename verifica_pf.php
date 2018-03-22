@@ -1,7 +1,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title>Pro-Mac - Programa Municipal de Apoio a Projetos Culturais<br/>Secretaria Municipal de Cultura</title>
+		<title>SMC / Pro-Mac - Programa Municipal de Apoio a Projetos Culturais</title>
 		<link href="visual/css/bootstrap.min.css" rel="stylesheet" media="screen">
 		<link href="visual/css/style.css" rel="stylesheet" media="screen">
 		<link href="visual/color/default.css" rel="stylesheet" media="screen">
