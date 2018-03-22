@@ -1,9 +1,11 @@
 <?php 
-$con = bancoMysqli();
+# Barra Pessoa Juridica
+$con  = bancoMysqli();
 $idPj = $_SESSION['idUser'];
-$pj = recuperaDados("pessoa_juridica","idPj",$idPj);
+$pj   = recuperaDados("pessoa_juridica","idPj",$idPj);
 $idProj = isset($_SESSION['idProjeto'])?$_SESSION['idProjeto']:null;
-# Barra nPessoa Juridica
+$proj   = recuperaDados("projeto","idProjeto",$idProj); // Para verificar status
+
 $urlPj = array(
     0 => '/promac/visual/index_pj.php?secao=perfil',
     1 => '/promac/visual/index_pj.php',
@@ -162,9 +164,21 @@ for ($i = 0; $i < count($urlPj); $i++) {
                 <li class="<?php echo isset($ativa18) ? $ativa18 : 'clickable'; ?>">
                    <a onclick="location.href='index_pj.php?perfil=finalProjeto'" href=""><br />Final Projeto</a>
                 </li>
+                <?php 
+                    if ($proj['idStatus'] != 1) {                        
+                ?>                
                 <li class="<?php echo isset($ativa19) ? $ativa19 : 'clickable'; ?>">
                    <a onclick="location.href='index_pj.php?perfil=informacoes_administrativas'" href=""><br />Informações da Inscrição</a>
-                </li> 
+                </li>
+                <?php 
+                    }else{
+                ?>
+                <li class="<?php echo isset($ativa19) ? $ativa19 : 'disabled'; ?>">
+                   <a><br />Informações da Inscrição</a>
+                </li>
+                <?php        
+                    }
+                ?>        
             </ul> 
         </div>
 <?php  

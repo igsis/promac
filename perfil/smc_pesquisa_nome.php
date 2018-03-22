@@ -2,7 +2,7 @@
 	<div class="container"><?php include 'includes/menu_smc.php'; ?>
 		<div class="form-group">
 			<h4>Nível de acesso</h4>
-			<h6>Pesquisar Usuário</h6>
+			<h6>Pesquisar Usuários</h6> 
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
