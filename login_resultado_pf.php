@@ -36,7 +36,7 @@ if($num_busca > 0)
 		</head>
 		<body>
 			<div id="bar">
-				<p id="p-bar"><img src="visual/images/logo_cultura_h.png" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>ProMAC</p>
+				<p id="p-bar"><img src="visual/images/logo_cultura_h.png" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Pro-Mac</b></p>
 			</div>
 			<p>&nbsp;</p>
 			<p>&nbsp;</p>
@@ -84,6 +84,7 @@ if($num_busca > 0)
 					</div>
 				</div>
 			</section>
+			<?php include "visual/rodape_index.php" ?>
 		</body>
 	</html>
 
@@ -104,7 +105,7 @@ else
 		</head>
 		<body>
 			<div id="bar">
-				<p id="p-bar"><img src="visual/images/logo_cultura_h.png" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>ProMAC</p>
+				<p id="p-bar"><img src="visual/images/logo_cultura_h.png" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Pro-Mac</p>
 			</div>
 			<p>&nbsp;</p>
 			<p>&nbsp;</p>
@@ -171,7 +172,7 @@ else
 					</div>
 				</div>
 			</section>
-		<?php include "visual/rodape.php" ?>
+		<?php include "visual/rodape_index.php" ?>
 <?php
 }
 ?>

@@ -15,7 +15,7 @@
 	</head>
 	<body>
 		<div id="bar">
-			<p id="p-bar"><img src="visual/images/logo_cultura_h.png" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Pro-Mac</p>
+			<p id="p-bar"><img src="visual/images/logo_cultura_h.png" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Pro-Mac</b></p>
 		</div>
 		<p>&nbsp;</p>
 		<p>&nbsp;</p>
@@ -45,4 +45,4 @@
 				</div>
 			</div>
 		</section>
-		<?php include "visual/rodape.php" ?>
+		<?php include "visual/rodape_index.php" ?>
