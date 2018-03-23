@@ -134,7 +134,7 @@ function autenticaloginincentivadorpf($login, $senha)
 				$_SESSION['tipoPessoa'] = "1";
 				$log = "Fez login.";
 				$cpf = $user['cpf'];
-				header("Location: perfil/incentivador_index_pf.php");
+				header("Location: visual/incentivador_index_pf.php");
 			}
 			else
 			{
