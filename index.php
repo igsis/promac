@@ -48,7 +48,7 @@
 							</div>
 							<div class="col-md-1">
 								<form method="POST" action="manual/index.php" class="form-horizontal" role="form">
-									<button class='btn btn-default' type='submit' style="border-radius: 30px;"><i class="fa fa-question-circle"></i></button>
+									<button class='btn btn-theme' type='submit' style="border-radius: 30px;">&nbsp;<i class="fa fa-question"></i>&nbsp;</button>
 								</form>
 							</div>
 						</div>
