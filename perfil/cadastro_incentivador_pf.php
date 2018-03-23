@@ -1,13 +1,42 @@
-<html>
-		<head>
-			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-			<title>ProMAC - Programa Municipal de Apoio a Projetos Culturais<br/>Secretaria Municipal de Cultura</title>
-			<link href="visual/css/bootstrap.min.css" rel="stylesheet" media="screen">
-			<link href="visual/css/style.css" rel="stylesheet" media="screen">
-			<link href="visual/color/default.css" rel="stylesheet" media="screen">
-			<script src="visual/js/modernizr.custom.js"></script>
-		</head>
-		<body>
+<?php
+
+$con = bancoMysqli();
+$idPf = $_SESSION['idUser'];
+
+if(isset($_POST['cadastraNovoPf']))
+{
+	$nome = addslashes($_POST['nome']);
+	$rg = $_POST['rg'];
+	$telefone = $_POST['telefone'];
+	$celular = $_POST['celular'];
+	$email = $_POST['email'];
+	$Endereco = $_POST['Endereco'];
+	$CEP = $_POST['CEP'];
+
+	$sql_atualiza_pf = "UPDATE incentivador_pessoafisica SET
+	nome = '$nome',
+	`rg` = '$rg',
+	`telefone` = '$telefone',
+	`celular` = '$celular',
+	`email` = '$email',
+	`logradouro` = '$Endereco',
+	`cep` = '$CEP'
+	WHERE `idPf` = '$idPf'";
+
+	if(mysqli_query($con,$sql_atualiza_pf))
+	{
+		$mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
+		gravarLog($sql_atualiza_pf);
+	}
+	else
+	{
+		$mensagem = "<font color='#01DF3A'><strong>Erro ao atualizar! Tente novamente.</strong></font> <br/>".$sql_atualiza_pf;
+	}
+}
+
+$pf = recuperaDados("incentivador_pessoafisica","idPf",$idPf);
+ ?>
+
 			<section id="contact" class="home-section bg-white">
 				<div class="container">
 					<div class="form-group">
@@ -15,28 +44,28 @@
 					</div>
 					<div class="row">
 						<div class="col-md-offset-1 col-md-10">
-						<form class="form-horizontal" role="form" action="redirect_pra_algum_lugar.php" method="post">
+						<form class="form-horizontal" role="form" action="?perfil=cadastro_incentivador_pf" method="post">
 							<div class="form-group">
 								<div class="col-md-offset-2 col-md-8"><strong>Nome: *</strong><br/>
-									<input type="text" class="form-control" name="nome" placeholder="Nome completo">
+									<input type="text" class="form-control" name="nome" placeholder="Nome completo" value="<?= $pf['nome']?>" required>
 								</div>
 							</div>
 
 							<div class="form-group">
 								<div class="col-md-offset-2 col-md-6"><strong>CPF: *</strong>
-									<input type="text" name="cpf" class="form-control" id="inputName" placeholder="">
+									<input type="text" name="cpf" class="form-control" id="inputName" placeholder="" value="<?= $pf['cpf']?>" disabled>
 								</div>
 								<div class=" col-md-6"><strong>RG ou RNE *</strong>
-									<input type="text" name="rg" class="form-control" id="inputEmail" placeholder="">
+									<input type="text" name="rg" class="form-control" id="inputEmail" placeholder="" required>
 								</div>
 							</div>
 
 							<div class="form-group">
 								<div class="col-md-offset-2 col-md-6"><strong>CEP: *</strong><br/>
-									<input type="text" class="form-control" name="cep" placeholder="CEP">
+									<input type="text" class="form-control" id="CEP" name="cep" placeholder="CEP" required>
 								</div>
 								<div class="col-md-6"><strong>Endereço: *</strong><br/>
-									<input type="text" class="form-control" name="endereco" placeholder="Endereço">
+									<input type="text" class="form-control" id="Endereco" name="Endereco" placeholder="Endereco" disabled>
 								</div>
 							</div>
 
@@ -51,7 +80,7 @@
 
 							<div class="form-group">
 								<div class="col-md-offset-2 col-md-8"><strong>Email: *</strong><br/>
-									<input type="text" class="form-control" name="email" placeholder="xxxx@xxxxx.xxx">
+									<input type="email" class="form-control" name="email" placeholder="xxxx@xxxxx.xxx" required>
 								</div>
 							</div>
 
