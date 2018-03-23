@@ -103,7 +103,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 						<div role="tabpanel">
 							<ul class="nav nav-tabs">
         						<li class="nav active"><a href="#tabela" data-toggle="tab">Tabela para Consulta</a></li>
-        						<li class="nav"><a href="#artigo" data-toggle="tab">Artigo</a></li>
+        						<li class="nav"><a href="#artigo" data-toggle="tab">Legislação</a></li>
         						<li class="nav"><a href="#informacoes" data-toggle="tab">Informações Importantes</a></li>
     						</ul>
     						<div class="tab-content">
