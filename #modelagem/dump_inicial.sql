@@ -53,7 +53,8 @@ INSERT INTO `lista_documento` (`idListaDocumento`, `idTipoUpload`, `documento`, 
 (23, 3, 'Declaração de Responsabilidade por Direitos Autorais [modelo para download]', 'drda', 1),
 (24, 3, 'Informações adicionais, de acordo com a especificidade do segmento artístico do projeto (exemplo: roteiro do espetáculo)', 'ia', 1),
 (25, 1, 'Carnê IPTU', 'ciptu', 1),
-(26, 1, 'Contrato de locação', 'clcc', 1);
+(26, 1, 'Contrato de locação', 'clcc', 1),
+(27, 2, 'Portfólio comprovando atividades artísticas ou culturais (opcional)', 'pcaa', 1);
 --
 -- Extraindo dados da tabela `renuncia_fiscal`
 --
