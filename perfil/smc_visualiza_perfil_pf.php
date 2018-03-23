@@ -93,7 +93,7 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 
 						echo "<td class='list_description'>
 							<select name='status' id='statusOpt' value='teste'>";
-							geraOpcao('status', $row['idStatusDocumento']);
+							geraOpcao('status_documento', $row['idStatusDocumento']);
 							echo " </select>
 						</td>";
 					$queryOBS = "SELECT observacoes FROM upload_arquivo WHERE idUploadArquivo = '".$arquivo['idUploadArquivo']."'";
