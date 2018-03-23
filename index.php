@@ -5,7 +5,10 @@
 		<link href="visual/css/bootstrap.min.css" rel="stylesheet" media="screen">
 		<link href="visual/css/style.css" rel="stylesheet" media="screen">
 		<link href="visual/color/default.css" rel="stylesheet" media="screen">
+		<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+		<link rel="stylesheet" href="visual/css/font-awesome.min.css">
 		<script src="visual/js/modernizr.custom.js"></script>
+		<?php include "include/script.php";?>
 	</head>
 	<body>
 		<div id="bar">
@@ -14,7 +17,7 @@
 		<p>&nbsp;</p>
 		<p>&nbsp;</p>
 		<p>&nbsp;</p>
-		<section id="contact" class="home-section bg-white">
+		<section id="list_items" class="home-section bg-white">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-offset-1 col-md-10">
@@ -28,6 +31,27 @@
 
 						<hr/>
 
+						<div class="form-group">
+							<div class="col-md-offset-1 col-md-3">
+								<button class='btn btn-theme btn-md btn-block' type='button' data-toggle='modal' data-target='#proponente' style="border-radius: 30px;">Proponente</button>
+							</div>
+							<div class="col-md-3">
+								<button class='btn btn-theme btn-md btn-block' type='button' data-toggle='modal' data-target='#incentivador' style="border-radius: 30px;">Incentivador</button>
+							</div>
+							<div class="col-md-3">
+								<form method="POST" action="./visual/index.php" class="form-horizontal" role="form">
+									<input type="hidden" name="consulta" value="1">
+									<button class='btn btn-theme btn-md btn-block' type='submit' style="border-radius: 30px;">Consulta Pública</button>
+								</form>
+							</div>
+							<div class="col-md-1">
+								<form method="POST" action="manual/index.php" class="form-horizontal" role="form">
+									<button class='btn btn-default' type='submit' style="border-radius: 30px;"><i class="far fa-question-circle"></i></button>
+								</form>
+							</div>
+						</div>
+
+						<!-- Apagar esse trecho depois que o modal funcionar -->
 						<div class="form-group">
 							<div class="col-md-3">
 								<form method="POST" action="login_pf.php" class="form-horizontal" role="form">
@@ -51,8 +75,63 @@
 								</form>
 							</div>
 						</div>
+						<!-- Apagar esse trecho depois que o modal funcionar -->
 					</div>
 				</div>
+				<!-- Inicio Modal Proponente -->
+				<div class="modal fade" id="proponente" role="dialog" aria-labelledby="proponenteLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+								<h4 class="modal-title">Proponente</h4>
+							</div>
+							<div class="modal-body" style="text-align: left;">
+								<div class="col-md-3">
+									<form method="POST" action="login_pf.php" class="form-horizontal" role="form">
+										<button type="submit" class="btn btn-theme btn-md btn-block">Pessoa Física</button>
+									</form>
+								</div>
+								<div class="col-md-3">
+									<form method="POST" action="login_pj.php" class="form-horizontal" role="form">
+										<button type="submit" class="btn btn-theme btn-md btn-block">Pessoa Jurídica</button>
+									</form>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Fim Modal Proponente -->
+				<!-- Inicio Modal Incentivador -->
+				<div class="modal fade" id="incentivador" role="dialog" aria-labelledby="incentivadorLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+								<h4 class="modal-title">Incentivador</h4>
+							</div>
+							<div class="modal-body" style="text-align: left;">
+								<div class="col-md-3">
+									<form method="POST" action="login_incentivador_pf.php" class="form-horizontal" role="form">
+										<button type="submit" class="btn btn-theme btn-md btn-block">Pessoa Física</button>
+									</form>
+								</div>
+								<div class="col-md-3">
+									<form method="POST" action="login_incentivador_pj.php" class="form-horizontal" role="form">
+										<button type="submit" class="btn btn-theme btn-md btn-block">Pessoa Jurídica</button>
+									</form>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Fim Modal Incentivador -->
 			</div>
 		</section>
 		<footer>
