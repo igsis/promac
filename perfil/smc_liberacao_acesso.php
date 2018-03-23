@@ -28,10 +28,20 @@ if($nome != '' || $cpf != '')
 	{
 		$filtro_cpf = "";
 	}
+	
+	if ($filtro_nome != '' && $filtro_cpf != '')
+	{
+		$filtro = " AND ";
+	}
+	else
+	{
+		$filtro = '';
+	}
+
 }
 if(isset($_POST['pesquisarPf'])){
 	$sql = "SELECT * FROM pessoa_fisica 
-			WHERE $filtro_cpf $filtro_nome";
+			WHERE $filtro_cpf $filtro $filtro_nome";
 
 	$stmt = $conn->prepare($sql);
 	$stmt->execute();
@@ -75,10 +85,19 @@ if($razaoSocial != '' || $cnpj != '')
 	{
 		$filtro_cnpj = "";
 	}
+
+	if ($razaoSocial != '' && $cnpj != '')
+	{
+		$filtro = " AND ";
+	}
+	else
+	{
+		$filtro = '';
+	}
 }
 if(isset($_POST['pesquisarPj'])){
 	$sql = "SELECT * FROM pessoa_juridica
-			WHERE $filtro_cnpj $filtro_razaoSocial";
+			WHERE $filtro_cnpj $filtro $filtro_razaoSocial";
 
 	$stmt = $conn->prepare($sql);
 	$stmt->execute();
