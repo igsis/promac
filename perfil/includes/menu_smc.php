@@ -17,7 +17,6 @@ $pasta = "?perfil=";
 			</li>
 			<li><a href="?perfil=informacoes_iniciais_pf">Módulo Proponente (provisório)</a></li>
 			<li><a href="<?php echo $pasta ?>comissao_index">Módulo Comissão (provisório)</a></li>
-			<li><a href="?perfil=resetar_senha">Resetar senhas</a></li>
 			<li style="color:white;">-------------------------</li>
 			<li><a href="index.php?secao=perfil">Início</a></li>
 			<li><a href="<?php echo $pasta ?>minha_conta">Minha conta</a></li>
