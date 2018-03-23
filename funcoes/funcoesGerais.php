@@ -69,25 +69,6 @@ function autenticaloginpf($login, $senha)
 	}
 }
 
-function geraProtocolo($id)
-{
-	date_default_timezone_set('America/Sao_Paulo');
-	$date = date('Ymd');
-	$preencheZeros = str_pad($id, 5, '0', STR_PAD_LEFT);
-	
-	return $date . $preencheZeros;
-}
-
-function verificaArquivosExistentesPF($idPessoa,$idDocumento)
-{
-	$con = bancoMysqli();
-	$verificacaoArquivo = "SELECT arquivo FROM upload_arquivo WHERE idPessoa = '$idPessoa' AND idListaDocumento = '$idDocumento' AND publicado = '1'";
-	$envio = mysqli_query($con, $verificacaoArquivo);
-	if (mysqli_num_rows($envio) > 0) {
-		return true;
-	}
-}
-
 function autenticaloginpj($login, $senha)
 {
 	$sql = "SELECT * FROM pessoa_juridica AS pj
@@ -112,6 +93,89 @@ function autenticaloginpj($login, $senha)
 				$_SESSION['tipoPessoa'] = "2";
 				$log = "Fez login.";
 				header("Location: visual/index_pj.php");
+			}
+			else
+			{
+				return "<font color='#FF0000'><strong>A senha está incorreta!</strong></font>";
+			}
+		}
+		else
+		{
+			return "<font color='#FF0000'><strong>O usuário não existe.</strong></font>";
+		}
+	}
+	else
+	{
+		return "<font color='#FF0000'><strong>Erro no banco de dados!</strong></font>";
+	}
+}
+
+function autenticaloginincentivadorpf($login, $senha)
+{
+	$sql = "SELECT * FROM incentivador_pessoaFisica AS pf
+	WHERE pf.cpf = '$login' LIMIT 0,1";
+	$con = bancoMysqli();
+	$query = mysqli_query($con,$sql);
+	//query que seleciona os campos que voltarão para na matriz
+	if($query)
+	{
+		//verifica erro no banco de dados
+		if(mysqli_num_rows($query) > 0)
+		{
+			// verifica se retorna usuário válido
+			$user = mysqli_fetch_array($query);
+			if($user['senha'] == md5($_POST['senha']))
+			{
+				// compara as senhas
+				session_start();
+				$_SESSION['login'] = $user['cpf'];
+				$_SESSION['nome'] = $user['nome'];
+				$_SESSION['idUser'] = $user['idPf'];
+				$_SESSION['tipoPessoa'] = "1";
+				$log = "Fez login.";
+				$cpf = $user['cpf'];
+				header("Location: perfil/incentivador_index_pf.php");
+			}
+			else
+			{
+				return "<font color='#FF0000'><strong>A senha está incorreta!</strong></font>";
+			}
+		}
+		else
+		{
+			return "<font color='#FF0000'><strong>O usuário não existe.</strong></font>";
+		}
+	}
+	else
+	{
+		return "<font color='#FF0000'><strong>Erro no banco de dados!</strong></font>";
+	}
+}
+
+function autenticaloginincentivadorpj($login, $senha)
+{
+	$sql = "SELECT * FROM pessoa_juridica AS pj
+	WHERE pj.cnpj = '$login' LIMIT 0,1";
+	$con = bancoMysqli();
+	$query = mysqli_query($con,$sql);
+	//query que seleciona os campos que voltarão para na matriz
+	if($query)
+	{
+		//verifica erro no banco de dados
+		if(mysqli_num_rows($query) > 0)
+		{
+			// verifica se retorna usuário válido
+			$user = mysqli_fetch_array($query);
+			if($user['senha'] == md5($_POST['senha']))
+			{
+				// compara as senhas
+				session_start();
+				$_SESSION['login'] = $user['cnpj'];
+				$_SESSION['nome'] = $user['razaoSocial'];
+				$_SESSION['idUser'] = $user['idPj'];
+				$_SESSION['tipoPessoa'] = "2";
+				$log = "Fez login.";
+				header("Location: visual/incentivador_index_pj.php");
 			}
 			else
 			{
@@ -952,6 +1016,24 @@ function listaArquivos($idEvento)
 	echo "
 		</tbody>
 		</table>";
+}
+
+function geraProtocolo($id)
+{
+	date_default_timezone_set('America/Sao_Paulo');
+	$date = date('Ymd');
+	$preencheZeros = str_pad($id, 5, '0', STR_PAD_LEFT);
+	return $date . $preencheZeros;
+}
+
+function verificaArquivosExistentesPF($idPessoa,$idDocumento)
+{
+	$con = bancoMysqli();
+	$verificacaoArquivo = "SELECT arquivo FROM upload_arquivo WHERE idPessoa = '$idPessoa' AND idListaDocumento = '$idDocumento' AND publicado = '1'";
+	$envio = mysqli_query($con, $verificacaoArquivo);
+	if (mysqli_num_rows($envio) > 0) {
+		return true;
+	}
 }
 
 ?>
