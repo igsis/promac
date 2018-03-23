@@ -154,7 +154,7 @@ function autenticaloginincentivadorpf($login, $senha)
 
 function autenticaloginincentivadorpj($login, $senha)
 {
-	$sql = "SELECT * FROM pessoa_juridica AS pj
+	$sql = "SELECT * FROM incentivador_pessoaJuridica AS pj
 	WHERE pj.cnpj = '$login' LIMIT 0,1";
 	$con = bancoMysqli();
 	$query = mysqli_query($con,$sql);

@@ -23,7 +23,7 @@ if(isset($_POST['cadastraNovoPj']))
 				$senha01 = md5($_POST['senha01']);
 				$idFraseSeguranca = $_POST['idFraseSeguranca'];
 				$respostaFrase = $_POST['respostaFrase'];
-				$sql_senha = "INSERT INTO `pessoa_juridica`(razaoSocial, cnpj, email, senha, idNivelAcesso, idFraseSeguranca, respostaFrase) VALUES ('$razaoSocial', '$login', '$email', '$senha01', '1', '$idFraseSeguranca', '$respostaFrase' )";
+				$sql_senha = "INSERT INTO `pessoa_juridica`(razaoSocial, cnpj, email, senha, idFraseSeguranca, respostaFrase) VALUES ('$razaoSocial', '$login', '$email', '$senha01', '$idFraseSeguranca', '$respostaFrase' )";
 				$query_senha = mysqli_query($con,$sql_senha);
 
 				$sql_select = "SELECT * FROM pessoa_juridica WHERE cnpj = '$login'";
@@ -34,7 +34,7 @@ if(isset($_POST['cadastraNovoPj']))
 				{
 					$mensagem = "Usuário cadastrado com sucesso! Aguarde que você será redirecionado para a página de login";
 					 echo "<script type=\"text/javascript\">
-						  window.setTimeout(\"location.href='login_pj.php';\", 4000);
+						  window.setTimeout(\"location.href='login_incentivador_pj.php';\", 4000);
 						</script>";
 				}
 				else

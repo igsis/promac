@@ -24,9 +24,9 @@ if(isset($_POST['cadastraNovoPf']))
 				$dataAtualizacao = date("Y-m-d");
 				$idFraseSeguranca = $_POST['idFraseSeguranca'];
 				$respostaFrase = $_POST['respostaFrase'];
-				$sql_senha = "INSERT INTO `pessoa_fisica`(nome, cpf, email, senha, idNivelAcesso, idFraseSeguranca, respostaFrase) VALUES ('$nome', '$login', '$email', '$senha01', '1', '$idFraseSeguranca', '$respostaFrase')";
+				$sql_senha = "INSERT INTO `incentivador_pessoaFisica`(nome, cpf, email, senha, idFraseSeguranca, respostaFrase) VALUES ('$nome', '$login', '$email', '$senha01', '$idFraseSeguranca', '$respostaFrase')";
 				$query_senha = mysqli_query($con,$sql_senha);
-				$sql_select = "SELECT * FROM pessoa_fisica WHERE cpf = '$login'";
+				$sql_select = "SELECT * FROM incentivador_pessoaFisica WHERE cpf = '$login'";
 				$query_select = mysqli_query($con,$sql_select);
 				$sql_array = mysqli_fetch_array($query_select);
 				$idPessoaFisica = $sql_array['idPf'];
@@ -34,7 +34,7 @@ if(isset($_POST['cadastraNovoPf']))
 				{
 					$mensagem = "Usuário cadastrado com sucesso! Aguarde que você será redirecionado para a página de login";
 					 echo "<script type=\"text/javascript\">
-						  window.setTimeout(\"location.href='login_pf.php';\", 4000);
+						  window.setTimeout(\"location.href='login_incentivador_pf.php';\", 4000);
 						</script>";
 				}
 				else

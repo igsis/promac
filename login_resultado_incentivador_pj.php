@@ -11,7 +11,7 @@ if(isset($_POST['busca']))
 	$validacao = validaCNPJ($_POST['busca']);
 	if($validacao == false)
 	{
-		echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=erro_login_pj.php'>";
+		echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=erro_login_incentivador_pj.php'>";
 	}
 	else
 	{

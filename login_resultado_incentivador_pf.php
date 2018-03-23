@@ -11,7 +11,7 @@ if(isset($_POST['busca']))
 	$validacao = validaCPF($_POST['busca']);
 	if($validacao == false)
 	{
-		echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=erro_login_pf.php'>";
+		echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=erro_login_incentivador_pf.php'>";
 	}
 	else
 	{
