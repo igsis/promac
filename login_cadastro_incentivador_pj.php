@@ -23,10 +23,10 @@ if(isset($_POST['cadastraNovoPj']))
 				$senha01 = md5($_POST['senha01']);
 				$idFraseSeguranca = $_POST['idFraseSeguranca'];
 				$respostaFrase = $_POST['respostaFrase'];
-				$sql_senha = "INSERT INTO `pessoa_juridica`(razaoSocial, cnpj, email, senha, idFraseSeguranca, respostaFrase) VALUES ('$razaoSocial', '$login', '$email', '$senha01', '$idFraseSeguranca', '$respostaFrase' )";
+				$sql_senha = "INSERT INTO `incentivador_pessoaJuridica`(razaoSocial, cnpj, email, senha, idFraseSeguranca, respostaFrase) VALUES ('$razaoSocial', '$login', '$email', '$senha01', '$idFraseSeguranca', '$respostaFrase' )";
 				$query_senha = mysqli_query($con,$sql_senha);
 
-				$sql_select = "SELECT * FROM pessoa_juridica WHERE cnpj = '$login'";
+				$sql_select = "SELECT * FROM incentivador_pessoaJuridica WHERE cnpj = '$login'";
 				$query_select = mysqli_query($con,$sql_select);
 				$sql_array = mysqli_fetch_array($query_select);
 				$idPessoaJuridica = $sql_array['idPj'];
