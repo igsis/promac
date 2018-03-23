@@ -30,12 +30,12 @@ if($nome != '' || $cpf != '')
 	}
 }
 if(isset($_POST['pesquisarPf'])){
-$sql = "SELECT * FROM pessoa_fisica 
-		WHERE $filtro_cpf $filtro_nome";
+	$sql = "SELECT * FROM pessoa_fisica 
+			WHERE $filtro_cpf $filtro_nome";
 
-$stmt = $conn->prepare($sql);
-$stmt->execute();
-$result = $stmt->fetchAll();
+	$stmt = $conn->prepare($sql);
+	$stmt->execute();
+	$result = $stmt->fetchAll();
 
 }
 if (isset($_POST['alterarPf'])) {
@@ -77,12 +77,12 @@ if($razaoSocial != '' || $cnpj != '')
 	}
 }
 if(isset($_POST['pesquisarPj'])){
-$sql = "SELECT * FROM pessoa_juridica
-		WHERE $filtro_cnpj $filtro_razaoSocial";
+	$sql = "SELECT * FROM pessoa_juridica
+			WHERE $filtro_cnpj $filtro_razaoSocial";
 
-$stmt = $conn->prepare($sql);
-$stmt->execute();
-$result = $stmt->fetchAll();
+	$stmt = $conn->prepare($sql);
+	$stmt->execute();
+	$result = $stmt->fetchAll();
 
 }
 if (isset($_POST['alterarPj'])) {
@@ -126,6 +126,15 @@ if($nome == true || $cpf == true || isset($_POST['alterarPf'])){
 							<?php
 							foreach ($result as $value)
 							{
+								if ($value['idNivelAcesso'] == 1) {
+									$acesso = 'Proponente';
+								}elseif ($value['idNivelAcesso'] == 2){
+									$acesso = 'SMC';
+								}elseif ($value['idNivelAcesso'] == 3) {
+									$acesso = 'Comissão';
+								}else {
+									$acesso = '';
+								}
 								echo "<form method='POST' action=''>";
 								echo "<tr>";
 								echo "<td class='list_description'>".$value['idPf']."</td>";
@@ -133,10 +142,10 @@ if($nome == true || $cpf == true || isset($_POST['alterarPf'])){
 								echo "<td class='list_description'>".$value['cpf']."</td>";
 								echo "<td class='list_description'>
 										<select class='form-control' name='idNivelAcesso'>
-											<option value='".$value['idNivelAcesso']."'>".$value['idNivelAcesso']."</option>
-											<option value='1'>1</option>
-											<option value='2'>2</option>
-											<option value='3'>3</option>									
+											<option value='".$value['idNivelAcesso']."'>".$acesso."</option>
+											<option value='1'>Proponente</option>
+											<option value='2'>SMC</option>
+											<option value='3'>Comissão</option>									
 										</select>
 									</td>";
 								echo "<td class='list_description'>
@@ -179,6 +188,15 @@ if($nome == true || $cpf == true || isset($_POST['alterarPf'])){
 							<?php
 							foreach ($result as $value)
 							{
+								if ($value['idNivelAcesso'] == 1) {
+									$acesso = 'Proponente';
+								}elseif ($value['idNivelAcesso'] == 2){
+									$acesso = 'SMC';
+								}elseif ($value['idNivelAcesso'] == 3) {
+									$acesso = 'Comissão';
+								}else {
+									$acesso = '';
+								}
 								echo "<form method='POST' action=''>";
 								echo "<tr>";
 								echo "<td class='list_description'>".$value['idPj']."</td>";
@@ -186,10 +204,10 @@ if($nome == true || $cpf == true || isset($_POST['alterarPf'])){
 								echo "<td class='list_description'>".$value['cnpj']."</td>";
 								echo "<td class='list_description'>
 										<select class='form-control' name='idNivelAcesso'>
-											<option value='".$value['idNivelAcesso']."'>".$value['idNivelAcesso']."</option>
-											<option value='1'>1</option>
-											<option value='2'>2</option>
-											<option value='3'>3</option>									
+											<option value='".$value['idNivelAcesso']."'>".$acesso."</option>
+											<option value='1'>Proponente</option>
+											<option value='2'>SMC</option>
+											<option value='3'>Comissão</option>								
 										</select>
 									</td>";
 								echo "<td class='list_description'>
