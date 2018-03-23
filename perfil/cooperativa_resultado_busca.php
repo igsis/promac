@@ -30,7 +30,7 @@ if(isset($_POST['insereCooperativa']))
 	if(mysqli_query($con,$sql_insere_cooperativa))
 	{
 		$num_busca = 1;
-		$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso! </strong></font>";
+		$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso! Utilize o menu para avançar.</strong></font>";
 		echo "<meta HTTP-EQUIV='refresh' CONTENT='0.5;URL=?perfil=projeto_2'>";
 	}
 	else

@@ -19,7 +19,7 @@ if(isset($_POST['insereOrcamento']))
 	$sql_insere = "INSERT INTO `orcamento`(`idProjeto`, `idEtapa`, `descricao`, `quantidade`, `idUnidadeMedida`, `quantidadeUnidade`, `valorUnitario`, `valorTotal`, `publicado`) VALUES ('$idProjeto', '$idEtapa', '$descricao', '$quantidade', '$idUnidadeMedida', '$quantidadeUnidade', '$valorUnitario', '$valorTotal', 1)";
 	if(mysqli_query($con,$sql_insere))
 	{
-		$mensagem = "<font color='#01DF3A'><strong>Inserido com sucesso!</strong></font>";
+		$mensagem = "<font color='#01DF3A'><strong>Inserido com sucesso! Utilize o menu para avançar.</strong></font>";
 	}
 	else
 	{
@@ -39,7 +39,7 @@ if(isset($_POST['editaOrcamento']))
 	WHERE idOrcamento = '$idOrcamento'";
 	if(mysqli_query($con,$sql_edita))
 	{
-		$mensagem = "<font color='#01DF3A'><strong>Editado com sucesso!</strong></font>";
+		$mensagem = "<font color='#01DF3A'><strong>Editado com sucesso! Utilize o menu para avançar.</strong></font>";
 	}
 	else
 	{

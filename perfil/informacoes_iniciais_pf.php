@@ -38,7 +38,7 @@ if(isset($_POST['atualizarFisica']))
 
 	if(mysqli_query($con,$sql_atualiza_pf))
 	{
-		$mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
+		$mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso! Utilize o menu para avançar.</strong></font>";
 		gravarLog($sql_atualiza_pf);
 	}
 	else

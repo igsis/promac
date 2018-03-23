@@ -26,7 +26,7 @@ if(isset($_POST['gravarPrazos']))
 		$sql_insere = "INSERT INTO prazos_projeto (idProjeto, prazoCaptacao, prorrogacaoCaptacao, finalCaptacao, inicioExecucao, fimExecucao, prorrogacaoExecucao, finalProjeto, prestarContas) VALUES ('$idProjeto', '$prazoCaptacao', '$prorrogacaoCaptacao', '$finalCaptacao', '$inicioExecucao', '$fimExecucao', '$prorrogacaoExecucao', '$finalProjeto', '$prestarContas')";
 		if(mysqli_query($con,$sql_insere))
 		{
-			$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso!</strong></font>";
+			$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso! Utilize o menu para avançar.</strong></font>";
 		}
 		else
 		{

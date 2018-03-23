@@ -22,7 +22,7 @@ if(isset($_POST['editaCronograma']))
 	WHERE idCronograma = '$idCronograma'";
 	if(mysqli_query($con,$sql_edita_cronograma))
 	{
-		$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso!</strong></font>";
+		$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso! Utilize o menu para avançar.</strong></font>";
 		echo "<meta HTTP-EQUIV='refresh' CONTENT='0.5;URL=?perfil=cronograma'>";
 	}
 	else

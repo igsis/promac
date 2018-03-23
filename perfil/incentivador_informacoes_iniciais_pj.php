@@ -35,7 +35,7 @@ if(isset($_POST['atualizarJuridica'])){
 
 	if(mysqli_query($con,$sql_atualiza_pj))
 	{
-		$mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
+		$mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso! Utilize o menu para avançar.</strong></font>";
 		gravarLog($sql_atualiza_pj);
 	}
 	else

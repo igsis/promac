@@ -13,7 +13,7 @@ if(isset($_POST['insere']))
 		WHERE idProjeto = '$idProjeto'";
 	if(mysqli_query($con,$sql_insere))
 	{
-		$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso!</strong></font>";
+		$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso! Utilize o menu para avançar.</strong></font>";
 	}
 	else
 	{
