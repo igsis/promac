@@ -55,6 +55,18 @@ INSERT INTO `lista_documento` (`idListaDocumento`, `idTipoUpload`, `documento`, 
 (25, 1, 'Carnê IPTU', 'ciptu', 1),
 (26, 1, 'Contrato de locação', 'clcc', 1),
 (27, 2, 'Portfólio comprovando atividades artísticas ou culturais (opcional)', 'pcaa', 1);
+(28,4,'RG/RNE','rg',1),
+(29,4,'CPF','cpf',1),
+(30,4,'Comprovante de endereço atual (até últimos 3 meses)','ce',1),
+(31,4,'Carnê IPTU','ciptu',1),
+(32,4,'Contrato de locação','clc',1),
+(33,5,'CNPJ','cnpj',1),
+(34,5,'Cadastro de Contribuintes Imobiliários - CCM','ccm',1),
+(35,5,'Contrato Social','cs',1),
+(36,5,'Comprovante de endereço atual (até últimos 3 meses)','ce',1),
+(37,5,'Carnê IPTU','ciptu',1),
+(38,5,'Contrato de locação','clc',1);
+
 --
 -- Extraindo dados da tabela `renuncia_fiscal`
 --
