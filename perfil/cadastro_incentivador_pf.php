@@ -40,7 +40,10 @@ $pf = recuperaDados("incentivador_pessoafisica","idPf",$idPf);
 			<section id="contact" class="home-section bg-white">
 				<div class="container">
 					<div class="form-group">
-						<h4>Cadastro de Incentivador PF</h4><br>
+						<h4>Cadastro de Incentivador<br>
+							<small>Pessoa Física</small>
+						</h4>
+						<h4><?php if(isset($mensagem)){echo $mensagem;};?></h4>
 					</div>
 					<div class="row">
 						<div class="col-md-offset-1 col-md-10">
@@ -53,34 +56,34 @@ $pf = recuperaDados("incentivador_pessoafisica","idPf",$idPf);
 
 							<div class="form-group">
 								<div class="col-md-offset-2 col-md-6"><strong>CPF: *</strong>
-									<input type="text" name="cpf" class="form-control" id="inputName" placeholder="" value="<?= $pf['cpf']?>" disabled>
+									<input type="text" name="cpf" class="form-control" id="inputName" placeholder="" value="<?= $pf['cpf']?>" readonly>
 								</div>
 								<div class=" col-md-6"><strong>RG ou RNE *</strong>
-									<input type="text" name="rg" class="form-control" id="inputEmail" placeholder="" required>
+									<input type="text" name="rg" value="<?= $pf['rg']?>" class="form-control" id="inputEmail" placeholder="" required>
 								</div>
 							</div>
 
 							<div class="form-group">
 								<div class="col-md-offset-2 col-md-6"><strong>CEP: *</strong><br/>
-									<input type="text" class="form-control" id="CEP" name="cep" placeholder="CEP" required>
+									<input type="text" class="form-control" id="CEP" name="CEP" value="<?= $pf['cep']?>" placeholder="CEP" required>
 								</div>
 								<div class="col-md-6"><strong>Endereço: *</strong><br/>
-									<input type="text" class="form-control" id="Endereco" name="Endereco" placeholder="Endereco" disabled>
+									<input type="text" class="form-control" id="Endereco" name="Endereco" value="<?= $pf['logradouro']?>" placeholder="Endereco" readonly>
 								</div>
 							</div>
 
 							<div class="form-group">
 								<div class="col-md-offset-2 col-md-6"><strong>Telefone: </strong><br/>
-									<input type="text" class="form-control" name="telefone" placeholder="Telefone">
+									<input type="text" class="form-control" name="telefone"<?= $pf['telefone']?> placeholder="Telefone">
 								</div>
 								<div class="col-md-6"><strong>Celular: </strong><br/>
-									<input type="text" class="form-control" name="celular" placeholder="Celular">
+									<input type="text" class="form-control" name="celular" value="<?= $pf['celular']?>" placeholder="Celular">
 								</div>
 							</div>
 
 							<div class="form-group">
 								<div class="col-md-offset-2 col-md-8"><strong>Email: *</strong><br/>
-									<input type="email" class="form-control" name="email" placeholder="xxxx@xxxxx.xxx" required>
+									<input type="email" class="form-control" name="email" value="<?= $pf['email']?>" placeholder="xxxx@xxxxx.xxx" required>
 								</div>
 							</div>
 
