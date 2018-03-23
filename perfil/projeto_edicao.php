@@ -151,7 +151,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8" align="left">
-								<strong>Cooperativa está representando:</strong> <?php echo $pj['razaoSocial'] ?>
+								<strong>Cooperativa:</strong> <?php echo $pj['razaoSocial'] ?>
 							</div>
 						</div>
 
@@ -161,7 +161,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8">
-								<strong>Deseja trocar de Cooperativa?</strong>
+								<strong>Insira o CNPJ da Cooperativa: </strong>
 							</div>
 						</div>
 
