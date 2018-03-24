@@ -140,22 +140,23 @@ if($pf['liberado'] == 3)
 					</div>
 
 					<div class="form-group">
-						<div class="col-md-offset-4 col-md-2">
-							<strong>É cooperado? *</strong>
-						</div>
-						<div class="col-md-2">
-							<select class="form-control" name="cooperado">
-								<option value="<?php echo $pf['cooperado'] ?>" selected >
-									<?php
-										if($pf['cooperado'] == 1){ echo "Sim"; }
-										else { echo "Não"; }
-									?>
-								</option>
-								<option value="0">Não</option>
-								<option value="1">Sim</option>
-							</select>
-						</div>
-					</div>
+					  <div class="col-md-offset-4 col-md-2">
+					    <strong>É cooperado? *</strong>
+					  </div>
+					  <div class="col-md-2">
+					    <select class="form-control" name="cooperado">
+                          <?php $tipos = ['Não', 'Sim'];
+                            foreach($tipos as $chave => $tipo):
+                              $selected = $pf['cooperado'] == $chave ?
+                                          "selected='selected'" : ""; ?>
+
+  							  <option value="<?=$chave?>" <?=$selected?>>
+  							    <?=$tipo?>
+                              </option>                                 
+                          <?php endforeach ?>  
+                        </select>
+					  </div>
+					</div>				
 
 					<!-- Botão para Gravar -->
 					<div class="form-group">
