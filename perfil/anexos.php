@@ -101,7 +101,8 @@ if(isset($_POST["enviar"]))
 				$nome_temporario = $_FILES['arquivo']['tmp_name'][$x];
 				$new_name = date("YmdHis")."_".semAcento($nome_arquivo); //Definindo um novo nome para o arquivo
 				$hoje = date("Y-m-d H:i:s");
-				$dir = '../uploadsdocs/'; //Diretório para uploads
+				$dir = '../uploadsdocs/'; //Diretório para uploads*/
+
 				$allowedExts = array(".pdf", ".PDF"); //Extensões permitidas
 				$ext = strtolower(substr($nome_arquivo,-4));
 
@@ -109,7 +110,7 @@ if(isset($_POST["enviar"]))
 				{
 					if(move_uploaded_file($nome_temporario, $dir.$new_name))
 					{
-						$sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('3', '$idProjeto', '$y', '$new_name', '$hoje', '1'); ";
+						$sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('3', '$idPf', '$y', '$new_name', '$hoje', '1'); ";
 						$query = mysqli_query($con,$sql_insere_arquivo);
 						if($query)
 						{
