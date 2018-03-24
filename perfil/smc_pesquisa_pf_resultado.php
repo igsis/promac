@@ -93,7 +93,6 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 								echo "<td class='list_description'>".$x[$h]['rg']."</td>";
 								echo "<td class='list_description'>".$x[$h]['email']."</td>";
 								echo "<td class='list_description'>".$x[$h]['telefone']."</td>";
-								echo "<td class='list_description'>".
 								if($x[$h]['liberado'] == 1) { echo "<td class='list_description'>Acesso aos dados cadastrais</td>";}
 								if($x[$h]['liberado'] == 2) { echo "<td class='list_description'>Acesso não aprovado</td>";}
 								if($x[$h]['liberado'] == 3) { echo "<td class='list_description'>Acesso ao projeto</td>";}
