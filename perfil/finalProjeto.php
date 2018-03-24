@@ -2,7 +2,9 @@
 
 $con = bancoMysqli();
 $idUsuario = $_SESSION['idUser'];
+$idProjeto = $_SESSION['idProjeto'];
 $tipoPessoa = $_SESSION['tipoPessoa'];
+$projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 if ($tipoPessoa == "1")
 {
 	$pf = recuperaDados("pessoa_fisica","idPf",$idPf);
@@ -11,18 +13,17 @@ else
 {
 	$pj = recuperaDados("pessoa_juridica","idPj",$idUsuario);
 }
-$idProjeto = $_SESSION['idProjeto'];
 $alterar = 0;
 
 /**Campos Obrigatórios**/
-if(isset($idProjeto)):        
+if(isset($idProjeto)):
   require_once('validacaoCamposObrigatorios.php');
-endif;  
+endif;
 
 /**Arquivos Obrigatórios**/
-if(isset($tipoPessoa) && isset($idProjeto)):  
-  require_once('validacaoArquivosObrigatorios.php');	
-endif;	
+if(isset($tipoPessoa) && isset($idProjeto)):
+  require_once('validacaoArquivosObrigatorios.php');
+endif;
 
 $select = "SELECT idStatus FROM projeto WHERE idProjeto='$idProjeto' AND publicado='1'";
 $send = mysqli_query($con, $select);
@@ -54,7 +55,7 @@ if($row['idStatus'] == 6)
 			</div>
 		</div>
 		 <div class = "page-header">
-		 	<h5>Informações legais</h5>
+		 	<h5>Informações do projeto</h5>
 		 	<br>
 		 </div>
 
@@ -68,23 +69,21 @@ if($row['idStatus'] == 6)
 					$query = "SELECT * FROM projeto WHERE idPj='$idUsuario' AND publicado='1' AND idProjeto='$idProjeto'";
 				}
 			 $en = mysqli_query($con, $query);
-			 while($row = mysqli_fetch_array($en, MYSQLI_ASSOC)){
+			 while($row = mysqli_fetch_array($en, MYSQLI_ASSOC))
+			 {
+			 	$area = recuperaDados("area_atuacao","idArea",$row['idAreaAtuacao']);
+				$renuncia = recuperaDados("renuncia_fiscal","idRenuncia",$row['idRenunciaFiscal']);
+				$cronograma = recuperaDados("cronograma","idCronograma",$row['idCronograma']);
 		 ?>
 		 <div class="well">
-			<p align="justify"><strong>Referência:</strong> <?php echo $row['idProjeto']; ?></p>
-			<p align="justify"><strong>Nome do Projeto:</strong> <?php echo isset($row['nomeProjeto']) ? $row['nomeProjeto'] : null; ?></p>
-			<p align="justify"><strong>Valor do projeto:</strong> <?php echo isset($row['valorProjeto']) ? $row['valorProjeto'] : null; ?></p>
-			<p align="justify"><strong>Valor do incentivo:</strong> <?php echo isset($row['valorIncentivo']) ? $row['valorIncentivo'] : null; ?><p>
-			<p align="justify"><strong>Valor do financiamento:</strong> <?php echo isset($row['valorFinanciamento']) ? $row['valorFinanciamento'] : null; ?><p>
-			<p align="justify"><strong>Marca:</strong> <?php echo isset($row['exposicaoMarca']) ? $row['exposicaoMarca'] : null; ?><p>
-		</div>
-
-		<div class = "page-header">
-		 	<h5>Informações gerais do projeto</h5>
-		 	<br>
-		 </div>
-
-		  <div class="well">
+			<p align="justify"><strong>Protocolo (nº ISP):</strong> <?php echo $row['protocolo']; ?></p>
+			<p align="justify"><strong>Nome do Projeto:</strong> <?php echo $row['nomeProjeto']; ?></p>
+			<p align="justify"><strong>Valor do projeto:</strong> R$ <?php echo dinheiroParaBr($row['valorProjeto']); ?></p>
+			<p align="justify"><strong>Valor do incentivo:</strong> R$ <?php echo dinheiroParaBr($row['valorIncentivo']); ?><p>
+			<p align="justify"><strong>Valor do financiamento:</strong> R$ <?php echo dinheiroParaBr($row['valorFinanciamento']); ?><p>
+		  	<p align="justify"><strong>Área de atuação:</strong> <?php echo $area['areaAtuacao'] ?></p>
+			<p align="justify"><strong>Renúncia Fiscal:</strong> <?php echo $renuncia['renunciaFiscal'] ?></p>
+		  	<p align="justify"><strong>Exposição da Marca:</strong> <?php echo $row['exposicaoMarca']; ?></p>
 			<p align="justify"><strong>Resumo do projeto:</strong> <?php echo isset($row['resumoProjeto']) ? $row['resumoProjeto'] : null; ?></p>
 			<p align="justify"><strong>Currículo:</strong> <?php echo isset($row['curriculo']) ? $row['curriculo'] : null; ?></p>
 			<p align="justify"><strong>Descrição:</strong> <?php echo isset($row['descricao']) ? $row['descricao'] : null; ?></p>
@@ -165,55 +164,50 @@ if($row['idStatus'] == 6)
 		 <?php }
 	 }
 	 }?>
-	</div>	    
-    <!--Inicio do termo do contrato-->	      
-    <?php if(sizeof($erros) == 0 && sizeof($arqPendentes) == 0) : ?>      
+	</div>
+    <!--Inicio do termo do contrato-->
+    <?php if(sizeof($erros) == 0 && sizeof($arqPendentes) == 0) : ?>
       <div>
-        <a href="#">    
+        <a href="#">
           <div class="termoContrato">
-            <input type="hidden" name="termos" id="termo" 
-                   value="false">           	            
+            <input type="hidden" name="termos" id="termo" value="false">
             <a href="#" data-toggle="modal" data-target="#myModal">
-              Click aqui, para ler os termos do contrato.	
-            </a>                        
-          </div>  
+              Li e aceito as condições para participação no Pro-Mac previstas na Lei nº 15.948/2013, Decreto nº 58.041/2017, bem como demais atos regulamentares.
+            </a>
+          </div>
         </a>
         <div class="modal fade" id="myModal" role="dialog">
-          <div class="modal-dialog">          
-            <div class="modal-content">                      
+          <div class="modal-dialog">
+            <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Termos do acordo</h4>
+                <h4 class="modal-title">Termos de aceite</h4>
               </div>
-          
+
               <div class="modal-body">
-                <p>Aqui deve ser incluso o texto dos termos</p>
+                <p>Li e aceito as condições para participação no Pro-Mac previstas na Lei nº 15.948/2013, Decreto nº 58.041/2017, bem como demais atos regulamentares</p>
               </div>
-          
+
               <div class="modal-footer">
-                <button type="button" class="btn btn-danger" 
-                        data-dismiss="modal" id="btnRejeitar">Rejeitar
-                </button>
-                <button type="button" class="btn btn-success" 
-                        data-dismiss="modal" id="btnAceitar">Aceitar
-                </button>        
+                <button type="button" class="btn btn-danger" data-dismiss="modal" id="btnRejeitar">Rejeitar</button>
+                <button type="button" class="btn btn-success" data-dismiss="modal" id="btnAceitar">Aceitar</button
               </div>
-            </div>      
+            </div>
           </div>
         </div>
-      </div> 
-    <?php endif ?>  
+      </div>
+    <?php endif ?>
     <!--Fim do termo do contrato-->
-    </div>    
-    <!-- Botão para Prosseguir -->	  
+    </div>
+    <!-- Botão para Prosseguir -->
 	  <div class="form-group">
 	    <div class="col-md-offset-5 col-md-2">
 		  <form class="form-horizontal" role="form" action="?perfil=informacoes_administrativas" method="post">
-		   <?php 
+		   <?php
 		     if($alterar == 1){ ?>
 			    <input type="hidden" name="alterar" value="<?php echo $alterar; ?>">
 		    <?php } ?>
-			<input type="hidden" value="Enviar" id="inptEnviar" 
+			<input type="hidden" value="Enviar" id="inptEnviar"
 			       class="btn btn-theme btn-lg btn-block">
 		  </form>
 		</div>
