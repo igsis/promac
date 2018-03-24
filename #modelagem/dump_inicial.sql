@@ -116,12 +116,12 @@ INSERT INTO `unidade_medida` (`idUnidadeMedida`, `unidadeMedida`) VALUES
 --
 
 INSERT INTO `status`(`idStatus`, `status`) VALUES
-(1, 'em elaboração'),
-(2, 'enviado'),
-(3, 'em análise'),
-(4, 'diligência'),
-(5, 'aprovado'),
-(6, 'indeferido');
+(1, 'Em elaboração'),
+(2, 'Enviado'),
+(3, 'Em análise'),
+(4, 'Complementação'),
+(5, 'Aprovado'),
+(6, 'Reprovado');
 
 --
 -- Extraindo dados da tabela `area_atuacao`
