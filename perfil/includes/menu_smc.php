@@ -15,6 +15,12 @@ $pasta = "?perfil=";
 					<li><a href="<?php echo $pasta ?>smc_pesquisa_geral">Projetos</a></li>
 				</ul>
 			</li>
+			<li><a href="#">Relatórios</a>
+				<ul class="dl-submenu">
+					<li><a href="<?php echo $pasta ?>#">Pessoa Física</a></li>
+					<li><a href="<?php echo $pasta ?>#">Pessoa Jurídica</a></li>
+				</ul>
+			</li>
 			<li><a href="?perfil=informacoes_iniciais_pf">Módulo Proponente (provisório)</a></li>
 			<li><a href="<?php echo $pasta ?>comissao_index">Módulo Comissão (provisório)</a></li>
 			<li style="color:white;">-------------------------</li>
