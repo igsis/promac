@@ -54,8 +54,8 @@ INSERT INTO `lista_documento` (`idListaDocumento`, `idTipoUpload`, `documento`, 
 (24, 3, 'Informações adicionais, de acordo com a especificidade do segmento artístico do projeto (exemplo: roteiro do espetáculo)', 'ia', 1),
 (25, 1, 'Carnê IPTU', 'ciptu', 1),
 (26, 1, 'Contrato de locação', 'clcc', 1),
-(27, 2, 'Portfólio comprovando atividades artísticas ou culturais (opcional)', 'pcaa', 1);
-(28,4,'RG/RNE','rg',1),
+(27, 2, 'Portfólio comprovando atividades artísticas ou culturais (opcional)', 'pcaa', 1),
+(28, 4,'RG/RNE','rg',1),
 (29,4,'CPF','cpf',1),
 (30,4,'Comprovante de endereço atual (até últimos 3 meses)','ce',1),
 (31,4,'Carnê IPTU','ciptu',1),
@@ -65,7 +65,9 @@ INSERT INTO `lista_documento` (`idListaDocumento`, `idTipoUpload`, `documento`, 
 (35,5,'Contrato Social','cs',1),
 (36,5,'Comprovante de endereço atual (até últimos 3 meses)','ce',1),
 (37,5,'Carnê IPTU','ciptu',1),
-(38,5,'Contrato de locação','clc',1);
+(38,5,'Contrato de locação','clc',1),
+(39, 3, 'Carta(s) de anuência do(s) principal(is) participante(s)', 'anuencia', 1),
+(40, 3, 'Plano de atividades', 'atividades', 1);
 
 --
 -- Extraindo dados da tabela `renuncia_fiscal`
