@@ -1,4 +1,4 @@
-<?php 
+<?php
 # Barra Pessoa Juridica
 $con  = bancoMysqli();
 $idPj = $_SESSION['idUser'];
@@ -31,56 +31,56 @@ $urlPj = array(
     21 => '/promac/visual/index_pj.php?perfil=ficha_tecnica', // Ficha Técnica
     22 => '/promac/visual/index_pj.php?perfil=ficha_tecnica_novo', // Ficha Técnica
     23 => '/promac/visual/index_pj.php?perfil=ficha_tecnica_edicao', // Ficha Técnica
-    24 => '/promac/visual/index_pj.php?perfil=cronograma', //  Cronograma  
-    25 => '/promac/visual/index_pj.php?perfil=cronograma_novo', //  Cronograma  
-    26 => '/promac/visual/index_pj.php?perfil=cronograma_edicao', //  Cronograma  
-    27 => '/promac/visual/index_pj.php?perfil=orcamento', //  Orçamento   
-    28 => '/promac/visual/index_pj.php?perfil=orcamento_novo', //  Orçamento   
-    29 => '/promac/visual/index_pj.php?perfil=orcamento_edicao', //  Orçamento   
-    30 => '/promac/visual/index_pj.php?perfil=anexos', //  Anexos  
+    24 => '/promac/visual/index_pj.php?perfil=cronograma', //  Cronograma
+    25 => '/promac/visual/index_pj.php?perfil=cronograma_novo', //  Cronograma
+    26 => '/promac/visual/index_pj.php?perfil=cronograma_edicao', //  Cronograma
+    27 => '/promac/visual/index_pj.php?perfil=orcamento', //  Orçamento
+    28 => '/promac/visual/index_pj.php?perfil=orcamento_novo', //  Orçamento
+    29 => '/promac/visual/index_pj.php?perfil=orcamento_edicao', //  Orçamento
+    30 => '/promac/visual/index_pj.php?perfil=anexos', //  Anexos
     31 => '/promac/visual/index_pj.php?perfil=projeto_13', //  Link do YouTube
-    32 => '/promac/visual/index_pj.php?perfil=finalProjeto', // Final Projeto  
+    32 => '/promac/visual/index_pj.php?perfil=finalProjeto', // Final Projeto
     33 => '/promac/visual/index_pj.php?perfil=informacoes_administrativas',
-    34 => '/promac/visual/index_pj.php?perfil=cooperativa_resultado_busca' // Empresa  
+    34 => '/promac/visual/index_pj.php?perfil=cooperativa_resultado_busca' // Empresa
 );
 
 for ($i = 0; $i < count($urlPj); $i++) {
     if ($uri == $urlPj[$i]) {
         if ($i == 0 || $i == 1 || $i == 2){ // informações iniciais
             $ativa1 = 'active loading';
-        }elseif ($i == 3 || $i == 4 || $i == 5) {                
+        }elseif ($i == 3 || $i == 4 || $i == 5) {
             $ativa2 = 'active loading';
-        }elseif ($i == 6) {                
+        }elseif ($i == 6) {
             $ativa3 = 'active loading';
-        }elseif ($i == 7 || $i == 8 || $i == 9 || $i == 10 || $i == 11 || $i == 34) {  // Projeto                
+        }elseif ($i == 7 || $i == 8 || $i == 9 || $i == 10 || $i == 11 || $i == 34) {  // Projeto
             $ativa4 = 'active loading';
-        }elseif ($i == 12) {       // Passo 2             
+        }elseif ($i == 12) {       // Passo 2
             $ativa7 = 'active loading';
-        }elseif ($i == 13) {       // Passo 3              
+        }elseif ($i == 13) {       // Passo 3
             $ativa8 = 'active loading';
-        }elseif ($i == 14) {       // Passo 4              
+        }elseif ($i == 14) {       // Passo 4
             $ativa9 = 'active loading';
-        }elseif ($i == 15) {       // Passo 5              
+        }elseif ($i == 15) {       // Passo 5
             $ativa10 = 'active loading';
         }elseif ($i == 16) {       // Passo 6
             $ativa11 = 'active loading';
-        }elseif ($i == 17 || $i == 18 || $i == 19) { //  Local   
+        }elseif ($i == 17 || $i == 18 || $i == 19) { //  Local
             $ativa12 = 'active loading';
-        }elseif ($i == 21 || $i == 22 || $i == 23) { //  Ficha Técnica             
+        }elseif ($i == 21 || $i == 22 || $i == 23) { //  Ficha Técnica
             $ativa13 = 'active loading';
-        }elseif ($i == 24 || $i == 25 || $i == 26) { //  Cronograma             
+        }elseif ($i == 24 || $i == 25 || $i == 26) { //  Cronograma
             $ativa14 = 'active loading';
-        }elseif ($i == 27 || $i == 28 || $i == 29) { //  Orçamento            
+        }elseif ($i == 27 || $i == 28 || $i == 29) { //  Orçamento
             $ativa15 = 'active loading';
-        }elseif ($i == 30) {       //  Anexos           
+        }elseif ($i == 30) {       //  Anexos
             $ativa16 = 'active loading';
-        }elseif ($i == 31) {       //  Link do YouTube             
+        }elseif ($i == 31) {       //  Link do YouTube
             $ativa17 = 'active loading';
-        }elseif ($i == 32) {       // Final Projeto              
+        }elseif ($i == 32) {       // Final Projeto
             $ativa18 = 'active loading';
-        }elseif ($i == 33) {       //  Informações Administrativas             
+        }elseif ($i == 33) {       //  Informações Administrativas
             $ativa19 = 'active loading';
-        }elseif ($i == 20) {       //  Informações Administrativas             
+        }elseif ($i == 20) {       //  Informações Administrativas
             $ativa20 = 'active loading';
         }
 
@@ -94,47 +94,46 @@ for ($i = 0; $i < count($urlPj); $i++) {
                 </li>
                 <li class="<?php echo isset($ativa1) ? $ativa1 : 'clickable'; ?>">
                     <a onclick="location.href='index_pj.php?perfil=informacoes_iniciais_pj'" href=""><br /><small>Proponente</small></a>
-                </li> 
+                </li>
                 <li class="<?php echo isset($ativa2) ? $ativa2 : 'clickable'; ?>">
                     <a onclick="location.href='index_pj.php?perfil=representante_pj'" href=""><br /><small>Representante Legal</small></a>
-                </li>    
+                </li>
                 <li class="<?php echo isset($ativa3) ? $ativa3 : 'clickable'; ?>">
                     <a onclick="location.href='index_pj.php?perfil=arquivos_pj'" href=""><br /><small>Documentos do Proponente</small></a>
                 </li>
-                <?php 
+                <?php
                     if ($pj['liberado'] != 3) {
-                ?>                
+                ?>
                 <li class="<?php echo isset($ativa4) ? $ativa4 : 'clickable'; ?>">
                     <a onclick="location.href='index_pj.php?perfil=projeto_pj'" href=""><br /><small>Projetos</small></a>
                 </li>
                 <?php
                         break;
-                    } 
+                    }
                 ?>
                 <li class="<?php echo isset($ativa4) ? $ativa4 : 'clickable'; ?>">
                     <a onclick="location.href='index_pj.php?perfil=projeto_pj'" href=""><br /><small>Projetos</small></a>
                 </li>
-                <?php 
-                    if ($idProj == true) {                    
-                ?>                
+                <?php
+                    if ($idProj == true) {
+                ?>
                 <li class="<?php echo isset($ativa7) ? $ativa7 : 'clickable'; ?>">
                    <a onclick="location.href='index_pj.php?perfil=projeto_2'" href=""><br />Passo 2</a>
-                </li> 
-                <?php 
+                </li>
+                <?php
                     }else {
-                        
                         break;
                     }
-                ?>                  
+                ?>
                 <li class="<?php echo isset($ativa8) ? $ativa8 : 'clickable'; ?>">
                    <a onclick="location.href='index_pj.php?perfil=projeto_3'" href=""><br />Passo 3</a>
-                </li> 
+                </li>
                 <li class="<?php echo isset($ativa9) ? $ativa9 : 'clickable'; ?>">
                    <a onclick="location.href='index_pj.php?perfil=projeto_4'" href=""><br />Passo 4</a>
-                </li> 
+                </li>
                 <li class="<?php echo isset($ativa10) ? $ativa10 : 'clickable'; ?>">
                    <a onclick="location.href='index_pj.php?perfil=projeto_5'" href=""><br />Passo 5</a>
-                </li>               
+                </li>
                 <li class="<?php echo isset($ativa11) ? $ativa11 : 'clickable'; ?>">
                    <a onclick="location.href='index_pj.php?perfil=projeto_6'" href=""><br />Passo 6</a>
                 </li>
@@ -142,13 +141,13 @@ for ($i = 0; $i < count($urlPj); $i++) {
                    <a onclick="location.href='index_pj.php?perfil=local'" href=""><br />Local</a>
                 </li>
             </ul> <!-- Barra linha 2 -->
-            <ul>                   
+            <ul>
                 <li class="<?php echo isset($ativa20) ? $ativa20 : 'clickable'; ?>">
                    <a onclick="location.href='index_pj.php?perfil=projeto_8'" href=""><br />Passo 8</a>
-                </li>              
+                </li>
                 <li class="<?php echo isset($ativa13) ? $ativa13 : 'clickable'; ?>">
                    <a onclick="location.href='index_pj.php?perfil=ficha_tecnica'" href=""><br />Ficha Técnica</a>
-                </li>   
+                </li>
                 <li class="<?php echo isset($ativa14) ? $ativa14 : 'clickable'; ?>">
                    <a onclick="location.href='index_pj.php?perfil=cronograma'" href=""><br />Cronograma</a>
                 </li>
@@ -162,27 +161,26 @@ for ($i = 0; $i < count($urlPj); $i++) {
                    <a onclick="location.href='index_pj.php?perfil=projeto_13'" href=""><br />Link do YouTube</a>
                 </li>
                 <li class="<?php echo isset($ativa18) ? $ativa18 : 'clickable'; ?>">
-                   <a onclick="location.href='index_pj.php?perfil=finalProjeto'" href=""><br />Final Projeto</a>
+                   <a onclick="location.href='index_pj.php?perfil=finalProjeto'" href=""><br />Concluir Inscrição</a>
                 </li>
-                <?php 
-                    if ($proj['idStatus'] != 1) {                        
-                ?>                
+                <?php
+                    if ($proj['idStatus'] != 1) {
+                ?>
                 <li class="<?php echo isset($ativa19) ? $ativa19 : 'clickable'; ?>">
                    <a onclick="location.href='index_pj.php?perfil=informacoes_administrativas'" href=""><br />Informações da Inscrição</a>
                 </li>
-                <?php 
+                <?php
                     }else{
                 ?>
                 <li class="<?php echo isset($ativa19) ? $ativa19 : 'disabled'; ?>">
                    <a><br />Informações da Inscrição</a>
                 </li>
-                <?php        
+                <?php
                     }
-                ?>        
-            </ul> 
+                ?>
+            </ul>
         </div>
-<?php  
-    
+<?php
     }
 }
 ?>
