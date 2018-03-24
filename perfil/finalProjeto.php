@@ -14,6 +14,16 @@ else
 $idProjeto = $_SESSION['idProjeto'];
 $alterar = 0;
 
+/**Campos Obrigatórios**/
+if(isset($idProjeto)):        
+  require_once('validacaoCamposObrigatorios.php');
+endif;  
+
+/**Arquivos Obrigatórios**/
+if(isset($tipoPessoa) && isset($idProjeto)):  
+  require_once('validacaoArquivosObrigatorios.php');	
+endif;	
+
 $select = "SELECT idStatus FROM projeto WHERE idProjeto='$idProjeto' AND publicado='1'";
 $send = mysqli_query($con, $select);
 $row = mysqli_fetch_array($send);
@@ -155,8 +165,9 @@ if($row['idStatus'] == 6)
 		 <?php }
 	 }
 	 }?>
-	</div>	
-    <!--Termo do contrato-->	      
+	</div>	    
+    <!--Inicio do termo do contrato-->	      
+    <?php if(sizeof($erros) == 0 && sizeof($arqPendentes) == 0) : ?>      
       <div>
         <a href="#">    
           <div class="termoContrato">
@@ -191,6 +202,8 @@ if($row['idStatus'] == 6)
           </div>
         </div>
       </div> 
+    <?php endif ?>  
+    <!--Fim do termo do contrato-->
     </div>    
     <!-- Botão para Prosseguir -->	  
 	  <div class="form-group">

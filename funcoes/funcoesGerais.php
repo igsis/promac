@@ -1041,4 +1041,304 @@ function verificaArquivosExistentesPF($idPessoa,$idDocumento)
 	}
 }
 
+function retornaCamposObrigatoriosPf($idProjeto)
+{
+	$campos = [];
+
+	$conexao = bancoMysqli();
+	$query =  "SELECT 	             
+	             pf.nome AS nomeProponente, 
+	             pf.cpf AS cpfProponente, 
+	             pf.rg AS rgProponente, 
+	             pf.email AS emailProponente, 
+	             pf.cep AS cepProponente,
+	             pf.numero AS numeroProponente,	             
+	             proj.idAreaAtuacao AS areaAtuacaoProjeto, 	             
+	             proj.nomeProjeto AS nomeProjeto, 
+	             proj.idRenunciaFiscal AS renunciaFiscalPasso2, 
+	             proj.exposicaoMarca AS exposicaoMarcaPasso2, 
+	             proj.resumoProjeto AS reumoPasso3, 
+	             proj.curriculo AS curriculoPasso3, 
+	             proj.descricao AS descricaoPasso4,  
+	             proj.justificativa AS justificativaPasso5,
+	             proj.objetivo AS objetivoPasso5, 
+	             proj.metodologia AS metodologiaPasso6,	
+	             proj.contrapartida AS ontrapartidapasso6,               
+	             loc_rea.local AS local, 
+	             loc_rea.estimativaPublico AS estimativaLocal, 
+	             loc_rea.idZona AS zonaLocal,  				 
+	             proj.publicoAlvo AS publicoAlvoPasso8,
+	             proj.planoDivulgacao as divulgacaoPasso8, 
+	             ficha_t.nome AS nomeFichaTecnica, 
+  				 ficha_t.cpf AS cpfFichaTecnica, 
+  				 ficha_t.funcao AS funcaoFichaTecnica,  				
+	             proj.inicioCronograma AS inicioConogramaProjeto, 
+	             proj.fimCronograma AS fimConogramaProjeto,  
+  				 crono.captacaoRecurso AS recursoConograma, 
+  				 crono.preProducao AS preProducaoConograma, 
+  				 crono.producao AS producaoConograma, 
+  				 crono.posProducao AS posProducaoConograma, 
+  				 crono.prestacaoContas AS ContasConograma,
+  			     orca.idEtapa AS EtapaOrcamento, 
+  			     orca.descricao AS 'descricaoOrcamento',
+  			     orca.quantidade AS 'quantidadeOrcamento',
+  			     orca.idUnidadeMedida AS 'UnidadeOrcamento',
+  			     orca.quantidadeUnidade AS 'qtdUnidadeOrcamento',
+  			     orca.valorUnitario AS 'valorUnitarioOrcamento'
+			   FROM  
+			     projeto as proj
+			   INNER JOIN 
+                 pessoa_fisica AS pf ON pf.idPf = proj.idPf
+  			   
+  			   INNER JOIN 
+                  locais_realizacao AS loc_rea 
+               ON loc_rea.idProjeto = proj.idProjeto
+			   
+			   INNER JOIN 
+  			      ficha_tecnica AS ficha_t 
+  			   ON ficha_t.idProjeto = proj.idProjeto
+			   
+			   INNER JOIN 
+  			     cronograma AS crono 
+  			   ON crono.idCronograma = proj.idCronograma
+			   
+			   INNER JOIN 
+  			     orcamento AS orca 
+  			   ON orca.idProjeto = proj.idProjeto  
+  			   
+  			   WHERE loc_rea.publicado = 1
+  			   AND  ficha_t.publicado = 1
+  			   AND  orca.publicado = 1
+  			   AND  proj.idProjeto =".$idProjeto;
+
+	$resultado = mysqli_query($conexao,$query);		
+
+	while($campo = mysqli_fetch_assoc($resultado)) 
+    {
+      array_push($campos, $campo);
+    }	  
+
+    return $campos;
+}	
+
+function retornaCamposObrigatoriosPj($idProjeto)
+{
+	$campos = [];
+
+	$conexao = bancoMysqli();
+	$query =  "SELECT 
+	             pj.idRepresentanteLegal, 
+	             pj.razaoSocial AS razaoSocialProponente, 
+	             pj.email AS emailProponente, 
+	             pj.cep AS cepProponente,
+	             pj.numero AS numeroProponente,
+	             rep_leg.nome AS nomeRepresentate, 
+	             rep_leg.rg AS rgRepresentate, 
+	             rep_leg.cpf AS cpfRepresentate, 
+	             rep_leg.email AS emailRepresentate, 
+	             rep_leg.cep AS cepRepresentate, 
+	             rep_leg.numero AS numeroRepresentate,
+	             proj.idAreaAtuacao AS areaAtuacaoProjeto, 
+	             proj.contratoGestao AS contratoGestaoProjeto, 
+	             proj.nomeProjeto AS nomeProjeto, 
+	             proj.idRenunciaFiscal AS renunciaFiscalProjeto, 
+	             proj.exposicaoMarca AS exposicaoMarcaPasso2, 
+	             proj.resumoProjeto AS reumoPasso3, 
+	             proj.curriculo AS curriculoPasso3, 
+	             proj.descricao AS descricaoPasso4,  
+	             proj.justificativa AS justificativaPasso5, 
+	             proj.objetivo AS objetivoPasso5, 
+	             proj.contrapartida AS contrapartidapasso6, 
+	             proj.metodologia AS metodologiaPasso6,	             
+	             proj.publicoAlvo AS publicoAlvoPasso8,
+	             proj.planoDivulgacao as divulgacaoPasso8, 
+	             proj.inicioCronograma AS inicioConogramaProjeto, 
+	             proj.fimCronograma AS fimConogramaProjeto,  
+	             loc_rea.local AS local, 
+	             loc_rea.estimativaPublico AS estimativaLocal, 
+	             loc_rea.idZona AS zonaLocal,  				 
+  				 ficha_t.nome AS nomeFichaTecnica, 
+  				 ficha_t.cpf AS cpfFichaTecnica, 
+  				 ficha_t.funcao AS funcaoFichaTecnica,  				 
+  				 crono.captacaoRecurso AS recursoConograma, 
+  				 crono.preProducao AS preProducaoConograma, 
+  				 crono.producao AS producaoConograma, 
+  				 crono.posProducao AS posProducaoConograma, 
+  				 crono.prestacaoContas AS ContasConograma,
+  			     orca.idEtapa AS EtapaOrcamento, 
+  			     orca.descricao AS 'descricaoOrcamento',
+  			     orca.quantidade AS 'quantidadeOrcamento',
+  			     orca.idUnidadeMedida AS 'UnidadeOrcamento',
+  			     orca.quantidadeUnidade AS 'qtdUnidadeOrcamento',
+  			     orca.valorUnitario AS 'valorUnitarioOrcamento'
+			   FROM  
+			     projeto as proj
+			   INNER JOIN 
+                 pessoa_juridica AS pj ON pj.idPj = proj.idPj 
+               
+               INNER JOIN 
+  			     representante_legal AS rep_leg 
+  			   ON rep_leg.idRepresentanteLegal = pj.idRepresentanteLegal
+  			   
+  			   INNER JOIN 
+                  locais_realizacao AS loc_rea 
+               ON loc_rea.idProjeto = proj.idProjeto
+			   
+			   INNER JOIN 
+  			      ficha_tecnica AS ficha_t 
+  			   ON ficha_t.idProjeto = proj.idProjeto
+			   
+			   INNER JOIN 
+  			     cronograma AS crono 
+  			   ON crono.idCronograma = proj.idCronograma
+			   
+			   INNER JOIN 
+  			     orcamento AS orca 
+  			   ON orca.idProjeto = proj.idProjeto  
+  			   
+  			   WHERE loc_rea.publicado = 1
+  			   AND  ficha_t.publicado = 1
+  			   AND  orca.publicado = 1
+  			   AND  proj.idProjeto =".$idProjeto;
+
+	$resultado = mysqli_query($conexao,$query);		
+
+	while($campo = mysqli_fetch_assoc($resultado)) 
+    {
+      array_push($campos, $campo);
+    }	  
+
+    return $campos;
+}	
+
+function processaDados($fields)
+{
+  $erros = [];  
+
+  foreach($fields as $campos):
+    foreach($campos as $campo => $conteudo):
+      if(is_string($campo)):                       
+        validaConteudo($conteudo) ? array_push($erros, $campo) : '';
+        if($campo == 'zonaLocal'):
+          validaLocalZona($conteudo) ? array_push($erros, $campo) : '';	
+        endif;	
+      endif;
+     endforeach;
+   endforeach;	
+  
+   return $erros;
+}
+
+function validaConteudo($conteudo)
+{
+   $numeros = strlen(preg_replace("/[^0-9]/", "", $conteudo));
+   $letras = strlen(preg_replace("/[^A-Za-z]/", "", $conteudo));
+  
+   return $numeros == $letras ? true : false;    
+}
+
+function validaLocalZona($conteudo)
+{
+  return $conteudo == 0 ? true : false;  
+}
+
+function retornaArquivosObrigatorios($tipoPessoa)
+{
+  $documentos = [];
+  $conexao = bancoMysqli();
+  $query =  "SELECT 
+               doc.idListaDocumento                         
+             FROM 
+               lista_documento AS doc  
+  			  WHERE doc.idListaDocumento <> 20
+  			  AND doc.idTipoUpload = 3
+  			  OR doc.idTipoUpload = ".$tipoPessoa;		      
+
+  $resultado = mysqli_query($conexao,$query);
+  
+  while($documento = mysqli_fetch_assoc($resultado)) 
+  {
+    array_push($documentos, $documento);
+  }	  
+
+  return $documentos;
+}
+
+
+function retornaArquivosCarregados($tipoPessoa)
+{
+  $idPessoa = $tipoPessoa == 1 ? 'proj.idPf' : 'proj.idPj';  
+
+  $documentos = [];
+  $conexao = bancoMysqli();
+  $query =  "SELECT 	             
+  			   up_arq.idListaDocumento 
+			 FROM  
+			   projeto as proj			 
+  			 INNER JOIN 
+               upload_arquivo AS up_arq 
+             ON up_arq.idPessoa >= $idPessoa	              
+  			 
+  			 WHERE up_arq.publicado = 1";
+
+  $resultado = mysqli_query($conexao,$query);
+	
+  if(!empty($resultado)):
+    while($documento = mysqli_fetch_assoc($resultado)) 
+    {
+      array_push($documentos, $documento);
+    }  
+  endif;  
+  
+  return $documentos;
+}
+
+function formataDados($arrayArquivos)
+{
+  $tipoDoc = [];
+
+  foreach($arrayArquivos as $key => $conteudo):
+    foreach($conteudo as $tipo):
+     array_push($tipoDoc, $tipo);
+    endforeach;	
+  endforeach;
+
+  return $tipoDoc;
+}	
+
+function analiseArquivos($arqObrigatorio, $arqEnviado)
+{
+  $idDocDiferentes = array_diff($arqObrigatorio, $arqEnviado);
+
+  return pegaIdDocumento($idDocDiferentes);
+}
+
+function pegaIdDocumento($idDocDiferentes)
+{
+  $documentos = [];
+
+  foreach($idDocDiferentes as $key => $conteudo):
+    array_push($documentos, retornaArquivosDivergentes($conteudo));
+  endforeach;		
+
+  return $documentos;
+ 
+}
+
+function retornaArquivosDivergentes($idListaDocumento)
+{
+  $documentos = [];
+  $conexao = bancoMysqli();
+  $query =  "SELECT 
+               doc.documento
+             FROM 
+               lista_documento AS doc  
+  			  WHERE doc.idListaDocumento = ".$idListaDocumento;		
+
+  $resultado = mysqli_query($conexao,$query);
+  $documentos = mysqli_fetch_array($resultado);
+
+  return $documentos;
+}
+
 ?>
