@@ -99,8 +99,7 @@ else
 <section id="contact" class="home-section bg-white">
 	<div class="container"><?php include 'includes/menu_minhaconta.php'; ?>
 		<div class="form-group">
-			<h3>DADOS DA CONTA</h3>
-			<p><b>Código de cadastro:</b> <?php echo $idUser; ?> | <b>Nome:</b> <?php echo $usuario['nome']; ?></p>
+			<h4>Alteração de Senha</h4>
 			<h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
 		</div>
 		<!-- Redefinição de senha -->
@@ -124,7 +123,7 @@ else
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
-							<button type="submit" class="btn btn-theme btn-lg btn-block">Mudar a senha</button>
+							<button type="submit" class="btn btn-theme btn-md btn-block">Mudar a senha</button>
 						</div>
 					</div>
 				</form>
@@ -132,11 +131,13 @@ else
 		</div>
 		<!-- Fim Redefinição de Senha -->
 
+		<div class="row"><hr/></div>
+
 		<!-- Pergunta de Segurança -->
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
 				<form method="POST" action="?perfil=senha"class="form-horizontal" role="form">
-					<h5>Recuperação de Senha</h5>
+					<h5>Alteração da pergunta de segurança</h5>
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8"><strong>Escolha uma pergunta secreta, para casos de recuperação de senha:</strong><br/>
 								<select class="form-control" name="idFraseSeguranca" id="idFraseSeguranca">
@@ -155,7 +156,7 @@ else
 				<!-- Botão para gravar -->
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
-						<input type="submit" name ="fraseSeguranca" value="GRAVAR" class="btn btn-theme btn-lg btn-block">
+						<input type="submit" name ="fraseSeguranca" value="GRAVAR" class="btn btn-theme btn-md btn-block">
 					</div>
 				</div>
 				</form>

@@ -9,7 +9,7 @@ $pasta = "?perfil=";
 			<li><a href="<?php echo $pasta ?>comissao_pesquisa">Pesquisa</a></li>
 			<li style="color:white;">-------------------------</li>
 			<li><a href="index.php?secao=perfil">Início</a></li>
-			<li><a href="<?php echo $pasta ?>minha_conta">Minha conta</a></li>
+			<li><a href="<?php echo $pasta ?>senha">Alterar senha</a></li>
 			<li><a href="../manual" target="_blank">Ajuda</a></li>
 			<li><a href="../include/logoff.php">Sair</a></li>
 		</ul>
