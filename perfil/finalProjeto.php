@@ -185,7 +185,7 @@ if($row['idStatus'] == 6)
               </div>
 
               <div class="modal-body">
-                <p>Li e aceito as condições para participação no Pro-Mac previstas na Lei nº 15.948/2013, Decreto nº 58.041/2017, bem como demais atos regulamentares</p>
+                <p>Li e aceito as condições para participação no Pro-Mac previstas na Lei nº 15.948/2013, Decreto nº 58.041/2017, bem como demais atos regulamentares.</p>
               </div>
 
               <div class="modal-footer">
