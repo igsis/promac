@@ -28,8 +28,7 @@ if(isset($_POST['novoPj'])) //tipoePessoa = 2
 		WHERE idProjeto = '$idProjeto'";
 	if(mysqli_query($con,$sql_insere_projeto))
 	{
-		$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso! Aguarde...</strong></font>";
-		echo "<meta HTTP-EQUIV='refresh' CONTENT='0.5;URL=?perfil=projeto_2'>";
+		$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso!</strong></font>";
 	}
 	else
 	{
@@ -48,8 +47,7 @@ if(isset($_POST['insereAtuacao']))
 		WHERE idProjeto = '$idProjeto'";
 	if(mysqli_query($con,$sql_insere_projeto))
 	{
-		$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso! Aguarde...</strong></font>";
-		echo "<meta HTTP-EQUIV='refresh' CONTENT='0.5;URL=?perfil=projeto_2'>";
+		$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso!</strong></font>";
 	}
 	else
 	{
@@ -128,8 +126,17 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 							<div class="col-md-offset-2 col-md-8">
 								<label>Área de atuação *</label><br/>
 								<select class="form-control" name="idAreaAtuacao" >
-									<option value="1"></option>
-									<?php echo geraOpcao("area_atuacao",$projeto['idAreaAtuacao']) ?>
+									<option value="<?php echo $projeto['idAreaAtuacao'] ?>"><?php echo $projeto['idAreaAtuacao'] ?></option>
+									<?php
+									if($cooperado == 1)
+									{
+										echo geraAreaAtuacao("area_atuacao",2);
+									}
+									else
+									{
+										echo geraAreaAtuacao("area_atuacao",1);
+									}
+									?>
 								</select>
 							</div>
 						</div>

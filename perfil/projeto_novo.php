@@ -126,7 +126,7 @@ if(isset($_POST['insereAtuacao']))
 									<label>Área de atuação *</label><br/>
 									<select class="form-control" name="idAreaAtuacao" >
 										<option value="0"></option>
-										<?php echo geraAreaAtuacao("area_atuacao",1) ?>
+										<?php echo geraAreaAtuacao("area_atuacao",2) ?>
 									</select>
 								</div>
 							</div>
@@ -137,28 +137,6 @@ if(isset($_POST['insereAtuacao']))
 								</div>
 							</div>
 						</form>
-					<?php
-					}
-					if(isset($_SESSION['idProjeto']))
-					{
-					?>
-						<div class="form-group">
-							<div class="col-md-offset-2 col-md-8">
-								<strong>Qual cooperativa está representando?* </strong>
-								<p><strong>Insira o CNPJ</strong></p>
-								</div>
-							</div>
-							<div class="form-group">
-								<form method="POST" action="?perfil=cooperativa_resultado_busca" class="form-horizontal" role="form">
-									<div class="col-md-offset-4 col-md-3">
-										<input type="text" name="busca" class="form-control" placeholder="CNPJ" id="cnpj" >
-									</div>
-									<div class="col-md-2">
-										<input type="submit" name="pesquisar" class="btn btn-theme btn-md btn-block" value="Pesquisar">
-									</div>
-								</form>
-							</div>
-						</div>
 					<?php
 					}
 				}
