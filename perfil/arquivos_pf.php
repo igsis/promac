@@ -7,8 +7,6 @@ $tipoPessoa = '1';
 // Gerar documentos
 $server = "http://".$_SERVER['SERVER_NAME']."/promac/";
 $http = $server."/pdf/";
-$link1 = $http."rlt_declaracao_inscricao_pf.php";
-
 
 if(isset($_POST["enviar"]))
 {
@@ -160,7 +158,16 @@ else{
 												echo '<div class="alert alert-success">O arquivo ' . $doc . ' já foi enviado.</div>';
 											}
 											else{ ?>
-											<td class="list_description"><label><?php echo $arq['documento']?></label></td>
+											<td class="list_description path" 
+											    >
+											  <?php 
+                                                $path = selecionaArquivoAnexo(
+                                                $http, $arq['documento'] ) ?>
+                                               <a href='<?=$path?>'  
+                                               	  target="_blank">
+                                                 <?=$arq['documento'] ?> 		
+                                               </a>
+                                            </td>	  
 											<td class="list_description"><input type='file' name='arquivo[<?php echo $arq['sigla']; ?>]'></td>
 											<?php } ?>
 										</tr>

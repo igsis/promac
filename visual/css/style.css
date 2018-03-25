@@ -693,3 +693,8 @@ input[type=checkbox].css-checkbox {
 	position:absolute;
 	width:100%;
 }
+
+.path a{
+  color: blue;
+
+}

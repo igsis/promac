@@ -1336,4 +1336,10 @@ function retornaArquivosDivergentes($idListaDocumento)
   return $documentos;
 }
 
+function selecionaArquivoAnexo($http, $documento)
+{
+   $path = $http.$documento;   
+   return $path;
+}
+
 ?>
