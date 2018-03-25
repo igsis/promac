@@ -10,6 +10,7 @@ $server = "http://".$_SERVER['SERVER_NAME']."/promac/";
 $http = $server."/pdf/";
 $link1 = $http."rlt_declaracao_vinculo_pf.php";
 
+
 function pegaStatus($id)
 {
 	$con = bancoMysqli();
@@ -208,7 +209,7 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 									<td></td>
 								</tr>
 								<?php
-									$sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '3'";
+								  $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '3'";
 									$query_arquivos = mysqli_query($con,$sql_arquivos);
 									while($arq = mysqli_fetch_array($query_arquivos))
 									{
@@ -224,7 +225,18 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 												echo '<div class="alert alert-success">O arquivo ' . $doc . ' já foi enviado.</div>';
 											}
 											else{ ?>
-											<td class="list_description"><label><?php echo $arq['documento']?></label></td>
+											<td class="list_description">
+											  <!--<label>
+                                                <?php 
+                                                  //echo $arq['documento']?>
+                                              </label>-->           
+                                              <a href='<?=$link1?>'  target="_blank"> 
+                                              	<?=$arq['documento'] ?>
+                                              </a>	
+                                            </td>
+
+
+
 											<td class="list_description"><input type='file' name='arquivo[<?php echo $arq['sigla']; ?>]'></td>
 											<?php } ?>
 										</tr>
