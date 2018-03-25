@@ -224,8 +224,15 @@ function semAcento($string)
 //retorna data d/m/y de mysql/date(a-m-d)
 function exibirDataBr($data)
 {
-	$timestamp = strtotime($data);
-	return date('d/m/Y', $timestamp);
+	if($data == '0000-00-00' || $data == NULL)
+	{
+		return "00-00-0000";
+	}
+	else
+	{
+		$timestamp = strtotime($data);
+		return date('d/m/Y', $timestamp);
+	}
 }
 // retorna datatime sem hora
 function retornaDataSemHora($data)
