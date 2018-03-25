@@ -47,8 +47,8 @@ $con = bancoMysqli();
 									}
 									if($campo['tipoPessoa'] == 2)
 									{
-										echo "<td class='list_description'>".$pf['razaoSocial']."</td>";
-										echo "<td class='list_description'>".$pf['cnpj']."</td>";
+										echo "<td class='list_description'>".$pj['razaoSocial']."</td>";
+										echo "<td class='list_description'>".$pj['cnpj']."</td>";
 									}
 									echo "<td class='list_description'>".$area['areaAtuacao']."</td>";
 									echo "
