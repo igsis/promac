@@ -112,7 +112,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 					</form>
 				<?php
 				}
-				if($projeto['tipoPessoa'] == 1) //Pessoa Física Cooperado
+				if($projeto['tipoPessoa'] == 1) //Pessoa Física
 				{
 				?>
 					<form method="POST" action="?perfil=projeto_edicao" class="form-horizontal" role="form">
@@ -126,15 +126,14 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 							<div class="col-md-offset-2 col-md-8">
 								<label>Área de atuação *</label><br/>
 								<select class="form-control" name="idAreaAtuacao" >
-									<option value="<?php echo $projeto['idAreaAtuacao'] ?>"><?php echo $projeto['idAreaAtuacao'] ?></option>
 									<?php
 									if($cooperado == 1)
 									{
-										echo geraAreaAtuacao("area_atuacao",2);
+										echo geraAreaAtuacao("area_atuacao","1,2",$projeto['idAreaAtuacao']);
 									}
 									else
 									{
-										echo geraAreaAtuacao("area_atuacao",1);
+										echo geraAreaAtuacao("area_atuacao","1",$projeto['idAreaAtuacao']);
 									}
 									?>
 								</select>

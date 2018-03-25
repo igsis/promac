@@ -96,7 +96,7 @@ if(isset($_POST['insereAtuacao']))
 								<label>Área de atuação *</label>
 								<select class="form-control" name="idAreaAtuacao" >
 									<option value="0"></option>
-									<?php echo geraAreaAtuacao("area_atuacao",2) ?>
+									<?php echo geraOpcao("area_atuacao","") ?>
 								</select>
 							</div>
 						</div>
@@ -126,7 +126,7 @@ if(isset($_POST['insereAtuacao']))
 									<label>Área de atuação *</label><br/>
 									<select class="form-control" name="idAreaAtuacao" >
 										<option value="0"></option>
-										<?php echo geraAreaAtuacao("area_atuacao",2) ?>
+										<?php echo geraOpcao("area_atuacao","") ?>
 									</select>
 								</div>
 							</div>
@@ -157,7 +157,7 @@ if(isset($_POST['insereAtuacao']))
 									<label>Área de atuação *</label><br/>
 									<select class="form-control" name="idAreaAtuacao" >
 										<option value="0"></option>
-										<?php echo geraAreaAtuacao("area_atuacao", 1) ?>
+										<?php echo geraAreaAtuacao("area_atuacao","1","") ?>
 									</select>
 								</div>
 							</div>
