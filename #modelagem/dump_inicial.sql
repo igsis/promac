@@ -130,27 +130,29 @@ INSERT INTO `status`(`idStatus`, `status`) VALUES
 --
 
 INSERT INTO `area_atuacao` (`idArea`, `areaAtuacao`, `tipo`) VALUES
-(1, 'Artes Plásticas, Visuais e Design', 2),
-(2, 'Bibliotecas, Arquivos, Centros Culturais e Espaços Culturais Independentes', 2),
-(3, 'Cinema e Séries de Televisão', 1),
-(4, 'Circo', 2),
-(5, 'Cultura Popular e Artesanato', 2),
-(6, 'Dança', 1),
-(7, 'Eventos Carnavalescos e Escolas de Samba', 1),
-(8, 'Hip-Hop', 2),
-(9, 'Literatura', 2),
+(1, 'Artes plásticas, visuais e "design"', 1),
+(2, 'Bibliotecas, arquivos, centros culturais e espaços culturais independentes', 1),
+(3, 'Cinema e séries de televisão', 2),
+(4, 'Circo', 1),
+(5, 'Cultura popular e artesanato', 1),
+(6, 'Dança', 2),
+(7, 'Eventos carnavalescos e escolas de samba', 2),
+(8, '"Hip-hop”', 1),
+(9, 'Literatura', 1),
 (10, 'Museu', 1),
 (11, 'Música', 2),
-(12, 'Ópera', 1),
-(13, 'Patrimônio Histórico e Artístico', 1),
-(14, 'Pesquisa e Documentação', 2),
-(15, 'Teatro', 1),
-(16, 'Vídeo e Fotografia', 2),
-(17, 'Bolsas de estudo para cursos de caráter cultural ou artístico, ministrados em instituições nacionais ou internacionais sem fins lucrativos.', 2),
-(18, 'Programas de rádio e de televisão com finalidade cultural, social e de prestação de serviços à comunidade.', 1),
-(19, 'Restauração e conservação de bens protegidos por órgão oficial de preservação.', 1),
-(20, 'Cultura Digital', 2),
-(21, 'Design de Moda', 2);
+(12, 'Ópera', 2),
+(13, 'Patrimônio histórico e artístico', 2),
+(14, 'Pesquisa e documentação', 1),
+(15, 'Teatro', 2),
+(16, 'Vídeo e fotografia', 1),
+(17, 'Bolsas de estudo para cursos de caráter cultural ou artístico, ministrados em instituições nacionais ou internacionais sem fins lucrativos', 1),
+(18, 'Programas de rádio e de televisão com finalidade cultural, social e de prestação de serviços à comunidade', 2),
+(19, 'Restauração e conservação de bens protegidos por órgão oficial de preservação', 2),
+(20, 'Cultura digital', 1),
+(21, '"Design" de moda', 1),
+(22, 'Plano anual de atividades', 2),
+(23, 'Projetos especiais: primeiras obras, experimentações, pesquisas, publicações, cursos, viagens, resgate de modos tradicionais de produção, desenvolvimento de novas tecnologias para as artes e para a cultura e preservação da diversidade cultural', 1);
 
 
 INSERT INTO `status_documento` (`idStatusDocumento`, `status`) VALUES
