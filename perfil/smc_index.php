@@ -182,8 +182,8 @@ if(isset($_POST['liberacaoPJ']))
 									}
 									if($campo['tipoPessoa'] == 2)
 									{
-										echo "<td class='list_description'>".$pf['razaoSocial']."</td>";
-										echo "<td class='list_description'>".$pf['cnpj']."</td>";
+										echo "<td class='list_description'>".$pj['razaoSocial']."</td>";
+										echo "<td class='list_description'>".$pj['cnpj']."</td>";
 									}
 									echo "<td class='list_description'>".$area['areaAtuacao']."</td>";
 									echo "
@@ -236,9 +236,9 @@ if(isset($_POST['liberacaoPJ']))
 								{
 									echo "<tr>";
 									echo "<td class='list_description'>".$campo['protocolo']."</td>";
-									echo "<td class='list_description'>".$campo['prazoCaptacao']."</td>";
-									echo "<td class='list_description'>".$campo['inicioExecucao']."</td>";
-									echo "<td class='list_description'>".$campo['fimExecucao']."</td>";
+									echo "<td class='list_description'>".exibirDataBr($campo['prazoCaptacao'])."</td>";
+									echo "<td class='list_description'>".exibirDataBr($campo['inicioExecucao'])."</td>";
+									echo "<td class='list_description'>".exibirDataBr($campo['fimExecucao'])."</td>";
 									$idProjetos = $campo['idProjeto'];
 									echo "
 										<td class='list_description'>
@@ -289,9 +289,9 @@ if(isset($_POST['liberacaoPJ']))
 								{
 									echo "<tr>";
 									echo "<td class='list_description'>".$campo['protocolo']."</td>";
-									echo "<td class='list_description'>".$campo['prazoCaptacao']."</td>";
-									echo "<td class='list_description'>".$campo['inicioExecucao']."</td>";
-									echo "<td class='list_description'>".$campo['fimExecucao']."</td>";
+									echo "<td class='list_description'>".exibirDataBr($campo['prazoCaptacao'])."</td>";
+									echo "<td class='list_description'>".exibirDataBr($campo['inicioExecucao'])."</td>";
+									echo "<td class='list_description'>".exibirDataBr($campo['fimExecucao'])."</td>";
 									$idProjetos = $campo['idProjeto'];
 									echo "
 										<td class='list_description'>
@@ -345,9 +345,9 @@ if(isset($_POST['liberacaoPJ']))
 								{
 									echo "<tr>";
 									echo "<td class='list_description'>".$campo['protocolo']."</td>";
-									echo "<td class='list_description'>".$campo['prazoCaptacao']."</td>";
-									echo "<td class='list_description'>".$campo['inicioExecucao']."</td>";
-									echo "<td class='list_description'>".$campo['fimExecucao']."</td>";
+									echo "<td class='list_description'>".exibirDataBr($campo['prazoCaptacao'])."</td>";
+									echo "<td class='list_description'>".exibirDataBr($campo['inicioExecucao'])."</td>";
+									echo "<td class='list_description'>".exibirDataBr($campo['fimExecucao'])."</td>";
 									$idProjetos = $campo['idProjeto'];
 									echo "
 										<td class='list_description'>
