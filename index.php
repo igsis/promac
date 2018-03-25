@@ -25,11 +25,16 @@
 					<div class="col-md-offset-1 col-md-10">
 						<h4>Pro-Mac - Programa Municipal de Apoio a Projetos Culturais</h4>
 						<img src="visual/images/logo_promac_colorido.png" align="left" hspace="20" />
-						<p align="justify">Inspirado no Programa de Ação Cultural (ProAC) do Governo de São Paulo, o Pro-Mac permite que o patrocinador tenha dedução de 100% do valor investido, disponibilizando mais recursos para artistas e produtores culturais, que antes recebiam no máximo 70% do valor total do patrocínio. Com o Pro-Mac, áreas como design, cultura digital, séries de TV, espaços culturais independentes, circo, cinema, dança, fotografia, teatro – dentre outras – que não estavam previstas na Lei Mendonça  – agora podem receber patrocínio.</p>
+						<p align="justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 
-						<p align="justify">Ao estabelecer regras simples e critérios mais objetivos para a obtenção do incentivo, a nova Lei se torna acessível a pequenos produtores e a artistas independentes, que antes dependiam de empresas e produtoras culturais para adequarem seus projetos à burocracia e às exigências da Lei Mendonça. Outro destaque é que o Pro-Mac também prevê que a contrapartida ao patrocínio, que antes era determinada por lei (Ex: o artista deverá produzir e distribuir 1000 CDs ou realizar 10 shows gratuitos) seja formulada pelo proponente do projeto. Isso significa que o autor da proposta é quem vai indicar a melhor forma de levar ao público o seu projeto cultural, o que também será um critério de avaliação.</p>
+						<p align="justify">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</p>
 
-						<p align="justify">Para acessar o sistema, escolha entre uma das áreas abaixo.</p>
+						<p align="justify">Links de informações sobre o sistema:</p>
+
+						<ul>
+							<li align="left">Manual de aplicação de marca no texto de abertura.</li>
+							<li align="left"><a href="manual/index.php">Manual de utilização do sistema.</a></li>
+						</ul>
 
 						<hr/>
 
@@ -44,11 +49,6 @@
 								<form method="POST" action="./visual/index.php" class="form-horizontal" role="form">
 									<input type="hidden" name="consulta" value="1">
 									<button class='btn btn-theme btn-md btn-block' type='submit' style="border-radius: 30px;">Consulta Pública</button>
-								</form>
-							</div>
-							<div class="col-md-1">
-								<form method="POST" action="manual/index.php" class="form-horizontal" role="form">
-									<button class='btn btn-theme' type='submit' style="border-radius: 30px;">&nbsp;<i class="fa fa-question"></i>&nbsp;</button>
 								</form>
 							</div>
 						</div>
@@ -109,6 +109,10 @@
 						<td width="20%"><img src="visual/images/logo_promac_branco.png" align="left"/></td>
 						<td align="center"><font color="#ccc">2018 @ Pro-Mac - Programa Municipal de Apoio a Projetos Culturais<br/>Secretaria Municipal de Cultura<br/>Prefeitura de São Paulo</font></td>
 						<td width="20%"><img src="visual/images/logo_cultura_q.png" align="right"/></td>
+					</tr>
+					<tr>
+						<td colspan="2"><font color="#ccc"><br/>Supervisão de Tecnologia da Informação - Programação e Desenvolvimento</font></td>
+						<td align="right"><font color="#ccc">Versão 0.1</font></td>
 					</tr>
 				</table>
 				<script src="visual/js/bootstrap.min.js"></script>
