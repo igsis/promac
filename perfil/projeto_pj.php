@@ -115,7 +115,7 @@ if(isset($_POST['apagar']))
 						<div class="table-responsive list_info">
 						<?php
 							$sql = "SELECT * FROM projeto
-									WHERE publicado > 0 AND idPj ='$idPj'
+									WHERE publicado > 0 AND idPj ='$idPj' AND tipoPessoa = 2
 									ORDER BY idProjeto DESC";
 							$query = mysqli_query($con,$sql);
 							$num = mysqli_num_rows($query);
