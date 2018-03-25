@@ -10,11 +10,11 @@
   });
  
   $(function() {
-    $('.valor').maskMoney({thousands:'', decimal:',', allowZero:true, suffix: ''});
+    $('.valor').maskMoney({thousands:'.', decimal:',', allowZero:true, suffix: ''});
   });
   $(function() {
     $('#valor,#valor1,#valor2,#valor3,#valor01,#valor_individual,#duracao')
-      .maskMoney({thousands:'', decimal:',', allowZero:true, suffix: ''});
+      .maskMoney({thousands:'.', decimal:',', allowZero:true, suffix: ''});
   });
   $(function(){
 	$("#CEP").mask("99999-999");
