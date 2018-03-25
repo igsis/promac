@@ -403,32 +403,6 @@ function geraAreaAtuacao($tabela,$tipo,$select)
 	}
 }
 
-function geraAreaAtuacao1($tabela,$tipoPessoa)
-{
-	$sql = "SELECT * FROM $tabela";
-	$conn = bancoPDO();
-	$stmt = $conn->query($sql);
-
-	while($row = $stmt->fetch(PDO::FETCH_ASSOC))
-	{
-		if ($tipoPessoa == 1)
-		{
-			if($row['tipo'] == 1) // pj
-			{
-				echo "<option value='".$row['idArea']."' selected >".$row['areaAtuacao']."</option>";
-			}
-		}
-		elseif($tipoPessoa == 2)
-		{
-			if($row['tipo']) // pj e pf
-			{
-				echo "<option value='".$row['idArea']."' selected >".$row['areaAtuacao']."</option>";
-			}
-		}
-	}
-}
-
-
 function geraCombobox($tabela,$campo,$order,$select)
 {
 	//gera os options de um select
