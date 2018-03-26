@@ -7,7 +7,6 @@
 		<link href="visual/color/default.css" rel="stylesheet" media="screen">
 		<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 		<link rel="stylesheet" href="visual/css/font-awesome.min.css">
-		
 		<script src="visual/js/modernizr.custom.js"></script>
 		<script src="visual/js/jquery-1.9.1.js"></script>
 		<script src="visual/js/jquery-ui.js"></script>
@@ -25,24 +24,36 @@
 					<div class="col-md-offset-1 col-md-10">
 						<h4>Pro-Mac - Programa Municipal de Apoio a Projetos Culturais</h4>
 						<img src="visual/images/logo_promac_colorido.png" align="left" hspace="20" />
-						<p align="justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+						<p>&nbsp;</p>
+						<p align="justify">O Programa de Municipal de Apoio a Projetos Culturais – Pro-Mac, instituído pela Lei nº 15.948/2013 e regulamentado pelo Decreto nº 58.041/2017, tem como objetivo incentivar projetos culturais e artísticos por meio da renúncia fiscal. Os incentivadores – pessoa física ou jurídica - poderão contribuir por meio da renúncia de até 20% do Imposto sobre Serviços de Qualquer Natureza - ISS e do Imposto Predial e Territorial Urbano - IPTU.</p>
 
-						<p align="justify">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</p>
+						<p align="justify">Para saber como participar, clique em <button class='btn btn-theme btn-md' type='button' data-toggle='modal' data-target='#regulamento' style="border-radius: 30px;">Regulamento</button> e se inscreva no link abaixo.</p>
 
-						<p align="justify">Links de informações sobre o sistema:</p>
+						<p>&nbsp;</p>
 
-						<ul>
-							<li align="left">Manual de aplicação de marca no texto de abertura.</li>
-							<li align="left"><a href="manual/index.php">Manual de utilização do sistema.</a></li>
-						</ul>
-
-						<hr/>
+						<div class="well">
+							<h6>Inscreva-se aqui:</h6>
+							<div class="form-group">
+								<div class="col-md-offset-3 col-md-3">
+									<form method="POST" action="login_pf.php" class="form-horizontal" role="form">
+										<button type="submit" class="btn btn-theme btn-md btn-block" style="border-radius: 30px;">Pessoa Física</button>
+									</form>
+								</div>
+								<div class="col-md-3">
+									<form method="POST" action="login_pj.php" class="form-horizontal" role="form">
+										<button type="submit" class="btn btn-theme btn-md btn-block"  style="border-radius: 30px;">Pessoa Jurídica</button>
+									</form>
+								</div>
+							</div>
+							<br/><br/>
+						</div>
 
 						<div class="form-group">
-							<div class="col-md-offset-1 col-md-3">
-								<button class='btn btn-theme btn-md btn-block' type='button' data-toggle='modal' data-target='#proponente' style="border-radius: 30px;">Proponente</button>
-							</div>
-							<div class="col-md-3">
+							<div class="col-md-12"><hr/></div>
+						</div>
+
+						<div class="form-group">
+							<div class="col-md-offset-3 col-md-3">
 								<button class='btn btn-theme btn-md btn-block' type='button' data-toggle='modal' data-target='#incentivador' style="border-radius: 30px;">Incentivador</button>
 							</div>
 							<div class="col-md-3">
@@ -55,20 +66,20 @@
 					</div>
 				</div>
 				<!-- Inicio Modal Proponente -->
-				<div class="modal fade" id="proponente" role="dialog" aria-labelledby="proponenteLabel" aria-hidden="true">
+				<div class="modal fade" id="regulamento" role="dialog" aria-labelledby="regulamentoLabel" aria-hidden="true">
 					<div class="modal-dialog">
 						<div class="modal-content">
 							<div class="modal-header">
 								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-								<h4 class="modal-title">Proponente</h4>
+								<h4 class="modal-title">Regulamento</h4>
 							</div>
-							<div class="modal-body">
-								<form method="POST" action="login_pf.php" class="form-horizontal" role="form">
-									<button type="submit" class="btn btn-theme btn-block">Pessoa Física</button>
-								</form>
-								<form method="POST" action="login_pj.php" class="form-horizontal" role="form">
-									<button type="submit" class="btn btn-theme btn-block">Pessoa Jurídica</button>
-								</form>
+							<div class="modal-body" align="left">
+								<ul class="list-group">
+									<li class="list-group-item"><a href="#">Lei</a></li>
+									<li class="list-group-item"><a href="#">Decreto</a></li>
+									<li class="list-group-item"><a href="#">Manual de utilização</a></li>
+									<li class="list-group-item"><a href="#">Manual de uso da marca</a></li>
+								</ul>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
