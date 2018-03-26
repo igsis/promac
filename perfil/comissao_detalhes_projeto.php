@@ -1,7 +1,7 @@
 <?php
 $con = bancoMysqli();
 
-$idProjeto = $_POST['idProjeto'];
+$idProjeto = isset($_POST['idProjeto'])?$_POST['idProjeto']:null;
 $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 
 // Gerar documentos
@@ -162,6 +162,11 @@ if(isset($_POST['apagar']))
 	{
 		$mensagem = "<font color='#FF0000'><strong>Erro ao apagar arquivo!</strong></font>";
 	}
+	$sql = "SELECT * FROM projeto WHERE publicado = 1 AND idStatus = 2";
+	$query = mysqli_query($con,$sql);
+	$campo = mysqli_fetch_array($query);
+	$idProjeto = $campo['idProjeto'];
+
 }
 
 if($projeto['tipoPessoa'] == 1)
