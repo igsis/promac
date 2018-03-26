@@ -37,7 +37,7 @@ for ($i = 0; $i < count($urlIncentivadorPj); $i++) {
                 <a href=""><br /></a>
             </li>
             <li class="<?php echo isset($liga1) ? $liga1 : 'clickable'; ?>">
-                <a onclick="location.href='incentivador_index_pj.php'" href=""><br />Incentivador</a>
+                <a onclick="location.href='incentivador_index_pj.php'" href=""><br />Cadastro Incentivador</a>
             </li>
             <li class="<?php echo isset($liga2) ? $liga2 : 'clickable'; ?>">
                 <a onclick="location.href='incentivador_index_pf.php?perfil=incentivador_informacoes_iniciais_pj'" href=""><br />Incentivador</a>
