@@ -6,7 +6,7 @@ $idProjeto = $_SESSION['idProjeto'];
 $tipoPessoa = '1';
 
 // Gerar documentos
-$server = "http://".$_SERVER['SERVER_NAME']."/promac/";
+$server = "http://".$_SERVER['SERVER_NAME']."/promac";
 $http = $server."/pdf/";
 
 
@@ -224,14 +224,23 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 												echo '<div class="alert alert-success">O arquivo ' . $doc . ' já foi enviado.</div>';
 											}
 											else{ ?>
-											<td class="list_description path">
-                                              <?php 
-                                                $path = selecionaArquivoAnexo(
-                                                $http, $arq['documento'] ) ?>
-                                             <a href='<?=$path?>'  target="_blank">
-                                               <?=$arq['documento'] ?> 		
-                                             </a>
-                                            </td>	
+											<?php 
+										    $urlArquivo = $http.$arq['idListaDocumento'];
+											if(arquivosExiste($urlArquivo)): ?>	
+											  <td class="list_description path">
+                                                <?php              
+                                                 $path = selecionaArquivoAnexo(
+                                                  $http, $arq['idListaDocumento']); ?>                  
+                                                  <a href='<?=$path?>'  
+                                                  	 target="_blank">
+                                                     <?=$arq['documento'] ?> 	
+                                                  </a>
+                                              </td>	
+                                            <?php else: ?>
+                                              <td class="list_description path">
+                                                <?=$arq['documento']?>	
+                                              </td>	
+                                            <?php endif ?> 
 											<td class="list_description"><input type='file' name='arquivo[<?php echo $arq['sigla']; ?>]'></td>
 											<?php } ?>
 										</tr>

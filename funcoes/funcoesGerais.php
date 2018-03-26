@@ -1343,9 +1343,20 @@ function retornaArquivosDivergentes($idListaDocumento)
   return $documentos;
 }
 
-function selecionaArquivoAnexo($http, $documento)
+function arquivosExiste($urlArquivo, $extensao = '.pdf')
 {
-   $path = $http.$documento;   
+  $file = $urlArquivo.$extensao;
+  $file_headers = @get_headers($file);
+  if($file_headers[0] == 'HTTP/1.1 404 Not Found'):
+    return false;
+  endif;
+  
+  return true;
+}
+
+function selecionaArquivoAnexo($http, $idListaDocumento, $extensao = '.pdf')
+{
+   $path = $http.$idListaDocumento.$extensao;   
    return $path;
 }
 
