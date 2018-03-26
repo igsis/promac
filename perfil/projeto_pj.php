@@ -98,13 +98,35 @@ if(isset($_POST['apagar']))
 				else // liberação concedida pela SMC - liberado = 3
 				{
 			?>
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-8">
-							<form class="form-horizontal" role="form" action="?perfil=projeto_novo" method="post">
-								<input type="submit" value="Inscrever Projeto" class="btn btn-theme btn-lg btn-block">
-							</form>
-						</div>
-					</div>
+			<!--Inicio da validação numero de projetos-->
+			<?php 
+			  $qtd = retornaQtdProjetos($tipoPessoa,$idPj); 
+			  $numProjetos = (int) $qtd[0];	
+			  
+			  $projetos = formataDados(retornaProjeto($tipoPessoa, $idPj));			  
+			
+			if($numProjetos <= 1): ?>					
+			  <div class="form-group">
+			    <div class="col-md-offset-2 col-md-8">
+				  <form class="form-horizontal" role="form" 
+				    action="  ?perfil=projeto_novo" method="post">
+				    <input type="submit" value="Inscrever Projeto" class="btn btn-theme btn-lg btn-block">
+				  </form>
+				</div>
+			  </div>
+			<?php else: ?>
+			  <div class="alert alert-danger">
+			     <p>Você possui dois projetos em andamento:<b> 
+			   	    <?php 
+			   	      foreach($projetos as $key => $value):
+			   	        echo $value.',';	
+			   	      endforeach;	
+			   	    ?>
+			   	    </b>este é o seu limite.
+			   	  </p>
+			    </div>	
+			<?php endif?> 
+			 <!--Fim da validação numero de projetos-->
 			</div>
 
 					<div class="form-group">
