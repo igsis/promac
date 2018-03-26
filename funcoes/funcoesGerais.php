@@ -1360,4 +1360,78 @@ function selecionaArquivoAnexo($http, $idListaDocumento, $extensao = '.pdf')
    return $path;
 }
 
+function retornaQtdProjetos($tipoPessoa, $id)
+{
+  $conexao = bancoMysqli();
+
+  if($tipoPessoa == 1):    
+    $query =  "SELECT 
+               count(idProjeto)
+             FROM 
+               projeto AS proj  
+  			  WHERE proj.publicado = 1
+  			  AND   proj.idPf = ".$id;
+    
+    elseif ($tipoPessoa == 2):
+  	  
+  	  $query =  "SELECT 
+               count(idProjeto)
+             FROM 
+               projeto AS proj  
+             INNER JOIN 
+               pessoa_juridica AS pj 
+             ON pj.idPj = proj.idPj  
+  			 
+  			 WHERE proj.publicado = 1
+  			 AND   pj.cooperativa = 0
+  			 AND   proj.idPj = ".$id;
+    
+  endif;	
+
+
+  $resultado = mysqli_query($conexao,$query);
+  $qtdProjeto = mysqli_fetch_array($resultado);
+  
+  return $qtdProjeto;
+}
+
+function retornaProjeto($tipoPessoa, $id)
+{
+  $documentos = [];
+  $conexao = bancoMysqli();
+  
+  if($tipoPessoa == 1):    
+    $query =  "SELECT 
+               idProjeto
+             FROM 
+               projeto AS proj  
+  			  WHERE proj.publicado = 1
+  			  AND   proj.idPf = ".$id;
+  	
+  	$resultado = mysqli_query($conexao,$query);
+    $projeto = mysqli_fetch_array($resultado);
+
+    return $projeto;
+		  	
+  else:
+  	$query =  "SELECT 
+               idProjeto
+             FROM 
+               projeto AS proj  
+  			  WHERE proj.publicado = 1
+  			  AND   proj.idPj = ".$id;	
+
+    $resultado = mysqli_query($conexao,$query);
+
+    if(!empty($resultado)):
+      while($documento = mysqli_fetch_assoc($resultado)) 
+      {
+        array_push($documentos, $documento);
+      }  
+      return $documentos;  			  
+    endif;  
+  endif;  
+ 
+}
+
 ?>
