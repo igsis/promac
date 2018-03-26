@@ -58,7 +58,6 @@ if(isset($_POST['apagar']))
 			<?php
 				if($pf['liberado'] == 0) // ainda não foi solicitado liberação
 				{
-
 				include 'includes/resumo_pf.php';
 				?>
 				<div class="alert alert-info">
@@ -68,12 +67,25 @@ if(isset($_POST['apagar']))
 						<div class="col-md-offset-2 col-md-8">
 							<?php
 							if ($cpo == false)
-							{?>
+							{
+								$idPess = $pf['idPf'];
+								$queryArquivos = "SELECT idUploadArquivo FROM upload_arquivo WHERE idPessoa = $idPess AND idTipo = '1' AND publicado = '1'";
+								$enviaArquivos = mysqli_query($con, $queryArquivos);
+								$numRow = mysqli_num_rows($enviaArquivos);
+
+								if($numRow >= 8)
+								{?>
 							<form class="form-horizontal" role="form" action="?perfil=projeto_pf" method="post">
 								<input type="submit" name="liberacao" value="Concluir inscrição do proponente" class="btn btn-theme btn-lg btn-block">
 							</form>
 							<?php
-							}?>
+							}
+							else{
+								echo "<div class='alert alert-warning'>
+								<strong>Erro: </strong> Você deve enviar todos os documentos para prosseguir.
+								</div>";
+							}
+						}?>
 						</div>
 					</div>
 			</div>
