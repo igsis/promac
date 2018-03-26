@@ -19,6 +19,8 @@ $link2 = $http."excel_pj.php";
 					<li><a href="<?php echo $pasta ?>smc_pesquisa_pj">Pessoa Jurídica</a></li>
 					<li><a href="<?php echo $pasta ?>smc_pesquisa_prazos">Prazos</a></li>
 					<li><a href="<?php echo $pasta ?>smc_pesquisa_geral">Projetos</a></li>
+					<li><a href="<?php echo $pasta ?>smc_pesquisa_incentivadores_pf">Incentivador PF</a></li>
+					<li><a href="<?php echo $pasta ?>smc_pesquisa_incentivador_pj">Incentivador PJ</a></li>
 				</ul>
 			</li>
 			<li><a href="#">Relatórios</a>
