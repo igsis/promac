@@ -1,9 +1,9 @@
 <?php
 $con = bancoMysqli();
 
-$razaoSocial = $_POST['razaoSocial'];
-$cnpj = $_POST['cnpj'];
-$liberado = $_POST['liberado'];
+$razaoSocial = isset($_POST['razaoSocial']) ? $_POST['razaoSocial'] : null;
+$cnpj = isset($_POST['cnpj']) ? $_POST['cnpj'] : null;
+$liberado = isset($_POST['liberado']) ? $_POST['liberado'] : null;
 
 if($razaoSocial != '')
 {
