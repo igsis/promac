@@ -1,5 +1,11 @@
 <?php
 $pasta = "?perfil=";
+
+// Gerar documentos
+$server = "http://".$_SERVER['SERVER_NAME']."/promac/";
+$http = $server."/pdf/";
+$link1 = $http."excel_pf.php";
+$link2 = $http."excel_pj.php";
 ?>
 <div class="menu-area">
 	<div id="dl-menu" class="dl-menuwrapper">
@@ -17,8 +23,8 @@ $pasta = "?perfil=";
 			</li>
 			<li><a href="#">Relatórios</a>
 				<ul class="dl-submenu">
-					<li><a href="<?php echo $pasta ?>#">Pessoa Física</a></li>
-					<li><a href="<?php echo $pasta ?>#">Pessoa Jurídica</a></li>
+					<li><a href="<?php echo $link1 ?>">Pessoa Física</a></li>
+					<li><a href="<?php echo $link2 ?>">Pessoa Jurídica</a></li>
 				</ul>
 			</li>
 			<li><a href="?perfil=informacoes_iniciais_pf">Módulo Proponente (provisório)</a></li>
