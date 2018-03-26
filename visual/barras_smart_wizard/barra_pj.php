@@ -118,7 +118,7 @@ for ($i = 0; $i < count($urlPj); $i++) {
                     if ($idProj == true) {
                 ?>
                 <li class="<?php echo isset($ativa7) ? $ativa7 : 'clickable'; ?>">
-                   <a onclick="location.href='index_pj.php?perfil=projeto_2'" href=""><br />Passo 2</a>
+                   <a onclick="location.href='index_pj.php?perfil=projeto_2'" href=""><br /><small>Valores Enquadramento</small></a>
                 </li>
                 <?php
                     }else {
@@ -126,54 +126,56 @@ for ($i = 0; $i < count($urlPj); $i++) {
                     }
                 ?>
                 <li class="<?php echo isset($ativa8) ? $ativa8 : 'clickable'; ?>">
-                   <a onclick="location.href='index_pj.php?perfil=projeto_3'" href=""><br />Passo 3</a>
+                   <a onclick="location.href='index_pj.php?perfil=projeto_3'" href=""><br /><small>Resumo e Currículo</small></a>
                 </li>
                 <li class="<?php echo isset($ativa9) ? $ativa9 : 'clickable'; ?>">
-                   <a onclick="location.href='index_pj.php?perfil=projeto_4'" href=""><br />Passo 4</a>
+                   <a onclick="location.href='index_pj.php?perfil=projeto_4'" href=""><br /><small>Objeto</small></a>
                 </li>
                 <li class="<?php echo isset($ativa10) ? $ativa10 : 'clickable'; ?>">
-                   <a onclick="location.href='index_pj.php?perfil=projeto_5'" href=""><br />Passo 5</a>
-                </li>
-                <li class="<?php echo isset($ativa11) ? $ativa11 : 'clickable'; ?>">
-                   <a onclick="location.href='index_pj.php?perfil=projeto_6'" href=""><br />Passo 6</a>
-                </li>
-                <li class="<?php echo isset($ativa12) ? $ativa12 : 'clickable'; ?>">
-                   <a onclick="location.href='index_pj.php?perfil=local'" href=""><br />Local</a>
+                   <a onclick="location.href='index_pj.php?perfil=projeto_5'" href=""><br /><small>Justificativa e Objetivo</small></a>
                 </li>
             </ul> <!-- Barra linha 2 -->
             <ul>
+                <li class="<?php echo isset($ativa11) ? $ativa11 : 'clickable'; ?>">
+                   <a onclick="location.href='index_pj.php?perfil=projeto_6'" href=""><br /><small>Metodologia e Contrapartida</small></a>
+                </li>
+                <li class="<?php echo isset($ativa12) ? $ativa12 : 'clickable'; ?>">
+                   <a onclick="location.href='index_pj.php?perfil=local'" href=""><br /><small>Local</small></a>
+                </li>
                 <li class="<?php echo isset($ativa20) ? $ativa20 : 'clickable'; ?>">
-                   <a onclick="location.href='index_pj.php?perfil=projeto_8'" href=""><br />Passo 8</a>
+                   <a onclick="location.href='index_pj.php?perfil=projeto_8'" href=""><br /><small>Público Alvo e Plano de Divulgação</small></a>
                 </li>
                 <li class="<?php echo isset($ativa13) ? $ativa13 : 'clickable'; ?>">
-                   <a onclick="location.href='index_pj.php?perfil=ficha_tecnica'" href=""><br />Ficha Técnica</a>
+                   <a onclick="location.href='index_pj.php?perfil=ficha_tecnica'" href=""><br /><small>Ficha Técnica</small></a>
                 </li>
                 <li class="<?php echo isset($ativa14) ? $ativa14 : 'clickable'; ?>">
-                   <a onclick="location.href='index_pj.php?perfil=cronograma'" href=""><br />Cronograma</a>
+                   <a onclick="location.href='index_pj.php?perfil=cronograma'" href=""><br /><small>Cronograma</small></a>
                 </li>
                 <li class="<?php echo isset($ativa15) ? $ativa15 : 'clickable'; ?>">
-                   <a onclick="location.href='index_pj.php?perfil=orcamento'" href=""><br />Orçamento</a>
+                   <a onclick="location.href='index_pj.php?perfil=orcamento'" href=""><br /><small>Orçamento</small></a>
                 </li>
                 <li class="<?php echo isset($ativa16) ? $ativa16 : 'clickable'; ?>">
-                   <a onclick="location.href='index_pj.php?perfil=anexos'" href=""><br />Anexos</a>
+                   <a onclick="location.href='index_pj.php?perfil=anexos'" href=""><br /><small>Anexos</small></a>
                 </li>
                 <li class="<?php echo isset($ativa17) ? $ativa17 : 'clickable'; ?>">
-                   <a onclick="location.href='index_pj.php?perfil=projeto_13'" href=""><br />Link do YouTube</a>
+                   <a onclick="location.href='index_pj.php?perfil=projeto_13'" href=""><br /><small>Link do YouTube</small></a>
                 </li>
+            </ul> <!-- Barra linha 3 -->
+            <ul>
                 <li class="<?php echo isset($ativa18) ? $ativa18 : 'clickable'; ?>">
-                   <a onclick="location.href='index_pj.php?perfil=finalProjeto'" href=""><br />Concluir Inscrição</a>
+                   <a onclick="location.href='index_pj.php?perfil=finalProjeto'" href=""><br /><small>Concluir Inscrição</small></a>
                 </li>
                 <?php
                     if ($proj['idStatus'] != 1) {
                 ?>
                 <li class="<?php echo isset($ativa19) ? $ativa19 : 'clickable'; ?>">
-                   <a onclick="location.href='index_pj.php?perfil=informacoes_administrativas'" href=""><br />Informações da Inscrição</a>
+                   <a onclick="location.href='index_pj.php?perfil=informacoes_administrativas'" href=""><br /><small>Informações da Inscrição</small></a>
                 </li>
                 <?php
                     }else{
                 ?>
                 <li class="<?php echo isset($ativa19) ? $ativa19 : 'disabled'; ?>">
-                   <a><br />Informações da Inscrição</a>
+                   <a><br /><small>Informações da Inscrição</small></a>
                 </li>
                 <?php
                     }
