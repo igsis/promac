@@ -103,34 +103,6 @@ else{
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
-				<!-- Links emissão de documentos -->
-
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-5">
-						<p align="left"><strong>Declaração de Inscrição</strong></p>
-					</div>
-					<div class="col-md-3">
-						<a href='<?php echo $link1; ?>' target='_blank' class="btn btn-theme btn-md btn-block"><strong>Obter modelo</strong></a>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8"><hr/></div>
-				</div>
-
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-5">
-						<p align="left">Declaração exclusiva para Organização Social com Termo de Colaboração com a SMC.</p>
-					</div>
-					<div class="col-md-3">
-						<a href='<?php echo $link2; ?>' target='_blank' class="btn btn-theme btn-md btn-block"><strong>Obter modelo</strong></a>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8"><hr/><br/></div>
-				</div>
-
 				<!-- Exibir arquivos -->
 				<div class="form-group">
 					<div class="col-md-12">

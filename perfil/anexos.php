@@ -3,7 +3,7 @@
 $con = bancoMysqli();
 $idPf = $_SESSION['idUser'];
 $idProjeto = $_SESSION['idProjeto'];
-$tipoPessoa = '1';
+$tipoPessoa = '3';
 
 // Gerar documentos
 $server = "http://".$_SERVER['SERVER_NAME']."/promac";
@@ -21,7 +21,6 @@ function pegaStatus($id)
 
 function listaArquivosPessoaComStatus($idPessoa,$tipoPessoa,$pagina)
 {
-	
 	$con = bancoMysqli();
 	$sql = "SELECT *
 			FROM lista_documento as list
@@ -110,7 +109,7 @@ if(isset($_POST["enviar"]))
 				{
 					if(move_uploaded_file($nome_temporario, $dir.$new_name))
 					{
-						$sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('3', '$idPf', '$y', '$new_name', '$hoje', '1'); ";
+						$sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('3', '$idProjeto', '$y', '$new_name', '$hoje', '1'); ";
 						$query = mysqli_query($con,$sql_insere_arquivo);
 						if($query)
 						{
@@ -152,7 +151,7 @@ if(isset($_POST['apagar']))
 	}
 }
 
-$pf = recuperaDados("pessoa_fisica","idPf",$idPf);
+//$pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 ?>
 
 <section id="list_items" class="home-section bg-white">
@@ -175,20 +174,6 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
-				<!-- Links emissão de documentos -->
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-5">
-						<p align="left">Declaração de Vínculo.</p>
-					</div>
-					<div class="col-md-3">
-						<a href='<?php echo $link1; ?>' target='_blank' class="btn btn-theme btn-md btn-block"><strong>Gerar</strong></a>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8"><hr/><br/></div>
-				</div>
-
 				<!-- Exibir arquivos -->
 				<div class="form-group">
 					<div class="col-md-12">
@@ -228,9 +213,9 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 										    $urlArquivo = $http.$arq['idListaDocumento'];
 											if(arquivosExiste($urlArquivo)): ?>	
 											  <td class="list_description path">
-                                                <?php              
+                                                <?php
                                                  $path = selecionaArquivoAnexo(
-                                                  $http, $arq['idListaDocumento']); ?>                  
+                                                  $http, $arq['idListaDocumento']); ?>
                                                   <a href='<?=$path?>'  
                                                   	 target="_blank">
                                                      <?=$arq['documento'] ?> 	
