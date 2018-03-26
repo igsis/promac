@@ -2,6 +2,10 @@
 $con = bancoMysqli();
 $tipoPessoa = '1';
 $idPf = isset($_POST['liberado']) ? $_POST['liberado'] : null;
+if($idPf == null)
+{
+	$idPf = $_GET['idFF'];
+}
 $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 
 if(isset($_POST['liberar']))
@@ -21,7 +25,7 @@ if(isset($_POST['negar']))
 	$envio = mysqli_query($con, $QueryPJ);
 	if($envio)
 		echo "<script>alert('O usuário foi negado com sucesso');</script>";
-		echo "<script>window.location = '?perfil=smc_pesquisa_pf';</script>";
+		echo "<script>window.location = '?perfil=smc_pesquisa_pf';</script>"; 
 }
 
 if(isset($_POST['desbloquear']))
@@ -36,6 +40,7 @@ if(isset($_POST['desbloquear']))
 
 if(isset($_POST['atualizar']))
 {
+	$id = $_POST['idPessoa'];
 	$observacao = $_POST['observ'];
 	$status = $_POST['status'];
 	$idArquivo = $_POST['idArquivo'];
@@ -46,7 +51,7 @@ if(isset($_POST['atualizar']))
 	if($envia)
 	{
 		echo "<script>alert('O arquivo foi atualizado com sucesso.')</script>";
-		echo "<script>window.location.href = 'index_pf.php?perfil=smc_index';</script>";
+		echo "<script>window.location.href = 'index_pf.php?perfil=smc_visualiza_perfil_pf&idFF=$id';</script>";
 	}
 	else
 	{
