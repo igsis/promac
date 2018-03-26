@@ -1,13 +1,16 @@
 <?php 
+# Barra Incentivador PJ
 $con  = bancoMysqli();
 
 $urlIncentivadorPj = array(
+	// Rotas
 	0 => '/promac/visual/incentivador_index_pj.php',
 	1 => '/promac/visual/incentivador_index_pj.php?perfil=cadastro_incentivador_pj',
 	2 => '/promac/visual/incentivador_index_pj.php?perfil=arquivos_incentivador_pj',
-	3 => '/promac/visual/incentivador_index_pj.php?perfil=incentivador_representante_pj',
-	4 => '/promac/visual/incentivador_index_pj.php?perfil=incentivador_representante_pj_resultado_busca',
-	5 => '/promac/visual/incentivador_index_pj.php?perfil=incentivador_representante_pj_cadastro'
+	3 => '/promac/visual/incentivador_index_pf.php?perfil=incentivador_informacoes_iniciais_pj',
+	4 => '/promac/visual/incentivador_index_pj.php?perfil=incentivador_representante_pj',
+	5 => '/promac/visual/incentivador_index_pj.php?perfil=incentivador_representante_pj_resultado_busca',
+	6 => '/promac/visual/incentivador_index_pj.php?perfil=incentivador_representante_pj_cadastro'
 );
 
 

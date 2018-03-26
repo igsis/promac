@@ -24,24 +24,6 @@
 						</div>
 					</div>
 				</form>
-				<form method="POST" action="?perfil=smc_liberacao_acesso" class="form-horizontal" role="form">
-					<hr/>
-					<label>PESSOA JURÍDICA</label>
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-5"><label>Razao Social</label>
-							<input type="text" name="razaoSocial" class="form-control" placeholder="">
-						</div>
-						<div class="col-md-3"><label>CNPJ</label>
-							<input type="text" name="cnpj" id="cnpj" class="form-control" placeholder="">
-						</div>
-					</div>
-					<hr/>
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-8">
-							<input type="submit" name="pesquisarPj" class="btn btn-theme btn-lg btn-block" value="Pesquisar">
-						</div>
-					</div>
-				</form>
 			</div>
 		</div>
 	</div>
