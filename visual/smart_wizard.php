@@ -25,11 +25,15 @@
         // echo $uri;
         # Barra Pessoa Fisica
         include_once 'barras_smart_wizard/barra_pf.php';
-        //-------------------------------------------------------------------
-        # Barra Evento Pessoa Juridica
+        # Barra Pessoa Juridica
         include_once 'barras_smart_wizard/barra_pj.php';
- 
-        ?>
+        //-------------------------------------------------------------------
+        # Barra Incentivador Pessoa Fisica
+        include_once 'barras_smart_wizard/barra_incentivador_pf.php';
+         # Barra Incentivador Pessoa Fisica
+        include_once 'barras_smart_wizard/barra_incentivador_pj.php';
+
+    ?>
 </div>
 <!-- Include SmartWizard JavaScript source -->
 <script type="text/javascript" src="../visual/dist/js/jquery.smartWizard.js"></script>

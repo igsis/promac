@@ -28,7 +28,7 @@ if($nome != '' || $cpf != '')
 	{
 		$filtro_cpf = "";
 	}
-	
+
 	if ($filtro_nome != '' && $filtro_cpf != '')
 	{
 		$filtro = " AND ";
