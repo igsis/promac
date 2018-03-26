@@ -34,12 +34,12 @@ $local = recuperaDados("locais_realizacao", "idLocaisRealizacao", $idLocaisReali
 						</div> 
 
 						<div class="col-md-2"><label>Público Estimado *</label><br/>
-							<input type="text" name="estimativaPublico" class="form-control" value="<?php echo $local['estimativaPublico'] ?>">
+							<input type="text" name="estimativaPublico" class="form-control" value="<?php echo $local['estimativaPublico'] ?>" required>
 						</div>
 
 						<div class="col-md-2">
 							<label>Zona *</label>
-							<select class="form-control" name="idZona" >
+							<select class="form-control" name="idZona" required>
 								<option value="1"></option>
 								<?php echo geraOpcao("zona", $local['idZona']) ?>
 							</select>

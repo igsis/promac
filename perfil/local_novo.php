@@ -33,12 +33,12 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 						</div>
 
 						<div class="col-md-2"><label>Público Estimado *</label><br/>
-							<input type="text" name="estimativaPublico" class="form-control">
+							<input type="text" name="estimativaPublico" class="form-control" required>
 						</div>
 
 						<div class="col-md-2">
 							<label>Zona *</label>
-							<select class="form-control" name="idZona" >
+							<select class="form-control" name="idZona" required>
 								<option value="0"></option>
 								<?php echo geraOpcao("zona","") ?>
 							</select>

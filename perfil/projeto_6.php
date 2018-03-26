@@ -48,7 +48,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<label>Metodologia e parâmetros a serem utilizados para aferição do cumprimento de metas</label>
-							<textarea name="metodologia" class="form-control" rows="10"><?php echo $projeto['metodologia'] ?></textarea>
+							<textarea name="metodologia" class="form-control" rows="10" required><?php echo $projeto['metodologia'] ?></textarea>
 						</div>
 					</div>
 

@@ -29,16 +29,16 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-4">
 							<label>Nome *</label><br/>
-							<input type="text" name="nome" class="form-control" maxlength="150">
+							<input type="text" name="nome" class="form-control" maxlength="150" required>
 						</div>
 
 						<div class="col-md-2"><label>CPF *</label><br/>
-							<input type="text" name="cpf" id="cpf" class="form-control">
+							<input type="text" name="cpf" id="cpf" class="form-control" required>
 						</div>
 
 						<div class="col-md-2">
 							<label>Função *</label>
-							<input type="text" name="funcao" class="form-control" maxlength="50">
+							<input type="text" name="funcao" class="form-control" maxlength="50" required>
 						</div>
 					</div>
 

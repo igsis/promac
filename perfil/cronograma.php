@@ -101,7 +101,7 @@ else
 											echo date("Y",$var);
 										} else{
 											echo "00/00/0000";
-										}?>">
+										}?>" required>
 						</div>
 						<div class="col-md-offset-2 col-md-3"><label>Data fim do projeto</label>
 							<input type="text" name="fimCronograma" class="form-control" id="datepicker02" value="<?php
@@ -112,7 +112,7 @@ else
 											echo date("Y",$var);
 										} else{
 											echo "00/00/0000";
-										}?>">
+										}?>" required>
 						</div>
 					</div>
 

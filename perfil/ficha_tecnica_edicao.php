@@ -30,16 +30,16 @@ $fichaTecnica = recuperaDados("ficha_tecnica", "idFichaTecnica", $idFichaTecnica
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-4">
 							<label>Nome *</label><br/>
-							<input type="text" name="nome" class="form-control" maxlength="150" value="<?php echo $fichaTecnica['nome'] ?>">
+							<input type="text" name="nome" class="form-control" maxlength="150" value="<?php echo $fichaTecnica['nome'] ?>" required>
 						</div>
 
 						<div class="col-md-2"><label>CPF *</label><br/>
-							<input type="text" name="cpf" id="cpf" class="form-control" value="<?php echo $fichaTecnica['cpf'] ?>">
+							<input type="text" name="cpf" id="cpf" class="form-control" value="<?php echo $fichaTecnica['cpf'] ?>" required>
 						</div>
 
 						<div class="col-md-2">
 							<label>Função *</label>
-							<input type="text" name="funcao" class="form-control" maxlength="50" value="<?php echo $fichaTecnica['funcao'] ?>">
+							<input type="text" name="funcao" class="form-control" maxlength="50" value="<?php echo $fichaTecnica['funcao'] ?>" required>
 						</div>
 					</div>
 
