@@ -1,48 +1,126 @@
 ﻿<?php
-
 //require '../include/';
-   require_once("../funcoes/funcoesConecta.php");
-   require_once("../funcoes/funcoesGerais.php");
-   require_once("../funcoes/funcoesSiscontrat.php");
-   require_once("../funcoes/funcoesSiscontrat.php");
-   require_once("../include/phpexcel/Classes/PHPExcel.php");
+require_once("../funcoes/funcoesConecta.php");
+require_once("../funcoes/funcoesGerais.php");
+require_once("../include/phpexcel/Classes/PHPExcel.php");
 
-//CONEXÃO COM BANCO DE DADOS 
-   $conexao = bancoMysqli();
-
+//CONEXÃO COM BANCO DE DADOS
+$con = bancoMysqli();
 
 // Create new PHPExcel object
 $objPHPExcel = new PHPExcel();
+
 // Set document properties
-$objPHPExcel->freezePane(1);
-$objPHPExcel->getProperties()->setCreator("Maarten Balliauw");
-$objPHPExcel->getProperties()->setLastModifiedBy("Maarten Balliauw");
-$objPHPExcel->getProperties()->setTitle("Office 2007 XLSX Test Document");
-$objPHPExcel->getProperties()->setSubject("Office 2007 XLSX Test Document");
-$objPHPExcel->getProperties()->setDescription("Test document for Office 2007 XLSX, generated using PHP classes.");
+$cacheMethod = PHPExcel_CachedObjectStorageFactory:: cache_to_phpTemp;
+$cacheSettings = array( ' memoryCacheSize ' => '8MB');
+PHPExcel_Settings::setCacheStorageMethod($cacheMethod, $cacheSettings);
+$objPHPExcel->getProperties()->setCreator("Sistema Pro-Mac");
+$objPHPExcel->getProperties()->setLastModifiedBy("Sistema Pro-Mac");
+$objPHPExcel->getProperties()->setTitle("Relatório de Pessoa Física");
+$objPHPExcel->getProperties()->setSubject("Relatório de Pessoa Física");
+$objPHPExcel->getProperties()->setDescription("Gerado automaticamente a partir do Sistema Pro-Mac");
 $objPHPExcel->getProperties()->setKeywords("office 2007 openxml php");
-$objPHPExcel->getProperties()->setCategory("Test result file");
+$objPHPExcel->getProperties()->setCategory("Pessoa Física");
+
 // Add some data
 $objPHPExcel->setActiveSheetIndex(0)
-            ->setCellValue('A1', 'Hello')
-            ->setCellValue('B2', 'world!')
-            ->setCellValue('C1', 'Hello')
-            ->setCellValue('D2', 'world!');
-// Miscellaneous glyphs, UTF-8
-$objPHPExcel->setActiveSheetIndex(0)
-            ->setCellValue('A4', 'Miscellaneous glyphs')
-            ->setCellValue('A5', 'éàèùâêîôûëïüÿäöüç');
-// Rename worksheet
-$objPHPExcel->getActiveSheet()->setTitle('Simple');
-// Set active sheet index to the first sheet, so Excel opens this as the first sheet
-$objPHPExcel->setActiveSheetIndex(0);
+            ->setCellValue('A1', 'Nome')
+            ->setCellValue('B1', 'CPF')
+            ->setCellValue('C1', 'RG')
+            ->setCellValue('D1', 'Logradouro')
+            ->setCellValue('E1', 'Nº')
+            ->setCellValue('F1', 'Complemento')
+            ->setCellValue('G1', 'Bairro')
+            ->setCellValue('H1', 'Cidade')
+            ->setCellValue('I1', 'Estado')
+            ->setCellValue('J1', 'CEP')
+            ->setCellValue('K1', 'Telefone')
+            ->setCellValue('L1', 'Celular')
+            ->setCellValue('M1', 'E-mail')
+            ->setCellValue('N1', 'Cooperado')
+            ->setCellValue('O1', 'Nível de Acesso');
 
+//Colorir a primeira fila
+$objPHPExcel->getActiveSheet()->getStyle('A1:O1')->applyFromArray(
+   array(
+      'fill' => array(
+         'type' => PHPExcel_Style_Fill::FILL_SOLID,
+         'color' => array('rgb' => 'E0EEEE')
+      ),
+   )
+);
+
+
+//Dados
+$sql = "SELECT * FROM pessoa_fisica ORDER BY nome";
+$query = mysqli_query($con,$sql);
+
+$i = 2; // para começar a gravar os dados na segunda linha
+while($row = mysqli_fetch_array($query))
+{
+   if($row['cooperado'] == 1)
+      $cooperado = 'Sim';
+   else
+      $cooperado = 'Não';
+
+   if($row['idNivelAcesso'] == 1)
+      {$nivelAcesso = 'Proponente';}
+   elseif($row['idNivelAcesso'] == 2)
+      {$nivelAcesso = 'SMC';}
+   else
+      {$nivelAcesso = 'Comissão';}
+
+   $a = "A".$i;
+   $b = "B".$i;
+   $c = "C".$i;
+   $d = "D".$i;
+   $e = "E".$i;
+   $f = "F".$i;
+   $g = "G".$i;
+   $h = "H".$i;
+   $I = "I".$i;
+   $j = "J".$i;
+   $k = "K".$i;
+   $l = "L".$i;
+   $m = "M".$i;
+   $n = "N".$i;
+   $o = "O".$i;
+
+   $objPHPExcel->setActiveSheetIndex(0)
+               ->setCellValue($a, $row['nome'])
+               ->setCellValue($b, $row['cpf'])
+               ->setCellValue($c, $row['rg'])
+               ->setCellValue($d, $row['logradouro'])
+               ->setCellValue($e, $row['numero'])
+               ->setCellValue($f, $row['complemento'])
+               ->setCellValue($g, $row['bairro'])
+               ->setCellValue($h, $row['cidade'])
+               ->setCellValue($I, $row['estado'])
+               ->setCellValue($j, $row['cep'])
+               ->setCellValue($k, $row['telefone'])
+               ->setCellValue($l, $row['celular'])
+               ->setCellValue($m, $row['email'])
+               ->setCellValue($n, $cooperado)
+               ->setCellValue($o, $nivelAcesso);
+   $i++;
+}
+foreach (range('A', $objPHPExcel->getActiveSheet()->getHighestDataColumn()) as $col)
+{
+   $objPHPExcel->getActiveSheet()
+               ->getColumnDimension($col)
+               ->setAutoSize(true);
+}
+
+$objPHPExcel->setActiveSheetIndex(0);
 ob_end_clean();
     ob_start();
+
+$nome_arquivo = date("Y-m-d")."_pessoa_fisica.xls";
+
 // Redirect output to a client’s web browser (Excel2007)
 header('Content-Type: text/html; charset=ISO-8859-1');
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment;filename="01simple.xls"');
+header('Content-Disposition: attachment;filename="'.$nome_arquivo.'"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');
@@ -55,6 +133,4 @@ header ('Pragma: public'); // HTTP/1.0
 
 $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
 $objWriter->save('php://output');
-exit;
-
 ?>
