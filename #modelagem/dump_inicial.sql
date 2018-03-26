@@ -66,8 +66,10 @@ INSERT INTO `lista_documento` (`idListaDocumento`, `idTipoUpload`, `documento`, 
 (36,5,'Comprovante de endereço atual (até últimos 3 meses)','ce',1),
 (37,5,'Carnê IPTU','ciptu',1),
 (38,5,'Contrato de locação','clc',1),
-(39, 3, 'Carta(s) de anuência do(s) principal(is) participante(s)', 'anuencia', 1),
-(40, 3, 'Plano de atividades', 'atividades', 1);
+(39, 5,'RG/RNE do Representante Legal','rg',1),
+(40,5,'CPF do Representante Legal','cpf',1),
+(41, 3, 'Carta(s) de anuência do(s) principal(is) participante(s)', 'anuencia', 1),
+(42, 3, 'Plano de atividades', 'atividades', 1);
 
 --
 -- Extraindo dados da tabela `renuncia_fiscal`
