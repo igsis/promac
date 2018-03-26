@@ -129,7 +129,7 @@ else{
 										<tr>
 											<?php
 											$doc = $arq['documento'];
-											$query = "SELECT idListaDocumento FROM lista_documento WHERE documento='$doc' AND publicado='1' AND idTipoUpload='2'";
+											$query = "SELECT idListaDocumento FROM lista_documento WHERE documento='$doc' AND publicado='1' AND idTipoUpload='5'";
 											$envio = $con->query($query);
 											$row = $envio->fetch_array(MYSQLI_ASSOC);
 

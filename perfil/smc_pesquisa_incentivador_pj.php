@@ -1,17 +1,17 @@
 <section id="list_items" class="home-section bg-white">
 	<div class="container"><?php include 'includes/menu_smc.php'; ?>
 		<div class="form-group">
-			<h4>Pesquisar Incentivadores PF</h4>
+			<h4>Pesquisar Incentivadores PJ</h4>
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
-				<form method="POST" action="?perfil=smc_pesquisa_incentivador_pf_resultado" class="form-horizontal" role="form">
+				<form method="POST" action="?perfil=smc_pesquisa_incentivador_pj_resultado" class="form-horizontal" role="form">
 
 					<div class="form-group">
-						<div class="col-md-offset-2 col-md-5"><label>Nome</label>
+						<div class="col-md-offset-2 col-md-5"><label>Razão Social</label>
 							<input type="text" name="nome" class="form-control" placeholder="">
 						</div>
-						<div class="col-md-3"><label>CPF</label>
+						<div class="col-md-3"><label>CNPJ</label>
 							<input type="text" name="cpf" id="cpf" class="form-control" placeholder="">
 						</div>
 					</div>
@@ -36,4 +36,4 @@
 			</div>
 		</div>
 	</div>
-</section>
+</section> 

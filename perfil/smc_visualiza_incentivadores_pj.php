@@ -1,13 +1,13 @@
 <?php
 $con = bancoMysqli();
-$tipoPessoa = '1';
-$idPf = isset($_POST['liberado']) ? $_POST['liberado'] : null;
-$pf = recuperaDados("incentivador_pessoafisica","idPf",$idPf);
+$tipoPessoa = '5';
+$idPj = isset($_POST['liberado']) ? $_POST['liberado'] : null;
+$pf = recuperaDados("incentivador_pessoajuridica","idPj",$idPj);
 
 if(isset($_POST['liberar']))
 {
 	$id = $_POST['LIBPF'];
-	$QueryPJ = "UPDATE incentivador_pessoafisica SET liberado='3' WHERE idPf = '$id'";
+	$QueryPJ = "UPDATE incentivador_pessoajuridica SET liberado='3' WHERE idPj = '$id'";
 	$envio = mysqli_query($con, $QueryPJ);
 	if($envio)
 		echo "<script>alert('O usuário foi liberado com sucesso');</script>";
@@ -17,7 +17,7 @@ if(isset($_POST['liberar']))
 if(isset($_POST['negar']))
 {
 	$id = $_POST['LIBPF'];
-	$QueryPJ = "UPDATE incentivador_pessoafisica SET liberado='2' WHERE idPf = '$id'";
+	$QueryPJ = "UPDATE incentivador_pessoajuridica SET liberado='2' WHERE idPj = '$id'";
 	$envio = mysqli_query($con, $QueryPJ);
 	if($envio)
 		echo "<script>alert('O usuário foi negado com sucesso');</script>";
@@ -27,11 +27,11 @@ if(isset($_POST['negar']))
 if(isset($_POST['desbloquear']))
 {
 	$id = $_POST['LIBPF'];
-	$QueryPJ = "UPDATE incentivador_pessoafisica SET liberado='1' WHERE idPf = '$id'";
+	$QueryPJ = "UPDATE incentivador_pessoajuridica SET liberado='1' WHERE idPj = '$id'";
 	$envio = mysqli_query($con, $QueryPJ);
 	if($envio)
 		echo "<script>alert('O usuário foi desbloqueado com sucesso');</script>";
-		echo "<script>window.location = '?perfil=smc_pesquisa_pf';</script>";
+		echo "<script>window.location = '?perfil=smc_pesquisa_incentivador_pj';</script>";
 }
 
 if(isset($_POST['atualizar']))
@@ -135,9 +135,8 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 		 	<h5>Dados do proponente</h5>
 		 </div>
 		 <div class="well">
-			<p align="justify"><strong>Nome:</strong> <?php echo isset($pf['nome']) ? $pf['nome'] : null; ?></p>
-			<p align="justify"><strong>CPF:</strong> <?php echo isset($pf['cpf']) ? $pf['cpf'] : null; ?><p>
-			<p align="justify"><strong>RG:</strong> <?php echo isset($pf['rg']) ? $pf['rg'] : null; ?><p>
+			<p align="justify"><strong>Razão Social:</strong> <?php echo isset($pf['razaoSocial']) ? $pf['razaoSocial'] : null; ?></p>
+			<p align="justify"><strong>CNPJ:</strong> <?php echo isset($pf['cnpj']) ? $pf['cnpj'] : null; ?><p>
 			<p align="justify"><strong>Telefone:</strong> <?php echo isset($pf['telefone']) ? $pf['telefone'] : null; ?></p>
 			<p align="justify"><strong>Celular:</strong> <?php echo isset($pf['celular']) ? $pf['celular'] : null; ?></p>
 			<p align="justify"><strong>Email:</strong> <?php echo isset($pf['email']) ? $pf['email'] : null; ?></p>
@@ -151,11 +150,11 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 		 </div>
 		 <div class="table-responsive list_info"><h6>Arquivo(s) de Pessoa Física</h6>
 		<?php
-		$query = "SELECT idProjeto FROM projeto WHERE idPf='$idPf' AND publicado = '1'";
+		$query = "SELECT idProjeto FROM projeto WHERE idPj='$idPj' AND publicado = '1'";
 		$send = mysqli_query($con, $query);
 		$row = mysqli_fetch_array($send);
-		listaArquivosPessoaEditorr($pf['idPf'],'4',"smc_visualiza_incentivadores_pf");
-		$idFisica = $pf['idPf']; ?>
+		listaArquivosPessoaEditorr($pf['idPj'],'5',"smc_visualiza_incentivadores_pj");
+		$idFisica = $pf['idPj']; ?>
 		</div>
 	</div>
 
@@ -166,14 +165,14 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 	?>
 		<div class="form-group">
 			<div class='col-md-offset-4 col-md-2'>
-				<form class='form-horizontal' role='form' action='?perfil=smc_visualiza_incentivadores_pf' method='post'>
-					<input type='hidden' name='LIBPF' value='<?php echo $pf['idPf'] ?>' />
+				<form class='form-horizontal' role='form' action='?perfil=smc_visualiza_perfil_pf' method='post'>
+					<input type='hidden' name='LIBPF' value='<?php echo $pf['idPj'] ?>' />
 					<input type='submit' name='negar' value='Não Aprovar' class='btn btn-theme btn-lg btn-block'>
 				</form>
 			</div>
 			<div class='col-md-2'>
-				<form class='form-horizontal' role='form' action='?perfil=smc_visualiza_incentivadores_pf' method='post'>
-					<input type='hidden' name='LIBPF' value='<?php echo $pf['idPf'] ?>' />
+				<form class='form-horizontal' role='form' action='?perfil=smc_visualiza_perfil_pf' method='post'>
+					<input type='hidden' name='LIBPF' value='<?php echo $pf['idPj'] ?>' />
 					<input type='submit' name='liberar' value='Aprovar' class='btn btn-theme btn-lg btn-block'>
 				</form>
 			</div>
@@ -186,7 +185,7 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 		<div class="form-group">
 			<div class='col-md-offset-2 col-md-8'>
 				<form class='form-horizontal' role='form' action='?perfil=smc_visualiza_perfil_pf' method='post'>
-					<input type='hidden' name='LIBPF' value='<?php echo $pf['idPf'] ?>' />
+					<input type='hidden' name='LIBPF' value='<?php echo $pf['idPj'] ?>' />
 					<input type='submit' name='desbloquear' value='Desbloquear dados do proponente para edição' class='btn btn-theme btn-lg btn-block'>
 				</form>
 			</div>
