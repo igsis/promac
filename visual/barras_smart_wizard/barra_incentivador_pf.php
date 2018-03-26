@@ -1,10 +1,13 @@
 <?php 
+# Barra Incentivador PF
 $con  = bancoMysqli();
 
 $urlIncentivadorPf = array(
 	// Rotas
 	0 => '/promac/visual/incentivador_index_pf.php',
-	1 => '/promac/visual/incentivador_index_pf.php?perfil=cadastro_incentivador_pf'
+	1 => '/promac/visual/incentivador_index_pf.php?perfil=cadastro_incentivador_pf',
+	2 => '/promac/visual/incentivador_index_pf.php?perfil=incentivador_informacoes_iniciais_pf',
+	3 => '/promac/visual/incentivador_index_pf.php?perfil=incentivador_arquivos_pf'
 
 );
 
@@ -24,7 +27,7 @@ for ($i = 0; $i < count($urlIncentivadorPf); $i++) {
                 <li class="<?php echo isset($ligar1) ? $ligar1 : 'clickable'; ?>">
                     <a onclick="location.href='incentivador_index_pf.php'" href=""><br />Incentivador</a>
                 </li>
-                <li class="<?php echo isset($liga2) ? $liga2 : 'clickable'; ?>">
+                <li class="<?php echo isset($ligar2) ? $ligar2 : 'clickable'; ?>">
                     <a onclick="location.href=''" href=""><br />Documentos do Incentivador</a>
                 </li>
             </ul>
