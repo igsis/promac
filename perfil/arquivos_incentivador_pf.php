@@ -6,7 +6,7 @@ $tipoPessoa = '4';
 
 if(isset($_POST["enviar"]))
 {
-	$sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa'";
+	$sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '4'";
 	$query_arquivos = mysqli_query($con,$sql_arquivos);
 	while($arq = mysqli_fetch_array($query_arquivos))
 	{
@@ -128,11 +128,11 @@ else{
 										<tr>
 											<?php
 											$doc = $arq['documento'];
-											$query = "SELECT idListaDocumento FROM lista_documento WHERE documento='$doc' AND publicado='1' AND idTipoUpload='1'";
+											$query = "SELECT idListaDocumento FROM lista_documento WHERE documento='$doc' AND publicado='1' AND idTipoUpload='4'";
 											$envio = $con->query($query);
 											$row = $envio->fetch_array(MYSQLI_ASSOC);
 
-											if(verificaArquivosExistentesPF($idPf,$row['idListaDocumento'])){
+											if(verificaArquivosExistentesIncentivador($idPf,$row['idListaDocumento'])){
 												echo '<div class="alert alert-success">O arquivo ' . $doc . ' já foi enviado.</div>';
 											}
 											else{ ?>
