@@ -73,7 +73,8 @@ if(isset($_POST['consulta']))
 		<div class="form-group">
 			<div class="col-md-offset-5 col-md-3">
 			<form method="POST" action="?perfil=visualiza_perfil" class="form-horizontal" role="form">
-				<input type="hidden" name="idUs" value="<?php $idusuario ?>">
+				<?php  $idPessoaFi = $pf['idPf'];
+				echo "<input type='hidden' name='idUs' value='$idPessoaFi'>'"; ?>
 				<br><input type="submit" name="consulta" class="btn btn-theme btn-lg btn-block" value="Alterar">
 
 			</div>

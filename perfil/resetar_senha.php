@@ -5,11 +5,12 @@ $con = bancoMysqli();
 if(isset($_POST['consulta']))
 {
 	$cpf = $_POST['cpf'];
-	$query = "SELECT idPf FROM pessoa_fisica WHERE idNivelAcesso in (2,3) AND cpf = '$cpf'";
+	$query = "SELECT idPf, idNivelAcesso FROM pessoa_fisica WHERE idNivelAcesso in (2,3) AND cpf = '$cpf'";
 	$envia = mysqli_query($con, $query);
 	$row = mysqli_fetch_array($envia);
+	$idAcesso = $row['idNivelAcesso'];
 	$idUser = $row['idPf'];
-	if($idUser != 2 && $idUser != 3)
+	if($idAcesso != 2 && $idAcesso != 3)
 	{
 		echo "<script>alert('ERRO: O usuário em questão não faz parte da SMC ou Comissão.')</script>";
 	}
