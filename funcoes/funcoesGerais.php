@@ -865,6 +865,59 @@ function listaArquivosPessoaEditor($idPessoa,$tipoPessoa,$pagina)
 	}
 }
 
+//Lista os arquivos da pessoa com o campo de status e observação para visualização
+function listaArquivosPessoaObs($idPessoa,$tipoPessoa)
+{
+	$con = bancoMysqli();
+	$sql = "SELECT *
+			FROM lista_documento as list
+			INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
+			WHERE arq.idPessoa = '$idPessoa'
+			AND arq.idTipo = '$tipoPessoa'
+			AND arq.publicado = '1'";
+	$query = mysqli_query($con,$sql);
+	$linhas = mysqli_num_rows($query);
+
+	if ($linhas > 0)
+	{
+	echo "
+		<table class='table table-condensed'>
+			<thead>
+				<tr class='list_menu'>
+					<td><strong>Tipo de arquivo</strong></td>
+					<td><strong>Nome do arquivo</strong></td>
+					<td><strong>Status</strong></td>
+					<td><strong>Observações</strong></td>
+				</tr>
+			</thead>
+			<tbody>";
+				while($arquivo = mysqli_fetch_array($query))
+				{
+					echo "<tr>";
+					echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
+					echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
+					$queryy = "SELECT idStatusDocumento FROM upload_arquivo WHERE idUploadArquivo = '".$arquivo['idUploadArquivo']."'";
+					$send = mysqli_query($con, $queryy);
+					$row = mysqli_fetch_array($send);
+					$statusDoc = recuperaDados("status_documento","idStatusDocumento",$row['idStatusDocumento']);
+
+					echo "<td class='list_description'>".$statusDoc['status']."</td>";
+					$queryOBS = "SELECT observacoes FROM upload_arquivo WHERE idUploadArquivo = '".$arquivo['idUploadArquivo']."'";
+					$send = mysqli_query($con, $queryOBS);
+					$row = mysqli_fetch_array($send);
+					echo "<td class='list_description'>".$row['observacoes']."</td>";
+					echo "</tr>";
+				}
+				echo "
+		</tbody>
+		</table>";
+	}
+	else
+	{
+		echo "<p>Não há arquivo(s) inserido(s).<p/><br/>";
+	}
+}
+
 function exibirArquivos($tipoPessoa,$idPessoa)
 {
 	$con = bancoMysqli();

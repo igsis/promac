@@ -102,9 +102,19 @@ if(isset($_POST['apagar']))
 				elseif($pj['liberado'] == 2)// a liberação de projetos foi rejeitada pela SMC.
 				{
 			?>
-				<div class="alert alert-danger">
-					<strong>Sua solicitação para a liberação de envio de projetos foi rejeitada pela Secretaria Municipal de Cultura.</strong>
-				</div>
+					<div class="alert alert-danger">
+						<strong>Sua solicitação para a liberação de envio de projetos foi rejeitada pela Secretaria Municipal de Cultura.</strong>
+					</div>
+					<div>
+				 		<?php listaArquivosPessoaObs($idPj,2) ?>
+				 	</div>
+				 	<div class="form-group">
+						<div class="col-md-offset-2 col-md-8">
+							<form class="form-horizontal" role="form" action="?perfil=projeto_pj" method="post">
+								<input type="submit" name="liberacao" value="Concluir inscrição do proponente" class="btn btn-theme btn-lg btn-block">
+							</form>
+						</div>
+					</div>
 			<?php
 				}
 				else // liberação concedida pela SMC - liberado = 3
