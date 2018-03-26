@@ -2,6 +2,11 @@
 $con = bancoMysqli();
 $tipoPessoa = '1';
 $idPf = isset($_POST['liberado']) ? $_POST['liberado'] : null;
+if($idPf == null)
+{
+	$idPf = $_GET['idFF'];
+}
+
 $pf = recuperaDados("incentivador_pessoafisica","idPf",$idPf);
 
 if(isset($_POST['liberar']))
@@ -36,6 +41,7 @@ if(isset($_POST['desbloquear']))
 
 if(isset($_POST['atualizar']))
 {
+	$id = $_POST['idPessoa'];
 	$observacao = $_POST['observ'];
 	$status = $_POST['status'];
 	$idArquivo = $_POST['idArquivo'];
@@ -46,7 +52,7 @@ if(isset($_POST['atualizar']))
 	if($envia)
 	{
 		echo "<script>alert('O arquivo foi atualizado com sucesso.')</script>";
-		echo "<script>window.location.href = 'index_pf.php?perfil=smc_index';</script>";
+		echo "<script>window.location.href = 'index_pf.php?perfil=smc_visualiza_incentivadores_pf&idFF=$id';</script>";
 	}
 	else
 	{
@@ -86,7 +92,7 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 					echo "<tr>";
 					echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
 					echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
-					echo "<form id='atualizaDoc' method='POST' action='?perfil=smc_visualiza_perfil_pf'>";
+					echo "<form id='atualizaDoc' method='POST' action='?perfil=smc_visualiza_incentivadores_pf'>";
 					$queryy = "SELECT idStatusDocumento FROM upload_arquivo WHERE idUploadArquivo = '".$arquivo['idUploadArquivo']."'";
 					$send = mysqli_query($con, $queryy);
 					$row = mysqli_fetch_array($send);
@@ -185,7 +191,7 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 	?>
 		<div class="form-group">
 			<div class='col-md-offset-2 col-md-8'>
-				<form class='form-horizontal' role='form' action='?perfil=smc_visualiza_perfil_pf' method='post'>
+				<form class='form-horizontal' role='form' action='?perfil=smc_visualiza_incentivadores_pf' method='post'>
 					<input type='hidden' name='LIBPF' value='<?php echo $pf['idPf'] ?>' />
 					<input type='submit' name='desbloquear' value='Desbloquear dados do proponente para edição' class='btn btn-theme btn-lg btn-block'>
 				</form>
