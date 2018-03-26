@@ -90,7 +90,7 @@ if($pf['liberado'] == 3)
 	echo "<div class='alert alert-warning'>
   	<strong>Aviso!</strong> Seus dados já foram aceitos, portanto, não podem ser alterados.</div>";
 
-  	include 'resumo_usuario.php';
+  	include 'resumo_arquivos_usuario.php';
 }
 else{
 ?>

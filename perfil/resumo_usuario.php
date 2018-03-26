@@ -89,13 +89,6 @@ function listaArquivosPessoaSApagar($idPessoa,$tipoPessoa,$pagina)
 						<p align='justify'><strong>Email:</strong> <?php echo isset($pf['email']) ? $pf['email'] : null; ?><p>
 						</div>
 						
-						<div class="form-group">
-							<div class="col-md-12">
-								<div class="table-responsive list_info"><h6>Arquivo(s) Anexado(s)</h6>
-									<?php listaArquivosPessoaSApagar($pf['idPf'],'1',"resumo_usuario"); ?>
-								</div>
-							</div>
-						</div>
 						<?php
 					
 			}
@@ -116,13 +109,6 @@ function listaArquivosPessoaSApagar($idPessoa,$tipoPessoa,$pagina)
 						<p align='justify'><strong>Email:</strong> <?php echo isset($pj['email']) ? $pj['email'] : null; ?><p>
 						</div>
 						
-						<div class="form-group">
-							<div class="col-md-12">
-								<div class="table-responsive list_info"><h6>Arquivo(s) Anexado(s)</h6>
-									<?php listaArquivosPessoaSApagar($pj['idPj'],'2',"resumo_usuario"); ?>
-								</div>
-							</div>
-						</div>
 				<?php }
 		 ?>
 </section>
