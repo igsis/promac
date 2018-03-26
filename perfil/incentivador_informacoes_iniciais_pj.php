@@ -59,7 +59,9 @@ else{
 <section id="list_items" class="home-section bg-white">
 	<div class="container"><?php include 'includes/menu_interno_pj.php'; ?>
 		<div class="form-group">
-			<h4>Proponente</h4>
+			<h4>Incentivador<br>
+				<small>Pessoa Jurídica</small>
+			</h4>
 			<h5><?php if(isset($mensagem)){echo $mensagem;};?></h5>
 		</div>
 		<div class="row">
