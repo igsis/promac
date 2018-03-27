@@ -383,12 +383,30 @@ if($projeto['idStatus'] == 6)
 		     if($alterar == 1){ ?>
 			    <input type="hidden" name="alterar" value="<?php echo $alterar; ?>">
 		    <?php } ?>
-			<input type="hidden" value="Enviar" id="inptEnviar"
-			       class="btn btn-theme btn-lg btn-block">
+			<button id="inptEnviar" class="btn btn-theme btn-lg" type="button" data-toggle="modal" data-target="#confirmApagar" data-title="Inscrever Projeto?" data-message="Deseja realmente inscrever o projeto <?= $projeto['nomeProjeto'] ?>" style="display: none;">Inscrever Projeto</button>
+
+			<!-- <input type="hidden" value="Inscrever Projeto" id="inptEnviar"
+			       class="btn btn-theme btn-lg btn-block"> -->
 		  </form>
+		  <!-- INICIO Modal de confirmação de envio do projeto -->
+		  <div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							<h4 class="modal-title">Inscrever Projeto?</h4>
+						</div>
+						<div class="modal-body">
+							<p>Confirma?</p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+							<button type="button" class="btn btn-success" id="confirm">Inscrever</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- FIM Modal de confirmação de envio do projeto -->
 		</div>
 	  </div>
 </section>
-
-
-

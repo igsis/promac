@@ -10,12 +10,12 @@ function termosDoProjeto()
   btnAceitar.addEventListener('click', function(){    
     
     termo.checked = true;  
-    inptEnviar.type = 'submit';    
+    document.getElementById("inptEnviar").style.display = "block";
   });	 
 
   btnRejeitar.addEventListener('click', function(){    
     
     termo.checked = false;  
-    inptEnviar.type = 'hidden';    
+    document.getElementById("inptEnviar").style.display = "none";
   });	 
 }

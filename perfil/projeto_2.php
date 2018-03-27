@@ -67,7 +67,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
-							<label>Enquadramento da renúncia fiscal *</label> <button class='btn btn-default' type='button' data-toggle='modal' data-target='#infoRenunciaFiscal' style="border-radius: 30px;"><i class="fa fa-info-circle"></i></button>
+							<label>Enquadramento da renúncia fiscal *</label> <button class='btn btn-default' type='button' data-toggle='modal' data-target='#infoRenunciaFiscal' style="border-radius: 30px;"><i class="fa fa-question-circle"></i></button>
 							<select required class="form-control" name="idRenunciaFiscal">
 								<option value="0"></option>
 								<?php echo geraOpcao("renuncia_fiscal",$projeto['idRenunciaFiscal']) ?>

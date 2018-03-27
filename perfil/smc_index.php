@@ -188,7 +188,7 @@ if(isset($_POST['liberacaoPJ']))
 									echo "<td class='list_description'>".$area['areaAtuacao']."</td>";
 									echo "
 										<td class='list_description'>
-											<form method='POST' action='?perfil=comissao_detalhes_projeto'>
+											<form method='POST' action='?perfil=smc_detalhes_projeto'>
 												<input type='hidden' name='idProjeto' value='".$campo['idProjeto']."' />
 												<input type ='submit' class='btn btn-theme btn-block' value='Visualizar'>
 											</form>
