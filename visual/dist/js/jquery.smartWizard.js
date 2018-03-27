@@ -150,9 +150,9 @@
             }
 
             // Create the toolbar buttons
-            // var btnNext = this.options.toolbarSettings.showNextButton !== false ? $('<button></button>').text(this.options.lang.next).addClass('btn btn-default sw-btn-next').attr('type', 'button') : null;
-            // var btnPrevious = this.options.toolbarSettings.showPreviousButton !== false ? $('<button></button>').text(this.options.lang.previous).addClass('btn btn-default sw-btn-prev').attr('type', 'button') : null;
-            // var btnGroup = $('<div></div>').addClass('btn-group navbar-btn sw-btn-group pull-' + this.options.toolbarSettings.toolbarButtonPosition).attr('role', 'group').append(btnPrevious, btnNext);
+            var btnNext = this.options.toolbarSettings.showNextButton !== false ? $('<button></button>').text(this.options.lang.next).addClass('btn btn-default sw-btn-next').attr('type', 'button') : null;
+            var btnPrevious = this.options.toolbarSettings.showPreviousButton !== false ? $('<button></button>').text(this.options.lang.previous).addClass('btn btn-default sw-btn-prev').attr('type', 'button') : null;
+            var btnGroup = $('<div></div>').addClass('btn-group navbar-btn sw-btn-group pull-' + this.options.toolbarSettings.toolbarButtonPosition).attr('role', 'group').append(btnPrevious, btnNext);
 
             // Add extra toolbar buttons
             var btnGroupExtra = null;
