@@ -139,18 +139,19 @@ if(isset($_POST['apagaOrcamento']))
 					<div class="form-group">
 						<div class="col-md-3">
 							<br/><label>Etapa *</label>
-							<select class="form-control" name="idEtapa" required>
-								<option value="0"></option>
+							<select class="form-control" name="idEtapa" required style="margin-top: -5px;">
+								
+							<option value="0"></option>
 								<?php echo geraOpcao("etapa","") ?>
 							</select>
 						</div>
-						<div class="col-md-4"><br/><strong>Descrição: *</strong><br/>
+						<div class="col-md-3"><br/><strong>Descrição: *</strong><br/>
 							<input type="text" class="form-control" name="descricao" placeholder="Descrição da etapa" maxlength="255" required>
 						</div>
 						<div class="col-md-1"><br/><strong>Qtde:</strong><br/>
 							<input type="text" class="form-control" name="quantidade" required>
 						</div>
-						<div class="col-md-1"><strong>Unidade Medida:</strong><br/>
+						<div class="col-md-2"><strong>Unidade <br>Medida:</strong><br/>
 							<select class="form-control" name="idUnidadeMedida" required>
 								<option value="0"></option>
 								<?php echo geraOpcao("unidade_medida","") ?>
