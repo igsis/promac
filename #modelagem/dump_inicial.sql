@@ -69,7 +69,9 @@ INSERT INTO `lista_documento` (`idListaDocumento`, `idTipoUpload`, `documento`, 
 (39, 5,'RG/RNE do Representante Legal','rg',1),
 (40,5,'CPF do Representante Legal','cpf',1),
 (41, 3, 'Carta(s) de anuência do(s) principal(is) participante(s)', 'anuencia', 1),
-(42, 3, 'Plano de atividades', 'atividades', 1);
+(42, 3, 'Plano de atividades', 'atividades', 1),
+(43, 9, 'Parecer da Comissão', 'parecer', 1);
+
 
 --
 -- Extraindo dados da tabela `renuncia_fiscal`
