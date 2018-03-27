@@ -1,7 +1,11 @@
 <?php
 $con = bancoMysqli();
 
-$idProjeto = $_POST['idProjeto'];
+$idProjeto = isset($_POST['idProjeto']) ? $_POST['idProjeto'] : null;
+if($idProjeto == null)
+{
+	echo $idProjeto = $_GET['idFF'];
+}
 $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 
 // Gerar documentos
@@ -11,6 +15,7 @@ $link1 = $http."rlt_projeto.php";
 
 if(isset($_POST['gravarPrazos']))
 {
+	$idP = $_POST['IDP'];
 	$prazoCaptacao = exibirDataMysql($_POST['prazoCaptacao']);
 	$prorrogacaoCaptacao = $_POST['prorrogacaoCaptacao'];
 	$finalCaptacao = exibirDataMysql($_POST['finalCaptacao']);
@@ -23,7 +28,7 @@ if(isset($_POST['gravarPrazos']))
 	$prazos = recuperaDados("prazos_projeto","idProjeto",$idProjeto);
 	if($prazos == NULL)
 	{
-		$sql_insere = "INSERT INTO prazos_projeto (idProjeto, prazoCaptacao, prorrogacaoCaptacao, finalCaptacao, inicioExecucao, fimExecucao, prorrogacaoExecucao, finalProjeto, prestarContas) VALUES ('$idProjeto', '$prazoCaptacao', '$prorrogacaoCaptacao', '$finalCaptacao', '$inicioExecucao', '$fimExecucao', '$prorrogacaoExecucao', '$finalProjeto', '$prestarContas')";
+		$sql_insere = "INSERT INTO prazos_projeto (idProjeto, prazoCaptacao, prorrogacaoCaptacao, finalCaptacao, inicioExecucao, fimExecucao, prorrogacaoExecucao, finalProjeto, prestarContas) VALUES ('$idP', '$prazoCaptacao', '$prorrogacaoCaptacao', '$finalCaptacao', '$inicioExecucao', '$fimExecucao', '$prorrogacaoExecucao', '$finalProjeto', '$prestarContas')";
 		if(mysqli_query($con,$sql_insere))
 		{
 			$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso! Utilize o menu para avançar.</strong></font>";
@@ -44,10 +49,11 @@ if(isset($_POST['gravarPrazos']))
 		prorrogacaoExecucao = '$prorrogacaoExecucao',
 		finalProjeto = '$finalProjeto',
 		prestarContas = '$prestarContas'
-		WHERE idProjeto = '$idProjeto'";
+		WHERE idProjeto = '$idP'";
 		if(mysqli_query($con,$sql_edita))
 		{
 			$mensagem = "<font color='#01DF3A'><strong>Editado com sucesso!</strong></font>";
+			echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>"; 
 		}
 		else
 		{
@@ -58,12 +64,14 @@ if(isset($_POST['gravarPrazos']))
 
 if(isset($_POST['gravarAdm']))
 {
+	$idP = $_POST['IDP'];
 	$idStatus = $_POST['idStatus'];
 	$valorAprovado = dinheiroDeBr($_POST['valorAprovado']);
-	$sql_gravarAdm = "UPDATE projeto SET idStatus = '$idStatus', valorAprovado = '$valorAprovado' WHERE idProjeto = '$idProjeto' ";
+	$sql_gravarAdm = "UPDATE projeto SET idStatus = '$idStatus', valorAprovado = '$valorAprovado' WHERE idProjeto = '$idP' ";
 	if(mysqli_query($con,$sql_gravarAdm))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
+		echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>"; 
 	}
 	else
 	{
@@ -162,7 +170,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 
 								<div class="form-group">
 									<div class="col-md-offset-2 col-md-8">
-										<input type="hidden" name="idProjeto" value="<?= $idProjeto ?>">
+										<?php echo "<input type='hidden' name='IDP' value='$idProjeto'>"; ?>
 										<input type="submit" name="gravarAdm" class="btn btn-theme btn-md btn-block" value="Gravar">
 									</div>
 								</div>
@@ -319,7 +327,9 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 								</div>
 
 								<div class="form-group">
-									<div class="col-md-offset-2 col-md-8"><input type="submit" name="gravarPrazos" class="btn btn-theme btn-lg btn-block" value="Gravar"></div>
+									<div class="col-md-offset-2 col-md-8">
+										<?php echo "<input type='hidden' name='IDP' value='$idProjeto'>"; ?>
+										<input type="submit" name="gravarPrazos" class="btn btn-theme btn-lg btn-block" value="Gravar"></div>
 								</div>
 							</form>
 
