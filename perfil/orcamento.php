@@ -213,7 +213,7 @@ if(isset($_POST['apagaOrcamento']))
 									echo "<tr>";
 									echo "<form method='POST' action='?perfil=orcamento'>";
 									echo "<td class='list_description'>".$etapa['etapa']."</td>";
-									echo "<td class='list_description'><input type='text' class='form-control' name='descricao' maxlength='255' value=".$campo['descricao']."></td>";
+									echo "<td class='list_description'><input type='text' class='form-control' name='descricao' maxlength='255' value='".$campo['descricao']."'></td>";
 									echo "<td class='list_description'><input type='text' class='form-control' name='quantidade' value=".$campo['quantidade']."></td>";
 									echo "<td class='list_description'>".$medida['unidadeMedida']."</td>";
 									echo "<td class='list_description'><input type='text' class='form-control' name='quantidadeUnidade' value=".$campo['quantidadeUnidade']."></td>";
@@ -234,6 +234,7 @@ if(isset($_POST['apagaOrcamento']))
 								echo "
 							</tbody>
 							</table>";
+
 					}
 					?>
 				</div>
