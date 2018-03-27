@@ -91,7 +91,7 @@ if(isset($_POST['gravarNota']))
 
 if(isset($_POST["enviar"]))
 {
-	$sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '4'";
+	$sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '9'";
 	$query_arquivos = mysqli_query($con,$sql_arquivos);
 	while($arq = mysqli_fetch_array($query_arquivos))
 	{
@@ -123,7 +123,7 @@ if(isset($_POST["enviar"]))
 				{
 					if(move_uploaded_file($nome_temporario, $dir.$new_name))
 					{
-						$sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('4', '$idPf', '$y', '$new_name', '$hoje', '1'); ";
+						$sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('9', '$idPf', '$y', '$new_name', '$hoje', '1'); ";
 						$query = mysqli_query($con,$sql_insere_arquivo);
 						if($query)
 						{
@@ -255,7 +255,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 							<div class="form-group">
 								<div class="col-md-offset-2 col-md-8">
 									<div class="table-responsive list_info"><h6>Arquivo(s) Anexado(s)</h6>
-										<?php listaArquivosPessoa($idProjeto,4,"comissao_detalhes_projeto"); ?>
+										<?php listaArquivosPessoa($idProjeto,9,"comissao_detalhes_projeto"); ?>
 									</div>
 								</div>
 							</div>
@@ -269,7 +269,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 											<td></td>
 										</tr>
 										<?php
-										  $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '4'";
+										  $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '9'";
 											$query_arquivos = mysqli_query($con,$sql_arquivos);
 											while($arq = mysqli_fetch_array($query_arquivos))
 											{
@@ -277,7 +277,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 												<tr>
 													<?php
 													$doc = $arq['documento'];
-													$query = "SELECT idListaDocumento FROM lista_documento WHERE documento='$doc' AND publicado='1' AND idTipoUpload='4'";
+													$query = "SELECT idListaDocumento FROM lista_documento WHERE documento='$doc' AND publicado='1' AND idTipoUpload='9'";
 													$envio = $con->query($query);
 													$row = $envio->fetch_array(MYSQLI_ASSOC);
 
