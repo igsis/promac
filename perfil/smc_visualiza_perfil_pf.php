@@ -31,7 +31,7 @@ if(isset($_POST['negar']))
 if(isset($_POST['desbloquear']))
 {
 	$id = $_POST['LIBPF'];
-	$QueryPJ = "UPDATE pessoa_fisica SET liberado='1' WHERE idPf = '$id'";
+	$QueryPJ = "UPDATE pessoa_fisica SET liberado='2' WHERE idPf = '$id'";
 	$envio = mysqli_query($con, $QueryPJ);
 	if($envio)
 		echo "<script>alert('O usuário foi desbloqueado com sucesso');</script>";
