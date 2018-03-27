@@ -33,7 +33,7 @@
 
 						<div class="well">
 							<h6>Inscreva-se aqui:</h6>
-							<div class="form-group">
+							<div class="form-group" style="padding-bottom: 50px;">
 								<div class="col-md-offset-3 col-md-3">
 									<form method="POST" action="login_pf.php" class="form-horizontal" role="form">
 										<button type="submit" class="btn btn-theme btn-md btn-block" style="border-radius: 30px;">Pessoa Física</button>
@@ -45,27 +45,23 @@
 									</form>
 								</div>
 							</div>
-							<br/><br/>
 						</div>
-
-						<div class="form-group">
-							<div class="col-md-12"><hr/></div>
-						</div>
-
-						<div class="form-group">
+						
+						<div class="form-group"></div>
+							<div class="well" style="padding-top: 60px;">
+								<div class="form-group" style="padding-bottom: 60px;">
 							<div class="col-md-offset-3 col-md-3">
 								<button class='btn btn-theme btn-md btn-block' type='button' data-toggle='modal' data-target='#incentivador' style="border-radius: 30px;">Incentivador</button>
 							</div>
-							<div class="col-md-3">
-								<form method="POST" action="./visual/index.php" class="form-horizontal" role="form">
-									<input type="hidden" name="consulta" value="1">
-									<button class='btn btn-theme btn-md btn-block' type='submit' style="border-radius: 30px;">Consulta Pública</button>
-								</form>
+								<div class="col-md-3">
+									<form method="POST" action="/visual/index.php" class="form-horizontal" role="form">
+										<input type="hidden" name="consulta" value="1">
+										<button class='btn btn-theme btn-md btn-block' type='submit' style="border-radius: 30px;">Consulta Pública</button>
+									</form>
+								</div>
 							</div>
 						</div>
-					</div>
-				</div>
-				<!-- Inicio Modal Proponente -->
+									<!-- Inicio Modal Proponente -->
 				<div class="modal fade" id="regulamento" role="dialog" aria-labelledby="regulamentoLabel" aria-hidden="true">
 					<div class="modal-dialog">
 						<div class="modal-content">
