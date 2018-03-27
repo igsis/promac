@@ -3,7 +3,7 @@ $con = bancoMysqli();
 $idProjeto = $_SESSION['idProjeto'];
 $idPf = $_SESSION['idUser'];
 
-$protocolo = geraProtocolo($idPf);
+$protocolo = geraProtocolo($idProjeto);
 if(isset($_POST['insere']))
 {
 	$resumoProjeto = $_POST['resumoProjeto'];
