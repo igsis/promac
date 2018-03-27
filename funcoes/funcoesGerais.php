@@ -1307,6 +1307,26 @@ function validaLocalZona($conteudo)
   return $conteudo == 0 ? true : false;  
 }
 
+function retornaDocumentosObrigatoriosProponente($tipoPessoa)
+{
+  $documentos = [];
+  $conexao = bancoMysqli();
+  $query =  "SELECT 
+               doc.idListaDocumento                         
+             FROM 
+               lista_documento AS doc  
+  			  WHERE doc.idTipoUpload = ".$tipoPessoa;  			  
+
+  $resultado = mysqli_query($conexao,$query);
+  
+  while($documento = mysqli_fetch_assoc($resultado)) 
+  {
+    array_push($documentos, $documento);
+  }	  
+
+  return $documentos;
+}
+
 function retornaArquivosObrigatorios($tipoPessoa)
 {
   $documentos = [];
@@ -1315,9 +1335,8 @@ function retornaArquivosObrigatorios($tipoPessoa)
                doc.idListaDocumento                         
              FROM 
                lista_documento AS doc  
-  			  WHERE doc.idListaDocumento <> 20
-  			  AND doc.idTipoUpload = 3
-  			  OR doc.idTipoUpload = ".$tipoPessoa;		      
+  			  WHERE doc.idListaDocumento <> 20  	  			  
+  			  AND doc.idTipoUpload = 3";
 
   $resultado = mysqli_query($conexao,$query);
   
@@ -1330,10 +1349,8 @@ function retornaArquivosObrigatorios($tipoPessoa)
 }
 
 
-function retornaArquivosCarregados($tipoPessoa)
+function retornaArquivosCarregados($idUser)
 {
-  $idPessoa = $tipoPessoa == 1 ? 'proj.idPf' : 'proj.idPj';  
-
   $documentos = [];
   $conexao = bancoMysqli();
   $query =  "SELECT 	             
@@ -1342,9 +1359,31 @@ function retornaArquivosCarregados($tipoPessoa)
 			   projeto as proj			 
   			 INNER JOIN 
                upload_arquivo AS up_arq 
-             ON up_arq.idPessoa >= $idPessoa	              
-  			 
+             ON up_arq.idPessoa = '$idUser'
   			 WHERE up_arq.publicado = 1";
+
+  $resultado = mysqli_query($conexao,$query);
+	
+  if(!empty($resultado)):
+    while($documento = mysqli_fetch_assoc($resultado)) 
+    {
+      array_push($documentos, $documento);
+    }  
+  endif;  
+  
+  return $documentos;
+}
+
+function retornaAnexosCarregados($idProjeto)
+{
+  $documentos = [];
+  
+  $conexao = bancoMysqli();
+  $query =  "SELECT 	             
+  			   up_arq.idListaDocumento 
+			 FROM  			     			 
+               upload_arquivo AS up_arq              
+  			 WHERE up_arq.idPessoa =".$idProjeto;
 
   $resultado = mysqli_query($conexao,$query);
 	
