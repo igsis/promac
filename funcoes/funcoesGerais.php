@@ -1406,7 +1406,7 @@ function retornaArquivosDivergentes($idListaDocumento)
   return $documentos;
 }
 
-function arquivosExiste($urlArquivo, $extensao = '.pdf')
+function arquivosExiste($urlArquivo, $extensao = '.php')
 {
   $file = $urlArquivo.$extensao;
   $file_headers = @get_headers($file);
@@ -1417,7 +1417,7 @@ function arquivosExiste($urlArquivo, $extensao = '.pdf')
   return true;
 }
 
-function selecionaArquivoAnexo($http, $idListaDocumento, $extensao = '.pdf')
+function selecionaArquivoAnexo($http, $idListaDocumento, $extensao = '.php')
 {
    $path = $http.$idListaDocumento.$extensao;   
    return $path;
