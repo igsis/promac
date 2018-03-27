@@ -141,7 +141,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 											$idPess = $projeto['idPj'];
 										}
 									?>
-										<a href='<?php echo "../pdf/rlt_declaracao_inscricao.php?tipo=$id&projeto=$idP&pessoa=$idPess"; ?>' target='_blank' class="btn btn-theme btn-md btn-block"><strong>Gerar PDF do Projeto</strong></a><br/>
+										<a href='<?php echo "../pdf/gera_pdf.php?tipo=$id&projeto=$idP&pessoa=$idPess"; ?>' target='_blank' class="btn btn-theme btn-md btn-block"><strong>Gerar PDF do Projeto</strong></a><br/>
 									</div>
 									<div class="col-md-4">
 									<a href='<?php echo "../pdf/gera_excel.php?tipo=$id&projeto=$idP&pessoa=$idPess"; ?>' target='_blank' class="btn btn-theme btn-md btn-block"><strong>Gerar Excel do Projeto</strong></a><br/>
