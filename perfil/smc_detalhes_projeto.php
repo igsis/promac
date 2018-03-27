@@ -71,6 +71,7 @@ if(isset($_POST['gravarAdm']))
 	if(mysqli_query($con,$sql_gravarAdm))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
+		
 		echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>"; 
 	}
 	else
@@ -81,14 +82,16 @@ if(isset($_POST['gravarAdm']))
 
 if(isset($_POST['gravarNota']))
 {
-	if ($idProjeto != 0)
+	$idP = $_POST['IDP'];
+	if ($idP != 0)
 	{
 		$dateNow = date('Y:m:d h:i:s');
 		$nota = addslashes($_POST['nota']);
-		$sql_nota = "INSERT INTO notas (idProjeto, data, nota) VALUES ('$idProjeto', '$dateNow', '$nota')";
+		$sql_nota = "INSERT INTO notas (idProjeto, data, nota) VALUES ('$idP', '$dateNow', '$nota')";
 		if(mysqli_query($con,$sql_nota))
 		{
 			$mensagem = "<font color='#01DF3A'><strong>Nota inserida com sucesso!</strong></font>";
+			echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>"; 
 		}
 		else
 		{
@@ -184,6 +187,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 
 								<div class="form-group">
 									<div class="col-md-offset-2 col-md-8">
+										<?php echo "<input type='hidden' name='IDP' value='$idProjeto'>"; ?>
 										<input type="submit" name="gravarNota" class="btn btn-theme btn-md btn-block" value="Gravar">
 									</div>
 								</div>
