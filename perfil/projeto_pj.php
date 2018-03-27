@@ -16,6 +16,14 @@ foreach ($campos as $cpos) {
 	}
 }
 
+/**Arquivos Obrigatórios**/
+if(isset($tipoPessoa)):    
+  $tipoDoc = 'proponente';
+  $idUser = $idPj;
+  $idProjeto = 0; /*Incluso devido a busca pelos anexos*/
+  require_once('validacaoArquivosObrigatorios.php');
+endif;
+
 if(isset($_POST['liberacao']))
 {
 	$sql_liberacao = "UPDATE pessoa_juridica SET liberado = 1 WHERE idPj = '$idPj'";

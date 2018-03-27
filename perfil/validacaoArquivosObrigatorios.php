@@ -1,6 +1,7 @@
 <?php 
     
-  $arqPendentes = [];
+  $arqPendentes = [];  
+  
 
   function ImpressaoMsgErros($arqPendentes)
   {
@@ -12,17 +13,28 @@
       <?php endforeach;  
     endif;
   }
+  
 
-  function arquivosObrigatorios($tipoPessoa)
+  function arquivosObrigatorios($tipoPessoa, $tipoDoc, $idUser, $idProjeto)
   {
-
-    global  $arqPendentes;
-
-    $docObrig = formataDados(retornaArquivosObrigatorios($tipoPessoa));   
     
-    $docCarregados = formataDados(
-                       retornaArquivosCarregados($tipoPessoa)); 
+    global  $arqPendentes;        
 
+    if($tipoDoc == 'proponente'):      
+      $docObrig = formataDados(
+                    retornaDocumentosObrigatoriosProponente($tipoPessoa));
+
+      $docCarregados = formataDados(
+                       retornaArquivosCarregados($idUser)); 
+
+    elseif ($tipoDoc == 'anexo'):
+      $docObrig = formataDados(retornaArquivosObrigatorios($tipoPessoa));      
+      
+      $docCarregados = formataDados(
+                         retornaAnexosCarregados($idProjeto)); 
+      
+    endif;       
+    
     $listaDivergencias = formataDados(
                              analiseArquivos($docObrig, $docCarregados));
   
@@ -31,6 +43,7 @@
     ImpressaoMsgErros($arqPendentes);    
   }
 
-  echo arquivosObrigatorios($tipoPessoa);
+  echo arquivosObrigatorios($tipoPessoa, $tipoDoc, $idUser, $idProjeto);
+
     
  

@@ -51,12 +51,14 @@ if($projeto['idStatus'] == 6)
 		<div class="form-group">
 		<?php
 			/**Campos Obrigatórios**/
-			if(isset($idProjeto)):
+			if(isset($idProjeto)):			  
 			  require_once('validacaoCamposObrigatorios.php');
 			endif;
 
 			/**Arquivos Obrigatórios**/
-			if(isset($tipoPessoa) && isset($idProjeto)):
+			if(isset($tipoPessoa)):
+			  $tipoDoc = 'anexo';
+			  $idUser = $idUsuario;				  
 			  require_once('validacaoArquivosObrigatorios.php');
 			endif;
 		?>
