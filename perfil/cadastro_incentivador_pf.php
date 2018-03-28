@@ -48,7 +48,7 @@ $pf = recuperaDados("incentivador_pessoafisica","idPf",$idPf);
  ?>
 
 			<section id="contact" class="home-section bg-white">
-				<div class="container">
+				<div class="container"><?php include 'includes/menu_interno_pf.php'; ?>
 					<div class="form-group">
 						<h4>Cadastro de Incentivador<br>
 							<small>Pessoa Física</small>
