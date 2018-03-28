@@ -73,7 +73,7 @@
 								<ul class="list-group">
 									<li class="list-group-item"><a href="#">Lei</a></li>
 									<li class="list-group-item"><a href="#">Decreto</a></li>
-									<li class="list-group-item"><a href="#">Manual de utilização</a></li>
+									<li class="list-group-item"><a href="pdf/manual_utilizacao.pdf">Manual de utilização</a></li>
 									<li class="list-group-item"><a href="#">Manual de uso da marca</a></li>
 								</ul>
 							</div>
