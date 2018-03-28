@@ -183,7 +183,7 @@ else{
 								</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-									<button type="button" class="btn btn-danger" id="confirm">Apagar</button>
+									<button type="button" class="btn btn-danger" id="confirm">Remover</button>
 								</div>
 							</div>
 						</div>

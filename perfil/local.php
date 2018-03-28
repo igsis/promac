@@ -115,7 +115,7 @@ if(isset($_POST['apagaLocal']))
 											<td class='list_description'>
 												<form method='POST' action='?perfil=local'>
 													<input type='hidden' name='apagaLocal' value='".$campo['idLocaisRealizacao']."' />
-													<button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Excluir Local?' data-message='Deseja realmente excluir o local ".$campo['local']."?'>Apagar
+													<button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Excluir Local?' data-message='Deseja realmente excluir o local ".$campo['local']."?'>Remover
 															</button>
 												</form>
 											</td>";
@@ -135,14 +135,14 @@ if(isset($_POST['apagaLocal']))
 					<div class="modal-content">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-							<h4 class="modal-title">Excluir Arquivo?</h4>
+							<h4 class="modal-title">Remover Arquivo?</h4>
 						</div>
 						<div class="modal-body">
 							<p>Confirma?</p>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-							<button type="button" class="btn btn-danger" id="confirm">Apagar</button>
+							<button type="button" class="btn btn-danger" id="confirm">Remover</button>
 						</div>
 					</div>
 				</div>

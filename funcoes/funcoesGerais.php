@@ -738,7 +738,7 @@ function listaArquivosEvento($idPessoa, $tipoPessoa, $pagina)
 				<input type='hidden' name='idPessoa' value='".$idPessoa."' />
 				<input type='hidden' name='tipoPessoa' value='2' />
 				<input type='hidden' name='apagar' value='".$arquivo['idUploadArquivo']."' />
-				<button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Excluir Arquivo?' data-message='Deseja realmente excluir o arquivo ".$arquivo['documento']."?'>Apagar
+				<button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Remover Arquivo?' data-message='Deseja realmente excluir o arquivo ".$arquivo['documento']."?'>Remover
 															</button></td>
 				</form>";
 				echo "</tr>";
@@ -788,7 +788,7 @@ function listaArquivosPessoa($idPessoa,$tipoPessoa,$pagina)
 								<input type='hidden' name='idPessoa' value='".$idPessoa."' />
 								<input type='hidden' name='tipoPessoa' value='".$tipoPessoa."' />
 								<input type='hidden' name='apagar' value='".$arquivo['idUploadArquivo']."' />
-								<button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Excluir Arquivo?' data-message='Deseja realmente excluir o arquivo ".$arquivo['documento']."?'>Apagar
+								<button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Remover Arquivo?' data-message='Deseja realmente excluir o arquivo ".$arquivo['documento']."?'>Remover
 								</button></td>
 							</form>";
 					echo "</tr>";
@@ -1070,7 +1070,7 @@ function listaArquivos($idEvento)
 			<td class='list_description'>
 				<form method='POST' action='?perfil=arquivos_com_prod'>
 					<input type='hidden' name='apagar' value='".$campo['id']."' />
-					<input type ='submit' class='btn btn-theme  btn-block' value='apagar'></td></form>"	;
+					<input type ='submit' class='btn btn-theme  btn-block' value='Remover'></td></form>"	;
 		echo "</tr>";
 	}
 	echo "

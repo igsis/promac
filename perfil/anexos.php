@@ -59,7 +59,7 @@ function listaArquivosPessoaComStatus($idPessoa,$tipoPessoa,$pagina)
 								<input type='hidden' name='idPessoa' value='".$idPessoa."' />
 								<input type='hidden' name='tipoPessoa' value='".$tipoPessoa."' />
 								<input type='hidden' name='apagar' value='".$arquivo['idUploadArquivo']."' />
-								<button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Excluir Arquivo?' data-message='Deseja realmente excluir o arquivo ".$arquivo['documento']."?'>Apagar
+								<button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Excluir Arquivo?' data-message='Deseja realmente excluir o arquivo ".$arquivo['documento']."?'>Remover
 								</button></td>
 							</form>";
 					echo "</tr>";
@@ -252,7 +252,7 @@ if(isset($_POST['apagar']))
 								</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-									<button type="button" class="btn btn-danger" id="confirm">Apagar</button>
+									<button type="button" class="btn btn-danger" id="confirm">Remover</button>
 								</div>
 							</div>
 						</div>

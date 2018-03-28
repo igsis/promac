@@ -136,7 +136,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 														<td>
 															<form method="POST" action="?perfil=projeto_13">
 															<input type="hidden" name="videoApagar" value="<?php echo $key+1; ?>">
-															<button name="apagar" class="btn btn-theme" type="button" data-toggle="modal" data-target="#confirmApagar" data-title="Excluir Projeto?" data-message="Deseja realmente excluir o video <?= $obj['title']; ?>?">Apagar
+															<button name="apagar" class="btn btn-theme" type="button" data-toggle="modal" data-target="#confirmApagar" data-title="Excluir Projeto?" data-message="Deseja realmente excluir o video <?= $obj['title']; ?>?">Remover
 																</button>
 															</form>
 														</td>
@@ -164,14 +164,14 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-						<h4 class="modal-title">Excluir Arquivo?</h4>
+						<h4 class="modal-title">Remover Arquivo?</h4>
 					</div>
 					<div class="modal-body">
 						<p>Confirma?</p>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-						<button type="button" class="btn btn-danger" id="confirm">Apagar</button>
+						<button type="button" class="btn btn-danger" id="confirm">Remover</button>
 					</div>
 				</div>
 			</div>

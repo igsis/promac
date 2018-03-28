@@ -133,7 +133,7 @@ if(isset($_POST['apagaFicha']))
 									echo "<td class='list_description'>
 												<form method='POST' action='?perfil=ficha_tecnica'>
 													<input type='hidden' name='apagaFicha' value='".$campo['idFichaTecnica']."' />
-													<button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Excluir Integrante?' data-message='Deseja realmente excluir o integrante ".$campo['nome']."?'>Apagar
+													<button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Remover Integrante?' data-message='Deseja realmente excluir o integrante ".$campo['nome']."?'>Apagar
 															</button>
 												</form>
 											</td>";
@@ -160,7 +160,7 @@ if(isset($_POST['apagaFicha']))
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-							<button type="button" class="btn btn-danger" id="confirm">Apagar</button>
+							<button type="button" class="btn btn-danger" id="confirm">Remover</button>
 						</div>
 					</div>
 				</div>

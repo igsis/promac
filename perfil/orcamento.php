@@ -227,7 +227,7 @@ if(isset($_POST['apagaOrcamento']))
 									echo "<td class='list_description'>
 											<form method='POST' action='?perfil=orcamento'>
 												<input type='hidden' name='apagaOrcamento' value='".$campo['idOrcamento']."' />
-												<button style='margin-top: 13px' class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Excluir Etapa?' data-message='Deseja realmente excluir a etapa ".$etapa['etapa']."?'>Apagar</button>
+												<button style='margin-top: 13px' class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Excluir Etapa?' data-message='Deseja realmente excluir a etapa ".$etapa['etapa']."?'>Remover</button>
 											</form>
 										</td>";
 									echo "</tr>";
@@ -254,7 +254,7 @@ if(isset($_POST['apagaOrcamento']))
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-						<button type="button" class="btn btn-danger" id="confirm">Apagar</button>
+						<button type="button" class="btn btn-danger" id="confirm">Remover</button>
 					</div>
 				</div>
 			</div>

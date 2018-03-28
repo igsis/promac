@@ -208,7 +208,7 @@ if(isset($_POST['apagar']))
 												<td class='list_description'>
 													<form method='POST' action='?perfil=projeto_pf'>
 														<input type='hidden' name='apagar' value='".$campo['idProjeto']."' />
-														<button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Excluir Projeto?' data-message='Deseja realmente excluir o projeto nº ".$campo['idProjeto']."?'>Apagar
+														<button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Excluir Projeto?' data-message='Deseja realmente excluir o projeto nº ".$campo['idProjeto']."?'>Remover
 																</button>
 													</form>
 												</td>";
@@ -266,7 +266,7 @@ if(isset($_POST['apagar']))
 												<td class='list_description'>
 													<form method='POST' action='?perfil=projeto_pf'>
 														<input type='hidden' name='apagar' value='".$campo['idProjeto']."' />
-														<button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Excluir Projeto?' data-message='Deseja realmente excluir o projeto nº ".$campo['idProjeto']."?'>Apagar
+														<button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Excluir Projeto?' data-message='Deseja realmente excluir o projeto nº ".$campo['idProjeto']."?'>Remover
 																</button>
 													</form>
 												</td>";
@@ -297,7 +297,7 @@ if(isset($_POST['apagar']))
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-							<button type="button" class="btn btn-danger" id="confirm">Apagar</button>
+							<button type="button" class="btn btn-danger" id="confirm">Remover</button>
 						</div>
 					</div>
 				</div>
