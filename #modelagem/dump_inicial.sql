@@ -50,7 +50,7 @@ INSERT INTO `lista_documento` (`idListaDocumento`, `idTipoUpload`, `documento`, 
 (19, 3, 'CV dos principais participantes [no máximo 20 linhas de cada participante]', 'cvpp', 1), /* opcional */
 (20, 3, 'Declaração de Responsabilidade por Direitos Autorais [modelo para download]', 'drda', 1), /* opcional */
 (21, 3, 'Informações adicionais, de acordo com a especificidade do segmento artístico do projeto (exemplo: roteiro do espetáculo)', 'ia', 1), /* opcional */
-(22, 3, 'Plano de atividades', 'atividades', 1), /* opcional */
+(22, 3, 'Plano de atividades', 'atividades', 0), /* opcional */
 (23, 4, 'RG/RNE','rg',1),
 (24, 4, 'CPF','cpf',1),
 (25, 4, 'Comprovante de endereço atual (até últimos 3 meses)','ce',1),
