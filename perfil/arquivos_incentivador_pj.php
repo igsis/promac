@@ -92,7 +92,7 @@ else{
 ?>
 
 <section id="list_items" class="home-section bg-white">
-	<div class="container">
+	<div class="container"><?php include 'includes/menu_interno_pf.php'; ?>
 		<div class="form-group">
 			<h4>Documentos do Proponente<br>
 				<small>Pessoa Jurídica</small>

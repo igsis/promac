@@ -4,7 +4,7 @@
 	{
 		$servidor = 'localhost';
 		$usuario = 'root';
-		$senha = '';
+		$senha = 'xura123@';
 		$banco = 'promac';
 		$con = mysqli_connect($servidor,$usuario,$senha,$banco);
 		mysqli_set_charset($con,"utf8");
@@ -15,7 +15,7 @@
 	{
 		$host = 'localhost';
 		$user = 'root';
-		$pass = '';
+		$pass = 'xura123@';
 		$db = 'promac';
 		$charset = 'utf8';
 		$dsn = "mysql:host=$host;dbname=$db;charset=$charset;";
@@ -36,7 +36,7 @@
 	{
 		$servidor = 'localhost';
 		$usuario = 'root';
-		$senha = '';
+		$senha = 'xura123@';
 		$banco = 'cep';
 		$con = mysqli_connect($servidor,$usuario,$senha,$banco);
 		mysqli_set_charset($con,"utf8");

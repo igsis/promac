@@ -6,7 +6,7 @@ $urlIncentivadorPf = array(
 	// Rotas
 	0 => '/promac/visual/incentivador_index_pf.php',
 	1 => '/promac/visual/incentivador_index_pf.php?perfil=cadastro_incentivador_pf',
-	2 => '/promac/visual/incentivador_index_pj.php?perfil=arquivos_incentivador_pf',
+	2 => '/promac/visual/incentivador_index_pf.php?perfil=arquivos_incentivador_pf',
 	3 => '/promac/visual/incentivador_index_pf.php?perfil=incentivador_concluir_pf'
 
 );

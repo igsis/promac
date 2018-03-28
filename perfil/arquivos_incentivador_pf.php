@@ -86,18 +86,18 @@ if($pf['liberado'] == 3)
 	echo "<div class='alert alert-warning'>
   	<strong>Aviso!</strong> Seus dados já foram aceitos, portanto, não podem ser alterados.</div>";
 
-  	// include 'resumo_usuario.php';
+  	//include 'resumo_usuario.php';
 }
 else{
 ?>
 
 <section id="list_items" class="home-section bg-white">
-	<div class="container">
+	<div class="container"><?php include 'includes/menu_interno_pf.php'; ?>
 		<div class="form-group">
 			<h4>Documentos do Incentivador <br>
 				<small>Pessoa Física</small>
 			</h4>
-			<h5><?php if(isset($mensagem)){echo $mensagem;};?></h5>
+			<h5><?php if(isset($mensagem)){echo $mensagem;};?></h5>			    
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
