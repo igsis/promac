@@ -21,7 +21,7 @@
 	?>
 </div>
 <div class="page-header">
- 	<h5>Dados do Proponente</h5>
+ 	<h5>Dados do Incentivador</h5>
 </div>
 <div class="well">
 	<p align="justify"><strong>Nome:</strong> <?php echo $pf['nome']; ?></p>
