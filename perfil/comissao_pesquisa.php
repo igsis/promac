@@ -57,15 +57,6 @@
 					</div>
 
 					<div class="form-group">
-						<div class="col-md-offset-2 col-md-8"><label>Status</label>
-							<select class="form-control" name="idStatus" >
-								<option value="0"></option>
-								<?php echo geraOpcao("status","") ?>
-							</select>
-						</div>
-					</div>
-
-					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<input type="submit" name="pesquisar" class="btn btn-theme btn-lg btn-block" value="Pesquisar">
 						</div>
