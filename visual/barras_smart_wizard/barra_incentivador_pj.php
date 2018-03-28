@@ -20,7 +20,7 @@ for ($i = 0; $i < count($urlIncentivadorPj); $i++) {
     if ($uri == $urlIncentivadorPj[$i]) {
         if ($i == 0|| $i == 1) { // Cadastro Incentivador
             $liga1 = 'active loading'; 
-        }elseif ($i == 2 || $i == 3 || $i == 4 || $i == 5 || $i == 6) { 	 // Representante Legal
+        }elseif ($i == 2 || $i == 3 || $i == 4 || $i == 5 || $i == 6 || $i == 7) { 	 // Representante Legal
         	$liga2 = 'active loading'; 
         }elseif ($i == 8) { // Documentos do Incentivador
         	$liga3 = 'active loading';
@@ -44,7 +44,7 @@ for ($i = 0; $i < count($urlIncentivadorPj); $i++) {
             <li class="<?php echo isset($liga3) ? $liga3 : 'clickable'; ?>">
                 <a onclick="location.href='incentivador_index_pj.php?perfil=arquivos_incentivador_pj'" href=""><br />Documentos do Incentivador</a>
             </li>
-            <li class="<?php echo isset($liga4) ? $liga4 : 'clickable'; ?>">
+            <li class="<?php echo isset($liga4) ? $liga4 : 'disabled'; ?>">
                 <a onclick="location.href=''" href=""><br />Concluir Inscrição</a>
             </li>
         </ul>
