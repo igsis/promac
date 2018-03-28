@@ -4,7 +4,7 @@ $con = bancoMysqli();
 $idProjeto = isset($_POST['idProjeto']) ? $_POST['idProjeto'] : null;
 if($idProjeto == null)
 {
-	echo $idProjeto = $_GET['idFF'];
+	$idProjeto = isset($_GET['idFF']) ? $_GET['idFF'] : null;
 }
 $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 
@@ -25,13 +25,14 @@ if(isset($_POST['gravarPrazos']))
 	$finalProjeto = exibirDataMysql($_POST['finalProjeto']);
 	$prestarContas = exibirDataMysql($_POST['prestarContas']);
 
-	$prazos = recuperaDados("prazos_projeto","idProjeto",$idProjeto);
+	$prazos = recuperaDados("prazos_projeto","idProjeto",$idP);
 	if($prazos == NULL)
 	{
 		$sql_insere = "INSERT INTO prazos_projeto (idProjeto, prazoCaptacao, prorrogacaoCaptacao, finalCaptacao, inicioExecucao, fimExecucao, prorrogacaoExecucao, finalProjeto, prestarContas) VALUES ('$idP', '$prazoCaptacao', '$prorrogacaoCaptacao', '$finalCaptacao', '$inicioExecucao', '$fimExecucao', '$prorrogacaoExecucao', '$finalProjeto', '$prestarContas')";
 		if(mysqli_query($con,$sql_insere))
 		{
 			$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso! Utilize o menu para avançar.</strong></font>";
+			echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>"; 
 		}
 		else
 		{
