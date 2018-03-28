@@ -43,7 +43,7 @@ $ano = date('Y');
 							<li class='list-group-item list-group-item-success'>
 								<li class='list-group-item'><strong>Protocolo (nº ISP):</strong> <?php echo $projeto['protocolo'] ?></li>
 								<li class='list-group-item'><strong>Status:</strong> <?php echo $status['status'] ?></li>
-								<li class='list-group-item'>
+								<!--<li class='list-group-item'>
 									<strong>Valor Aprovado:</strong>
 									<?php
 										if($projeto['valorAprovado'] == 0)
@@ -54,7 +54,7 @@ $ano = date('Y');
 										{
 											echo "R$ ".dinheiroParaBr($projeto['valorAprovado']);
 										}
-									?>
+									?> -->
 								</li>
 							</li>
 						</ul>
