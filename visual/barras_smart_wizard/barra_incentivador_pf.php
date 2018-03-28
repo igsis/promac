@@ -6,9 +6,8 @@ $urlIncentivadorPf = array(
 	// Rotas
 	0 => '/promac/visual/incentivador_index_pf.php',
 	1 => '/promac/visual/incentivador_index_pf.php?perfil=cadastro_incentivador_pf',
-	2 => '/promac/visual/incentivador_index_pf.php?perfil=incentivador_informacoes_iniciais_pf',
-	3 => '/promac/visual/incentivador_index_pj.php?perfil=arquivos_incentivador_pf',
-	4 => '/promac/visual/incentivador_index_pf.php?perfil=incentivador_arquivos_pf'
+	2 => '/promac/visual/incentivador_index_pj.php?perfil=arquivos_incentivador_pf',
+	3 => '/promac/visual/incentivador_index_pf.php?perfil=incentivador_concluir_pf'
 
 );
 
@@ -33,10 +32,10 @@ for ($i = 0; $i < count($urlIncentivadorPf); $i++) {
                 <a onclick="location.href='incentivador_index_pf.php'" href=""><br />Cadastro Incentivador</a>
             </li>
             <li class="<?php echo isset($ligar2) ? $ligar2 : 'clickable'; ?>">
-                <a onclick="location.href='incentivador_index_pf.php?perfil=incentivador_informacoes_iniciais_pf'" href=""><br />Incentivador</a>
+                <a onclick="location.href='incentivador_index_pf.php?perfil=arquivos_incentivador_pf'" href=""><br />Documentos do Incentivador</a>
             </li>
             <li class="<?php echo isset($ligar3) ? $ligar3 : 'clickable'; ?>">
-                <a onclick="location.href='incentivador_index_pj.php?perfil=arquivos_incentivador_pf'" href=""><br />Documentos do Incentivador</a>
+                <a onclick="location.href='incentivador_index_pf.php?perfil=incentivador_concluir_pf'" href=""><br />Concluir Inscrição</a>
             </li>
         </ul>
     </div>
