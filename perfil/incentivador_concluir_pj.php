@@ -1,10 +1,11 @@
-<?php
+<?php 
 $con = bancoMysqli();
-$tipoPessoa = '4';
+$tipoPessoa = '5';
 
-$idPf = $_SESSION['idUser'];
-$pf = recuperaDados("incentivador_pessoaFisica","idPf",$idPf);
-$campos = array($pf['nome'], $pf['cpf'], $pf['rg'], $pf['email'], $pf['cep'], $pf['numero']);
+$idPj = $_SESSION['idUser'];
+$pj = recuperaDados("incentivador_pessoaJuridica","idPj",$idPj);
+$rl = recuperaDados("representante_legal","idRepresentanteLegal",$idPj);
+$campos = array($pj['razaoSocial'], $pj['cnpj'], $pj['email'], $pj['cep'], $pj['numero']);
 $cpo = false;
 
 foreach ($campos as $cpos)
@@ -18,14 +19,14 @@ foreach ($campos as $cpos)
 /**Arquivos Obrigatórios**/
 if(isset($tipoPessoa)):
   $tipoDoc = 'proponente';
-  $idUser = $idPf;
+  $idUser = $idPj;
   $idProjeto = 0; /*Incluso devido a busca pelos anexos*/
   require_once('validacaoArquivosObrigatorios.php');
 endif;
 
 if(isset($_POST['liberacao']))
 {
-	$sql_liberacao = "UPDATE incentivador_pessoaFisica SET liberado = 1 WHERE idPf = '$idPf'";
+	$sql_liberacao = "UPDATE incentivador_pessoaJuridica SET liberado = 1 WHERE idPj = '$idPj'";
 	if(mysqli_query($con,$sql_liberacao))
 	{
 		$mensagem = "Sua inscrição foi enviada à SMC........";
@@ -35,7 +36,6 @@ if(isset($_POST['liberacao']))
 		$mensagem = "<font color='#01DF3A'><strong>Erro ao atualizar! Tente novamente.</strong></font> <br/>";
 	}
 }
-
 ?>
 <section id="list_items" class="home-section bg-white">
 	<div class="container"><?php include 'includes/menu_interno_pf.php'; ?>
@@ -45,9 +45,9 @@ if(isset($_POST['liberacao']))
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
 			<?php
-				if($pf['liberado'] == 0) // ainda não foi solicitado liberação
+				if($pj['liberado'] == 0) // ainda não foi solicitado liberação
 				{
-					include 'includes/resumo_incentivador_pf.php';
+					include 'includes/resumo_incentivador_pj.php';
 				?>
 					<div class="alert alert-info">
 						Após o preenchimento de todos os dados pessoais, conclua a inscrição do proponente e aguarde a análise da sua documentação pela Secretaria Municipal de Cultura.
@@ -57,7 +57,7 @@ if(isset($_POST['liberacao']))
 							<?php							
 							if ($cpo == false)							{
 								
-								$idPess = $pf['idPf'];
+								$idPess = $pj['idPj'];
 								$queryArquivos = 
 								  "SELECT 
 								    idUploadArquivo 
@@ -65,13 +65,13 @@ if(isset($_POST['liberacao']))
 								     upload_arquivo 
 								   WHERE 
 								     idPessoa = $idPess 
-								   AND idTipo = '4' AND publicado = '1'";
+								   AND idTipo = '5' AND publicado = '1'";
 								
 								$enviaArquivos = mysqli_query($con, $queryArquivos);
 								$numRow = mysqli_num_rows($enviaArquivos);
-								if($numRow == 5)
+								if($numRow == 8)
 								{?>
-							<form class="form-horizontal" role="form" action="?perfil=incentivador_concluir_pf" method="post">
+							<form class="form-horizontal" role="form" action="?perfil=incentivador_concluir_pj" method="post">
 								<input type="submit" name="liberacao" value="Concluir inscrição do Incentivador" class="btn btn-theme btn-lg btn-block">
 							</form>
 							<?php
@@ -87,7 +87,7 @@ if(isset($_POST['liberacao']))
 			</div>
 			<?php
 				}
-				elseif($pf['liberado'] == 1)// foi solicitado liberação, porém a SMC não analisou ainda.
+				elseif($pj['liberado'] == 1)// foi solicitado liberação, porém a SMC não analisou ainda.
 				{
 			?>
 					<div class="alert alert-success">
@@ -95,7 +95,7 @@ if(isset($_POST['liberacao']))
 					</div>
 			<?php
 				}
-				elseif($pf['liberado'] == 2)// a liberação de projetos foi rejeitada pela SMC.
+				elseif($pj['liberado'] == 2)// a liberação de projetos foi rejeitada pela SMC.
 				{
 			?>
 					<div class="alert alert-danger">
@@ -103,11 +103,11 @@ if(isset($_POST['liberacao']))
 					</div>
 
 					<div>
-				 		<?php listaArquivosPessoaObs($idPf,1) ?>
+				 		<?php listaArquivosPessoaObs($idPj,1) ?>
 				 	</div>
 				 	<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
-							<form class="form-horizontal" role="form" action="?perfil=projeto_pf" method="post">
+							<form class="form-horizontal" role="form" action="?perfil=projeto_pj" method="post">
 								<input type="submit" name="liberacao" value="Concluir inscrição do Incentivador" class="btn btn-theme btn-lg btn-block">
 							</form>
 						</div>
@@ -121,7 +121,7 @@ if(isset($_POST['liberacao']))
 						<div class="col-md-offset-2 col-md-8">Sua inscrição foi aprovada pela SMC.</div><br/>
 					</div>
 				<?php
-					include 'includes/resumo_incentivador_pf.php';
+					include 'includes/resumo_incentivador_pj.php';
 				}
 				?>
 		</div>

@@ -21,7 +21,7 @@
 	?>
 </div>
 <div class="page-header">
- 	<h5>Dados do Proponente</h5>
+ 	<h5>Dados do Incentivador</h5>
 </div>
 <div class="well">
 	<p align="justify"><strong>Razão Social:</strong> <?php echo $pj['razaoSocial']; ?></p>
@@ -40,7 +40,7 @@
 
 <div class="table-responsive list_inf">
 	<div class = "page-header">
-		<h5>Representante Legal</h5>
+		<h5>Dados Representante Legal</h5>
 	</div>
 	<div class="well">
 		<?php

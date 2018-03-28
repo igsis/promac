@@ -13,6 +13,7 @@ $urlIncentivadorPj = array(
 	6 => '/promac/visual/incentivador_index_pj.php?perfil=representante_pj_cadastro',
 	7 => '/promac/visual/incentivador_index_pj.php?perfil=representante_pj_resultado_busca',
 	8 => '/promac/visual/incentivador_index_pj.php?perfil=arquivos_incentivador_pj',
+    9 => '/promac/visual/incentivador_index_pj.php?perfil=incentivador_concluir_pj'
 );
 
 
@@ -24,7 +25,7 @@ for ($i = 0; $i < count($urlIncentivadorPj); $i++) {
         	$liga2 = 'active loading'; 
         }elseif ($i == 8) { // Documentos do Incentivador
         	$liga3 = 'active loading';
-        }elseif ($i == '') { // Concluir Inscrição
+        }elseif ($i == 9) { // Concluir Inscrição
         	$liga4 = 'active loading';
         }
 ?>
@@ -44,8 +45,8 @@ for ($i = 0; $i < count($urlIncentivadorPj); $i++) {
             <li class="<?php echo isset($liga3) ? $liga3 : 'clickable'; ?>">
                 <a onclick="location.href='incentivador_index_pj.php?perfil=arquivos_incentivador_pj'" href=""><br />Documentos do Incentivador</a>
             </li>
-            <li class="<?php echo isset($liga4) ? $liga4 : 'disabled'; ?>">
-                <a onclick="location.href=''" href=""><br />Concluir Inscrição</a>
+            <li class="<?php echo isset($liga4) ? $liga4 : 'clickable'; ?>">
+                <a onclick="location.href='incentivador_index_pj.php?perfil=incentivador_concluir_pj'" href=""><br />Concluir Inscrição</a>
             </li>
         </ul>
     </div>
