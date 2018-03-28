@@ -54,7 +54,7 @@
 								<button class='btn btn-theme btn-md btn-block' type='button' data-toggle='modal' data-target='#incentivador' style="border-radius: 30px;">Incentivador</button>
 							</div>
 								<div class="col-md-3">
-									<form method="POST" action="/visual/index.php" class="form-horizontal" role="form">
+									<form method="POST" action="visual/index.php" class="form-horizontal" role="form">
 										<input type="hidden" name="consulta" value="1">
 										<button class='btn btn-theme btn-md btn-block' type='submit' style="border-radius: 30px;">Consulta Pública</button>
 									</form>
