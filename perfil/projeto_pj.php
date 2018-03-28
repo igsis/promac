@@ -82,7 +82,7 @@ if(isset($_POST['apagar']))
 								$enviaArquivos = mysqli_query($con, $queryArquivos);
 								$numRow = mysqli_num_rows($enviaArquivos);
 
-								if($numRow >= 13)
+								if($numRow >= 10)
 								{?>
 							<form class="form-horizontal" role="form" action="?perfil=projeto_pj" method="post">
 								<input type="submit" name="liberacao" value="Concluir inscrição do proponente" class="btn btn-theme btn-lg btn-block">
