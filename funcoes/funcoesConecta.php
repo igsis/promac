@@ -13,7 +13,7 @@
 	// Conexão de Banco com PDO
 	function bancoPDO()
 	{
-		$host = 'localhost';
+		$host = 'localhost:';
 		$user = 'root';
 		$pass = '';
 		$db = 'promac';
@@ -34,11 +34,11 @@
 	// Cria conexao ao banco de CEPs.
 	function bancoMysqliCep()
 	{
-		$servidor = 'localhost';
+		$servidor = 'localhost:3307';
 		$usuario = 'root';
 		$senha = '';
 		$banco = 'cep';
-		$con = mysqli_connect($servidor,$usuario,$senha,$banco);
+		$con = mysqli_connect($servidor,$usuario,$senha,$banco); 
 		mysqli_set_charset($con,"utf8");
 		return $con;
 	}

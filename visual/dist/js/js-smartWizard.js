@@ -4,22 +4,22 @@
         $("#smartwizard").on("showStep", function(e, anchorObject, stepNumber, stepDirection, stepPosition) {
            //alert("You are on step "+stepNumber+" now");
            if(stepPosition === 'first'){
-               $("#prev-btn").addClass('disabled');
+               $("#prev-botao").addClass('disabled');
            }else if(stepPosition === 'final'){
-               $("#next-btn").addClass('disabled');
+               $("#botaoex-botao").addClass('disabled');
            }else{
-               $("#prev-btn").removeClass('disabled');
-               $("#next-btn").removeClass('disabled');
+               $("#prev-botao").removeClass('disabled');
+               $("#botaoex-botao").removeClass('disabled');
            }
         });
         
         // Toolbar extra buttons
-        var btnFinish = $('<button></button>').text('Finish')
-                                         .addClass('btn btn-info')
-                                         .on('click', function(){ alert('Finish Clicked'); });
-        var btnCancel = $('<button></button>').text('Cancel')
-                                         .addClass('btn btn-danger')
-                                         .on('click', function(){ $('#smartwizard').smartWizard("reset"); });                         
+        var botaoFinish = $('<button></button>').text('Finish')
+                                         .addClass('botao botao-info')
+                                         .on('clicar', function(){ alert('Finish clicared'); });
+        var botaoCancel = $('<button></button>').text('Cancel')
+                                         .addClass('botao botao-danger')
+                                         .on('clicar', function(){ $('#smartwizard').smartWizard("reset"); });                         
         
         
         // Smart Wizard
@@ -29,27 +29,27 @@
                 transitionEffect:'fade',
                 showStepURLhash: true,
                 toolbarSettings: {toolbarPosition: 'both',
-                                  toolbarExtraButtons: [btnFinish, btnCancel]
+                                  toolbarExtraButtons: [botaoFinish, botaoCancel]
                                 }
         });
                                      
         
         // External Button Events
-        $("#reset-btn").on("click", function() {
+        $("#reset-botao").on("clicar", function() {
             // Reset wizard
             $('#smartwizard').smartWizard("reset");
             return true;
         });
         
-        $("#prev-btn").on("click", function() {
+        $("#prev-botao").on("clicar", function() {
             // Navigate previous
             $('#smartwizard').smartWizard("prev");
             return true;
         });
         
-        $("#next-btn").on("click", function() {
-            // Navigate next
-            $('#smartwizard').smartWizard("next");
+        $("#botaoex-botao").on("clicar", function() {
+            // Navigate botaoex
+            $('#smartwizard').smartWizard("botaoex");
             return true;
         });
         
