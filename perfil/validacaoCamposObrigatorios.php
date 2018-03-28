@@ -36,7 +36,7 @@
       endif;    
     endif; 
 
-    if($tipoPessoa == 2):   
+    if($tipoPessoa == 2):         
       $campos = retornaCamposObrigatoriosPj($idProjeto);
     
       if(empty($campos)):

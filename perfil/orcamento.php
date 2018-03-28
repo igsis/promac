@@ -19,6 +19,7 @@ if(isset($_POST['insereOrcamento']))
 	$idUnidadeMedida = $_POST['idUnidadeMedida'];
 
 	$sql_insere = "INSERT INTO `orcamento`(`idProjeto`, `idEtapa`, `observacoesEtapa`, `descricao`, `quantidade`, `idUnidadeMedida`, `quantidadeUnidade`, `valorUnitario`, `valorTotal`, `observacoes`, `publicado`) VALUES ('$idProjeto', '$idEtapa', '$observacoesEtapa','$descricao', '$quantidade', '$idUnidadeMedida', '$quantidadeUnidade', '$valorUnitario', '$valorTotal', '$observacoes','1')";
+	
 	if(mysqli_query($con,$sql_insere))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Inserido com sucesso! Utilize o menu para avançar.</strong></font>";
