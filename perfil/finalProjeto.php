@@ -383,7 +383,7 @@ if($projeto['idStatus'] == 6)
 		     if($alterar == 1){ ?>
 			    <input type="hidden" name="alterar" value="<?php echo $alterar; ?>">
 		    <?php } ?>
-			<button id="inptEnviar" class="btn btn-theme btn-lg" type="button" data-toggle="modal" data-target="#confirmApagar" data-title="Inscrever Projeto?" data-message="Deseja realmente inscrever o projeto <?= $projeto['nomeProjeto'] ?>" style="display: none;">Inscrever Projeto</button>
+			<button id="inptEnviar" class="btn btn-theme btn-lg" type="button" data-toggle="modal" data-target="#confirmApagar" data-title="Inscrever Projeto?" data-message="Deseja realmente inscrever o projeto <?= $projeto['nomeProjeto'] ?>? Após o envio não será possível editá-lo." style="display: none;">Inscrever Projeto</button>
 
 			<!-- <input type="hidden" value="Inscrever Projeto" id="inptEnviar"
 			       class="btn btn-theme btn-lg btn-block"> -->
