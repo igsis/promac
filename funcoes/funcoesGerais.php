@@ -1316,6 +1316,7 @@ function retornaDocumentosObrigatoriosProponente($tipoPessoa)
              FROM 
                lista_documento AS doc  
   			  WHERE doc.idListaDocumento <> 27
+  			  AND   doc.idListaDocumento <> 16
   			  AND doc.idTipoUpload = ".$tipoPessoa;  			  
 
   $resultado = mysqli_query($conexao,$query);
@@ -1328,10 +1329,12 @@ function retornaDocumentosObrigatoriosProponente($tipoPessoa)
   return $documentos;
 }
 
+/*Função que retornar os documentos obrigatórios do projeto
+  está inativa, caso o cliente deseje mudar a regra de negócio*/
 function retornaArquivosObrigatorios($tipoPessoa)
 {
   $documentos = [];
-  $conexao = bancoMysqli();
+  /*$conexao = bancoMysqli();
   $query =  "SELECT 
                doc.idListaDocumento                         
              FROM 
@@ -1344,7 +1347,7 @@ function retornaArquivosObrigatorios($tipoPessoa)
   while($documento = mysqli_fetch_assoc($resultado)) 
   {
     array_push($documentos, $documento);
-  }	  
+  }*/	  
 
   return $documentos;
 }
