@@ -1,7 +1,6 @@
 <?php
 
 $con = bancoMysqli();
-$idPf = $_SESSION['idUser'];
 $idProjeto = $_SESSION['idProjeto'];
 $tipoPessoa = '3';
 
