@@ -13,10 +13,12 @@ if(isset($_POST['insereOrcamento']) || isset($_POST['editaOrcamento']))
 
 if(isset($_POST['insereOrcamento']))
 {
+	$observacoes = $_POST['obs'];
+	$observacoesEtapa = $_POST['obsEtapa'];
 	$idEtapa = $_POST['idEtapa'];
 	$idUnidadeMedida = $_POST['idUnidadeMedida'];
 
-	$sql_insere = "INSERT INTO `orcamento`(`idProjeto`, `idEtapa`, `descricao`, `quantidade`, `idUnidadeMedida`, `quantidadeUnidade`, `valorUnitario`, `valorTotal`, `publicado`) VALUES ('$idProjeto', '$idEtapa', '$descricao', '$quantidade', '$idUnidadeMedida', '$quantidadeUnidade', '$valorUnitario', '$valorTotal', 1)";
+	$sql_insere = "INSERT INTO `orcamento`(`idProjeto`, `idEtapa`, `observacoesEtapa`, `descricao`, `quantidade`, `idUnidadeMedida`, `quantidadeUnidade`, `valorUnitario`, `valorTotal`, `observacoes`, `publicado`) VALUES ('$idProjeto', '$idEtapa', '$observacoesEtapa','$descricao', '$quantidade', '$idUnidadeMedida', '$quantidadeUnidade', '$valorUnitario', '$valorTotal', '$observacoes','1')";
 	if(mysqli_query($con,$sql_insere))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Inserido com sucesso! Utilize o menu para avançar.</strong></font>";
@@ -137,13 +139,17 @@ if(isset($_POST['apagaOrcamento']))
 				<form class="form-horizontal" role="form" action="?perfil=orcamento" method="post">
 
 					<div class="form-group">
-						<div class="col-md-3">
+						<div class="col-md-2 col-md-offset-2">
 							<br/><label>Etapa *</label>
-							<select class="form-control" name="idEtapa" required style="margin-top: -5px;">
+							<select class="form-control" name="idEtapa">
 								
 							<option value="0"></option>
 								<?php echo geraOpcao("etapa","") ?>
 							</select>
+						</div>
+						<div class="col-md-2"><strong>Observação
+							<font size="-2"><br>da etapa: </font></strong>
+							<input type="text" class="form-control" name="obsEtapa">
 						</div>
 						<div class="col-md-3"><br/><strong>Descrição: *</strong><br/>
 							<input type="text" class="form-control" name="descricao" placeholder="Descrição da etapa" maxlength="255" required>
@@ -151,12 +157,19 @@ if(isset($_POST['apagaOrcamento']))
 						<div class="col-md-1"><br/><strong>Qtde:</strong><br/>
 							<input type="text" class="form-control" name="quantidade" required>
 						</div>
-						<div class="col-md-2"><strong>Unidade <br>Medida:</strong><br/>
+						</div>
+						<div class="form-group">
+						<div class="col-md-3 col-md-offset-2"><strong>Unidade <br>Medida:</strong><br/>
 							<select class="form-control" name="idUnidadeMedida" required>
 								<option value="0"></option>
 								<?php echo geraOpcao("unidade_medida","") ?>
 							</select>
 						</div>
+						<div class="col-md-2"><strong>Observação
+							<font size="-2"><br>da unidade de medida: </font></strong>
+							<input type="text" class="form-control" name="obs">
+						</div>
+					<div class="form-group">
 						<div class="col-md-1"><strong>Qtde Unidade:</strong><br/>
 							<input type="text" class="form-control" name="quantidadeUnidade" required>
 						</div>
@@ -196,12 +209,14 @@ if(isset($_POST['apagaOrcamento']))
 								<thead>
 									<tr class='list_menu'>
 										<td width='25%'>Etapa</td>
+										<td>Observações etapa</td>
 										<td>Descrição</td>
 										<td width='5%'>Qtde</td>
 										<td width='5%'>Unid. Med.</td>
 										<td width='5%'>Qtde Unid.</td>
 										<td>Valor Unit.</td>
 										<td>Valor Total</td>
+										<td>Observações</td>
 										<td width='10%'></td>
 										<td width='10%'></td>
 									</tr>
@@ -214,12 +229,14 @@ if(isset($_POST['apagaOrcamento']))
 									echo "<tr>";
 									echo "<form method='POST' action='?perfil=orcamento'>";
 									echo "<td class='list_description'>".$etapa['etapa']."</td>";
+									echo "<td class='list_description'>".$campo['observacoesEtapa']."</td>";
 									echo "<td class='list_description'><input type='text' class='form-control' name='descricao' maxlength='255' value='".$campo['descricao']."'></td>";
 									echo "<td class='list_description'><input type='text' class='form-control' name='quantidade' value=".$campo['quantidade']."></td>";
 									echo "<td class='list_description'>".$medida['unidadeMedida']."</td>";
 									echo "<td class='list_description'><input type='text' class='form-control' name='quantidadeUnidade' value=".$campo['quantidadeUnidade']."></td>";
 									echo "<td class='list_description'><input type='text' class='form-control' name='valorUnitario' id='valor' value=".dinheiroParaBr($campo['valorUnitario'])."></td>";
 									echo "<td class='list_description'>".dinheiroParaBr($campo['valorTotal'])."</td>";
+									echo "<td class='list_description'>".$campo['observacoes']."</td>";
 									echo "<td class='list_description'>
 												<input type='hidden' name='editaOrcamento' value='".$campo['idOrcamento']."' />
 												<input type ='submit' class='btn btn-theme btn-block' value='Gravar'></td>";

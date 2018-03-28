@@ -109,7 +109,8 @@ INSERT INTO `unidade_medida` (`idUnidadeMedida`, `unidadeMedida`) VALUES
 (1, 'Cachê'),
 (2, 'Diária'),
 (3, 'Serviço'),
-(4, 'Unidade');
+(4, 'Unidade'),
+(5, 'Outros');
 
 --
 -- Extraindo dados da tabela `status`
