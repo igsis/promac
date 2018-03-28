@@ -35,48 +35,36 @@ INSERT INTO `lista_documento` (`idListaDocumento`, `idTipoUpload`, `documento`, 
 (4, 1, 'Comprovante de endereço atual (até últimos 3 meses)', 'ce', 1),
 (5, 1, 'Comprovante de endereço de pelo menos 2 anos atrás', 'ce2', 1),
 (6, 1, 'Declaração [modelo para download]', 'de', 1),
-
-
-(8, 2, 'CNPJ', 'cnpj', 1),
-(9, 2, 'Cadastro de Contribuintes Imobiliários - CCM', 'ccm', 1),
-(10, 2, 'Ato Constitutivo', 'ac', 1),
-(11, 2, 'Ata de Eleição e Posse', 'aep', 1),
-(12, 2, 'RG/RNE do representante legal', 'rg', 1),
-(13, 2, 'CPF do representante legal', 'cpf', 1),
-(14, 2, 'Comprovante de endereço atual da sede da pessoa jurídica (até últimos 3 meses)', 'ce', 1),
-(15, 2, 'Comprovante de endereço de pelo menos 2 anos atrás da sede da pessoa jurídica', 'ce2', 1),
-(16, 2, 'Declaração [modelo para download]', 'de', 1),
-/* 17 foi excluído */
-(18, 2, 'Portfólio comprovando atividades artísticas ou culturais (opcional)', 'pcaa', 1), /* opcional */
-/* 19 foi excluído */
-
-(20, 3, 'Carta de Intenção de Incentivo (caso houver)', 'cii', 1),/* opcional */
-(21, 3, 'Carta de Anuência do Local [modelo para download]', 'cal', 1),/* opcional */
-(22, 3, 'CV dos principais participantes [no máximo 20 linhas de cada participante]', 'cvpp', 1),/* opcional */
-(23, 3, 'Declaração de Responsabilidade por Direitos Autorais [modelo para download]', 'drda', 1),/* opcional */
-(24, 3, 'Informações adicionais, de acordo com a especificidade do segmento artístico do projeto (exemplo: roteiro do espetáculo)', 'ia', 1),/* opcional */
-(42, 3, 'Plano de atividades', 'atividades', 1), /* opcional */
-
-
-/* 27 foi excluído */
-(28, 4, 'RG/RNE','rg',1),
-(29, 4, 'CPF','cpf',1),
-(30, 4, 'Comprovante de endereço atual (até últimos 3 meses)','ce',1),
-(31, 4, 'Carnê IPTU','ciptu',1),
-(32, 4, 'Contrato de locação','clc',1),
-
-
-(33, 5, 'CNPJ','cnpj',1),
-(34, 5, 'Cadastro de Contribuintes Imobiliários - CCM','ccm',1),
-(35, 5, 'Contrato Social','cs',1),
-(36, 5, 'Comprovante de endereço atual (até últimos 3 meses)','ce',1),
-(39, 5, 'RG/RNE do Representante Legal','rg',1),
-(40, 5, 'CPF do Representante Legal','cpf',1),
-(37, 5, 'Carnê IPTU','ciptu',1),
-(38, 5, 'Contrato de locação','clc',1),
-
-
-(43, 9, 'Parecer da Comissão', 'parecer', 1);
+(7, 2, 'CNPJ', 'cnpj', 1),
+(8, 2, 'Cadastro de Contribuintes Imobiliários - CCM', 'ccm', 1),
+(9, 2, 'Ato Constitutivo', 'ac', 1),
+(10, 2, 'Ata de Eleição e Posse', 'aep', 1),
+(11, 2, 'RG/RNE do representante legal', 'rg', 1),
+(12, 2, 'CPF do representante legal', 'cpf', 1),
+(13, 2, 'Comprovante de endereço atual da sede da pessoa jurídica (até últimos 3 meses)', 'ce', 1),
+(14, 2, 'Comprovante de endereço de pelo menos 2 anos atrás da sede da pessoa jurídica', 'ce2', 1),
+(15, 2, 'Declaração [modelo para download]', 'de', 1),
+(16, 2, 'Portfólio comprovando atividades artísticas ou culturais (opcional)', 'pcaa', 1), /* opcional */
+(17, 3, 'Carta de Intenção de Incentivo (caso houver)', 'cii', 1), /* opcional */
+(18, 3, 'Carta de Anuência do Local [modelo para download]', 'cal', 1), /* opcional */
+(19, 3, 'CV dos principais participantes [no máximo 20 linhas de cada participante]', 'cvpp', 1), /* opcional */
+(20, 3, 'Declaração de Responsabilidade por Direitos Autorais [modelo para download]', 'drda', 1), /* opcional */
+(21, 3, 'Informações adicionais, de acordo com a especificidade do segmento artístico do projeto (exemplo: roteiro do espetáculo)', 'ia', 1), /* opcional */
+(22, 3, 'Plano de atividades', 'atividades', 1), /* opcional */
+(23, 4, 'RG/RNE','rg',1),
+(24, 4, 'CPF','cpf',1),
+(25, 4, 'Comprovante de endereço atual (até últimos 3 meses)','ce',1),
+(26, 4, 'Carnê IPTU','ciptu',1),
+(27, 4, 'Contrato de locação','clc',1),
+(28, 5, 'CNPJ','cnpj',1),
+(29, 5, 'Cadastro de Contribuintes Imobiliários - CCM','ccm',1),
+(30, 5, 'Contrato Social','cs',1),
+(31, 5, 'Comprovante de endereço atual (até últimos 3 meses)','ce',1),
+(32, 5, 'RG/RNE do Representante Legal','rg',1),
+(33, 5, 'CPF do Representante Legal','cpf',1),
+(34, 5, 'Carnê IPTU','ciptu',1),
+(35, 5, 'Contrato de locação','clc',1),
+(36, 9, 'Parecer da Comissão', 'parecer', 1);
 
 
 --
