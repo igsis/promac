@@ -1,10 +1,12 @@
 // Script Avançar Modal
-	$('.btnNext').click(function(){
-		$('.nav-tabs > .active').next('li').find('a').trigger('click');
+	$('.btnAvancar').click(function(){
+        $tab = document.getElementById("modaltab")
+		$('#modalRenuncia > .active').next($tab).find('a').trigger('click');
 	});
 
-	$('.btnPrevious').click(function(){
-		$('.nav-tabs > .active').prev('li').find('a').trigger('click');
+	$('.btnVoltar').click(function(){
+        $tab = document.getElementById("modaltab")
+		$('#modalRenuncia > .active').prev($tab).find('a').trigger('click');
 	});
 
 // Script Confirmação de Exclusão

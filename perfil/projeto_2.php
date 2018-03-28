@@ -101,10 +101,10 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 					</div>
 					<div class="modal-body" style="text-align: left;">
 						<div role="tabpanel">
-							<ul class="nav nav-tabs">
-        						<li class="nav active"><a href="#tabela" data-toggle="tab">Tabela para Consulta</a></li>
-        						<li class="nav"><a href="#artigo" data-toggle="tab">Legislação</a></li>
-        						<li class="nav"><a href="#informacoes" data-toggle="tab">Informações Importantes</a></li>
+							<ul id="modalRenuncia" class="nav nav-tabs">
+        						<li id="modaltab" class="nav active"><a href="#tabela" data-toggle="tab">Tabela para Consulta</a></li>
+        						<li id="modaltab" class="nav"><a href="#artigo" data-toggle="tab">Legislação</a></li>
+        						<li id="modaltab" class="nav"><a href="#informacoes" data-toggle="tab">Informações Importantes</a></li>
     						</ul>
     						<div class="tab-content">
     							<!-- TABELA -->
@@ -144,7 +144,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 	        								</tr>
 	        							</tbody>
         							</table>
-        							<a class="btn btn-success btnNext" >Próximo</a>
+        							<a class="btn btn-success btnAvancar" >Próximo</a>
 	        					</div>
     						<!-- ARTIGO -->
 	    						<div role="tabpanel" class="tab-pane fade" id="artigo">
@@ -165,8 +165,8 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 											<li class="list-group-item list-group-item-success"><b>20% (cinquenta por cento) de renúncia fiscal</b></li>
 											<li class="list-group-item">Os projetos que obtiverem 4 (quatro) ou menos pontos;</li>
 										</ul>
-										<a class="btn btn-success btnPrevious" >Anterior</a>
-										<a class="btn btn-success btnNext" >Próximo</a>
+										<a class="btn btn-success btnVoltar" >Anterior</a>
+										<a class="btn btn-success btnAvancar" >Próximo</a>
 								</div>
 
 								<!-- INFORMAÇÕES IMPORTANTES -->
@@ -184,7 +184,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 									<div class="well">
 										É vedado o uso de recursos provenientes dos mecanismos previstos neste decreto em projetos que se caracterizem exclusivamente como peças promocionais e institucionais de empresas patrocinadoras.
 									</div>
-    								<a class="btn btn-success btnPrevious" >Anterior</a>
+    								<a class="btn btn-success btnVoltar" >Anterior</a>
 	        					</div>
 	        				</div>
 	        			</div>
