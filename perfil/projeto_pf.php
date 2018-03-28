@@ -131,13 +131,13 @@ if(isset($_POST['apagar']))
 				{
 			?>
 			<!--Inicio da validação numero de projetos-->
-			<?php 
-			  $qtd = retornaQtdProjetos($tipoPessoa,$idPf); 
-			  $numProjetos = (int) $qtd[0];
+			<?php
+			$qtd = retornaQtdProjetos($tipoPessoa,$idPf);
+			$numProjetos = (int) $qtd[0];
 
-			  $projeto = retornaProjeto($tipoPessoa, $idPf);
-			  $numProjeto = $projeto[0]; 			  
-			
+			$projeto = retornaProjeto($tipoPessoa, $idPf);
+			$numProjeto = $projeto[0];
+
 			if($numProjetos == 0): ?>
 			  <div class="form-group">
 			    <div class="col-md-offset-2 col-md-8">
@@ -148,12 +148,12 @@ if(isset($_POST['apagar']))
 			  </div>
 			<?php else: ?>
 			  <div class="alert alert-danger">
-			   <p>Você possui o projeto 
-			   	  <b><?=$numProjeto?></b> em andamento. Este é o 
+			   <p>Você possui o projeto
+			   	  <b><?=$numProjeto?></b> em andamento. Este é o
 			   	  seu limite.
 			   	</p>
-			  </div>	
-			 <?php endif?> 
+			  </div>
+			 <?php endif?>
 			 <!--Fim da validação numero de projetos-->
 
 			</div>
@@ -176,8 +176,7 @@ if(isset($_POST['apagar']))
 									<table class='table table-condensed'>
 										<thead>
 											<tr class='list_menu'>
-												<td width='10%'>ID projeto</td>
-												<td>Descrição</td>
+												<td>Nome do Projeto</td>
 												<td>Área de Atuação</td>
 												<td>Status</td>
 												<td width='10%'></td>
@@ -189,11 +188,9 @@ if(isset($_POST['apagar']))
 										{
 											$area = recuperaDados("area_atuacao","idArea",$campo['idAreaAtuacao']);
 											echo "<tr>";
-											echo "<td class='list_description'>".$campo['idProjeto']."</td>";
-											echo "<td class='list_description'>".$campo['descricao']."</td>";
+											echo "<td class='list_description'>".$campo['nomeProjeto']."</td>";
 											echo "<td class='list_description'>".$area['areaAtuacao']."</td>";
 											$idCampo = $campo['idStatus'];
-											
 											$status = "SELECT status FROM status WHERE idStatus='$idCampo'";
 											$envio = mysqli_query($con, $status);
 											$rowStatus = mysqli_fetch_array($envio);

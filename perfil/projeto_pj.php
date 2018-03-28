@@ -17,7 +17,7 @@ foreach ($campos as $cpos) {
 }
 
 /**Arquivos Obrigatórios**/
-if(isset($tipoPessoa)):    
+if(isset($tipoPessoa)):
   $tipoDoc = 'proponente';
   $idUser = $idPj;
   $idProjeto = 0; /*Incluso devido a busca pelos anexos*/
@@ -129,16 +129,16 @@ if(isset($_POST['apagar']))
 				{
 			?>
 			<!--Inicio da validação numero de projetos-->
-			<?php 
-			  $qtd = retornaQtdProjetos($tipoPessoa,$idPj); 
-			  $numProjetos = (int) $qtd[0];	
-			  
-			  $projetos = formataDados(retornaProjeto($tipoPessoa, $idPj));			  
-			
-			if($numProjetos <= 1): ?>					
+			<?php
+			$qtd = retornaQtdProjetos($tipoPessoa,$idPj);
+			$numProjetos = (int) $qtd[0];
+
+			$projetos = formataDados(retornaProjeto($tipoPessoa, $idPj));
+
+			if($numProjetos <= 1): ?>
 			  <div class="form-group">
 			    <div class="col-md-offset-2 col-md-8">
-				  <form class="form-horizontal" role="form" 
+				  <form class="form-horizontal" role="form"
 				    action="  ?perfil=projeto_novo" method="post">
 				    <input type="submit" value="Inscrever Projeto" class="btn btn-theme btn-lg btn-block">
 				  </form>
@@ -146,16 +146,16 @@ if(isset($_POST['apagar']))
 			  </div>
 			<?php else: ?>
 			  <div class="alert alert-danger">
-			     <p>Você possui dois projetos em andamento:<b> 
-			   	    <?php 
+			     <p>Você possui dois projetos em andamento:<b>
+			   	    <?php
 			   	      foreach($projetos as $key => $value):
-			   	        echo $value.',';	
-			   	      endforeach;	
+			   	        echo $value.',';
+			   	      endforeach;
 			   	    ?>
 			   	    </b>este é o seu limite.
 			   	  </p>
-			    </div>	
-			<?php endif?> 
+			    </div>
+			<?php endif?>
 			 <!--Fim da validação numero de projetos-->
 			</div>
 
@@ -177,8 +177,7 @@ if(isset($_POST['apagar']))
 									<table class='table table-condensed'>
 										<thead>
 											<tr class='list_menu'>
-												<td width='10%'>ID projeto</td>
-												<td>Descrição</td>
+												<td>Nome do Projeto</td>
 												<td>Área de Atuação</td>
 												<td>Status</td>
 												<td width='10%'></td>
@@ -190,8 +189,7 @@ if(isset($_POST['apagar']))
 										{
 											$area = recuperaDados("area_atuacao","idArea",$campo['idAreaAtuacao']);
 											echo "<tr>";
-											echo "<td class='list_description'>".$campo['idProjeto']."</td>";
-											echo "<td class='list_description'>".$campo['descricao']."</td>";
+											echo "<td class='list_description'>".$campo['nomeProjeto']."</td>";
 											echo "<td class='list_description'>".$area['areaAtuacao']."</td>";
 											$idCampo = $campo['idStatus'];
 
