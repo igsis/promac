@@ -29,7 +29,7 @@ for ($i = 0; $i < count($urlIncentivadorPf); $i++) {
                 <a href=""><br /></a>
             </li>
             <li class="<?php echo isset($ligar1) ? $ligar1 : 'clickable'; ?>">
-                <a onclick="location.href='incentivador_index_pf.php'" href=""><br />Cadastro Incentivador</a>
+                <a onclick="location.href='incentivador_index_pf.php'" href=""><br />Incentivador</a>
             </li>
             <li class="<?php echo isset($ligar2) ? $ligar2 : 'clickable'; ?>">
                 <a onclick="location.href='incentivador_index_pf.php?perfil=arquivos_incentivador_pf'" href=""><br />Documentos do Incentivador</a>
