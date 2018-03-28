@@ -175,9 +175,6 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
         							<div class="well">
         								Os projetos de Plano Anual de Atividades não serão avaliados em função do orçamento integral do projeto e já obterão 4 (quatro) pontos iniciais.
         							</div>
-        							<div class="well">
-        								Terão direita a 100% (cem por cento) de renúncia fiscal as doações para o FEPAC.
-        							</div>
 									<div class="well">
 										As doações para o FEPAC não implicarão divulgação ou exposição da marca do Contribuinte Incentivador.
 									</div>
