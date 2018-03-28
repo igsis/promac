@@ -121,7 +121,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 <section id="list_items" class="home-section bg-white">
 	<div class="container"><?php include 'includes/menu_smc.php'; ?>
 		<div class="form-group">
-			<h4>Ambiente SMC</h4>
+			<h4>Ambiente Coordenadoria</h4>
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
