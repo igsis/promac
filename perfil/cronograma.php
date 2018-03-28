@@ -93,26 +93,10 @@ else
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-3"><label>Data estimada de início do projeto</label>
-							<input type="text" name="inicioCronograma" class="form-control" id="datepicker01" value="<?php
-										if(returnEmptyDateCronograma('inicioCronograma', $idProjeto) > 0 ){
-											$var = strtotime(returnEmptyDateCronograma('inicioCronograma', $idProjeto));
-											echo date("d",$var) . "/";
-											echo date("m",$var) . "/";
-											echo date("Y",$var);
-										} else{
-											echo "00/00/0000";
-										}?>" required>
+							<input type="text" name="inicioCronograma" class="form-control" placeholder = "DD/MM/AA" required>
 						</div>
 						<div class="col-md-offset-2 col-md-3"><label>Data estimada do final do projeto</label>
-							<input type="text" name="fimCronograma" class="form-control" id="datepicker02" value="<?php
-										if(returnEmptyDateCronograma('fimCronograma', $idProjeto) > 0 ){
-											$var = strtotime(returnEmptyDateCronograma('fimCronograma', $idProjeto));
-											echo date("d",$var) . "/";
-											echo date("m",$var) . "/";
-											echo date("Y",$var);
-										} else{
-											echo "00/00/0000";
-										}?>" required>
+							<input type="text" name="fimCronograma" class="form-control" placeholder ="DD/MM/AA" required>
 						</div>
 					</div>
 
