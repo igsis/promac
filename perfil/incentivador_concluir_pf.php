@@ -54,15 +54,22 @@ if(isset($_POST['liberacao']))
 					</div>
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
-							<?php
-							if ($cpo == false)
-							{
+							<?php							
+							if ($cpo == false)							{
+								
 								$idPess = $pf['idPf'];
-								$queryArquivos = "SELECT idUploadArquivo FROM upload_arquivo WHERE idPessoa = $idPess AND idTipo = '4' AND publicado = '1'";
+								$queryArquivos = 
+								  "SELECT 
+								    idUploadArquivo 
+								   FROM 
+								     upload_arquivo 
+								   WHERE 
+								     idPessoa = $idPess 
+								   AND idTipo = '4' AND publicado = '1'";
+								
 								$enviaArquivos = mysqli_query($con, $queryArquivos);
 								$numRow = mysqli_num_rows($enviaArquivos);
-
-								if($numRow >= 8)
+								if($numRow == 5)
 								{?>
 							<form class="form-horizontal" role="form" action="?perfil=incentivador_concluir_pf" method="post">
 								<input type="submit" name="liberacao" value="Concluir inscrição do proponente" class="btn btn-theme btn-lg btn-block">
@@ -111,7 +118,7 @@ if(isset($_POST['liberacao']))
 				{
 			?>
 					<div class="form-group">
-						<div class="col-md-offset-2 col-md-8">Sua inscrição foi aprovada pela SMC.</div>
+						<div class="col-md-offset-2 col-md-8">Sua inscrição foi aprovada pela SMC.</div><br/>
 					</div>
 				<?php
 					include 'includes/resumo_incentivador_pf.php';
