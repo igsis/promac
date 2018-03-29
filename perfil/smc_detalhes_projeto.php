@@ -68,16 +68,7 @@ if(isset($_POST['gravarAdm']))
 	$idP = $_POST['IDP'];
 	$idStatus = $_POST['idStatus'];
 	$valorAprovado = dinheiroDeBr($_POST['valorAprovado']);
-	$envioComissao = date('Y-m-d H:i:s');
-	if($_POST['idStatus'] == 7)
-	{
-		$sql_gravarAdm = "UPDATE projeto SET idStatus = '$idStatus', valorAprovado = '$valorAprovado', envioComissao = 'envioComissao' WHERE idProjeto = '$idP' ";
-	}
-	else
-	{
-		$sql_gravarAdm = "UPDATE projeto SET idStatus = '$idStatus', valorAprovado = '$valorAprovado' WHERE idProjeto = '$idP' ";
-	}
-
+	$sql_gravarAdm = "UPDATE projeto SET idStatus = '$idStatus', valorAprovado = '$valorAprovado' WHERE idProjeto = '$idP' ";
 	if(mysqli_query($con,$sql_gravarAdm))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
@@ -106,6 +97,22 @@ if(isset($_POST['gravarNota']))
 		{
 			$mensagem = "<font color='#FF0000'><strong>Erro ao inserir nota! Tente novamente.</strong></font>";
 		}
+	}
+}
+
+if(isset($_POST['envioComissao']))
+{
+	$idP = $_POST['IDP'];
+	$dateNow = date('Y:m:d h:i:s');
+	$sql_gravarAdm = "UPDATE projeto SET idStatus = '$idStatus', envioComissao = '$dateNow' WHERE idProjeto = '$idP' ";
+	if(mysqli_query($con,$sql_gravarAdm))
+	{
+		$mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
+		echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
+	}
+	else
+	{
+		$mensagem = "<font color='#FF0000'><strong>Erro ao atualizar! Tente novamente.</strong></font>";
 	}
 }
 
@@ -147,29 +154,46 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 					<div class="tab-content">
 						<!-- LABEL ADMINISTRATIVO-->
 						<div role="tabpanel" class="tab-pane fade in active" id="adm">
+							<h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
 							<form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
-								<h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
 								<div class="form-group">
-									<div class="col-md-offset-3 col-md-3">
-									<?php 
-										$id = $projeto['tipoPessoa']; 
-										$idP = $projeto['idProjeto'];
-										if($id == 1)
-										{
-											$idPess = $projeto['idPf'];
-										} else if($id == 2)
-										{
-											$idPess = $projeto['idPj'];
-										}
-									?>
-										<a href='<?php echo "../pdf/gera_pdf.php?tipo=$id&projeto=$idP&pessoa=$idPess"; ?>' target='_blank' class="btn btn-theme btn-md btn-block"><strong>Gerar PDF do Projeto</strong></a><br/>
+									<div class="col-md-offset-2 col-md-6" align="right"><br/><label>Enviar projeto para a comissão</label>
 									</div>
-									<div class="col-md-4">
-									<a href='<?php echo "../pdf/gera_excel.php?tipo=$id&projeto=$idP&pessoa=$idPess"; ?>' target='_blank' class="btn btn-theme btn-md btn-block"><strong>Gerar Excel do Projeto</strong></a><br/>
-
+									<div class="col-md-2"><br/>
+										<?php echo "<input type='hidden' name='IDP' value='$idProjeto'>"; ?>
+										<input type="submit" name="envioComissao" class="btn btn-theme btn-md btn-block" value="Sim">
 									</div>
 								</div>
+							</form>
 
+							<div class="form-group"><hr/></div>
+
+							<div class="form-group">
+								<div class="col-md-offset-2 col-md-4">
+								<?php 
+									$id = $projeto['tipoPessoa']; 
+									$idP = $projeto['idProjeto'];
+									if($id == 1)
+									{
+										$idPess = $projeto['idPf'];
+									} else if($id == 2)
+									{
+										$idPess = $projeto['idPj'];
+									}
+								?>
+									<a href='<?php echo "../pdf/gera_pdf.php?tipo=$id&projeto=$idP&pessoa=$idPess"; ?>' target='_blank' class="btn btn-theme btn-md btn-block"><strong>Gerar PDF do Projeto</strong></a><br/>
+								</div>
+								<div class="col-md-4">
+								<a href='<?php echo "../pdf/gera_excel.php?tipo=$id&projeto=$idP&pessoa=$idPess"; ?>' target='_blank' class="btn btn-theme btn-md btn-block"><strong>Gerar Excel do Projeto</strong></a><br/>
+
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div class="col-md-12"><hr/></div>
+							</div>
+
+							<form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
 								<div class="form-group">
 									<div class="col-md-offset-2 col-md-6"><label>Status</label><br/>
 										<select class="form-control" name="idStatus" >
