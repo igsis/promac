@@ -1,7 +1,25 @@
 <?php
 $con = bancoMysqli();
 
-$idProjeto = isset($_POST['idProjeto'])?$_POST['idProjeto']:null;
+if(isset($_POST['idProjeto']))
+{
+	$idProjeto = $_POST['idProjeto'];
+	$_SESSION['idProjeto'] = $idProjeto;
+}
+else
+{
+	if(isset($_SESSION['idProjeto']))
+	{
+		$idProjeto = $_SESSION['idProjeto'];
+	}
+	else
+	{
+		$idProjeto = null;
+	}
+}
+
+// $idProjeto = isset($_POST['idProjeto'])?$_POST['idProjeto']:null;
+// $_SESSION['idProjeto'] = $idProjeto;
 $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 
 // Gerar documentos
@@ -162,11 +180,6 @@ if(isset($_POST['apagar']))
 	{
 		$mensagem = "<font color='#FF0000'><strong>Erro ao apagar arquivo!</strong></font>";
 	}
-	$sql = "SELECT * FROM projeto WHERE publicado = 1 AND idStatus = 2";
-	$query = mysqli_query($con,$sql);
-	$campo = mysqli_fetch_array($query);
-	$idProjeto = $campo['idProjeto'];
-
 }
 
 if($projeto['tipoPessoa'] == 1)
@@ -255,7 +268,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 							<div class="form-group">
 								<div class="col-md-offset-2 col-md-8">
 									<div class="table-responsive list_info"><h6>Arquivo(s) Anexado(s)</h6>
-										<?php listaArquivosPessoa($idProjeto,9,"comissao_detalhes_projeto"); ?>
+										<?php listaArquivosPessoa($idPf,9,"comissao_detalhes_projeto"); ?>
 									</div>
 								</div>
 							</div>
@@ -281,7 +294,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 													$envio = $con->query($query);
 													$row = $envio->fetch_array(MYSQLI_ASSOC);
 
-													if(verificaArquivosExistentesPF($idProjeto,$row['idListaDocumento'])){
+													if(verificaArquivosExistentesPF($idPf,$row['idListaDocumento'])){
 														echo '<div class="alert alert-success">O arquivo ' . $doc . ' já foi enviado.</div>';
 													}
 													else{ ?>
