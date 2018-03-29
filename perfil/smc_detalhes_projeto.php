@@ -68,12 +68,20 @@ if(isset($_POST['gravarAdm']))
 	$idP = $_POST['IDP'];
 	$idStatus = $_POST['idStatus'];
 	$valorAprovado = dinheiroDeBr($_POST['valorAprovado']);
-	$sql_gravarAdm = "UPDATE projeto SET idStatus = '$idStatus', valorAprovado = '$valorAprovado' WHERE idProjeto = '$idP' ";
+	$envioComissao = date('Y-m-d H:i:s');
+	if($_POST['idStatus'] == 7)
+	{
+		$sql_gravarAdm = "UPDATE projeto SET idStatus = '$idStatus', valorAprovado = '$valorAprovado', envioComissao = 'envioComissao' WHERE idProjeto = '$idP' ";
+	}
+	else
+	{
+		$sql_gravarAdm = "UPDATE projeto SET idStatus = '$idStatus', valorAprovado = '$valorAprovado' WHERE idProjeto = '$idP' ";
+	}
+
 	if(mysqli_query($con,$sql_gravarAdm))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
-		
-		echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>"; 
+		echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
 	}
 	else
 	{
@@ -92,7 +100,7 @@ if(isset($_POST['gravarNota']))
 		if(mysqli_query($con,$sql_nota))
 		{
 			$mensagem = "<font color='#01DF3A'><strong>Nota inserida com sucesso!</strong></font>";
-			echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>"; 
+			echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
 		}
 		else
 		{
@@ -109,6 +117,7 @@ else
 {
 	$pj = recuperaDados("pessoa_juridica","idPj",$projeto['idPj']);
 }
+
 
 $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 $prazos = recuperaDados("prazos_projeto","idProjeto",$idProjeto);
