@@ -2,9 +2,9 @@
 	// Conexão de Banco MySQLi
 	function bancoMysqli()
 	{
-		$servidor = '200.237.5.34';
+		$servidor = 'localhost';
 		$usuario = 'root';
-		$senha = 'lic54eca';
+		$senha = '';
 		$banco = 'promac';
 		$con = mysqli_connect($servidor,$usuario,$senha,$banco);
 		mysqli_set_charset($con,"utf8");
@@ -13,9 +13,9 @@
 	// Conexão de Banco com PDO
 	function bancoPDO()
 	{
-		$host = '200.237.5.34';
+		$host = 'localhost';
 		$user = 'root';
-		$pass = 'lic54eca';
+		$pass = '';
 		$db = 'promac';
 		$charset = 'utf8';
 		$dsn = "mysql:host=$host;dbname=$db;charset=$charset;";
@@ -34,9 +34,9 @@
 	// Cria conexao ao banco de CEPs.
 	function bancoMysqliCep()
 	{
-		$servidor = '200.237.5.34';
+		$servidor = 'localhost';
 		$usuario = 'root';
-		$senha = 'lic54eca';
+		$senha = '';
 		$banco = 'cep';
 		$con = mysqli_connect($servidor,$usuario,$senha,$banco); 
 		mysqli_set_charset($con,"utf8");

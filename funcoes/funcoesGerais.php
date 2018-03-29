@@ -51,7 +51,7 @@ function autenticaloginpf($login, $senha)
 					$_SESSION['tipoUsuario'] = 2;
 				}
 				else if($nAcesso == 3)
-					header("Location: perfil/comissao_index.php");
+					header("Location:  visual/index_pf.php?perfil=comissao_index");
 			}
 			else
 			{
