@@ -122,7 +122,8 @@ INSERT INTO `status`(`idStatus`, `status`) VALUES
 (3, 'Em análise'),
 (4, 'Complementação'),
 (5, 'Aprovado'),
-(6, 'Reprovado');
+(6, 'Reprovado'),
+(7, 'Comissão');
 
 --
 -- Extraindo dados da tabela `area_atuacao`
