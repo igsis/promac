@@ -48,7 +48,18 @@ $status = recuperaDados("status","idStatus",$projeto['idStatus']);
 									<ul class='list-group'>
 										<li class='list-group-item list-group-item-success'>
 											<li class='list-group-item'><strong>Protocolo (nº ISP):</strong> <?php echo $projeto['protocolo'] ?></li>
-											<li class='list-group-item'><strong>Status:</strong> <?php echo $status['status'] ?></li>
+											<li class='list-group-item'><strong>Status:</strong>
+												<?php
+												if($status['status'] == 7)
+												{
+													echo "Projeto em análise";
+												}
+												else
+												{
+													echo $status['status'];
+												}
+												?>
+											</li>
 											<li class='list-group-item'>
 												<strong>Valor Aprovado:</strong>
 												<?php
@@ -77,7 +88,7 @@ $status = recuperaDados("status","idStatus",$projeto['idStatus']);
 										<li class='list-group-item list-group-item-success'>Notas
 										<?php
 											$sql = "SELECT * FROM notas
-													WHERE idProjeto = '$idProjeto'";
+													WHERE idProjeto = '$idProjeto' AND interna != 1";
 											$query = mysqli_query($con,$sql);
 											$num = mysqli_num_rows($query);
 											if($num > 0)
