@@ -41,7 +41,7 @@ if(isset($_POST['gravarPrazos']))
 	$prazos = recuperaDados("prazos_projeto","idProjeto",$idProjeto);
 	if($prazos == NULL)
 	{
-		$sql_insere = "INSERT INTO prazos_projeto (idProjeto, prazoCaptacao, prorrogacaoCaptacao, finalCaptacao, inicioExecucao, fimExecucao, prorrogacaoExecucao, finalProjeto, prestarContas) VALUES ('$idProjeto', '$prazoCaptacao', '$prorrogacaoCaptacao', '$finalCaptacao', '$inicioExecucao', '$fimExecucao', '$prorrogacaoExecucao', '$finalProjeto', '$prestarContas')";
+		$sql_insere = "INSERT INTO prazos_projeto (idProjeto, prazoCaptacao, prorrogacaoCaptacao, finalCaptacao, inicioExecucao, fimExecucao, prorrogacaoExecucao, finalProjeto, prestarContas, publicado) VALUES ('$idProjeto', '$prazoCaptacao', '$prorrogacaoCaptacao', '$finalCaptacao', '$inicioExecucao', '$fimExecucao', '$prorrogacaoExecucao', '$finalProjeto', '$prestarContas', 0)";
 		if(mysqli_query($con,$sql_insere))
 		{
 			$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso! Utilize o menu para avançar.</strong></font>";
@@ -76,9 +76,8 @@ if(isset($_POST['gravarPrazos']))
 
 if(isset($_POST['gravarAdm']))
 {
-	$idStatus = $_POST['idStatus'];
 	$valorAprovado = dinheiroDeBr($_POST['valorAprovado']);
-	$sql_gravarAdm = "UPDATE projeto SET idStatus = '$idStatus', valorAprovado = '$valorAprovado' WHERE idProjeto = '$idProjeto' ";
+	$sql_gravarAdm = "UPDATE projeto SET valorAprovado = '$valorAprovado' WHERE idProjeto = '$idProjeto'";
 	if(mysqli_query($con,$sql_gravarAdm))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
@@ -95,7 +94,7 @@ if(isset($_POST['gravarNota']))
 	{
 		$dateNow = date('Y:m:d h:i:s');
 		$nota = addslashes($_POST['nota']);
-		$sql_nota = "INSERT INTO notas (idProjeto, data, nota) VALUES ('$idProjeto', '$dateNow', '$nota')";
+		$sql_nota = "INSERT INTO notas (idProjeto, data, nota, interna) VALUES ('$idProjeto', '$dateNow', '$nota',1)";
 		if(mysqli_query($con,$sql_nota))
 		{
 			$mensagem = "<font color='#01DF3A'><strong>Nota inserida com sucesso!</strong></font>";
@@ -221,7 +220,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 							<form method="POST" action="?perfil=comissao_detalhes_projeto" class="form-horizontal" role="form">
 								<h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
 								<div class="form-group">
-									<div class="col-md-offset-3 col-md-3">
+									<div class="col-md-offset-2 col-md-4">
 									<?php
 										$id = $projeto['tipoPessoa'];
 										$idP = $projeto['idProjeto'];
@@ -240,20 +239,11 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 
 									</div>
 								</div>
-
 								<div class="form-group">
-									<div class="col-md-offset-2 col-md-6"><label>Status</label><br/>
-										<select class="form-control" name="idStatus" >
-											<?php echo geraOpcao("status",$projeto['idStatus']) ?>
-										</select>
-									</div>
-									<div class="col-md-6"><label>Valor Aprovado</label><br/>
+									<div class="col-md-offset-2 col-md-6"><label>Valor Aprovado</label><br/>
 										<input type="text" name="valorAprovado" id='valor' class="form-control" value="<?php echo dinheiroParaBr($projeto['valorAprovado']) ?>">
 									</div>
-								</div>
-
-								<div class="form-group">
-									<div class="col-md-offset-2 col-md-8">
+									<div class="col-md-6"><label><br/></label>
 										<input type="hidden" name="idProjeto" value="<?php echo $idProjeto ?>">
 										<input type="submit" name="gravarAdm" class="btn btn-theme btn-md btn-block" value="Gravar">
 									</div>
