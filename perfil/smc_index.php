@@ -208,7 +208,7 @@ if(isset($_POST['liberacaoPJ']))
 			</div>
 		</div>
 		<div class="form-group">
-			<h5>Projetos com data de captação com tempo menor que 30 dias.</h5>
+			<h5>Projetos com data final de captação com tempo menor que 30 dias.</h5>
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
@@ -261,7 +261,7 @@ if(isset($_POST['liberacaoPJ']))
 			</div>
 		</div>
 		<div class="form-group">
-			<h5>Projetos com data final menor que 30 dias.</h5>
+			<h5>Projetos com data de execução menor que 30 dias.</h5>
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
