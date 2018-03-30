@@ -32,7 +32,7 @@ if($nome != '' || $cpf != '')
 
 	$sql = "SELECT * FROM projeto AS prj
 			INNER JOIN pessoa_fisica AS pf ON prj.idPf = pf.idPf
-			WHERE publicado = 1
+			WHERE publicado = 1 AND idStatus = 7
 			$filtro_nome $filtro_cpf";
 	$query = mysqli_query($con,$sql);
 	$num = mysqli_num_rows($query);
@@ -81,7 +81,7 @@ elseif($razaoSocial != '' || $cnpj != '')
 	}
 	$sql = "SELECT * FROM projeto AS prj
 			INNER JOIN pessoa_juridica AS pj ON prj.idPj = pj.idPj
-			WHERE publicado = 1
+			WHERE publicado = 1 AND idStatus = 7
 			$filtro_razaSocial $filtro_cnpj";
 	$query = mysqli_query($con,$sql);
 	$num = mysqli_num_rows($query);
@@ -139,7 +139,7 @@ else
 	}
 
 	$sql = "SELECT * FROM projeto AS prj
-			WHERE publicado = 1
+			WHERE publicado = 1 AND idStatus = 7
 			$filtro_nomeProjeto $filtro_idProjeto $filtro_idAreaAtuacao";
 	$query = mysqli_query($con,$sql);
 	$num = mysqli_num_rows($query);
