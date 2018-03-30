@@ -1317,6 +1317,7 @@ function retornaDocumentosObrigatoriosProponente($tipoPessoa)
                lista_documento AS doc  
   			  WHERE doc.idListaDocumento <> 27
   			  AND   doc.idListaDocumento <> 16
+  			  AND   doc.idListaDocumento <> 17
   			  AND doc.idTipoUpload = ".$tipoPessoa;  			  
 
   $resultado = mysqli_query($conexao,$query);

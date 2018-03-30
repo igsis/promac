@@ -45,12 +45,12 @@ INSERT INTO `lista_documento` (`idListaDocumento`, `idTipoUpload`, `documento`, 
 (14, 2, 'Comprovante de endereço de pelo menos 2 anos atrás da sede da pessoa jurídica', 'ce2', 1),
 (15, 2, 'Declaração [modelo para download]', 'de', 1),
 (16, 2, 'Portfólio comprovando atividades artísticas ou culturais (opcional)', 'pcaa', 1), /* opcional */
-(17, 3, 'Carta de Intenção de Incentivo (caso houver)', 'cii', 1), /* opcional */
-(18, 3, 'Carta de Anuência do Local [modelo para download]', 'cal', 1), /* opcional */
-(19, 3, 'CV dos principais participantes [no máximo 20 linhas de cada participante]', 'cvpp', 1), /* opcional */
-(20, 3, 'Declaração de Responsabilidade por Direitos Autorais [modelo para download]', 'drda', 1), /* opcional */
-(21, 3, 'Informações adicionais, de acordo com a especificidade do segmento artístico do projeto (exemplo: roteiro do espetáculo)', 'ia', 1), /* opcional */
-(22, 3, 'Plano de atividades', 'atividades', 0), /* opcional */
+(17, 2, 'Certidão de Regularidade da Cooperativa perante a Organização das Cooperativas Brasileiras ou Organização das Cooperativas do Estado de São Paulo (exclusivo para Cooperativas)', 1),
+(18, 3, 'Carta de Intenção de Incentivo (caso houver)', 'cii', 1), /* opcional */
+(19, 3, 'Carta de Anuência do Local [modelo para download]', 'cal', 1), /* opcional */
+(20, 3, 'CV dos principais participantes [no máximo 20 linhas de cada participante]', 'cvpp', 1), /* opcional */
+(21, 3, 'Declaração de Responsabilidade por Direitos Autorais [modelo para download]', 'drda', 1), /* opcional */
+(22, 3, 'Informações adicionais, de acordo com a especificidade do segmento artístico do projeto (exemplo: roteiro do espetáculo)', 'ia', 1), /* opcional */
 (23, 4, 'RG/RNE','rg',1),
 (24, 4, 'CPF','cpf',1),
 (25, 4, 'Comprovante de endereço atual (até últimos 3 meses)','ce',1),
@@ -119,7 +119,7 @@ INSERT INTO `unidade_medida` (`idUnidadeMedida`, `unidadeMedida`) VALUES
 INSERT INTO `status`(`idStatus`, `status`) VALUES
 (1, 'Em elaboração'),
 (2, 'Enviado'),
-(3, 'Em análise'),
+(3, 'Projeto em análise'),
 (4, 'Complementação'),
 (5, 'Aprovado'),
 (6, 'Reprovado'),
