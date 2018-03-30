@@ -33,7 +33,7 @@ $ano = date('Y');
     	?>
 		<div class="form-group">
 			<h4>Informações da Inscrição</h4>
-			<p><strong><?php if(isset($mensagem)){echo $mensagem;} ?></strong></p>
+			<p><strong><font color='#01DF3A'><strong>O status da sua inscrição é <?php echo $status['status'] ?>!</strong></font></strong></p>
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
@@ -42,20 +42,6 @@ $ano = date('Y');
 						<ul class='list-group'>
 							<li class='list-group-item list-group-item-success'>
 								<li class='list-group-item'><strong>Protocolo (nº ISP):</strong> <?php echo $projeto['protocolo'] ?></li>
-								<li class='list-group-item'><strong>Status:</strong> <?php echo $status['status'] ?></li>
-								<!--<li class='list-group-item'>
-									<strong>Valor Aprovado:</strong>
-									<?php
-										if($projeto['valorAprovado'] == 0)
-										{
-											echo "Nenhum valor foi inserido";
-										}
-										else
-										{
-											echo "R$ ".dinheiroParaBr($projeto['valorAprovado']);
-										}
-									?> -->
-								</li>
 							</li>
 						</ul>
 					</div>
@@ -63,33 +49,6 @@ $ano = date('Y');
 
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8"><hr/></div>
-				</div>
-
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8" align="left">
-						<ul class='list-group'>
-							<li class='list-group-item list-group-item-success'>Notas
-							<?php
-								$sql = "SELECT * FROM notas
-										WHERE idProjeto = '$idProjeto'";
-								$query = mysqli_query($con,$sql);
-								$num = mysqli_num_rows($query);
-								if($num > 0)
-								{
-
-									while($campo = mysqli_fetch_array($query))
-									{
-										echo "<li class='list-group-item'><strong>".exibirDataHoraBr($campo['data'])."</strong><br/>".$campo['nota']."</li>";
-									}
-								}
-								else
-								{
-									echo "<li class='list-group-item'>Não há notas disponíveis.</li>";
-								}
-							?>
-							</li>
-						</ul>
-					</div>
 				</div>
 
 			</div>
