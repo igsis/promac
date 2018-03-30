@@ -104,7 +104,7 @@ if(isset($_POST['envioComissao']))
 {
 	$idP = $_POST['IDP'];
 	$dateNow = date('Y:m:d h:i:s');
-	$sql_gravarAdm = "UPDATE projeto SET idStatus = '$idStatus', envioComissao = '$dateNow' WHERE idProjeto = '$idP' ";
+	$sql_gravarAdm = "UPDATE projeto SET idStatus = '7', envioComissao = '$dateNow' WHERE idProjeto = '$idP' ";
 	if(mysqli_query($con,$sql_gravarAdm))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
@@ -157,7 +157,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 							<h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
 							<form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
 								<div class="form-group">
-									<div class="col-md-offset-2 col-md-6" align="right"><br/><label>Enviar projeto para a comissão</label>
+									<div class="col-md-offset-2 col-md-6" align="right"><br/><label>Enviar projeto para a comissão</label><br><?php echo exibirDataHoraBr($projeto['envioComissao']) ?>
 									</div>
 									<div class="col-md-2"><br/>
 										<?php echo "<input type='hidden' name='IDP' value='$idProjeto'>"; ?>
@@ -170,8 +170,8 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 
 							<div class="form-group">
 								<div class="col-md-offset-2 col-md-4">
-								<?php 
-									$id = $projeto['tipoPessoa']; 
+								<?php
+									$id = $projeto['tipoPessoa'];
 									$idP = $projeto['idProjeto'];
 									if($id == 1)
 									{
