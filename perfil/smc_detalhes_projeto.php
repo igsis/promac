@@ -32,7 +32,7 @@ if(isset($_POST['gravarPrazos']))
 		if(mysqli_query($con,$sql_insere))
 		{
 			$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso! Utilize o menu para avançar.</strong></font>";
-			echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>"; 
+			echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
 		}
 		else
 		{
@@ -258,7 +258,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 
 								<div class="form-group">
 									<div class="col-md-offset-2 col-md-3">
-										<label>Prazo Captação</label><br/>
+										<label>Data inicial de Captação</label><br/>
 										<input type="text" name="prazoCaptacao" id="datepicker01" class="form-control" value="<?php
 										if(returnEmptyDate('prazoCaptacao', $idProjeto) > 0 ){
 											$var = strtotime(returnEmptyDate('prazoCaptacao', $idProjeto));
@@ -338,18 +338,33 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 											<option value="1">Sim</option>
 										</select>
 									</div>
-									<div class="col-md-3"><label>Data final do projeto</label>
-										<input type="text" name="finalProjeto" id="datepicker05" class="form-control" value="<?php
-										if(returnEmptyDate('finalProjeto', $idProjeto) > 0 ){
-											$var = strtotime(returnEmptyDate('finalProjeto', $idProjeto));
-											echo date("d",$var) . "/";
-											echo date("m",$var) . "/";
-											echo date("Y",$var);
-										} else{
-											echo "00/00/0000";
-										}
-										?>">
-									</div>
+									<?php
+									if($prazos['prorrogacaoExecucao'] == 1)
+									{
+									?>
+										<div class="col-md-3"><label>Data final do projeto</label>
+											<input type="text" name="finalProjeto" id="datepicker05" class="form-control" value="<?php
+											if(returnEmptyDate('finalProjeto', $idProjeto) > 0 ){
+												$var = strtotime(returnEmptyDate('finalProjeto', $idProjeto));
+												echo date("d",$var) . "/";
+												echo date("m",$var) . "/";
+												echo date("Y",$var);
+											} else{
+												echo "00/00/0000";
+											}
+											?>">
+										</div>
+									<?php
+									}
+									else
+									{
+									?>
+										<div class="col-md-3"><label>Data final do projeto</label><br/>
+											<i>Não há prorrogração</i>
+										</div>
+									<?php
+									}
+									?>
 									<div class="col-md-3"><label>Data para prestar contas</label>
 										<input type="text" name="prestarContas" id="datepicker06" class="form-control" value="<?php
 										if(returnEmptyDate('prestarContas', $idProjeto) > 0 ){
