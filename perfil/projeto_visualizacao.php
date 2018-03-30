@@ -63,13 +63,13 @@ $status = recuperaDados("status","idStatus",$projeto['idStatus']);
 											<li class='list-group-item'>
 												<strong>Valor Aprovado:</strong>
 												<?php
-													if($projeto['valorAprovado'] == 0)
+													if($status['status'] == 5)
 													{
-														echo "Nenhum valor foi inserido";
+														echo "R$ ".dinheiroParaBr($projeto['valorAprovado']);
 													}
 													else
 													{
-														echo "R$ ".dinheiroParaBr($projeto['valorAprovado']);
+														echo "Nenhum valor foi inserido";
 													}
 												?>
 											</li>
