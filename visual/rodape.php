@@ -29,5 +29,7 @@
 <script src="js/custom.js"></script>
 <script src="js/scriptbaixo.js"></script>
 <script src="js/termoContrato.js"></script>
+<script src="js/pegaCep.js"></script>
+
 </body>
 </html>

@@ -1536,8 +1536,94 @@ function retornaProjeto($tipoPessoa, $id)
       }  
       return $documentos;  			  
     endif;  
+  endif;   
+}
+
+function retornaEndereco($cep){  
+  
+  $enderecos = [];
+  $conexao = bancoMysqliCep();
+    
+  $resultado = mysqli_query($conexao, 
+     "CALL  pr_busca_cep('$cep');"); 
+
+  if(!empty($resultado)):
+    while($endereco = mysqli_fetch_assoc($resultado)) 
+    {
+      array_push($enderecos, $endereco);
+    }  
+    return $enderecos;  			  
   endif;  
- 
+  
+  return $enderecos;  
+}
+
+function retornaUf($cep){    
+  
+  $conexao = bancoMysqliCep();
+    
+  $resultado = mysqli_query($conexao, 
+     "CALL  pr_busca_uf('$cep');"); 
+
+  $uf = mysqli_fetch_array($resultado);  
+  
+  return array_unique($uf);  			  
+}
+
+function configuraEndereco($addresses)
+{
+  $enderecos = [];
+
+  if(!empty($addresses)):
+    $enderecos = [
+       'logradouro' => $addresses[0]['logradouro'],
+       'cidade' => $addresses[0]['cidade'],
+       'bairro' => $addresses[0]['bairro'],
+       'cep' => $addresses[0]['cep']
+      ]; 
+   return $enderecos;
+  endif;   
+
+  return $enderecos;
+  
+}
+
+function listaEstados()
+{
+  $estados = [];  
+  $conexao = bancoMysqliCep();
+
+  $query =  "SELECT 
+               uf
+             FROM 
+               estado order by uf";
+
+  $resultado = mysqli_query($conexao,$query);
+    
+  while($estado = mysqli_fetch_assoc($resultado)) 
+  {
+    array_push($estados, $estado);
+  }  
+  return $estados;  			    
+}
+
+function listaCidades()
+{
+  $cidades = [];  
+  $conexao = bancoMysqliCep();
+
+  $query =  "SELECT 
+               nome
+             FROM 
+               cidade order by nome";
+
+  $resultado = mysqli_query($conexao,$query);
+    
+  while($cidade = mysqli_fetch_assoc($resultado)) 
+  {
+    array_push($cidades, $cidade);
+  }  
+  return $cidades;  			    
 }
 
 ?>
