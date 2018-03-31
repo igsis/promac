@@ -45,7 +45,7 @@ INSERT INTO `lista_documento` (`idListaDocumento`, `idTipoUpload`, `documento`, 
 (14, 2, 'Comprovante de endereço de pelo menos 2 anos atrás da sede da pessoa jurídica', 'ce2', 1),
 (15, 2, 'Declaração [modelo para download]', 'de', 1),
 (16, 2, 'Portfólio comprovando atividades artísticas ou culturais (opcional)', 'pcaa', 1), /* opcional */
-(17, 2, 'Certidão de Regularidade da Cooperativa perante a Organização das Cooperativas Brasileiras ou Organização das Cooperativas do Estado de São Paulo (exclusivo para Cooperativas)', 1),
+(17, 2, 'Certidão de Regularidade da Cooperativa perante a Organização das Cooperativas Brasileiras ou Organização das Cooperativas do Estado de São Paulo (exclusivo para Cooperativas)', 'certcoop', 1),
 (18, 3, 'Carta de Intenção de Incentivo (caso houver)', 'cii', 1), /* opcional */
 (19, 3, 'Carta de Anuência do Local [modelo para download]', 'cal', 1), /* opcional */
 (20, 3, 'CV dos principais participantes [no máximo 20 linhas de cada participante]', 'cvpp', 1), /* opcional */
