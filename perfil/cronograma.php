@@ -4,26 +4,20 @@ $idProjeto = $_SESSION['idProjeto'];
 
 if(isset($_POST['insere']))
 {
-	if($_POST['fimCronograma'] < $_POST['inicioCronograma'])
-	{
-		echo "<script>alert('ERRO: A data final não pode ser menor que a data inicial. ')</script>";
-		header("Location: index_pf.php?perfil=cronograma");
-		} else {
-		$inicioCronograma = exibirDataMysql($_POST['inicioCronograma']);
-		$fimCronograma = exibirDataMysql($_POST['fimCronograma']);
+	$inicioCronograma = $_POST['inicioCronograma'];
+	$fimCronograma = $_POST['fimCronograma'];
 
-		$sql_insere = "UPDATE projeto SET
-			inicioCronograma = '$inicioCronograma',
-			fimCronograma = '$fimCronograma'
-			WHERE idProjeto = '$idProjeto'";
-		if(mysqli_query($con,$sql_insere))
-		{
-			$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso! </strong></font>";
-		}
-		else
-		{
-			$mensagem = "<font color='#FF0000'><strong>Erro ao gravar! Tente novamente.</strong></font>";
-		}
+	$sql_insere = "UPDATE projeto SET
+		inicioCronograma = '$inicioCronograma',
+		fimCronograma = '$fimCronograma'
+		WHERE idProjeto = '$idProjeto'";
+	if(mysqli_query($con,$sql_insere))
+	{
+		$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso! </strong></font>";
+	}
+	else
+	{
+		$mensagem = "<font color='#FF0000'><strong>Erro ao gravar! Tente novamente.</strong></font>";
 	}
 }
 
@@ -60,14 +54,6 @@ if(isset($_POST['insereCronograma']))
 }
 
 $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
-if($projeto['fimCronograma'] == 0000-00-00)
-{
-	$fimCronograma = "";
-}
-else
-{
-	$fimCronograma = exibirDataBr($projeto['fimCronograma']);
-}
 ?>
 <section id="list_items" class="home-section bg-white">
 	<div class="container">
@@ -93,10 +79,10 @@ else
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-3"><label>Data estimada de início do projeto</label>
-							<input type="text" name="inicioCronograma" class="form-control" placeholder = "DD/MM/AA" required>
+							<input type="text" name="inicioCronograma" class="form-control" placeholder = "DD/MM/AA ou MM/AAAA" required value="<?php echo $projeto['inicioCronograma'] ?>">
 						</div>
 						<div class="col-md-offset-2 col-md-3"><label>Data estimada do final do projeto</label>
-							<input type="text" name="fimCronograma" class="form-control" placeholder ="DD/MM/AA" required>
+							<input type="text" name="fimCronograma" class="form-control" placeholder ="DD/MM/AA ou MM/AAAA" required value="<?php echo $projeto['fimCronograma'] ?>">
 						</div>
 					</div>
 
