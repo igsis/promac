@@ -7,6 +7,7 @@
 		<link href="visual/color/default.css" rel="stylesheet" media="screen">
 		<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 		<link rel="stylesheet" href="visual/css/font-awesome.min.css">
+		<link rel="icon" type="image/png" sizes="16x16" href="visual/images/favicon.png">
 		<script src="visual/js/modernizr.custom.js"></script>
 		<script src="visual/js/jquery-1.9.1.js"></script>
 		<script src="visual/js/jquery-ui.js"></script>
@@ -118,15 +119,19 @@
 					<tr>
 						<td width="20%"><img src="visual/images/logo_promac_branco.png" align="left"/></td>
 						<td align="center"><font color="#ccc">2018 @ Pro-Mac - Programa Municipal de Apoio a Projetos Culturais<br/>Secretaria Municipal de Cultura<br/>Prefeitura de São Paulo</font></td>
-						<td width="20%"><img src="visual/images/logo_cultura_q.png" align="right"/></td>
-					</tr>
-					<tr>
-						<td colspan="2"><font color="#ccc"><br/>Supervisão de Tecnologia da Informação - Programação e Desenvolvimento</font></td>
-						<td align="right"><font color="#ccc">Versão 0.1</font></td>
+						<td align="right"><font color="#ccc"><b>Contato:</b><br/><i class="fa fa-phone-square"></i> (11) 3397-0063<br/><i class="fa fa-envelope"></i> promac@prefeitura.sp.gov.br</font></td>
 					</tr>
 				</table>
-				<script src="visual/js/bootstrap.min.js"></script>
 			</div>
+			<div class="container">
+				<table width="100%">
+					<tr>
+						<td><font color="#ccc" size="1"><br/><i>Supervisão de Tecnologia da Informação - Programação e Desenvolvimento</i></font></td>
+						<td align="right"><font color="#ccc" size="1"><i>Versão 0.1</i></font></td>
+					</tr>
+				</table>
+			</div>
+			<script src="visual/js/bootstrap.min.js"></script>
 		</footer>
     </body>
 </html>

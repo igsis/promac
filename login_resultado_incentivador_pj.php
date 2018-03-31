@@ -24,155 +24,122 @@ if(isset($_POST['busca']))
 
 if($num_busca > 0)
 { // Se exisitr, lista a resposta.
+	include "visual/cabecalho_index.php";
 ?>
-	<html>
-		<head>
-			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-			<title>SMC / Pro-Mac - Programa Municipal de Apoio a Projetos Culturais</title>
-			<link href="visual/css/bootstrap.min.css" rel="stylesheet" media="screen">
-			<link href="visual/css/style.css" rel="stylesheet" media="screen">
-			<link href="visual/color/default.css" rel="stylesheet" media="screen">
-			<script src="visual/js/modernizr.custom.js"></script>
-		</head>
-		<body>
-			<div id="bar">
-				<p id="p-bar"><img src="visual/images/logo_cultura_h.png" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Pro-Mac</b></p>
+	<section id="list_items" class="home-section bg-white">
+		<div class="container">
+			<div class="form-group">
+				<h3>USUÁRIO JÁ POSSUI CADASTRO</h3>
 			</div>
-			<p>&nbsp;</p>
-			<p>&nbsp;</p>
-			<p>&nbsp;</p>
-			<section id="list_items" class="home-section bg-white">
-				<div class="container">
-					<div class="form-group">
-						<h3>USUÁRIO JÁ POSSUI CADASTRO</h3>
-					</div>
-					<div class="row">
-						<div class="col-md-offset-1 col-md-10">
-							<div class="table-responsive list_info">
-								<table class="table table-condensed">
-									<thead>
-										<tr class="list_menu">
-											<td>Razão Social</td>
-											<td>CNPJ</td>
-											<td width="15%"></td>
+			<div class="row">
+				<div class="col-md-offset-1 col-md-10">
+					<div class="table-responsive list_info">
+						<table class="table table-condensed">
+							<thead>
+								<tr class="list_menu">
+									<td>Razão Social</td>
+									<td>CNPJ</td>
+									<td width="15%"></td>
+								</tr>
+							</thead>
+							<tbody>
+							<?php
+								while($descricao = mysqli_fetch_array($query_busca))
+								{
+									echo "
+										<tr>
+											<td class='list_description'><b>".$descricao['razaoSocial']."</b></td>
+											<td class='list_description'>".$descricao['cnpj']."</td>
+											<td><a href='https://drive.google.com/open?id=11W-UF7HakT6lKZt-0qAJ9b0DCactPHsyuLCUSxdcWwo'><input type='submit' value='Esqueci a Senha' class='btn btn-theme btn-block'></a></td>
 										</tr>
-									</thead>
-									<tbody>
-									<?php
-										while($descricao = mysqli_fetch_array($query_busca))
-										{
-											echo "
-												<tr>
-													<td class='list_description'><b>".$descricao['razaoSocial']."</b></td>
-													<td class='list_description'>".$descricao['cnpj']."</td>
-													<td><a href='https://drive.google.com/open?id=11W-UF7HakT6lKZt-0qAJ9b0DCactPHsyuLCUSxdcWwo'><input type='submit' value='Esqueci a Senha' class='btn btn-theme btn-block'></a></td>
-												</tr>
-											";
-										}
-									?>
-									</tbody>
-								</table>
-							</div>
+									";
+								}
+							?>
+							</tbody>
+						</table>
+					</div>
 
-							<div class="form-group">
-								<div class="col-md-offset-2 col-md-8">
-									<a href="index.php"><input type="submit" value="Entrar com outro usuário" class="btn btn-theme btn-block"></a>
-								</div>
-							</div>
-
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8">
+							<a href="index.php"><input type="submit" value="Entrar com outro usuário" class="btn btn-theme btn-block"></a>
 						</div>
 					</div>
-				</div>
-			</section>
-			<?php include "visual/rodape_index.php" ?>
-		</body>
-	</html>
 
+				</div>
+			</div>
+		</div>
+	</section>
 <?php
+	include "visual/rodape_index.php";
 }
 else
 { // se não existir o cpf, imprime um formulário.
 	$busca = $_POST['busca'];
+	include "visual/cabecalho_index.php";
 ?>
-	<html>
-		<head>
-			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-			<title>SMC / Pro-Mac - Programa Municipal de Apoio a Projetos Culturais</title>
-			<link href="visual/css/bootstrap.min.css" rel="stylesheet" media="screen">
-			<link href="visual/css/style.css" rel="stylesheet" media="screen">
-			<link href="visual/color/default.css" rel="stylesheet" media="screen">
-			<script src="visual/js/modernizr.custom.js"></script>
-		</head>
-		<body>
-			<div id="bar">
-				<p id="p-bar"><img src="visual/images/logo_cultura_h.png" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Pro-Mac</b></p>
+	<section id="contact" class="home-section bg-white">
+		<div class="container">
+			<div class="form-group">
+				<h4>Cadastro de Pessoa Jurídica</h4>
+				<h5><?php if(isset($mensagem)){echo $mensagem;};?></h5>
 			</div>
-			<p>&nbsp;</p>
-			<p>&nbsp;</p>
-			<p>&nbsp;</p>
-			<section id="contact" class="home-section bg-white">
-				<div class="container">
+			<div class="row">
+				<div class="col-md-offset-1 col-md-10">
+				<form class="form-horizontal" role="form" action="login_cadastro_incentivador_pj.php" method="post">
 					<div class="form-group">
-						<h4>Cadastro de Pessoa Jurídica</h4>
-						<h5><?php if(isset($mensagem)){echo $mensagem;};?></h5>
-					</div>
-					<div class="row">
-						<div class="col-md-offset-1 col-md-10">
-						<form class="form-horizontal" role="form" action="login_cadastro_incentivador_pj.php" method="post">
-							<div class="form-group">
-								<div class="col-md-offset-2 col-md-8"><strong>Razão Social: *</strong><br/>
-									<input type="text" class="form-control" name="razaoSocial" placeholder="Razão Social">
-								</div>
-							</div>
-
-							<div class="form-group">
-								<div class="col-md-offset-2 col-md-6"><strong>Senha: *</strong>
-									<input type="password" name="senha01" class="form-control" id="inputName" placeholder="">
-								</div>
-								<div class=" col-md-6"><strong>Redigite a senha: *</strong>
-									<input type="password" name="senha02" class="form-control" id="inputEmail" placeholder="">
-								</div>
-							</div>
-
-							<div class="form-group">
-								<div class="col-md-offset-2 col-md-6"><strong>CNPJ: *</strong><br/>
-									<input type="text" readonly class="form-control" name="cnpj" value="<?php echo $busca ?>" placeholder="CNPJ">
-								</div>
-								<div class="col-md-6"><strong>Email: *</strong><br/>
-									<input type="text" class="form-control" name="email" placeholder="Email">
-								</div>
-							</div>
-
-							<div class="form-group">
-								<div class="col-md-offset-2 col-md-8"><strong>Escolha uma pergunta secreta, para casos de recuperação de senha:</strong><br/>
-									<select class="form-control" name="idFraseSeguranca" id="idFraseSeguranca" required>
-										<option>Selecione...</option>
-										<?php geraOpcao("frase_seguranca","");	?>
-									</select>
-								</div>
-							</div>
-
-							<div class="form-group">
-								<div class="col-md-offset-2 col-md-8"><strong>Resposta:</strong><br/>
-									<input type="text" class="form-control" id="respostaFrase" maxlength="10" name="respostaFrase" required/>
-								</div>
-							</div>
-
-							<!-- Botão para Gravar -->
-							<div class="form-group">
-								<div class="col-md-offset-2 col-md-8">
-									<input type="hidden" value="<?php echo $busca ?>">
-									<input type="hidden" name="cadastraNovoPj">
-									<input type="submit" value="Enviar" class="btn btn-theme btn-lg btn-block">
-								</div>
-							</div>
-						</form>
-
+						<div class="col-md-offset-2 col-md-8"><strong>Razão Social: *</strong><br/>
+							<input type="text" class="form-control" name="razaoSocial" placeholder="Razão Social">
 						</div>
 					</div>
+
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-6"><strong>Senha: *</strong>
+							<input type="password" name="senha01" class="form-control" id="inputName" placeholder="">
+						</div>
+						<div class=" col-md-6"><strong>Redigite a senha: *</strong>
+							<input type="password" name="senha02" class="form-control" id="inputEmail" placeholder="">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-6"><strong>CNPJ: *</strong><br/>
+							<input type="text" readonly class="form-control" name="cnpj" value="<?php echo $busca ?>" placeholder="CNPJ">
+						</div>
+						<div class="col-md-6"><strong>Email: *</strong><br/>
+							<input type="text" class="form-control" name="email" placeholder="Email">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8"><strong>Escolha uma pergunta secreta, para casos de recuperação de senha:</strong><br/>
+							<select class="form-control" name="idFraseSeguranca" id="idFraseSeguranca" required>
+								<option>Selecione...</option>
+								<?php geraOpcao("frase_seguranca","");	?>
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8"><strong>Resposta:</strong><br/>
+							<input type="text" class="form-control" id="respostaFrase" maxlength="10" name="respostaFrase" required/>
+						</div>
+					</div>
+
+					<!-- Botão para Gravar -->
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8">
+							<input type="hidden" value="<?php echo $busca ?>">
+							<input type="hidden" name="cadastraNovoPj">
+							<input type="submit" value="Enviar" class="btn btn-theme btn-lg btn-block">
+						</div>
+					</div>
+				</form>
+
 				</div>
-			</section>
-			<?php include "visual/rodape_index.php" ?>
+			</div>
+		</div>
+	</section>
 <?php
+	include "visual/rodape_index.php";
 }
 ?>

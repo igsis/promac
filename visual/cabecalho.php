@@ -19,7 +19,6 @@ else
 {
 	$logado = $_SESSION['login'];
 }
-//ini_set('session.gc_maxlifetime', 30*60); // 30 minutos
 ?>
 
 <html>
@@ -31,6 +30,7 @@ else
 		<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
 		<link href="css/style.css" rel="stylesheet" media="screen">
 		<link href="color/default.css" rel="stylesheet" media="screen">
+		<link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
 		<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 		<link rel="stylesheet" href="css/font-awesome.min.css">
 		<?php include "../include/script.php"; ?>
@@ -40,7 +40,7 @@ else
 			<p id="p-bar"><img src="images/logo_cultura_h.png" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Pro-Mac</b>
 			</p>
 		</div>
-<?php 
+<?php
 # Menu progresso
 include_once '../visual/smart_wizard.php';
-?>		
+?>

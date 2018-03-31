@@ -1,13 +1,4 @@
-<html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title>SMC / Pro-Mac - Programa Municipal de Apoio a Projetos Culturais</title>
-		<link href="visual/css/bootstrap.min.css" rel="stylesheet" media="screen">
-		<link href="visual/css/style.css" rel="stylesheet" media="screen">
-		<link href="visual/color/default.css" rel="stylesheet" media="screen">
-		<script src="visual/js/modernizr.custom.js"></script>
-	</head>
-	<body>
+<?php include "visual/cabecalho_index.php" ?>
 		<section id="list_items" class="home-section bg-white">
 			<div class="container">
 				<div class="row">
