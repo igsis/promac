@@ -266,12 +266,12 @@ else: ?>
 				            name="cidade" required
 				            <?=$habilitaCampo ? '' : 'readonly'?> 
 				            value="<?php 
-				              if(!empty($_POST['cidade'])):				           
-				                echo $_POST['cidade'];				                
+				              if(!empty($endereco['cidade'])):				           
+				                echo $endereco['cidade'];				                
 				              elseif(!empty($pf['cidade'])):
 				                echo $pf['cidade'];	
-				              elseif(!empty($endereco['cidade'])):  
-				                 echo $endereco['cidade'];	  			               
+				              elseif(!empty($_POST['cidade'])):  
+				                 echo $_POST['cidade'];	  			               
 				              else:
 				                echo '';
 				              endif?>"> 
@@ -292,12 +292,12 @@ else: ?>
 			                name="estado"  
 				            <?=$habilitaCampo ? '' : 'readonly'?>
 				              value="<?php 
-				              if(!empty($_POST['estado'])):				           
-				                echo $_POST['estado'];				                
+				              if(!empty($uf)):				           
+				                echo $uf;				                
 				              elseif(!empty($pf['estado'])):
 				                echo $pf['estado'];				               
-				              elseif(!empty($uf)):
-				              	echo $uf;				                
+				              elseif(!empty($endereco['estado'])):
+				              	echo $endereco['estado'];				                
 				              else:
 				                echo '';
 				              endif?>"> 
