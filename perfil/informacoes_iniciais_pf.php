@@ -248,7 +248,7 @@ else: ?>
 			       if($habilitaCampo): ?>
 			         <select class="form-control" name="cidade" id="cidade">
 			           <?php foreach($cidades as $cidade): 
-			             $selected = $pf['cidade'] == $cidade ?
+			             $selected = $_POST['cidade'] == $cidade ?
 	                                 "selected='selected'" : ""; ?>			           
 			       	      <option value="<?=$cidade?>"<?=$selected?>><?=$cidade?></option>
 			       	    <?php endforeach ?>  
@@ -274,7 +274,7 @@ else: ?>
 			       if($habilitaCampo): ?>
 			         <select class="form-control" name="estado" id="estado">
 			           <?php foreach($estados as $estado): 
-  					     $selected = $pf['estado'] == $estado ?
+  					     $selected = $_POST['estado'] == $estado ?
 	                                  "selected='selected'" : ""; ?>			           
 			       	      <option value="<?=$estado?>" <?=$selected?>><?=$estado?></option>
 			       	    <?php endforeach ?>  
