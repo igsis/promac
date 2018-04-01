@@ -243,8 +243,15 @@ function retornaDataSemHora($data)
 //retorna data d/m/y de mysql/datetime(a-m-d H:i:s)
 function exibirDataHoraBr($data)
 {
-	$timestamp = strtotime($data);
-	return date('d/m/y - H:i:s', $timestamp);
+	if($data == '0000-00-00 00:00:00')
+	{
+		return "0000-00-00 00:00:00";
+	}
+	else
+	{
+		$timestamp = strtotime($data);
+		return date('d/m/y - H:i:s', $timestamp);
+	}
 }
 function returnEmptyDateCronograma($VCAM, $idProjeto)
 {
