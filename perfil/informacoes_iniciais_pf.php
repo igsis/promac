@@ -174,22 +174,26 @@ else: ?>
 					
 			<div class="form-group">
 			  <div class="col-md-offset-2 col-md-8"><strong>Endereço:</strong><br/>
-			    <input type="text" class="form-control" id="Endereco" 
-				       name="Endereco" placeholder="Endereço" 
-				       <?=$habilitaCampo ? '' : 'readonly'?> 
-				       required
-				       value="<?php 
-				          if(!empty($endereco['logradouro'])):				            
-				            echo $endereco['logradouro'];					            
-				          elseif(!empty($_POST['logradouro'])):  
-				            echo $_POST['logradouro'];
-				          elseif(!empty($pf['logradouro'])):
-				            echo $pf['logradouro'];	
-				          else:
-				            echo '';
-				          endif
-				        ?>"> 
-			 </div>
+			    <?php if(!empty($endereco['logradouro'])): ?>
+			      <input type="text" class="form-control" id="Endereco" 
+				         name="Endereco" placeholder="Endereço" 
+				         <?=$habilitaCampo ? '' : 'readonly'?> 
+				         required
+				         value="<?php echo $endereco['logradouro'];?>">
+				<?php elseif(!empty($_POST['Endereco'])): ?>
+				  <input type="text" class="form-control" id="Endereco" 
+				         name="Endereco" placeholder="Endereço" 
+				         <?=$habilitaCampo ? '' : 'readonly'?> 
+				         required
+				         value="<?php echo $_POST['Endereco'];?>">
+				<?php else: ?>         	
+				  <input type="text" class="form-control" id="Endereco" 
+				         name="Endereco" placeholder="Endereço" 
+				         <?=$habilitaCampo ? '' : 'readonly'?> 
+				         required
+				         value="<?php echo '';?>">	
+				<?php endif ?>         
+			  </div>
 			</div>
 
 			<div class="form-group">
@@ -224,21 +228,25 @@ else: ?>
 
 			<div class="form-group">
 			  <div class="col-md-offset-2 col-md-8"><strong>Bairro:</strong><br/>
-			    <input type="text" class="form-control" id="Bairro" 
-				       name="Bairro" placeholder="Bairro" 
-				       <?=$habilitaCampo ? '' : 'readonly'?> 
-				       required
-				       value="<?php 
-				          if(!empty($endereco['bairro'])):				            
-				            echo $endereco['bairro'];					            
-				          elseif(!empty($_POST['bairro'])):  
-				            echo $_POST['bairro'];				              
-				          elseif(!empty($pf['bairro'])):
-				            echo $pf['bairro'];	
-				          else:
-				            echo '';
-				          endif
-				        ?>"> 
+			    <?php if(!empty($endereco['bairro'])): ?>
+			      <input type="text" class="form-control" id="Bairro" 
+				         name="Bairro" placeholder="Bairro" 
+				         <?=$habilitaCampo ? '' : 'readonly'?> 
+				         required
+				         value="<?php echo $endereco['bairro'];?>">
+				<?php elseif(!empty($_POST['Bairro'])): ?>
+				  <input type="text" class="form-control" id="Bairro" 
+				         name="Bairro" placeholder="Bairro" 
+				         <?=$habilitaCampo ? '' : 'readonly'?> 
+				         required
+				         value="<?php echo $_POST['Bairro'];?>">
+				<?php else: ?>         	
+				  <input type="text" class="form-control" id="Bairro" 
+				         name="Bairro" placeholder="Bairro" 
+				         <?=$habilitaCampo ? '' : 'readonly'?> 
+				         required
+				         value="<?php echo '';?>">	
+				<?php endif ?>         
 			  </div>
 			</div>
 
@@ -305,7 +313,7 @@ else: ?>
 			    <select class="form-control" name="cooperado">
                   <?php $tipos = ['Não', 'Sim'];
                     foreach($tipos as $chave => $tipo):
-	                      $selected = $pf['cooperado'] == $chave ?
+	                      $selected = $_POST['cooperado'] == $chave ?
 	                                  "selected='selected'" : ""; ?>
 
   					  <option value="<?=$chave?>" <?=$selected?>>
