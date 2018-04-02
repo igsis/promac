@@ -153,8 +153,8 @@ else{
 					</div>
 
 					<div class="form-group">
-						<div class="col-md-offset-2 col-md-8"><strong>E-mail *:</strong><br/>
-							<input type="text" class="form-control" name="email" placeholder="E-mail" value="<?php echo $representante1['email']; ?>" required>
+						<div class="col-md-offset-2 col-md-8"><strong>Email *:</strong><br/>
+							<input type="email" class="form-control" name="email" placeholder="E-mail" value="<?php echo $representante1['email']; ?>" required>
 						</div>
 					</div>
 
