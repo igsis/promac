@@ -90,6 +90,8 @@ INSERT INTO `etapa` (`idEtapa`, `etapa`) VALUES
 (5, 'Impostos, taxas, tarifas bancárias, contribuições e seguros'),
 (6, 'Elaboração e Agenciamento'),
 (7, 'Outros Financiamentos');
+(8, 'Outros');
+
 
 --
 -- Extraindo dados da tabela `zona`
