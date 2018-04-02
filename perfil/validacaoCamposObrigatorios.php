@@ -2,16 +2,18 @@
   
   $erros = [];  
 
-  function mensagemErro($tipoPessoa)
+  function mensagemErro($tipoPessoa, $msg)
   {
     global $erros;
     
-    $erros = ['dos campos Local, Ficha Técnica, Cronograma, Orçamento'];
+    array_push($erros, $msg);
+
+    /*$erros = ['dos campos Local, Ficha Técnica, Cronograma, Orçamento'];
 
     if($tipoPessoa == 2):
       $erros = ['dos campos Local, Ficha Técnica, Cronograma, Orçamento e 
                  Representante Legal'];
-    endif;    
+    endif;*/    
     
     return $erros;
   }
@@ -32,13 +34,25 @@
     global $erros;
 
     if($tipoPessoa == 1):           
+      
       $campos = retornaCamposObrigatoriosPf($idProjeto);
-
+       
       if(empty($campos)):     
-        $erros = mensagemErro($tipoPessoa);
+        
+        $locais = retornaCamposObrigatoriosLocais($idProjeto);   
+        $fichaTecnicas = retornaCamposObrigatoriosFichaTecnica($idProjeto); 
+        $cronogramas = retornaCamposObrigatoriosCronograma($idProjeto); 
+        $orcamentos = retornaCamposObrigatoriosOrcamento($idProjeto); 
+
+        empty($locais) ? mensagemErro($tipoPessoa, 'da fase Local') : '';  
+        empty($fichaTecnicas) ? mensagemErro($tipoPessoa, 'da fase Ficha Ténica') : '';  
+        empty($cronogramas) ? mensagemErro($tipoPessoa, 'da fase Cronograma') : '';  
+        empty($orcamentos) ? mensagemErro($tipoPessoa, 'da fase Orçamento') : '';  
+
       else:      
         $erros = array_unique(processaDados(
-                     retornaCamposObrigatoriosPf($idProjeto)));          
+                     retornaCamposObrigatoriosPf($idProjeto))); 
+
       endif;    
     endif; 
 
