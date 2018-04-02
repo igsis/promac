@@ -6,7 +6,6 @@ $idPf = $_SESSION['idUser'];
 $pf = recuperaDados("pessoa_fisica","idPf",$idPf); 
 $estados = formataDados(listaEstados());
 $cidades = formataDados(listaCidades());
-
 $habilitaCampo = false;
 
 if(isset($_POST['cep'])):          
@@ -25,11 +24,7 @@ if(isset($_POST['cep']) and empty($enderecos)):  $habilitaCampo = true; ?>
 <?php endif;
 
 if(isset($_POST['atualizarFisica']) and $_POST['numero'] and empty($endereço)):  
-
-  echo "<pre>";
-  print_r($_POST);
-  echo "</pre>";
-
+  
   $nome = addslashes($_POST['nome']);
   $rg = $_POST['rg'];
   $telefone = $_POST['telefone'];

@@ -2,6 +2,25 @@
 
 $con = bancoMysqli();
 $idPf = $_SESSION['idUser'];
+$pf = recuperaDados("incentivador_pessoafisica","idPf",$idPf); 
+$estados = formataDados(listaEstados());
+$cidades = formataDados(listaCidades());
+$habilitaCampo = false;
+
+if(isset($_POST['cep'])):          
+  $enderecos = retornaEndereco($_POST['cep']);  
+  
+  if(isset($enderecos)):
+    $endereco  = configuraEndereco($enderecos); 
+    $uf = implode("",retornaUf($_POST['cep']));     
+  endif;  
+endif;  
+
+if(isset($_POST['cep']) and empty($enderecos)):  $habilitaCampo = true; ?>
+  <div class="alert alert-warning">
+  	<p>O cep: <b><?=$_POST['cep']?></b> não foi localizado. Informe manualmente</p>
+  </div>  
+<?php endif;
 
 if(isset($_POST['cadastraNovoPf'])):  
   $nome = addslashes($_POST['nome']);
@@ -40,9 +59,9 @@ if(isset($_POST['cadastraNovoPf'])):
     $mensagem = "<font color='#01DF3A'><strong>Erro ao atualizar! Tente novamente.</strong>
                 </font> <br/>".$sql_atualiza_pf;
   endif;
-endif;
+endif; ?>
 
-$pf = recuperaDados("incentivador_pessoafisica","idPf",$idPf); ?> 
+
   <section id="contact" class="home-section bg-white">
     <div class="container"><?php include 'includes/menu_interno_pf.php'; ?>
 	  <div class="form-group">
@@ -54,7 +73,7 @@ $pf = recuperaDados("incentivador_pessoafisica","idPf",$idPf); ?>
 	  <div class="row">
 	    <div class="col-md-offset-1 col-md-10">
 		  <form class="form-horizontal" role="form" 
-		        action="?perfil=cadastro_incentivador_pf" method="post">
+		        action="?perfil=cadastro_incentivador_pf" method="post" id="frmCad">
 		    <div class="form-group">
 			  <div class="col-md-offset-2 col-md-8"><strong>Nome *:</strong><br/>
 			    <input type="text" class="form-control" name="nome" placeholder="Nome" 
@@ -162,3 +181,18 @@ $pf = recuperaDados("incentivador_pessoafisica","idPf",$idPf); ?>
 	  </div>
 	</div>
   </section>
+  <script language="JavaScript" type="text/javascript">
+  var cep = document.querySelector('#cep'); 
+
+  $(function(){
+	pegaCep();
+  });
+
+  function pegaCep()
+  {
+    cep.addEventListener('focusout', function(){
+      form = document.querySelector('#frmCad');    
+      form.submit();        
+    });    	
+  }
+</script>
