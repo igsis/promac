@@ -166,3 +166,7 @@ INSERT INTO `frase_seguranca` (`id`, `frase_seguranca`) VALUES
 (2, 'Qual o nome do seu primeiro animal?'),
 (3, 'Qual o nome do seu primeiro professor?'),
 (4, 'Qual o nome do seu melhor amigo de infância?');
+
+
+INSERT INTO `statusprojeto` (`idStatus`, `situacaoAtual`, `descricaoSituacao`) VALUES
+(1, 2, 'bloqueado');

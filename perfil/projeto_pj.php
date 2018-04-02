@@ -5,6 +5,7 @@ $tipoPessoa = '2';
 
 $idPj = $_SESSION['idUser'];
 $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
+$statusProjeto = recuperaStatus("statusprojeto");
 $rl = recuperaDados("representante_legal","idRepresentanteLegal",$pj['idRepresentanteLegal']);
 $campos = array($pj['razaoSocial'], $pj['cnpj'], $pj['email'], $pj['cep'], $pj['numero']);
 $cpo = false;
@@ -65,6 +66,7 @@ if(isset($_POST['apagar']))
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
 			<?php
+			if($statusProjeto == 1){
 				if($pj['liberado'] == 0)// ainda não foi solicitado liberação
 				{
 
@@ -305,5 +307,14 @@ if(isset($_POST['apagar']))
 				</div>
 			</div>
 		<!-- Fim Confirmação de Exclusão -->
+		
+			<?php } 
+
+			else{
+				echo "<div class='alert alert-warning'>
+				  <strong>Aviso: </strong>O cadastro de novos projetos está desabilitado temporariamente pela SMC.
+				</div>";
+			}
+				?>
 	</div>
 </section>
