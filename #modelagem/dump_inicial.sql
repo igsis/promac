@@ -47,24 +47,25 @@ INSERT INTO `lista_documento` (`idListaDocumento`, `idTipoUpload`, `documento`, 
 (16, 2, 'Portfólio comprovando atividades artísticas ou culturais (opcional)', 'pcaa', 1), /* opcional */
 (17, 2, 'Certidão de Regularidade da Cooperativa perante a Organização das Cooperativas Brasileiras ou Organização das Cooperativas do Estado de São Paulo (exclusivo para Cooperativas)', 'certcoop', 1),
 (18, 3, 'Carta de Intenção de Incentivo (caso houver)', 'cii', 1), /* opcional */
-(19, 3, 'Carta de Anuência do Local [modelo para download]', 'cal', 1), /* opcional */
-(20, 3, 'CV dos principais participantes [no máximo 20 linhas de cada participante]', 'cvpp', 1), /* opcional */
-(21, 3, 'Declaração de Responsabilidade por Direitos Autorais [modelo para download]', 'drda', 1), /* opcional */
-(22, 3, 'Informações adicionais, de acordo com a especificidade do segmento artístico do projeto (exemplo: roteiro do espetáculo)', 'ia', 1), /* opcional */
-(23, 4, 'RG/RNE','rg',1),
-(24, 4, 'CPF','cpf',1),
-(25, 4, 'Comprovante de endereço atual (até últimos 3 meses)','ce',1),
-(26, 4, 'Carnê IPTU','ciptu',1),
-(27, 4, 'Contrato de locação','clc',1),
-(28, 5, 'CNPJ','cnpj',1),
-(29, 5, 'Cadastro de Contribuintes Imobiliários - CCM','ccm',1),
-(30, 5, 'Contrato Social','cs',1),
-(31, 5, 'Comprovante de endereço atual (até últimos 3 meses)','ce',1),
-(32, 5, 'RG/RNE do Representante Legal','rg',1),
-(33, 5, 'CPF do Representante Legal','cpf',1),
-(34, 5, 'Carnê IPTU','ciptu',1),
-(35, 5, 'Contrato de locação','clc',1),
-(36, 9, 'Parecer da Comissão', 'parecer', 1);
+(19, 3, 'Carta de Anuência do(s) Local(is) [modelo para download]', 'cal', 1), /* opcional */
+(20, 3, 'Carta de Anuência do(s) Principais(is) Participante(s) [modelo para download]', 'cal', 1), /* opcional */
+(21, 3, 'CV dos principais participantes [no máximo 20 linhas de cada participante]', 'cvpp', 1), /* opcional */
+(22, 3, 'Declaração de Responsabilidade por Direitos Autorais [modelo para download]', 'drda', 1), /* opcional */
+(23, 3, 'Informações adicionais, de acordo com a especificidade do segmento artístico do projeto (exemplo: roteiro do espetáculo)', 'ia', 1), /* opcional */
+(24, 4, 'RG/RNE','rg',1),
+(25, 4, 'CPF','cpf',1),
+(26, 4, 'Comprovante de endereço atual (até últimos 3 meses)','ce',1),
+(27, 4, 'Carnê IPTU','ciptu',1),
+(28, 4, 'Contrato de locação','clc',1),
+(29, 5, 'CNPJ','cnpj',1),
+(30, 5, 'Cadastro de Contribuintes Imobiliários - CCM','ccm',1),
+(31, 5, 'Contrato Social','cs',1),
+(32, 5, 'Comprovante de endereço atual (até últimos 3 meses)','ce',1),
+(33, 5, 'RG/RNE do Representante Legal','rg',1),
+(34, 5, 'CPF do Representante Legal','cpf',1),
+(35, 5, 'Carnê IPTU','ciptu',1),
+(36, 5, 'Contrato de locação','clc',1),
+(37, 9, 'Parecer da Comissão', 'parecer', 1);
 
 
 --
