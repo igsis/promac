@@ -84,7 +84,7 @@ if(isset($_POST['apagaOrcamento']))
 			<h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
 		</div>
 		<div class="row">
-			<div class="col-md-offset-1 col-md-10">
+			<div class="col-md-12">
 				<!-- Início Resumo Orçamento -->
 				<ul class="list-group">
 					<li class="list-group-item list-group-item-success"><b>Resumo</b></li>
