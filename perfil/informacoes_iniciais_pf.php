@@ -99,6 +99,7 @@ else: ?>
 			   <div class="col-md-6"><strong>RG ou RNE *:</strong><br/>
 			     <input type="text" class="form-control" name="rg" 
 				        placeholder="Número do Documento" 
+				        maxlength="14"
 				        required
 				        value="<?php 
 				          if(!empty($_POST['rg'])):				            

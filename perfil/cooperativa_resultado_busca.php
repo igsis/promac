@@ -113,7 +113,7 @@ else
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-6">
-							<a href="?perfil=projeto_novo"><input type="submit" value="Pesquisar outro CNPJ" class="btn btn-theme btn-block"></a>
+							<a href="?perfil=projeto_edicao"><input type="submit" value="Pesquisar outro CNPJ" class="btn btn-theme btn-block"></a>
 						</div>
 						<div class="col-md-6">
 							<a href="?perfil=informacoes_iniciais_pf"><input type="submit" value="Voltar" class="btn btn-theme btn-block"></a>
