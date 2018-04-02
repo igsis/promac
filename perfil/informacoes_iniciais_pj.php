@@ -187,7 +187,7 @@ else: ?>
 				         name="Endereco" placeholder="Endereço" 
 				         <?=$habilitaCampo ? '' : 'readonly'?> 
 				         required
-				         value="<?php echo '';?>">	
+				         value="<?php echo $pj['logradouro'];?>">	
 				<?php endif ?>         
 			  </div>
 			</div>
@@ -240,7 +240,7 @@ else: ?>
 				         name="Bairro" placeholder="Bairro" 
 				         <?=$habilitaCampo ? '' : 'readonly'?> 
 				         required
-				         value="<?php echo '';?>">	
+				         value="<?php echo $pj['bairro'];?>">	
 				<?php endif ?>   
 			  </div>
 			</div>

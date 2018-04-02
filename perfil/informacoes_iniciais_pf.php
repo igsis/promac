@@ -26,6 +26,10 @@ if(isset($_POST['cep']) and empty($enderecos)):  $habilitaCampo = true; ?>
 
 if(isset($_POST['atualizarFisica']) and $_POST['numero'] and empty($endereço)):  
 
+  echo "<pre>";
+  print_r($_POST);
+  echo "</pre>";
+
   $nome = addslashes($_POST['nome']);
   $rg = $_POST['rg'];
   $telefone = $_POST['telefone'];
@@ -191,7 +195,7 @@ else: ?>
 				         name="Endereco" placeholder="Endereço" 
 				         <?=$habilitaCampo ? '' : 'readonly'?> 
 				         required
-				         value="<?php echo '';?>">	
+				         value="<?php echo $pf['logradouro'];?>">	
 				<?php endif ?>         
 			  </div>
 			</div>
@@ -245,7 +249,7 @@ else: ?>
 				         name="Bairro" placeholder="Bairro" 
 				         <?=$habilitaCampo ? '' : 'readonly'?> 
 				         required
-				         value="<?php echo '';?>">	
+				         value="<?php echo $pf['bairro'];?>">	
 				<?php endif ?>         
 			  </div>
 			</div>
