@@ -90,6 +90,8 @@ INSERT INTO `etapa` (`idEtapa`, `etapa`) VALUES
 (5, 'Impostos, taxas, tarifas bancárias, contribuições e seguros'),
 (6, 'Elaboração e Agenciamento'),
 (7, 'Outros Financiamentos');
+(8, 'Outros');
+
 
 --
 -- Extraindo dados da tabela `zona`
@@ -166,3 +168,7 @@ INSERT INTO `frase_seguranca` (`id`, `frase_seguranca`) VALUES
 (2, 'Qual o nome do seu primeiro animal?'),
 (3, 'Qual o nome do seu primeiro professor?'),
 (4, 'Qual o nome do seu melhor amigo de infância?');
+
+
+INSERT INTO `statusprojeto` (`idStatus`, `situacaoAtual`, `descricaoSituacao`) VALUES
+(1, 1, 'liberado');

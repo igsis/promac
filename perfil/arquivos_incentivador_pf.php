@@ -18,7 +18,7 @@ if(isset($_POST["enviar"]))
 		//Extensões permitidas
 		$ext = array("PDF","pdf"); 
 
-		if($f_size > 3145728) // 3MB em bytes
+		if($_FILES['arquivo']['size'] > 3145728) // 3MB em bytes
 		{
 			$mensagem = "<font color='#01DF3A'><strong>Erro! Tamanho de arquivo excedido! Tamanho máximo permitido: 03 MB.</strong></font>";
 		}

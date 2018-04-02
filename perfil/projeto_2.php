@@ -77,7 +77,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
-							<label>Descrição da exposição da marca*</label>
+							<label>Descrição da exposição da marca e indicação do valor do ingresso*</label><button class='btn btn-default' type='button' data-toggle='modal' data-target='#infoExposicaoMarca' style="border-radius: 30px;"><i class="fa fa-question-circle"></i></button>
 							<textarea name="exposicaoMarca" class="form-control" rows="10" maxlength="5000" required><?php echo $projeto['exposicaoMarca'] ?></textarea>
 						</div>
 					</div>
@@ -91,6 +91,35 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 
 			</div>
 		</div>
+		<!-- Inicio Modal Informações Exposição da Marca -->
+		<div class="modal fade" id="infoExposicaoMarca" role="dialog" aria-labelledby="infoExposicaoMarca" aria-hidden="true">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title">Informações sobre a Exposição da Marca</h4>
+					</div>
+					<div class="modal-body" style="text-align: left;">
+						<div role="tabpanel">
+    						<div class="tab-content">
+    							<!-- TABELA -->
+	    						<div role="tabpanel" class="tab-pane fade in active" id="tabela">
+        							<br>
+	        							<div class="well">
+	        								O proponente deverá descrever proposta de ações que sejam acompanhadas de disponibilização de ingressos ou oferta de gratuidade visando garantir o mais amplo acesso da população ao produto do projeto cultural, ainda que essas ações de acessibilidade sejam indiretas em relação ao objeto/produto principal do projeto.
+        								</div>
+	        					</div>
+
+	        				</div>
+	        			</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Fim Modal Informações da Exposição da Marca -->
 		<!-- Inicio Modal Informações Renuncia fiscal -->
 		<div class="modal fade" id="infoRenunciaFiscal" role="dialog" aria-labelledby="infoRenunciaFiscalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-lg">

@@ -476,6 +476,15 @@ function recuperaDados($tabela,$campo,$variavelCampo)
 	return $campo;
 }
 
+function recuperaStatus($tabela)
+{
+	$con = bancoMysqli();
+	$sql = "SELECT situacaoAtual FROM $tabela WHERE idStatus = '1'";
+	$query = mysqli_query($con,$sql);
+	$campo = mysqli_fetch_array($query);
+	return $campo['situacaoAtual'];
+}
+
 function verificaExiste($idTabela,$idCampo,$idDado,$st)
 {
 	//retorna uma array com indice 'numero' de registros e 'dados' da tabela
