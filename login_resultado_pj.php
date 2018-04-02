@@ -106,7 +106,7 @@ else
 							<input type="text" readonly class="form-control" name="cnpj" value="<?php echo $busca ?>" placeholder="CNPJ">
 						</div>
 						<div class="col-md-6"><strong>Email: *</strong><br/>
-							<input type="text" class="form-control" name="email" placeholder="Email">
+							<input type="email" class="form-control" name="email" placeholder="Email">
 						</div>
 					</div>
 
