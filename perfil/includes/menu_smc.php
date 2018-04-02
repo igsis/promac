@@ -12,7 +12,12 @@ $link2 = $http."excel_pj.php";
 		<button class="dl-trigger">Open Menu</button>
 		<ul class="dl-menu">
 			<li><a href="<?php echo $pasta ?>smc_index">Home</a></li>
-			<li><a href="<?php echo $pasta ?>smc_pesquisa_nome">Nivel de acesso</a></li>
+			<li><a href="#">Usuários</a>
+				<ul class="dl-submenu">
+					<li><a href="<?php echo $pasta ?>smc_pesquisa_nome">Nível de acesso</a></li>
+					<li><a href="<?php echo $pasta ?>smc_pesquisa_reseta_senha">Reiniciar senha</a></li>
+				</ul>
+			</li>
 			<li><a href="#">Pesquisas</a>
 				<ul class="dl-submenu">
 					<li><a href="<?php echo $pasta ?>smc_pesquisa_pf">Pessoa Física</a></li>
