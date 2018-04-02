@@ -185,7 +185,7 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 
 <!-- Botão para Prosseguir -->
 	<?php
-	if($pf['liberado'] == 1)
+	if($pj['liberado'] == 1)
 	{
 	?>
 		<div class="form-group">
@@ -204,7 +204,7 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 		</div>
 		<?php
 	}
-	if($pf['liberado'] == 3)
+	if($pj['liberado'] == 3)
 	{
 	?>
 		<div class="form-group">
