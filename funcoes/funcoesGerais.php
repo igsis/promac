@@ -1261,33 +1261,33 @@ function retornaCamposObrigatoriosPf($idProjeto)
 	             proj.objetivo AS justificativaObjetoMetas,
 	             proj.metodologia AS MetodologiaContrapartida, 
 	             proj.contrapartida AS MetodologiaContrapartidaDescricao,
-	             /*loc_rea.local AS local, 
+	             loc_rea.local AS local, 
 	             loc_rea.estimativaPublico AS estimativaLocal, 
-	             loc_rea.idZona AS zonaLocal,*/  				 
+	             loc_rea.idZona AS zonaLocal,  				 
 	             proj.publicoAlvo AS publicoAlvo,
 	             proj.planoDivulgacao as publicoAlvoDivulgacao,
-	             /*ficha_t.nome AS nomeFichaTecnica, 
+	             ficha_t.nome AS nomeFichaTecnica, 
   				 ficha_t.cpf AS cpfFichaTecnica, 
-  				 ficha_t.funcao AS funcaoFichaTecnica,*/  				
+  				 ficha_t.funcao AS funcaoFichaTecnica,  				
 	             proj.inicioCronograma AS inicioConogramaProjeto, 
-	             proj.fimCronograma AS fimConogramaProjeto/*,  
+	             proj.fimCronograma AS fimConogramaProjeto,  
   				 crono.captacaoRecurso AS recursoConograma, 
   				 crono.preProducao AS preProducaoConograma, 
   				 crono.producao AS producaoConograma, 
   				 crono.posProducao AS posProducaoConograma, 
-  				 crono.prestacaoContas AS ContasConograma,*/
-  			     /*orca.idEtapa AS EtapaOrcamento, 
+  				 crono.prestacaoContas AS ContasConograma,
+  			     orca.idEtapa AS EtapaOrcamento, 
   			     orca.descricao AS 'descricaoOrcamento',
   			     orca.quantidade AS 'quantidadeOrcamento',
   			     orca.idUnidadeMedida AS 'UnidadeOrcamento',
   			     orca.quantidadeUnidade AS 'qtdUnidadeOrcamento',
-  			     orca.valorUnitario AS 'valorUnitarioOrcamento'*/
+  			     orca.valorUnitario AS 'valorUnitarioOrcamento'
 			   FROM  
 			     projeto as proj
 			   INNER JOIN 
                  pessoa_fisica AS pf ON pf.idPf = proj.idPf
   			   
-  			  /* INNER JOIN 
+  			   INNER JOIN 
                   locais_realizacao AS loc_rea 
                ON loc_rea.idProjeto = proj.idProjeto
 			   
@@ -1301,12 +1301,12 @@ function retornaCamposObrigatoriosPf($idProjeto)
 			   
 			   INNER JOIN 
   			     orcamento AS orca 
-  			   ON orca.idProjeto = proj.idProjeto*/  
+  			   ON orca.idProjeto = proj.idProjeto 
   			   
-  			   WHERE /*loc_rea.publicado = 1*/
-  			   /*AND  ficha_t.publicado = 1
+  			   WHERE loc_rea.publicado = 1
+  			   AND  ficha_t.publicado = 1
   			   AND  orca.publicado = 1
-  			   AND*/  proj.idProjeto =".$idProjeto;
+  			   AND  proj.idProjeto =".$idProjeto;
 
 	$resultado = mysqli_query($conexao,$query);		
 
