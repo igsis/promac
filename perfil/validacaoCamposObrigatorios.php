@@ -7,13 +7,6 @@
     global $erros;
     
     array_push($erros, $msg);
-
-    /*$erros = ['dos campos Local, Ficha Técnica, Cronograma, Orçamento'];
-
-    if($tipoPessoa == 2):
-      $erros = ['dos campos Local, Ficha Técnica, Cronograma, Orçamento e 
-                 Representante Legal'];
-    endif;*/    
     
     return $erros;
   }
@@ -37,20 +30,8 @@
       
       $campos = retornaCamposObrigatoriosPf($idProjeto);
        
-      if(empty($campos)):     
-        
-        /*$locais = retornaCamposObrigatoriosLocais($idProjeto);   
-        $fichaTecnicas = retornaCamposObrigatoriosFichaTecnica($idProjeto); 
-        $cronogramas = retornaCamposObrigatoriosCronograma($idProjeto); 
-        $orcamentos = retornaCamposObrigatoriosOrcamento($idProjeto); 
-
-        empty($locais) ? mensagemErro($tipoPessoa, 'da fase Local') : '';  
-        empty($fichaTecnicas) ? mensagemErro($tipoPessoa, 'da fase Ficha Ténica') : '';  
-        empty($cronogramas) ? mensagemErro($tipoPessoa, 'da fase Cronograma') : '';  
-        empty($orcamentos) ? mensagemErro($tipoPessoa, 'da fase Orçamento') : '';*/
-
-        require_once('validacaoArqsObrigsComplemento.php');           
-
+      if(empty($campos)):            
+        require_once('validacaoCamposObrigComplemento.php');           
       else:      
         $erros = array_unique(processaDados(
                      retornaCamposObrigatoriosPf($idProjeto))); 
@@ -61,8 +42,8 @@
     if($tipoPessoa == 2):         
       $campos = retornaCamposObrigatoriosPj($idProjeto);
     
-      if(empty($campos)):
-        $erros = mensagemErro($tipoPessoa);
+      if(empty($campos)):        
+        require_once('validacaoCamposObrigComplemento.php');
       else:
         $erros = array_unique(processaDados(
   	              retornaCamposObrigatoriosPj($idProjeto)));    

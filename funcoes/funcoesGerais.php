@@ -1318,6 +1318,39 @@ function retornaCamposObrigatoriosPf($idProjeto)
     return $campos;
 }	
 
+function retornaCamposObrigatoriosRepresentate($idProjeto)
+{
+	$campos = [];
+
+	$conexao = bancoMysqli();
+	$query =  "SELECT 
+	             rep_leg.nome AS nomeRepresentate, 
+	             rep_leg.rg AS rgRepresentate, 
+	             rep_leg.cpf AS cpfRepresentate, 
+	             rep_leg.email AS emailRepresentate, 
+	             rep_leg.cep AS cepRepresentate, 
+	             rep_leg.numero AS numeroRepresentate	             
+			   FROM  
+			     projeto as proj
+			   INNER JOIN 
+                 pessoa_juridica AS pj ON pj.idPj = proj.idPj 
+               
+               INNER JOIN 
+  			     representante_legal AS rep_leg 
+  			   ON rep_leg.idRepresentanteLegal = pj.idRepresentanteLegal
+  			   
+  			   WHERE proj.idProjeto =".$idProjeto;   			   
+
+	$resultado = mysqli_query($conexao,$query);		
+
+	while($campo = mysqli_fetch_assoc($resultado)) 
+    {
+      array_push($campos, $campo);
+    }	  
+
+    return $campos;
+}	
+
 function retornaCamposObrigatoriosPj($idProjeto)
 {
 	$campos = [];
