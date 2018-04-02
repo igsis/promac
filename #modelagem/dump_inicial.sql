@@ -171,4 +171,4 @@ INSERT INTO `frase_seguranca` (`id`, `frase_seguranca`) VALUES
 
 
 INSERT INTO `statusprojeto` (`idStatus`, `situacaoAtual`, `descricaoSituacao`) VALUES
-(1, 2, 'bloqueado');
+(1, 1, 'liberado');
