@@ -8,7 +8,8 @@ if(isset($_POST['cadastraNovoPf']))
 {
 	$email = $_POST['email'];
 	$nome = addslashes($_POST['nome']);
-	if($email == '' OR $nome == '')
+	$idFraseSeguranca = $_POST['idFraseSeguranca'];
+	if($email == '' OR $nome == '' OR $idFraseSeguranca == 0)
 	{
 		$mensagem = "Por favor, preencha todos os campos.";
 	}

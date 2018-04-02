@@ -12,43 +12,68 @@ $con = bancoMysqli();
 
 class PDF extends FPDF
 {
+  // Simple table
+  function BasicTable($header, $data)
+  {
+    // Header
+    foreach($header as $col)
+    $this->Cell(40,7,$col,1);
+    $this->Ln();
+    // Data
+    foreach($data as $row)
+    {
+      foreach($row as $col)
+      $this->Cell(40,6,$col,1);
+      $this->Ln();
+    }
+  }
 
+  // Simple table
+  function Cabecalho($header)
+  {
+   // Column widths
+    $w = array(70, 25, 25, 30, 30);
+    // Header
+    for($i=0;$i<count($header);$i++)
+        $this->Cell($w[$i],7,$header[$i],1,0,'C');
+    $this->Ln();
+  }
+
+  function Tabela($data)
+  {
+    // Column widths
+    $w = array(70, 25, 25, 30, 30);
+    for($i=0;$i<count($data);$i++)
+        $this->Cell($w[$i],10,$data[$i],1,0,'L');
+    $this->Ln();
+    // Data
+  }
+}
+
+function fichaTecnica($idProjeto)
+{
+  $con = bancoMysqli();
+  $sql = "SELECT * FROM ficha_tecnica WHERE idProjeto = '$idProjeto' AND publicado = 1";
+  $query = mysqli_query($con,$sql);
+  $a = array();
+  $i = 0;
+  while($row = mysqli_fetch_array($query))
+  {
+    $a[$i]['nome'] = $row['nome'];
+    $a[$i]['cpf'] = $row['cpf'];
+    $a[$i]['funcao'] = $row['funcao'];
+    $i++;
+  }
+  $a['numero'] = $i;
+  return $a;
 }
 
 //CONSULTA
 $idProjeto = $_SESSION["idProjeto"];
 $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
-$NomeProjeto = $projeto["nomeProjeto"];
+$nomeProjeto = $projeto["nomeProjeto"];
 
-if($projeto['tipoPessoa'] == 1)//Pessoa Física
-{
-  $pf = recuperaDados("pessoa_fisica","idPf",$projeto['idPf']);
-  $Nome = $pf["nome"];
-  $RG = $pf["rg"];
-  $CPF = $pf["cpf"];
-  $Endereco = $pf ["logradouro"];
-  $Numero = $pf["numero"];
-  $Bairro = $pf["bairro"];
-  $Cidade = $pf["cidade"];
-  $Cep = $pf["cep"];
-}
-else //Pessoa Jurídica
-{
-  $pj = recuperaDados("pessoa_juridica","idPj",$projeto['idPj']);
-  $representante1 = recuperaDados("representante_legal","idRepresentanteLegal",$pj['idRepresentanteLegal']);
-  //Pessoa Jurídica
-  $RazaoSocial = $pj["razaoSocial"];
-  $CNPJ = $pj["cnpj"];
-  $Endereco = $pj["logradouro"];
-  $Numero = $pj["numero"];
-  $Bairro = $pj["bairro"];
-  $Cidade = $pj["cidade"];
-  $Cep = $pj["cep"];
-  //Representante Legal
-  $Nome = $representante1["nome"];
-  $RG = $representante1["rg"];
-  $CPF = $representante1["cpf"];
-}
+$ficha = fichaTecnica($idProjeto);
 
 
 //GERANDO O PDF:
@@ -59,37 +84,37 @@ $pdf->AddPage();
 $x=20;
 $l=7; //DEFINE A ALTURA DA LINHA
 
-$pdf->SetXY( $x , 40 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
+$pdf->SetXY( $x , 35 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 14);
-$pdf->Cell(180,5,utf8_decode("DECLARAÇÃO DE RESPONSABILIDADE POR DIREITOS AUTORAIS"),0,1,'C');
+$pdf->Cell(180,5,utf8_decode("CARTA(S) DE ANUÊNCIA DO(S) PRINCIPAL(IS) PARTICIPANTE(S)"),0,1,'C');
 
 $pdf->Ln();
 $pdf->Ln();
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','', 11);
-
-if($projeto['tipoPessoa'] == 1)//Pessoa Física
-{
-  $pdf->MultiCell(180,$l,utf8_decode("Eu, ".$Nome.", RG nº ".$RG.", CPF nº ".$CPF.", residente no endereço ".$Endereco.", ".$Numero.", bairro ".$Bairro.", CEP ".$Cep.", município de ".$Cidade.", proponente do projeto denominado ".$NomeProjeto." me comprometo a obter as autorizações necessárias dos eventuais detentores de direitos autorais de qualquer bem envolvido no projeto, cuja execução demande direito autoral ou patrimonial, ficando sobre responsabilidade integral do proponente quaisquer obrigações decorrentes da execução do projeto."));
-}
-else
-{
-  $pdf->MultiCell(170,$l,utf8_decode("Eu, "."$Nome".", RG nº"."$RG".", CPF nº "."$CPF".", representante legal da pessoa jurídica "."$RazaoSocial".", CNPJ nº "."$CNPJ".", sediada no endereço "."$Endereco".", "."$Numero".", bairro "."$Bairro".", CEP "."$Cep".", município de "."$Cidade".", proponente do projeto denominado "."$NomeProjeto"." me comprometo a obter as autorizações necessárias dos eventuais detentores de direitos autorais de qualquer bem envolvido no projeto, cuja execução demande direito autoral ou patrimonial, ficando sobre responsabilidade integral do proponente quaisquer obrigações decorrentes da execução do projeto."));
-}
+$pdf->MultiCell(180,$l,utf8_decode("Os profissionais listados abaixo declaram ter ciência e concordam em participar do projeto denominado ´´".$nomeProjeto."``, caso seja contemplado."));
 
 $pdf->Ln();
 $pdf->Ln();
-$pdf->Ln();
-$pdf->Ln();
+
+// Column headings
+$header = array('NOME', 'CPF', 'CONTATO', 'FUNCAO','ASSINATURA');
+$data = array($ficha);
 
 $pdf->SetX($x);
-$pdf->SetFont('Arial','', 11);
-$pdf->Cell(180,$l,utf8_decode("_________________________________________"),0,1,'C');
-$pdf->SetX($x);
-$pdf->Cell(180,$l,utf8_decode($Nome),0,1,'C');
+$pdf->SetFont('Arial','',8);
+
+$pdf->Cabecalho($header);
+
+for($i = 0;$i < $ficha['numero']; $i++)
+{
+  $data = array(utf8_decode($ficha[$i]['nome']), $ficha[$i]['cpf'],"", $ficha[$i]['funcao'],"");
+  $pdf->SetX($x);
+  $pdf->Tabela($data);
+}
 
 $pdf->Output();
 ?>

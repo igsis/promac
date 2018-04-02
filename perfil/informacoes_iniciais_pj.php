@@ -99,9 +99,9 @@ else: ?>
 			    <input type="text" readonly class="form-control" id="cnpj" 
 			           name="cnpj" placeholder="CNPJ" value="<?php echo $pj['cnpj']; ?>" required>
 			  </div>
-			  <div class="col-md-6"><strong>E-mail *:</strong><br/>
+			  <div class="col-md-6"><strong>Email *:</strong><br/>
 			    <input type="text" class="form-control" name="email" 
-			           placeholder="E-mail" required
+			           placeholder="E-mail" maxlength="50" required
 			           value="<?php 
 				          if(!empty($_POST['email'])):				            
 				            echo $_POST['email'];

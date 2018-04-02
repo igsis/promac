@@ -103,6 +103,7 @@ else: ?>
 			   <div class="col-md-6"><strong>RG ou RNE *:</strong><br/>
 			     <input type="text" class="form-control" name="rg" 
 				        placeholder="Número do Documento" 
+				        maxlength="14"
 				        required
 				        value="<?php 
 				          if(!empty($_POST['rg'])):				            
@@ -117,9 +118,9 @@ else: ?>
 			</div>
 
 			<div class="form-group">
-			  <div class="col-md-offset-2 col-md-8"><strong>E-mail *:</strong><br/>
+			  <div class="col-md-offset-2 col-md-8"><strong>Email *:</strong><br/>
 			    <input type="email" class="form-control" name="email" 
-				       placeholder="E-mail" value="<?=$pf['email']?>" required>
+				       placeholder="E-mail" maxlength="50" value="<?=$pf['email']?>" required>
 			  </div>
 			</div>
 
