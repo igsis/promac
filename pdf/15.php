@@ -16,20 +16,23 @@ class PDF extends FPDF
 }
 
 //CONSULTA
-$idPf = $_SESSION['idUser'];
-$pf = recuperaDados("pessoa_fisica","idPf",$idPf);
+$idPj = $_SESSION['idUser'];
+$pj = recuperaDados("pessoa_juridica","idPj",$idPj);
+$representante1 = recuperaDados("representante_legal","idRepresentanteLegal",$pj['idRepresentanteLegal']);
 
-$ano=date('Y');
+//Pessoa Jurídica
+$RazaoSocial = $pj["razaoSocial"];
+$CNPJ = $pj["cnpj"];
+$Endereco = $pj["logradouro"];
+$Numero = $pj["numero"];
+$Bairro = $pj["bairro"];
+$Cidade = $pj["cidade"];
+$Cep = $pj["cep"];
 
-//Pessoa Física
-$Nome = $pf["nome"];
-$RG = $pf["rg"];
-$CPF = $pf["cpf"];
-$Endereco = $pf ["logradouro"];
-$Numero = $pf["numero"];
-$Bairro = $pf["bairro"];
-$Cidade = $pf["cidade"];
-$Cep = $pf["cep"];
+//Representante Legal
+$Nome = $representante1["nome"];
+$RG = $representante1["rg"];
+$CPF = $representante1["cpf"];
 
 
 //GERANDO O PDF:
@@ -51,7 +54,7 @@ $pdf->Ln();
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','', 11);
-$pdf->MultiCell(180,$l,utf8_decode("Eu, ".$Nome.", RG nº ".$RG.", CPF nº ".$CPF.", residente no endereço ".$Endereco.", ".$Numero.", bairro ".$Bairro.", CEP ".$Cep.", município de ".$Cidade."."));
+$pdf->MultiCell(180,$l,utf8_decode("Eu, ".$Nome.", RG nº ".$RG.", CPF nº ".$CPF.", representante legal da pessoa jurídica ".$RazaoSocial.", CNPJ nº ".$CNPJ.", sediada no endereço ".$Endereco.", ".$Numero.", bairro ".$Bairro.", CEP ".$Cep.", município de ".$Cidade."."));
 
 $pdf->Ln();
 
@@ -99,6 +102,14 @@ $pdf->Ln();
 $pdf->SetX($x);
 $pdf->SetFont('Arial','', 11);
 $pdf->MultiCell(180,$l,utf8_decode("h) O projeto apresentado não recebeu e nem recebe recursos de editais da Secretaria Municipal de Cultura."));
+
+$pdf->SetX($x);
+$pdf->SetFont('Arial','', 11);
+$pdf->MultiCell(180,$l,utf8_decode("i) Não emprego menor de dezoito anos em trabalho noturno, perigoso ou insalubre e não emprego menor de 16 anos, salvo na condição de aprendiz;"));
+
+$pdf->SetX($x);
+$pdf->SetFont('Arial','', 11);
+$pdf->MultiCell(180,$l,utf8_decode("j) Não tenho entre os dirigentes pessoa cujas contas relativas a parcerias tenham sido julgadas irregulares ou rejeitadas por Tribunal ou Conselho de Contas de qualquer esfera da Federação, em decisão irrecorrível, nos últimos 8 (oito) anos; julgada responsável por falta grave e inabilitada para o exercício de cargo em comissão ou função de confiança, enquanto durar a inabilitação; ou considerada responsável por ato de improbidade, enquanto durarem os prazos estabelecidos nos incisos I, II e III do art. 12 da Lei nº 8.429, de 2 de junho de 1992;"));
 
 $pdf->Ln();
 $pdf->Ln();
