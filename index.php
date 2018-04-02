@@ -75,7 +75,7 @@
 											<li class="list-group-item"><a href="pdf/Lei_ProMac.pdf" target="_blank">Lei</a></li>
 											<li class="list-group-item"><a href="pdf/Decreto_ProMac.pdf" target="_blank">Decreto</a></li>
 											<li class="list-group-item"><a href="pdf/AlteracaoDecreto_ProMac.pdf" target="_blank">Alteração de Decreto</a></li>
-											<li class="list-group-item"><a href="#">Portarias de procedimentos</a></li>
+											<li class="list-group-item"><a href="pdf/Portaria_publicado">Portarias de procedimentos</a></li>
 											<li class="list-group-item"><a href="#">Portarias de prestação de contas</a></li>
 											<li class="list-group-item"><a href="pdf/manual_utilizacao.pdf" target="_blank">Manual de utilização do sistema</a></li>
 											<li class="list-group-item"><a href="#">Manual de uso da marca</a></li>

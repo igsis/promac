@@ -62,42 +62,29 @@ $pdf->SetX($x);
 $pdf->SetFont('Arial','', 11);
 $pdf->MultiCell(180,$l,utf8_decode("a) Tenho ciência e concordo com os termos da Lei nº 15.948/2013, do Decreto nº 58.041/2017 e desta portaria;"));
 
-$pdf->Ln();
-
 $pdf->SetX($x);
 $pdf->SetFont('Arial','', 11);
 $pdf->MultiCell(180,$l,utf8_decode("b) As informações prestadas são verídicas;"));
-
-$pdf->Ln();
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','', 11);
 $pdf->MultiCell(180,$l,utf8_decode("c) Sou residente / sediado no Município de São Paulo há no mínimo 02 (dois) anos;"));
 
-$pdf->Ln();
-
 $pdf->SetX($x);
 $pdf->SetFont('Arial','', 11);
 $pdf->MultiCell(180,$l,utf8_decode("d) Não possuo qualquer associação ou vínculo direto ou indireto com empresas de serviços de radiodifusão de som e imagem ou operadoras de comunicação eletrônica aberta ou por assinatura;"));
-
-$pdf->Ln();
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','', 11);
 $pdf->MultiCell(180,$l,utf8_decode("e) Não possuo qualquer associação ou vínculo direto ou indireto com o contribuinte incentivador do projeto apresentado, ressalvadas as hipóteses a que aludem o inciso XX do artigo 4º e o inciso III do artigo 7º da Lei nº 15.948, de 2013;"));
 
-$pdf->Ln();
-
 $pdf->SetX($x);
 $pdf->SetFont('Arial','', 11);
 $pdf->MultiCell(180,$l,utf8_decode("f) Estou em situação regular perante a Administração Pública;"));
 
-$pdf->Ln();
-
 $pdf->SetX($x);
 $pdf->SetFont('Arial','', 11);
 $pdf->MultiCell(180,$l,utf8_decode("g) Não estou cadastrado e não possuo débitos junto à Fazenda do Município de São Paulo;"));
-$pdf->Ln();
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','', 11);
