@@ -114,9 +114,9 @@ else: ?>
 			</div>
 
 			<div class="form-group">
-			  <div class="col-md-offset-2 col-md-8"><strong>E-mail *:</strong><br/>
+			  <div class="col-md-offset-2 col-md-8"><strong>Email *:</strong><br/>
 			    <input type="email" class="form-control" name="email" 
-				       placeholder="E-mail" value="<?=$pf['email']?>" required>
+				       placeholder="E-mail" maxlength="50" value="<?=$pf['email']?>" required>
 			  </div>
 			</div>
 
