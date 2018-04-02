@@ -77,7 +77,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
-							<label>Descrição da exposição da marca*</label>
+							<label>Descrição da exposição da marca e indicação do valor do ingresso*</label>
 							<textarea name="exposicaoMarca" class="form-control" rows="10" maxlength="5000" required><?php echo $projeto['exposicaoMarca'] ?></textarea>
 						</div>
 					</div>
