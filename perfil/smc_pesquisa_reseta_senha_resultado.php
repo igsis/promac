@@ -53,13 +53,13 @@ if($nome != '' || $cpf != '')
 // Inicio Pessoa Jurídica
 elseif($razaoSocial != '' || $cnpj != '')
 {
-	if($razaSocial != '')
+	if($razaoSocial != '')
 	{
-		$filtro_razaSocial = " AND razaoSocial LIKE '%$razaoSocial%'";
+		$filtro_razaoSocial = " AND razaoSocial LIKE '%$razaoSocial%'";
 	}
 	else
 	{
-		$filtro_razaSocial = "";
+		$filtro_razaoSocial = "";
 	}
 
 	if($cnpj != '')
@@ -99,7 +99,7 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 <section id="list_items" class="home-section bg-white">
 	<div class="container"><?php include 'includes/menu_smc.php'; ?>
 		<div class="form-group">
-			<h4>Pesquisar Projetos</h4>
+			<h4>Pesquisar Pessoas</h4>
 			<h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
 			<h5><a href="?perfil=smc_pesquisa_reseta_senha">Fazer outra busca</a></h5>
 		</div>
@@ -129,7 +129,7 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 										<form method='POST' action='?perfil=smc_texto_resete_senha'>
 											<input type='hidden' name='id' value='".$x[$h]['id']."' />
 											<input type='hidden' name='tipoPessoa' value='".$x[$h]['tipoPessoa']."' />
-											<input type ='submit' class='btn btn-theme btn-block' value='Reiniciar Senha'>
+											<button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Reiniciar Senha de ".$x[$h]['pessoa']."?'>Reiniciar Senha</button>
 										</form>
 									</td>";
 								echo "</tr>";
@@ -141,7 +141,7 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 			</div>
 		</div>
 		<!-- INICIO Modal de confirmação de resete de senha -->
-		<div class="modal fade" id="confirmResetar" role="dialog" aria-labelledby="confirmResetarLabel" aria-hidden="true">
+		<div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
