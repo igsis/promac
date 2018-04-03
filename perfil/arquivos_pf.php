@@ -21,18 +21,19 @@ if(isset($_POST["enviar"]))
 
 		//Extensões permitidas
 		$ext = array("PDF","pdf"); 
+		/*
 		if($_FILES['arquivo']['size'] > 3145728) // 3MB em bytes
 		{
 			$mensagem = "<font color='#01DF3A'><strong>Erro! Tamanho de arquivo excedido! Tamanho máximo permitido: 03 MB.</strong></font>";
 		}
 		else
-		{
+		{*/
 			if($nome_arquivo != "")
 			{
 				$nome_temporario = $_FILES['arquivo']['tmp_name'][$x];
 				$new_name = date("YmdHis")."_".semAcento($nome_arquivo); //Definindo um novo nome para o arquivo
 				$hoje = date("Y-m-d H:i:s");
-				$dir = '../uploadsdocs/'; //Diretório para uploads				
+				$dir = '../uploadsdocs/'; //Diretório para uploads
 				$allowedExts = array(".pdf", ".PDF"); //Extensões permitidas
 				$ext = strtolower(substr($nome_arquivo,-4));
 
@@ -63,7 +64,7 @@ if(isset($_POST["enviar"]))
 					$mensagem = "<font color='#FF0000'><strong>Erro no upload! Anexar documentos somente no formato PDF.</strong></font>";
 				}
 			}
-		}
+		//}
 	}
 }
 
