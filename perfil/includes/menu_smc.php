@@ -17,7 +17,7 @@ $link2 = $http."excel_pj.php";
 					<li><a href="<?php echo $pasta ?>smc_pesquisa_nome">Nível de acesso</a></li>
 					<li><a href="<?php echo $pasta ?>smc_pesquisa_reseta_senha">Reiniciar senha</a></li>
 				</ul>
-			</li> 
+			</li>
 			<li><a href="#">Pesquisas</a>
 				<ul class="dl-submenu">
 					<li><a href="<?php echo $pasta ?>smc_pesquisa_pf">Pessoa Física</a></li>
@@ -32,6 +32,7 @@ $link2 = $http."excel_pj.php";
 				<ul class="dl-submenu">
 					<li><a href="<?php echo $link1 ?>">Pessoa Física</a></li>
 					<li><a href="<?php echo $link2 ?>">Pessoa Jurídica</a></li>
+					<li><a href="../pdf/projetos.php">Projetos</a></li>
 				</ul>
 			</li>
 			<li><a href="?perfil=informacoes_iniciais_pf">Módulo Proponente (provisório)</a></li>
