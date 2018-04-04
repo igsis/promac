@@ -64,7 +64,7 @@ if($num_busca > 0)
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
-							<a href="?perfil=representante_pj_cadastro"><input type="submit" value="Inserir outro representante" class="btn btn-theme btn-block"></a>
+							<a href="?perfil=representante_pj"><input type="submit" value="Inserir outro representante" class="btn btn-theme btn-block"></a>
 						</div>
 					</div>
 
