@@ -21,14 +21,13 @@ if(isset($_POST["enviar"]))
 
 		//Extensões permitidas
 		$ext = array("PDF","pdf");
-		/*
-		if($_FILES['arquivo']['size'] > 3145728) // 3MB em bytes
+		
+		if($f_size > 3145728) // 3MB em bytes
 		{
-			$mensagem = "<font color='#01DF3A'><strong>Erro! Tamanho de arquivo excedido! Tamanho máximo permitido: 03 MB.</strong></font>";
+			$mensagem = "<font color='#FF0000'><strong>Erro! Tamanho de arquivo excedido! Tamanho máximo permitido: 03 MB.</strong></font>";
 		}
 		else
 		{
-		*/
 			if($nome_arquivo != "")
 			{
 				$nome_temporario = $_FILES['arquivo']['tmp_name'][$x];
@@ -48,7 +47,6 @@ if(isset($_POST["enviar"]))
 						{
 							$mensagem = "<font color='#01DF3A'><strong>Arquivo recebido com sucesso!</strong></font>";
 							gravarLog($sql_insere_arquivo);
-							echo '<script>window.location = "?perfil=arquivos_pj"</script>';
 						}
 						else
 						{
@@ -65,7 +63,7 @@ if(isset($_POST["enviar"]))
 					$mensagem = "<font color='#FF0000'><strong>Erro no upload! Anexar documentos somente no formato PDF.</strong></font>";
 				}
 			}
-		//}
+		}
 	}
 }
 
