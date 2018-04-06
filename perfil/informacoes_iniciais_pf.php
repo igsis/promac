@@ -8,13 +8,14 @@ $estados = formataDados(listaEstados());
 $cidades = formataDados(listaCidades());
 $habilitaCampo = false;
 
-if(isset($_POST['cep'])):          
-  $enderecos = retornaEndereco($_POST['cep']);  
+if(isset($_POST['cep'])):
+  	$enderecos = retornaEndereco($_POST['cep']);  
   
-  if(isset($enderecos)):
+  	if(isset($enderecos)):
     $endereco  = configuraEndereco($enderecos); 
-    $uf = implode("",retornaUf($_POST['cep']));     
-  endif;  
+    $uf = implode("",retornaUf($_POST['cep']));
+
+  endif;
 endif;  
 
 if(isset($_POST['cep']) and empty($enderecos)):  $habilitaCampo = true; ?>
@@ -76,7 +77,7 @@ else: ?>
   <section id="list_items" class="home-section bg-white">
     <div class="container"><?php include 'includes/menu_interno_pf.php'; ?>
 	  <div class="form-group">
-	    <h4>Proponente</h4>
+	    <h4>Proponente <br> <small>Pessoa Física</small></h4>
 		<h5><?php if(isset($mensagem)){echo $mensagem;};?></h5>
 	  </div>
 	  <div class="row">
@@ -133,8 +134,8 @@ else: ?>
 				          endif
 				        ?>"> 
 			  </div>
-			  <div class="col-md-6"><strong>Celular:</strong><br/>
-			    <input type="text" class="form-control" name="celular" id="celular"  
+			  <div class="col-md-6"><strong>Celular *:</strong><br/>
+			    <input required type="text" class="form-control" name="celular" id="celular"  
 				       onkeyup="mascara( this, mtel );" maxlength="15" 
 				       placeholder="Exemplo: (11) 98765-4321" 
 				       value="<?php 
