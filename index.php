@@ -76,7 +76,7 @@
 										<ul class="list-group">
 											<li class="list-group-item"><a href="pdf/Lei_ProMac.pdf" target="_blank">Lei</a></li>
 											<li class="list-group-item"><a href="pdf/Decreto_ProMac.pdf" target="_blank">Decreto</a></li>
-											<li class="list-group-item"><a href="pdf/edital_promac.pdf" target="_blank">Edital de Abertura</a></li>
+											<!--<li class="list-group-item"><a href="pdf/edital_promac.pdf" target="_blank">Edital de Abertura</a></li>-->
 											<li class="list-group-item"><a href="pdf/AlteracaoDecreto_ProMac.pdf" target="_blank">Alteração de Decreto</a></li>
 											<li class="list-group-item"><a href="pdf/Portaria_publicado.pdf">Portaria de procedimentos e documentos para inscrição</a></li>
 											<li class="list-group-item"><a href="#">Portarias de prestação de contas</a></li>
