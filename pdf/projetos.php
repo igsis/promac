@@ -57,6 +57,41 @@ while($row = mysqli_fetch_array($query))
   $z = "Z".$i;
   $i++;
 
+  $idP = $row['idProjeto'];/*
+  $queryL = "SELECT local, estimativaPublico FROM locais_realizacao WHERE idProjeto = '$idP'";
+  $enviaL = mysqli_query($con, $idP);
+  if (!$enviaL) {
+    printf("Error: %s\n", mysqli_error($con));
+    exit();
+  }
+
+  while($rowL = mysqli_fetch_array($enviaL))
+  {
+    $localR = $rowL['local'];
+    $estimativaP = $rowL['estimativaPublico'];
+  }*/
+
+  $queryR = "SELECT idZona FROM locais_realizacao WHERE idProjeto = '$idP'";
+  $idZona = mysqli_query($con, $queryR);
+  while($idz = mysqli_fetch_array($idZona))
+  {
+    $idZZ = $idz['idZona'];
+  }
+
+  $queryZ = "SELECT zona FROM zona WHERE idZona = '$idZZ'";
+  $enviaZ = mysqli_query($con, $queryZ);
+  while($zonas = mysqli_fetch_array($enviaZ))
+  {
+      $zonaString = $zonas['zona'];
+  }
+
+  $queryF = "SELECT nome FROM ficha_tecnica WHERE idProjeto = '$idP'";
+  $enviaF = mysqli_query($con, $queryF);
+  while($fichaS = mysqli_fetch_array($enviaF))
+  {
+    $ficha = $fichaS['nome'];
+  }
+
   $objPHPExcel->setActiveSheetIndex(0)
     ->setCellValue('A1', 'Nome do projeto')
     ->setCellValue('B1', 'Valor total')
@@ -72,12 +107,12 @@ while($row = mysqli_fetch_array($query))
               ->setCellValue($a, $row['nomeProjeto'])
               ->setCellValue($b, $row['valorFinanciamento']+$row['valorIncentivo'])
               ->setCellValue($c, $row['valorIncentivo'])
-              ->setCellValue($d, $row['numero'])
-              ->setCellValue($e, $row['complemento'])
-              ->setCellValue($f, $row['bairro'])
-              ->setCellValue($g, $row['cidade'])
-              ->setCellValue($h, $row['estado'])
-              ->setCellValue($I, $row['cep']);
+              ->setCellValue($d, $row['resumoProjeto'])
+              ->setCellValue($e, $localR)
+              ->setCellValue($f, $estimativaP)
+              ->setCellValue($g, $zonaString)
+              ->setCellValue($h, $row['publicoAlvo'])
+              ->setCellValue($I, $ficha);
 
 
   $objPHPExcel->setActiveSheetIndex(0)
@@ -209,7 +244,7 @@ $objPHPExcel->setActiveSheetIndex(0);
 ob_end_clean();
     ob_start();
 
-$nome_arquivo = date("Y-m-d")."_pessoa_fisica.xls";
+$nome_arquivo = date("Y-m-d")."_projeto.xls";
 
 // Redirect output to a client’s web browser (Excel2007)
 header('Content-Type: text/html; charset=ISO-8859-1');
