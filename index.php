@@ -28,6 +28,9 @@
 						<p>&nbsp;</p>
 						<p align="justify">O Programa de Municipal de Apoio a Projetos Culturais – Pro-Mac, instituído pela Lei nº 15.948/2013 e regulamentado pelo Decreto nº 58.041/2017, tem como objetivo incentivar projetos culturais e artísticos por meio da renúncia fiscal. Os incentivadores – pessoa física ou jurídica - poderão contribuir por meio da renúncia de até 20% do Imposto sobre Serviços de Qualquer Natureza - ISS e do Imposto Predial e Territorial Urbano - IPTU.</p>
 
+						<p align="justify"><strong>Inscrição de proponente: </strong>aberta o ano todo.<br/>
+						<strong>Inscrição de projeto: </strong>de 23/04/2018 à 31/10/2018.</p>	
+
 						<p align="justify">O proponente deverá inscrever-se no link abaixo e após habilitação poderá inscrever o projeto.</p>
 
 						<p align="justify">Para saber como participar, clique em <button class='btn btn-theme btn-md' type='button' data-toggle='modal' data-target='#regulamento' style="border-radius: 30px;">Regulamento</button> e se inscreva no link abaixo.</p>
