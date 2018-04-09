@@ -1742,7 +1742,7 @@ function configuraEndereco($addresses)
 
   if(!empty($addresses)):
     $enderecos = [
-       'logradouro' => $addresses[0]['logradouro'],
+       'logradouro' => $addresses[0]['tp_logradouro']." ".$addresses[0]['logradouro'],
        'cidade' => $addresses[0]['cidade'],
        'bairro' => $addresses[0]['bairro'],
        'cep' => $addresses[0]['cep']
