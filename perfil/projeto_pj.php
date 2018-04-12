@@ -66,7 +66,6 @@ if(isset($_POST['apagar']))
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
 			<?php
-			if($statusProjeto == 1){
 				if($pj['liberado'] == 0)// ainda não foi solicitado liberação
 				{
 
@@ -132,6 +131,7 @@ if(isset($_POST['apagar']))
 			?>
 			<!--Inicio da validação numero de projetos-->
 			<?php
+			if($statusProjeto == 1){
 			$qtd = retornaQtdProjetos($tipoPessoa,$idPj);
 			$numProjetos = (int) $qtd[0];
 
@@ -285,7 +285,11 @@ if(isset($_POST['apagar']))
 						</div>
 					</div>
 				<?php
-				}
+				}			else{
+				echo "<div class='alert alert-warning'>
+				  <strong>Aviso: </strong>O cadastro de novos projetos está desabilitado temporariamente pela SMC.
+				</div>";
+			}
 				?>
 		</div>
 		<!-- Confirmação de Exclusão -->
@@ -310,11 +314,7 @@ if(isset($_POST['apagar']))
 		
 			<?php } 
 
-			else{
-				echo "<div class='alert alert-warning'>
-				  <strong>Aviso: </strong>O cadastro de novos projetos está desabilitado temporariamente pela SMC.
-				</div>";
-			}
+
 				?>
 	</div>
 </section>

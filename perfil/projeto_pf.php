@@ -57,8 +57,7 @@ if(isset($_POST['apagar']))
 <section id="list_items" class="home-section bg-white">
 	<div class="container"><?php include '../perfil/includes/menu_interno_pf.php'; ?>
 		<div class="form-group">
-			<?php
-			if($statusProjeto == 1){
+			<?php			
 				if($pf['liberado'] != 0)
 				echo "<h4>Projetos</h4>";
 				?>
@@ -134,6 +133,7 @@ if(isset($_POST['apagar']))
 				?>
 				<!--Inicio da validação numero de projetos-->
 				<?php
+				if($statusProjeto == 1){
 				$qtd = retornaQtdProjetos($tipoPessoa,$idPf);
 				$numProjetos = (int) $qtd[0];
 
@@ -283,6 +283,14 @@ if(isset($_POST['apagar']))
 							</div>
 						</div>
 					<?php
+								} 
+
+			else{
+				echo "<div class='alert alert-warning'>
+				  <strong>Aviso: </strong>O cadastro de novos projetos está desabilitado temporariamente pela SMC.
+				</div>";
+			}
+
 					}
 					?>
 			</div>
@@ -305,13 +313,5 @@ if(isset($_POST['apagar']))
 					</div>
 				</div>
 			<!-- Fim Confirmação de Exclusão -->
-			<?php } 
-
-			else{
-				echo "<div class='alert alert-warning'>
-				  <strong>Aviso: </strong>O cadastro de novos projetos está desabilitado temporariamente pela SMC.
-				</div>";
-			}
-				?>
 	</div>
 </section>
