@@ -192,7 +192,7 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 						<h4 class="modal-title text-danger" id="myModalLabel">Atenção</h4>
 					</div>
 					<div class="modal-body">
-						<h6>Sempre que preencher o campo "Observações", clique no botão <b class="text-warning">ATUALIZAR</b></h6>
+						<h6>Sempre que preencher o campo "Observações", ou alterar o "Status" clique no botão <b class="text-warning">ATUALIZAR</b></h6>
 						<p>Se esse procedimento já foi realizado, clique no botão abaixo</p>
 					</div>
 					<div class="modal-footer">
