@@ -20,7 +20,7 @@ if(isset($_POST["enviar"]))
 
 		if($f_size > 5242880) // 5MB em bytes
 		{
-			$mensagem = "<font color='#FF0000'><strong>Erro! Tamanho de arquivo excedido! Tamanho máximo permitido: 03 MB.</strong></font>";
+			$mensagem = "<font color='#FF0000'><strong>Erro! Tamanho de arquivo excedido! Tamanho máximo permitido: 05 MB.</strong></font>";
 		}
 		else
 		{
