@@ -136,10 +136,8 @@ else{
 											if(verificaArquivosExistentesPF($idPj,$row['idListaDocumento'])){
 												echo '<div class="alert alert-success">O arquivo ' . $doc . ' já foi enviado.</div>';
 											}
-											else{ ?>
-											<?php 
-										    $urlArquivo = $http.$arq['idListaDocumento'];
-											if(arquivosExiste($urlArquivo)): ?>	
+											elseif ($arq['idListaDocumento'] == 15) 
+											{?>
 											  <td class="list_description path">
                                                 <?php              
                                                  $path = selecionaArquivoAnexo(
@@ -148,14 +146,15 @@ else{
                                                   	 target="_blank">
                                                      <?=$arq['documento'] ?> 	
                                                   </a>
-                                              </td>	
-                                            <?php else: ?>
+                                              </td>
+                                              <td class="list_description"><input type='file' name='arquivo[<?php echo $arq['sigla']; ?>]'></td>
+											
+                                      <?php }	else { ?>
                                               <td class="list_description path">
                                                 <?=$arq['documento']?>	
                                               </td>	
-                                            <?php endif ?>  
 											<td class="list_description"><input type='file' name='arquivo[<?php echo $arq['sigla']; ?>]'></td>
-											<?php } ?>
+                                            <?php } ?>  
 										</tr>
 								<?php
 									}
