@@ -108,7 +108,7 @@ if(isset($_POST['apagar']))
 				</div>
 			<?php
 				}
-				elseif($pj['liberado'] == 2)// a liberação de projetos foi rejeitada pela SMC.
+				elseif(($pj['liberado'] == 2) || ($pj['liberado'] == 4))// a liberação de projetos foi rejeitada pela SMC.
 				{
 			?>
 					<div class="alert alert-danger">

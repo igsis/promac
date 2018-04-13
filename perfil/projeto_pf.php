@@ -109,13 +109,24 @@ if(isset($_POST['apagar']))
 						</div>
 				<?php
 					}
-					elseif($pf['liberado'] == 2)// a liberação de projetos foi rejeitada pela SMC.
+					elseif(($pf['liberado'] == 2) || ($pf['liberado'] == 4))// a liberação de projetos foi rejeitada pela SMC.
 					{
+					
+						if ($pf['liberado'] == 2)
+						{
 				?>
 						<div class="alert alert-danger">
 							<strong>Sua solicitação para a liberação de envio de projetos foi rejeitada pela Secretaria Municipal de Cultura.</strong>
 						</div>
+				<?php 
+						}
+						else
+						{
 
+				?>
+						<div class="alert alert-danger">
+							<strong>Seu cadastro foi desbloqueado para edição</strong>
+						</div>
 						<div>
 					 		<?php listaArquivosPessoaObs($idPf,1) ?>
 					 	</div>
@@ -127,6 +138,7 @@ if(isset($_POST['apagar']))
 							</div>
 						</div>
 				<?php
+						}
 					}
 					else // liberação concedida pela SMC - liberado = 3
 					{
