@@ -34,7 +34,7 @@ if(isset($_POST['negar']))
 if(isset($_POST['desbloquear']))
 {
 	$id = $_POST['LIBPF'];
-	$QueryPJ = "UPDATE pessoa_juridica SET liberado='2' WHERE idPj = '$id'";
+	$QueryPJ = "UPDATE pessoa_juridica SET liberado='4' WHERE idPj = '$id'";
 	$envio = mysqli_query($con, $QueryPJ);
 	if($envio)
 		echo "<script>alert('O usuário foi negado com sucesso');</script>";
@@ -185,15 +185,14 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 
 <!-- Botão para Prosseguir -->
 	<?php
-	if($pj['liberado'] == 1)
+	if(($pj['liberado'] == 1) || ($pj['liberado'] == 4))
 	{
 	?>
 		<div class="form-group">
 			<div class='col-md-offset-4 col-md-2'>
-				<form class='form-horizontal' role='form' action='?perfil=smc_visualiza_perfil_pj' method='post'>
-					<input type='hidden' name='LIBPF' value='<?php echo $pj['idPj'] ?>' />
-					<input type='submit' name='negar' value='Não Aprovar' class='btn btn-theme btn-lg btn-block'>
-				</form>
+				<button type="button" class='btn btn-theme btn-lg btn-block' data-toggle="modal" data-target="#myModal">
+					Não Aprovar
+				</button>
 			</div>
 			<div class='col-md-2'>
 				<form class='form-horizontal' role='form' action='?perfil=smc_visualiza_perfil_pj' method='post'>
@@ -202,6 +201,27 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 				</form>
 			</div>
 		</div>
+		<!-- Modal de aviso -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title text-danger" id="myModalLabel">Atenção</h4>
+					</div>
+					<div class="modal-body">
+						<h6>Sempre que preencher o campo "Observações", ou alterar o "Status" clique no botão <b class="text-warning">ATUALIZAR</b></h6>
+						<p>Se esse procedimento já foi realizado, clique no botão abaixo</p>
+					</div>
+					<div class="modal-footer">
+						<form class='form-horizontal' role='form' action='?perfil=smc_visualiza_perfil_pj' method='post'>
+							<input type='hidden' name='LIBPF' value='<?php echo $pj['idPj'] ?>' />
+							<input type='submit' name='negar' value='Não Aprovar' class='btn btn-theme btn-lg btn-block'>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>		
 		<?php
 	}
 	if(($pj['liberado'] == 3) || ($pj['liberado'] == 2))

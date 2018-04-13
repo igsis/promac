@@ -31,7 +31,7 @@ if(isset($_POST['negar']))
 if(isset($_POST['desbloquear']))
 {
 	$id = $_POST['LIBPF'];
-	$QueryPJ = "UPDATE pessoa_fisica SET liberado='2' WHERE idPf = '$id'";
+	$QueryPJ = "UPDATE pessoa_fisica SET liberado='4' WHERE idPf = '$id'";
 	$envio = mysqli_query($con, $QueryPJ);
 	if($envio)
 		echo "<script>alert('O usuário foi desbloqueado com sucesso');</script>";
@@ -166,7 +166,7 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 
 <!-- Botão para Prosseguir -->
 	<?php
-	if($pf['liberado'] == 1)
+	if(($pf['liberado'] == 1) || ($pf['liberado'] == 4))
 	{
 	?>
 		<div class="form-group">
@@ -192,7 +192,7 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 						<h4 class="modal-title text-danger" id="myModalLabel">Atenção</h4>
 					</div>
 					<div class="modal-body">
-						<h6>Sempre que preencher o campo "Observações", clique no botão <b class="text-warning">ATUALIZAR</b></h6>
+						<h6>Sempre que preencher o campo "Observações", ou alterar o "Status" clique no botão <b class="text-warning">ATUALIZAR</b></h6>
 						<p>Se esse procedimento já foi realizado, clique no botão abaixo</p>
 					</div>
 					<div class="modal-footer">
