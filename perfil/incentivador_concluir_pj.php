@@ -104,7 +104,7 @@ if(isset($_POST['liberacao']))
 					</div>
 
 					<div>
-				 		<?php listaArquivosPessoaObs($idPj,1) ?>
+				 		<?php listaArquivosPessoaObs($idPj,5) ?>
 				 	</div>
 				 	<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">

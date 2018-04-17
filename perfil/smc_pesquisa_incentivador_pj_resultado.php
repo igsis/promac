@@ -93,6 +93,7 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 								if($x[$h]['liberado'] == 1) { echo "<td class='list_description'>Acesso aos dados cadastrais</td>";}
 								if($x[$h]['liberado'] == 2) { echo "<td class='list_description'>Acesso não aprovado</td>";}
 								if($x[$h]['liberado'] == 3) { echo "<td class='list_description'>Acesso ao projeto</td>";}
+								if($x[$h]['liberado'] == 4) { echo "<td class='list_description'>Liberado para Edição</td>";}
 								echo "<td class='list_description'>
 										<form method='POST' action='?perfil=smc_visualiza_incentivadores_pj'>
 											<input type='hidden' name='liberado' value='".$x[$h]['idPj']."' />
