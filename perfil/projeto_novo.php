@@ -22,6 +22,7 @@ if(isset($_POST['novoPj'])) //tipoePessoa = 2
 		$ultimoProjeto = mysqli_fetch_array($query_ultimo);
 		$_SESSION['idProjeto']  = $ultimoProjeto['idProjeto'];
 		$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso! Aguarde...</strong></font>";
+		gravarLog($sql_insere_projeto);
 		echo "<meta HTTP-EQUIV='refresh' CONTENT='0.5;URL=?perfil=projeto_2'>";
 	}
 	else
@@ -43,6 +44,7 @@ if(isset($_POST['insereAtuacao']))
 		$ultimoProjeto = mysqli_fetch_array($query_ultimo);
 		$_SESSION['idProjeto']  = $ultimoProjeto['idProjeto'];
 		$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso! Aguarde...</strong></font>";
+		gravarLog($sql_insere_projeto);
 		echo "<meta HTTP-EQUIV='refresh' CONTENT='0.5;URL=?perfil=projeto_edicao'>";
 	}
 	else

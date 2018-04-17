@@ -45,7 +45,8 @@ if(isset($_POST['gravarPrazos']))
 		if(mysqli_query($con,$sql_insere))
 		{
 			$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso! Utilize o menu para avançar.</strong></font>";
-		}
+			gravarLog($sql_insere);
+		}	
 		else
 		{
 			$mensagem = "<font color='#FF0000'><strong>Erro ao gravar! Tente novamente.</strong></font>";
@@ -66,6 +67,7 @@ if(isset($_POST['gravarPrazos']))
 		if(mysqli_query($con,$sql_edita))
 		{
 			$mensagem = "<font color='#01DF3A'><strong>Editado com sucesso!</strong></font>";
+			gravarLog($sql_edita);
 		}
 		else
 		{
@@ -81,6 +83,7 @@ if(isset($_POST['gravarAdm']))
 	if(mysqli_query($con,$sql_gravarAdm))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
+		gravarLog($sql_gravarAdm);
 	}
 	else
 	{
@@ -98,6 +101,7 @@ if(isset($_POST['gravarNota']))
 		if(mysqli_query($con,$sql_nota))
 		{
 			$mensagem = "<font color='#01DF3A'><strong>Nota inserida com sucesso!</strong></font>";
+			gravarLog($sql_nota);
 		}
 		else
 		{
@@ -174,6 +178,7 @@ if(isset($_POST['apagar']))
 	if(mysqli_query($con,$sql_apagar_arquivo))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Arquivo apagado com sucesso!</strong></font>";
+		gravarLog($sql_apagar_arquivo);
 	}
 	else
 	{

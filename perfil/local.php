@@ -13,6 +13,7 @@ if(isset($_POST['insereLocal']))
 	if(mysqli_query($con,$sql_insere_local))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso!</strong></font>";
+		gravarLog($sql_insere_local);
 	}
 	else
 	{
@@ -35,6 +36,7 @@ if(isset($_POST['editaLocal']))
 	if(mysqli_query($con,$sql_edita_local))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso!</strong></font>";
+		gravarLog($sql_edita_local);
 	}
 	else
 	{
@@ -50,6 +52,7 @@ if(isset($_POST['apagaLocal']))
 	if(mysqli_query($con,$sql_apaga_local))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Apagado com sucesso!</strong></font>";
+		gravarLog($sql_apaga_local);
 	}
 	else
 	{

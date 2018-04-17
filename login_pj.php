@@ -10,6 +10,8 @@ if(isset($_POST['login']))
 	$login = $_POST['login'];
 	$senha = $_POST['senha'];
 	autenticaloginpj($login,$senha);
+	$log = "Fez login.";
+	gravarLog($log);
 }
 ?>
 

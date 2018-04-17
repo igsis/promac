@@ -23,7 +23,8 @@ if(isset($_POST['insereOrcamento']))
 	if(mysqli_query($con,$sql_insere))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Inserido com sucesso! Utilize o menu para avançar.</strong></font>";
-	}
+		gravarLog($sql_insere);
+	}	
 	else
 	{
 		$mensagem = "<font color='#FF0000'><strong>Erro ao inserir! Tente novamente.</strong></font>" .$sql_insere;
@@ -43,6 +44,7 @@ if(isset($_POST['editaOrcamento']))
 	if(mysqli_query($con,$sql_edita))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Editado com sucesso! Utilize o menu para avançar.</strong></font>";
+		gravarLog($sql_edita);
 	}
 	else
 	{
@@ -57,6 +59,7 @@ if(isset($_POST['apagaOrcamento']))
 	if(mysqli_query($con,$sql_apaga))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Apagado com sucesso!</strong></font>";
+		gravarLog($sql_apaga);
 	}
 	else
 	{

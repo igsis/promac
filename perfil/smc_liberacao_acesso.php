@@ -68,6 +68,7 @@ if (isset($_POST['alterarPf'])) {
  	$stmt->bindParam(':idNivelAcesso', $idNivelAcesso);
  	if ($stmt->execute()) {
  		$mensagem = 'Atualizado com sucesso!';
+		gravarLog($sql_atualizar);
  	}
 
  	$sql = "SELECT * FROM pessoa_fisica 

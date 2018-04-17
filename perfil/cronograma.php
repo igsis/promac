@@ -14,6 +14,7 @@ if(isset($_POST['insere']))
 	if(mysqli_query($con,$sql_insere))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso! </strong></font>";
+		gravarLog($sql_insere);
 	}
 	else
 	{
@@ -41,6 +42,7 @@ if(isset($_POST['insereCronograma']))
 		if(mysqli_query($con,$sql_insere_cronograma_evento))
 		{
 			$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso!</strong></font>";
+			gravarLog($sql_insere_cronograma_evento);
 		}
 		else
 		{

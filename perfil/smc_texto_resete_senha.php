@@ -26,6 +26,7 @@ if($tipoPessoa == 1)
 			<br/>
 			<p align='justify'>Att.</p>
 		";
+		gravarLog($sql);
 	}
 	else
 	{
@@ -53,6 +54,7 @@ else
 			<br/>
 			<p align='justify'>Att.</p>
 		";
+		gravarLog($sql);
 	}
 	else
 	{

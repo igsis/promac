@@ -16,6 +16,7 @@ if(isset($_POST['insere']))
 	if(mysqli_query($con,$sql_insere))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso! Utilize o menu para avançar.</strong></font>";
+		gravarLog($sql_insere);
 	}
 	else
 	{
@@ -34,7 +35,8 @@ if(isset($_POST['videoApagar']))
 	if(mysqli_query($con,$sql_insere))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Apagado com sucesso!</strong></font>";
-	}
+		gravarLog($sql_insere);
+	}				
 	else
 	{
 		$mensagem = "<font color='#FF0000'><strong>Erro ao gravar! Tente novamente.</strong></font>";

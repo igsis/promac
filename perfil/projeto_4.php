@@ -12,6 +12,7 @@ if(isset($_POST['insere']))
 	if(mysqli_query($con,$sql_insere))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso! Utilize o menu para avançar.</strong></font>";
+		gravarLog($sql_insere);
 	}
 	else
 	{

@@ -33,6 +33,7 @@ if(isset($_POST['cadastraRepresentante']))
 		if(mysqli_query($con,$sql_insere_rep1))
 		{
 			$mensagem = "<font color='#01DF3A'><strong>Cadastrado com sucesso!</strong></font><br/>";
+			gravarLog($sql_insere_rep1);
 			$idrep1 = recuperaUltimo("representante_legal");
 			$sql_representante1_empresa = "UPDATE incentivador_pessoaJuridica SET idRepresentanteLegal = '$idrep1' WHERE idPj = '$idPj'";
 			if(mysqli_query($con,$sql_representante1_empresa))

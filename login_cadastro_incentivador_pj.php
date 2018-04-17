@@ -33,6 +33,7 @@ if(isset($_POST['cadastraNovoPj']))
 				if($query_senha)
 				{
 					$mensagem = "Usuário cadastrado com sucesso! Aguarde que você será redirecionado para a página de login";
+					gravarLog($sql_senha);
 					 echo "<script type=\"text/javascript\">
 						  window.setTimeout(\"location.href='login_incentivador_pj.php';\", 4000);
 						</script>";

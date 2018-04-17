@@ -29,6 +29,7 @@ if(isset($_POST['novoPj'])) //tipoePessoa = 2
 	if(mysqli_query($con,$sql_insere_projeto))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso!</strong></font>";
+		gravarLog($sql_insere_projeto);
 	}
 	else
 	{
@@ -48,6 +49,7 @@ if(isset($_POST['insereAtuacao']))
 	if(mysqli_query($con,$sql_insere_projeto))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso!</strong></font>";
+		gravarLog($sql_insere_projeto);
 	}
 	else
 	{

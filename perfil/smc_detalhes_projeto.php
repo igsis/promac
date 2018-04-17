@@ -33,6 +33,7 @@ if(isset($_POST['gravarPrazos']))
 		{
 			$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso! Utilize o menu para avançar.</strong></font>";
 			echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
+			gravarLog($sql_insere);
 		}
 		else
 		{
@@ -55,6 +56,7 @@ if(isset($_POST['gravarPrazos']))
 		{
 			$mensagem = "<font color='#01DF3A'><strong>Editado com sucesso!</strong></font>";
 			echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>"; 
+			gravarLog($sql_edita);
 		}
 		else
 		{
@@ -73,6 +75,7 @@ if(isset($_POST['gravarAdm']))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
 		echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
+		gravarLog($sql_gravarAdm);
 	}
 	else
 	{
@@ -92,6 +95,7 @@ if(isset($_POST['gravarNota']))
 		{
 			$mensagem = "<font color='#01DF3A'><strong>Nota inserida com sucesso!</strong></font>";
 			echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
+			gravarLog($sql_nota);
 		}
 		else
 		{
@@ -109,6 +113,7 @@ if(isset($_POST['envioComissao']))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
 		echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
+		gravarLog($sql_gravarAdm);
 	}
 	else
 	{

@@ -20,6 +20,7 @@ if(isset($_POST['insereFicha']))
 			if(mysqli_query($con,$sql_insere_nome))
 			{
 				$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso! Utilize o menu para avançar.</strong></font>";
+				gravarLog($sql_insere_nome);
 			}
 			else
 			{
@@ -43,6 +44,7 @@ if(isset($_POST['editaFicha']))
 	if(mysqli_query($con,$sql_edita_ficha))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso!</strong></font>";
+		gravarLog($sql_edita_ficha);
 	}
 	else
 	{
@@ -58,6 +60,7 @@ if(isset($_POST['apagaFicha']))
 	if(mysqli_query($con,$sql_apaga_ficha))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Apagado com sucesso!</strong></font>";
+		gravarLog($sql_apaga_ficha);
 	}
 	else
 	{
