@@ -32,7 +32,7 @@ else
 	$filtro_liberado = "";
 }
 
-$sql = "SELECT * FROM incentivador_pessoafisica
+$sql = "SELECT * FROM incentivador_pessoaFisica
 		WHERE idNivelAcesso = 1
 		$filtro_liberado $filtro_nome $filtro_cpf
 		ORDER BY idPf DESC";
@@ -113,3 +113,4 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 		</div>
 	</div>
 </section>
+

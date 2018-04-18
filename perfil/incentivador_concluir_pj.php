@@ -96,13 +96,27 @@ if(isset($_POST['liberacao']))
 					</div>
 			<?php
 				}
-				elseif($pj['liberado'] == 2)// a liberação de projetos foi rejeitada pela SMC.
+				elseif(($pj['liberado'] == 2) || ($pj['liberado'] == 4))// a liberação de projetos foi rejeitada pela SMC.
 				{
+					if ($pj['liberado'] == 2) 
+					{
+						
+					
 			?>
 					<div class="alert alert-danger">
-						<strong>Sua solicitação para a liberação de envio de projetos foi rejeitada pela Secretaria Municipal de Cultura.</strong>
+						<strong>Sua inscrição para incentivo foi rejeitada pela Secretaria Municipal de Cultura.</strong>
 					</div>
-
+			<?php 
+					}
+					else // liberado == 4
+					{
+			?>
+					<div class="alert alert-danger">
+						<strong>Sua inscrição para incentivo foi liberada para edição.</strong>
+					</div>
+			<?php 
+					}
+			?>
 					<div>
 				 		<?php listaArquivosPessoaObs($idPj,5) ?>
 				 	</div>

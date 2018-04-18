@@ -51,9 +51,6 @@ if(isset($_POST['cadastraNovoPf']) and $_POST['numero'] and empty($endereço)):
 	`complemento` = '$Complemento'
   WHERE `idPf` = '$idPf'";
 
-  echo "<pre>";
-  print_r($sql_atualiza_pf);
-  echo "</pre>";
 
   if(mysqli_query($con,$sql_atualiza_pf)):     
     $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso! Utilize o menu para 
@@ -225,7 +222,7 @@ endif; ?>
 			  </div>
 			  <div class=" col-md-6"><strong>Complemento:</strong><br/>
 			    <input type="text" class="form-control" id="complemento" 
-			    	   name="complemento" placeholder="complemento" 
+			    	   name="Complemento" placeholder="complemento" 
 			           value="<?php 
 				          if(!empty($_POST['complemento'])):				            
 				            echo $_POST['complemento'];

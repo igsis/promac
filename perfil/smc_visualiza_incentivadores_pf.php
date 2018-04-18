@@ -7,12 +7,12 @@ if($idPf == null)
 	$idPf = $_GET['idFF'];
 }
 
-$pf = recuperaDados("incentivador_pessoafisica","idPf",$idPf);
+$pf = recuperaDados("incentivador_pessoaFisica","idPf",$idPf);
 
 if(isset($_POST['liberar']))
 {
 	$id = $_POST['LIBPF'];
-	$QueryPJ = "UPDATE incentivador_pessoafisica SET liberado='3' WHERE idPf = '$id'";
+	$QueryPJ = "UPDATE incentivador_pessoaFisica SET liberado='3' WHERE idPf = '$id'";
 	$envio = mysqli_query($con, $QueryPJ);
 	if($envio)
 		echo "<script>alert('O usuário foi liberado com sucesso');</script>";
@@ -22,7 +22,7 @@ if(isset($_POST['liberar']))
 if(isset($_POST['negar']))
 {
 	$id = $_POST['LIBPF'];
-	$QueryPJ = "UPDATE incentivador_pessoafisica SET liberado='2' WHERE idPf = '$id'";
+	$QueryPJ = "UPDATE incentivador_pessoaFisica SET liberado='2' WHERE idPf = '$id'";
 	$envio = mysqli_query($con, $QueryPJ);
 	if($envio)
 		echo "<script>alert('O usuário foi negado com sucesso');</script>";
@@ -32,7 +32,7 @@ if(isset($_POST['negar']))
 if(isset($_POST['desbloquear']))
 {
 	$id = $_POST['LIBPF'];
-	$QueryPJ = "UPDATE incentivador_pessoafisica SET liberado='1' WHERE idPf = '$id'";
+	$QueryPJ = "UPDATE incentivador_pessoaFisica SET liberado='4' WHERE idPf = '$id'";
 	$envio = mysqli_query($con, $QueryPJ);
 	if($envio)
 		echo "<script>alert('O usuário foi desbloqueado com sucesso');</script>";
@@ -167,7 +167,7 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 
 <!-- Botão para Prosseguir -->
 	<?php
-	if($pf['liberado'] == 1)
+	if(($pf['liberado'] == 1) || ($pf['liberado'] == 4))
 	{
 	?>
 		<div class="form-group">
@@ -186,7 +186,7 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 		</div>
 	<?php
 	}
-	if($pf['liberado'] == 2)
+	if(($pf['liberado'] == 2) || ($pf['liberado'] == 3))
 	{
 	?>
 		<div class="form-group">

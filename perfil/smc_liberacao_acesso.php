@@ -90,7 +90,6 @@ if (isset($_POST['alterarPf'])) {
 					<table class='table table-condensed table-hover text-center'>
 						<thead>
 							<tr class='list_menu'>
-								<td>ID</td>
 								<td>Nome</td>
 								<td>CPF</td>
 								<td>Tipo Acesso</td>
@@ -115,7 +114,6 @@ if (isset($_POST['alterarPf'])) {
 									}
 									echo "<form method='POST' action=''>";
 									echo "<tr>";
-									echo "<td class='list_description'>".$value['idPf']."</td>";
 									echo "<td class='list_description'>".$value['nome']."</td>";
 									echo "<td class='list_description'>".$value['cpf']."</td>";
 									echo "<td class='list_description'>
