@@ -101,7 +101,6 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 										</form>
 									</td>";
 								echo "</tr>";
-								echo $x[$h]['liberado'].'<br>';
 							}
 							?>
 						</tbody>

@@ -2,7 +2,7 @@
 $con = bancoMysqli();
 
 $nome = isset($_POST['nome']) ? $_POST['nome'] : null;
-$cpf = isset($_POST['cpf']) ? $_POST['cpf'] : null;
+$cnpj = isset($_POST['cnpj']) ? $_POST['cnpj'] : null;
 $liberado = isset($_POST['liberado']) ? $_POST['liberado'] : null;
 
 if($nome != '')
@@ -14,13 +14,13 @@ else
 	$filtro_nome = "";
 }
 
-if($cpf != '')
+if($cnpj != '')
 {
-	$filtro_cpf = " AND cnpj = '$cpf'";
+	$filtro_cnpj = " AND cnpj = '$cnpj'";
 }
 else
 {
-	$filtro_cpf = "";
+	$filtro_cnpj = "";
 }
 
 if($liberado != 0 && $liberado != NULL)
@@ -34,7 +34,7 @@ else
 
 $sql = "SELECT * FROM incentivador_pessoajuridica
 		WHERE idNivelAcesso = 1
-		$filtro_liberado $filtro_nome $filtro_cpf
+		$filtro_liberado $filtro_nome $filtro_cnpj
 		ORDER BY idPj DESC";
 $query = mysqli_query($con,$sql);
 $num = mysqli_num_rows($query);

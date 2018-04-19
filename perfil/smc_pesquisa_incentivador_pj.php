@@ -12,7 +12,7 @@
 							<input type="text" name="nome" class="form-control" placeholder="">
 						</div>
 						<div class="col-md-3"><label>CNPJ</label>
-							<input type="text" name="cpf" id="cpf" class="form-control" placeholder="">
+							<input type="text" name="cnpj" id="cnpj" class="form-control" placeholder="">
 						</div>
 					</div>
 
