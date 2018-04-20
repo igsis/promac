@@ -24,10 +24,9 @@ if(isset($_POST['cep']) and empty($enderecos)):  $habilitaCampo = true; ?>
 <?php endif;
 
 
-if(isset($_POST['atualizarJuridica']) and $_POST['Numero'] and empty($endereço)):  
+if(isset($_POST['atualizarJuridica']) and $_POST['numero'] and empty($endereço)):  
 	
 	$razaoSocial = addslashes($_POST['razaoSocial']);
-	$cnpj = $_POST['cnpj'];
 	$telefone = $_POST['telefone'];
 	$celular = $_POST['celular'];
 	$email = $_POST['email'];
@@ -36,7 +35,7 @@ if(isset($_POST['atualizarJuridica']) and $_POST['Numero'] and empty($endereço)
 	$cidade = $_POST['cidade'];
 	$estado = $_POST['estado'];
 	$CEP = $_POST['cep'];
-	$Numero = $_POST['Numero'];
+    $Numero = $_POST['numero'];
 	$Complemento = $_POST['complemento'];
 	$cooperativa = $_POST['cooperativa'];
 
@@ -194,8 +193,8 @@ else: ?>
 
 			<div class="form-group">
 			  <div class="col-md-offset-2 col-md-6"><strong>Número *:</strong><br/>
-			    <input type="text" class="form-control" id="Numero" name="Numero" 
-			           placeholder="Numero" required
+			    <input type="text" class="form-control" id="numero" name="numero" 
+			           placeholder="Número" required
 			           value="<?php 
 				          if(!empty($_POST['numero'])):				            
 				            echo $_POST['numero'];
