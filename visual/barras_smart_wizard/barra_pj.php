@@ -41,7 +41,8 @@ $urlPj = array(
     31 => '/promac/visual/index_pj.php?perfil=projeto_13', //  Link do YouTube
     32 => '/promac/visual/index_pj.php?perfil=finalProjeto', // Final Projeto
     33 => '/promac/visual/index_pj.php?perfil=informacoes_administrativas',
-    34 => '/promac/visual/index_pj.php?perfil=cooperativa_resultado_busca' // Empresa
+    34 => '/promac/visual/index_pj.php?perfil=cooperativa_resultado_busca', // Empresa
+    35 => '/promac/visual/index_pj.php?perfil=resultado_inscricao_pj' // Resultado Inscrição
 );
 
 for ($i = 0; $i < count($urlPj); $i++) {
@@ -82,6 +83,8 @@ for ($i = 0; $i < count($urlPj); $i++) {
             $ativa19 = 'active loading';
         }elseif ($i == 20) {       //  Informações Administrativas
             $ativa20 = 'active loading';
+        }elseif ($i == 35) {       //  Resiltado Inscrição 
+            $ativa21 = 'active loading'; 
         }
 
 ?>
@@ -100,6 +103,9 @@ for ($i = 0; $i < count($urlPj); $i++) {
                 </li>
                 <li class="<?php echo isset($ativa3) ? $ativa3 : 'clickable'; ?>">
                     <a onclick="location.href='index_pj.php?perfil=arquivos_pj'" href=""><br /><small>Documentos do Proponente</small></a>
+                </li>
+                <li class="<?php echo isset($ativa21) ? $ativa21 : 'clickable'; ?>">
+                    <a onclick="location.href='index_pj.php?perfil=resultado_inscricao_pj'" href=""><br /><small>Resultado Inscrição</small></a>
                 </li>
                 <?php
                     if ($pj['liberado'] != 3) {
