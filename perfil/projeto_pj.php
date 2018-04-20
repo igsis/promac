@@ -125,6 +125,9 @@ if(isset($_POST['apagar']))
 							<strong>Seu cadastro foi desbloqueado para edição</strong>
 						</div>			
 					<div>
+			<?php 
+					}
+			?>
 				 		<?php listaArquivosPessoaObs($idPj,2) ?>
 				 	</div>
 				 	<div class="form-group">
@@ -135,7 +138,7 @@ if(isset($_POST['apagar']))
 						</div>
 					</div>
 			<?php
-					}
+					
 				}
 				else // liberação concedida pela SMC - liberado = 3
 				{
