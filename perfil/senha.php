@@ -14,8 +14,8 @@ if(isset($_POST['senha01']))
 			$queryPF = "SELECT senha FROM pessoa_fisica WHERE idPf = '$idUser'";
 			$envia = mysqli_query($con, $queryPF);
 		} else{
-			$queryPJ = "SELECT senha from pessoa_juridica WHERE idPk = '$idUser'";
-			$envia = mysqli_query($con, $queryPF);
+			$queryPJ = "SELECT senha from pessoa_juridica WHERE idPj = '$idUser'";
+			$envia = mysqli_query($con, $queryPJ);
 		}
 		$row = mysqli_fetch_array($envia);
 		$senha = $row['senha'];
