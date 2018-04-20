@@ -178,7 +178,7 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 			<p align="justify"><strong>Estado:</strong> <?php echo isset($rl['estado']) ? $rl['estado'] : null; ?></p>
 			<p align="justify"><strong>CEP:</strong> <?php echo isset($rl['cep']) ? $rl['cep'] : null; ?></p>
 		</div>
-		<div class="table-responsive list_info"><h6>Arquivo(s) de Pessoa Física</h6>
+		<div class="table-responsive list_info"><h6>Arquivo(s) de Pessoa Jurídica</h6>
 		<?php listaArquivosPessoaEditorr($idPj,'2',"smc_visualiza_perfil_pj"); ?>
 		</div>
 	</div>
