@@ -98,6 +98,7 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 
 						echo "<td class='list_description'>
 							<select name='status' id='statusOpt' value='teste'>";
+							echo "<option>Selecione</option>";
 							geraOpcao('status_documento', $row['idStatusDocumento']);
 							echo " </select>
 						</td>";
