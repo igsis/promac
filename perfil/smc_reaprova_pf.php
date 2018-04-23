@@ -15,7 +15,7 @@ if(isset($_POST['reaprovar']))
 	}
 	else
 	{
-		$mensagem = "<font color='#01DF3A'>Erro ao aprovar cadastro. Por favor, tente novamente!</font>";
+		$mensagem = "<font color='#FF0000'>Erro ao aprovar cadastro. Por favor, tente novamente!</font>";
 	}
 }
 ?>
@@ -53,14 +53,26 @@ if(isset($_POST['reaprovar']))
 	</div>
 
 	<!-- Botão -->
-	<div class="form-group">
-		<div class='col-md-offset-5 col-md-2'>
-			<!-- Button para ativar modal -->
-			<button type="button" class='btn btn-theme btn-lg btn-block' data-toggle="modal" data-target="#myModal">
-				Aprovar
-			</button>
+	<?php
+	if($pf['liberado'] != 3)
+	{
+	?>
+		<div class="form-group">
+			<div class='col-md-offset-5 col-md-2'>
+				<!-- Button para ativar modal -->
+				<button type="button" class='btn btn-theme btn-lg btn-block' data-toggle="modal" data-target="#myModal">
+					Aprovar
+				</button>
+			</div>
 		</div>
-	</div>
+	<?php
+	}
+	else
+	{
+		echo "<h5><font color='#01DF3A'>".$pf['nome']." está com a inscrição do proponente aprovada.</font></h5>";
+	}
+	?>
+
 	<!-- Modal de aviso -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
