@@ -235,5 +235,15 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 				</form>
 			</div>
 		</div>
-	<?php } ?>
+	<?php 
+	} 
+	if(($pj['liberado'] == 2) || ($pj['liberado'] == 4))
+	{
+	?>	
+		<div class="form-group">
+			<h5>Proponente não aprovado!<br> Aguardando reenvio da inscrição.</h5>
+		</div>
+	<?php
+	}
+	?>
 </section>
