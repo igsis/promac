@@ -48,9 +48,7 @@ if(isset($_POST['reaprovar']))
 		</div>
 		<div class="table-responsive list_info">
 			<h6>Arquivo(s) de Pessoa Física</h6>
-			<?php
-				exibirArquivos($tipoPessoa,$idPf);
-			?>
+			<?php exibirArquivos($tipoPessoa,$idPf); ?>
 		</div>
 	</div>
 
