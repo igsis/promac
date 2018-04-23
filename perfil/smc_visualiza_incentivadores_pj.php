@@ -137,7 +137,7 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 			</div>
 		</div>
 		 <div class = "page-header">
-		 	<h5>Dados do proponente</h5>
+		 	<h5>Dados do Incentivador</h5>
 		 </div>
 		 <div class="well">
 			<p align="justify"><strong>Razão Social:</strong> <?php echo isset($pf['razaoSocial']) ? $pf['razaoSocial'] : null; ?></p>
@@ -215,5 +215,15 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 				</form>
 			</div>
 		</div>
-	<?php } ?>
+	<?php 
+	} 
+	if(($pf['liberado'] == 2) || ($pf['liberado'] == 4))
+	{
+	?>	
+		<div class="form-group">
+			<h5>Incentivador não aprovado!<br> Aguardando reenvio da inscrição.</h5>
+		</div>
+	<?php
+	}
+	?>
 </section>
