@@ -3,7 +3,6 @@ $con = bancoMysqli();
 $tipoPessoa = '1';
 
 $idPf = $_POST['idPf'];
-$pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 
 if(isset($_POST['reaprovar']))
 {
@@ -18,6 +17,8 @@ if(isset($_POST['reaprovar']))
 		$mensagem = "<font color='#FF0000'>Erro ao aprovar cadastro. Por favor, tente novamente!</font>";
 	}
 }
+
+$pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 ?>
 
 <section id="list_items" class="home-section bg-white">
