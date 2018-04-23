@@ -23,6 +23,7 @@
 								<option value="1">Liberar inscrição de projeto</option>
 								<option value="2">Visualizar as inscrições não aprovadas</option>
 								<option value="3">Desbloquear dados do proponente para edição</option>
+								<option value="4">Inscrições liberadas para edição</option>
 							</select>
 						</div>
 					</div>
