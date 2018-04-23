@@ -1,17 +1,17 @@
 <?php
 $con = bancoMysqli();
-$tipoPessoa = '1';
+$tipoPessoa = '2';
 
-$idPf = $_POST['idPf'];
-$pf = recuperaDados("pessoa_fisica","idPf",$idPf);
+$idPj = $_POST['idPj'];
+$pf = recuperaDados("pessoa_juridica","idPj",$idPj);
 
 if(isset($_POST['reaprovar']))
 {
-	$idPf = $_POST['idPf'];
-	$sql = "UPDATE pessoa_fisica SET liberado = 3 WHERE idPf = '$idPf'";
-	if(mysqli_query($con,$sql))
+	$idPj = $_POST['idPj'];
+	$sql = "UPDATE pessoa_juridica SET liberado = 3 WHERE idPj = '$idPj'";
+	if(mysqli_query($con,$sql_liberacao))
 	{
-		$mensagem = "<font color='#01DF3A'>Cadastro aprovado com sucesso!</font>";
+		$mensagem = "<font color='#01DF3A'>Cadastro aprovado com sucesso!</font>"
 	}
 	else
 	{
@@ -47,14 +47,14 @@ if(isset($_POST['reaprovar']))
 			<p align="justify"><strong>CEP:</strong> <?php echo isset($pf['cep']) ? $pf['cep'] : null; ?></p>
 		</div>
 		<div class="table-responsive list_info">
-			<h6>Arquivo(s) de Pessoa Física</h6>
-			<?php exibirArquivos($tipoPessoa,$idPf); ?>
+			<h6>Arquivo(s) de Pessoa Jurídica</h6>
+			<?php exibirArquivos($tipoPessoa,$idPj); ?>
 		</div>
 	</div>
 
 	<!-- Botão -->
 	<div class="form-group">
-		<div class='col-md-offset-5 col-md-2'>
+		<div class='col-md-offset-4 col-md-2'>
 			<!-- Button para ativar modal -->
 			<button type="button" class='btn btn-theme btn-lg btn-block' data-toggle="modal" data-target="#myModal">
 				Aprovar
@@ -73,9 +73,9 @@ if(isset($_POST['reaprovar']))
 					<p>Tem certeza que deseja aprovar um cadastro que não está liberado?</p>
 				</div>
 				<div class="modal-footer">
-					<form class='form-horizontal' role='form' action='?perfil=smc_reaprova_pf' method='post'>
+					<form class='form-horizontal' role='form' action='?perfil=smc_reprova_pj' method='post'>
 						<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-						<input type='hidden' name='idPf' value='<?php echo $pf['idPf'] ?>' />
+						<input type='hidden' name='idPj' value='<?php echo $pf['idPj'] ?>' />
 	 					<button type="submit" name="reaprovar" class="btn btn-success" id="confirm">Aprovar</button>
 					</form>
 				</div>

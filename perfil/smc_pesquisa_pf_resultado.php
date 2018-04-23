@@ -93,16 +93,29 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 								echo "<td class='list_description'>".$x[$h]['rg']."</td>";
 								echo "<td class='list_description'>".$x[$h]['email']."</td>";
 								echo "<td class='list_description'>".$x[$h]['telefone']."</td>";
+								if($x[$h]['liberado'] == 0) { echo "<td class='list_description'>Em elaboração</td>";}
 								if($x[$h]['liberado'] == 1) { echo "<td class='list_description'>Acesso aos dados cadastrais</td>";}
 								if($x[$h]['liberado'] == 2) { echo "<td class='list_description'>Acesso não aprovado</td>";}
 								if($x[$h]['liberado'] == 3) { echo "<td class='list_description'>Acesso ao projeto</td>";}
 								if($x[$h]['liberado'] == 4) { echo "<td class='list_description'>Liberado para Edição</td>";}
-								echo "<td class='list_description'>
+								if($x[$h]['liberado'] == 4)
+								{
+									echo "<td class='list_description'>
+										<form method='POST' action='?perfil=smc_reaprova_pf'>
+											<input type='hidden' name='idPf' value='".$x[$h]['idPf']."' />
+											<input type ='submit' class='btn btn-theme btn-block' value='detalhes'>
+										</form>
+									</td>";
+								}
+								else
+								{
+									echo "<td class='list_description'>
 										<form method='POST' action='?perfil=smc_visualiza_perfil_pf'>
 											<input type='hidden' name='liberado' value='".$x[$h]['idPf']."' />
 											<input type ='submit' class='btn btn-theme btn-block' value='detalhes'>
 										</form>
 									</td>";
+								}
 								echo "</tr>";
 							}
 							?>
