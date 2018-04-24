@@ -90,6 +90,11 @@ if($pf['liberado'] == 3)
   	<strong>Aviso!</strong> Seus dados já foram aceitos, portanto, não podem ser alterados.</div>";
 
   	include 'resumo_arquivos_usuario.php';
+}elseif (($pf['liberado'] == 2) || ($pf['liberado'] == 4)) 
+{
+	echo "<div class='alert alert-warning'>
+	<strong>Aviso!</strong> Seus dados foram liberados para edição.</div>";
+	include 'resumo_arquivos_usuario.php';
 }
 else{
 ?>
@@ -102,6 +107,10 @@ else{
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
+				<?php 
+				if($pf['liberado'] != 1)
+				{
+				?>
 				<!-- Exibir arquivos -->
 				<div class="form-group">
 					<div class="col-md-12">
@@ -110,7 +119,9 @@ else{
 						</div>
 					</div>
 				</div>
-
+				<?php 
+				}
+				?>
 				<div class="form-group">
 					<div class="col-md-12">
 						<div class="table-responsive list_info"><h6>Upload de Arquivo(s) Somente em PDF</h6>
