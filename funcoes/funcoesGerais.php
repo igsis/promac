@@ -819,6 +819,81 @@ function listaArquivosPessoa($idPessoa,$tipoPessoa,$pagina)
 	}
 }
 
+function listaArquivosPendentePessoa($idPessoa,$tipoPessoa,$pagina)
+{
+	$con = bancoMysqli();
+	$sql = "SELECT *
+			FROM lista_documento as list
+			INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
+			WHERE arq.idPessoa = '$idPessoa'
+			AND arq.idTipo = '$tipoPessoa'
+			AND arq.idStatusDocumento != 'null'
+			AND arq.idStatusDocumento != '1'
+			AND arq.publicado = '1'";
+	$query = mysqli_query($con,$sql);
+	$linhas = mysqli_num_rows($query);
+
+	if ($linhas > 0)
+	{
+	echo "
+		<table class='table table-condensed'>
+			<thead>
+				<tr class='list_menu'>
+					<td>Tipo de arquivo</td>
+					<td>Nome do arquivo</td>
+					<td width='15%'></td>
+				</tr>
+			</thead>
+			<tbody>";
+				while($arquivo = mysqli_fetch_array($query))
+				{
+					echo "<tr>";
+					echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
+					echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
+					echo "
+						<td class='list_description'>
+							<form id='apagarArq' method='POST' action='?perfil=".$pagina."'>
+								<input type='hidden' name='idPessoa' value='".$idPessoa."' />
+								<input type='hidden' name='tipoPessoa' value='".$tipoPessoa."' />
+								<input type='hidden' name='apagar' value='".$arquivo['idUploadArquivo']."' />
+								<button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Remover Arquivo?' data-message='Deseja realmente excluir o arquivo ".$arquivo['documento']."?'>Remover
+								</button></td>
+							</form>";
+					echo "</tr>";
+					echo "<tr>";
+					echo "<td class='list_description'><button type='button' class='btn btn-warning' data-toggle='modal' data-target='#".$arquivo['idUploadArquivo']."'>Observação</button></td>";
+					echo "</tr>";
+					// Modal para exibir dados do campo Observação
+					echo "
+						<div class='modal fade' id='".$arquivo['idUploadArquivo']."' tabindex='-1' role='dialog' aria-labelledby='myModalLabel'>
+							<div class='modal-dialog' role='document'>
+								<div class='modal-content'>
+									<div class='modal-header'>
+										<button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+										<h4 class='modal-title text-primary' id='myModalLabel'>Observação</h4>
+									</div>
+									<div class='modal-body'>
+										<h6>Arquivo: ".$arquivo['documento']."</h6>
+										<p>".$arquivo['observacoes']."	</p>
+									</div>
+									<div class='modal-footer'>
+										<button type='button' class='btn btn-secondary' data-dismiss='modal'>Sair</button>
+									</div>
+								</div>
+							</div>
+						</div>";
+				}
+				echo "
+		</tbody>
+		</table>";
+
+	}
+	else
+	{
+		echo "<p>Não há arquivo(s) inserido(s).<p/><br/>";
+	}
+}
+
 function listaArquivosPessoaEditor($idPessoa,$tipoPessoa,$pagina)
 {
 	$con = bancoMysqli();
