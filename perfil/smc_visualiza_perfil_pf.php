@@ -1,11 +1,23 @@
 <?php
 $con = bancoMysqli();
 $tipoPessoa = '1';
-$idPf = isset($_POST['liberado']) ? $_POST['liberado'] : null;
-if($idPf == null)
+if(isset($_POST['liberado']))
 {
-	$idPf = $_GET['idFF'];
+	$idPf = $_POST['liberado'];
 }
+else if(isset($_POST['idPessoa']))
+{
+	$idPf = $_POST['idPessoa'];
+}
+else if (isset($_POST['LIBPF']))
+{
+	$idPf = $_POST['LIBPF'];
+}
+else
+{
+	$idPf = null;
+}
+
 $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 
 if(isset($_POST['liberar']))
@@ -14,8 +26,7 @@ if(isset($_POST['liberar']))
 	$QueryPJ = "UPDATE pessoa_fisica SET liberado='3' WHERE idPf = '$id'";
 	$envio = mysqli_query($con, $QueryPJ);
 	if($envio)
-		echo "<script>alert('O usuário foi liberado com sucesso');</script>";
-		echo "<script>window.location = '?perfil=smc_index';</script>";
+		$mensagem = "<font color='#01DF3A'><strong>O usuario ".$pf['nome']." foi aprovado com sucesso!</strong></font>";
 }
 
 if(isset($_POST['negar']))
@@ -24,8 +35,7 @@ if(isset($_POST['negar']))
 	$QueryPJ = "UPDATE pessoa_fisica SET liberado='2' WHERE idPf = '$id'";
 	$envio = mysqli_query($con, $QueryPJ);
 	if($envio)
-		echo "<script>alert('O usuário foi negado com sucesso');</script>";
-		echo "<script>window.location = '?perfil=smc_pesquisa_pf';</script>"; 
+		$mensagem = "<font color='#FF0000'><strong>O usuario ".$pf['nome']." foi REPROVADO com sucesso!</strong></font>";
 }
 
 if(isset($_POST['desbloquear']))
@@ -34,8 +44,7 @@ if(isset($_POST['desbloquear']))
 	$QueryPJ = "UPDATE pessoa_fisica SET liberado='4' WHERE idPf = '$id'";
 	$envio = mysqli_query($con, $QueryPJ);
 	if($envio)
-		echo "<script>alert('O usuário foi desbloqueado com sucesso');</script>";
-		echo "<script>window.location = '?perfil=smc_pesquisa_pf';</script>";
+		$mensagem = "<font color='#01DF3A'><strong>O usuario ".$pf['nome']." foi desbloqueado para edição!</strong></font>";
 }
 
 if(isset($_POST['atualizar']))
@@ -50,8 +59,7 @@ if(isset($_POST['atualizar']))
 
 	if($envia)
 	{
-		echo "<script>alert('O arquivo foi atualizado com sucesso.')</script>";
-		echo "<script>window.location.href = 'index_pf.php?perfil=smc_visualiza_perfil_pf&idFF=$id';</script>";
+		$mensagem = "<font color='#01DF3A'><strong>Arquivo foi atualizado com sucesso!</strong></font>";
 	}
 	else
 	{
@@ -114,7 +122,7 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 						<td class='list_description'>
 								<input type='hidden' name='idPessoa' value='".$idPessoa."' />
 								<input type='hidden' name='idArquivo' value='".$arquivo['idUploadArquivo']."' />
-								<input type ='submit' name='atualizar' class='btn btn-theme btn-block' value='Atualizar'></td>
+								<input type='submit' name='atualizar' class='btn btn-theme btn-block' value='Atualizar'></td>
 							</form>";
 					echo "</tr>";
 				}
@@ -127,6 +135,8 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 		echo "<p>Não há arquivo(s) inserido(s).<p/><br/>";
 	}
 }
+
+$pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 ?>
 
 <section id="list_items" class="home-section bg-white">
@@ -138,7 +148,15 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 			</div>
 		</div>
 		 <div class = "page-header">
-		 	<h5>Dados do proponente</h5>
+		 	<h5>Dados do proponente
+		 		<?php
+		 			if(isset($mensagem))
+		 			{
+		 				echo "<br>";
+		 				echo $mensagem;
+		 			}
+		 		?>
+		 	</h5>
 		 </div>
 		 <div class="well">
 			<p align="justify"><strong>Nome:</strong> <?php echo isset($pf['nome']) ? $pf['nome'] : null; ?></p>
