@@ -90,6 +90,7 @@ if($pj['liberado'] == 3)
   	<strong>Aviso!</strong> Seus dados já foram aceitos, portanto, não podem ser alterados.</div>";
 
   	include 'resumo_usuario.php';
+
 }elseif (($pj['liberado'] == 2)||($pj['liberado'] == 4)) {
 	echo "<div class='alert alert-warning'>
   	<strong>Aviso!</strong> Seus dados foram liberados para edição.</div>";
@@ -106,6 +107,12 @@ else{
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
+				<?php 
+					if ($pj['liberado'] == 1) {
+						echo "<div class='alert alert-warning'>
+				  		<strong>Status!</strong> Aguardando a verificação da inscrição</div>";
+  					}else{
+				?>
 				<!-- Exibir arquivos -->
 				<div class="form-group">
 					<div class="col-md-12">
@@ -114,7 +121,9 @@ else{
 						</div>
 					</div>
 				</div>
-
+				<?php 
+					}
+				?>
 				<div class="form-group">
 					<div class="col-md-12">
 						<div class="table-responsive list_info"><h6>Upload de Arquivo(s) Somente em PDF</h6>
