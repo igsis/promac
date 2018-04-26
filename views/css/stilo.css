@@ -1,0 +1,81 @@
+body
+{
+  background-color: #edf2f9;
+}
+table
+{
+  margin-top: 1em;	
+}
+
+table th
+{
+  background-color: #000;
+  text-align: center;
+  color: #fff;
+}
+
+table tr
+{
+  text-align: center;
+}
+
+.title
+{
+  color: #FF6B6B; 	
+}
+.setTr
+{
+  text-align: center;	
+}
+
+.inputContainer
+{
+  width: 400px;
+  height: 400px;
+  display: inline-flex;
+  justify-content: center;
+}
+
+.dataInicio{
+  width: 12em;
+  height: 1em;
+  margin-right: 12em;  
+}
+
+.dataFim{
+  width: 12em;
+  height: 1em;
+  margin-right: 20em;
+  margin-left: 13em;
+  margin-top: -1em;  
+}
+
+.dataFim button
+{
+  height: 2em;
+  width: 5em;
+  margin-left: 12.4em;
+  margin-top: 0.13em;	   
+}
+
+.btn-busca
+{
+  border: 1px solid #000;
+  border-radius: 5px;
+  font-weight:lighter;
+  opacity: 1;
+  background-color: #ff6b6b;
+  color: #fff;
+  font-weight: bold;
+  
+}
+
+.btn-busca:hover
+{
+  opacity: 0.6;
+}
+
+form
+{
+  margin-bottom: 3em;	
+}
