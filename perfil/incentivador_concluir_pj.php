@@ -122,7 +122,7 @@ if(isset($_POST['liberacao']))
 				 	</div>
 				 	<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
-							<form class="form-horizontal" role="form" action="?perfil=projeto_pj" method="post">
+							<form class="form-horizontal" role="form" action="?perfil=incentivador_concluir_pj.php" method="post">
 								<input type="submit" name="liberacao" value="Concluir inscrição do Incentivador" class="btn btn-theme btn-lg btn-block">
 							</form>
 						</div>

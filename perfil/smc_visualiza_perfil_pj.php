@@ -51,6 +51,13 @@ if(isset($_POST['atualizar']))
 	$query = "UPDATE upload_arquivo SET idStatusDocumento = '$status', observacoes = '$observacao' WHERE idUploadArquivo = '$idArquivo'";
 	$envia = mysqli_query($con, $query);
 
+	# Reprovar se status == complementação ou Reprovado
+	if ($_POST['status'] == 2 || $_POST['status'] == 3) 
+	{
+		$QueryPJ = "UPDATE pessoa_juridica SET liberado='2' WHERE idPj = '$id'";
+		$envio = mysqli_query($con, $QueryPJ);
+	}
+
 	if($envia)
 	{
 		echo "<script>alert('O arquivo foi atualizado com sucesso.')</script>";
