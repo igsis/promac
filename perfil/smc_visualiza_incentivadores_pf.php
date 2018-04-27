@@ -214,36 +214,16 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 	?>
 		<div class="form-group">
 			<div class='col-md-offset-4 col-md-2'>
-				<button type="button" class='btn btn-theme btn-lg btn-block' data-toggle="modal" data-target="#myModal">
-					Não Aprovar
-				</button>
+				<form class='form-horizontal' role='form' action='?perfil=smc_visualiza_incentivadores_pf' method='post'>
+					<input type='hidden' name='LIBPF' value='<?php echo $pf['idPf'] ?>' />
+					<input type='submit' name='negar' value='Não Aprovar' class='btn btn-theme btn-lg btn-block'>
+				</form>
 			</div>
 			<div class='col-md-2'>
 				<form class='form-horizontal' role='form' action='?perfil=smc_visualiza_incentivadores_pf' method='post'>
 					<input type='hidden' name='LIBPF' value='<?php echo $pf['idPf'] ?>' />
 					<input type='submit' name='liberar' value='Aprovar' class='btn btn-theme btn-lg btn-block'>
 				</form>
-			</div>
-		</div>
-		<!-- Modal de aviso -->
-		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						<h4 class="modal-title text-danger" id="myModalLabel">Atenção</h4>
-					</div>
-					<div class="modal-body">
-						<h6>Sempre que preencher o campo "Observações", ou alterar o "Status" clique no botão <b class="text-warning">ATUALIZAR</b></h6>
-						<p>Se esse procedimento já foi realizado, clique no botão abaixo</p>
-					</div>
-					<div class="modal-footer">
-						<form class='form-horizontal' role='form' action='?perfil=smc_visualiza_incentivadores_pf' method='post'>
-							<input type='hidden' name='LIBPF' value='<?php echo $pf['idPf'] ?>' />
-							<input type='submit' name='negar' value='Não Aprovar' class='btn btn-theme btn-lg btn-block'>
-						</form>
-					</div>
-				</div>
 			</div>
 		</div>
 	<?php
