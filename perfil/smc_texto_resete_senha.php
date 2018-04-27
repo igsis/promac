@@ -3,7 +3,7 @@ $con = bancoMysqli();
 
 $id = $_POST['id'];
 $tipoPessoa = $_POST['tipoPessoa'];
-$senha = MD5('capac2018');
+$senha = MD5('promac2018');
 
 if($tipoPessoa == 1)
 {
@@ -19,7 +19,7 @@ if($tipoPessoa == 1)
 			<br/>
 			<p align='justify'>Sua senha foi reiniciada com sucesso! Para acessar o sistema, utilize as seguintes informações:</p>
 			<p align='justify'><strong>Login:</strong> ".$pf['cpf']."</p>
-			<p align='justify'><strong>Senha:</strong> capac2018</p>
+			<p align='justify'><strong>Senha:</strong> promac2018</p>
 			<p align='justify'><strong>Endereço de acesso:</strong> <a href='http://smcsistemas.prefeitura.sp.gov.br/promac/'>http://smcsistemas.prefeitura.sp.gov.br/promac</a></p>
 			<br/>
 			<p align='justify'><strong>Atenção: Pedimos que, para sua segurança, altere sua senha no primeiro login, através do MENU -> Trocar minha senha</strong></p>
@@ -47,7 +47,7 @@ else
 			<br/>
 			<p align='justify'>Sua senha foi reiniciada com sucesso! Para acessar o sistema, utilize as seguintes informações:</p>
 			<p align='justify'><strong>Login:</strong> ".$pj['cnpj']."</p>
-			<p align='justify'><strong>Senha:</strong> capac2018</p>
+			<p align='justify'><strong>Senha:</strong> promac2018</p>
 			<p align='justify'><strong>Endereço de acesso:</strong> <a href='http://smcsistemas.prefeitura.sp.gov.br/promac/'>http://smcsistemas.prefeitura.sp.gov.br/promac</a></p>
 			<br/>
 			<p align='justify'><strong>Atenção: Pedimos que, para sua segurança, altere sua senha no primeiro login, através do MENU -> Trocar minha senha</strong></p>
