@@ -25,7 +25,8 @@ endif;
 
 if(isset($_POST['liberacao']))
 {
-	$sql_liberacao = "UPDATE incentivador_pessoaFisica SET liberado = 1 WHERE idPf = '$idPf'";
+	$date = date('Y:m:d H:i:s');
+	$sql_liberacao = "UPDATE incentivador_pessoaFisica SET liberado = 1, dataInscricao = '$date' WHERE idPf = '$idPf'";
 	if(mysqli_query($con,$sql_liberacao))
 	{
 		$mensagem = "Sua inscrição foi enviada à SMC!";
