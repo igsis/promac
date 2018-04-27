@@ -209,6 +209,7 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 			<p align="justify"><strong>Cidade:</strong> <?php echo isset($pf['cidade']) ? $pf['cidade'] : null; ?></p>
 			<p align="justify"><strong>Estado:</strong> <?php echo isset($pf['estado']) ? $pf['estado'] : null; ?></p>
 			<p align="justify"><strong>CEP:</strong> <?php echo isset($pf['cep']) ? $pf['cep'] : null; ?></p>
+			<p align="justify"><strong>Data da Inscrição:</strong> <?php echo isset($pf['dataInscricao']) ? exibirDataHoraBr($pf['dataInscricao']) : null; ?></p>
 		 </div>
 		 <div class="table-responsive list_info"><h6>Arquivo(s) de Pessoa Física</h6>
 		<?php

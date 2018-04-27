@@ -200,6 +200,7 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 			<p align="justify"><strong>Estado:</strong> <?php echo isset($pj['estado']) ? $pj['estado'] : null; ?></p>
 			<p align="justify"><strong>CEP:</strong> <?php echo isset($pj['cep']) ? $pj['cep'] : null; ?></p>
 			<p align="justify"><strong>Cooperativa:</strong> <?php if($pj['cooperativa'] == 1){ echo "Sim"; } else { echo "Não"; } ?></p>
+			<p align="justify"><strong>Data da Inscrição:</strong> <?php echo isset($pj['dataInscricao']) ? exibirDataHoraBr($pj['dataInscricao']) : null; ?></p>
 		</div>
 
 		<div class = "page-header">
