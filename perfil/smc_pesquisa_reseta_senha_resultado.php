@@ -35,11 +35,14 @@ if($nome != '' || $cpf != '')
 		$i = 0;
 		while($lista = mysqli_fetch_array($query))
 		{
+			$frase = recuperaDados("frase_seguranca","id",$lista['idFraseSeguranca']);
 			$x[$i]['id'] = $lista['idPf'];
 			$x[$i]['pessoa'] = $lista['nome'];
 			$x[$i]['documento'] = $lista['cpf'];
 			$x[$i]['email'] = $lista['email'];
 			$x[$i]['telefone'] = $lista['telefone'];
+			$x[$i]['frase'] = $frase['frase_seguranca'];
+			$x[$i]['resposta'] = $lista['respostaFrase'];
 			$x[$i]['tipoPessoa'] = 1;
 			$i++;
 		}
@@ -78,11 +81,14 @@ elseif($razaoSocial != '' || $cnpj != '')
 		$i = 0;
 		while($lista = mysqli_fetch_array($query))
 		{
+			$frase = recuperaDados("frase_seguranca","id",$lista['idFraseSeguranca']);
 			$x[$i]['id'] = $lista['idPj'];
 			$x[$i]['pessoa'] = $lista['razaoSocial'];
 			$x[$i]['documento'] = $lista['cnpj'];
 			$x[$i]['email'] = $lista['email'];
 			$x[$i]['telefone'] = $lista['telefone'];
+			$x[$i]['frase'] = $frase['frase_seguranca'];
+			$x[$i]['resposta'] = $lista['respostaFrase'];
 			$x[$i]['tipoPessoa'] = 2;
 			$i++;
 		}
@@ -113,6 +119,8 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 								<td>Documento</td>
 								<td>Email</td>
 								<td>Telefone</td>
+								<td>Frase</td>
+								<td>Resposta</td>
 								<td width='10%'></td>
 							</tr>
 						</thead>
@@ -125,6 +133,8 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 								echo "<td class='list_description'>".$x[$h]['documento']."</td>";
 								echo "<td class='list_description'>".$x[$h]['email']."</td>";
 								echo "<td class='list_description'>".$x[$h]['telefone']."</td>";
+								echo "<td class='list_description'>".$x[$h]['frase']."</td>";
+								echo "<td class='list_description'>".$x[$h]['resposta']."</td>";
 								echo "<td class='list_description'>
 										<form method='POST' action='?perfil=smc_texto_resete_senha'>
 											<input type='hidden' name='id' value='".$x[$h]['id']."' />
@@ -149,7 +159,7 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 						<h4 class="modal-title">Reiniciar senha</h4>
 					</div>
 					<div class="modal-body">
-						<p>Confirma o reinício da senha para <strong>capac2018</strong>?</p>
+						<p>Confirma o reinício da senha para <strong>promac2018</strong>?</p>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>

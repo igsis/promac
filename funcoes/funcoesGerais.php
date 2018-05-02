@@ -476,6 +476,16 @@ function recuperaDados($tabela,$campo,$variavelCampo)
 	return $campo;
 }
 
+function recuperaDadosProjeto($tabela,$campo,$variavelCampo)
+{
+	//retorna uma array com os dados de qualquer tabela. serve apenas para 1 registro.
+	$con = bancoMysqli();
+	$sql = "SELECT * FROM $tabela WHERE ".$campo." = '$variavelCampo' ORDER BY 'idProjeto' DESC LIMIT 0,1";
+	$query = mysqli_query($con,$sql);
+	$campo = mysqli_fetch_array($query);
+	return $campo;
+}
+
 function recuperaStatus($tabela)
 {
 	$con = bancoMysqli();
@@ -1024,6 +1034,8 @@ function exibirArquivos($tipoPessoa,$idPessoa)
 			<tr>
 				<td><strong>Tipo de arquivo</strong></td>
 				<td><strong>Nome do arquivo</strong></td>
+				<td><strong>Status</strong></td>
+				<td><strong>Observações</strong></td>
 			</tr>
 	";
 	while($arquivo = mysqli_fetch_array($query))
@@ -1031,6 +1043,12 @@ function exibirArquivos($tipoPessoa,$idPessoa)
 		echo "<tr>";
 		echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
 		echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>".$arquivo['arquivo']."</a></td>";
+		$queryy = "SELECT idStatusDocumento FROM upload_arquivo WHERE idUploadArquivo = '".$arquivo['idUploadArquivo']."'";
+		$send = mysqli_query($con, $queryy);
+		$row = mysqli_fetch_array($send);
+		$statusDoc = recuperaDados("status_documento","idStatusDocumento",$row['idStatusDocumento']);
+		echo "<td class='list_description'>".$statusDoc['status']."</td>";
+		echo "<td class='list_description'>".$arquivo['observacoes']."</td>";
 		echo "</tr>";
 	}
 	echo "</table>";
@@ -1865,6 +1883,63 @@ function listaCidades()
     array_push($cidades, $cidade);
   }  
   return $cidades;  			    
+}
+
+function validaData($dtInicio, $dtFim)
+{
+  return $dtInicio > $dtFim ? true : false;      
+}
+
+function geraWebLog($dataInicio, $dataFim, $tipoOrdem)
+{
+  $logs = [];  
+  $conexao = bancoMysqli();  
+
+  $query =  "SELECT 
+               log.idWebLog, 
+               log.tabela, 
+               log.acao, 
+               log.dataOcorrencia, 
+               log.usuario,
+               pf.nome 
+             FROM 
+               weblogs AS log
+             INNER JOIN pessoa_fisica AS pf
+             ON pf.idPf =  log.idRegistro
+             WHERE log.dataOcorrencia >= '$dataInicio'
+             AND   log.dataOcorrencia <= '$dataFim'".$tipoOrdem;   
+
+  $resultado = mysqli_query($conexao,$query);
+
+  if($resultado):
+    while($log = mysqli_fetch_assoc($resultado)):
+      array_push($logs, $log);
+    endwhile;
+  endif; 
+  
+  return $logs;
+
+  var_dump($query);
+}
+
+function geraWebLogDetalhes($idWeblog)
+{
+  $logs = [];  
+  $conexao = bancoMysqli();  
+
+  $query =  "SELECT 
+               antes, depois
+             FROM 
+               weblogs 
+             WHERE idWeblog = ".$idWeblog;             
+
+  $resultado = mysqli_query($conexao,$query);
+    
+  while($log = mysqli_fetch_assoc($resultado)) 
+  {
+    array_push($logs, $log);
+  }  
+  return $logs;  			    	
 }
 
 ?>

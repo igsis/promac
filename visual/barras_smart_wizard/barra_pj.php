@@ -134,14 +134,14 @@ for ($i = 0; $i < count($urlPj); $i++) {
                 <li class="<?php echo isset($ativa8) ? $ativa8 : 'clickable'; ?>">
                    <a onclick="location.href='index_pj.php?perfil=projeto_3'" href=""><br /><small>Resumo e Currículo</small></a>
                 </li>
+            </ul> <!-- Barra linha 2 -->
+            <ul>                
                 <li class="<?php echo isset($ativa9) ? $ativa9 : 'clickable'; ?>">
                    <a onclick="location.href='index_pj.php?perfil=projeto_4'" href=""><br /><small>Objeto</small></a>
                 </li>
                 <li class="<?php echo isset($ativa10) ? $ativa10 : 'clickable'; ?>">
                    <a onclick="location.href='index_pj.php?perfil=projeto_5'" href=""><br /><small>Justificativa e Objetivo</small></a>
                 </li>
-            </ul> <!-- Barra linha 2 -->
-            <ul>
                 <li class="<?php echo isset($ativa11) ? $ativa11 : 'clickable'; ?>">
                    <a onclick="location.href='index_pj.php?perfil=projeto_6'" href=""><br /><small>Metodologia e Contrapartida</small></a>
                 </li>
@@ -157,6 +157,8 @@ for ($i = 0; $i < count($urlPj); $i++) {
                 <li class="<?php echo isset($ativa14) ? $ativa14 : 'clickable'; ?>">
                    <a onclick="location.href='index_pj.php?perfil=cronograma'" href=""><br /><small>Cronograma</small></a>
                 </li>
+            </ul> <!-- Barra linha 3 -->
+            <ul>                
                 <li class="<?php echo isset($ativa15) ? $ativa15 : 'clickable'; ?>">
                    <a onclick="location.href='index_pj.php?perfil=orcamento'" href=""><br /><small>Orçamento</small></a>
                 </li>
@@ -166,8 +168,6 @@ for ($i = 0; $i < count($urlPj); $i++) {
                 <li class="<?php echo isset($ativa17) ? $ativa17 : 'clickable'; ?>">
                    <a onclick="location.href='index_pj.php?perfil=projeto_13'" href=""><br /><small>Link do YouTube</small></a>
                 </li>
-            </ul> <!-- Barra linha 3 -->
-            <ul>
                 <li class="<?php echo isset($ativa18) ? $ativa18 : 'clickable'; ?>">
                    <a onclick="location.href='index_pj.php?perfil=finalProjeto'" href=""><br /><small>Concluir Inscrição</small></a>
                 </li>

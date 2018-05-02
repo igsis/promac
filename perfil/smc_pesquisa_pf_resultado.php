@@ -43,6 +43,8 @@ if($num > 0)
 	$i = 0;
 	while($lista = mysqli_fetch_array($query))
 	{
+		$projeto = recuperaDadosProjeto("projeto","idPf",$lista['idPf']);
+		$status = recuperaDados("status","idStatus",$projeto['idStatus']);
 		$x[$i]['idPf'] = $lista['idPf'];
 		$x[$i]['nome'] = $lista['nome'];
 		$x[$i]['cpf'] = $lista['cpf'];
@@ -50,6 +52,8 @@ if($num > 0)
 		$x[$i]['email'] = $lista['email'];
 		$x[$i]['telefone'] = $lista['telefone'];
 		$x[$i]['liberado'] = $lista['liberado'];
+		$x[$i]['projeto'] = $projeto['nomeProjeto'];
+		$x[$i]['statusProjeto'] = $status['status'];
 		$i++;
 	}
 	$x['num'] = $i;
@@ -69,60 +73,68 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 			<h5><a href="?perfil=smc_pesquisa_pf">Fazer outra busca</a></h5>
 		</div>
 		<div class="row">
-			<div class="col-md-offset-1 col-md-10">
-				<div class="table-responsive list_info">
-					<table class='table table-condensed'>
-						<thead>
-							<tr class='list_menu'>
-								<td>Nome</td>
-								<td>CPF</td>
-								<td>RG</td>
-								<td>Email</td>
-								<td>Telefone</td>
-								<td>Liberação</td>
-								<td width='10%'></td>
-							</tr>
-						</thead>
-						<tbody>
-							<?php
-							for($h = 0; $h < $x['num']; $h++)
-							{
-								echo "<tr>";
-								echo "<td class='list_description'>".$x[$h]['nome']."</td>";
-								echo "<td class='list_description'>".$x[$h]['cpf']."</td>";
-								echo "<td class='list_description'>".$x[$h]['rg']."</td>";
-								echo "<td class='list_description'>".$x[$h]['email']."</td>";
-								echo "<td class='list_description'>".$x[$h]['telefone']."</td>";
-								if($x[$h]['liberado'] == 0 || $x[$h]['liberado'] == NULL) { echo "<td class='list_description'>Em elaboração</td>";}
-								if($x[$h]['liberado'] == 1) { echo "<td class='list_description'>Acesso aos dados cadastrais</td>";}
-								if($x[$h]['liberado'] == 2) { echo "<td class='list_description'>Acesso não aprovado</td>";}
-								if($x[$h]['liberado'] == 3) { echo "<td class='list_description'>Acesso ao projeto</td>";}
-								if($x[$h]['liberado'] == 4) { echo "<td class='list_description'>Liberado para Edição</td>";}
-								if($x[$h]['liberado'] == 2)
-								{
-									echo "<td class='list_description'>
-										<form method='POST' action='?perfil=smc_reaprova_pf'>
-											<input type='hidden' name='idPf' value='".$x[$h]['idPf']."' />
-											<input type ='submit' class='btn btn-theme btn-block' value='detalhes'>
-										</form>
-									</td>";
-								}
-								else
-								{
-									echo "<td class='list_description'>
-										<form method='POST' action='?perfil=smc_visualiza_perfil_pf'>
-											<input type='hidden' name='liberado' value='".$x[$h]['idPf']."' />
-											<input type ='submit' class='btn btn-theme btn-block' value='detalhes'>
-										</form>
-									</td>";
-								}
-								echo "</tr>";
-							}
-							?>
-						</tbody>
-					</table>
-				</div>
-			</div>
+			<table class='table table-condensed table-hover list_info'>
+				<thead>
+					<tr class='list_menu'>
+						<td>Nome</td>
+						<td>CPF</td>
+						<td>RG</td>
+						<td>Email</td>
+						<td>Telefone</td>
+						<td>Status do Proponente</td>
+						<td>Último Projeto Enviado</td>
+						<td>Status do Projeto</td>
+						<td width='10%'></td>
+					</tr>
+				</thead>
+				<tbody>
+					<?php
+					for($h = 0; $h < $x['num']; $h++)
+					{
+						echo "<tr>";
+						echo "<td class='list_description'>".$x[$h]['nome']."</td>";
+						echo "<td class='list_description'>".$x[$h]['cpf']."</td>";
+						echo "<td class='list_description'>".$x[$h]['rg']."</td>";
+						echo "<td class='list_description'>".$x[$h]['email']."</td>";
+						echo "<td class='list_description'>".$x[$h]['telefone']."</td>";
+						if($x[$h]['liberado'] == 0 || $x[$h]['liberado'] == NULL) { echo "<td class='list_description'>Em elaboração</td>";}
+						if($x[$h]['liberado'] == 1) { echo "<td class='list_description'>Acesso aos dados cadastrais</td>";}
+						if($x[$h]['liberado'] == 2) { echo "<td class='list_description'>Proponente Reprovado</td>";}
+						if($x[$h]['liberado'] == 3) { echo "<td class='list_description'>Proponente Aprovado</td>";}
+						if($x[$h]['liberado'] == 4) { echo "<td class='list_description'>Liberado para Edição</td>";}
+						if($x[$h]['projeto'] == "")
+						{
+							echo "<td class='list_description'>Sem Projetos Enviados</td>";
+							echo "<td class='list_description'></td>";
+						}
+						else
+						{
+							echo "<td class='list_description'>".$x[$h]['projeto']."</td>";
+							echo "<td class='list_description'>".$x[$h]['statusProjeto']."</td>";
+						}
+						if($x[$h]['liberado'] == 2)
+						{
+							echo "<td class='list_description'>
+								<form method='POST' action='?perfil=smc_reaprova_pf'>
+									<input type='hidden' name='idPf' value='".$x[$h]['idPf']."' />
+									<input type ='submit' class='btn btn-theme btn-block' value='detalhes'>
+								</form>
+							</td>";
+						}
+						else
+						{
+							echo "<td class='list_description'>
+								<form method='POST' action='?perfil=smc_visualiza_perfil_pf'>
+									<input type='hidden' name='liberado' value='".$x[$h]['idPf']."' />
+									<input type ='submit' class='btn btn-theme btn-block' value='detalhes'>
+								</form>
+							</td>";
+						}
+						echo "</tr>";
+					}
+					?>
+				</tbody>
+			</table>
 		</div>
 	</div>
 </section>

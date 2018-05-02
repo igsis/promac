@@ -6,7 +6,8 @@ if($idPj == null)
 {
 	$idPj = $_GET['idFF'];
 }
-$pf = recuperaDados("incentivador_pessoaJuridica","idPj",$idPj);
+$pj = recuperaDados("incentivador_pessoaJuridica","idPj",$idPj);
+$rl = recuperaDados("representante_legal","idRepresentanteLegal",$pj['idRepresentanteLegal']);
 
 if(isset($_POST['liberar']))
 {
@@ -40,24 +41,54 @@ if(isset($_POST['desbloquear']))
 
 if(isset($_POST['atualizar']))
 {
-	$id = $_POST['idPessoa'];
-	$observacao = $_POST['observ'];
-	$status = $_POST['status'];
-	$idArquivo = $_POST['idArquivo'];
+	// array com os inputs
+	$dados = $_POST['dado']; 
 
-	$query = "UPDATE upload_arquivo SET idStatusDocumento = '$status', observacoes = '$observacao' WHERE idUploadArquivo='$idArquivo'";
-	$envia = mysqli_query($con, $query);
+	// atualiza todos os campos
+	foreach ($dados as $dado) {
 
-	if($envia)
-	{
-		echo "<script>alert('O arquivo foi atualizado com sucesso.')</script>";
-		echo "<script>window.location.href = 'index_pf.php?perfil=smc_visualiza_incentivadores_pj&idFF=$id';</script>";
+		$query = "UPDATE upload_arquivo SET idStatusDocumento = '".$dado['status']."', observacoes = '".$dado['observ']."' WHERE idUploadArquivo = '".$dado['idArquivo']."' ";
+		$envia = mysqli_query($con, $query);
+		if($envia)
+		{
+			$mensagem = "<font color='#01DF3A'><strong>Os arquivos foram atualizados com sucesso!</strong></font>";
+			echo "<script>window.location.href = 'index_pf.php?perfil=smc_visualiza_incentivadores_pj&idFF=".$dado['idPessoa']."';</script>";
+		}
+		else
+		{
+			echo "<script>alert('Erro durante o processamento, entre em contato com os responsáveis pelo sistema para maiores informações.')</script>";
+			echo "<script>window.location.href = 'index_pf.php?perfil=smc_index';</script>";
+		}
 	}
-	else
-	{
-		echo "<script>alert('Erro durante o processamento, entre em contato com os responsáveis pelo sistema para maiores informações.')</script>";
-		echo "<script>window.location.href = 'index_pf.php?perfil=smc_index';</script>";
+
+	$sql = "SELECT *
+		FROM lista_documento as list
+		INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
+		WHERE arq.idPessoa = '".$dados[0]['idPessoa']."'
+		AND arq.idTipo = '$tipoPessoa'
+		AND arq.publicado = '1'";
+	$query = mysqli_query($con,$sql);
+	$rows = mysqli_num_rows($query);
+
+	$count = 0;
+	if ($rows > 0) {
+		while($arquivo = mysqli_fetch_array($query))
+		{
+			# Recebe um array com idStatus de todos os docs
+			$totStatus[$count] = $arquivo['idStatusDocumento'];
+	 		$count ++;
+		}
 	}
+	# Verifica se tem algum status reprovado ou complemetação 
+	if ((in_array('2',$totStatus)) || in_array('3',$totStatus))
+	{
+		$QueryPJ = "UPDATE incentivador_pessoaJuridica SET liberado='2' WHERE idPj = '".$dados[0]['idPessoa']."'";
+		$envio = mysqli_query($con, $QueryPJ);
+	}else {
+		$QueryPJ = "UPDATE incentivador_pessoaJuridica SET liberado='1' WHERE idPj = '".$dados[0]['idPessoa']."'";
+		$envio = mysqli_query($con, $QueryPJ);
+	}
+
 }
 
 function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
@@ -86,18 +117,20 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 				</tr>
 			</thead>
 			<tbody>";
+				echo "<form id='atualizaDoc' method='POST' action='?perfil=smc_visualiza_incentivadores_pj'>";
+				$count = 0;
 				while($arquivo = mysqli_fetch_array($query))
 				{
 					echo "<tr>";
 					echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
 					echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
-					echo "<form id='atualizaDoc' method='POST' action='?perfil=smc_visualiza_incentivadores_pj'>";
 					$queryy = "SELECT idStatusDocumento FROM upload_arquivo WHERE idUploadArquivo = '".$arquivo['idUploadArquivo']."'";
 					$send = mysqli_query($con, $queryy);
 					$row = mysqli_fetch_array($send);
 
 						echo "<td class='list_description'>
-							<select name='status' id='statusOpt' value='teste'>";
+							<select name='dado[$count][status]' id='statusOpt' value='teste'>";
+							echo "<option>Selecione</option>";
 							geraOpcao('status_documento', $row['idStatusDocumento']);
 							echo " </select>
 						</td>";
@@ -105,21 +138,23 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 					$send = mysqli_query($con, $queryOBS);
 					$row = mysqli_fetch_array($send);
 					echo "<td class='list_description'>
-					<input type='text' name='observ' maxlength='100' id='observ' value='".$row['observacoes']."'/>
+					<input type='text' name='dado[$count][observ]' maxlength='100' id='observ' value='".$row['observacoes']."'/>
 					</td>";
 
 
 					echo "
 						<td class='list_description'>
-								<input type='hidden' name='idPessoa' value='".$idPessoa."' />
-								<input type='hidden' name='idArquivo' value='".$arquivo['idUploadArquivo']."' />
-								<input type ='submit' name='atualizar' class='btn btn-theme btn-block' value='Atualizar'></td>
-							</form>";
+								<input type='hidden' name='dado[$count][idPessoa]' value='".$idPessoa."' />
+								<input type='hidden' name='dado[$count][idArquivo]' value='".$arquivo['idUploadArquivo']."' /></td>
+								";
 					echo "</tr>";
+					$count++;
 				}
 				echo "
 		</tbody>
 		</table>";
+		echo "<input type ='submit' name='atualizar' class='btn btn-theme btn-lg' value='Atualizar'>
+			</form>";
 	}
 	else
 	{
@@ -137,89 +172,95 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 			</div>
 		</div>
 		 <div class = "page-header">
-		 	<h5>Dados do Incentivador</h5>
+		 	<h5>Dados do Incentivador
+		 	<?php
+	 			if(isset($mensagem))
+	 			{
+	 				echo "<br>";
+	 				echo $mensagem;
+	 			}
+		 		?>
+		 	</h5>
 		 </div>
 		 <div class="well">
-			<p align="justify"><strong>Razão Social:</strong> <?php echo isset($pf['razaoSocial']) ? $pf['razaoSocial'] : null; ?></p>
-			<p align="justify"><strong>CNPJ:</strong> <?php echo isset($pf['cnpj']) ? $pf['cnpj'] : null; ?><p>
-			<p align="justify"><strong>Telefone:</strong> <?php echo isset($pf['telefone']) ? $pf['telefone'] : null; ?></p>
-			<p align="justify"><strong>Celular:</strong> <?php echo isset($pf['celular']) ? $pf['celular'] : null; ?></p>
-			<p align="justify"><strong>Email:</strong> <?php echo isset($pf['email']) ? $pf['email'] : null; ?></p>
-			<p align="justify"><strong>Logradouro:</strong> <?php echo isset($pf['logradouro']) ? $pf['logradouro'] : null; ?></p>
-			<p align="justify"><strong>Número:</strong> <?php echo isset($pf['numero']) ? $pf['numero'] : null; ?></p>
-			<p align="justify"><strong>Complemento:</strong> <?php echo isset($pf['complemento']) ? $pf['complemento'] : null; ?></p>
-			<p align="justify"><strong>Bairro:</strong> <?php echo isset($pf['bairro']) ? $pf['bairro'] : null; ?></p>
-			<p align="justify"><strong>Cidade:</strong> <?php echo isset($pf['cidade']) ? $pf['cidade'] : null; ?></p>
-			<p align="justify"><strong>Estado:</strong> <?php echo isset($pf['estado']) ? $pf['estado'] : null; ?></p>
-			<p align="justify"><strong>CEP:</strong> <?php echo isset($pf['cep']) ? $pf['cep'] : null; ?></p>
-		 </div>
-		 <div class="table-responsive list_info"><h6>Arquivo(s) de Pessoa Física</h6>
+			<p align="justify"><strong>Razão Social:</strong> <?php echo isset($pj['razaoSocial']) ? $pj['razaoSocial'] : null; ?></p>
+			<p align="justify"><strong>CNPJ:</strong> <?php echo isset($pj['cnpj']) ? $pj['cnpj'] : null; ?><p>
+			<p align="justify"><strong>Telefone:</strong> <?php echo isset($pj['telefone']) ? $pj['telefone'] : null; ?></p>
+			<p align="justify"><strong>Celular:</strong> <?php echo isset($pj['celular']) ? $pj['celular'] : null; ?></p>
+			<p align="justify"><strong>Email:</strong> <?php echo isset($pj['email']) ? $pj['email'] : null; ?></p>
+			<p align="justify"><strong>Logradouro:</strong> <?php echo isset($pj['logradouro']) ? $pj['logradouro'] : null; ?></p>
+			<p align="justify"><strong>Número:</strong> <?php echo isset($pj['numero']) ? $pj['numero'] : null; ?></p>
+			<p align="justify"><strong>Complemento:</strong> <?php echo isset($pj['complemento']) ? $pj['complemento'] : null; ?></p>
+			<p align="justify"><strong>Bairro:</strong> <?php echo isset($pj['bairro']) ? $pj['bairro'] : null; ?></p>
+			<p align="justify"><strong>Cidade:</strong> <?php echo isset($pj['cidade']) ? $pj['cidade'] : null; ?></p>
+			<p align="justify"><strong>Estado:</strong> <?php echo isset($pj['estado']) ? $pj['estado'] : null; ?></p>
+			<p align="justify"><strong>CEP:</strong> <?php echo isset($pj['cep']) ? $pj['cep'] : null; ?></p>
+			<p align="justify"><strong>Data da Inscrição:</strong> <?php echo isset($pj['dataInscricao']) ? exibirDataHoraBr($pj['dataInscricao']) : null; ?></p>
+		</div>
+
+		<div class = "page-header">
+		 	<h5>Representante Legal</h5>
+		</div>
+
+		<div class="well">
+		  	<p align="justify"><strong>Nome:</strong> <?php echo isset($rl['nome']) ? $rl['nome'] : null; ?></p>
+			<p align="justify"><strong>CPF:</strong> <?php echo isset($rl['cpf']) ? $rl['cpf'] : null; ?><p>
+			<p align="justify"><strong>RG:</strong> <?php echo isset($rl['rg']) ? $rl['rg'] : null; ?><p>
+			<p align="justify"><strong>Logradouro:</strong> <?php echo isset($rl['logradouro']) ? $rl['logradouro'] : null; ?></p>
+			<p align="justify"><strong>Número:</strong> <?php echo isset($rl['numero']) ? $rl['numero'] : null; ?></p>
+			<p align="justify"><strong>Complemento:</strong> <?php echo isset($rl['complemento']) ? $rl['complemento'] : null; ?></p>
+			<p align="justify"><strong>Bairro:</strong> <?php echo isset($rl['bairro']) ? $rl['bairro'] : null; ?></p>
+			<p align="justify"><strong>Cidade:</strong> <?php echo isset($rl['cidade']) ? $rl['cidade'] : null; ?></p>
+			<p align="justify"><strong>Estado:</strong> <?php echo isset($rl['estado']) ? $rl['estado'] : null; ?></p>
+			<p align="justify"><strong>CEP:</strong> <?php echo isset($rl['cep']) ? $rl['cep'] : null; ?></p>
+		</div>
+		<div class="table-responsive list_info"><h6>Arquivo(s) de Pessoa Jurídica</h6>
 		<?php
-		$query = "SELECT idProjeto FROM projeto WHERE idPj='$idPj' AND publicado = '1'";
-		$send = mysqli_query($con, $query);
-		$row = mysqli_fetch_array($send);
-		listaArquivosPessoaEditorr($pf['idPj'],'5',"smc_visualiza_incentivadores_pj");
-		$idFisica = $pf['idPj']; ?>
+			$query = "SELECT idProjeto FROM projeto WHERE idPj='$idPj' AND publicado = '1'";
+			$send = mysqli_query($con, $query);
+			$row = mysqli_fetch_array($send);
+			listaArquivosPessoaEditorr($pj['idPj'],'5',"smc_visualiza_incentivadores_pj");
+		?>
 		</div>
 	</div>
 
 <!-- Botão para Prosseguir -->
 	<?php
-	if($pf['liberado'] == 1)
+	if($pj['liberado'] == 1)
 	{
 	?>
 		<div class="form-group">
 			<div class='col-md-offset-4 col-md-2'>
-				<button type="button" class='btn btn-theme btn-lg btn-block' data-toggle="modal" data-target="#myModal">
-					Não Aprovar
-				</button>
+				<form class='form-horizontal' role='form' action='?perfil=smc_visualiza_incentivadores_pj' method='post'>
+					<input type='hidden' name='LIBPF' value='<?php echo $pj['idPj'] ?>' />
+					<input type='submit' name='negar' value='Não Aprovar' class='btn btn-theme btn-lg btn-block'>
+				</form>
 			</div>
 			<div class='col-md-2'>
 				<form class='form-horizontal' role='form' action='?perfil=smc_visualiza_incentivadores_pj' method='post'>
-					<input type='hidden' name='LIBPF' value='<?php echo $pf['idPj'] ?>' />
+					<input type='hidden' name='LIBPF' value='<?php echo $pj['idPj'] ?>' />
 					<input type='submit' name='liberar' value='Aprovar' class='btn btn-theme btn-lg btn-block'>
 				</form>
 			</div>
 		</div>
-		<!-- Modal de aviso -->
-		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						<h4 class="modal-title text-danger" id="myModalLabel">Atenção</h4>
-					</div>
-					<div class="modal-body">
-						<h6>Sempre que preencher o campo "Observações", ou alterar o "Status" clique no botão <b class="text-warning">ATUALIZAR</b></h6>
-						<p>Se esse procedimento já foi realizado, clique no botão abaixo</p>
-					</div>
-					<div class="modal-footer">
-						<form class='form-horizontal' role='form' action='?perfil=smc_visualiza_incentivadores_pj' method='post'>
-							<input type='hidden' name='LIBPF' value='<?php echo $pf['idPj'] ?>' />
-							<input type='submit' name='negar' value='Não Aprovar' class='btn btn-theme btn-lg btn-block'>
-						</form>						
-					</div>
-				</div>
-			</div>
-		</div>
 	<?php
 	}
-	if($pf['liberado'] == 3)
+	if($pj['liberado'] == 3)
 	{
 	?>
 		<div class="form-group">
 			<div class='col-md-offset-2 col-md-8'>
 				<form class='form-horizontal' role='form' action='?perfil=smc_visualiza_incentivadores_pj' method='post'>
-					<input type='hidden' name='LIBPF' value='<?php echo $pf['idPj'] ?>' />
+					<input type='hidden' name='LIBPF' value='<?php echo $pj['idPj'] ?>' />
 					<input type='submit' name='desbloquear' value='Desbloquear dados do proponente para edição' class='btn btn-theme btn-lg btn-block'>
 				</form>
 			</div>
 		</div>
-	<?php 
-	} 
-	if(($pf['liberado'] == 2) || ($pf['liberado'] == 4))
+	<?php
+	}
+	if(($pj['liberado'] == 2) || ($pj['liberado'] == 4))
 	{
-	?>	
+	?>
 		<div class="form-group">
 			<h5>Incentivador não aprovado!<br> Aguardando reenvio da inscrição.</h5>
 		</div>

@@ -43,23 +43,52 @@ if(isset($_POST['desbloquear']))
 
 if(isset($_POST['atualizar']))
 {
-	$id = $_POST['idPessoa'];
-	$observacao = $_POST['observ'];
-	$status = $_POST['status'];
-	$idArquivo = $_POST['idArquivo'];
+	// array com os inputs
+	$dados = $_POST['dado']; 
 
-	$query = "UPDATE upload_arquivo SET idStatusDocumento = '$status', observacoes = '$observacao' WHERE idUploadArquivo = '$idArquivo'";
-	$envia = mysqli_query($con, $query);
-
-	if($envia)
+	// atualiza todos os campos
+	foreach ($dados as $dado) 
 	{
-		echo "<script>alert('O arquivo foi atualizado com sucesso.')</script>";
-		echo "<script>window.location.href = 'index_pf.php?perfil=smc_visualiza_perfil_pj&idFF=$id';</script>";
+		$query = "UPDATE upload_arquivo SET idStatusDocumento = '".$dado['status']."', observacoes = '".$dado['observ']."' WHERE idUploadArquivo = '".$dado['idArquivo']."' ";
+		$envia = mysqli_query($con, $query);
+		if($envia)
+		{
+			$mensagem = "<font color='#01DF3A'><strong>Os arquivos foram atualizados com sucesso!</strong></font>";
+			echo "<script>window.location.href = 'index_pf.php?perfil=smc_visualiza_perfil_pj&idFF=".$dado['idPessoa'] ."';</script>";
+		}
+		else
+		{
+			echo "<script>alert('Erro durante o processamento, entre em contato com os responsáveis pelo sistema para maiores informações.')</script>";
+			echo "<script>window.location.href = 'index_pf.php?perfil=smc_index';</script>";
+		}
 	}
-	else
+
+	$sql = "SELECT *
+		FROM lista_documento as list
+		INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
+		WHERE arq.idPessoa = '".$dados[0]['idPessoa']."'
+		AND arq.idTipo = '$tipoPessoa'
+		AND arq.publicado = '1'";
+	$query = mysqli_query($con,$sql);
+	$rows = mysqli_num_rows($query);
+
+	$count = 0;
+	if ($rows > 0) {
+		while($arquivo = mysqli_fetch_array($query))
+		{
+			# Recebe um array com idStatus de todos os docs
+			$totStatus[$count] = $arquivo['idStatusDocumento'];
+	 		$count ++;
+		}
+	}
+	# Verifica se tem algum status reprovado ou complemetação 
+	if ((in_array('2',$totStatus)) || in_array('3',$totStatus))
 	{
-		echo "<script>alert('Erro durante o processamento, entre em contato com os responsáveis pelo sistema para maiores informações.')</script>";
-		echo "<script>window.location.href = 'index_pf.php?perfil=smc_index';</script>";
+		$QueryPJ = "UPDATE pessoa_juridica SET liberado='2' WHERE idPj = '".$dados[0]['idPessoa']."'";
+		$envio = mysqli_query($con, $QueryPJ);
+	}else {
+		$QueryPJ = "UPDATE pessoa_juridica SET liberado='1' WHERE idPj = '".$dados[0]['idPessoa']."'";
+		$envio = mysqli_query($con, $QueryPJ);
 	}
 }
 
@@ -84,24 +113,25 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 				<tr class='list_menu'>
 					<td>Tipo de arquivo</td>
 					<td>Nome do arquivo</td>
-					<td>Status</td>
+					<td width='15%'>Status</td>
 					<td>Observações</td>
-					<td>Ação</td>
 				</tr>
 			</thead>
 			<tbody>";
+				echo "
+				<form id='atualizaDoc' method='POST' action='?perfil=smc_visualiza_perfil_pj'>";
+				$count = 0;
 				while($arquivo = mysqli_fetch_array($query))
 				{
 					echo "<tr>";
 					echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
 					echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
-					echo "<form id='atualizaDoc' method='POST' action='?perfil=smc_visualiza_perfil_pj'>";
 					$queryy = "SELECT idStatusDocumento FROM upload_arquivo WHERE idUploadArquivo = '".$arquivo['idUploadArquivo']."'";
 					$send = mysqli_query($con, $queryy);
 					$row = mysqli_fetch_array($send);
 
 						echo "<td class='list_description'>
-							<select name='status' id='statusOpt' value='teste'>";
+							<select name='dado[$count][status]' id='statusOpt' value='teste'>";
 							echo "<option>Selecione</option>";
 							geraOpcao('status_documento', $row['idStatusDocumento']);
 							echo " </select>
@@ -110,20 +140,22 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 					$send = mysqli_query($con, $queryOBS);
 					$row = mysqli_fetch_array($send);
 					echo "<td class='list_description'>
-					<input type='text' name='observ' maxlength='100' id='observ' value='".$row['observacoes']."'/>
+					<input type='text' name='dado[$count][observ]' maxlength='100' id='observ' value='".$row['observacoes']."'/>
 					</td>";
 
 					echo "
 						<td class='list_description'>
-								<input type='hidden' name='idPessoa' value='".$idPessoa."' />
-								<input type='hidden' name='idArquivo' value='".$arquivo['idUploadArquivo']."' />
-								<input type ='submit' name='atualizar' class='btn btn-theme btn-block' value='Atualizar'></td>
-							</form>";
+							<input type='hidden' name='dado[$count][idPessoa]' value='".$idPessoa."' />
+							<input type='hidden' name='dado[$count][idArquivo]' value='".$arquivo['idUploadArquivo']."' /></td>
+							";
 					echo "</tr>";
+					$count ++;
 				}
 				echo "
 		</tbody>
 		</table>";
+		echo "<input type ='submit' name='atualizar' class='btn btn-theme btn-lg' value='Atualizar'><br>
+			</form>";
 	}
 	else
 	{
@@ -142,7 +174,15 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 			</div>
 		</div>
 		 <div class = "page-header">
-		 	<h5>Dados do Proponente</h5>
+		 	<h5>Dados do Proponente
+				<?php
+		 			if(isset($mensagem))
+		 			{
+		 				echo "<br>";
+		 				echo $mensagem;
+		 			}
+		 		?>
+		 	</h5>
 		 	<br>
 		 </div>
 		 <div class="well">
@@ -160,6 +200,7 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 			<p align="justify"><strong>Estado:</strong> <?php echo isset($pj['estado']) ? $pj['estado'] : null; ?></p>
 			<p align="justify"><strong>CEP:</strong> <?php echo isset($pj['cep']) ? $pj['cep'] : null; ?></p>
 			<p align="justify"><strong>Cooperativa:</strong> <?php if($pj['cooperativa'] == 1){ echo "Sim"; } else { echo "Não"; } ?></p>
+			<p align="justify"><strong>Data da Inscrição:</strong> <?php echo isset($pj['dataInscricao']) ? exibirDataHoraBr($pj['dataInscricao']) : null; ?></p>
 		</div>
 
 		<div class = "page-header">
@@ -191,9 +232,10 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 	?>
 		<div class="form-group">
 			<div class='col-md-offset-4 col-md-2'>
-				<button type="button" class='btn btn-theme btn-lg btn-block' data-toggle="modal" data-target="#myModal">
-					Não Aprovar
-				</button>
+				<form class='form-horizontal' role='form' action='?perfil=smc_visualiza_perfil_pj' method='post'>
+					<input type='hidden' name='LIBPF' value='<?php echo $pj['idPj'] ?>' />
+					<input type='submit' name='negar' value='Não Aprovar' class='btn btn-theme btn-lg btn-block'>
+				</form>
 			</div>
 			<div class='col-md-2'>
 				<form class='form-horizontal' role='form' action='?perfil=smc_visualiza_perfil_pj' method='post'>
@@ -201,28 +243,7 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 					<input type='submit' name='liberar' value='Aprovar' class='btn btn-theme btn-lg btn-block'>
 				</form>
 			</div>
-		</div>
-		<!-- Modal de aviso -->
-		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						<h4 class="modal-title text-danger" id="myModalLabel">Atenção</h4>
-					</div>
-					<div class="modal-body">
-						<h6>Sempre que preencher o campo "Observações", ou alterar o "Status" clique no botão <b class="text-warning">ATUALIZAR</b></h6>
-						<p>Se esse procedimento já foi realizado, clique no botão abaixo</p>
-					</div>
-					<div class="modal-footer">
-						<form class='form-horizontal' role='form' action='?perfil=smc_visualiza_perfil_pj' method='post'>
-							<input type='hidden' name='LIBPF' value='<?php echo $pj['idPj'] ?>' />
-							<input type='submit' name='negar' value='Não Aprovar' class='btn btn-theme btn-lg btn-block'>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>		
+		</div>	
 		<?php
 	}
 	if($pj['liberado'] == 3)

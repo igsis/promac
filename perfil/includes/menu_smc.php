@@ -33,6 +33,7 @@ $link2 = $http."excel_pj.php";
 					<li><a href="<?php echo $link1 ?>">Pessoa Física</a></li>
 					<li><a href="<?php echo $link2 ?>">Pessoa Jurídica</a></li>
 					<li><a href="../pdf/projetos.php">Projetos</a></li>
+					<li><a href="../perfil/webLog.php" target="_blank">WebLog</a></li>					
 				</ul>
 			</li>
 			<li><a href="?perfil=informacoes_iniciais_pf">Módulo Proponente (provisório)</a></li>

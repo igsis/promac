@@ -6,37 +6,6 @@ $tipoPessoa = '2';
 $idPj = $_SESSION['idUser'];
 $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 $statusProjeto = recuperaStatus("statusprojeto");
-$rl = recuperaDados("representante_legal","idRepresentanteLegal",$pj['idRepresentanteLegal']);
-$campos = array($pj['razaoSocial'], $pj['cnpj'], $pj['email'], $pj['cep'], $pj['numero']);
-$cpo = false;
-
-foreach ($campos as $cpos) {
-	if ($cpos == null)
-	{
-		$cpo = true;
-	}
-}
-
-/**Arquivos Obrigatórios**/
-if(isset($tipoPessoa)):
-  $tipoDoc = 'proponente';
-  $idUser = $idPj;
-  $idProjeto = 0; /*Incluso devido a busca pelos anexos*/
-  require_once('validacaoArquivosObrigatorios.php');
-endif;
-
-if(isset($_POST['liberacao']))
-{
-	$sql_liberacao = "UPDATE pessoa_juridica SET liberado = 1 WHERE idPj = '$idPj'";
-	if(mysqli_query($con,$sql_liberacao))
-	{
-		echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=?perfil=projeto_pj'>";
-	}
-	else
-	{
-		$mensagem = "<font color='#01DF3A'><strong>Erro ao atualizar! Tente novamente.</strong></font>";
-	}
-}
 
 if(isset($_POST['apagar']))
 {
@@ -57,93 +26,8 @@ if(isset($_POST['apagar']))
 <section id="list_items" class="home-section bg-white">
 	<div class="container"><?php include '../perfil/includes/menu_interno_pj.php'; ?>
 		<div class="form-group">
-			<?php
-			if($pj['liberado'] != 0)
-			echo "<h4>Projetos</h4>";
-			?>
-			<h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
-		</div>
-		<div class="row">
-			<div class="col-md-offset-1 col-md-10">
-			<?php
-				if($pj['liberado'] == 0)// ainda não foi solicitado liberação
-				{
+			<h4>Projeto</h4>
 
-				include 'includes/resumo_pj.php';
-				?>
-				<div class="alert alert-info">
-					Após o preenchimento de todos os dados pessoais, conclua a inscrição do proponente e aguarde a análise da sua documentação pela Secretaria Municipal de Cultura.
-				</div>
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-8">
-							<?php
-							if ($cpo == false)
-							{
-								$queryArquivos = "SELECT idUploadArquivo FROM upload_arquivo WHERE idPessoa = $idPj AND idTipo = '2' AND publicado = '1'";
-								$enviaArquivos = mysqli_query($con, $queryArquivos);
-								$numRow = mysqli_num_rows($enviaArquivos);
-
-								if($numRow != 0)
-								{?>
-							<form class="form-horizontal" role="form" action="?perfil=projeto_pj" method="post">
-								<input type="submit" name="liberacao" value="Concluir inscrição do proponente" class="btn btn-theme btn-lg btn-block">
-							</form>
-							<?php
-							}
-							else{
-								echo "<div class='alert alert-warning'>
-								<strong>Erro: </strong> Você deve enviar todos os documentos para prosseguir.
-								</div>";
-							}
-						}?>
-						</div>
-					</div>
-			<?php
-				}
-				elseif($pj['liberado'] == 1)// foi solicitado liberação, porém a SMC não analisou ainda.
-				{
-			?>
-				<div class="alert alert-success">
-					<strong>Sua solicitação de inscrição foi enviada com sucesso à Secretaria Municipal de Cultura. Aguarde a análise da documentação.</strong>
-				</div>
-			<?php
-				}
-				elseif(($pj['liberado'] == 2) || ($pj['liberado'] == 4))// a liberação de projetos foi rejeitada pela SMC.
-				{
-					if ($pj['liberado'] == 2)
-						{
-			?>
-					<div class="alert alert-danger">
-						<strong>Sua solicitação para a liberação de envio de projetos foi rejeitada pela Secretaria Municipal de Cultura.</strong>
-					</div>
-			<?php 
-					}
-					else
-					{
-			?>		
-					<div class="alert alert-danger">
-							<strong>Seu cadastro foi desbloqueado para edição</strong>
-						</div>			
-					<div>
-			<?php 
-					}
-			?>
-				 		<?php listaArquivosPessoaObs($idPj,2) ?>
-				 	</div>
-				 	<div class="form-group">
-						<div class="col-md-offset-2 col-md-8">
-							<form class="form-horizontal" role="form" action="?perfil=projeto_pj" method="post">
-								<input type="submit" name="liberacao" value="Concluir inscrição do proponente" class="btn btn-theme btn-lg btn-block">
-							</form>
-						</div>
-					</div>
-			<?php
-					
-				}
-				else // liberação concedida pela SMC - liberado = 3
-				{
-			?>
-			<!--Inicio da validação numero de projetos-->
 			<?php
 			if($statusProjeto == 1){
 			$qtd = retornaQtdProjetos($tipoPessoa,$idPj);
@@ -151,159 +35,174 @@ if(isset($_POST['apagar']))
 
 			$projetos = formataDados(retornaProjeto($tipoPessoa, $idPj));
 
-			if($numProjetos <= 1): ?>
-			  <div class="form-group">
-			    <div class="col-md-offset-2 col-md-8">
-				  <form class="form-horizontal" role="form"
-				    action="  ?perfil=projeto_novo" method="post">
-				    <input type="submit" value="Inscrever Projeto" class="btn btn-theme btn-lg btn-block">
-				  </form>
+			if ($pj['liberado'] == 3) 
+			{
+				if($numProjetos <= 1)
+				{
+
+				?>
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8">
+							<form class="form-horizontal" role="form"
+							action="  ?perfil=projeto_novo" method="post">
+								<input type="submit" value="Inscrever Projeto" class="btn btn-theme btn-lg btn-block">
+							</form>
+						</div>
+					 </div>
+				<?php
+
+				}else{ 
+				?>
+				<div class="alert alert-danger">
+				    <p>Você possui dois projetos em andamento:<b>
+				   	    <?php
+						foreach($projetos as $key => $value):
+							echo $value.',';
+						endforeach;
+				   	    ?>
+				   	    </b>este é o seu limite.
+				   	</p>
 				</div>
-			  </div>
-			<?php else: ?>
-			  <div class="alert alert-danger">
-			     <p>Você possui dois projetos em andamento:<b>
-			   	    <?php
-			   	      foreach($projetos as $key => $value):
-			   	        echo $value.',';
-			   	      endforeach;
-			   	    ?>
-			   	    </b>este é o seu limite.
-			   	  </p>
-			    </div>
-			<?php endif?>
-			 <!--Fim da validação numero de projetos-->
+				<?php
+				} 
+				?>
+			<!--Fim da validação numero de projetos-->
 			</div>
 
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-8"><br></div>
-					</div>
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8"><br></div>
+			</div>
+				<div class="col-md-offset-1 col-md-10">
+					<div class="table-responsive list_info">
+					<?php
+						$sql = "SELECT * FROM projeto
+								WHERE publicado > 0 AND idPj ='$idPj' AND tipoPessoa = 2
+								ORDER BY idProjeto DESC";
+						$query = mysqli_query($con,$sql);
+						$num = mysqli_num_rows($query);
+						if($num > 0)
+						{
+							echo "
+								<table class='table table-condensed'>
+									<thead>
+										<tr class='list_menu'>
+											<td>Nome do Projeto</td>
+											<td>Área de Atuação</td>
+											<td>Status</td>
+											<td width='10%'></td>
+											<td width='10%'></td>
+										</tr>
+									</thead>
+									<tbody>";
+									while($campo = mysqli_fetch_array($query))
+									{
+										$area = recuperaDados("area_atuacao","idArea",$campo['idAreaAtuacao']);
+										echo "<tr>";
+										echo "<td class='list_description'>".$campo['nomeProjeto']."</td>";
+										echo "<td class='list_description'>".$area['areaAtuacao']."</td>";
+										$idCampo = $campo['idStatus'];
 
-					<div class="col-md-offset-1 col-md-10">
-						<div class="table-responsive list_info">
-						<?php
-							$sql = "SELECT * FROM projeto
-									WHERE publicado > 0 AND idPj ='$idPj' AND tipoPessoa = 2
-									ORDER BY idProjeto DESC";
-							$query = mysqli_query($con,$sql);
-							$num = mysqli_num_rows($query);
-							if($num > 0)
-							{
-								echo "
-									<table class='table table-condensed'>
-										<thead>
-											<tr class='list_menu'>
-												<td>Nome do Projeto</td>
-												<td>Área de Atuação</td>
-												<td>Status</td>
-												<td width='10%'></td>
-												<td width='10%'></td>
-											</tr>
-										</thead>
-										<tbody>";
-										while($campo = mysqli_fetch_array($query))
+										$status = "SELECT status FROM status WHERE idStatus='$idCampo'";
+										$envio = mysqli_query($con, $status);
+										$rowStatus = mysqli_fetch_array($envio);
+										switch($campo['idStatus'])
 										{
-											$area = recuperaDados("area_atuacao","idArea",$campo['idAreaAtuacao']);
-											echo "<tr>";
-											echo "<td class='list_description'>".$campo['nomeProjeto']."</td>";
-											echo "<td class='list_description'>".$area['areaAtuacao']."</td>";
-											$idCampo = $campo['idStatus'];
-
-											$status = "SELECT status FROM status WHERE idStatus='$idCampo'";
-											$envio = mysqli_query($con, $status);
-											$rowStatus = mysqli_fetch_array($envio);
-											switch($campo['idStatus']){
-												case 1:
-													echo "<td class='list_description'> ".$rowStatus['status']."</td>";
-													echo "
-												<td class='list_description'>
-													<form method='POST' action='?perfil=projeto_edicao'>
-														<input type='hidden' name='carregar' value='".$campo['idProjeto']."' />
-														<input type ='submit' class='btn btn-theme btn-block' value='carregar'>
-													</form>
-												</td>";
+											case 1:
+												echo "<td class='list_description'> ".$rowStatus['status']."</td>";
 												echo "
-												<td class='list_description'>
-													<form method='POST' action='?perfil=projeto_pf'>
-														<input type='hidden' name='apagar' value='".$campo['idProjeto']."' />
-														<button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Excluir Projeto?' data-message='Deseja realmente excluir o projeto nº ".$campo['idProjeto']."?'>Remover
-																</button>
-													</form>
-												</td>";
-													break;
-												case 2:
-													echo "<td class='list_description'>".$rowStatus['status']." </td>";
-													echo "
-												<td class='list_description'>
-													<form method='POST' action='?perfil=projeto_visualizacao'>
-														<input type='hidden' name='carregar' value='".$campo['idProjeto']."' />
-														<input type ='submit' class='btn btn-theme btn-block' value='visualizar'>
-													</form>
-												</td>";
-													break;
-												case 3:
-													echo "<td class='list_description'> ".$rowStatus['status']." </td>";
-													echo "
-												<td class='list_description'>
-													<form method='POST' action='?perfil=projeto_visualizacao'>
-														<input type='hidden' name='carregar' value='".$campo['idProjeto']."' />
-														<input type ='submit' class='btn btn-theme btn-block' value='visualizar'>
-													</form>
-												</td>";
-													break;
-												case 4:
-													echo "<td class='list_description'> ".$rowStatus['status']." </td>";
-													echo "
-												<td class='list_description'>
-													<form method='POST' action='?perfil=projeto_edicao'>
-														<input type='hidden' name='carregar' value='".$campo['idProjeto']."' />
-														<input type ='submit' class='btn btn-theme btn-block' value='carregar'>
-													</form>
-												</td>";
-													break;
-												case 5:
-													echo "<td class='list_description'> ".$rowStatus['status']." </td>";
-													echo "
-												<td class='list_description'>
-													<form method='POST' action='?perfil=projeto_visualizacao'>
-														<input type='hidden' name='carregar' value='".$campo['idProjeto']."' />
-														<input type ='submit' class='btn btn-theme btn-block' value='visualizar'>
-													</form>
-												</td>";
+											<td class='list_description'>
+												<form method='POST' action='?perfil=projeto_edicao'>
+													<input type='hidden' name='carregar' value='".$campo['idProjeto']."' />
+													<input type ='submit' class='btn btn-theme btn-block' value='carregar'>
+												</form>
+											</td>";
+											echo "
+											<td class='list_description'>
+												<form method='POST' action='?perfil=projeto_pj'>
+													<input type='hidden' name='apagar' value='".$campo['idProjeto']."' />
+													<button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Excluir Projeto?' data-message='Deseja realmente excluir o projeto nº ".$campo['idProjeto']."?'>Remover
+															</button>
+												</form>
+											</td>";
 												break;
-												case 6:
-													echo "<td class='list_description'> <a href='?perfil=informacoes_administrativas'>".$rowStatus['status']." </a></td>";
-													echo "
-												<td class='list_description'>
-													<form method='POST' action='?perfil=projeto_edicao'>
-														<input type='hidden' name='carregar' value='".$campo['idProjeto']."' />
-														<input type ='submit' class='btn btn-theme btn-block' value='carregar'>
-													</form>
-												</td>";
+											case 2:
+												echo "<td class='list_description'>".$rowStatus['status']." </td>";
 												echo "
-												<td class='list_description'>
-													<form method='POST' action='?perfil=projeto_pf'>
-														<input type='hidden' name='apagar' value='".$campo['idProjeto']."' />
-														<button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Excluir Projeto?' data-message='Deseja realmente excluir o projeto nº ".$campo['idProjeto']."?'>Remover
-																</button>
-													</form>
-												</td>";
-											}
-											echo "</tr>";
+											<td class='list_description'>
+												<form method='POST' action='?perfil=projeto_visualizacao'>
+													<input type='hidden' name='carregar' value='".$campo['idProjeto']."' />
+													<input type ='submit' class='btn btn-theme btn-block' value='visualizar'>
+												</form>
+											</td>";
+												break;
+											case 3:
+												echo "<td class='list_description'> ".$rowStatus['status']." </td>";
+												echo "
+											<td class='list_description'>
+												<form method='POST' action='?perfil=projeto_visualizacao'>
+													<input type='hidden' name='carregar' value='".$campo['idProjeto']."' />
+													<input type ='submit' class='btn btn-theme btn-block' value='visualizar'>
+												</form>
+											</td>";
+												break;
+											case 4:
+												echo "<td class='list_description'> ".$rowStatus['status']." </td>";
+												echo "
+											<td class='list_description'>
+												<form method='POST' action='?perfil=projeto_edicao'>
+													<input type='hidden' name='carregar' value='".$campo['idProjeto']."' />
+													<input type ='submit' class='btn btn-theme btn-block' value='carregar'>
+												</form>
+											</td>";
+												break;
+											case 5:
+												echo "<td class='list_description'> ".$rowStatus['status']." </td>";
+												echo "
+											<td class='list_description'>
+												<form method='POST' action='?perfil=projeto_visualizacao'>
+													<input type='hidden' name='carregar' value='".$campo['idProjeto']."' />
+													<input type ='submit' class='btn btn-theme btn-block' value='visualizar'>
+												</form>
+											</td>";
+											break;
+											case 6:
+												echo "<td class='list_description'> <a href='?perfil=informacoes_administrativas'>".$rowStatus['status']." </a></td>";
+												echo "
+											<td class='list_description'>
+												<form method='POST' action='?perfil=projeto_edicao'>
+													<input type='hidden' name='carregar' value='".$campo['idProjeto']."' />
+													<input type ='submit' class='btn btn-theme btn-block' value='carregar'>
+												</form>
+											</td>";
+											echo "
+											<td class='list_description'>
+												<form method='POST' action='?perfil=projeto_pf'>
+													<input type='hidden' name='apagar' value='".$campo['idProjeto']."' />
+													<button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Excluir Projeto?' data-message='Deseja realmente excluir o projeto nº ".$campo['idProjeto']."?'>Remover
+															</button>
+												</form>
+											</td>";
 										}
-								echo "
+										echo "</tr>";
+									}
+							echo "
 									</tbody>
-									</table>";
-							}
-							?>
-						</div>
+								</table>";
+						}
+			}else {
+				echo "<div class='alert alert-warning'>
+				  <strong></strong>Aguardando Aprovação da Inscrição.
+				</div>";
+			} 						
+			?>
+					</div>
 					</div>
 				<?php
-				}			else{
+				}else{
 				echo "<div class='alert alert-warning'>
 				  <strong>Aviso: </strong>O cadastro de novos projetos está desabilitado temporariamente pela SMC.
 				</div>";
-			}
+				}
 				?>
 		</div>
 		<!-- Confirmação de Exclusão -->
@@ -326,9 +225,5 @@ if(isset($_POST['apagar']))
 			</div>
 		<!-- Fim Confirmação de Exclusão -->
 		
-			<?php } 
-
-
-				?>
 	</div>
 </section>

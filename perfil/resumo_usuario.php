@@ -66,6 +66,7 @@ function listaArquivosPessoaSApagar($idPessoa,$tipoPessoa,$pagina)
 		{
 			$idPj= $_SESSION['idUser'];
 			include '../perfil/includes/menu_interno_pj.php';
+
 		}
     	?> 
 

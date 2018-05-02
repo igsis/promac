@@ -26,7 +26,8 @@ endif;
 
 if(isset($_POST['liberacao']))
 {
-	$sql_liberacao = "UPDATE incentivador_pessoaJuridica SET liberado = 1 WHERE idPj = '$idPj'";
+	$date = date('Y:m:d H:i:s');
+	$sql_liberacao = "UPDATE incentivador_pessoaJuridica SET liberado = 1, dataInscricao = '$date' WHERE idPj = '$idPj'";
 	if(mysqli_query($con,$sql_liberacao))
 	{
 		$mensagem = "Sua inscrição foi enviada à SMC!";
@@ -122,7 +123,7 @@ if(isset($_POST['liberacao']))
 				 	</div>
 				 	<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
-							<form class="form-horizontal" role="form" action="?perfil=projeto_pj" method="post">
+							<form class="form-horizontal" role="form" action="?perfil=incentivador_concluir_pj.php" method="post">
 								<input type="submit" name="liberacao" value="Concluir inscrição do Incentivador" class="btn btn-theme btn-lg btn-block">
 							</form>
 						</div>

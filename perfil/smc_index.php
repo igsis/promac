@@ -41,6 +41,7 @@ if(isset($_POST['liberacaoPJ']))
 <section id="list_items" class="home-section bg-white">
 	<div class="container"><?php include 'includes/menu_smc.php'; ?>
 		<p align="left"><strong><?php echo saudacao(); ?>, <?php echo $_SESSION['nome']; ?></strong></p>
+		<!-- Lista 1 -->
 		<div class="form-group">
 			<h5>Inscrições de pessoa física a liberar</h5>
 		</div>
@@ -83,14 +84,18 @@ if(isset($_POST['liberacaoPJ']))
 										</td>";
 								}
 							echo "</tr>";
+							echo "</tbody>
+								</table>";
 						}
-						echo "
-							</tbody>
-							</table>";
+						else
+						{
+							echo "Não há resultado no momento.";
+						}
 					?>
 				</div>
 			</div>
 		</div>
+		<!-- Lista 2 -->
 		<div class="form-group">
 			<h5>Inscrições de pessoa jurídica a liberar</h5>
 		</div>
@@ -131,14 +136,124 @@ if(isset($_POST['liberacaoPJ']))
 										</td>";
 								}
 							echo "</tr>";
+							echo "</tbody>
+								</table>";
 						}
-						echo "
-							</tbody>
-							</table>";
+						else
+						{
+							echo "Não há resultado no momento.";
+						}
 					?>
 				</div>
 			</div>
 		</div>
+		<!-- Lista 3 -->
+		<div class="form-group">
+			<h5>Inscrições de incentivador pessoa física a liberar</h5>
+		</div>
+		<div class="row">
+			<div class="col-md-offset-1 col-md-10">
+				<div class="table-responsive list_info">
+				<?php
+					$sql = "SELECT * FROM incentivador_pessoaFisica WHERE liberado = 1 LIMIT 0,10";
+					$query = mysqli_query($con,$sql);
+					$num = mysqli_num_rows($query);
+					if($num > 0)
+					{
+						echo "
+							<table class='table table-condensed'>
+								<thead>
+									<tr class='list_menu'>
+										<td>Nome</td>
+										<td>CPF</td>
+										<td>RG</td>
+										<td>Email</td>
+										<td>Telefone</td>
+										<td width='10%'></td>
+									</tr>
+								</thead>
+								<tbody>";
+								while($campo = mysqli_fetch_array($query))
+								{
+									echo "<tr>";
+									echo "<td class='list_description'>".$campo['nome']."</td>";
+									echo "<td class='list_description'>".$campo['cpf']."</td>";
+									echo "<td class='list_description'>".$campo['rg']."</td>";
+									echo "<td class='list_description'>".$campo['email']."</td>";
+									echo "<td class='list_description'>".$campo['telefone']."</td>";
+									echo "
+										<td class='list_description'>
+											<form method='POST' action='?perfil=smc_visualiza_incentivadores_pf'>
+												<input type='hidden' name='liberado' value='".$campo['idPf']."' />
+												<input type ='submit' class='btn btn-theme btn-block' value='Visualizar'>
+											</form>
+										</td>";
+								}
+							echo "</tr>";
+							echo "</tbody>
+								</table>";
+						}
+						else
+						{
+							echo "Não há resultado no momento.";
+						}
+					?>
+				</div>
+			</div>
+		</div>
+		<!-- Lista 4 -->
+		<div class="form-group">
+			<h5>Inscrições de incentivador pessoa jurídica a liberar</h5>
+		</div>
+		<div class="row">
+			<div class="col-md-offset-1 col-md-10">
+				<div class="table-responsive list_info">
+					<?php
+					$sql = "SELECT * FROM incentivador_pessoaJuridica WHERE liberado = 1 LIMIT 0,10";
+					$query = mysqli_query($con,$sql);
+					$num = mysqli_num_rows($query);
+					if($num > 0)
+					{
+						echo "
+							<table class='table table-condensed'>
+								<thead>
+									<tr class='list_menu'>
+										<td>Razão Social</td>
+										<td>CNPJ</td>
+										<td>Email</td>
+										<td>Telefone</td>
+										<td width='10%'></td>
+									</tr>
+								</thead>
+								<tbody>";
+								while($campo = mysqli_fetch_array($query))
+								{
+									echo "<tr>";
+									echo "<td class='list_description'>".$campo['razaoSocial']."</td>";
+									echo "<td class='list_description'>".$campo['cnpj']."</td>";
+									echo "<td class='list_description'>".$campo['email']."</td>";
+									echo "<td class='list_description'>".$campo['telefone']."</td>";
+									echo "
+										<td class='list_description'>
+											<form method='POST' action='?perfil=smc_visualiza_incentivadores_pj'>
+												<input type='hidden' name='liberado' value='".$campo['idPj']."' />
+												<input type ='submit' class='btn btn-theme btn-block' value='Visualizar'>
+											</form>
+										</td>";
+								}
+							echo "</tr>";
+							echo "</tbody>
+								</table>";
+						}
+						else
+						{
+							echo "Não há resultado no momento.";
+						}
+					?>
+				</div>
+			</div>
+		</div>
+		<!-- Lista 5 -->
 		<div class="form-group">
 			<h5>Lista de projetos enviados.</h5>
 		</div>
@@ -146,7 +261,7 @@ if(isset($_POST['liberacaoPJ']))
 			<div class="col-md-offset-1 col-md-10">
 				<div class="table-responsive list_info">
 				<?php
-					$sql = $sql = "SELECT * FROM projeto WHERE publicado = 1 AND idStatus = 2 LIMIT 0,10";
+					$sql = "SELECT * FROM projeto WHERE publicado = 1 AND idStatus = 2 LIMIT 0,10";
 					$query = mysqli_query($con,$sql);
 					$num = mysqli_num_rows($query);
 					if($num > 0)
@@ -195,18 +310,18 @@ if(isset($_POST['liberacaoPJ']))
 										</td>";
 									}
 									echo "</tr>";
-						echo "
-							</tbody>
-							</table>";
+							echo "</tbody>
+								</table>";
 						}
 						else
 						{
-							echo "Nada consta.";
+							echo "Não há resultado no momento.";
 						}
 					?>
 				</div>
 			</div>
 		</div>
+		<!-- Lista 6 -->
 		<div class="form-group">
 			<h5>Projetos com data final de captação com tempo menor que 30 dias.</h5>
 		</div>
@@ -249,17 +364,18 @@ if(isset($_POST['liberacaoPJ']))
 										</td>";
 									}
 									echo "</tr>";
-						echo "
-							</tbody>
-							</table>";
+							echo "</tbody>
+								</table>";
 						}
-						else{
-							echo "Nada consta.";
+						else
+						{
+							echo "Não há resultado no momento.";
 						}
 					?>
 				</div>
 			</div>
 		</div>
+		<!-- Lista 7 -->
 		<div class="form-group">
 			<h5>Projetos com data de execução menor que 30 dias.</h5>
 		</div>
@@ -302,20 +418,18 @@ if(isset($_POST['liberacaoPJ']))
 										</td>";
 									}
 									echo "</tr>";
-						echo "
-							</tbody>
-							</table>";
+							echo "</tbody>
+								</table>";
 						}
-						else{
-							echo "Nada consta.";
+						else
+						{
+							echo "Não há resultado no momento.";
 						}
 					?>
 				</div>
 			</div>
 		</div>
-	</div>
-
-	<div class="container">
+		<!-- Lista 8 -->
 		<div class="form-group">
 			<h5>Projetos com data para prestar contas faltando 30 dias ou menos.</h5>
 		</div>
@@ -358,12 +472,12 @@ if(isset($_POST['liberacaoPJ']))
 										</td>";
 									}
 									echo "</tr>";
-						echo "
-							</tbody>
-							</table>";
+							echo "</tbody>
+								</table>";
 						}
-						else{
-							echo "Nada consta.";
+						else
+						{
+							echo "Não há resultado no momento.";
 						}
 					?>
 				</div>
