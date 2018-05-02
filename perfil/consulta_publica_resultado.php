@@ -194,7 +194,12 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 		<div class="form-group">
 			<h4>Pesquisar Projetos</h4>
 			<h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
-			<h5><a href="?perfil=consulta_publica">Fazer outra busca</a></h5>
+			<div class="col-md-offset-5 col-md-2">
+				<form method="POST" action="../visual/index.php" class="form-horizontal" role="form">
+					<input type="hidden" name="consulta" value="1">
+					<button class='btn btn-theme btn-md btn-block' align= "center" type='submit' style="border-radius: 30px;">Fazer outra busca</button>
+				</form>
+			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">

@@ -24,14 +24,22 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 	<div class="container">
 		<div class="row">
 			<div class="form-group">
-				<div class="col-md-offset-2 col-md-8">
-					<strong>
-						<a href="?perfil=consulta_publica">Efetuar nova consulta</a>
-						| <a href="../index.php">Voltar a tela de Login</a>
-					</strong>
+				<div class="col-md-offset-2 col-md-6">
+					<form method="POST" action="../visual/index.php" class="form-horizontal" role="form">
+						<input type="hidden" name="consulta" value="1">
+						<button class='btn btn-theme btn-md btn-block' align= "center" type='submit' style="border-radius: 30px;">Fazer outra busca</button>
+					</form>
+				</div>
+
+				<div class="col-md-6">
+					<form method="POST" action="index.php" class="form-horizontal" role="form">
+						<input type="hidden" value="1">
+						<button class='btn btn-theme btn-md btn-block' align= "center" type='submit' style="border-radius: 30px;">Voltar a tela de login</button>
+					</form>
 				</div>
 			</div>
 		</div>
+	</div>
 		<div class="form-group">
 			<h4>Detalhes do Projeto: <small><?= $projeto['nomeProjeto'] ?></small></h4>
 		</div>
