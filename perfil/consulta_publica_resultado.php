@@ -8,6 +8,7 @@ $cnpj = $_POST['cnpj'];
 $nomeProjeto = $_POST['nomeProjeto'];
 $protocolo = $_POST['protocolo'];
 $idAreaAtuacao = $_POST['idAreaAtuacao'];
+$idStatus = $_POST['idStatus'];
 $valorAprovado = $_POST['valorAprovado'];
 
 // Inicio Pessoa Física
@@ -109,6 +110,159 @@ elseif($razaoSocial != '' || $cnpj != '')
 		$x['num'] = 0;
 	}
 }
+//filtro por status aprovado
+elseif ($idStatus == 5)
+{
+	if($idStatus == 5)
+	{
+		$filtro_idStatus = " AND idStatus = '$idStatus'";
+	}
+	else
+	{
+		$filtro_idStatus = "";
+	}
+
+	$sql = "SELECT * FROM projeto AS prj
+			WHERE publicado = 1 AND idStatus = 5
+			$filtro_idStatus";
+	$query = mysqli_query($con,$sql);
+	$num = mysqli_num_rows($query);
+	if($num > 0)
+	{
+		$i = 0;
+		while($lista = mysqli_fetch_array($query))
+		{
+			$area = recuperaDados("area_atuacao","idArea",$lista['idAreaAtuacao']);
+			$status = recuperaDados("status","idStatus",$lista['idStatus']);
+			$pf = recuperaDados("pessoa_fisica","idPf",$lista['idPf']);
+			$pj = recuperaDados("pessoa_juridica","idPj",$lista['idPj']);
+			$x[$i]['idProjeto'] = $lista['idProjeto'];
+			$x[$i]['protocolo'] = $lista['protocolo'];
+			$x[$i]['nomeProjeto'] = $lista['nomeProjeto'];
+			if($lista['tipoPessoa'] == 1)
+			{
+				$x[$i]['proponente'] = $pf['nome'];
+				$x[$i]['documento'] = $pf['cpf'];
+			}
+			else
+			{
+				$x[$i]['proponente'] = $pj['razaoSocial'];
+				$x[$i]['documento'] = $pj['cnpj'];
+			}
+			$x[$i]['areaAtuacao'] = $area['areaAtuacao'];
+			$x[$i]['status'] = $status['status'];
+			$i++;
+		}
+		$x['num'] = $i;
+	}
+	else
+	{
+		$x['num'] = 0;
+	}
+}
+
+//filtro por status reprovado
+elseif ($idStatus == 6)
+{
+	if($idStatus == 6)
+	{
+		$filtro_idStatus = " AND idStatus = '$idStatus'";
+	}
+	else
+	{
+		$filtro_idStatus = "";
+	}
+
+	$sql = "SELECT * FROM projeto AS prj
+			WHERE publicado = 1 AND idStatus = 6
+			$filtro_idStatus";
+	$query = mysqli_query($con,$sql);
+	$num = mysqli_num_rows($query);
+	if($num > 0)
+	{
+		$i = 0;
+		while($lista = mysqli_fetch_array($query))
+		{
+			$area = recuperaDados("area_atuacao","idArea",$lista['idAreaAtuacao']);
+			$status = recuperaDados("status","idStatus",$lista['idStatus']);
+			$pf = recuperaDados("pessoa_fisica","idPf",$lista['idPf']);
+			$pj = recuperaDados("pessoa_juridica","idPj",$lista['idPj']);
+			$x[$i]['idProjeto'] = $lista['idProjeto'];
+			$x[$i]['protocolo'] = $lista['protocolo'];
+			$x[$i]['nomeProjeto'] = $lista['nomeProjeto'];
+			if($lista['tipoPessoa'] == 1)
+			{
+				$x[$i]['proponente'] = $pf['nome'];
+				$x[$i]['documento'] = $pf['cpf'];
+			}
+			else
+			{
+				$x[$i]['proponente'] = $pj['razaoSocial'];
+				$x[$i]['documento'] = $pj['cnpj'];
+			}
+			$x[$i]['areaAtuacao'] = $area['areaAtuacao'];
+			$x[$i]['status'] = $status['status'];
+			$i++;
+		}
+		$x['num'] = $i;
+	}
+	else
+	{
+		$x['num'] = 0;
+	}
+}
+
+//filtro por status inscrito (comissão)
+elseif ($idStatus == 7)
+{
+	if($idStatus == 7)
+	{
+		$filtro_idStatus = " AND idStatus = '$idStatus'";
+	}
+	else
+	{
+		$filtro_idStatus = "";
+	}
+
+	$sql = "SELECT * FROM projeto AS prj
+			WHERE publicado = 1 AND idStatus = 7
+			$filtro_idStatus";
+	$query = mysqli_query($con,$sql);
+	$num = mysqli_num_rows($query);
+	if($num > 0)
+	{
+		$i = 0;
+		while($lista = mysqli_fetch_array($query))
+		{
+			$area = recuperaDados("area_atuacao","idArea",$lista['idAreaAtuacao']);
+			$status = recuperaDados("status","idStatus",$lista['idStatus']);
+			$pf = recuperaDados("pessoa_fisica","idPf",$lista['idPf']);
+			$pj = recuperaDados("pessoa_juridica","idPj",$lista['idPj']);
+			$x[$i]['idProjeto'] = $lista['idProjeto'];
+			$x[$i]['protocolo'] = $lista['protocolo'];
+			$x[$i]['nomeProjeto'] = $lista['nomeProjeto'];
+			if($lista['tipoPessoa'] == 1)
+			{
+				$x[$i]['proponente'] = $pf['nome'];
+				$x[$i]['documento'] = $pf['cpf'];
+			}
+			else
+			{
+				$x[$i]['proponente'] = $pj['razaoSocial'];
+				$x[$i]['documento'] = $pj['cnpj'];
+			}
+			$x[$i]['areaAtuacao'] = $area['areaAtuacao'];
+			$x[$i]['status'] = $status['status'];
+			$i++;
+		}
+		$x['num'] = $i;
+	}
+	else
+	{
+		$x['num'] = 0;
+	}
+}
+
 //Início Projeto
 else
 {
@@ -147,6 +301,7 @@ else
 	{
 		$filtro_valorAprovado = "";
 	}
+
 
 	$sql = "SELECT * FROM projeto AS prj
 			WHERE publicado = 1 AND idStatus = 5

@@ -62,6 +62,17 @@
 					</div>
 
 					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8"><label>Status</label>
+							<select class="form-control" name="idStatus" >
+								<option value="0"></option>
+			                    <option value="5">Aprovado</option>
+   			                    <option value="6">Reprovado</option> 
+			                    <option value="7">Inscrito</option> 
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><label>Área atuação</label>
 							<select class="form-control" name="idAreaAtuacao" >
 								<option value="0"></option>
