@@ -1,6 +1,4 @@
 <?php
-date_default_timezone_set("Brazil/East");
-
 function habilitarErro()
 {
 	@ini_set('display_errors', '1');
