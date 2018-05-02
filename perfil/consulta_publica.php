@@ -16,19 +16,7 @@
 
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
-				<div class="well">
-					<h6>Listar:</h6>
-					<div class="form-group" style="padding-bottom: 60px;">
-						<div class="col-md-offset-2 col-md-4">
-							<a href="?perfil=consulta_publica_proponente_pf" class="btn btn-theme btn-md btn-block" style="border-radius: 30px;">Proponente Pessoa Física</a>
-							<a href="?perfil=consulta_publica_proponente_pj" class="btn btn-theme btn-md btn-block" style="border-radius: 30px;">Proponente Pessoa Jurídica</a>
-						</div>
-						<div class="col-md-4">
-							<a href="?perfil=consulta_publica_incentivador_pf" class="btn btn-theme btn-md btn-block" style="border-radius: 30px;">Incentivador Pessoa Física</a>
-							<a href="?perfil=consulta_publica_incentivador_pj" class="btn btn-theme btn-md btn-block" style="border-radius: 30px;">Incentivador Pessoa Jurídica</a>
-						</div>
-					</div>
-				</div>
+				<?php include 'includes/menu_consulta_publica.php'; ?>
 				<div class="well">
 					Nesta área, você pode consultar os projetos já aprovados!
 				</div>
