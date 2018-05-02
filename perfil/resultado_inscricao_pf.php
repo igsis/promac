@@ -4,6 +4,39 @@ $con = bancoMysqli();
 $idPf = $_SESSION['idUser'];
 $tipoPessoa = '1';
 
+$campos = array($pf['nome'], $pf['cpf'], $pf['rg'], $pf['email'], $pf['cep'], $pf['numero']);
+$cpo = false;
+
+foreach ($campos as $cpos) {
+	if ($cpos == null)
+	{
+		$cpo = true;
+	}
+}
+
+/**Arquivos Obrigatórios**/
+
+if(isset($tipoPessoa)):      
+  $tipoDoc = 'proponente';  
+  $idUser = $idPf;
+  $idProjeto = 0; /*Incluso devido a busca pelos anexos*/
+  require_once('validacaoArquivosObrigatorios.php');
+endif;
+
+if(isset($_POST['liberacao']))
+{
+	$date = date('Y:m:d H:i:s');
+	$sql_liberacao = "UPDATE pessoa_fisica SET liberado = 1, dataInscricao = '$date' WHERE idPf = '$idPf'";
+	if(mysqli_query($con,$sql_liberacao))
+	{
+		echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=?perfil=resultado_inscricao_pf'>";
+	}
+	else
+	{
+		$mensagem = "<font color='#01DF3A'><strong>Erro ao atualizar! Tente novamente.</strong></font> <br/>".$sql_atualiza_pf;
+	}
+}
+
 // Gerar documentos
 $server = "http://".$_SERVER['SERVER_NAME']."/promac";
 $http = $server."/pdf/";
@@ -84,32 +117,88 @@ if(isset($_POST['apagar']))
 
 $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 
-if($pf['liberado'] == 3)
-{
-	echo "<br><div class='alert alert-warning'>
-  	<strong>Aviso!</strong> Seus dados já foram aceitos, portanto, não podem ser alterados.</div>";
 
-  	include 'resumo_arquivos_usuario.php';
-}
-else{
 ?>
 
 <section id="list_items" class="home-section bg-white">
 	<div class="container"><?php include 'includes/menu_interno_pf.php'; ?>
 		<div class="form-group">
-			<h4>Resultado da Inscrição</h4>
 			<h5><?php if(isset($mensagem)){echo $mensagem;};?></h5>
 		</div>
+		<div class="row">
 		<?php 
-			if ($pf['liberado'] == 0){
-				echo "<div class='alert alert-info'>Inscrição não enviada</div>";
-
+			if ($pf['liberado'] == 0){  // ainda não foi solicitado liberação
 		?>
+		<div class="col-md-offset-1 col-md-10">
+				<?php
+
+					include 'includes/resumo_pf.php';
+					?>
+					<div class="alert alert-info">
+						Após o preenchimento de todos os dados pessoais, conclua a inscrição do proponente e aguarde a análise da sua documentação pela Secretaria Municipal de Cultura.
+					</div>
+						<div class="form-group">
+							<div class="col-md-offset-2 col-md-8">
+								<?php
+								if ($cpo == false)
+								{
+									$idPess = $pf['idPf'];
+									$queryArquivos = "SELECT idUploadArquivo FROM upload_arquivo WHERE idPessoa = $idPess AND idTipo = '1' AND publicado = '1'";
+									$enviaArquivos = mysqli_query($con, $queryArquivos);
+									$numRow = mysqli_num_rows($enviaArquivos);
+
+									if($numRow >= 6)
+									{?>
+								<form class="form-horizontal" role="form" action="?perfil=resultado_inscricao_pf" method="post">
+									<input type="submit" name="liberacao" value="Concluir inscrição do proponente" class="btn btn-theme btn-lg btn-block">
+								</form>
+								<?php
+								}
+								else{
+									echo "<div class='alert alert-warning'>
+									<strong>Erro: </strong> Você deve enviar todos os documentos para prosseguir.
+									</div>";
+								}
+							}?>
+							</div>
+						</div>
+				</div>
 			
 		<?php 
-			}else{
+			} // FIM LIBERADO 0 NULL
+			if ($pf['liberado'] == 1) {
 		?>
-		<div class="row">
+				<div class="alert alert-success">
+					<strong>Sua solicitação de inscrição foi enviada com sucesso à Secretaria Municipal de Cultura. Aguarde a análise da documentação.</strong>
+				</div>
+				<?php
+			} // FIM LIBERADO 1
+			if (($pf['liberado'] == 2) || ($pf['liberado'] == 4)){
+				if ($pf['liberado'] == 2)
+				{
+
+		?>
+				<div class="col-md-offset-1 col-md-10">
+					<div class="alert alert-danger">
+						<strong>Sua solicitação para a liberação de envio de projetos foi rejeitada pela Secretaria Municipal de Cultura.</strong>
+					</div>
+		<?php 
+				}
+				else // liberado 4
+				{
+
+		?>
+					<div class="alert alert-danger">
+						<strong>Seu cadastro foi desbloqueado para edição</strong>
+					</div>
+		<?php 
+				}
+		?>
+					<div>
+				 		<?php listaArquivosPessoaObs($idPf,1) ?>
+				 	</div>
+				 </div>
+
 			<div class="col-md-offset-1 col-md-10">
 				<!-- Exibir arquivos -->
 				<div class="form-group">
@@ -177,28 +266,44 @@ else{
 						</div>
 					</div>
 				</div>
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-8">
+						<form class="form-horizontal" role="form" action="?perfil=resultado_inscricao_pf" method="post">
+							<input type="submit" name="liberacao" value="Concluir inscrição do proponente" class="btn btn-theme btn-lg btn-block">
+						</form>
+					</div>
+				</div>
 				<!-- Fim Upload de arquivo -->
 				<!-- Confirmação de Exclusão -->
-					<div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel" aria-hidden="true">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-									<h4 class="modal-title">Excluir Arquivo?</h4>
-								</div>
-								<div class="modal-body">
-									<p>Confirma?</p>
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-									<button type="button" class="btn btn-danger" id="confirm">Remover</button>
-								</div>
+				<div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+								<h4 class="modal-title">Excluir Arquivo?</h4>
+							</div>
+							<div class="modal-body">
+								<p>Confirma?</p>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+								<button type="button" class="btn btn-danger" id="confirm">Remover</button>
 							</div>
 						</div>
 					</div>
+				</div>
 
+	<?php 
+			}// Fim liberado 2 e 4
+	?>	
 <?php 
-		}
+if($pf['liberado'] == 3)
+{
+	echo "<br><div class='alert alert-warning'>
+  	<strong>Aviso!</strong> Seus dados já foram aceitos, portanto, não podem ser alterados.</div>";
+
+  	//include 'resumo_arquivos_usuario.php';
+
 } 
 ?>
 				<!-- Fim Confirmação de Exclusão -->
