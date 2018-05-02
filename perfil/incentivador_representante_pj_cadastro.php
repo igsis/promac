@@ -35,7 +35,7 @@ if(isset($_POST['cadastraRepresentante']))
 			$mensagem = "<font color='#01DF3A'><strong>Cadastrado com sucesso!</strong></font><br/>";
 			gravarLog($sql_insere_rep1);
 			$idrep1 = recuperaUltimo("representante_legal");
-			$sql_representante1_empresa = "UPDATE incentivador_pessoaJuridica SET idRepresentanteLegal = '$idrep1' WHERE idPj = '$idPj'";
+			$sql_representante1_empresa = "UPDATE incentivador_pessoa_juridica SET idRepresentanteLegal = '$idrep1' WHERE idPj = '$idPj'";
 			if(mysqli_query($con,$sql_representante1_empresa))
 			{
 				$mensagem .= "<font color='#01DF3A'><strong>Representante inserido com sucesso na empresa!</strong></font>";
@@ -57,7 +57,7 @@ if(isset($_POST['cadastraRepresentante']))
 if(isset($_POST['insereRepresentante']))
 {
 	$idrep1 = $_POST['insereRepresentante'];
-	$sql_representante1_empresa = "UPDATE incentivador_pessoaJuridica SET idRepresentanteLegal = '$idrep1' WHERE idPj = '$idPj'";
+	$sql_representante1_empresa = "UPDATE incentivador_pessoa_juridica SET idRepresentanteLegal = '$idrep1' WHERE idPj = '$idPj'";
 	if(mysqli_query($con,$sql_representante1_empresa))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Inserido com sucesso!</strong></font>";
@@ -99,7 +99,7 @@ if(isset($_POST['editaRepresentante']))
 		if(mysqli_query($con,$sql_atualiza_rep1))
 		{
 			$mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font><br/>";
-			$sql_representante1_empresa = "UPDATE incentivador_pessoaJuridica SET idRepresentanteLegal = '$idrep1' WHERE idPj = '$idPj'";
+			$sql_representante1_empresa = "UPDATE incentivador_pessoa_juridica SET idRepresentanteLegal = '$idrep1' WHERE idPj = '$idPj'";
 			if(mysqli_query($con,$sql_representante1_empresa))
 			{
 				$mensagem .= "<font color='#01DF3A'><strong>Representante inserido com sucesso na empresa!</strong></font>";
@@ -117,7 +117,7 @@ if(isset($_POST['editaRepresentante']))
 	}
 }
 
-$pj = recuperaDados("incentivador_pessoaJuridica","idPj",$idPj);
+$pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
 $representante1 = recuperaDados("representante_legal","idRepresentanteLegal",$pj['idRepresentanteLegal']);
 
 if($pj['liberado'] == 3)

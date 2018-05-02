@@ -79,7 +79,7 @@ if(isset($_POST['apagar']))
 	}
 }
 
-$pj = recuperaDados("incentivador_pessoajuridica","idPj",$idPj);
+$pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
 
 if($pj['liberado'] == 3)
 {

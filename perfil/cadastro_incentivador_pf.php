@@ -2,7 +2,7 @@
 
 $con = bancoMysqli();
 $idPf = $_SESSION['idUser'];
-$pf = recuperaDados("incentivador_pessoafisica","idPf",$idPf); 
+$pf = recuperaDados("incentivador_pessoa_fisica","idPf",$idPf); 
 $estados = formataDados(listaEstados());
 $cidades = formataDados(listaCidades());
 $habilitaCampo = false;
@@ -36,7 +36,7 @@ if(isset($_POST['cadastraNovoPf']) and $_POST['numero'] and empty($endereço)):
   $Numero = $_POST['numero'];
   $Complemento = $_POST['Complemento'];
 
-  $sql_atualiza_pf = "UPDATE incentivador_pessoafisica SET
+  $sql_atualiza_pf = "UPDATE incentivador_pessoa_fisica SET
     `nome` = '$nome',
 	`rg` = '$rg',
 	`telefone` = '$telefone',

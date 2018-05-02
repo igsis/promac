@@ -32,7 +32,7 @@ else
 	$filtro_liberado = "";
 }
 
-$sql = "SELECT * FROM incentivador_pessoajuridica
+$sql = "SELECT * FROM incentivador_pessoa_juridica
 		WHERE idNivelAcesso = 1
 		$filtro_liberado $filtro_nome $filtro_cnpj
 		ORDER BY idPj DESC";

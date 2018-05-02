@@ -78,7 +78,7 @@ if(isset($_POST['apagar']))
 	}
 }
 
-$pf = recuperaDados("incentivador_pessoafisica","idPf",$idPf);
+$pf = recuperaDados("incentivador_pessoa_fisica","idPf",$idPf);
 
 if($pf['liberado'] == 3)
 {

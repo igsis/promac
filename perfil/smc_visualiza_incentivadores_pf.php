@@ -7,12 +7,12 @@ if($idPf == null)
 	$idPf = $_GET['idFF'];
 }
 
-$pf = recuperaDados("incentivador_pessoaFisica","idPf",$idPf);
+$pf = recuperaDados("incentivador_pessoa_fisica","idPf",$idPf);
 
 if(isset($_POST['liberar']))
 {
 	$id = $_POST['LIBPF'];
-	$QueryPJ = "UPDATE incentivador_pessoaFisica SET liberado='3' WHERE idPf = '$id'";
+	$QueryPJ = "UPDATE incentivador_pessoa_fisica SET liberado='3' WHERE idPf = '$id'";
 	$envio = mysqli_query($con, $QueryPJ);
 	if($envio)
 		echo "<script>alert('O usuário foi liberado com sucesso');</script>";
@@ -22,7 +22,7 @@ if(isset($_POST['liberar']))
 if(isset($_POST['negar']))
 {
 	$id = $_POST['LIBPF'];
-	$QueryPJ = "UPDATE incentivador_pessoaFisica SET liberado='2' WHERE idPf = '$id'";
+	$QueryPJ = "UPDATE incentivador_pessoa_fisica SET liberado='2' WHERE idPf = '$id'";
 	$envio = mysqli_query($con, $QueryPJ);
 	if($envio)
 		echo "<script>alert('O usuário foi negado com sucesso');</script>";
@@ -32,7 +32,7 @@ if(isset($_POST['negar']))
 if(isset($_POST['desbloquear']))
 {
 	$id = $_POST['LIBPF'];
-	$QueryPJ = "UPDATE incentivador_pessoaFisica SET liberado='4' WHERE idPf = '$id'";
+	$QueryPJ = "UPDATE incentivador_pessoa_fisica SET liberado='4' WHERE idPf = '$id'";
 	$envio = mysqli_query($con, $QueryPJ);
 	if($envio)
 		echo "<script>alert('O usuário foi desbloqueado com sucesso');</script>";
@@ -83,10 +83,10 @@ if(isset($_POST['atualizar']))
 	# Verifica se tem algum status reprovado ou complemetação 
 	if ((in_array('2',$totStatus)) || in_array('3',$totStatus))
 	{
-		$QueryPJ = "UPDATE incentivador_pessoaFisica SET liberado='2' WHERE idPf = '".$dados[0]['idPessoa']."'";
+		$QueryPJ = "UPDATE incentivador_pessoa_fisica SET liberado='2' WHERE idPf = '".$dados[0]['idPessoa']."'";
 		$envio = mysqli_query($con, $QueryPJ);
 	}else{
-		$QueryPJ = "UPDATE incentivador_pessoaFisica SET liberado='1' WHERE idPf = '".$dados[0]['idPessoa']."'";
+		$QueryPJ = "UPDATE incentivador_pessoa_fisica SET liberado='1' WHERE idPf = '".$dados[0]['idPessoa']."'";
 		$envio = mysqli_query($con, $QueryPJ);
 	}
 

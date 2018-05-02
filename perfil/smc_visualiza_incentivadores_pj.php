@@ -6,13 +6,13 @@ if($idPj == null)
 {
 	$idPj = $_GET['idFF'];
 }
-$pj = recuperaDados("incentivador_pessoaJuridica","idPj",$idPj);
+$pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
 $rl = recuperaDados("representante_legal","idRepresentanteLegal",$pj['idRepresentanteLegal']);
 
 if(isset($_POST['liberar']))
 {
 	$id = $_POST['LIBPF'];
-	$QueryPJ = "UPDATE incentivador_pessoaJuridica SET liberado='3' WHERE idPj = '$id'";
+	$QueryPJ = "UPDATE incentivador_pessoa_juridica SET liberado='3' WHERE idPj = '$id'";
 	$envio = mysqli_query($con, $QueryPJ);
 	if($envio)
 		echo "<script>alert('O usuário foi liberado com sucesso');</script>";
@@ -22,7 +22,7 @@ if(isset($_POST['liberar']))
 if(isset($_POST['negar']))
 {
 	$id = $_POST['LIBPF'];
-	$QueryPJ = "UPDATE incentivador_pessoaJuridica SET liberado='2' WHERE idPj = '$id'";
+	$QueryPJ = "UPDATE incentivador_pessoa_juridica SET liberado='2' WHERE idPj = '$id'";
 	$envio = mysqli_query($con, $QueryPJ);
 	if($envio)
 		echo "<script>alert('O usuário foi negado com sucesso');</script>";
@@ -32,7 +32,7 @@ if(isset($_POST['negar']))
 if(isset($_POST['desbloquear']))
 {
 	$id = $_POST['LIBPF'];
-	$QueryPJ = "UPDATE incentivador_pessoaJuridica SET liberado='4' WHERE idPj = '$id'";
+	$QueryPJ = "UPDATE incentivador_pessoa_juridica SET liberado='4' WHERE idPj = '$id'";
 	$envio = mysqli_query($con, $QueryPJ);
 	if($envio)
 		echo "<script>alert('O usuário foi desbloqueado com sucesso');</script>";
@@ -82,10 +82,10 @@ if(isset($_POST['atualizar']))
 	# Verifica se tem algum status reprovado ou complemetação 
 	if ((in_array('2',$totStatus)) || in_array('3',$totStatus))
 	{
-		$QueryPJ = "UPDATE incentivador_pessoaJuridica SET liberado='2' WHERE idPj = '".$dados[0]['idPessoa']."'";
+		$QueryPJ = "UPDATE incentivador_pessoa_juridica SET liberado='2' WHERE idPj = '".$dados[0]['idPessoa']."'";
 		$envio = mysqli_query($con, $QueryPJ);
 	}else {
-		$QueryPJ = "UPDATE incentivador_pessoaJuridica SET liberado='1' WHERE idPj = '".$dados[0]['idPessoa']."'";
+		$QueryPJ = "UPDATE incentivador_pessoa_juridica SET liberado='1' WHERE idPj = '".$dados[0]['idPessoa']."'";
 		$envio = mysqli_query($con, $QueryPJ);
 	}
 

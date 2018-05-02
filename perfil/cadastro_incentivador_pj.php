@@ -1,7 +1,7 @@
 <?php
 $con = bancoMysqli();
 $idPj = $_SESSION['idUser'];
-$pj = recuperaDados("incentivador_pessoajuridica","idPj",$idPj);
+$pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
 $estados = formataDados(listaEstados());
 $cidades = formataDados(listaCidades());
 $habilitaCampo = false;
@@ -37,7 +37,7 @@ if(isset($_POST['cadastraNovoPj']) and $_POST['numero'] and empty($endereço)):
   $Numero = $_POST['numero'];
   $Complemento = $_POST['Complemento'];
 
-  $sql_atualiza_pj = "UPDATE incentivador_pessoajuridica SET
+  $sql_atualiza_pj = "UPDATE incentivador_pessoa_juridica SET
     `razaoSocial` = '$razaoSocial',
     `telefone` = '$telefone',
 	`celular` = '$celular',

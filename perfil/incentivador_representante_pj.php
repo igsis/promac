@@ -2,14 +2,14 @@
 $con = bancoMysqli();
 $idPj = $_SESSION['idUser'];
 
-$pj = recuperaDados("incentivador_pessoaJuridica","idPj",$idPj);
+$pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
 
 // Edita os dados do representante
 if(isset($_POST['apagaRepresentante']))
 {
 	$idPj = $_POST['apagaRepresentante'];
 
-	$sql_apaga_rep1 = "UPDATE incentivador_pessoaJuridica SET idRepresentanteLegal = '0'
+	$sql_apaga_rep1 = "UPDATE incentivador_pessoa_juridica SET idRepresentanteLegal = '0'
 	WHERE `idPj` = '$idPj'";
 
 	if(mysqli_query($con,$sql_apaga_rep1))

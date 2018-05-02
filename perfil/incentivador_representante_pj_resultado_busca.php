@@ -2,7 +2,7 @@
 $con = bancoMysqli();
 $idPj = $_SESSION['idUser'];
 
-$pj = recuperaDados("incentivador_pessoaJuridica","idPj",$idPj);
+$pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
 
 if(isset($_POST['busca']))
 {

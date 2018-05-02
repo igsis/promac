@@ -155,7 +155,7 @@ if(isset($_POST['liberacaoPJ']))
 			<div class="col-md-offset-1 col-md-10">
 				<div class="table-responsive list_info">
 				<?php
-					$sql = "SELECT * FROM incentivador_pessoaFisica WHERE liberado = 1 LIMIT 0,10";
+					$sql = "SELECT * FROM incentivador_pessoa_fisica WHERE liberado = 1 LIMIT 0,10";
 					$query = mysqli_query($con,$sql);
 					$num = mysqli_num_rows($query);
 					if($num > 0)
@@ -209,7 +209,7 @@ if(isset($_POST['liberacaoPJ']))
 			<div class="col-md-offset-1 col-md-10">
 				<div class="table-responsive list_info">
 					<?php
-					$sql = "SELECT * FROM incentivador_pessoaJuridica WHERE liberado = 1 LIMIT 0,10";
+					$sql = "SELECT * FROM incentivador_pessoa_juridica WHERE liberado = 1 LIMIT 0,10";
 					$query = mysqli_query($con,$sql);
 					$num = mysqli_num_rows($query);
 					if($num > 0)

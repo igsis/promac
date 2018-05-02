@@ -16,7 +16,7 @@ if(isset($_POST['busca']))
 	else
 	{
 		$busca = $_POST['busca'];
-		$sql_busca = "SELECT * FROM incentivador_pessoaJuridica WHERE cnpj = '$busca' ORDER BY razaoSocial";
+		$sql_busca = "SELECT * FROM incentivador_pessoa_juridica WHERE cnpj = '$busca' ORDER BY razaoSocial";
 		$query_busca = mysqli_query($con,$sql_busca);
 		$num_busca = mysqli_num_rows($query_busca);
 	}

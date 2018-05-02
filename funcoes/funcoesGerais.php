@@ -112,7 +112,7 @@ function autenticaloginpj($login, $senha)
 
 function autenticaloginincentivadorpf($login, $senha)
 {
-	$sql = "SELECT * FROM incentivador_pessoaFisica AS pf
+	$sql = "SELECT * FROM incentivador_pessoa_fisica AS pf
 	WHERE pf.cpf = '$login' LIMIT 0,1";
 	$con = bancoMysqli();
 	$query = mysqli_query($con,$sql);
@@ -154,7 +154,7 @@ function autenticaloginincentivadorpf($login, $senha)
 
 function autenticaloginincentivadorpj($login, $senha)
 {
-	$sql = "SELECT * FROM incentivador_pessoaJuridica AS pj
+	$sql = "SELECT * FROM incentivador_pessoa_juridica AS pj
 	WHERE pj.cnpj = '$login' LIMIT 0,1";
 	$con = bancoMysqli();
 	$query = mysqli_query($con,$sql);

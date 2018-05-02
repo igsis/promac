@@ -3,7 +3,7 @@ $con = bancoMysqli();
 $tipoPessoa = '5';
 
 $idPj = $_SESSION['idUser'];
-$pj = recuperaDados("incentivador_pessoaJuridica","idPj",$idPj);
+$pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
 $rl = recuperaDados("representante_legal","idRepresentanteLegal",$idPj);
 $campos = array($pj['razaoSocial'], $pj['cnpj'], $pj['email'], $pj['cep'], $pj['numero']);
 $cpo = false;
@@ -27,7 +27,7 @@ endif;
 if(isset($_POST['liberacao']))
 {
 	$date = date('Y:m:d H:i:s');
-	$sql_liberacao = "UPDATE incentivador_pessoaJuridica SET liberado = 1, dataInscricao = '$date' WHERE idPj = '$idPj'";
+	$sql_liberacao = "UPDATE incentivador_pessoa_juridica SET liberado = 1, dataInscricao = '$date' WHERE idPj = '$idPj'";
 	if(mysqli_query($con,$sql_liberacao))
 	{
 		$mensagem = "Sua inscrição foi enviada à SMC!";
