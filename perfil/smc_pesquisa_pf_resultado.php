@@ -43,7 +43,7 @@ if($num > 0)
 	$i = 0;
 	while($lista = mysqli_fetch_array($query))
 	{
-		$projeto = recuperaDados("projeto","idPf",$lista['idPf']);
+		$projeto = recuperaDadosProjeto("projeto","idPf",$lista['idPf']);
 		$status = recuperaDados("status","idStatus",$projeto['idStatus']);
 		$x[$i]['idPf'] = $lista['idPf'];
 		$x[$i]['nome'] = $lista['nome'];
@@ -82,7 +82,7 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 						<td>Email</td>
 						<td>Telefone</td>
 						<td>Status do Proponente</td>
-						<td>Projeto Enviado</td>
+						<td>Último Projeto Enviado</td>
 						<td>Status do Projeto</td>
 						<td width='10%'></td>
 					</tr>
