@@ -6,38 +6,7 @@ $tipoPessoa = '1';
 $idPf = $_SESSION['idUser'];
 $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 $statusProjeto = recuperaStatus("statusprojeto");
-// $campos = array($pf['nome'], $pf['cpf'], $pf['rg'], $pf['email'], $pf['cep'], $pf['numero']);
-// $cpo = false;
 
-// foreach ($campos as $cpos) {
-// 	if ($cpos == null)
-// 	{
-// 		$cpo = true;
-// 	}
-// }
-
-// /**Arquivos Obrigatórios**/
-
-// if(isset($tipoPessoa)):      
-//   $tipoDoc = 'proponente';  
-//   $idUser = $idPf;
-//   $idProjeto = 0; /*Incluso devido a busca pelos anexos*/
-//   require_once('validacaoArquivosObrigatorios.php');
-// endif;
-
-// if(isset($_POST['liberacao']))
-// {
-// 	$date = date('Y:m:d H:i:s');
-// 	$sql_liberacao = "UPDATE pessoa_fisica SET liberado = 1, dataInscricao = '$date' WHERE idPf = '$idPf'";
-// 	if(mysqli_query($con,$sql_liberacao))
-// 	{
-// 		echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=?perfil=projeto_pf'>";
-// 	}
-// 	else
-// 	{
-// 		$mensagem = "<font color='#01DF3A'><strong>Erro ao atualizar! Tente novamente.</strong></font> <br/>".$sql_atualiza_pf;
-// 	}
-// }
 
 if(isset($_POST['apagar']))
 {
