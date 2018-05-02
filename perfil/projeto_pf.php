@@ -36,42 +36,13 @@ if(isset($_POST['apagar']))
 			<div class="row">
 				<div class="col-md-offset-1 col-md-10">
 				<?php
-					if($pf['liberado'] == 0) // ainda não foi solicitado liberação
+					if ($pf['liberado'] == 0)
 					{
-					include 'includes/resumo_pf.php';
-					?>
-					<div class="alert alert-info">
-						Após o preenchimento de todos os dados pessoais, conclua a inscrição do proponente e aguarde a análise da sua documentação pela Secretaria Municipal de Cultura.
-					</div>
-						<div class="form-group">
-							<div class="col-md-offset-2 col-md-8">
-								<?php
-								if ($cpo == false)
-								{
-									$idPess = $pf['idPf'];
-									$queryArquivos = "SELECT idUploadArquivo FROM upload_arquivo WHERE idPessoa = $idPess AND idTipo = '1' AND publicado = '1'";
-									$enviaArquivos = mysqli_query($con, $queryArquivos);
-									$numRow = mysqli_num_rows($enviaArquivos);
-
-									if($numRow >= 6)
-									{?>
-								<form class="form-horizontal" role="form" action="?perfil=projeto_pf" method="post">
-									<input type="submit" name="liberacao" value="Concluir inscrição do proponente" class="btn btn-theme btn-lg btn-block">
-								</form>
-								<?php
-								}
-								else{
-									echo "<div class='alert alert-warning'>
-									<strong>Erro: </strong> Você deve enviar todos os documentos para prosseguir.
-									</div>";
-								}
-							}?>
-							</div>
-						</div>
-				</div>
-				<?php
+						echo "<div class='alert alert-warning'>
+				  		<strong></strong>Aguardando Aprovação da Inscrição.
+						</div>";
 					}
-					elseif($pf['liberado'] == 1)// foi solicitado liberação, porém a SMC não analisou ainda.
+					if($pf['liberado'] == 1)// foi solicitado liberação, porém a SMC não analisou ainda.
 					{
 				?>
 						<div class="alert alert-success">
@@ -79,40 +50,7 @@ if(isset($_POST['apagar']))
 						</div>
 				<?php
 					}
-					elseif(($pf['liberado'] == 2) || ($pf['liberado'] == 4))// a liberação de projetos foi rejeitada pela SMC.
-					{
-					
-						if ($pf['liberado'] == 2)
-						{
-				?>
-						<div class="alert alert-danger">
-							<strong>Sua solicitação para a liberação de envio de projetos foi rejeitada pela Secretaria Municipal de Cultura.</strong>
-						</div>
-				<?php 
-						}
-						else
-						{
-
-				?>
-						<div class="alert alert-danger">
-							<strong>Seu cadastro foi desbloqueado para edição</strong>
-						</div>
-						<div>
-				<?php 
-						}
-				?>
-					 		<?php listaArquivosPessoaObs($idPf,1) ?>
-					 	</div>
-					 	<div class="form-group">
-							<div class="col-md-offset-2 col-md-8">
-								<form class="form-horizontal" role="form" action="?perfil=projeto_pf" method="post">
-									<input type="submit" name="liberacao" value="Concluir inscrição do proponente" class="btn btn-theme btn-lg btn-block">
-								</form>
-							</div>
-						</div>
-				<?php
-					}
-					else // liberação concedida pela SMC - liberado = 3
+					if ($pf['liberado'] == 3)
 					{
 				?>
 				<!--Inicio da validação numero de projetos-->

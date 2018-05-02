@@ -121,7 +121,7 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 ?>
 
 <section id="list_items" class="home-section bg-white">
-	<div class="container"><?php include 'includes/menu_interno_pf.php'; ?>
+	<div class="container"><?php if ($pf['liberado'] != 3){include 'includes/menu_interno_pf.php';} ?>
 		<div class="form-group">
 			<h5><?php if(isset($mensagem)){echo $mensagem;};?></h5>
 		</div>
@@ -302,7 +302,7 @@ if($pf['liberado'] == 3)
 	echo "<br><div class='alert alert-warning'>
   	<strong>Aviso!</strong> Seus dados já foram aceitos, portanto, não podem ser alterados.</div>";
 
-  	//include 'resumo_arquivos_usuario.php';
+  	include 'resumo_arquivos_usuario.php';
 
 } 
 ?>

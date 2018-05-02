@@ -121,7 +121,7 @@ $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 ?>
 
 <section id="list_items" class="home-section bg-white">
-	<div class="container"><?php include 'includes/menu_interno_pj.php'; ?>
+	<div class="container"><?php if ($pj['liberado'] == 0){include 'includes/menu_interno_pj.php';} ?>
 		<div class="form-group">
 			<!-- <h4>Resultado da Inscrição</h4> -->
 			<h5><?php if(isset($mensagem)){echo $mensagem;};?></h5>
@@ -280,14 +280,7 @@ $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 				} // Fim liberado 2 e 4
 				?>
 				
-				<?php 
-				if($pj['liberado'] == 3)
-				{
-					echo "<div class='alert alert-warning'>
-				  	<strong>Aviso!</strong> Seus dados já foram aceitos, portanto, não podem ser alterados.</div>";
 
-				} // Fim liberado 3
-				?>
 				<!-- Confirmação de Exclusão -->
 					<div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel" aria-hidden="true">
 						<div class="modal-dialog">
@@ -308,6 +301,15 @@ $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 					</div>
 				<!-- Fim Confirmação de Exclusão -->
 			</div>
+				<?php 
+				if($pj['liberado'] == 3)
+				{
+					echo "<div class='alert alert-warning'>
+				  	<strong>Aviso!</strong> Seus dados já foram aceitos, portanto, não podem ser alterados.</div>";
+				  	include 'resumo_arquivos_usuario.php';
+
+				} // Fim liberado 3
+				?>
 		</div>
 	</div>
 </section>
