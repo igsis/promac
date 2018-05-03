@@ -38,10 +38,12 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('L1', 'Celular')
             ->setCellValue('M1', 'E-mail')
             ->setCellValue('N1', 'Cooperado')
-            ->setCellValue('O1', 'Nível de Acesso');
+            ->setCellValue('O1', 'Nível de Acesso')
+            ->setCellValue('P1', 'Status')
+            ->setCellValue('Q1', 'Data da Inscrição');
 
 //Colorir a primeira fila
-$objPHPExcel->getActiveSheet()->getStyle('A1:O1')->applyFromArray(
+$objPHPExcel->getActiveSheet()->getStyle('A1:Q1')->applyFromArray(
    array(
       'fill' => array(
          'type' => PHPExcel_Style_Fill::FILL_SOLID,
@@ -70,6 +72,29 @@ while($row = mysqli_fetch_array($query))
    else
       {$nivelAcesso = 'Comissão';}
 
+   if(($row['liberado'] == 0) || ($row['liberado'] == NULL))
+   {
+      $status = "Em Elaboração";
+   }
+   elseif ($row['liberado'] == 1)
+   {
+      $status = "Liberação Solicitada";
+   }
+   elseif ($row['liberado'] == 2)
+   {
+      $status = "Proponente Reprovado";
+   }
+   elseif ($row['liberado'] == 3)
+   {
+      $status = "Proponente Aprovado";  
+   }
+   else
+   {
+      $status = "Cadastro Liberado para Edição";
+   }
+   $dataInscricao = $row['dataInscricao'];
+   $dataInscricao = retornaDataSemHora($dataInscricao);
+
    $a = "A".$i;
    $b = "B".$i;
    $c = "C".$i;
@@ -85,6 +110,8 @@ while($row = mysqli_fetch_array($query))
    $m = "M".$i;
    $n = "N".$i;
    $o = "O".$i;
+   $p = "P".$i;
+   $q = "Q".$i;
 
    $objPHPExcel->setActiveSheetIndex(0)
                ->setCellValue($a, $row['nome'])
@@ -101,7 +128,9 @@ while($row = mysqli_fetch_array($query))
                ->setCellValue($l, $row['celular'])
                ->setCellValue($m, $row['email'])
                ->setCellValue($n, $cooperado)
-               ->setCellValue($o, $nivelAcesso);
+               ->setCellValue($o, $nivelAcesso)
+               ->setCellValue($p, $status)
+               ->setCellValue($q, $row['dataInscricao']);
    $i++;
 }
 foreach (range('A', $objPHPExcel->getActiveSheet()->getHighestDataColumn()) as $col)

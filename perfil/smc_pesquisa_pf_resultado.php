@@ -98,7 +98,7 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 						echo "<td class='list_description'>".$x[$h]['email']."</td>";
 						echo "<td class='list_description'>".$x[$h]['telefone']."</td>";
 						if($x[$h]['liberado'] == 0 || $x[$h]['liberado'] == NULL) { echo "<td class='list_description'>Em elaboração</td>";}
-						if($x[$h]['liberado'] == 1) { echo "<td class='list_description'>Acesso aos dados cadastrais</td>";}
+						if($x[$h]['liberado'] == 1) { echo "<td class='list_description'>Liberação Solicitada</td>";}
 						if($x[$h]['liberado'] == 2) { echo "<td class='list_description'>Proponente Reprovado</td>";}
 						if($x[$h]['liberado'] == 3) { echo "<td class='list_description'>Proponente Aprovado</td>";}
 						if($x[$h]['liberado'] == 4) { echo "<td class='list_description'>Liberado para Edição</td>";}

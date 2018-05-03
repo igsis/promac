@@ -49,10 +49,12 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('W1', 'CEP')
             ->setCellValue('X1', 'Telefone')
             ->setCellValue('Y1', 'Celular')
-            ->setCellValue('Z1', 'E-mail');
+            ->setCellValue('Z1', 'E-mail')
+            ->setCellValue('AA1', 'Status')
+            ->setCellValue('AB1', 'Data da Inscrição');
 
 //Colorir a primeira fila
-$objPHPExcel->getActiveSheet()->getStyle('A1:Z1')->applyFromArray(
+$objPHPExcel->getActiveSheet()->getStyle('A1:AB1')->applyFromArray(
    array(
       'fill' => array(
          'type' => PHPExcel_Style_Fill::FILL_SOLID,
@@ -73,6 +75,29 @@ while($row = mysqli_fetch_array($query))
       $cooperativa = 'Sim';
    else
       $cooperativa = 'Não';
+
+   if(($row['liberado'] == 0) || ($row['liberado'] == NULL))
+   {
+      $status = "Em Elaboração";
+   }
+   elseif ($row['liberado'] == 1)
+   {
+      $status = "Liberação Solicitada";
+   }
+   elseif ($row['liberado'] == 2)
+   {
+      $status = "Proponente Reprovado";
+   }
+   elseif ($row['liberado'] == 3)
+   {
+      $status = "Proponente Aprovado";  
+   }
+   else
+   {
+      $status = "Cadastro Liberado para Edição";
+   }
+   $dataInscricao = $row['dataInscricao'];
+   $dataInscricao = retornaDataSemHora($dataInscricao);
 
    $rl = recuperaDados("representante_legal","idRepresentanteLegal",$row['idRepresentanteLegal']);
 
@@ -102,6 +127,8 @@ while($row = mysqli_fetch_array($query))
    $x = "X".$i;
    $y = "Y".$i;
    $z = "Z".$i;
+   $aa = "AA".$i;
+   $ab = "AB".$i;
 
    $objPHPExcel->setActiveSheetIndex(0)
                ->setCellValue($a, $row['razaoSocial'])
@@ -130,6 +157,8 @@ while($row = mysqli_fetch_array($query))
                ->setCellValue($x, $row['telefone'])
                ->setCellValue($y, $row['celular'])
                ->setCellValue($z, $row['email'])
+               ->setCellValue($aa, $status)
+               ->setCellValue($ab, $dataInscricao)
                ;
    $i++;
 }
