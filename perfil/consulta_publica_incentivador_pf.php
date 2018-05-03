@@ -29,6 +29,7 @@ $total = mysqli_num_rows($query_lista);
 	<div class="container">
 		<div class="sub-title"><h4>INCENTIVADOR PESSOA FÍSICA INSCRITOS</h4>
 		</div>
+		<?php include 'includes/menu_consulta_publica.php'; ?>
 		<p><strong>Total de registros:</strong> <?php echo $total_geral;?> | <strong>Registros nesta página:</strong> <?php echo $total;?></p>
 		<div class="table-responsive list_info">
 			<table class="table table-condensed">
