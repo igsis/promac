@@ -18,7 +18,7 @@ if(isset($_POST['apagaRepresentante']))
 		gravarLog($sql_apaga_rep1);
 	?>
 		<script language="JavaScript">
-			window.location = "?perfil=representante_pj";
+			window.location = "?perfil=incentivador_representante_pj";
 		</script>
 	<?php
 	}

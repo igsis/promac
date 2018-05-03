@@ -226,7 +226,7 @@ else{
 				<!-- Botão para Trocar o Representante -->
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
-						<form method='POST' action='?perfil=representante_pj'>
+						<form method='POST' action='?perfil=incentivador_representante_pj'>
 							<input type="hidden" name="apagaRepresentante" value="<?php echo $idPj ?>">
 							<input type="submit" value="Trocar o Representante" class="btn btn-theme btn-lg btn-block">
 						</form>
