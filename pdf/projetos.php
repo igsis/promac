@@ -63,27 +63,29 @@ while($row = mysqli_fetch_array($query))
   if (!$enviaL) {
     printf("Error: %s\n", mysqli_error($con));
     exit();
-  }
-
+  }*/
+  $queryL = "SELECT local, estimativaPublico FROM locais_realizacao WHERE idProjeto = '$idP'";
+  $enviaL = mysqli_query($con, $idP);
   while($rowL = mysqli_fetch_array($enviaL))
   {
     $localR = $rowL['local'];
     $estimativaP = $rowL['estimativaPublico'];
-  }*/
+  }
 
   $queryR = "SELECT idZona FROM locais_realizacao WHERE idProjeto = '$idP'";
   $idZona = mysqli_query($con, $queryR);
   while($idz = mysqli_fetch_array($idZona))
   {
     $idZZ = $idz['idZona'];
+      $queryZ = "SELECT zona FROM zona WHERE idZona = '$idZZ'";
+      $enviaZ = mysqli_query($con, $queryZ);
+      while($zonas = mysqli_fetch_array($enviaZ))
+      {
+          $zonaString = $zonas['zona'];
+      }
   }
 
-  $queryZ = "SELECT zona FROM zona WHERE idZona = '$idZZ'";
-  $enviaZ = mysqli_query($con, $queryZ);
-  while($zonas = mysqli_fetch_array($enviaZ))
-  {
-      $zonaString = $zonas['zona'];
-  }
+
 
   $queryF = "SELECT nome FROM ficha_tecnica WHERE idProjeto = '$idP'";
   $enviaF = mysqli_query($con, $queryF);
