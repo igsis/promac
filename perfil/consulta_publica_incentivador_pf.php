@@ -34,7 +34,7 @@ $total = mysqli_num_rows($query_lista);
 			<table class="table table-condensed">
 				<thead>
 					<tr class="list_menu">
-						<td>Razão Social</td>
+						<td>Nome</td>
 					</tr>
 				</thead>
 				<tbody>
