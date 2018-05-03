@@ -18,7 +18,7 @@ foreach ($campos as $cpos) {
 if(isset($_POST['liberacao']))
 {
 	$date = date('Y:m:d H:i:s');
-	$sql_liberacao = "UPDATE pessoa_juridica SET liberado = 1, dataInscricao WHERE idPj = '$idPj'";
+	$sql_liberacao = "UPDATE pessoa_juridica SET liberado = 1, dataInscricao = '$date' WHERE idPj = '$idPj'";
 	if(mysqli_query($con,$sql_liberacao))
 	{
 		echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=?perfil=resultado_inscricao_pj'>";
