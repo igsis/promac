@@ -17,7 +17,7 @@
 			</tr>
 		</table>
 	</div>
-	<!--
+	
 	<div class="container">
 		<div class="col-md-12">
 		<?php
@@ -29,7 +29,7 @@
 		?>
 		</div>
 	</div>
-	-->
+	
 </footer>
 
 <script src="visual/js/bootstrap.min.js"></script>
