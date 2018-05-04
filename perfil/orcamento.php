@@ -262,6 +262,10 @@ if(isset($_POST['apagaOrcamento']))
 				</div>
 			</div>
 		</div>
+
+		<div class="table-responsive list_info"><h8><strong>Observação:</strong> Caso o projeto comtemple outras fontes de recurso, poderá enviar uma planilha orçamentária completa em formato PDF na etapa ANEXOS (campo de upload <strong>Planilha Orçamentária Complementar</strong>).</h8>
+
+
 		<!-- Confirmação de Exclusão -->
 		<div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel" aria-hidden="true">
 			<div class="modal-dialog">
