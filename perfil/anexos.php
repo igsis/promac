@@ -182,8 +182,7 @@ if(isset($_POST['apagar']))
 
 				<div class="form-group">
 					<div class="col-md-12">
-						<div class="table-responsive list_info"><h6>Upload de Arquivo(s) Somente em PDF.</h6>
-						<div class="table-responsive list_info"><h6>O tamanho máximo do arquivo deve ser 5MB.</h6>
+						<div class="table-responsive list_info"><h6>Upload de Arquivo(s) Somente em PDF com tamanho máximo de 5MB.</h6>
 						<form method="POST" action="?perfil=anexos" enctype="multipart/form-data">
 							<table class='table table-condensed'>
 								<tr class='list_menu'>
