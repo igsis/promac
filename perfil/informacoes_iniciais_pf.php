@@ -39,6 +39,10 @@ if(isset($_POST['atualizarFisica']) and $_POST['numero'] and empty($endereço)):
   $Numero = $_POST['numero'];
   $Complemento = $_POST['complemento'];
   $cooperado = $_POST['cooperado'];
+  $idZona = $_POST['idZona'];
+  $idSubprefeitura = $_POST['idSubprefeitura'];
+  $idDistrito = $_POST['idDistrito'];
+
 
   $sql_atualiza_pf = 
     "UPDATE pessoa_fisica SET
@@ -54,7 +58,11 @@ if(isset($_POST['atualizarFisica']) and $_POST['numero'] and empty($endereço)):
 	  `cep` = '$cep',
 	  `numero` = '$Numero',
 	  `complemento` = '$Complemento',
-	  `cooperado` = '$cooperado'
+	  `cooperado` = '$cooperado',
+	  `idZona` = '$idZona',
+	  `idSubprefeitura` = '$idSubprefeitura',
+	  `idDistrito` = '$idDistrito'
+
 	WHERE `idPf` = '$idPf'";
 
 	if(mysqli_query($con,$sql_atualiza_pf)):	
@@ -305,6 +313,57 @@ else: ?>
 				   <?php endif ?>          
 			   </div>			   
 			</div>
+
+			<div class="form-group">
+			  <div class="col-md-offset-2 col-md-6"><strong>Zona *:</strong><br/>
+			  	<select class="form-control" name="idZona" required value="<?php 
+				          if(!empty($_POST['idZona'])):				            
+				            echo $_POST['idZona'];
+				          elseif(!empty($pf['idZona'])):
+				            echo $pf['idZona'];
+				          else:
+				            echo '';
+				          endif
+				        ?>"> 
+					<option value="0"></option>
+					<?php echo geraOpcao("zona","") ?>
+				</select>
+			   </div>
+
+			  <div class=" col-md-6"><strong>Subprefeitura *:</strong><br/>
+			   		  	<select class="form-control" name="idSubprefeitura" required value="<?php 
+				          if(!empty($_POST['idSubprefeitura'])):				            
+				            echo $_POST['idSubprefeitura'];
+				          elseif(!empty($pf['idSubprefeitura'])):
+				            echo $pf['idSubprefeitura'];
+				          else:
+				            echo '';
+				          endif
+				        ?>"> 
+					<option value="0"></option>
+					<?php echo geraOpcao("subprefeitura","") ?>
+				</select>
+			   </div>
+			</div>
+
+			<div class="form-group">
+			  <div class="col-md-offset-2 col-md-6"><strong>Distrito *:</strong><br/>
+			  	<select class="form-control" name="idDistrito" required value="<?php 
+				          if(!empty($_POST['idDistrito'])):				            
+				            echo $_POST['idDistrito'];
+				          elseif(!empty($pf['idDistrito'])):
+				            echo $pf['idDistrito'];
+				          else:
+				            echo '';
+				          endif
+				        ?>"> 
+					<option value="0"></option>
+					<?php echo geraOpcao("distrito","") ?>
+				</select>
+			   </div>
+			</div>
+
+
 
 			<div class="form-group">
 			  <div class="col-md-offset-4 col-md-2">
