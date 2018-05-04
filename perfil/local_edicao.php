@@ -28,10 +28,10 @@ $local = recuperaDados("locais_realizacao", "idLocaisRealizacao", $idLocaisReali
 				<form method="POST" action="?perfil=local" class="form-horizontal" role="form">
 
 					<div class="form-group">
-						<div class="col-md-offset-2 col-md-4">
+						<div class="col-md-offset-1 col-md-4">
 							<label>Local *</label><br/>
 							<input type="text" name="local" class="form-control" maxlength="100" value="<?php echo $local['local'] ?>">
-						</div> 
+						</div>
 
 						<div class="col-md-2"><label>Público Estimado *</label><br/>
 							<input type="text" name="estimativaPublico" class="form-control" value="<?php echo $local['estimativaPublico'] ?>" required>
@@ -63,7 +63,7 @@ $local = recuperaDados("locais_realizacao", "idLocaisRealizacao", $idLocaisReali
 					</div>
 
 					<div class="form-group">
-						<div class="col-md-offset-2 col-md-8">
+						<div class="col-md-offset-1 col-md-10">
 							<input type="hidden" name="editaLocal" value="<?php echo $idLocaisRealizacao ?>">
 							<input type="submit" class="btn btn-theme btn-lg btn-block" value="Inserir">
 						</div>

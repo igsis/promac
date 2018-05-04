@@ -27,7 +27,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 				<form method="POST" action="?perfil=local" class="form-horizontal" role="form">
 
 					<div class="form-group">
-						<div class="col-md-offset-2 col-md-2">
+						<div class="col-md-offset-1 col-md-2">
 							<label>Local *</label><br/>
 							<input type="text" name="local" class="form-control" maxlength="100" required>
 						</div>
@@ -62,7 +62,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 					</div>
 
 					<div class="form-group">
-						<div class="col-md-offset-2 col-md-8">
+						<div class="col-md-offset-1 col-md-10">
 							<input type="submit" name="insereLocal" class="btn btn-theme btn-lg btn-block" value="Inserir">
 						</div>
 					</div>
