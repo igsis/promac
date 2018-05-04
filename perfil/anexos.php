@@ -90,7 +90,7 @@ if(isset($_POST["enviar"]))
 
 		if($f_size > 5242880) // 5MB em bytes
 		{
-			$mensagem = "<font color='#FF0000'><strong>Erro! Tamanho de arquivo excedido! Tamanho máximo permitido: 03 MB.</strong></font>";
+			$mensagem = "<font color='#FF0000'><strong>Erro! Tamanho de arquivo excedido! Tamanho máximo permitido: 05 MB.</strong></font>";
 		}
 		else
 		{
@@ -182,7 +182,8 @@ if(isset($_POST['apagar']))
 
 				<div class="form-group">
 					<div class="col-md-12">
-						<div class="table-responsive list_info"><h6>Upload de Arquivo(s) Somente em PDF</h6>
+						<div class="table-responsive list_info"><h6>Upload de Arquivo(s) Somente em PDF.</h6>
+						<div class="table-responsive list_info"><h6>O tamanho máximo do arquivo deve ser 5MB.</h6>
 						<form method="POST" action="?perfil=anexos" enctype="multipart/form-data">
 							<table class='table table-condensed'>
 								<tr class='list_menu'>
