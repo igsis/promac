@@ -20,7 +20,7 @@ $local = recuperaDados("locais_realizacao", "idLocaisRealizacao", $idLocaisReali
 		}
     	?>
 		<div class="form-group">
-			<h4>Cadastro de Projeto</h4>
+			<h4>Edição de Local</h4>
 			<p><strong><?php if(isset($mensagem)){echo $mensagem;} ?></strong></p>
 		</div>
 		<div class="row">
@@ -28,7 +28,7 @@ $local = recuperaDados("locais_realizacao", "idLocaisRealizacao", $idLocaisReali
 				<form method="POST" action="?perfil=local" class="form-horizontal" role="form">
 
 					<div class="form-group">
-						<div class="col-md-offset-1 col-md-4">
+						<div class="col-md-offset-1 col-md-2">
 							<label>Local *</label><br/>
 							<input type="text" name="local" class="form-control" maxlength="100" value="<?php echo $local['local'] ?>">
 						</div>
@@ -40,7 +40,7 @@ $local = recuperaDados("locais_realizacao", "idLocaisRealizacao", $idLocaisReali
 						<div class="col-md-2">
 							<label>Zona *</label>
 							<select class="form-control" name="idZona" required>
-								<option value="1"></option>
+								<option value="0"></option>
 								<?php echo geraOpcao("zona", $local['idZona']) ?>
 							</select>
 						</div>
@@ -49,7 +49,7 @@ $local = recuperaDados("locais_realizacao", "idLocaisRealizacao", $idLocaisReali
 							<label>Subprefeitura *</label>
 							<select class="form-control" name="idSubprefeitura" required>
 								<option value="0"></option>
-								<?php echo geraOpcao("subprefeitura","") ?>
+								<?php echo geraOpcao("subprefeitura",$local['idSubprefeitura']) ?>
 							</select>
 						</div>
 
@@ -57,7 +57,7 @@ $local = recuperaDados("locais_realizacao", "idLocaisRealizacao", $idLocaisReali
 							<label>Distrito *</label>
 							<select class="form-control" name="idDistrito" required>
 								<option value="0"></option>
-								<?php echo geraOpcao("distrito","") ?>
+								<?php echo geraOpcao("distrito",$local['idDistrito']) ?>
 							</select>
 						</div>
 					</div>

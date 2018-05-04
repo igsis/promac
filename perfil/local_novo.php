@@ -19,7 +19,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 		}
     	?>
 		<div class="form-group">
-			<h4>Cadastro de Projeto</h4>
+			<h4>Cadastro de Local</h4>
 			<p><strong><?php if(isset($mensagem)){echo $mensagem;} ?></strong></p>
 		</div>
 		<div class="row">
