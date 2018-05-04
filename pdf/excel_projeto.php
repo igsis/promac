@@ -32,125 +32,154 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('F1', 'Público estimado')
             ->setCellValue('G1', 'Zona')
             ->setCellValue('H1', 'Público alvo')
-            ->setCellValue('I1', 'Ficha técnica');
-            ->setCellValue('J1', 'Nome/Razão Social')
-            ->setCellValue('K1', 'CPF/CNPJ')
-            ->setCellValue('L1', 'Logradouro')
-            ->setCellValue('M1', 'Número')
-            ->setCellValue('N1', 'Complemento')
-            ->setCellValue('O1', 'Bairro')
-            ->setCellValue('P1', 'Cidade')
-            ->setCellValue('Q1', 'Estado')
-            ->setCellValue('R1', 'CEP');
+            ->setCellValue('I1', 'Ficha técnica')
+            ->setCellValue('J1', 'Status')
+            ->setCellValue('K1', 'Proponente')
+            ->setCellValue('L1', 'Documento')
+            ->setCellValue('M1', 'Logradouro')
+            ->setCellValue('N1', 'Número')
+            ->setCellValue('O1', 'Complemento')
+            ->setCellValue('P1', 'Bairro')
+            ->setCellValue('Q1', 'Cidade')
+            ->setCellValue('R1', 'Estado')
+            ->setCellValue('S1', 'CEP');
 
 //Colorir a primeira fila
-$objPHPExcel->getActiveSheet()->getStyle('A1:R1')->applyFromArray(
-   array(
-      'fill' => array(
-         'type' => PHPExcel_Style_Fill::FILL_SOLID,
-         'color' => array('rgb' => 'E0EEEE')
-      ),
-   )
-);
+$objPHPExcel->getActiveSheet()->getStyle('A1:S1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+$objPHPExcel->getActiveSheet()->getStyle('A1:S1')->getFill()->getStartColor()->setARGB('#29bb04');
+// Add some data
+$objPHPExcel->getActiveSheet()->getStyle("A1:S1")->getFont()->setBold(true);
+$objPHPExcel->getActiveSheet()->getStyle('A1:S1')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+$styleArray = array(
+      'borders' => array(
+          'allborders' => array(
+              'style' => PHPExcel_Style_Border::BORDER_THIN
+          )
+      )
+  );
+$objPHPExcel->getDefaultStyle()->applyFromArray($styleArray);
 
+$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(50);
+$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(50);
+$objPHPExcel->getActiveSheet()->getColumnDimension('E')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('F')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('G')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('H')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('I')->setWidth(50);
+$objPHPExcel->getActiveSheet()->getColumnDimension('J')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('K')->setWidth(50);
+$objPHPExcel->getActiveSheet()->getColumnDimension('L')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('M')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('N')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('O')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('P')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('Q')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('R')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('S')->setAutoSize(true);
 
 //Dados
-$sql = "SELECT nomeProjeto, valorProjeto, valorIncentivo, resumoProjeto FROM projeto ORDER BY protocolo";
+$sql = "SELECT idProjeto, nomeProjeto, valorProjeto, valorIncentivo, resumoProjeto, tipoPessoa, idPj, idPf, status
+         FROM projeto AS pr
+         INNER JOIN status AS st ON pr.idStatus = st.idStatus
+         WHERE publicado = 1 ORDER BY protocolo";
 $query = mysqli_query($con,$sql);
 $campo = mysqli_fetch_array($query);
 
-$sql_ficha = "SELECT nome FROM ficha_tecnica WHERE idProjeto = ''";
-
-$sql_
+//Recupera todos os integrantes daquele projeto
+function listaFicha($idProjeto)
+{
+   $con = bancoMysqli();
+   $sql_ficha = "SELECT * FROM ficha_tecnica WHERE idProjeto = '$idProjeto' AND publicado = '1'";
+   $query_ficha = mysqli_query($con,$sql_ficha);
+   $num = mysqli_num_rows($query_ficha);
+   if($num > 0)
+   {
+      $txt = "";
+      while($ficha = mysqli_fetch_array($query_ficha))
+      {
+         $txt .= $ficha['nome']." CPF: ".$ficha['cpf']." Função: ".$ficha['funcao'].", ";
+      }
+   }
+   else
+   {
+      $txt = "Não há integrantes inseridos";
+   }
+   return $txt;
+}
 
 $i = 2; // para começar a gravar os dados na segunda linha
 while($row = mysqli_fetch_array($query))
 {
-   if($row['cooperado'] == 1)
-      $cooperado = 'Sim';
-   else
-      $cooperado = 'Não';
-
-   if($row['idNivelAcesso'] == 1)
-      {$nivelAcesso = 'Proponente';}
-   elseif($row['idNivelAcesso'] == 2)
-      {$nivelAcesso = 'SMC';}
-   else
-      {$nivelAcesso = 'Comissão';}
-
-   if(($row['liberado'] == 0) || ($row['liberado'] == NULL))
+   if($row['tipoPessoa'] == 2)
    {
-      $status = "Em Elaboração";
-   }
-   elseif ($row['liberado'] == 1)
-   {
-      $status = "Liberação Solicitada";
-   }
-   elseif ($row['liberado'] == 2)
-   {
-      $status = "Proponente Reprovado";
-   }
-   elseif ($row['liberado'] == 3)
-   {
-      $status = "Proponente Aprovado";  
+      $pj = recuperaDados("pessoa_juridica","idPj",$row['idPj']);
+      $proponente = $pj['razaoSocial'];
+      $documento = $pj['cnpj'];
+      $logradouro = $pj['logradouro'];
+      $numero = $pj['numero'];
+      $complemento = $pj['complemento'];
+      $bairro = $pj['bairro'];
+      $cidade = $pj['cidade'];
+      $estado = $pj['estado'];
+      $cep = $pj['cep'];
    }
    else
    {
-      $status = "Cadastro Liberado para Edição";
+      $pf = recuperaDados("pessoa_fisica","idPf",$row['idPf']);
+      $proponente = $pf['nome'];
+      $documento = $pf['cpf'];
+      $logradouro = $pf['logradouro'];
+      $numero = $pf['numero'];
+      $complemento = $pf['complemento'];
+      $bairro = $pf['bairro'];
+      $cidade = $pf['cidade'];
+      $estado = $pf['estado'];
+      $cep = $pf['cep'];
    }
-   $dataInscricao = $row['dataInscricao'];
-   $dataInscricao = retornaDataSemHora($dataInscricao);
 
-   $a = "A".$i;
-   $b = "B".$i;
-   $c = "C".$i;
-   $d = "D".$i;
-   $e = "E".$i;
-   $f = "F".$i;
-   $g = "G".$i;
-   $h = "H".$i;
-   $I = "I".$i;
-   $j = "J".$i;
-   $k = "K".$i;
-   $l = "L".$i;
-   $m = "M".$i;
-   $n = "N".$i;
-   $o = "O".$i;
-   $p = "P".$i;
-   $q = "Q".$i;
+   $lista_ficha = listaFicha($row['idProjeto']);
+
+
+   $objPHPExcel->getActiveSheet()->getStyle('A'.$i.'')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+   $objPHPExcel->getActiveSheet()->getStyle('B'.$i.'')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+   $objPHPExcel->getActiveSheet()->getStyle('C'.$i.'')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+   $objPHPExcel->getActiveSheet()->getStyle('D'.$i.'')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+   $objPHPExcel->getActiveSheet()->getStyle('E'.$i.'')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+   $objPHPExcel->getActiveSheet()->getStyle('F'.$i.'')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+   $objPHPExcel->getActiveSheet()->getStyle('G'.$i.'')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+   $objPHPExcel->getActiveSheet()->getStyle('H'.$i.'')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+   $objPHPExcel->getActiveSheet()->getStyle('I'.$i.'')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
 
    $objPHPExcel->setActiveSheetIndex(0)
-               ->setCellValue($a, $row['nome'])
-               ->setCellValue($b, $row['cpf'])
-               ->setCellValue($c, $row['rg'])
-               ->setCellValue($d, $row['logradouro'])
-               ->setCellValue($e, $row['numero'])
-               ->setCellValue($f, $row['complemento'])
-               ->setCellValue($g, $row['bairro'])
-               ->setCellValue($h, $row['cidade'])
-               ->setCellValue($I, $row['estado'])
-               ->setCellValue($j, $row['cep'])
-               ->setCellValue($k, $row['telefone'])
-               ->setCellValue($l, $row['celular'])
-               ->setCellValue($m, $row['email'])
-               ->setCellValue($n, $cooperado)
-               ->setCellValue($o, $nivelAcesso)
-               ->setCellValue($p, $status)
-               ->setCellValue($q, $row['dataInscricao']);
+               ->setCellValue('A'.$i, $row['nomeProjeto'])
+               ->setCellValue('B'.$i, $row['valorProjeto'])
+               ->setCellValue('C'.$i, $row['valorIncentivo'])
+               ->setCellValue('D'.$i, $row['resumoProjeto'])
+               ->setCellValue('E'.$i, "local")
+               ->setCellValue('F'.$i, "pub. est.")
+               ->setCellValue('G'.$i, "zona")
+               ->setCellValue('H'.$i, "pub. alvo")
+               ->setCellValue('I'.$i, $lista_ficha)
+               ->setCellValue('J'.$i, $row['status'])
+               ->setCellValue('K'.$i, $proponente)
+               ->setCellValue('L'.$i, $documento)
+               ->setCellValue('M'.$i, $logradouro)
+               ->setCellValue('N'.$i, $numero)
+               ->setCellValue('O'.$i, $complemento)
+               ->setCellValue('P'.$i, $bairro)
+               ->setCellValue('Q'.$i, $cidade)
+               ->setCellValue('R'.$i, $estado)
+               ->setCellValue('S'.$i, $cep);
    $i++;
-}
-foreach (range('A', $objPHPExcel->getActiveSheet()->getHighestDataColumn()) as $col)
-{
-   $objPHPExcel->getActiveSheet()
-               ->getColumnDimension($col)
-               ->setAutoSize(true);
 }
 
 $objPHPExcel->setActiveSheetIndex(0);
 ob_end_clean();
-    ob_start();
+ob_start();
 
-$nome_arquivo = date("Y-m-d")."_pessoa_fisica.xls";
+$nome_arquivo = date("Y-m-d H:i:s")."_projetos.xls";
 
 // Redirect output to a client’s web browser (Excel2007)
 header('Content-Type: text/html; charset=ISO-8859-1');
