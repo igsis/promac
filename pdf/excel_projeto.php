@@ -97,16 +97,44 @@ function listaFicha($idProjeto)
    if($num > 0)
    {
       $txt = "";
-      while($ficha = mysqli_fetch_array($query_ficha))
+      while($row = mysqli_fetch_array($query_ficha))
       {
-         $txt .= $ficha['nome']." CPF: ".$ficha['cpf']." Função: ".$ficha['funcao'].", ";
+         $txt .= $row['nome']." CPF: ".$row['cpf']." Função: ".$row['funcao']."\r";
       }
    }
    else
    {
       $txt = "Não há integrantes inseridos";
    }
-   return $txt;
+   return substr($txt,0,-1);
+}
+
+//Recupera todos os integrantes daquele projeto
+function listaLocal($idProjeto)
+{
+   $con = bancoMysqli();
+   $sql_local = "SELECT * FROM locais_realizacao WHERE idProjeto = '$idProjeto' AND publicado = '1'";
+   $query_local = mysqli_query($con,$sql_local);
+   $num = mysqli_num_rows($query_local);
+   if($num > 0)
+   {
+      $local = "";
+      $estimativa = "";
+      while($row = mysqli_fetch_array($query_local))
+      {
+         $local .= $row['local']."\r";
+         $estimativa .= $row['estimativaPublico']."\r";
+         $array = array(
+            "local" => substr($local,0,-1),
+            "estimativa" => substr($estimativa,0,-1)
+         );
+      }
+      return $array;
+   }
+   else
+   {
+      return "Não possui";
+   }
 }
 
 $i = 2; // para começar a gravar os dados na segunda linha
@@ -141,6 +169,10 @@ while($row = mysqli_fetch_array($query))
 
    $lista_ficha = listaFicha($row['idProjeto']);
 
+   $lista_local = listaLocal($row['idProjeto']);
+   $loc = $lista_local['local'];
+   $est = $lista_local['estimativa'];
+
 
    $objPHPExcel->getActiveSheet()->getStyle('A'.$i.'')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
    $objPHPExcel->getActiveSheet()->getStyle('B'.$i.'')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
@@ -157,8 +189,8 @@ while($row = mysqli_fetch_array($query))
                ->setCellValue('B'.$i, $row['valorProjeto'])
                ->setCellValue('C'.$i, $row['valorIncentivo'])
                ->setCellValue('D'.$i, $row['resumoProjeto'])
-               ->setCellValue('E'.$i, "local")
-               ->setCellValue('F'.$i, "pub. est.")
+               ->setCellValue('E'.$i, $loc)
+               ->setCellValue('F'.$i, $est)
                ->setCellValue('G'.$i, "zona")
                ->setCellValue('H'.$i, "pub. alvo")
                ->setCellValue('I'.$i, $lista_ficha)
