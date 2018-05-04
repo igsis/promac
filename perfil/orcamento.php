@@ -214,7 +214,7 @@ if(isset($_POST['apagaOrcamento']))
 									<tr class='list_menu'>
 										<td width='25%'>Etapa</td>
 										<td>Observações etapa</td>
-										<td>Descrição</td>
+										<td width='40%'>Descrição</td>
 										<td width='5%'>Qtde</td>
 										<td width='5%'>Unid. Med.</td>
 										<td width='5%'>Qtde Unid.</td>
