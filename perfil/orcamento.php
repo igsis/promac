@@ -212,12 +212,12 @@ if(isset($_POST['apagaOrcamento']))
 							<table class='table table-condensed'>
 								<thead>
 									<tr class='list_menu'>
-										<td width='25%'>Etapa</td>
+										<td width='20%'>Etapa</td>
 										<td>Observações etapa</td>
 										<td width='40%'>Descrição</td>
-										<td width='5%'>Qtde</td>
-										<td width='5%'>Unid. Med.</td>
-										<td width='5%'>Qtde Unid.</td>
+										<td width='10%'>Qtde</td>
+										<td width='10%'>Unid. Med.</td>
+										<td width='10%'>Qtde Unid.</td>
 										<td>Valor Unit.</td>
 										<td>Valor Total</td>
 										<td>Observações</td>
