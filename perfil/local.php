@@ -7,8 +7,11 @@ if(isset($_POST['insereLocal']))
 	$local = $_POST['local'];
 	$estimativaPublico = $_POST['estimativaPublico'];
 	$idZona = $_POST['idZona'];
+	$idSubprefeitura = $_POST['idSubprefeitura'];
+	$idDistrito = $_POST['idDistrito'];
 
-	$sql_insere_local = "INSERT INTO `locais_realizacao`(`idProjeto`, `local`, `estimativaPublico`, `idZona`, `publicado`) VALUES ('$idProjeto', '$local', '$estimativaPublico', '$idZona', 1)";
+
+	$sql_insere_local = "INSERT INTO `locais_realizacao`(`idProjeto`, `local`, `estimativaPublico`, `idZona`, `idSubprefeitura`, `idDistrito`, `publicado`) VALUES ('$idProjeto', '$local', '$estimativaPublico', '$idZona', '$idSubprefeitura', '$idDistrito', 1)";
 
 	if(mysqli_query($con,$sql_insere_local))
 	{
@@ -27,11 +30,17 @@ if(isset($_POST['editaLocal']))
 	$local = $_POST['local'];
 	$estimativaPublico = $_POST['estimativaPublico'];
 	$idZona = $_POST['idZona'];
+	$idSubprefeitura = $_POST['idSubprefeitura'];
+	$idDistrito = $_POST['idDistrito'];
+
+
 
 	$sql_edita_local = "UPDATE `locais_realizacao` SET
 	`local`= '$local',
 	`estimativaPublico`= '$estimativaPublico',
-	`idZona`= '$idZona'
+	`idZona`= '$idZona',
+	`idSubprefeitura`= '$idSubprefeitura',
+	`idDistrito`= '$idDistrito'
 	WHERE idLocaisRealizacao = '$idLocaisRealizacao'";
 	if(mysqli_query($con,$sql_edita_local))
 	{
@@ -96,6 +105,8 @@ if(isset($_POST['apagaLocal']))
 										<td>Local</td>
 										<td>Público estimado</td>
 										<td>Zona</td>
+										<td>Subprefeitura</td>
+										<td>Distrito</td>
 										<td width='10%'></td>
 										<td width='10%'></td>
 									</tr>
@@ -104,10 +115,14 @@ if(isset($_POST['apagaLocal']))
 								while($campo = mysqli_fetch_array($query))
 								{
 									$zona = recuperaDados("zona","idZona",$campo['idZona']);
+									$subprefeitura = recuperaDados("subprefeitura","idSubprefeitura",$campo['idSubprefeitura']);
+									$distrito = recuperaDados("distrito","idDistrito",$campo['idDistrito']);
 									echo "<tr>";
 									echo "<td class='list_description'>".$campo['local']."</td>";
 									echo "<td class='list_description'>".$campo['estimativaPublico']."</td>";
 									echo "<td class='list_description'>".$zona['zona']."</td>";
+									echo "<td class='list_description'>".$subprefeitura['subprefeitura']."</td>";
+									echo "<td class='list_description'>".$distrito['distrito']."</td>";
 									echo "<td class='list_description'>
 											<form method='POST' action='?perfil=local_edicao'>
 												<input type='hidden' name='editarLocal' value='".$campo['idLocaisRealizacao']."' />

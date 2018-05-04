@@ -44,6 +44,22 @@ $local = recuperaDados("locais_realizacao", "idLocaisRealizacao", $idLocaisReali
 								<?php echo geraOpcao("zona", $local['idZona']) ?>
 							</select>
 						</div>
+
+						<div class="col-md-2">
+							<label>Subprefeitura *</label>
+							<select class="form-control" name="idSubprefeitura" required>
+								<option value="0"></option>
+								<?php echo geraOpcao("subprefeitura","") ?>
+							</select>
+						</div>
+
+						<div class="col-md-2">
+							<label>Distrito *</label>
+							<select class="form-control" name="idDistrito" required>
+								<option value="0"></option>
+								<?php echo geraOpcao("distrito","") ?>
+							</select>
+						</div>
 					</div>
 
 					<div class="form-group">
