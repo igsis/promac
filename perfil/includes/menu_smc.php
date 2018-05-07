@@ -38,6 +38,7 @@ $pasta = "?perfil=";
 					<li><a href="?perfil=smc_gerenciar_projeto&id=2">Bloquear</a></li>
 				</ul>
 			</li>
+			<li><a href="<?php echo $pasta ?>smc_area_atuacao">Área atuação</a></li>
 			<li style="color:white;">-------------------------</li>
 			<li><a href="index.php?secao=perfil">Início</a></li>
 			<li><a href="<?php echo $pasta ?>senha">Alterar senha</a></li>
