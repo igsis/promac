@@ -3,12 +3,13 @@ $con = bancoMysqli();
 $idProjeto = $_SESSION['idProjeto'];
 $alterar = isset($_POST['alterar']) ? $_POST['alterar'] : null;
 
+$protocolo = geraProtocolo($idProjeto);
 if($alterar == 1 || $alterar == 0)
 {
 	/*
 		Caso esteja alterando após indeferimento, muda o status para enviado
 	*/
-	$queryInsert = "UPDATE projeto SET idStatus='2' WHERE idProjeto='$idProjeto'";
+	$queryInsert = "UPDATE projeto SET idStatus='2', protocolo = '$protocolo' WHERE idProjeto='$idProjeto'";
 	$sendValue = mysqli_query($con, $queryInsert);
 }
 

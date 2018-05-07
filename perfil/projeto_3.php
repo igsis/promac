@@ -3,7 +3,6 @@ $con = bancoMysqli();
 $idProjeto = $_SESSION['idProjeto'];
 $idPf = $_SESSION['idUser'];
 
-$protocolo = geraProtocolo($idProjeto);
 if(isset($_POST['insere']))
 {
 	$resumoProjeto = $_POST['resumoProjeto'];
@@ -11,7 +10,6 @@ if(isset($_POST['insere']))
 
 	$sql_insere = "UPDATE projeto SET
 		resumoProjeto = '$resumoProjeto',
-		protocolo = '$protocolo',
 		curriculo = '$curriculo'
 		WHERE idProjeto = '$idProjeto'";
 	if(mysqli_query($con,$sql_insere))
