@@ -31,25 +31,27 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('E1', 'Local')
             ->setCellValue('F1', 'Público estimado')
             ->setCellValue('G1', 'Zona')
-            ->setCellValue('H1', 'Público alvo')
-            ->setCellValue('I1', 'Ficha técnica')
-            ->setCellValue('J1', 'Status')
-            ->setCellValue('K1', 'Proponente')
-            ->setCellValue('L1', 'Documento')
-            ->setCellValue('M1', 'Logradouro')
-            ->setCellValue('N1', 'Número')
-            ->setCellValue('O1', 'Complemento')
-            ->setCellValue('P1', 'Bairro')
-            ->setCellValue('Q1', 'Cidade')
-            ->setCellValue('R1', 'Estado')
-            ->setCellValue('S1', 'CEP');
+            ->setCellValue('H1', 'Subprefeitura')
+            ->setCellValue('I1', 'Distrito')
+            ->setCellValue('J1', 'Público alvo')
+            ->setCellValue('K1', 'Ficha técnica')
+            ->setCellValue('L1', 'Status')
+            ->setCellValue('M1', 'Proponente')
+            ->setCellValue('N1', 'Documento')
+            ->setCellValue('O1', 'Logradouro')
+            ->setCellValue('P1', 'Número')
+            ->setCellValue('Q1', 'Complemento')
+            ->setCellValue('R1', 'Bairro')
+            ->setCellValue('S1', 'Cidade')
+            ->setCellValue('T1', 'Estado')
+            ->setCellValue('U1', 'CEP');
 
 //Colorir a primeira fila
-$objPHPExcel->getActiveSheet()->getStyle('A1:S1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
-$objPHPExcel->getActiveSheet()->getStyle('A1:S1')->getFill()->getStartColor()->setARGB('#29bb04');
+$objPHPExcel->getActiveSheet()->getStyle('A1:U1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+$objPHPExcel->getActiveSheet()->getStyle('A1:U1')->getFill()->getStartColor()->setARGB('#29bb04');
 // Add some data
-$objPHPExcel->getActiveSheet()->getStyle("A1:S1")->getFont()->setBold(true);
-$objPHPExcel->getActiveSheet()->getStyle('A1:S1')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+$objPHPExcel->getActiveSheet()->getStyle("A1:U1")->getFont()->setBold(true);
+$objPHPExcel->getActiveSheet()->getStyle('A1:U1')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
 $styleArray = array(
       'borders' => array(
           'allborders' => array(
@@ -78,6 +80,8 @@ $objPHPExcel->getActiveSheet()->getColumnDimension('P')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('Q')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('R')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('S')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('T')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('U')->setAutoSize(true);
 
 //Dados
 $sql = "SELECT idProjeto, nomeProjeto, valorProjeto, valorIncentivo, resumoProjeto, tipoPessoa, idPj, idPf, status
@@ -113,28 +117,57 @@ function listaFicha($idProjeto)
 function listaLocal($idProjeto)
 {
    $con = bancoMysqli();
-   $sql_local = "SELECT * FROM locais_realizacao WHERE idProjeto = '$idProjeto' AND publicado = '1'";
-   $query_local = mysqli_query($con,$sql_local);
-   $num = mysqli_num_rows($query_local);
-   if($num > 0)
-   {
-      $local = "";
-      $estimativa = "";
-      while($row = mysqli_fetch_array($query_local))
-      {
-         $local .= $row['local']."\r";
-         $estimativa .= $row['estimativaPublico']."\r";
-         $array = array(
+   
+   $sql_local = 
+     "SELECT 
+        LR.idLocaisRealizacao,
+        LR.idProjeto,
+        LR.local,
+        LR.estimativaPublico,
+        ZO.zona,        
+        SUBP.subprefeitura,
+        DIS.distrito,        
+        publicado 
+      FROM 
+        locais_realizacao AS LR
+      
+      INNER JOIN zona AS ZO  
+      ON ZO.idZona = LR.idZona  
+
+      INNER JOIN subprefeitura AS SUBP  
+      ON SUBP.idSubprefeitura = LR.idSubprefeitura 
+
+      INNER JOIN distrito AS DIS  
+      ON DIS.idDistrito = LR.idDistrito
+      
+      WHERE idProjeto = '$idProjeto' AND publicado = '1'";    
+
+     $query_local = mysqli_query($con,$sql_local);   
+     $num = mysqli_num_rows($query_local);
+     if($num > 0)
+     {
+        $local = "";
+        $estimativa = "";
+        $zona = "";
+        $subprefeitura = "";      
+        $distrito = "";
+        while($row = mysqli_fetch_array($query_local))
+        {
+          $local .= $row['local']."\r";
+          $estimativa .= $row['estimativaPublico']."\r";
+          $zona .= $row['zona']."\r";
+          $subprefeitura .= $row['subprefeitura']."\r";
+          $distrito .= $row['distrito']."\r";
+
+          $array = array(
             "local" => substr($local,0,-1),
-            "estimativa" => substr($estimativa,0,-1)
-         );
-      }
-      return $array;
-   }
-   else
-   {
-      return "Não possui";
-   }
+            "estimativa" => substr($estimativa,0,-1),
+            "zona" => substr($zona,0,-1),
+            "subprefeitura" => substr($subprefeitura,0,-1),
+            "distrito" => substr($distrito,0,-1));
+        }
+      return $array;         
+      }   
 }
 
 $i = 2; // para começar a gravar os dados na segunda linha
@@ -166,13 +199,9 @@ while($row = mysqli_fetch_array($query))
       $estado = $pf['estado'];
       $cep = $pf['cep'];
    }
-
+   
    $lista_ficha = listaFicha($row['idProjeto']);
-
-   $lista_local = listaLocal($row['idProjeto']);
-   $loc = $lista_local['local'];
-   $est = $lista_local['estimativa'];
-
+   $lista_local = listaLocal($row['idProjeto']);   
 
    $objPHPExcel->getActiveSheet()->getStyle('A'.$i.'')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
    $objPHPExcel->getActiveSheet()->getStyle('B'.$i.'')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
@@ -189,21 +218,23 @@ while($row = mysqli_fetch_array($query))
                ->setCellValue('B'.$i, $row['valorProjeto'])
                ->setCellValue('C'.$i, $row['valorIncentivo'])
                ->setCellValue('D'.$i, $row['resumoProjeto'])
-               ->setCellValue('E'.$i, $loc)
-               ->setCellValue('F'.$i, $est)
-               ->setCellValue('G'.$i, "zona")
-               ->setCellValue('H'.$i, "pub. alvo")
-               ->setCellValue('I'.$i, $lista_ficha)
-               ->setCellValue('J'.$i, $row['status'])
-               ->setCellValue('K'.$i, $proponente)
-               ->setCellValue('L'.$i, $documento)
-               ->setCellValue('M'.$i, $logradouro)
-               ->setCellValue('N'.$i, $numero)
-               ->setCellValue('O'.$i, $complemento)
-               ->setCellValue('P'.$i, $bairro)
-               ->setCellValue('Q'.$i, $cidade)
-               ->setCellValue('R'.$i, $estado)
-               ->setCellValue('S'.$i, $cep);
+               ->setCellValue('E'.$i, $lista_local['local'])        
+               ->setCellValue('F'.$i, $lista_local['estimativa'])        
+               ->setCellValue('G'.$i, $lista_local['zona'])
+               ->setCellValue('H'.$i, $lista_local['subprefeitura'])
+               ->setCellValue('I'.$i, $lista_local['distrito'])
+               ->setCellValue('J'.$i, "pub. alvo")
+               ->setCellValue('K'.$i, $lista_ficha)
+               ->setCellValue('L'.$i, $row['status'])
+               ->setCellValue('M'.$i, $proponente)
+               ->setCellValue('N'.$i, $documento)
+               ->setCellValue('O'.$i, $logradouro)
+               ->setCellValue('P'.$i, $numero)
+               ->setCellValue('Q'.$i, $complemento)
+               ->setCellValue('R'.$i, $bairro)
+               ->setCellValue('S'.$i, $cidade)
+               ->setCellValue('T'.$i, $estado)
+               ->setCellValue('U'.$i, $cep);
    $i++;
 }
 
@@ -229,4 +260,4 @@ header ('Pragma: public'); // HTTP/1.0
 
 $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
 $objWriter->save('php://output');
-?>
+   
