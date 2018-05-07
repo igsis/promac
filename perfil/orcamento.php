@@ -19,12 +19,12 @@ if(isset($_POST['insereOrcamento']))
 	$idUnidadeMedida = $_POST['idUnidadeMedida'];
 
 	$sql_insere = "INSERT INTO `orcamento`(`idProjeto`, `idEtapa`, `observacoesEtapa`, `descricao`, `quantidade`, `idUnidadeMedida`, `quantidadeUnidade`, `valorUnitario`, `valorTotal`, `observacoes`, `publicado`) VALUES ('$idProjeto', '$idEtapa', '$observacoesEtapa','$descricao', '$quantidade', '$idUnidadeMedida', '$quantidadeUnidade', '$valorUnitario', '$valorTotal', '$observacoes','1')";
-	
+
 	if(mysqli_query($con,$sql_insere))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Inserido com sucesso! Utilize o menu para avançar.</strong></font>";
 		gravarLog($sql_insere);
-	}	
+	}
 	else
 	{
 		$mensagem = "<font color='#FF0000'><strong>Erro ao inserir! Tente novamente.</strong></font>" .$sql_insere;
@@ -33,6 +33,10 @@ if(isset($_POST['insereOrcamento']))
 
 if(isset($_POST['editaOrcamento']))
 {
+	$etapas = $_POST['idEtapa'];
+	$obs_etapa = $_POST['observacoesEtapa'];
+	$und_medida = $_POST['idUnidadeMedida'];
+	$observacoes = $_POST['observacoes'];
 	$idOrcamento = $_POST['editaOrcamento'];
 	$sql_edita = "UPDATE orcamento SET
 	descricao = '$descricao',
@@ -146,7 +150,7 @@ if(isset($_POST['apagaOrcamento']))
 						<div class="col-md-2 col-md-offset-2">
 							<br/><label>Etapa *</label>
 							<select class="form-control" name="idEtapa">
-								
+
 							<option value="0"></option>
 								<?php echo geraOpcao("etapa","") ?>
 							</select>
@@ -198,7 +202,7 @@ if(isset($_POST['apagaOrcamento']))
 			<div class="form-group">
 				<div class="col-md-offset-2 col-md-8"><br></div>
 			</div>
-			<div class="col-md-offset-1 col-md-10">
+			<div class="col-md-12">
 				<div class="table-responsive list_info">
 				<?php
 					$sql = "SELECT * FROM orcamento
@@ -218,7 +222,7 @@ if(isset($_POST['apagaOrcamento']))
 										<td width='10%'>Qtde</td>
 										<td width='10%'>Unid. Med.</td>
 										<td width='10%'>Qtde Unid.</td>
-										<td>Valor Unit.</td>
+										<td width='10%'>Valor Unit.</td>
 										<td>Valor Total</td>
 										<td>Observações</td>
 										<td width='10%'></td>
@@ -232,15 +236,24 @@ if(isset($_POST['apagaOrcamento']))
 									$medida = recuperaDados("unidade_medida","idUnidadeMedida",$campo['idUnidadeMedida']);
 									echo "<tr>";
 									echo "<form method='POST' action='?perfil=orcamento'>";
-									echo "<td class='list_description'>".$etapa['etapa']."</td>";
-									echo "<td class='list_description'>".$campo['observacoesEtapa']."</td>";
+									echo "<td class='list_description'>
+										<select class='form-control' name='idEtapa'>";
+									echo geraOpcao('etapa',$etapa['idEtapa'])
+										."</select></td>";
+									echo "<td class='list_description'><input type='text' class='form-control' name='observacoesEtapa' maxlength='255' value='".$campo['observacoesEtapa']."'></td>";
+
 									echo "<td class='list_description'><input type='text' class='form-control' name='descricao' maxlength='255' value='".$campo['descricao']."'></td>";
 									echo "<td class='list_description'><input type='text' class='form-control' name='quantidade' value=".$campo['quantidade']."></td>";
-									echo "<td class='list_description'>".$medida['unidadeMedida']."</td>";
+
+									echo "<td class='list_description'>
+									<select class='form-control' name='idUnidadeMedida' required>";
+								 	echo 	geraOpcao('unidade_medida',$medida['idUnidadeMedida'])."
+									</select></td>";
+
 									echo "<td class='list_description'><input type='text' class='form-control' name='quantidadeUnidade' value=".$campo['quantidadeUnidade']."></td>";
 									echo "<td class='list_description'><input type='text' class='form-control' name='valorUnitario' id='valor' value=".dinheiroParaBr($campo['valorUnitario'])."></td>";
 									echo "<td class='list_description'>".dinheiroParaBr($campo['valorTotal'])."</td>";
-									echo "<td class='list_description'>".$campo['observacoes']."</td>";
+									echo "<td class='list_description'><input type='text' class='form-control' name='observacoes' value='".$campo['observacoes']."'></td>";
 									echo "<td class='list_description'>
 												<input type='hidden' name='editaOrcamento' value='".$campo['idOrcamento']."' />
 												<input type ='submit' class='btn btn-theme btn-block' value='Gravar'></td>";
