@@ -3,7 +3,7 @@ $con = bancoMysqli();
 
 //verifica a página atual caso seja informada na URL, senão atribui como 1ª página
 $pagina = (isset($_GET['pagina']))? $_GET['pagina'] : 1;
-$sql_lista = "SELECT nome FROM pessoa_fisica WHERE liberado = '3'";
+$sql_lista = "SELECT nome, email FROM pessoa_fisica WHERE liberado = '3'";
 $query_lista = mysqli_query($con,$sql_lista);
 
 //conta o total de itens
@@ -19,7 +19,7 @@ $numPaginas = ceil($total_geral/$registros);
 $inicio = ($registros*$pagina)-$registros;
 
 //seleciona os itens por página
-$sql_lista = "SELECT nome FROM pessoa_fisica WHERE liberado = '3' ORDER BY nome LIMIT $inicio,$registros";
+$sql_lista = "SELECT nome, email FROM pessoa_fisica WHERE liberado = '3' ORDER BY nome LIMIT $inicio,$registros";
 $query_lista = mysqli_query($con,$sql_lista);
 
 //conta o total de itens
@@ -35,7 +35,8 @@ $total = mysqli_num_rows($query_lista);
 			<table class="table table-condensed">
 				<thead>
 					<tr class="list_menu">
-						<td>Razão Social</td>
+						<td>Nome</td>
+						<td>E-mail</td>
 					</tr>
 				</thead>
 				<tbody>
@@ -44,6 +45,7 @@ $total = mysqli_num_rows($query_lista);
 				{
 					echo "<tr>";
 					echo "<td class='list_description'>".$campo['nome']."</td>";
+					echo "<td class='list_description'>".$campo['email']."</td>";
 					echo "</tr>";
 				}
 			?>

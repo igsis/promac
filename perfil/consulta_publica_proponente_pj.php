@@ -3,7 +3,7 @@ $con = bancoMysqli();
 
 //verifica a página atual caso seja informada na URL, senão atribui como 1ª página
 $pagina = (isset($_GET['pagina']))? $_GET['pagina'] : 1;
-$sql_lista = "SELECT razaoSocial FROM pessoa_juridica WHERE liberado = '3'";
+$sql_lista = "SELECT razaoSocial, email FROM pessoa_juridica WHERE liberado = '3'";
 $query_lista = mysqli_query($con,$sql_lista);
 
 //conta o total de itens
@@ -19,7 +19,7 @@ $numPaginas = ceil($total_geral/$registros);
 $inicio = ($registros*$pagina)-$registros;
 
 //seleciona os itens por página
-$sql_lista = "SELECT razaoSocial FROM pessoa_juridica WHERE liberado = '3' ORDER BY razaoSocial LIMIT $inicio,$registros";
+$sql_lista = "SELECT razaoSocial, email FROM pessoa_juridica WHERE liberado = '3' ORDER BY razaoSocial LIMIT $inicio,$registros";
 $query_lista = mysqli_query($con,$sql_lista);
 
 //conta o total de itens
@@ -36,6 +36,7 @@ $total = mysqli_num_rows($query_lista);
 				<thead>
 					<tr class="list_menu">
 						<td>Razão Social</td>
+						<td>E-mail</td>
 					</tr>
 				</thead>
 				<tbody>
@@ -44,6 +45,7 @@ $total = mysqli_num_rows($query_lista);
 				{
 					echo "<tr>";
 					echo "<td class='list_description'>".$campo['razaoSocial']."</td>";
+					echo "<td class='list_description'>".$campo['email']."</td>";
 					echo "</tr>";
 				}
 			?>
@@ -57,7 +59,7 @@ $total = mysqli_num_rows($query_lista);
 							for($i = 1; $i < $numPaginas + 1; $i++)
 							{
 								echo "<td>";
-								echo "<form method='POST' action='?perfil=consulta_publica_incentivador_pj&pagina=$i'>";
+								echo "<form method='POST' action='?perfil=consulta_publica_proponente_pj&pagina=$i'>";
 								echo "<button class='btn btn-theme btn-xs' type='submit' style='border-radius: 30px;' name='consulta' value='1'>$i</button>";
 								echo "</form>";
 								echo "</td>";

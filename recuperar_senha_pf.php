@@ -28,7 +28,6 @@
 		$email = $_POST['email'];
 		$pergunta = $_POST['frase'];
 		$resposta = $_POST['resposta'];
-		$pf = recuperaDados("pessoa_fisica","email",$email);
 
 	}
 ?>
@@ -65,12 +64,13 @@
 						<div class="form-group">
 							<label>Escolha sua Pergunta Secreta:</label>
 							<select class="form-control" name="frase" >
-								<option value="0"></option>
+								<option value="0">Selecione...</option>
 								<?php echo geraOpcao("frase_seguranca","") ?>
 							</select>
 						</div>
 						<div class="form-group">
 							<label>Digite Sua Resposta</label>
+							<?=$pf['email']?>
 							<input type="text" name="resposta" class="form-control">
 						</div>
 						<div class="form-group">
