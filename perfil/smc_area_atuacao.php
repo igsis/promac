@@ -21,10 +21,10 @@ if (isset($_POST['atualizar']))
 if (isset($_POST['apagar']))
 {
 	$id = $_POST['id'];
-	$sql_deleta = "DELETE FROM area_atuacao WHERE idArea = :id ";
+	$sql_deleta = "UPDATE area_atuacao SET publicado = '0' WHERE idArea = :id ";
 	$stmt = $conn->prepare($sql_deleta);
 	$stmt->bindParam(':id', $id);
-	
+
 	if ($stmt->execute())
 	{
 		$mensagem = "Área removida com sucesso!";
@@ -40,7 +40,7 @@ if (isset($_POST['inserir']))
 	$area = $_POST['nomeArea'];
 	$tipo = $_POST['tipoPessoa'];
 
-	$sql_insere = "INSERT INTO `area_atuacao` (`areaAtuacao`, `tipo`) VALUES (:areaAtuacao,:tipo)";
+	$sql_insere = "INSERT INTO `area_atuacao` (`areaAtuacao`, `tipo`,publicado) VALUES (:areaAtuacao,:tipo, '1')";
 	$stmt = $conn->prepare($sql_insere);
 	$stmt->bindParam(':areaAtuacao',$area);
 	$stmt->bindParam(':tipo',$tipo);
@@ -53,7 +53,7 @@ if (isset($_POST['inserir']))
 	}
 
 }
-$sql = "SELECT * FROM area_atuacao";
+$sql = "SELECT * FROM area_atuacao WHERE publicado = '1'";
 ?>
 <section id="list_items" class="home-section bg-white">
 	<div class="container"><?php include 'includes/menu_smc.php'; ?>
@@ -112,7 +112,7 @@ $sql = "SELECT * FROM area_atuacao";
 								<select name='tipoPessoa'>
 									<option value=".$row['tipo']."></option>
 									<option value='1'>Pessoa Física</option>
-									<option value='2'>Pessoa Jurídica</option>
+									<option value='2'>Pessoa Física e Júridica</option>
 								</select>
 								<br><br>
 								<input type='submit' name='atualizar' class='btn btn-theme btn-block' value='Savar'>
@@ -149,11 +149,11 @@ $sql = "SELECT * FROM area_atuacao";
 					    </div>
 					  </div>
 					</div>";
-            }
+            } // Inserir 
             	echo "<form action='' method='post' class='form-group'>";
              	echo "<tr>
 	                    <th scope='row'>$i</th>
-	                	    <td><input type='text' name='nomeArea' value='' class='form-control'></td>
+	                	    <td><input type='text' name='nomeArea' class='form-control' required></td>
 	                	 	<td><select name='tipoPessoa'>
 	                	 		<option value='1'>Pessoa Física</option>
 	                	 		<option value='2'>Pessoa Física e Júridica</option>
@@ -165,9 +165,6 @@ $sql = "SELECT * FROM area_atuacao";
 ?>
                 </tbody>     
             </table>
-
-			<!-- Modal -->
-
 		</div>	
 	</div>
 </section>
