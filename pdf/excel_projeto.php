@@ -36,16 +36,16 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('J1', 'Distrito')
             ->setCellValue('K1', 'Público alvo')
             ->setCellValue('L1', 'Ficha técnica')
-            ->setCellValue('M1', 'Status')
-            ->setCellValue('N1', 'Proponente')
-            ->setCellValue('O1', 'Documento')
-            ->setCellValue('P1', 'Logradouro')
-            ->setCellValue('Q1', 'Número')
-            ->setCellValue('R1', 'Complemento')
-            ->setCellValue('S1', 'Bairro')
-            ->setCellValue('T1', 'Cidade')
-            ->setCellValue('U1', 'Estado')
-            ->setCellValue('V1', 'CEP');
+            ->setCellValue('M1', 'Proponente')
+            ->setCellValue('N1', 'Documento')
+            ->setCellValue('O1', 'Logradouro')
+            ->setCellValue('P1', 'Número')
+            ->setCellValue('Q1', 'Complemento')
+            ->setCellValue('R1', 'Bairro')
+            ->setCellValue('S1', 'Cidade')
+            ->setCellValue('T1', 'Estado')
+            ->setCellValue('U1', 'CEP')
+            ->setCellValue('V1', 'Status');
 
 //Colorir a primeira fila
 $objPHPExcel->getActiveSheet()->getStyle('A1:V1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
@@ -74,10 +74,10 @@ $objPHPExcel->getActiveSheet()->getColumnDimension('I')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('J')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('K')->setWidth(50);
 $objPHPExcel->getActiveSheet()->getColumnDimension('L')->setWidth(50);
-$objPHPExcel->getActiveSheet()->getColumnDimension('M')->setAutoSize(true);
-$objPHPExcel->getActiveSheet()->getColumnDimension('N')->setWidth(50);
-$objPHPExcel->getActiveSheet()->getColumnDimension('O')->setAutoSize(true);
-$objPHPExcel->getActiveSheet()->getColumnDimension('P')->setWidth(30);
+$objPHPExcel->getActiveSheet()->getColumnDimension('M')->setWidth(50);
+$objPHPExcel->getActiveSheet()->getColumnDimension('N')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('O')->setWidth(30);
+$objPHPExcel->getActiveSheet()->getColumnDimension('P')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('Q')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('R')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('S')->setAutoSize(true);
@@ -202,16 +202,16 @@ while($row = mysqli_fetch_array($query))
                ->setCellValue('J'.$i, $lista_local['distrito'])
                ->setCellValue('K'.$i, $row['publicoAlvo'])
                ->setCellValue('L'.$i, $lista_ficha)
-               ->setCellValue('M'.$i, $row['status'])
-               ->setCellValue('N'.$i, $proponente)
-               ->setCellValue('O'.$i, $documento)
-               ->setCellValue('P'.$i, $logradouro)
-               ->setCellValue('Q'.$i, $numero)
-               ->setCellValue('R'.$i, $complemento)
-               ->setCellValue('S'.$i, $bairro)
-               ->setCellValue('T'.$i, $cidade)
-               ->setCellValue('U'.$i, $estado)
-               ->setCellValue('V'.$i, $cep);
+               ->setCellValue('M'.$i, $proponente)
+               ->setCellValue('N'.$i, $documento)
+               ->setCellValue('O'.$i, $logradouro)
+               ->setCellValue('P'.$i, $numero)
+               ->setCellValue('Q'.$i, $complemento)
+               ->setCellValue('R'.$i, $bairro)
+               ->setCellValue('S'.$i, $cidade)
+               ->setCellValue('T'.$i, $estado)
+               ->setCellValue('U'.$i, $cep)
+               ->setCellValue('V'.$i, $row['status']);
    $i++;
 }
 
