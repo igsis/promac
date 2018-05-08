@@ -27,17 +27,17 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 				<form method="POST" action="?perfil=local" class="form-horizontal" role="form">
 
 					<div class="form-group">
-						<div class="col-md-offset-1 col-md-2">
-							<label>Local *</label><br/>
+						<div class="col-md-offset-1 col-md-3">
+							<label><br/>Local *</label><br/>
 							<input type="text" name="local" class="form-control" maxlength="100" required>
 						</div>
 
-						<div class="col-md-2"><label>Público Estimado *</label><br/>
+						<div class="col-md-1"><label>Público * Estimado</label><br/>
 							<input type="text" name="estimativaPublico" class="form-control" required>
 						</div>
 
 						<div class="col-md-2">
-							<label>Zona *</label>
+							<label><br/>Zona *</label>
 							<select class="form-control" name="idZona" required>
 								<option value="0"></option>
 								<?php echo geraOpcao("zona","") ?>
@@ -45,7 +45,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 						</div>
 
 						<div class="col-md-2">
-							<label>Subprefeitura *</label>
+							<label>Prefeitura Regional *</label>
 							<select class="form-control" name="idSubprefeitura" required>
 								<option value="0"></option>
 								<?php echo geraOpcao("subprefeitura","") ?>
@@ -53,7 +53,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 						</div>
 
 						<div class="col-md-2">
-							<label>Distrito *</label>
+							<label><br/>Distrito *</label>
 							<select class="form-control" name="idDistrito" required>
 								<option value="0"></option>
 								<?php echo geraOpcao("distrito","") ?>

@@ -105,7 +105,7 @@ if(isset($_POST['apagaLocal']))
 										<td>Local</td>
 										<td>Público estimado</td>
 										<td>Zona</td>
-										<td>Subprefeitura</td>
+										<td>Prefeitura Regional</td>
 										<td>Distrito</td>
 										<td width='10%'></td>
 										<td width='10%'></td>
