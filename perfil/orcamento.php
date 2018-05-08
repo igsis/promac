@@ -218,7 +218,7 @@ if(isset($_POST['apagaOrcamento']))
 									<tr class='list_menu'>
 										<td width='20%'>Etapa</td>
 										<td>Observações etapa</td>
-										<td width='40%'>Descrição</td>
+										<td width='30%'>Descrição</td>
 										<td width='10%'>Qtde</td>
 										<td width='10%'>Unid. Med.</td>
 										<td width='10%'>Qtde Unid.</td>
@@ -256,7 +256,7 @@ if(isset($_POST['apagaOrcamento']))
 									echo "<td class='list_description'><input type='text' class='form-control' name='observacoes' value='".$campo['observacoes']."'></td>";
 									echo "<td class='list_description'>
 												<input type='hidden' name='editaOrcamento' value='".$campo['idOrcamento']."' />
-												<input type ='submit' class='btn btn-theme btn-block' value='Gravar'></td>";
+												<input type ='submit' class='btn btn-theme btn-block' value='Editar'></td>";
 									echo "</form>";
 									echo "<td class='list_description'>
 											<form method='POST' action='?perfil=orcamento'>
