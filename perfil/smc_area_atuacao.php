@@ -85,7 +85,6 @@ $sql = "SELECT * FROM area_atuacao WHERE publicado = '1'";
                 echo    "<th scope='row'>$i</th>";
                 echo    "<td class='list_description'>".$row['areaAtuacao']."</td>";
                 echo    "<td class='list_description'>".$pessoa."</td>";
-                            // <form action='' method='post'></form>
                 echo    "<td class='list_description'>
                                 <button type='submit' name='edita' class='btn btn-info btn-sm' data-toggle='modal' data-target='#edita$i'><i class='fa fa-pencil'></i>
                                 </button>

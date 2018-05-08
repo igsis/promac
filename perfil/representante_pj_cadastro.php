@@ -145,14 +145,9 @@ if(isset($_POST['editaRepresentante']))
 $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 $representante1 = recuperaDados("representante_legal","idRepresentanteLegal",$pj['idRepresentanteLegal']);
 
-if($pj['liberado'] == 3)
+if($pj['liberado'] != 3)
 {
-	echo "<div class='alert alert-warning'>
-  	<strong>Aviso!</strong> Seus dados já foram aceitos, portanto, não podem ser alterados.</div>";
-
-  	include 'resumo_usuario.php';
-}
-else{ ?>
+?>
 <section id="list_items" class="home-section bg-white">
 	<div class="container"><?php include 'includes/menu_interno_pj.php'; ?>
 		<div class="form-group">
@@ -436,7 +431,16 @@ else{ ?>
 						</form>
 					</div>
 				</div>
-				<?php } ?>
+				<?php }
+				if($pj['liberado'] == 3){
+					include 'includes/menu_interno_pj.php'; 
+					echo "<div class='alert alert-warning'>
+				  	<strong>Aviso!</strong> Seus dados já foram aceitos, portanto, não podem ser alterados.</div>";
+
+				  	include 'resumo_representante_legal.php';
+				}
+				?>
+
 			</div>
 		</div>
 	</div>
