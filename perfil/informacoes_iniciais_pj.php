@@ -276,7 +276,7 @@ else
 								<?php echo geraOpcao("zona", $pj['idZona']) ?>
 							</select>
 						</div>
-						<div class="col-md-6"><strong>Subprefeitura *:</strong><br/>
+						<div class="col-md-6"><strong>Prefeitura Regional *:</strong><br/>
 							<select class="form-control" name="idSubprefeitura" required>
 								<option value="0"></option>
 								<?php echo geraOpcao("subprefeitura",$pj['idSubprefeitura']) ?>
