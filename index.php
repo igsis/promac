@@ -37,17 +37,13 @@
 						<p>&nbsp;</p>
 
 						<div class="well">
-							<h6>Inscreva-se aqui:</h6>
+							<h6>Faça seu login ou inscreva-se aqui:</h6>
 							<div class="form-group" style="padding-bottom: 50px;">
 								<div class="col-md-offset-3 col-md-3">
-									<form method="POST" action="login_pf.php" class="form-horizontal" role="form">
-										<button type="submit" class="btn btn-theme btn-md btn-block" style="border-radius: 30px;">Pessoa Física</button>
-									</form>
+									<button class='btn btn-theme btn-md btn-block' type='button' data-toggle='modal' data-target='#proponente' style="border-radius: 30px;">Proponente</button>
 								</div>
 								<div class="col-md-3">
-									<form method="POST" action="login_pj.php" class="form-horizontal" role="form">
-										<button type="submit" class="btn btn-theme btn-md btn-block"  style="border-radius: 30px;">Pessoa Jurídica</button>
-									</form>
+									<button class='btn btn-theme btn-md btn-block' type='button' data-toggle='modal' data-target='#incentivador' style="border-radius: 30px;">Incentivador</button>
 								</div>
 							</div>
 						</div>
@@ -55,14 +51,12 @@
 						<div class="form-group"></div>
 							<div class="well" style="padding-top: 60px;">
 								<div class="form-group" style="padding-bottom: 60px;">
-							<div class="col-md-offset-3 col-md-3">
-								<button class='btn btn-theme btn-md btn-block' type='button' data-toggle='modal' data-target='#incentivador' style="border-radius: 30px;">Incentivador</button>
-							</div>
-								<div class="col-md-3">
-									<form method="POST" action="visual/index.php" class="form-horizontal" role="form">
-										<input type="hidden" name="consulta" value="1">
-										<button class='btn btn-theme btn-md btn-block' type='submit' style="border-radius: 30px;">Consulta Pública</button>
-									</form>
+									<div class="col-md-offset-4 col-md-4">
+										<form method="POST" action="visual/index.php" class="form-horizontal" role="form">
+											<input type="hidden" name="consulta" value="1">
+											<button class='btn btn-theme btn-md btn-block' type='submit' style="border-radius: 30px;">Consulta Pública</button>
+										</form>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -94,6 +88,29 @@
 							</div>
 						</div>
 						<!-- Fim Modal Regulamento -->
+						<!-- Inicio Modal Proponente -->
+						<div class="modal fade" id="proponente" role="dialog" aria-labelledby="proponenteLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+										<h4 class="modal-title">Proponente</h4>
+									</div>
+									<div class="modal-body">
+										<form method="POST" action="login_pf.php" class="form-horizontal" role="form">
+											<button type="submit" class="btn btn-theme btn-md btn-block" style="border-radius: 30px;">Pessoa Física</button>
+										</form>
+										<form method="POST" action="login_pj.php" class="form-horizontal" role="form">
+											<button type="submit" class="btn btn-theme btn-md btn-block" style="border-radius: 30px;">Pessoa Jurídica</button>
+										</form>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- Fim Modal Proponente -->
 						<!-- Inicio Modal Incentivador -->
 						<div class="modal fade" id="incentivador" role="dialog" aria-labelledby="incentivadorLabel" aria-hidden="true">
 							<div class="modal-dialog">
@@ -104,10 +121,10 @@
 									</div>
 									<div class="modal-body">
 										<form method="POST" action="login_incentivador_pf.php" class="form-horizontal" role="form">
-											<button type="submit" class="btn btn-theme btn-block">Pessoa Física</button>
+											<button type="submit" class="btn btn-theme btn-md btn-block" style="border-radius: 30px;">Pessoa Física</button>
 										</form>
 										<form method="POST" action="login_incentivador_pj.php" class="form-horizontal" role="form">
-											<button type="submit" class="btn btn-theme btn-block">Pessoa Jurídica</button>
+											<button type="submit" class="btn btn-theme btn-md btn-block" style="border-radius: 30px;">Pessoa Jurídica</button>
 										</form>
 									</div>
 									<div class="modal-footer">
