@@ -50,7 +50,7 @@ if(isset($_POST['login']))
 						<br />
 					</div>
 					<div class="col-md-6">
-						<p>Esqueceu a senha? <a href="recuperar_senha.php">Clique aqui.</a></p>
+						<p>Esqueceu a senha? <a href="recuperar_senha_incentiv_pf.php">Clique aqui.</a></p>
 						<br />
 					</div>
 				</div>

@@ -24,7 +24,7 @@ if(isset($_POST['cadastraNovoPf']))
 				$login = $_POST['cpf'];
 				$dataAtualizacao = date("Y-m-d");
 				$idFraseSeguranca = $_POST['idFraseSeguranca'];
-				$respostaFrase = $_POST['respostaFrase'];
+				$respostaFrase = strtolower($_POST['respostaFrase']);
 				$sql_senha = "INSERT INTO `pessoa_fisica`(nome, cpf, email, senha, idNivelAcesso, idFraseSeguranca, respostaFrase) VALUES ('$nome', '$login', '$email', '$senha01', '1', '$idFraseSeguranca', '$respostaFrase')";
 				$query_senha = mysqli_query($con,$sql_senha);
 				$sql_select = "SELECT * FROM pessoa_fisica WHERE cpf = '$login'";

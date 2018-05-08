@@ -15,7 +15,7 @@ if(isset($_POST['login']))
 }
 ?>
 
-<?php include "visual/cabecalho_index.php" ?>
+<?php include "visual/cabecalho_index.php"; ?>
 <section id="contact" class="home-section bg-white">
 	<div class="container">
 		<div class="row">
@@ -53,7 +53,7 @@ if(isset($_POST['login']))
 						<br />
 					</div>
 					<div class="col-md-6">
-						<p>Esqueceu a senha? <a href="recuperar_senha.php">Clique aqui.</a></p>
+						<p>Esqueceu a senha? <a href="recuperar_senha_pj.php">Clique aqui.</a></p>
 						<br />
 					</div>
 				</div>
