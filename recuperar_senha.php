@@ -1,4 +1,4 @@
-<?php include "visual/cabecalho_index.php" ?>
+<?php include "visual/cabecalho_index.php"; ?>
 <section id="contact" class="home-section bg-white">
 	<div class="container">
 		<div class="row">

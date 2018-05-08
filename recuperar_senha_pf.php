@@ -5,6 +5,7 @@
 	$con = bancoMysqli();
 
 	$etapa = 1;
+	$tentativa = isset($_POST['tentativa']) ? $_POST['tentativa'] : 0;
 
 	if(isset($_POST['enviarEmail']))
 	{	
@@ -15,11 +16,13 @@
 		if($num > 0)
 		{
 			$etapa = 2;
+			$tentativa = 0;
 			$pf = recuperaDados("pessoa_fisica","email",$email);
 		}
 		else
 		{
 			$mensagem = "<font color='#ff0000'><strong>E-mail não encontrado em nossa base de dados.</strong></font>";
+			$tentativa++;
 		}
 	}
 
@@ -35,11 +38,15 @@
 		if($num > 0)
 		{
 			$etapa = 3;
+			$tentativa = 0;
 			$pf = recuperaDados("pessoa_fisica","email",$email);
 		}
 		else
 		{
+			$etapa = 2;
+			$pf = recuperaDados("pessoa_fisica","email",$email);
 			$mensagem = "<font color='#ff0000'><strong>Pergunta secreta ou Resposta não confere com a cadastrada em nossa base de dados.</strong></font>";
+			$tentativa++;
 		}
 	}
 
@@ -92,9 +99,16 @@
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
 				<h6>ESQUECEU SUA SENHA?</h6>
-				<h5><?php if(isset($mensagem)){echo $mensagem;};?></h5>
+				<h5><?php if(isset($mensagem)){echo $mensagem;}?></h5>
 				<hr>
+				
 				<?php
+					if ($tentativa >= 3)
+					{?>
+							<div class="col-md-offset-4 col-md-4 form-group">
+								<a href="https://drive.google.com/open?id=11W-UF7HakT6lKZt-0qAJ9b0DCactPHsyuLCUSxdcWwo" target="_blank" class="btn btn-theme btn-md btn-block form-control">Utilize nosso Formulário</a>
+							</div>
+			<?php	}
 				if ($etapa == 1)
 				{?>
 
@@ -106,6 +120,7 @@
 							<input type="email" name="email" class="form-control">
 						</div>
 						<div class="form-group">
+							<input type="hidden" name="tentativa" value="<?=$tentativa?>">
 							<input type="submit" name="enviarEmail" value="Enviar" class="btn btn-theme btn-md btn-block form-control" required>
 						</div>
 					</div>
@@ -129,6 +144,7 @@
 							<input type="text" name="resposta" class="form-control">
 						</div>
 						<div class="form-group">
+							<input type="hidden" name="tentativa" value="<?=$tentativa?>">
 							<input type="hidden" name="email" value="<?=$pf['email']?>">
 							<input type="submit" name="enviarResposta" value="Enviar" class="btn btn-theme btn-md btn-block form-control">
 						</div>
