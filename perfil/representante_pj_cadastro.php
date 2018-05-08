@@ -433,9 +433,9 @@ if($pj['liberado'] != 3)
 				</div>
 				<?php }
 				if($pj['liberado'] == 3){
-					include 'includes/menu_interno_pj.php'; 
-					echo "<div class='alert alert-warning'>
+					echo "<br><div class='alert alert-warning'>
 				  	<strong>Aviso!</strong> Seus dados já foram aceitos, portanto, não podem ser alterados.</div>";
+					include 'includes/menu_interno_pj.php'; 
 
 				  	include 'resumo_representante_legal.php';
 				}
