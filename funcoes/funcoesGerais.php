@@ -377,6 +377,18 @@ function gravarLog($log)
 	$mysqli->query($sql);
 }
 
+function gravarLogSenha($log, $idUsuario)
+{
+	//grava na tabela log os inserts e updates
+	$logTratado = addslashes($log);
+	$ip = $_SERVER["REMOTE_ADDR"];
+	$data = date('Y-m-d H:i:s');
+	$sql = "INSERT INTO `log` (`id`, `idUsuario`, `enderecoIP`, `dataLog`, `descricao`)
+		VALUES (NULL, '$idUsuario', '$ip', '$data', '$logTratado')";
+	$mysqli = bancoMysqli();
+	$mysqli->query($sql);
+}
+
 function geraOpcao($tabela,$select)
 {
 	//gera os options de um select

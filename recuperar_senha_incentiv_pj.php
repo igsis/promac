@@ -9,13 +9,13 @@
 	if(isset($_POST['enviarEmail']))
 	{	
 		$email = $_POST['email'];
-		$sql = "SELECT email FROM pessoa_fisica WHERE email = '$email'";
+		$sql = "SELECT email FROM incentivador_pessoa_juridica WHERE email = '$email'";
 		$query = mysqli_query($con,$sql);
 		$num = mysqli_num_rows($query);
 		if($num > 0)
 		{
 			$etapa = 2;
-			$pf = recuperaDados("pessoa_fisica","email",$email);
+			$pj = recuperaDados("incentivador_pessoa_juridica","email",$email);
 		}
 		else
 		{
@@ -29,13 +29,13 @@
 		$frase = $_POST['frase'];
 		$resposta = $_POST['resposta'];
 
-		$sql = "SELECT email, idFraseSeguranca, respostaFrase FROM pessoa_fisica WHERE email = '$email' AND idFraseSeguranca = '$frase' AND respostaFrase = '$resposta'";
+		$sql = "SELECT email, idFraseSeguranca, respostaFrase FROM incentivador_pessoa_juridica WHERE email = '$email' AND idFraseSeguranca = '$frase' AND respostaFrase = '$resposta'";
 		$query = mysqli_query($con,$sql);
 		$num = mysqli_num_rows($query);
 		if($num > 0)
 		{
 			$etapa = 3;
-			$pf = recuperaDados("pessoa_fisica","email",$email);
+			$pj = recuperaDados("incentivador_pessoa_juridica","email",$email);
 		}
 		else
 		{
@@ -46,14 +46,14 @@
 	if (isset($_POST['enviarSenha']))
 	{
 		$email = $_POST['email'];
-		$idUsuario = $_POST['idPf'];
+		$idUsuario = $_POST['idPj'];
 
 		if(($_POST['senha01'] != "") AND (strlen($_POST['senha01']) >= 5))
 		{
 			if($_POST['senha01'] == $_POST['senha02'])
 			{
 				$senha01 = md5($_POST['senha01']);
-				$sql_senha = "UPDATE `pessoa_fisica` SET `senha` = '$senha01' WHERE `idPf` = '$idUsuario';";
+				$sql_senha = "UPDATE `incentivador_pessoa_juridica` SET `senha` = '$senha01' WHERE `idPj` = '$idUsuario';";
 				$query_senha = mysqli_query($con,$sql_senha);
 				
 				if($query_senha)
@@ -61,14 +61,14 @@
 					$mensagem = "<font color='#33cc33'><strong>Senha alterada com sucesso! Aguarde que você será redirecionado para a página de login</strong></font>";
 					gravarLogSenha($sql_senha, $idUsuario);
 					echo "<script type=\"text/javascript\">
-						  window.setTimeout(\"location.href='login_pf.php';\", 3000);
+						  window.setTimeout(\"location.href='login_incentivador_pj.php';\", 3000);
 						</script>";
 				}
 				else
 				{
 					$mensagem = "<font color='#FF0000'><strong>Não foi possível mudar a senha! Tente novamente.</strong></font>";
 					echo "<script type=\"text/javascript\">
-						  window.setTimeout(\"location.href='recuperar_senha_pf.php';\", 3000);
+						  window.setTimeout(\"location.href='recuperar_senha_incentiv_pj.php';\", 3000);
 						</script>";
 				}
 			}
@@ -76,14 +76,14 @@
 			{
 				$etapa = 3;
 				$mensagem = "<font color='#FF0000'><strong>Senhas não conferem! Tente novamente.</strong></font>";
-				$pf = recuperaDados("pessoa_fisica","email",$email);
+				$pj = recuperaDados("incentivador_pessoa_juridica","email",$email);
 			}
 		}
 		else
 		{	
 			$etapa = 3;
 			$mensagem = "<font color='#FF0000'><strong>Senha de conter um minímo de 5 dígitos</strong></font>";
-			$pf = recuperaDados("pessoa_fisica","email",$email);
+			$pj = recuperaDados("incentivador_pessoa_juridica","email",$email);
 		}
 	}
 ?>
@@ -99,7 +99,7 @@
 				{?>
 
 				<!-- Solicitando E-mail -->
-				<form method="POST" action="./recuperar_senha_pf.php">
+				<form method="POST" action="./recuperar_senha_incentiv_pj.php">
 					<div class="col-md-offset-4 col-md-4">
 						<div class="form-group">
 							<label>Digite Seu E-mail:</label>
@@ -115,7 +115,7 @@
 				{?>
 
 				<!-- Confirmando Pergunta e Resposta -->
-				<form method="POST" action="./recuperar_senha_pf.php">
+				<form method="POST" action="./recuperar_senha_incentiv_pj.php">
 					<div class="col-md-offset-4 col-md-4">
 						<div class="form-group">
 							<label>Escolha sua Pergunta Secreta:</label>
@@ -129,7 +129,7 @@
 							<input type="text" name="resposta" class="form-control">
 						</div>
 						<div class="form-group">
-							<input type="hidden" name="email" value="<?=$pf['email']?>">
+							<input type="hidden" name="email" value="<?=$pj['email']?>">
 							<input type="submit" name="enviarResposta" value="Enviar" class="btn btn-theme btn-md btn-block form-control">
 						</div>
 					</div>
@@ -138,7 +138,7 @@
 				else
 				{?>
 					<!-- Setando a nova senha -->
-					<form method="POST" action="./recuperar_senha_pf.php">
+					<form method="POST" action="./recuperar_senha_incentiv_pj.php">
 						<div class="col-md-offset-4 col-md-4">
 							<div class="form-group">
 								<label>Digite sua nova senha:</label>
@@ -149,8 +149,8 @@
 								<input type="password" name="senha02" class="form-control" required>
 							</div>
 							<div class="form-group">
-								<input type="hidden" name="email" value="<?=$pf['email']?>">
-								<input type="hidden" name="idPf" value="<?=$pf['idPf']?>">
+								<input type="hidden" name="email" value="<?=$pj['email']?>">
+								<input type="hidden" name="idPj" value="<?=$pj['idPj']?>">
 								<input type="submit" name="enviarSenha" value="Enviar" class="btn btn-theme btn-md btn-block form-control">
 							</div>
 						</div>
