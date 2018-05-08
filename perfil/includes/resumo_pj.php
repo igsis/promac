@@ -18,6 +18,9 @@
 					Conclua sua inscrição ao final da página para enviar suas informações à Secretaria Municipal de Cultura.
 				</div>";
 		}
+		$zona = recuperaDados("zona","idZona",$pj['idZona']);
+        $subprefeitura = recuperaDados("subprefeitura","idSubprefeitura",$pj['idSubprefeitura']);
+        $distrito = recuperaDados("distrito","idDistrito",$pj['idDistrito']);
 	?>
 </div>
 <div class="page-header">
@@ -36,17 +39,21 @@
 	<p align="justify"><strong>Cidade:</strong> <?php echo $pj['cidade']; ?></p>
 	<p align="justify"><strong>Estado:</strong> <?php echo $pj['estado']; ?></p>
 	<p align="justify"><strong>CEP:</strong> <?php echo $pj['cep']; ?></p>
+	<p align="justify"><strong>Zona:</strong> <?php echo $zona['zona']; ?></p>
+	<p align="justify"><strong>Prefeitura Regional:</strong> <?php echo $subprefeitura['subprefeitura']; ?></p>
+	<p align="justify"><strong>Distrito:</strong> <?php echo $distrito['distrito']; ?></p>
 	<p align="justify"><strong>É Cooperativa?:</strong>
-		<?php
-			if ($pj['cooperativa'] == 0)
-			{
-				echo "Não";
-			}
-			else
-			{
-				echo "Sim";
-			}
-		?></p>
+	<?php
+		if ($pj['cooperativa'] == 0)
+		{
+			echo "Não";
+		}
+		else
+		{
+			echo "Sim";
+		}
+	?>
+	</p>
 </div>
 
 <div class="table-responsive list_inf">
