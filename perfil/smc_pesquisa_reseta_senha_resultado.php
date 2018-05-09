@@ -1,14 +1,22 @@
 <?php
 $con = bancoMysqli();
 
-$nome = $_POST['nome'];
-$cpf = $_POST['cpf'];
-$razaoSocial = $_POST['razaoSocial'];
-$cnpj = $_POST['cnpj'];
-
-// Inicio Pessoa Física
-if($nome != '' || $cpf != '')
+// Inicio Pessoa Física - Incentivador ou Proponente
+if(isset($_POST['pesquisaPf']))
 {
+	$nome = $_POST['nome'];
+	$cpf = $_POST['cpf'];
+	$tabela = $_POST['tipo'];
+	
+	if($tabela == "pessoa_fisica")
+	{
+		$tipoPessoa = 1;
+	}
+	else
+	{
+		$tipoPessoa = 4;
+	}
+	
 	if($nome != '')
 	{
 		$filtro_nome = " AND nome LIKE '%$nome%'";
@@ -27,7 +35,7 @@ if($nome != '' || $cpf != '')
 		$filtro_cpf = "";
 	}
 
-	$sql = "SELECT * FROM pessoa_fisica WHERE idPf > 1 $filtro_nome $filtro_cpf";
+	$sql = "SELECT * FROM $tabela WHERE idPf > 0 $filtro_nome $filtro_cpf";
 	$query = mysqli_query($con,$sql);
 	$num = mysqli_num_rows($query);
 	if($num > 0)
@@ -43,7 +51,7 @@ if($nome != '' || $cpf != '')
 			$x[$i]['telefone'] = $lista['telefone'];
 			$x[$i]['frase'] = $frase['frase_seguranca'];
 			$x[$i]['resposta'] = $lista['respostaFrase'];
-			$x[$i]['tipoPessoa'] = 1;
+			$x[$i]['tipoPessoa'] = $tipoPessoa;
 			$i++;
 		}
 		$x['num'] = $i;
@@ -53,9 +61,22 @@ if($nome != '' || $cpf != '')
 		$x['num'] = 0;
 	}
 }
-// Inicio Pessoa Jurídica
-elseif($razaoSocial != '' || $cnpj != '')
+// Inicio Pessoa Jurídica - Incentivador ou Proponente
+if(isset($_POST['pesquisaPj']))
 {
+	$razaoSocial = $_POST['razaoSocial'];
+	$cnpj = $_POST['cnpj'];
+	$tabela = $_POST['tipo'];
+	
+	if($tabela == "pessoa_juridica")
+	{
+		$tipoPessoa = 2;
+	}
+	else
+	{
+		$tipoPessoa = 5;
+	}
+
 	if($razaoSocial != '')
 	{
 		$filtro_razaoSocial = " AND razaoSocial LIKE '%$razaoSocial%'";
@@ -73,7 +94,7 @@ elseif($razaoSocial != '' || $cnpj != '')
 	{
 		$filtro_cnpj = "";
 	}
-	$sql = "SELECT * FROM pessoa_juridica WHERE idPj > 1 $filtro_razaoSocial $filtro_cnpj";
+	$sql = "SELECT * FROM $tabela WHERE idPj > 0 $filtro_razaoSocial $filtro_cnpj";
 	$query = mysqli_query($con,$sql);
 	$num = mysqli_num_rows($query);
 	if($num > 0)
@@ -89,7 +110,7 @@ elseif($razaoSocial != '' || $cnpj != '')
 			$x[$i]['telefone'] = $lista['telefone'];
 			$x[$i]['frase'] = $frase['frase_seguranca'];
 			$x[$i]['resposta'] = $lista['respostaFrase'];
-			$x[$i]['tipoPessoa'] = 2;
+			$x[$i]['tipoPessoa'] = $tipoPessoa;
 			$i++;
 		}
 		$x['num'] = $i;
@@ -110,7 +131,7 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 			<h5><a href="?perfil=smc_pesquisa_reseta_senha">Fazer outra busca</a></h5>
 		</div>
 		<div class="row">
-			<div class="col-md-offset-1 col-md-10">
+			<div>
 				<div class="table-responsive list_info">
 					<table class='table table-condensed'>
 						<thead>
