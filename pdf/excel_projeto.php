@@ -20,7 +20,7 @@ $objPHPExcel->getProperties()->setTitle("Relatório de Projetos");
 $objPHPExcel->getProperties()->setSubject("Relatório de Projetos");
 $objPHPExcel->getProperties()->setDescription("Gerado automaticamente a partir do Sistema Pro-Mac");
 $objPHPExcel->getProperties()->setKeywords("office 2007 openxml php");
-$objPHPExcel->getProperties()->setCategory("Pessoa Física");
+$objPHPExcel->getProperties()->setCategory("Relatório de Projetos");
 
 // Add some data
 $objPHPExcel->setActiveSheetIndex(0)
@@ -36,23 +36,24 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('J1', 'Distrito')
             ->setCellValue('K1', 'Público alvo')
             ->setCellValue('L1', 'Ficha técnica')
-            ->setCellValue('M1', 'Proponente')
-            ->setCellValue('N1', 'Documento')
-            ->setCellValue('O1', 'Logradouro')
-            ->setCellValue('P1', 'Número')
-            ->setCellValue('Q1', 'Complemento')
-            ->setCellValue('R1', 'Bairro')
-            ->setCellValue('S1', 'Cidade')
-            ->setCellValue('T1', 'Estado')
-            ->setCellValue('U1', 'CEP')
-            ->setCellValue('V1', 'Status');
+            ->setCellValue('M1', 'Pessoa')
+            ->setCellValue('N1', 'Proponente')
+            ->setCellValue('O1', 'Documento')
+            ->setCellValue('P1', 'Logradouro')
+            ->setCellValue('Q1', 'Número')
+            ->setCellValue('R1', 'Complemento')
+            ->setCellValue('S1', 'Bairro')
+            ->setCellValue('T1', 'Cidade')
+            ->setCellValue('U1', 'Estado')
+            ->setCellValue('V1', 'CEP')
+            ->setCellValue('W1', 'Status');
 
 //Colorir a primeira fila
-$objPHPExcel->getActiveSheet()->getStyle('A1:V1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
-$objPHPExcel->getActiveSheet()->getStyle('A1:V1')->getFill()->getStartColor()->setARGB('#29bb04');
+$objPHPExcel->getActiveSheet()->getStyle('A1:W1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+$objPHPExcel->getActiveSheet()->getStyle('A1:W1')->getFill()->getStartColor()->setARGB('#29bb04');
 // Add some data
-$objPHPExcel->getActiveSheet()->getStyle("A1:V1")->getFont()->setBold(true);
-$objPHPExcel->getActiveSheet()->getStyle('A1:V1')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+$objPHPExcel->getActiveSheet()->getStyle("A1:W1")->getFont()->setBold(true);
+$objPHPExcel->getActiveSheet()->getStyle('A1:W1')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
 $styleArray = array(
       'borders' => array(
           'allborders' => array(
@@ -74,19 +75,20 @@ $objPHPExcel->getActiveSheet()->getColumnDimension('I')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('J')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('K')->setWidth(50);
 $objPHPExcel->getActiveSheet()->getColumnDimension('L')->setWidth(50);
-$objPHPExcel->getActiveSheet()->getColumnDimension('M')->setWidth(50);
-$objPHPExcel->getActiveSheet()->getColumnDimension('N')->setAutoSize(true);
-$objPHPExcel->getActiveSheet()->getColumnDimension('O')->setWidth(30);
-$objPHPExcel->getActiveSheet()->getColumnDimension('P')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('M')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('N')->setWidth(50);
+$objPHPExcel->getActiveSheet()->getColumnDimension('O')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('P')->setWidth(30);
 $objPHPExcel->getActiveSheet()->getColumnDimension('Q')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('R')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('S')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('T')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('U')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('V')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('W')->setAutoSize(true);
 
 //Dados
-$sql = "SELECT idProjeto, protocolo, nomeProjeto, valorProjeto, valorIncentivo, resumoProjeto, publicoAlvo, tipoPessoa, idPj, idPf, status
+$sql = "SELECT idProjeto, protocolo, nomeProjeto, valorProjeto, valorIncentivo, resumoProjeto, publicoAlvo, tipoPessoa, idPj, idPf, status, tipoPessoa
          FROM projeto AS pr
          INNER JOIN status AS st ON pr.idStatus = st.idStatus
          WHERE publicado = 1 ORDER BY protocolo";
@@ -184,6 +186,15 @@ while($row = mysqli_fetch_array($query))
    $lista_ficha = listaFicha($row['idProjeto']);
    $lista_local = listaLocal($row['idProjeto']);
 
+   $tipoPessoa = $row['tipoPessoa'];
+   if($tipoPessoa == 1)
+   {
+   		$tipo = "Física";
+   }
+   else
+   {
+   		$tipo = "Jurídica";
+   }
    //$objPHPExcel->getActiveSheet()->getStyle('A'.$i.'')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
 
    $objPHPExcel->getActiveSheet()->getStyle('C'.$i.'')->getNumberFormat()->setFormatCode("#,##0.00");
@@ -202,16 +213,17 @@ while($row = mysqli_fetch_array($query))
                ->setCellValue('J'.$i, $lista_local['distrito'])
                ->setCellValue('K'.$i, $row['publicoAlvo'])
                ->setCellValue('L'.$i, $lista_ficha)
-               ->setCellValue('M'.$i, $proponente)
-               ->setCellValue('N'.$i, $documento)
-               ->setCellValue('O'.$i, $logradouro)
-               ->setCellValue('P'.$i, $numero)
-               ->setCellValue('Q'.$i, $complemento)
-               ->setCellValue('R'.$i, $bairro)
-               ->setCellValue('S'.$i, $cidade)
-               ->setCellValue('T'.$i, $estado)
-               ->setCellValue('U'.$i, $cep)
-               ->setCellValue('V'.$i, $row['status']);
+               ->setCellValue('M'.$i, $tipo)
+               ->setCellValue('N'.$i, $proponente)
+               ->setCellValue('O'.$i, $documento)
+               ->setCellValue('P'.$i, $logradouro)
+               ->setCellValue('Q'.$i, $numero)
+               ->setCellValue('R'.$i, $complemento)
+               ->setCellValue('S'.$i, $bairro)
+               ->setCellValue('T'.$i, $cidade)
+               ->setCellValue('U'.$i, $estado)
+               ->setCellValue('V'.$i, $cep)
+               ->setCellValue('W'.$i, $row['status']);
    $i++;
 }
 
