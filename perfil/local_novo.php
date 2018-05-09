@@ -45,7 +45,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 						</div>
 
 						<div class="col-md-2">
-							<label>Prefeitura Regional *</label>
+							<label>Prefeitura Regional * <a href="../pdf/lista_distritos.html" target="_blank"><i class="fa fa-info-circle"></i></a></label>
 							<select class="form-control" name="idSubprefeitura" required>
 								<option value="0"></option>
 								<?php echo geraOpcao("subprefeitura","") ?>
@@ -53,7 +53,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 						</div>
 
 						<div class="col-md-2">
-							<label><br/>Distrito *</label>
+							<label><br/>Distrito * <a href="../pdf/lista_distritos.html" target="_blank"><i class="fa fa-info-circle"></i></a></label>
 							<select class="form-control" name="idDistrito" required>
 								<option value="0"></option>
 								<?php echo geraOpcao("distrito","") ?>
