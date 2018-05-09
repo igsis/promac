@@ -268,7 +268,7 @@ else
 								<?php echo geraOpcao("zona", $pf['idZona']) ?>
 							</select>
 						</div>
-						<div class="col-md-6"><strong>Prefeitura Regional *:</strong><br/>
+						<div class="col-md-6"><strong>Prefeitura Regional *: <a href="?perfil=lista_distritos" target="_blank"><i class="fa fa-info-circle"></i></a></strong><br/>
 							<select class="form-control" name="idSubprefeitura" required>
 								<option value="0"></option>
 								<?php echo geraOpcao("subprefeitura",$pf['idSubprefeitura']) ?>
