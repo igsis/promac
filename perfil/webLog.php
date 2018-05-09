@@ -1,71 +1,47 @@
 <?php   
   require_once('../funcoes/funcoesGerais.php');  
-  require_once('../funcoes/funcoesConecta.php');     
-
-  $tipo="Pessoa Física";
-  $erros = [];
-
-  function impressaoMsgErros($erros)
-  {
-    foreach($erros as $erro):
-      echo $erro;  
-    endforeach;
-  }
-
-  if(array_key_exists('dataInicio', $_POST)):              
-     if(validaData($_POST['dataInicio'], $_POST['dataFim'])): 
-       array_push($erros,'<b>Data de inicio</b> não pode ser maior que a <b>Data de fim</b>.<br/>');       
-     endif;         
-     $logs = geraWebLog($_POST['dataInicio'], $_POST['dataFim'], "ORDER BY pf.nome");     
-  else:
-     $logs = geraWebLog(date('y/m/d'),date('y/m/d'), "ORDER BY log.dataOcorrencia desc");     
-  endif; 
+  require_once('../funcoes/funcoesConecta.php');         
+  
+  $logs = getLogs(geraHeaderWebLog());      
     
-  include("../views/header.php");
-  include("webLogFormData.php");
-
-  if(empty($logs)): 
-    array_push($erros, 'Lista não possui registros'); ?>           
-    <div class="alert alert-warning">
-      <p><?php impressaoMsgErros($erros);?></p>
-    </div>  
-  <?php else: ?>    
-    <table class="table table-bordered table-dark table-striped table-hover">
-      <thead>
-        <tr>
-      	  <th scope="col">ID</th>
-      	  <th>TABELA</th>
-      	  <th>ACAO</th>                               
-      	  <th>PESSOA FÍSICA</th>
-      	  <th>DATA</th>     
-          <th>DETALHES</th> 	  
-        </tr>
-      </thead>	
-      <tbody>
-        <?php foreach($logs as $log):?>
-          <tr>
-            <td><?=$log['idWebLog']?></td>
-            <td><?=$log['tabela']?></td>
-            <td><?=$log['acao']?></td>
-            <td><?=$log['nome']?></td>
-            <td><?=date('d/m/y',strtotime($log['dataOcorrencia']))?></td>      
-            <td>
-              <a href="webLogDetalhes.php?id=<?=$log['idWebLog']?>" target="_blank">  
-                <span class="glyphicon glyphicon-search" aria-hidden="true">
-                </span>
-              </a>  
-            </td>
-          </tr>	
-       <?php endforeach ?>
-      </tbody>
-    </table>
-    <?php include("../views/header.php") ?>
-  <?php endif ?>
+  include('../../promac/visual/webLogHeader.php'); ?>
+  
+  <h1 class="title">Consulta</h1>
+  <div class="containerHeader">
+    <form action="webLogConsulta.php" method="POST" class="form-horizontal">
+      <div class="form-group">
+        <div class="col-md-offset-2 col-md-6">
+          <label id="dataInicio">Inicio:</label>
+          <input type="date" name="dt-inicio" value="<?php echo date('d-m-Y')?>" class="form-control set-input-dtIncio" id="dataInicio">
+        </div>        
+        <div class="col-md-offset-2 col-md-6">
+          <label id="dataFim">Fim:</label>
+          <input type="date" name="dt-fim" value="<?php echo date('d-m-Y')?>" class="form-control"
+                 id="dataFim">
+        </div>  
+      </div>      
+      <div>
+        <label id="nome">Nome</label>  
+        <input type="text" name="nome" class="form-control" id="nome">
+      </div>  
+      <div>
+        <label id="tabela">Tabelas</label>  
+        <?php $tabelas = ['pessoa_fisica', 'pessoa_juridica', 'projeto', 'todos' ] ?>
+        <select name="tabela" id="tabela">
+          <?php foreach($tabelas as $tabela): ?>
+            <option value="<?=$tabela?>"><?=$tabela?></option>
+          <?php endforeach ?>
+        </select>        
+      </div>
+      <button type="submit" class="btn btn-success" id="button">Pesquisar</button>    
+    </form>        
+    <?php return include('webLogTable.php'); ?>
+  </div>  
+  <?php include('../../promac/visual/webLogFooter.php'); ?>
   
 
 
 
-
-
-
-
+  
+  
+  

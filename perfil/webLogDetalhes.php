@@ -1,35 +1,66 @@
-<!DOCTYPE html>
-<html>
-  <head>    
-    <title>SMC / Pro-Mac - Programa Municipal de Apoio a Projetos Culturais</title>    
-    <meta charset="utf-8">        
-    <link rel="stylesheet" type="text/css" href="../views/css/detalheLog.css">    
-  </head>
-  <body>    
-   <h1 class="title">Detalhes</h1>  
-   <p class="old">Anterior</p>
-   <p class="new">Atual</p>
-   <?php   
-    require_once('../funcoes/funcoesGerais.php');  
-    require_once('../funcoes/funcoesConecta.php');          
+<?php   
+  require_once('../funcoes/funcoesGerais.php');  
+  require_once('../funcoes/funcoesConecta.php');          
 
-    $idWebLog = $_GET['id'];
+  include('../../promac/visual/webLogHeader.php');
 
-    $logs = geraWebLogDetalhes($idWebLog);  ?>
-      
-    <?php foreach($logs as $log): ?>
-      <div class="container">                            
-        <div class="antes">                    
-          <?php echo str_replace('|', '<br/><hr/>', $log['antes']);?>
-        </div>  	            	    	
-        <div class="depois">
-          <?php echo str_replace('|', '<br/><hr/>', $log['depois']);?>
-        </div>              	    	      
-    <?php endforeach ?>	     
-  </body>
-</html>    
+  $idWebLog = $_GET['id'];
+  $logs = geraWebLogDetalhes($idWebLog); 
+  $old = retornaDados($logs, 'antes');
+  $new = retornaDados($logs, 'depois');
+  $log = array_diff($old, $new); ?>
+
+  <h1 class="title">Registros Manipulados</h1>  
+  <div class="container">
+    <div class="old">      
+      <p>Anterior</p>
+      <?php
+        foreach($old as $o):
+          echo $o.'<br/>'.'<hr/>';
+        endforeach;         
+      ?>  
+    </div>     
+    <div class="new">
+      <p>Atual</p>
+      <?php
+        foreach($new as $n):
+          echo $n.'<br/>'.'<hr/>';
+        endforeach;  
+      ?>
+    </div>     
+  </div>
+  
+  
 
 
+  
+  
+
+
+
+
+
+
+  
+  
+  
     
+
+
+
+
+
+
+
   
+
+
+
   
+
+
+
+  
+
+  
+
