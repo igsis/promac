@@ -3,29 +3,32 @@
   require_once('../funcoes/funcoesConecta.php');          
 
   include('../../promac/visual/webLogHeader.php');
-
+ 
   $idWebLog = $_GET['id'];
   $logs = geraWebLogDetalhes($idWebLog); 
   $old = retornaDados($logs, 'antes');
-  $new = retornaDados($logs, 'depois');
-  $log = array_diff($old, $new); ?>
-
+  $new = retornaDados($logs, 'depois'); ?>
+  
   <h1 class="title">Registros Manipulados</h1>  
   <div class="container">
     <div class="old">      
-      <p>Anterior</p>
+      <p style="color:blue">ANTERIOR</p>
       <?php
-        foreach($old as $o):
-          echo $o.'<br/>'.'<hr/>';
-        endforeach;         
+        for ($i=0; $i <count($old) ; $i++):  
+          if($old[$i] != $new[$i]): 
+            echo $old[$i].'<br/>'.'<hr/>';
+          endif;  
+        endfor;
       ?>  
     </div>     
     <div class="new">
-      <p>Atual</p>
+      <p style="color:blue">ATUAL</p>
       <?php
-        foreach($new as $n):
-          echo $n.'<br/>'.'<hr/>';
-        endforeach;  
+        for ($i=0; $i <count($old) ; $i++):  
+          if($old[$i] != $new[$i]): 
+            echo $new[$i].'<br/>'.'<hr/>';
+          endif;            
+        endfor;
       ?>
     </div>     
   </div>
