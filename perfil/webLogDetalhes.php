@@ -10,7 +10,7 @@
   $new = retornaDados($logs, 'depois'); ?>
   
   <h1 class="title">Registros Manipulados</h1>  
-  <div class="container">
+  <div class="containerDetalhe">
     <div class="old">      
       <p style="color:blue">ANTERIOR</p>
       <?php
