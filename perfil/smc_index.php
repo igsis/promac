@@ -261,7 +261,7 @@ if(isset($_POST['liberacaoPJ']))
 			<div class="col-md-offset-1 col-md-10">
 				<div class="table-responsive list_info">
 				<?php
-					$sql = "SELECT * FROM projeto WHERE publicado = 1 AND idStatus = 2 LIMIT 0,10";
+					$sql = "SELECT * FROM projeto WHERE publicado = 1 AND idStatus = 2 ORDER BY idProjeto DESC LIMIT 0,10";
 					$query = mysqli_query($con,$sql);
 					$num = mysqli_num_rows($query);
 					if($num > 0)
