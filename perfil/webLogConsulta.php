@@ -3,6 +3,13 @@
  require_once('../funcoes/funcoesGerais.php');  
  require_once('../funcoes/funcoesConecta.php');              
  include('../../promac/visual/webLogHeader.php');
+
+ $cleaner = cleanerWeblog();
+   if(sizeof($cleaner) > 0):
+     buscaRegistrosSemAlteracoes($cleaner);    
+  endif;  
+
+ limpaRegistrosNulos();  
  
  $erros = [];  
    

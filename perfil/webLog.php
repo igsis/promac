@@ -2,7 +2,15 @@
   require_once('../funcoes/funcoesGerais.php');  
   require_once('../funcoes/funcoesConecta.php');         
   
-  $logs = getLogs(geraHeaderWebLog());      
+  $cleaner = cleanerWeblog();
+   if(sizeof($cleaner) > 0):
+     buscaRegistrosSemAlteracoes($cleaner);    
+  endif;  
+
+ limpaRegistrosNulos();  
+
+
+  $logs = getLogs(geraHeaderWebLog());        
     
   include('../../promac/visual/webLogHeader.php'); ?>
   
