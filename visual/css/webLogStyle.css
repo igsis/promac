@@ -1,0 +1,100 @@
+body
+{
+  margin: 0;
+  background-color: #fff;
+}
+
+p
+{
+  margin-left: 2em;
+  font-size: 150%;
+  font-weight: bold;
+  margin-top: -0.5em;
+  color: #000;
+}
+
+table th, td
+{
+  text-align: center;
+}
+
+
+.title
+{
+  text-align: center;
+  background-color: #851944;
+  color: #fff;
+  padding: 10px;
+  border-bottom: 10px solid #000;
+  margin: 0;
+}
+
+.containerDetalhe
+{
+  width: 200px;
+  height: 200px;
+  display: inline-flex;
+  justify-content: center;     
+}
+
+.containerHeader
+{
+  width: 1500px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 30px 0;
+}
+
+.old
+{
+  width:600px;	
+  height:90px;  
+  margin-left: 135em;
+  margin-right: 15em;
+  padding: 1em;  
+}
+
+.new
+{
+  width:600px;	
+  height:90px;  
+  margin-right: 35em;
+  margin-left: 15em;
+  padding: 1em;
+}
+
+.msg
+{  
+ margin-right: 3.5em;  
+ height: 5em; 
+ margin-left: 3.5em;  
+ margin-top: 0.1em;
+}
+
+#dataInicio
+{
+  margin-left: 15em;    
+  width: 33%;
+}
+
+#dataFim
+{
+  margin-left: -18em;
+  width: 33%;
+}
+
+#nome, #tabela, #button
+{
+  margin-left: 25em;    
+  width: 50%;
+  margin-bottom: 0.9em;
+}
+
+
+
+
+
+
+
+
+

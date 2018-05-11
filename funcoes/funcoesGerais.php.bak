@@ -1899,10 +1899,10 @@ function listaCidades()
 
 function validaData($dtInicio, $dtFim)
 {
-  return $dtFim >= $dtInicio ? true : false;      
+  return $dtInicio > $dtFim ? true : false;      
 }
 
-function geraHeaderWebLog()
+function geraWebLog($dataInicio, $dataFim, $tipoOrdem)
 {
   $logs = [];  
   $conexao = bancoMysqli();  
@@ -1911,7 +1911,6 @@ function geraHeaderWebLog()
                log.idWebLog, 
                log.tabela, 
                log.acao, 
-               log.IdRegistro,
                log.dataOcorrencia, 
                log.usuario,
                pf.nome 
@@ -1919,80 +1918,20 @@ function geraHeaderWebLog()
                weblogs AS log
              INNER JOIN pessoa_fisica AS pf
              ON pf.idPf =  log.idRegistro
-             WHERE dataOcorrencia >= DATE_ADD(curdate(), interval -15 day)
-             AND   dataOcorrencia <= NOW()";             
+             WHERE log.dataOcorrencia >= '$dataInicio'
+             AND   log.dataOcorrencia <= '$dataFim'".$tipoOrdem;   
 
   $resultado = mysqli_query($conexao,$query);
 
-  while($log = mysqli_fetch_assoc($resultado)):
-    array_push($logs, $log);
-  endwhile;  
+  if($resultado):
+    while($log = mysqli_fetch_assoc($resultado)):
+      array_push($logs, $log);
+    endwhile;
+  endif; 
   
-  return $logs;  
-}
+  return $logs;
 
-function geraHeaderWebLogParam($dtInicio, $dtFim, $tabela, $nome) 
-{
-  $logs = [];  
-  $conexao = bancoMysqli();  
-
-  $query =  "SELECT 
-               log.idWebLog, 
-               log.tabela, 
-               log.acao, 
-               log.IdRegistro,
-               log.dataOcorrencia, 
-               log.usuario,
-               pf.nome 
-             FROM 
-               weblogs AS log
-             INNER JOIN pessoa_fisica AS pf
-             ON pf.idPf =  log.idRegistro
-             WHERE log.dataOcorrencia >= '$dtInicio'
-             AND   log.dataOcorrencia <= '$dtFim'
-             AND   log.tabela = '$tabela' 
-             AND   pf.nome LIKE '%$nome%'";             
-
-  $resultado = mysqli_query($conexao,$query);  
-
-  if($resultado):
-    while($log = mysqli_fetch_assoc($resultado)):
-      array_push($logs, $log);
-    endwhile;    
-    
-    return $logs;  
-  endif;  
-}
-
-function geraHeaderWebLogTodos($dtInicio, $dtFim) 
-{
-  $logs = [];  
-  $conexao = bancoMysqli();  
-
-  $query =  "SELECT 
-               log.idWebLog, 
-               log.tabela, 
-               log.acao, 
-               log.IdRegistro,
-               log.dataOcorrencia, 
-               log.usuario,
-               pf.nome 
-             FROM 
-               weblogs AS log
-             INNER JOIN pessoa_fisica AS pf
-             ON pf.idPf =  log.idRegistro
-             WHERE log.dataOcorrencia >= '$dtInicio'
-             AND   log.dataOcorrencia <= '$dtFim'";             
-
-  $resultado = mysqli_query($conexao,$query);  
-
-  if($resultado):
-    while($log = mysqli_fetch_assoc($resultado)):
-      array_push($logs, $log);
-    endwhile;    
-    
-    return $logs;  
-  endif;  
+  var_dump($query);
 }
 
 function geraWebLogDetalhes($idWeblog)
@@ -2001,11 +1940,10 @@ function geraWebLogDetalhes($idWeblog)
   $conexao = bancoMysqli();  
 
   $query =  "SELECT 
-               antes, 
-               depois
+               antes, depois
              FROM 
                weblogs 
-             WHERE idWebLog = ".$idWeblog;             
+             WHERE idWeblog = ".$idWeblog;             
 
   $resultado = mysqli_query($conexao,$query);
     
@@ -2014,72 +1952,6 @@ function geraWebLogDetalhes($idWeblog)
     array_push($logs, $log);
   }  
   return $logs;  			    	
-}
-
-function retornaDados($logs, $tipo)
-{
-  foreach($logs as $log):
-    $array = explode('|', $log[$tipo]);        
-  endforeach;   
-
-  return $array;
-}  
-
-function limpaRegistrosSemAlteracoes($idLog)
-{
-  $conexao = bancoMysqli();  
-
-  $query = "DELETE FROM weblogs WHERE idWebLog = {$idLog}";
-  return mysqli_query($conexao, $query);    
-}
-
-function buscaRegistrosSemAlteracoes($logs)
-{
-  foreach($logs as $log):          
-    $ids = geraWebLogDetalhes($log['idWebLog']); 
-    $old = retornaDados($ids, 'antes');
-    $new = retornaDados($ids, 'depois');
-    $numLinhas = array_diff($old, $new);                      
-      
-    sizeof($numLinhas) == 0 
-        ? limpaRegistrosSemAlteracoes($log['idWebLog'])
-        : '';     
-  endforeach;
-}
-
-function limpaRegistrosNulos()
-{
-  $logs = [];  
-  $conexao = bancoMysqli();  
-
-  $query =  "SELECT 
-               idWeblog,
-               antes                
-             FROM 
-               weblogs
-             WHERE antes is null";
-
-  $resultado = mysqli_query($conexao,$query);
-    
-  while($log = mysqli_fetch_assoc($resultado)) 
-  {
-    array_push($logs, $log);    
-  }  
-
-  if($resultado):
-    foreach($logs as $log):
-      foreach($log as $idWeblog):
-        limpaRegistrosSemAlteracoes($idWeblog);  	
-      endforeach;	
-    endforeach; 	
-  endif;	  
-}
-
-function getLogs($logs)
-{
-  buscaRegistrosSemAlteracoes($logs);
-  limpaRegistrosNulos();    
-  return geraHeaderWebLog();
 }
 
 ?>
