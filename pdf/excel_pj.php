@@ -33,28 +33,30 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('G1', 'Cidade')
             ->setCellValue('H1', 'Estado')
             ->setCellValue('I1', 'CEP')
-            ->setCellValue('J1', 'Telefone')
-            ->setCellValue('K1', 'Celular')
-            ->setCellValue('L1', 'E-mail')
-            ->setCellValue('M1', 'Cooperativa')
-            ->setCellValue('N1', 'Representante')
-            ->setCellValue('O1', 'CPF')
-            ->setCellValue('P1', 'RG')
-            ->setCellValue('Q1', 'Logradouro')
-            ->setCellValue('R1', 'Nº')
-            ->setCellValue('S1', 'Complemento')
-            ->setCellValue('T1', 'Bairro')
-            ->setCellValue('U1', 'Cidade')
-            ->setCellValue('V1', 'Estado')
-            ->setCellValue('W1', 'CEP')
-            ->setCellValue('X1', 'Telefone')
-            ->setCellValue('Y1', 'Celular')
-            ->setCellValue('Z1', 'E-mail')
-            ->setCellValue('AA1', 'Status')
-            ->setCellValue('AB1', 'Data da Inscrição');
+            ->setCellValue('J1', 'Prefeitura Regional')
+            ->setCellValue('K1', 'Distrito')
+            ->setCellValue('L1', 'Telefone')
+            ->setCellValue('M1', 'Celular')
+            ->setCellValue('N1', 'E-mail')
+            ->setCellValue('O1', 'Cooperativa')
+            ->setCellValue('P1', 'Representante')
+            ->setCellValue('Q1', 'CPF')
+            ->setCellValue('R1', 'RG')
+            ->setCellValue('S1', 'Logradouro')
+            ->setCellValue('T1', 'Nº')
+            ->setCellValue('U1', 'Complemento')
+            ->setCellValue('V1', 'Bairro')
+            ->setCellValue('W1', 'Cidade')
+            ->setCellValue('X1', 'Estado')
+            ->setCellValue('Y1', 'CEP')
+            ->setCellValue('Z1', 'Telefone')
+            ->setCellValue('AA1', 'Celular')
+            ->setCellValue('AB1', 'E-mail')
+            ->setCellValue('AC1', 'Status')
+            ->setCellValue('AD1', 'Data da Inscrição');
 
 //Colorir a primeira fila
-$objPHPExcel->getActiveSheet()->getStyle('A1:AB1')->applyFromArray(
+$objPHPExcel->getActiveSheet()->getStyle('A1:AD1')->applyFromArray(
    array(
       'fill' => array(
          'type' => PHPExcel_Style_Fill::FILL_SOLID,
@@ -100,6 +102,8 @@ while($row = mysqli_fetch_array($query))
    $dataInscricao = retornaDataSemHora($dataInscricao);
 
    $rl = recuperaDados("representante_legal","idRepresentanteLegal",$row['idRepresentanteLegal']);
+   $subprefeitura = recuperaDados("subprefeitura","idSubprefeitura",$row['idSubprefeitura']);
+   $distrito = recuperaDados("distrito","idDistrito",$row['idDistrito']);
 
    $a = "A".$i;
    $b = "B".$i;
@@ -129,6 +133,8 @@ while($row = mysqli_fetch_array($query))
    $z = "Z".$i;
    $aa = "AA".$i;
    $ab = "AB".$i;
+   $ac = "AC".$i;
+   $ad = "AD".$i;
 
    $objPHPExcel->setActiveSheetIndex(0)
                ->setCellValue($a, $row['razaoSocial'])
@@ -140,25 +146,27 @@ while($row = mysqli_fetch_array($query))
                ->setCellValue($g, $row['cidade'])
                ->setCellValue($h, $row['estado'])
                ->setCellValue($I, $row['cep'])
-               ->setCellValue($j, $row['telefone'])
-               ->setCellValue($k, $row['celular'])
-               ->setCellValue($l, $row['email'])
-               ->setCellValue($m, $cooperativa)
-               ->setCellValue($n, $rl['nome'])
-               ->setCellValue($o, $rl['cpf'])
-               ->setCellValue($p, $rl['rg'])
-               ->setCellValue($q, $row['logradouro'])
-               ->setCellValue($r, $row['numero'])
-               ->setCellValue($s, $row['complemento'])
-               ->setCellValue($t, $row['bairro'])
-               ->setCellValue($u, $row['cidade'])
-               ->setCellValue($v, $row['estado'])
-               ->setCellValue($w, $row['cep'])
-               ->setCellValue($x, $row['telefone'])
-               ->setCellValue($y, $row['celular'])
-               ->setCellValue($z, $row['email'])
-               ->setCellValue($aa, $status)
-               ->setCellValue($ab, $dataInscricao)
+               ->setCellValue($j, $subprefeitura['subprefeitura'])
+               ->setCellValue($k, $distrito['distrito'])
+               ->setCellValue($l, $row['telefone'])
+               ->setCellValue($m, $row['celular'])
+               ->setCellValue($n, $row['email'])
+               ->setCellValue($o, $cooperativa)
+               ->setCellValue($p, $rl['nome'])
+               ->setCellValue($q, $rl['cpf'])
+               ->setCellValue($r, $rl['rg'])
+               ->setCellValue($s, $row['logradouro'])
+               ->setCellValue($t, $row['numero'])
+               ->setCellValue($u, $row['complemento'])
+               ->setCellValue($v, $row['bairro'])
+               ->setCellValue($w, $row['cidade'])
+               ->setCellValue($x, $row['estado'])
+               ->setCellValue($y, $row['cep'])
+               ->setCellValue($z, $row['telefone'])
+               ->setCellValue($aa, $row['celular'])
+               ->setCellValue($ab, $row['email'])
+               ->setCellValue($ac, $status)
+               ->setCellValue($ad, $dataInscricao)
                ;
    $i++;
 }

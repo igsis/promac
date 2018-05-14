@@ -34,16 +34,18 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('H1', 'Cidade')
             ->setCellValue('I1', 'Estado')
             ->setCellValue('J1', 'CEP')
-            ->setCellValue('K1', 'Telefone')
-            ->setCellValue('L1', 'Celular')
-            ->setCellValue('M1', 'E-mail')
-            ->setCellValue('N1', 'Cooperado')
-            ->setCellValue('O1', 'Nível de Acesso')
-            ->setCellValue('P1', 'Status')
-            ->setCellValue('Q1', 'Data da Inscrição');
+            ->setCellValue('K1', 'Prefeitura Regional')
+            ->setCellValue('L1', 'Dsitrito')
+            ->setCellValue('M1', 'Telefone')
+            ->setCellValue('N1', 'Celular')
+            ->setCellValue('O1', 'E-mail')
+            ->setCellValue('P1', 'Cooperado')
+            ->setCellValue('Q1', 'Nível de Acesso')
+            ->setCellValue('R1', 'Status')
+            ->setCellValue('S1', 'Data da Inscrição');
 
 //Colorir a primeira fila
-$objPHPExcel->getActiveSheet()->getStyle('A1:Q1')->applyFromArray(
+$objPHPExcel->getActiveSheet()->getStyle('A1:S1')->applyFromArray(
    array(
       'fill' => array(
          'type' => PHPExcel_Style_Fill::FILL_SOLID,
@@ -95,6 +97,9 @@ while($row = mysqli_fetch_array($query))
    $dataInscricao = $row['dataInscricao'];
    $dataInscricao = retornaDataSemHora($dataInscricao);
 
+   $subprefeitura = recuperaDados("subprefeitura","idSubprefeitura",$row['idSubprefeitura']);
+   $distrito = recuperaDados("distrito","idDistrito",$row['idDistrito']);
+
    $a = "A".$i;
    $b = "B".$i;
    $c = "C".$i;
@@ -112,6 +117,8 @@ while($row = mysqli_fetch_array($query))
    $o = "O".$i;
    $p = "P".$i;
    $q = "Q".$i;
+   $r = "R".$i;
+   $s = "S".$i;
 
    $objPHPExcel->setActiveSheetIndex(0)
                ->setCellValue($a, $row['nome'])
@@ -124,13 +131,15 @@ while($row = mysqli_fetch_array($query))
                ->setCellValue($h, $row['cidade'])
                ->setCellValue($I, $row['estado'])
                ->setCellValue($j, $row['cep'])
-               ->setCellValue($k, $row['telefone'])
-               ->setCellValue($l, $row['celular'])
-               ->setCellValue($m, $row['email'])
-               ->setCellValue($n, $cooperado)
-               ->setCellValue($o, $nivelAcesso)
-               ->setCellValue($p, $status)
-               ->setCellValue($q, $row['dataInscricao']);
+               ->setCellValue($k, $subprefeitura['subprefeitura'])
+               ->setCellValue($l, $distrito['distrito'])
+               ->setCellValue($m, $row['telefone'])
+               ->setCellValue($n, $row['celular'])
+               ->setCellValue($o, $row['email'])
+               ->setCellValue($p, $cooperado)
+               ->setCellValue($q, $nivelAcesso)
+               ->setCellValue($r, $status)
+               ->setCellValue($s, $row['dataInscricao']);
    $i++;
 }
 foreach (range('A', $objPHPExcel->getActiveSheet()->getHighestDataColumn()) as $col)
