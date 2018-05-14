@@ -41,6 +41,7 @@ if(isset($_POST['atualizarFisica']) and $_POST['numero'] and empty($endereço))
   $idZona = $_POST['idZona'];
   $idSubprefeitura = $_POST['idSubprefeitura'];
   $idDistrito = $_POST['idDistrito'];
+  $usuarioLogado = $pf['nome'];
 
 
   $sql_atualiza_pf =
@@ -60,8 +61,9 @@ if(isset($_POST['atualizarFisica']) and $_POST['numero'] and empty($endereço))
 	  `cooperado` = '$cooperado',
 	  `idZona` = '$idZona',
 	  `idSubprefeitura` = '$idSubprefeitura',
-	  `idDistrito` = '$idDistrito'
-	WHERE `idPf` = '$idPf'";
+	  `idDistrito` = '$idDistrito',	  
+	  `alteradoPor` = '$usuarioLogado'
+	WHERE `idPf` = '$idPf'";	
 
 	if(mysqli_query($con,$sql_atualiza_pf)):
 		if($habilitaCampo != true):

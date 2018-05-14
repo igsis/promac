@@ -10,7 +10,7 @@
  limpaRegistrosNulos();  
 
 
-  $logs = getLogs(geraHeaderWebLog());        
+  $logs = getLogs(geraHeaderWebLog());   
     
   include('../../promac/visual/webLogHeader.php'); ?>
   

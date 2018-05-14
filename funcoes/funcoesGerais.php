@@ -1938,7 +1938,8 @@ function geraHeaderWebLog()
                log.IdRegistro,
                log.dataOcorrencia, 
                log.usuario,
-               pf.nome 
+               pf.nome,
+               pf.alteradoPor
              FROM 
                weblogs AS log
              INNER JOIN pessoa_fisica AS pf
@@ -1967,7 +1968,8 @@ function geraHeaderWebLogParam($dtInicio, $dtFim, $tabela, $nome)
                log.IdRegistro,
                log.dataOcorrencia, 
                log.usuario,
-               pf.nome 
+               pf.nome,
+               pf.alteradoPor 
              FROM 
                weblogs AS log
              INNER JOIN pessoa_fisica AS pf
@@ -2000,7 +2002,8 @@ function geraHeaderWebLogTodos($dtInicio, $dtFim)
                log.IdRegistro,
                log.dataOcorrencia, 
                log.usuario,
-               pf.nome 
+               pf.nome,
+               pf.alteradoPor 
              FROM 
                weblogs AS log
              INNER JOIN pessoa_fisica AS pf
@@ -2026,9 +2029,9 @@ function geraWebLogDetalhes($idWeblog)
 
   $query =  "SELECT 
                antes, 
-               depois
+               depois              
              FROM 
-               weblogs 
+               weblogs AS log             
              WHERE idWebLog = ".$idWeblog;             
 
   $resultado = mysqli_query($conexao,$query);
