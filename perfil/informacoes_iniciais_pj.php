@@ -330,6 +330,7 @@ else
 	function pegaCep()
 	{
 		cep.addEventListener('focusout', function(){
+			event.preventDefault();
 			form = document.querySelector('#frmCad');    
 			form.submit();        
 		});    	
