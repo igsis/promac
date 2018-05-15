@@ -1,6 +1,7 @@
 <?php   
   require_once('../funcoes/funcoesGerais.php');  
   require_once('../funcoes/funcoesConecta.php');         
+  include('../../promac/visual/webLogHeader.php');
   
   $cleaner = cleanerWeblog();
    if(sizeof($cleaner) > 0):
@@ -9,12 +10,9 @@
 
  limpaRegistrosNulos();  
 
-
-  $logs = getLogs(geraHeaderWebLog());   
-    
-  include('../../promac/visual/webLogHeader.php'); ?>
+ $logs = getLogs(geraHeaderWebLog()); ?>   
   
-  <h1 class="title">Consulta</h1>
+ <h1 class="title">Consulta</h1>   
   <div class="containerHeader">
     <form action="webLogConsulta.php" method="POST" class="form-horizontal">
       <div class="form-group">

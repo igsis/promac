@@ -2,11 +2,12 @@
   <table class="table table-striped table-hover">
     <thead>
       <tr>
-        <th>IDLOG</th>
+        <th>IDLOG</th>        
         <th>TABELA</th>  
         <th>AÇÃO</th>
         <th>DATA</th>
         <th>PESSOA FISICA</th>        
+        <th>ALTERADO POR</th>
       </tr>  
     </thead>  
     <tbody>      
@@ -16,7 +17,13 @@
           <td><?=$log['tabela']?></td>
           <td><?=$log['acao']?></td>          
           <td><?=date('d/m/y',strtotime($log['dataOcorrencia']))?></td> 
-          <td><?=$log['nome']?></td>            
+          <td><?=$log['nome']?></td> 
+          <td>
+            <?=$log['alteradoPor'] == 'none'
+              ? ''
+              : $log['alteradoPor']; 
+            ?>              
+          </td>
           <td>
             <a href="webLogDetalhes.php?id=<?=$log['idWebLog']?>" target="_blank">
               <span class="glyphicon glyphicon-search" aria-hidden="true">
