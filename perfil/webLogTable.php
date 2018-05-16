@@ -33,5 +33,41 @@
         </tr>    
       <?php endforeach ?>
     </tbody>
-  </table>  
+  </table>
+  <?php 
+    $nextPg = $pagina + 1;
+    $prevPag = $pagina - 1;
+  ?>   
+  <center>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <li class="page-item">
+          <?php if($prevPag != 0):?>
+            <a class="page-link" 
+               href="webLog.php?pagina=<?=$prevPag?>?"
+               aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+              <span class="sr-only">Previous</span>
+            </a>
+          <?php endif ?>  
+        </li>
+        <?php for ($i=1; $i < $numPaginas + 1; $i++): ?>
+          <li class="page-item">
+            <a class="page-link" 
+               href="webLog.php?pagina=<?=$i?>?"><?=$i?></a>
+          </li>
+        <?php endfor ?>  
+        <li class="page-item">
+          <?php if($nextPg != 0):?>
+            <a class="page-link" 
+               href="webLog.php?pagina=<?=$nextPg?>?"
+               aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+              <span class="sr-only">Next</span>
+            </a>
+          <?php endif ?>  
+        </li>
+      </ul>
+    </nav> 
+  </center>
 </div>

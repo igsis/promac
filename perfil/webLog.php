@@ -2,27 +2,27 @@
   require_once('../funcoes/funcoesGerais.php');  
   require_once('../funcoes/funcoesConecta.php');         
   include('../../promac/visual/webLogHeader.php');
+  require_once('webLogClear.php');
+  require_once('webLogPaginacao.php'); ?>
   
-  $cleaner = cleanerWeblog();
-   if(sizeof($cleaner) > 0):
-     buscaRegistrosSemAlteracoes($cleaner);    
-  endif;  
-
- limpaRegistrosNulos();  
-
- $logs = getLogs(geraHeaderWebLog()); ?>   
-  
- <h1 class="title">Consulta</h1>   
+  <h1 class="title">Consulta</h1>   
   <div class="containerHeader">
-    <form action="webLogConsulta.php" method="POST" class="form-horizontal">
+    <form action="webLogConsulta.php" method="POST" 
+          class="form-horizontal">
       <div class="form-group">
         <div class="col-md-offset-2 col-md-6">
           <label id="dataInicio">Inicio:</label>
-          <input type="date" name="dt-inicio" value="<?php echo date('d-m-Y')?>" class="form-control set-input-dtIncio" id="dataInicio">
+          <input type="date" name="dt-inicio" 
+                 value="<?php echo date('d-m-Y')?>" 
+                 class="form-control set-input-dtIncio" 
+                 id="dataInicio">
         </div>        
         <div class="col-md-offset-2 col-md-6">
           <label id="dataFim">Fim:</label>
-          <input type="date" name="dt-fim" value="<?php echo date('d-m-Y')?>" class="form-control"
+          <input type="date" 
+                 name="dt-fim" 
+                 value="<?php echo date('d-m-Y')?>" 
+                 class="form-control"
                  id="dataFim">
         </div>  
       </div>      

@@ -1926,7 +1926,7 @@ function cleanerWeblog()
   return $logs;  
 }
 
-function geraHeaderWebLog()
+/*function geraHeaderWebLog()
 {
   $logs = [];  
   $conexao = bancoMysqli();  
@@ -1945,7 +1945,66 @@ function geraHeaderWebLog()
              INNER JOIN pessoa_fisica AS pf
              ON pf.idPf =  log.idRegistro
              WHERE dataOcorrencia >= DATE_ADD(curdate(), interval -15 day)
-             AND   dataOcorrencia <= NOW()";             
+             AND   dataOcorrencia <= NOW()
+             ORDER BY log.idWeblog DESC";             
+
+  $resultado = mysqli_query($conexao,$query);
+
+  while($log = mysqli_fetch_assoc($resultado)):
+    array_push($logs, $log);
+  endwhile;  
+  
+  return $logs;  
+}*/
+
+function geraHeaderWebLog()
+{
+  $logs = [];  
+  $conexao = bancoMysqli();  
+
+  $query =  "SELECT 
+               log.idWebLog, 
+               log.tabela, 
+               log.acao, 
+               log.IdRegistro,
+               log.dataOcorrencia, 
+               log.usuario,
+               pf.nome,
+               pf.alteradoPor
+             FROM 
+               weblogs AS log
+             INNER JOIN pessoa_fisica AS pf
+             ON pf.idPf =  log.idRegistro             
+             ORDER BY log.idWeblog DESC";             
+
+  $resultado = mysqli_query($conexao,$query);
+
+  while($log = mysqli_fetch_assoc($resultado)):
+    array_push($logs, $log);
+  endwhile;  
+  
+  return $logs;  
+}
+
+function webLogPaginacao($inicio, $qtdRegistros)
+{
+  $logs = [];  
+  $conexao = bancoMysqli();  
+
+  $query =  "SELECT 
+               log.idWebLog, 
+               log.tabela, 
+               log.acao, 
+               log.IdRegistro,
+               log.dataOcorrencia, 
+               log.usuario,
+               pf.nome,
+               pf.alteradoPor
+             FROM 
+               weblogs AS log 
+             INNER JOIN pessoa_fisica AS pf
+             ON pf.idPf =  log.idRegistro
+             LIMIT $inicio, $qtdRegistros";
 
   $resultado = mysqli_query($conexao,$query);
 
@@ -2100,11 +2159,6 @@ function limpaRegistrosNulos()
       endforeach;	
     endforeach; 	
   endif;	  
-}
-
-function getLogs($logs)
-{  
-  return geraHeaderWebLog();
 }
 
 ?>
