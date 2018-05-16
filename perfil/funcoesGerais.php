@@ -1899,10 +1899,34 @@ function listaCidades()
 
 function validaData($dtInicio, $dtFim)
 {
-  return $dtInicio > $dtFim ? true : false;      
+  return $dtFim >= $dtInicio ? true : false;      
 }
 
-function geraWebLog($dataInicio, $dataFim, $tipoOrdem)
+function cleanerWeblog()
+{
+  $logs = [];  
+  $conexao = bancoMysqli();  
+
+  $query =  "SELECT 
+               log.idWebLog, 
+               log.antes,
+               log.depois
+             FROM 
+               weblogs AS log             
+             WHERE log.antes = log.depois";
+
+  $resultado = mysqli_query($conexao,$query);
+
+  if($resultado):
+    while($log = mysqli_fetch_assoc($resultado)):
+      array_push($logs, $log);
+    endwhile;     
+  endif;  
+
+  return $logs;  
+}
+
+/*function geraHeaderWebLog()
 {
   $logs = [];  
   $conexao = bancoMysqli();  
@@ -1911,27 +1935,150 @@ function geraWebLog($dataInicio, $dataFim, $tipoOrdem)
                log.idWebLog, 
                log.tabela, 
                log.acao, 
+               log.IdRegistro,
                log.dataOcorrencia, 
                log.usuario,
-               pf.nome 
+               pf.nome,
+               pf.alteradoPor
              FROM 
                weblogs AS log
              INNER JOIN pessoa_fisica AS pf
              ON pf.idPf =  log.idRegistro
-             WHERE log.dataOcorrencia >= '$dataInicio'
-             AND   log.dataOcorrencia <= '$dataFim'".$tipoOrdem;   
+             WHERE dataOcorrencia >= DATE_ADD(curdate(), interval -15 day)
+             AND   dataOcorrencia <= NOW()
+             ORDER BY log.idWeblog DESC";             
 
   $resultado = mysqli_query($conexao,$query);
+
+  while($log = mysqli_fetch_assoc($resultado)):
+    array_push($logs, $log);
+  endwhile;  
+  
+  return $logs;  
+}*/
+
+function geraHeaderWebLog()
+{
+  $logs = [];  
+  $conexao = bancoMysqli();  
+
+  $query =  "SELECT 
+               log.idWebLog, 
+               log.tabela, 
+               log.acao, 
+               log.IdRegistro,
+               log.dataOcorrencia, 
+               log.usuario,
+               pf.nome,
+               pf.alteradoPor
+             FROM 
+               weblogs AS log
+             INNER JOIN pessoa_fisica AS pf
+             ON pf.idPf =  log.idRegistro             
+             ORDER BY log.idWeblog DESC";             
+
+  $resultado = mysqli_query($conexao,$query);
+
+  while($log = mysqli_fetch_assoc($resultado)):
+    array_push($logs, $log);
+  endwhile;  
+  
+  return $logs;  
+}
+
+function webLogPaginacao($inicio, $qtdRegistros)
+{
+  $logs = [];  
+  $conexao = bancoMysqli();  
+
+  $query =  "SELECT 
+               log.idWebLog, 
+               log.tabela, 
+               log.acao, 
+               log.IdRegistro,
+               log.dataOcorrencia, 
+               log.usuario,
+               pf.nome,
+               pf.alteradoPor
+             FROM 
+               weblogs AS log 
+             INNER JOIN pessoa_fisica AS pf
+             ON pf.idPf =  log.idRegistro
+             LIMIT $inicio, $qtdRegistros";
+
+  $resultado = mysqli_query($conexao,$query);
+
+  while($log = mysqli_fetch_assoc($resultado)):
+    array_push($logs, $log);
+  endwhile;  
+  
+  return $logs;  
+}
+
+function geraHeaderWebLogParam($dtInicio, $dtFim, $tabela, $nome) 
+{
+  $logs = [];  
+  $conexao = bancoMysqli();  
+
+  $query =  "SELECT 
+               log.idWebLog, 
+               log.tabela, 
+               log.acao, 
+               log.IdRegistro,
+               log.dataOcorrencia, 
+               log.usuario,
+               pf.nome,
+               pf.alteradoPor 
+             FROM 
+               weblogs AS log
+             INNER JOIN pessoa_fisica AS pf
+             ON pf.idPf =  log.idRegistro
+             WHERE log.dataOcorrencia >= '$dtInicio'
+             AND   log.dataOcorrencia <= '$dtFim'
+             AND   log.tabela = '$tabela' 
+             AND   pf.nome LIKE '%$nome%'";             
+
+  $resultado = mysqli_query($conexao,$query);  
 
   if($resultado):
     while($log = mysqli_fetch_assoc($resultado)):
       array_push($logs, $log);
-    endwhile;
-  endif; 
-  
-  return $logs;
+    endwhile;    
+    
+    return $logs;  
+  endif;  
+}
 
-  var_dump($query);
+function geraHeaderWebLogTodos($dtInicio, $dtFim) 
+{
+  $logs = [];  
+  $conexao = bancoMysqli();  
+
+  $query =  "SELECT 
+               log.idWebLog, 
+               log.tabela, 
+               log.acao, 
+               log.IdRegistro,
+               log.dataOcorrencia, 
+               log.usuario,
+               pf.nome,
+               pf.alteradoPor 
+             FROM 
+               weblogs AS log
+             INNER JOIN pessoa_fisica AS pf
+             ON pf.idPf =  log.idRegistro
+             WHERE log.dataOcorrencia >= '$dtInicio'
+             AND   log.dataOcorrencia <= '$dtFim'";             
+
+  $resultado = mysqli_query($conexao,$query);  
+
+  if($resultado):
+    while($log = mysqli_fetch_assoc($resultado)):
+      array_push($logs, $log);
+    endwhile;    
+    
+    return $logs;  
+  endif;  
 }
 
 function geraWebLogDetalhes($idWeblog)
@@ -1940,10 +2087,11 @@ function geraWebLogDetalhes($idWeblog)
   $conexao = bancoMysqli();  
 
   $query =  "SELECT 
-               antes, depois
+               antes, 
+               depois              
              FROM 
-               weblogs 
-             WHERE idWeblog = ".$idWeblog;             
+               weblogs AS log             
+             WHERE idWebLog = ".$idWeblog;             
 
   $resultado = mysqli_query($conexao,$query);
     
@@ -1952,6 +2100,65 @@ function geraWebLogDetalhes($idWeblog)
     array_push($logs, $log);
   }  
   return $logs;  			    	
+}
+
+function retornaDados($logs, $tipo)
+{
+  foreach($logs as $log):
+    $array = explode('|', $log[$tipo]);        
+  endforeach;   
+
+  return $array;
+}  
+
+function limpaRegistrosSemAlteracoes($idLog)
+{
+  $conexao = bancoMysqli();  
+
+  $query = "DELETE FROM weblogs WHERE idWebLog = {$idLog}";
+  return mysqli_query($conexao, $query);    
+}
+
+function buscaRegistrosSemAlteracoes($logs)
+{
+  foreach($logs as $log):          
+    $ids = geraWebLogDetalhes($log['idWebLog']); 
+    $old = retornaDados($ids, 'antes');
+    $new = retornaDados($ids, 'depois');
+    $numLinhas = array_diff($old, $new);  
+
+    sizeof($numLinhas) == 0 
+        ? limpaRegistrosSemAlteracoes($log['idWebLog'])
+        : '';     
+  endforeach;
+}
+
+function limpaRegistrosNulos()
+{
+  $logs = [];  
+  $conexao = bancoMysqli();  
+
+  $query =  "SELECT 
+               idWeblog               
+             FROM 
+               weblogs
+             WHERE antes is null
+             OR    depois is null";
+
+  $resultado = mysqli_query($conexao,$query);
+    
+  while($log = mysqli_fetch_assoc($resultado)) 
+  {
+    array_push($logs, $log);    
+  }  
+
+  if($resultado):
+    foreach($logs as $log):
+      foreach($log as $idWeblog):
+        limpaRegistrosSemAlteracoes($idWeblog);  	
+      endforeach;	
+    endforeach; 	
+  endif;	  
 }
 
 ?>
