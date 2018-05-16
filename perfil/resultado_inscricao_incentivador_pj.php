@@ -4,7 +4,7 @@ $tipoPessoa = '5';
 
 $idPj = $_SESSION['idUser'];
 $pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
-$rl = recuperaDados("representante_legal","idRepresentanteLegal",$idPj);
+$rl = recuperaDados("representante_legal","idRepresentanteLegal",$pj['idRepresentanteLegal']);
 $campos = array($pj['razaoSocial'], $pj['cnpj'], $pj['email'], $pj['cep'], $pj['numero']);
 $cpo = false;
 

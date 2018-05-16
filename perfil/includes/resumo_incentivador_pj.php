@@ -71,5 +71,5 @@
 </div>
 
 <div class="table-responsive list_info"><h6>Arquivo(s) Anexado(s)</h6>
-	<?php listaArquivosPessoa($idPj,$tipoPessoa,"arquivos_pj"); ?>
+	<?php listaArquivosPessoa($idPj,$tipoPessoa,"arquivos_incetivador_pj"); ?>
 </div>
