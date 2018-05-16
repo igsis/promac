@@ -85,7 +85,7 @@ function listaArquivosPessoaSApagar($idPessoa,$tipoPessoa,$pagina)
 				<p align='justify'><strong>Bairro:</strong> <?php echo isset($pf['bairro']) ? $pf['bairro'] : null; ?></p>
 				<p align='justify'><strong>Cidade:</strong> <?php echo isset($pf['cidade']) ? $pf['cidade'] : null; ?></p>
 				<p align='justify'><strong>Estado:</strong> <?php echo isset($pf['estado']) ? $pf['estado'] : null; ?></p>
-				<p align='justify'><strong>CEP:</strong> <?php echo isset($pf['cep']) ? $pj['numero'] : null; ?></p>
+				<p align='justify'><strong>CEP:</strong> <?php echo isset($pf['cep']) ? $pj['cep'] : null; ?></p>
 				<p align='justify'><strong>Número:</strong> <?php echo isset($pf['numero']) ? $pf['numero'] : null; ?></p>
 				<p align='justify'><strong>Complemento:</strong> <?php echo isset($pf['complemento']) ? $pf['complemento'] : null; ?></p>
 				<p align='justify'><strong>Telefone:</strong> <?php echo isset($pf['telefone']) ? $pf['telefone'] : null; ?></p>
