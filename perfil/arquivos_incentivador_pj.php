@@ -133,7 +133,7 @@ else{
 											$envio = $con->query($query);
 											$row = $envio->fetch_array(MYSQLI_ASSOC);
 
-											if(verificaArquivosExistentesPF($idPj,$row['idListaDocumento'])){
+											if(verificaArquivosExistentesIncentivador($idPj,$row['idListaDocumento'])){
 												echo '<div class="alert alert-success">O arquivo ' . $doc . ' já foi enviado.</div>';
 											}
 											else{ ?>
