@@ -58,7 +58,7 @@
           </li>
         <?php endfor ?>  
         <li class="page-item">
-          <?php if($nextPg != 0):?>
+          <?php if($nextPg <= $numPaginas):?>
             <a class="page-link" 
                href="webLog.php?pagina=<?=$nextPg?>"
                aria-label="Next">
