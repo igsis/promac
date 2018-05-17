@@ -1926,37 +1926,6 @@ function cleanerWeblog()
   return $logs;  
 }
 
-/*function geraHeaderWebLog()
-{
-  $logs = [];  
-  $conexao = bancoMysqli();  
-
-  $query =  "SELECT 
-               log.idWebLog, 
-               log.tabela, 
-               log.acao, 
-               log.IdRegistro,
-               log.dataOcorrencia, 
-               log.usuario,
-               pf.nome,
-               pf.alteradoPor
-             FROM 
-               weblogs AS log
-             INNER JOIN pessoa_fisica AS pf
-             ON pf.idPf =  log.idRegistro
-             WHERE dataOcorrencia >= DATE_ADD(curdate(), interval -15 day)
-             AND   dataOcorrencia <= NOW()
-             ORDER BY log.idWeblog DESC";             
-
-  $resultado = mysqli_query($conexao,$query);
-
-  while($log = mysqli_fetch_assoc($resultado)):
-    array_push($logs, $log);
-  endwhile;  
-  
-  return $logs;  
-}*/
-
 function geraHeaderWebLog()
 {
   $logs = [];  
@@ -1968,14 +1937,9 @@ function geraHeaderWebLog()
                log.acao, 
                log.IdRegistro,
                log.dataOcorrencia, 
-               log.usuario,
-               pf.nome,
-               pf.alteradoPor
+               log.usuario
              FROM 
-               weblogs AS log
-             INNER JOIN pessoa_fisica AS pf
-             ON pf.idPf =  log.idRegistro             
-             ORDER BY log.idWeblog DESC";             
+               weblogs AS log";             
 
   $resultado = mysqli_query($conexao,$query);
 
@@ -1986,7 +1950,7 @@ function geraHeaderWebLog()
   return $logs;  
 }
 
-function webLogPaginacao($inicio, $qtdRegistros)
+function webLogPaginacao($inicio, $qtdRegistrosPorPag)
 {
   $logs = [];  
   $conexao = bancoMysqli();  
@@ -2004,7 +1968,7 @@ function webLogPaginacao($inicio, $qtdRegistros)
                weblogs AS log 
              INNER JOIN pessoa_fisica AS pf
              ON pf.idPf =  log.idRegistro
-             LIMIT $inicio, $qtdRegistros";
+             LIMIT $inicio, $qtdRegistrosPorPag";   
 
   $resultado = mysqli_query($conexao,$query);
 
@@ -2015,11 +1979,8 @@ function webLogPaginacao($inicio, $qtdRegistros)
   return $logs;  
 }
 
-function geraHeaderWebLogParam($dtInicio, $dtFim, $tabela, $nome) 
+function pessoaFisicaQuery($dtInicio, $dtFim, $tabela, $nome)
 {
-  $logs = [];  
-  $conexao = bancoMysqli();  
-
   $query =  "SELECT 
                log.idWebLog, 
                log.tabela, 
@@ -2038,15 +1999,60 @@ function geraHeaderWebLogParam($dtInicio, $dtFim, $tabela, $nome)
              AND   log.tabela = '$tabela' 
              AND   pf.nome LIKE '%$nome%'";             
 
-  $resultado = mysqli_query($conexao,$query);  
+   return $query;          
 
+}
+
+function pessoaJuridicaQuery($dtInicio, $dtFim, $tabela, $nome)
+{
+  $query =  "SELECT 
+               log.idWebLog, 
+               log.tabela, 
+               log.acao, 
+               log.IdRegistro,
+               log.dataOcorrencia, 
+               log.usuario,
+               pj.razaoSocial as nome,
+               pj.alteradoPor 
+             FROM 
+               weblogs AS log
+             INNER JOIN pessoa_juridica AS pj
+             ON pj.idPj =  log.idRegistro
+             WHERE log.dataOcorrencia >= '$dtInicio'
+             AND   log.dataOcorrencia <= '$dtFim'
+             AND   log.tabela = '$tabela' 
+             AND   pj.razaoSocial LIKE '%$nome%'";             
+
+   return $query;          
+
+}
+
+function geraHeaderWebLogParam($dtInicio, $dtFim, $tabela, $nome) 
+{
+  $logs = [];  
+  $conexao = bancoMysqli();   	  
+
+  switch ($tabela): 
+    case 'pessoa_fisica':
+  	  $query = pessoaFisicaQuery($dtInicio, $dtFim, $tabela, $nome);
+  	  break;
+
+  	case 'pessoa_juridica':
+  	  $query = pessoaJuridicaQuery($dtInicio, $dtFim, $tabela, $nome);
+  	  break;  
+
+  endswitch;
+  
+  $resultado = mysqli_query($conexao,$query);  
+  
   if($resultado):
     while($log = mysqli_fetch_assoc($resultado)):
       array_push($logs, $log);
     endwhile;    
     
     return $logs;  
-  endif;  
+  endif;
+  
 }
 
 function geraHeaderWebLogTodos($dtInicio, $dtFim) 

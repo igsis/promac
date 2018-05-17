@@ -36,7 +36,7 @@
   </table>
   <?php 
     $nextPg = $pagina + 1;
-    $prevPag = $pagina - 1;
+    $prevPag = $pagina - 1;    
   ?>   
   <center>
     <nav aria-label="Page navigation example">

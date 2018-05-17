@@ -10,4 +10,7 @@
   $numPaginas = ceil($totalRegistros/$qtdRegistrosPorPag); 
 
   $inicio = $qtdRegistrosPorPag*$pagina-$qtdRegistrosPorPag;
+  
   $logs = webLogPaginacao($inicio, $qtdRegistrosPorPag); 
+
+  

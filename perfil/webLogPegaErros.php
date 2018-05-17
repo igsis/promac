@@ -7,7 +7,8 @@
    
   $_POST['tabela'] == 'todos'
     ? $logs = geraHeaderWebLogTodos($_POST['dt-inicio'], $_POST['dt-fim'])
-    : $logs = geraHeaderWebLogParam($_POST['dt-inicio'], $_POST['dt-fim'], $_POST['tabela'], $_POST['nome']); 
+    : $logs = geraHeaderWebLogParam($_POST['dt-inicio'], $_POST['dt-fim'], $_POST['tabela'], 
+      $_POST['nome']); 
 
   sizeof($logs) == 0
     ? array_push($erros, 'Não existe registros nesse período')

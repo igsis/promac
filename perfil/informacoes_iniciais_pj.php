@@ -41,6 +41,7 @@ if(isset($_POST['atualizarJuridica']) and $_POST['numero'] and empty($endereço)
 	$idZona = $_POST['idZona'];
   	$idSubprefeitura = $_POST['idSubprefeitura'];
   	$idDistrito = $_POST['idDistrito'];
+  	$usuarioLogado = $pj['razaoSocial'];
 
 	$sql_atualiza_pj = "UPDATE pessoa_juridica SET
 	`razaoSocial` = '$razaoSocial',
@@ -57,7 +58,8 @@ if(isset($_POST['atualizarJuridica']) and $_POST['numero'] and empty($endereço)
 	`cooperativa` = '$cooperativa',
 	`idZona` = '$idZona',
 	`idSubprefeitura` = '$idSubprefeitura',
-	`idDistrito` = '$idDistrito'
+	`idDistrito` = '$idDistrito',
+	`alteradoPor` = '$usuarioLogado'
 	WHERE `idPj` = '$idPj'";
 
 	if(mysqli_query($con,$sql_atualiza_pj))

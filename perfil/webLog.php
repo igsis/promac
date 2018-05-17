@@ -2,8 +2,9 @@
   require_once('../funcoes/funcoesGerais.php');  
   require_once('../funcoes/funcoesConecta.php');         
   include('../../promac/visual/webLogHeader.php');
-  require_once('webLogClear.php');
-  require_once('webLogPaginacao.php'); ?>
+  require_once('webLogClear.php'); 
+  require_once('webLogPaginacao.php');
+  ?>  
   
   <h1 class="title">Consulta</h1>   
   <div class="containerHeader">
@@ -41,9 +42,14 @@
       </div>
       <button type="submit" class="btn btn-success" id="button">Pesquisar</button>    
     </form>        
-    <?php return include('webLogTable.php'); ?>
+    <?php 
+      
+      return include('webLogTable.php'); 
+    ?>
   </div>  
-  <?php include('../../promac/visual/webLogFooter.php'); ?>
+  <?php     
+    include('../../promac/visual/webLogFooter.php'); 
+   ?>
   
 
 
