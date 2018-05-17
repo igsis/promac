@@ -54,15 +54,15 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 					<div class="form-group">
 						<div class="col-md-offset-3 col-md-2">
 							<label>Valor total do <br/>projeto</label>
-							<input type="text" name="valorProjeto" class="form-control" id="valor1" readOnly value="<?php echo dinheiroParaBr($projeto['valorIncentivo']+$projeto['valorFinanciamento']) ?>" />
+							<input type="text" name="valorProjeto" class="form-control" id="valorProjeto" readOnly value="<?php echo dinheiroParaBr($projeto['valorProjeto']=$projeto['valorIncentivo']+$projeto['valorFinanciamento']) ?>" />
 						</div>
 						<div class="col-md-2">
 							<label>Valor do Incentivo solicitado no Pro-Mac</label>
-							<input type="text" name="valorIncentivo" class="form-control" id="valor2" value="<?php echo dinheiroParaBr($projeto['valorIncentivo']) ?>" />
+							<input type="text" name="valorIncentivo" class="form-control" id="valorIncentivo" value="<?php echo dinheiroParaBr($projeto['valorIncentivo']) ?>" />
 						</div>
 						<div class="col-md-2">
 							<label>Valor de outros financiamentos</label>
-							<input type="text" name="valorFinanciamento" class="form-control" id="valor3" value="<?php echo dinheiroParaBr($projeto['valorFinanciamento']) ?>" />
+							<input type="text" name="valorFinanciamento" class="form-control" id="valorFinanciamento" value="<?php echo dinheiroParaBr($projeto['valorFinanciamento']) ?>" />
 						</div>
 					</div>
 
@@ -225,3 +225,24 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 		<!-- Fim Modal Informações Renuncia fiscal -->
 	</div>
 </section>
+
+<script type="text/javascript">
+
+var valorIncentivo = document.querySelector ('#valorIncentivo');
+var valorFinanciamento = document.querySelector ('#valorFinanciamento');
+var valorProjeto = document.querySelector ('#valorProjeto');
+
+valorIncentivo.addEventListener('input', function(){
+
+	if(parseInt(valorIncentivo.value) && parseInt(valorFinanciamento.value)) 			  
+	   valorProjeto.value = parseInt(valorIncentivo.value) + parseInt(valorFinanciamento.value);
+});
+
+valorFinanciamento.addEventListener('input', function(){
+
+	if(parseInt(valorIncentivo.value) && parseInt(valorFinanciamento.value)) 			  
+	   valorProjeto.value = parseInt(valorIncentivo.value) + parseInt(valorFinanciamento.value);
+});
+
+
+</script>
