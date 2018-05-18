@@ -5,8 +5,7 @@
         <th>IDLOG</th>        
         <th>TABELA</th>  
         <th>AÇÃO</th>
-        <th>DATA</th>
-        <th>PESSOA FISICA</th>        
+        <th>DATA</th>        
         <th>ALTERADO POR</th>
       </tr>  
     </thead>  
@@ -16,8 +15,9 @@
           <td><?=$log['idWebLog']?></td>  
           <td><?=$log['tabela']?></td>
           <td><?=$log['acao']?></td>          
-          <td><?=date('d/m/y',strtotime($log['dataOcorrencia']))?></td> 
-          <td><?=$log['nome']?></td> 
+          <td>
+            <?=date('d/m/y',strtotime($log['dataOcorrencia']))?>
+          </td>           
           <td>
             <?=$log['alteradoPor'] == 'none'
               ? ''

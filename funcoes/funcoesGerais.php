@@ -1953,23 +1953,20 @@ function geraHeaderWebLog()
 function webLogPaginacao($inicio, $qtdRegistrosPorPag)
 {
   $logs = [];  
-  $conexao = bancoMysqli();  
+  $conexao = bancoMysqli();    
 
-  $query =  "SELECT 
+   $query =  "SELECT 
                log.idWebLog, 
                log.tabela, 
                log.acao, 
                log.IdRegistro,
                log.dataOcorrencia, 
-               log.usuario,
-               pf.nome,
-               pf.alteradoPor
+               log.usuario,               
+               fn_busca_registro
+                 (log.documento) as alteradoPor                     
              FROM 
-               weblogs AS log 
-             INNER JOIN pessoa_fisica AS pf
-             ON pf.idPf =  log.idRegistro
-             LIMIT $inicio, $qtdRegistrosPorPag";   
-
+               weblogs AS log";              
+    
   $resultado = mysqli_query($conexao,$query);
 
   while($log = mysqli_fetch_assoc($resultado)):

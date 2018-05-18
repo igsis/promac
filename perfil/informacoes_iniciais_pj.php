@@ -6,6 +6,7 @@ $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 $estados = formataDados(listaEstados());
 $cidades = formataDados(listaCidades());
 $habilitaCampo = false;
+var_dump($pj['razaoSocial']);
 
 if(isset($_POST['cep'])):          
 	$enderecos = retornaEndereco($_POST['cep']);  
