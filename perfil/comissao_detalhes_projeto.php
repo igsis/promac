@@ -97,7 +97,7 @@ if(isset($_POST['gravarNota']))
 	{
 		$dateNow = date('Y:m:d h:i:s');
 		$nota = addslashes($_POST['nota']);
-		$sql_nota = "INSERT INTO notas (idProjeto, data, nota, interna) VALUES ('$idProjeto', '$dateNow', '$nota',1)";
+		$sql_nota = "INSERT INTO notas (idProjeto, data, nota, interna) VALUES ('$idProjeto', '$dateNow', '$nota', '2')";
 		if(mysqli_query($con,$sql_nota))
 		{
 			$mensagem = "<font color='#01DF3A'><strong>Nota inserida com sucesso!</strong></font>";

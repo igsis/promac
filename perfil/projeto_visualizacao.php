@@ -88,7 +88,7 @@ $status = recuperaDados("status","idStatus",$projeto['idStatus']);
 										<li class='list-group-item list-group-item-success'>Notas
 										<?php
 											$sql = "SELECT * FROM notas
-													WHERE idProjeto = '$idProjeto' AND interna != 1";
+													WHERE idProjeto = '$idProjeto' AND interna = 0";
 											$query = mysqli_query($con,$sql);
 											$num = mysqli_num_rows($query);
 											if($num > 0)
