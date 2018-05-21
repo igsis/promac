@@ -144,7 +144,7 @@ if(isset($_POST["enviar"]))
 				{
 					if(move_uploaded_file($nome_temporario, $dir.$new_name))
 					{
-						$sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('9', '$idPf', '$y', '$new_name', '$hoje', '1'); ";
+						$sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('9', '$idProjeto', '$y', '$new_name', '$hoje', '1'); ";
 						$query = mysqli_query($con,$sql_insere_arquivo);
 						if($query)
 						{
@@ -263,7 +263,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 							<div class="form-group">
 								<div class="col-md-offset-2 col-md-8">
 									<div class="table-responsive list_info"><h6>Arquivo(s) Anexado(s)</h6>
-										<?php listaArquivosPessoa($idPf,9,"comissao_detalhes_projeto"); ?>
+										<?php listaArquivosPessoa($idProjeto,9,"comissao_detalhes_projeto"); ?>
 									</div>
 								</div>
 							</div>
@@ -289,7 +289,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 													$envio = $con->query($query);
 													$row = $envio->fetch_array(MYSQLI_ASSOC);
 
-													if(verificaArquivosExistentesPF($idPf,$row['idListaDocumento'])){
+													if(verificaArquivosExistentesPF($idProjeto,$row['idListaDocumento'])){
 														echo '<div class="alert alert-success">O arquivo ' . $doc . ' já foi enviado.</div>';
 													}
 													else{ ?>
