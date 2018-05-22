@@ -2022,6 +2022,29 @@ function pessoaJuridicaQuery($dtInicio, $dtFim, $tabela, $nome)
              AND   log.tabela = '$tabela' 
              AND   pj.razaoSocial LIKE '%$nome%'";             
 
+   return $query;   
+}
+
+function projetoQuery($dtInicio, $dtFim, $tabela, $nome)
+{
+  $query =  "SELECT 
+               log.idWebLog, 
+               log.tabela, 
+               log.acao, 
+               log.IdRegistro,
+               log.dataOcorrencia, 
+               log.usuario,
+               p.nomeProjeto as nome,
+               p.alteradoPor 
+             FROM 
+               weblogs AS log
+             INNER JOIN projeto AS p
+             ON p.idProjeto =  log.idRegistro
+             WHERE log.dataOcorrencia >= '$dtInicio'
+             AND   log.dataOcorrencia <= '$dtFim'
+             AND   log.tabela = '$tabela' 
+             AND   p.nomeProjeto LIKE '%$nome%'";             
+
    return $query;          
 
 }
@@ -2033,12 +2056,19 @@ function geraHeaderWebLogParam($dtInicio, $dtFim, $tabela, $nome)
 
   switch ($tabela): 
     case 'pessoa_fisica':
-  	  $query = pessoaFisicaQuery($dtInicio, $dtFim, $tabela, $nome);
+  	  $query = pessoaFisicaQuery($dtInicio, $dtFim, $tabela, 
+  	  	$nome);
   	  break;
 
   	case 'pessoa_juridica':
-  	  $query = pessoaJuridicaQuery($dtInicio, $dtFim, $tabela, $nome);
+  	  $query = pessoaJuridicaQuery($dtInicio, $dtFim, $tabela, 
+  	  	$nome);
   	  break;  
+
+  	case 'projeto':
+  	  $query = projetoQuery($dtInicio, $dtFim, $tabela, 
+  	  	$nome);
+  	  break;    
 
   endswitch;
   
