@@ -1960,7 +1960,7 @@ function webLogPaginacao($inicio, $qtdRegistrosPorPag)
                log.idWebLog, 
                log.tabela, 
                log.acao, 
-               log.IdRegistro,
+               log.idRegistro,
                log.dataOcorrencia, 
                log.usuario,               
                fn_busca_registro
@@ -1981,7 +1981,7 @@ function webLogPaginacao($inicio, $qtdRegistrosPorPag)
                   nomeProjeto 
                  FROM 
                    projeto AS P
-                 WHERE p.idProjeto = log.idRegistro) AS nomePo                       
+                 WHERE P.idProjeto = log.idRegistro) AS nomePo                       
              FROM 
                weblogs AS log
              LIMIT $inicio, $qtdRegistrosPorPag";              
@@ -2110,7 +2110,7 @@ function geraHeaderWebLogTodos($dtInicio, $dtFim)
                log.idWebLog, 
                log.tabela, 
                log.acao, 
-               log.IdRegistro,
+               log.idRegistro,
                log.dataOcorrencia, 
                log.usuario,               
                fn_busca_registro
@@ -2131,7 +2131,7 @@ function geraHeaderWebLogTodos($dtInicio, $dtFim)
                   nomeProjeto 
                  FROM 
                    projeto AS P
-                 WHERE p.idProjeto = log.idRegistro) AS nomePo
+                 WHERE P.idProjeto = log.idRegistro) AS nomePo
              FROM 
                weblogs AS log             
              WHERE log.dataOcorrencia >= '$dtInicio'
