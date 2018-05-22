@@ -121,6 +121,24 @@ if(isset($_POST['envioComissao']))
 	}
 }
 
+if(isset($_POST['reabreProjeto']))
+{
+	$idP = $_POST['IDP'];
+	$dateNow = date('Y:m:d h:i:s');
+	$sql_reabreProjeto = "UPDATE projeto SET idStatus = '9', reaberturaProjeto = '$dateNow' WHERE idProjeto = '$idP' ";
+	if(mysqli_query($con,$sql_reabreProjeto))
+	{
+		$mensagem = "<font color='#01DF3A'><strong>Reaberto com sucesso!</strong></font>";
+		echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
+		gravarLog($sql_reabreProjeto);
+	}
+	else
+	{
+		$mensagem = "<font color='#FF0000'><strong>Erro ao reabrir! Tente novamente.</strong></font>";
+	}
+}
+
+
 if($projeto['tipoPessoa'] == 1)
 {
 	$pf = recuperaDados("pessoa_fisica","idPf",$projeto['idPf']);
@@ -167,6 +185,17 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 									<div class="col-md-2"><br/>
 										<?php echo "<input type='hidden' name='IDP' value='$idProjeto'>"; ?>
 										<input type="submit" name="envioComissao" class="btn btn-theme btn-md btn-block" value="Sim">
+									</div>
+								</div>
+							</form>
+
+							<form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
+								<div class="form-group">
+									<div class="col-md-offset-2 col-md-6" align="right"><br/><label>Reabrir projeto para edição?</label><br><?php echo exibirDataHoraBr($projeto['reaberturaProjeto']) ?>
+									</div>
+									<div class="col-md-2"><br/>
+										<?php echo "<input type='hidden' name='IDP' value='$idProjeto'>"; ?>
+										<input type="submit" name="reabreProjeto" class="btn btn-theme btn-md btn-block" value="Sim">
 									</div>
 								</div>
 							</form>

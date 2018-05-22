@@ -255,7 +255,7 @@ if(isset($_POST['liberacaoPJ']))
 		</div>
 		<!-- Lista 5 -->
 		<div class="form-group">
-			<h5>Lista de projetos enviados.</h5>
+			<h5>Lista de projetos enviados</h5>
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
@@ -323,6 +323,76 @@ if(isset($_POST['liberacaoPJ']))
 		</div>
 		<!-- Lista 6 -->
 		<div class="form-group">
+			<h5>Lista de solicitações de reabertura de projeto para edição</h5>
+		</div>
+		<div class="row">
+			<div class="col-md-offset-1 col-md-10">
+				<div class="table-responsive list_info">
+				<?php
+					$sql = "SELECT * FROM projeto WHERE publicado = 1 AND idStatus = 8 ORDER BY idProjeto DESC LIMIT 0,10";
+					$query = mysqli_query($con,$sql);
+					$num = mysqli_num_rows($query);
+					if($num > 0)
+					{
+						echo "
+							<table class='table table-condensed'>
+								<thead>
+									<tr class='list_menu'>
+										<td>Protocolo (nº ISP)</td>
+										<td>Nome do Projeto</td>
+										<td>Proponente</td>
+										<td>Documento</td>
+										<td>Área de Atuação</td>
+										<td>Data da Solicitação</td>
+										<td width='10%'></td>
+									</tr>
+								</thead>
+								<tbody>";
+
+								while($campo = mysqli_fetch_array($query))
+								{
+									$area = recuperaDados("area_atuacao","idArea",$campo['idAreaAtuacao']);
+									$status = recuperaDados("status","idStatus",$campo['idStatus']);
+									$pf = recuperaDados("pessoa_fisica","idPf",$campo['idPf']);
+									$pj = recuperaDados("pessoa_juridica","idPj",$campo['idPj']);
+
+									echo "<tr>";
+									echo "<td class='list_description'>".$campo['protocolo']."</td>";
+									echo "<td class='list_description'>".$campo['nomeProjeto']."</td>";
+									if($campo['tipoPessoa'] == 1)
+									{
+										echo "<td class='list_description'>".$pf['nome']."</td>";
+										echo "<td class='list_description'>".$pf['cpf']."</td>";
+									}
+									if($campo['tipoPessoa'] == 2)
+									{
+										echo "<td class='list_description'>".$pj['razaoSocial']."</td>";
+										echo "<td class='list_description'>".$pj['cnpj']."</td>";
+									}
+									echo "<td class='list_description'>".$area['areaAtuacao']."</td>";
+									echo "<td class='list_description'>".$campo['solicitacaoReabertura']."</td>";
+									echo "
+										<td class='list_description'>
+											<form method='POST' action='?perfil=smc_detalhes_projeto'>
+												<input type='hidden' name='idProjeto' value='".$campo['idProjeto']."' />
+												<input type ='submit' class='btn btn-theme btn-block' value='Visualizar'>
+											</form>
+										</td>";
+									}
+									echo "</tr>";
+							echo "</tbody>
+								</table>";
+						}
+						else
+						{
+							echo "Não há resultado no momento.";
+						}
+					?>
+				</div>
+			</div>
+		</div>
+		<!-- Lista 7 -->
+		<div class="form-group">
 			<h5>Projetos com data final de captação com tempo menor que 30 dias.</h5>
 		</div>
 		<div class="row">
@@ -375,7 +445,7 @@ if(isset($_POST['liberacaoPJ']))
 				</div>
 			</div>
 		</div>
-		<!-- Lista 7 -->
+		<!-- Lista 8 -->
 		<div class="form-group">
 			<h5>Projetos com data de execução menor que 30 dias.</h5>
 		</div>
@@ -429,7 +499,7 @@ if(isset($_POST['liberacaoPJ']))
 				</div>
 			</div>
 		</div>
-		<!-- Lista 8 -->
+		<!-- Lista 9 -->
 		<div class="form-group">
 			<h5>Projetos com data para prestar contas faltando 30 dias ou menos.</h5>
 		</div>

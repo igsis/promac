@@ -194,6 +194,17 @@ if(isset($_POST['apagar']))
 																	</button>
 														</form>
 													</td>";
+													break;
+													//projeto reaberto para edição
+													case 9:
+														echo "<td class='list_description'> ".$rowStatus['status']."</td>";
+														echo "
+													<td class='list_description'>
+														<form method='POST' action='?perfil=projeto_edicao'>
+															<input type='hidden' name='carregar' value='".$campo['idProjeto']."' />
+															<input type ='submit' class='btn btn-theme btn-block' value='carregar'>
+														</form>
+													</td>";
 												}
 												echo "</tr>";
 											}
