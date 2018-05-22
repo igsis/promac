@@ -2054,6 +2054,7 @@ function geraHeaderWebLogParam($dtInicio, $dtFim, $tabela, $nome)
   
 }
 
+/*abuba*/
 function geraHeaderWebLogTodos($dtInicio, $dtFim) 
 {
   $logs = [];  
@@ -2065,13 +2066,11 @@ function geraHeaderWebLogTodos($dtInicio, $dtFim)
                log.acao, 
                log.IdRegistro,
                log.dataOcorrencia, 
-               log.usuario,
-               pf.nome,
-               pf.alteradoPor 
+               log.usuario,               
+               fn_busca_registro
+                 (log.documento, log.idRegistro) as alteradoPor                     
              FROM 
-               weblogs AS log
-             INNER JOIN pessoa_fisica AS pf
-             ON pf.idPf =  log.idRegistro
+               weblogs AS log             
              WHERE log.dataOcorrencia >= '$dtInicio'
              AND   log.dataOcorrencia <= '$dtFim'";             
 
