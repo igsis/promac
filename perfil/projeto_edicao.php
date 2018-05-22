@@ -1,5 +1,7 @@
 <?php
 $con = bancoMysqli();
+//[Procedure mySql para trigger de update]
+pr_atualizaCampos(); 
 
 
 if(isset($_POST['carregar']))

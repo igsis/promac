@@ -15,8 +15,11 @@ if(isset($_POST['novoPj'])) //tipoePessoa = 2
 		$contratoGestao = 0;
 	}
 	$sql_insere_projeto = "INSERT INTO projeto (idPj, contratoGestao, tipoPessoa, nomeProjeto, idAreaAtuacao, idStatus, publicado) VALUES ('$idPj', '$contratoGestao', 2, '$nomeProjeto', '$idAreaAtuacao', 1, 1)";
+	
 	if(mysqli_query($con,$sql_insere_projeto))
 	{
+		//[Procedure mySql para trigger de update]
+        pr_atualizaCampos(); 
 		$sql_ultimo = "SELECT idProjeto FROM projeto ORDER BY idProjeto DESC LIMIT 0,1";
 		$query_ultimo = mysqli_query($con,$sql_ultimo);
 		$ultimoProjeto = mysqli_fetch_array($query_ultimo);
@@ -24,6 +27,8 @@ if(isset($_POST['novoPj'])) //tipoePessoa = 2
 		$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso! Aguarde...</strong></font>";
 		gravarLog($sql_insere_projeto);
 		echo "<meta HTTP-EQUIV='refresh' CONTENT='0.5;URL=?perfil=projeto_2'>";
+
+		
 	}
 	else
 	{

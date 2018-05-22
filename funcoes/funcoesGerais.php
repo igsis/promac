@@ -2164,4 +2164,10 @@ function limpaRegistrosNulos()
   endif;	  
 }
 
+function pr_atualizaCampos()
+{  
+  mysqli_query(bancoMysqli(), 
+     "CALL  pr_atualizaCampos;");   
+}
+ 
 ?>
