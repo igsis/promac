@@ -1964,7 +1964,7 @@ function webLogPaginacao($inicio, $qtdRegistrosPorPag)
                log.dataOcorrencia, 
                log.usuario,               
                fn_busca_registro
-                 (log.documento) as alteradoPor                     
+                 (log.documento, log.idRegistro) as alteradoPor                     
              FROM 
                weblogs AS log
              LIMIT $inicio, $qtdRegistrosPorPag";              
