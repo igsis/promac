@@ -1926,7 +1926,6 @@ function cleanerWeblog()
   return $logs;  
 }
 
-/*xura looking*/
 function geraHeaderWebLog()
 {
   $logs = [];  
@@ -2101,7 +2100,7 @@ function geraHeaderWebLogParam($dtInicio, $dtFim, $tabela, $nome)
   
 }
 
-function geraHeaderWebLogTodos($dtInicio, $dtFim) 
+function geraHeaderWebLogTodos($dtInicio, $dtFim, $nome) 
 {
   $logs = [];  
   $conexao = bancoMysqli();  
@@ -2135,7 +2134,7 @@ function geraHeaderWebLogTodos($dtInicio, $dtFim)
              FROM 
                weblogs AS log             
              WHERE log.dataOcorrencia >= '$dtInicio'
-             AND   log.dataOcorrencia <= '$dtFim'";             
+             AND   log.dataOcorrencia <= '$dtFim'";
 
   $resultado = mysqli_query($conexao,$query);  
 
