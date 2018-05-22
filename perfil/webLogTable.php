@@ -5,11 +5,12 @@
         <th>IDLOG</th>        
         <th>TABELA</th>  
         <th>AÇÃO</th>
-        <th>DATA</th>        
+        <th>DATA</th>    
+        <th>NOME</th>    
         <th>ALTERADO POR</th>
       </tr>  
     </thead>  
-    <tbody>      
+    <tbody>            
       <?php foreach($logs as $log):?>
         <tr>
           <td><?=$log['idWebLog']?></td>  
@@ -18,6 +19,12 @@
           <td>
             <?=date('d/m/y',strtotime($log['dataOcorrencia']))?>
           </td>           
+          <td>
+            <?=isset($log['nomePf']) ? $log['nomePf'] : ''; ?>   
+            <?=isset($log['nomePj']) ? $log['nomePj'] : ''; ?>
+            <?=isset($log['nomePo']) ? $log['nomePo'] : ''; ?>
+            <?=isset($log['nome'])   ? $log['nome']   : ''; ?>
+          </td>
           <td>
             <?=$log['alteradoPor'] == 'none'
               ? ''

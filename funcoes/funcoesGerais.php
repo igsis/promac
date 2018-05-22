@@ -1964,7 +1964,24 @@ function webLogPaginacao($inicio, $qtdRegistrosPorPag)
                log.dataOcorrencia, 
                log.usuario,               
                fn_busca_registro
-                 (log.documento, log.idRegistro) as alteradoPor                     
+                 (log.documento, log.idRegistro) as alteradoPor,
+               (SELECT 
+                  nome 
+                 FROM 
+                   pessoa_fisica AS PF
+                 WHERE PF.cpf = log.documento) AS nomePf,
+
+                (SELECT 
+                  razaoSocial 
+                 FROM 
+                   pessoa_juridica AS PJ
+                 WHERE PJ.cnpj = log.documento) AS nomePj, 
+
+                 (SELECT 
+                  nomeProjeto 
+                 FROM 
+                   projeto AS P
+                 WHERE p.idProjeto = log.idRegistro) AS nomePo                       
              FROM 
                weblogs AS log
              LIMIT $inicio, $qtdRegistrosPorPag";              
@@ -1987,7 +2004,7 @@ function pessoaFisicaQuery($dtInicio, $dtFim, $tabela, $nome)
                log.IdRegistro,
                log.dataOcorrencia, 
                log.usuario,
-               pf.nome,
+               pf.nome as nome,
                pf.alteradoPor 
              FROM 
                weblogs AS log
@@ -2084,7 +2101,6 @@ function geraHeaderWebLogParam($dtInicio, $dtFim, $tabela, $nome)
   
 }
 
-/*abuba*/
 function geraHeaderWebLogTodos($dtInicio, $dtFim) 
 {
   $logs = [];  
@@ -2098,7 +2114,24 @@ function geraHeaderWebLogTodos($dtInicio, $dtFim)
                log.dataOcorrencia, 
                log.usuario,               
                fn_busca_registro
-                 (log.documento, log.idRegistro) as alteradoPor                     
+                 (log.documento, log.idRegistro) AS alteradoPor,
+                (SELECT 
+                  nome 
+                 FROM 
+                   pessoa_fisica AS PF
+                 WHERE PF.cpf = log.documento) AS nomePf,
+
+                (SELECT 
+                  razaoSocial 
+                 FROM 
+                   pessoa_juridica AS PJ
+                 WHERE PJ.cnpj = log.documento) AS nomePj, 
+
+                 (SELECT 
+                  nomeProjeto 
+                 FROM 
+                   projeto AS P
+                 WHERE p.idProjeto = log.idRegistro) AS nomePo
              FROM 
                weblogs AS log             
              WHERE log.dataOcorrencia >= '$dtInicio'
