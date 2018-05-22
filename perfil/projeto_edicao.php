@@ -1,6 +1,7 @@
 <?php
 $con = bancoMysqli();
 
+
 if(isset($_POST['carregar']))
 {
 	$_SESSION['idProjeto'] = $_POST['carregar'];
@@ -10,6 +11,10 @@ $idProjeto = $_SESSION['idProjeto'];
 
 if(isset($_POST['novoPj'])) //tipoePessoa = 2
 {
+	$usuario = recuperaDados("pessoa_juridica","idPj",$idPj);
+      $usuarioLogado = 
+      $usuario['razaoSocial'].' [ID='.$usuario['idPj'].']';
+
 	$idPj = $_SESSION['idUser'];
 	$nomeProjeto = $_POST['nomeProjeto'];
 	$idAreaAtuacao = $_POST['idAreaAtuacao'];
@@ -24,7 +29,8 @@ if(isset($_POST['novoPj'])) //tipoePessoa = 2
 	$sql_insere_projeto = "UPDATE projeto SET
 		contratoGestao = '$contratoGestao',
 		nomeProjeto = '$nomeProjeto',
-		idAreaAtuacao = '$idAreaAtuacao'
+		idAreaAtuacao = '$idAreaAtuacao',
+		alteradoPor   = '$usuarioLogado' 
 		WHERE idProjeto = '$idProjeto'";
 	if(mysqli_query($con,$sql_insere_projeto))
 	{
@@ -39,12 +45,17 @@ if(isset($_POST['novoPj'])) //tipoePessoa = 2
 
 if(isset($_POST['insereAtuacao']))
 {
+	$usuario = recuperaDados("pessoa_fisica","idPf",$idPf);
+    $usuarioLogado = 
+      $usuario['nome'].' [ID='.$usuario['idPf'].']';
+	
 	$idPf = $_SESSION['idUser'];
 	$nomeProjeto = $_POST['nomeProjeto'];
 	$idAreaAtuacao = $_POST['idAreaAtuacao'];
 	$sql_insere_projeto = "UPDATE projeto SET
 		nomeProjeto = '$nomeProjeto',
-		idAreaAtuacao = '$idAreaAtuacao'
+		idAreaAtuacao = '$idAreaAtuacao',
+		alteradoPor   = '$usuarioLogado' 
 		WHERE idProjeto = '$idProjeto'";
 	if(mysqli_query($con,$sql_insere_projeto))
 	{
