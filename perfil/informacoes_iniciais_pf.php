@@ -41,7 +41,7 @@ if(isset($_POST['atualizarFisica']) and $_POST['numero'] and empty($endereço))
   $idZona = $_POST['idZona'];
   $idSubprefeitura = $_POST['idSubprefeitura'];
   $idDistrito = $_POST['idDistrito'];
-  $usuarioLogado = $pf['nome'];
+  $usuarioLogado = $pf['nome'].' [ID='.$pf['idPf'].']';	
 
 
   $sql_atualiza_pf =

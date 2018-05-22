@@ -41,7 +41,8 @@ if(isset($_POST['atualizarJuridica']) and $_POST['numero'] and empty($endereço)
 	$idZona = $_POST['idZona'];
   	$idSubprefeitura = $_POST['idSubprefeitura'];
   	$idDistrito = $_POST['idDistrito'];
-  	$usuarioLogado = $pj['razaoSocial'];
+  	$usuarioLogado = 
+  	  $pj['razaoSocial'].' [ID='.$pj['idPj'].']';	
 
 	$sql_atualiza_pj = "UPDATE pessoa_juridica SET
 	`razaoSocial` = '$razaoSocial',
