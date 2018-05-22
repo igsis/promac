@@ -1926,6 +1926,7 @@ function cleanerWeblog()
   return $logs;  
 }
 
+/*xura looking*/
 function geraHeaderWebLog()
 {
   $logs = [];  
@@ -1965,7 +1966,8 @@ function webLogPaginacao($inicio, $qtdRegistrosPorPag)
                fn_busca_registro
                  (log.documento) as alteradoPor                     
              FROM 
-               weblogs AS log";              
+               weblogs AS log
+             LIMIT $inicio, $qtdRegistrosPorPag";              
     
   $resultado = mysqli_query($conexao,$query);
 
