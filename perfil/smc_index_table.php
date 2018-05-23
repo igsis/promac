@@ -28,7 +28,13 @@
   	          : $campo['cnpj'];
   	      ?>
   	    </td>  
- 	   <td><?=$campo['areaAtuacao']?></td>  	  
+ 	   <td><?=$campo['areaAtuacao']?></td>  	
+ 	   <td class='list_description'>
+	     <form method='POST' action='?perfil=smc_detalhes_projeto'>
+		   <input type='hidden' name='idProjeto' value='".$campo['idProjeto']."' />
+		   <input type ='submit' class='btn btn-theme btn-block' value='Visualizar'>
+		 </form>
+	  </td> 
   	  </tr>   
   	<?php endforeach ?>  
   </tbody>
