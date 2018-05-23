@@ -1534,7 +1534,7 @@ function retornaCamposObrigatoriosPj($idProjeto)
   			   WHERE loc_rea.publicado = 1
   			   AND  ficha_t.publicado = 1
   			   AND  orca.publicado = 1
-  			   AND  proj.idProjeto =".$idProjeto." limit 1";
+  			   AND  proj.idProjeto =".$idProjeto." LIMIT 1";
 	
 	$resultado = mysqli_query($conexao,$query);		
 

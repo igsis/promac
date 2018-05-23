@@ -284,8 +284,8 @@ if(isset($_POST['liberacaoPJ']))
 								{
 									$area = recuperaDados("area_atuacao","idArea",$campo['idAreaAtuacao']);
 									$status = recuperaDados("status","idStatus",$campo['idStatus']);
-									$pf = recuperaDados("pessoa_fisica","idPf",$campo['idPf']);
-									$pj = recuperaDados("pessoa_juridica","idPj",$campo['idPj']);
+									//$pf = recuperaDados("pessoa_fisica","idPf",$campo['idPf']);
+									//$pj = recuperaDados("pessoa_juridica","idPj",$campo['idPj']);
 
 									echo "<tr>";
 									echo "<td class='list_description'>".$campo['protocolo']."</td>";
