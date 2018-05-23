@@ -138,16 +138,14 @@ if(isset($_POST['reabreProjeto']))
 	}
 }
 
-
 if($projeto['tipoPessoa'] == 1)
 {
 	$pf = recuperaDados("pessoa_fisica","idPf",$projeto['idPf']);
 }
 else
 {
-	$pj = recuperaDados("pessoa_juridica","idPj",$projeto['idPj']);
+	$pj = recuperaDados("pessoa_juridica","idPj",$projeto['idpj']);   
 }
-
 
 $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 $prazos = recuperaDados("prazos_projeto","idProjeto",$idProjeto);
@@ -206,13 +204,13 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 								<div class="col-md-offset-2 col-md-4">
 								<?php
 									$id = $projeto['tipoPessoa'];
-									$idP = $projeto['idProjeto'];
+									$idP = $projeto['idProjeto'];									
 									if($id == 1)
 									{
 										$idPess = $projeto['idPf'];
 									} else if($id == 2)
 									{
-										$idPess = $projeto['idPj'];
+										$idPess = $projeto['idpj'];
 									}
 								?>
 									<a href='<?php echo "../pdf/gera_pdf.php?tipo=$id&projeto=$idP&pessoa=$idPess"; ?>' target='_blank' class="btn btn-theme btn-md btn-block"><strong>Gerar PDF do Projeto</strong></a><br/>

@@ -281,6 +281,7 @@ if(isset($_POST['liberacaoPJ']))
 					$campos = [];					
 					$sql = 
 					"SELECT   
+  					  p.idProjeto,
   					  p.protocolo,
   					  p.nomeProjeto,
   					  (SELECT nome FROM pessoa_fisica as pf WHERE pf.idPf = p.idPf limit 1) as nomePf,

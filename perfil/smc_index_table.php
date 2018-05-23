@@ -11,8 +11,8 @@
   </thead>  
   <tbody>  	
     <?php foreach($campos as $campo) :?>
-      <tr>
-  	    <td><?=$campo['protocolo']?></td>
+      <tr>  	    
+        <td><?=$campo['protocolo']?></td>
   	    <td><?=$campo['nomeProjeto']?></td>  
   	    <td>
   	      <?= 
@@ -31,7 +31,7 @@
  	   <td><?=$campo['areaAtuacao']?></td>  	
  	   <td class='list_description'>
 	     <form method='POST' action='?perfil=smc_detalhes_projeto'>
-		   <input type='hidden' name='idProjeto' value='".$campo['idProjeto']."' />
+		   <input type='hidden' name='idProjeto' value='<?=$campo['idProjeto']?>'>
 		   <input type ='submit' class='btn btn-theme btn-block' value='Visualizar'>
 		 </form>
 	  </td> 
