@@ -83,6 +83,13 @@ if($pf['liberado'] == 3)
 
 	include 'resumo_usuario.php';
 }
+elseif ($pf['liberado'] == 1) 
+{
+	echo "<div class='alert alert-warning'>
+	<strong>Aviso!</strong> Seus dados foram encaminhados para análise, portanto, não podem ser alterados.</div>";
+
+	include 'resumo_usuario.php';
+}
 else
 {
 	$pf = recuperaDados("pessoa_fisica","idPf",$idPf);
