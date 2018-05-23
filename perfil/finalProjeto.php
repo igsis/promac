@@ -317,9 +317,9 @@ if($projeto['idStatus'] == 6)
 		</div>
 
 		<?php
-		if($projeto['idPj'] != NULL)
+		if($projeto['idpj'] != NULL)
 		{
-			$pj = recuperaDados("pessoa_juridica","idPj",$projeto['idPj']);
+			$pj = recuperaDados("pessoa_juridica","idPj",$projeto['idpj']);
 		?>
 			<div class = "page-header">
 			 	<h5>Pessoa Jurídica</h5>
