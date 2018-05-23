@@ -261,9 +261,49 @@ if(isset($_POST['liberacaoPJ']))
 			<div class="col-md-offset-1 col-md-10">
 				<div class="table-responsive list_info">
 				<?php
-					$sql = "SELECT * FROM projeto WHERE publicado = 1 AND idStatus = 2 ORDER BY idProjeto DESC LIMIT 0,10";
-					$query = mysqli_query($con,$sql);
-					$num = mysqli_num_rows($query);
+					/*$sql = 
+					  "SELECT 
+					    * 
+					  FROM 
+					    projeto 
+					  INNER JOIN pessoa_fisica as pf
+					  on pf.idPf = projeto.idPf
+
+					  INNER JOIN pessoa_juridica as pj
+					  on pj.idPj = projeto.idPj
+					  
+					  WHERE publicado = 1 
+					  AND idStatus = 2 
+					  
+					  ORDER BY idProjeto 
+					  DESC LIMIT 0,10";*/
+
+					$campos = [];					
+					$sql = 
+					"SELECT   
+  					  p.protocolo,
+  					  p.nomeProjeto,
+  					  (SELECT nome FROM pessoa_fisica as pf WHERE pf.idPf = p.idPf limit 1) as nomePf,
+  					  (SELECT razaoSocial FROM pessoa_juridica as pj WHERE pj.idPj = p.idPj limit 1) as nomePj,
+  					  (SELECT cpf FROM pessoa_fisica as pf WHERE pf.idPf = p.idPf limit 1) as cpf,
+   					  (SELECT cnpj FROM pessoa_juridica as pj WHERE pj.idPj = p.idPj limit 1) as cnpj,
+   					  (SELECT areaAtuacao FROM area_atuacao as a WHERE a.idArea = p.idAreaAtuacao limit 1) as areaAtuacao   
+					FROM 
+ 					 	projeto as p 
+						WHERE publicado = 1 
+						AND idStatus = 2 
+		  
+						ORDER BY idProjeto 
+						DESC LIMIT 0,10";
+					$query = mysqli_query($con,$sql);										
+
+					while($dados = mysqli_fetch_array($query))
+					{
+  					   array_push($campos, $dados); 
+					}	
+					require_once('smc_index_table.php');
+
+					/*$num = mysqli_num_rows($query);
 					if($num > 0)
 					{
 						echo "
@@ -284,6 +324,7 @@ if(isset($_POST['liberacaoPJ']))
 								{
 									$area = recuperaDados("area_atuacao","idArea",$campo['idAreaAtuacao']);
 									$status = recuperaDados("status","idStatus",$campo['idStatus']);
+									
 									//$pf = recuperaDados("pessoa_fisica","idPf",$campo['idPf']);
 									//$pj = recuperaDados("pessoa_juridica","idPj",$campo['idPj']);
 
@@ -312,11 +353,12 @@ if(isset($_POST['liberacaoPJ']))
 									echo "</tr>";
 							echo "</tbody>
 								</table>";
+
 						}
 						else
 						{
 							echo "Não há resultado no momento.";
-						}
+						}*/
 					?>
 				</div>
 			</div>
