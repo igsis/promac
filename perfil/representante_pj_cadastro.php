@@ -145,6 +145,24 @@ if(isset($_POST['editaRepresentante']))
 $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 $representante1 = recuperaDados("representante_legal","idRepresentanteLegal",$pj['idRepresentanteLegal']);
 
+if($pj['liberado'] == 3){
+	echo "<br><div class='alert alert-warning'>
+  	<strong>Aviso!</strong> Seus dados já foram aceitos, portanto, não podem ser alterados.</div>";
+	include 'includes/menu_interno_pj.php'; 
+
+  	include 'resumo_representante_legal.php';
+}
+
+if($pj['liberado'] == 1){
+	echo "<br><div class='alert alert-warning'>
+  	<strong>Aviso!</strong> Seus dados foram encaminhados para análise, portanto, não podem ser alterados.
+  	</div>";
+	include 'includes/menu_interno_pj.php'; 
+
+  	include 'resumo_representante_legal.php';
+}
+
+
 if($pj['liberado'] != 3)
 {
 ?>
@@ -432,13 +450,6 @@ if($pj['liberado'] != 3)
 					</div>
 				</div>
 				<?php }
-				if($pj['liberado'] == 3){
-					echo "<br><div class='alert alert-warning'>
-				  	<strong>Aviso!</strong> Seus dados já foram aceitos, portanto, não podem ser alterados.</div>";
-					include 'includes/menu_interno_pj.php'; 
-
-				  	include 'resumo_representante_legal.php';
-				}
 				?>
 
 			</div>
