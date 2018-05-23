@@ -2,6 +2,9 @@
 $con = bancoMysqli();
 $idProjeto = $_SESSION['idProjeto'];
 
+$usuarioLogado = pegaUsuarioLogado(); 
+
+
 if(isset($_POST['insereLocal']))
 {
 	$local = $_POST['local'];
@@ -33,14 +36,13 @@ if(isset($_POST['editaLocal']))
 	$idSubprefeitura = $_POST['idSubprefeitura'];
 	$idDistrito = $_POST['idDistrito'];
 
-
-
 	$sql_edita_local = "UPDATE `locais_realizacao` SET
 	`local`= '$local',
 	`estimativaPublico`= '$estimativaPublico',
 	`idZona`= '$idZona',
 	`idSubprefeitura`= '$idSubprefeitura',
-	`idDistrito`= '$idDistrito'
+	`idDistrito`= '$idDistrito',
+	`alteradoPor` = '$usuarioLogado'
 	WHERE idLocaisRealizacao = '$idLocaisRealizacao'";
 	if(mysqli_query($con,$sql_edita_local))
 	{
@@ -48,7 +50,7 @@ if(isset($_POST['editaLocal']))
 		gravarLog($sql_edita_local);
 	}
 	else
-	{
+	{		
 		$mensagem = "<font color='#FF0000'><strong>Erro ao gravar! Tente novamente.</strong></font>";
 	}
 }

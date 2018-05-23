@@ -2038,7 +2038,33 @@ function projetoQuery($dtInicio, $dtFim, $tabela, $nome)
              AND   p.nomeProjeto LIKE '%$nome%'";             
 
    return $query;          
+}
 
+function locaisQuery($dtInicio, $dtFim, $tabela, $nome)
+{
+  $query =  "SELECT 
+               log.idWebLog, 
+               log.tabela, 
+               log.acao, 
+               log.IdRegistro,
+               log.dataOcorrencia, 
+               log.usuario,
+               p.nomeProjeto as nome,
+               loc.alteradoPor 
+             FROM 
+               weblogs AS log
+             INNER JOIN locais_realizacao AS loc
+             ON loc.idProjeto =  log.idRegistro
+             
+             INNER JOIN projeto AS p 
+             ON p.idProjeto =  log.idRegistro             
+             
+             WHERE log.dataOcorrencia >= '$dtInicio'
+             AND   log.dataOcorrencia <= '$dtFim'
+             AND   log.tabela = '$tabela' 
+             AND   p.nomeProjeto LIKE '%$nome%'";             
+   
+   return $query;          
 }
 
 function geraHeaderWebLogParam($dtInicio, $dtFim, $tabela, $nome) 
@@ -2061,6 +2087,11 @@ function geraHeaderWebLogParam($dtInicio, $dtFim, $tabela, $nome)
   	  $query = projetoQuery($dtInicio, $dtFim, $tabela, 
   	  	$nome);
   	  break;    
+
+  	case 'locais':
+  	  $query = locaisQuery($dtInicio, $dtFim, $tabela, 
+  	  	$nome);
+  	  break;      
 
   endswitch;
   
@@ -2177,4 +2208,20 @@ function pr_limpa_registros()
      "CALL  pr_exclui_iguais;");   
 }
  
+ function pegaUsuarioLogado(){   
+  
+  if(array_key_exists('tipoPessoa', $_SESSION)):   
+    
+    if($_SESSION['tipoPessoa'] == 1):       
+      $usuario = $usuarioPf = recuperaDados("pessoa_fisica","idPf",$_SESSION['idUser']);
+      
+      return $usuario['nome'].' [ID='.$usuario['idPf'].']';
+        
+    endif;  
+    
+    $usuario = recuperaDados("pessoa_juridica","idPj",$_SESSION['idUser']);
+    
+    return $usuario['razaoSocial'].' [ID='.$usuario['idPj'].']';
+  endif;
+} 
 ?>
