@@ -1902,31 +1902,7 @@ function validaData($dtInicio, $dtFim)
   return $dtFim >= $dtInicio ? true : false;      
 }
 
-function cleanerWeblog()
-{
-  $logs = [];  
-  $conexao = bancoMysqli();  
-
-  $query =  "SELECT 
-               log.idWebLog, 
-               log.antes,
-               log.depois
-             FROM 
-               weblogs AS log             
-             WHERE log.antes = log.depois";
-
-  $resultado = mysqli_query($conexao,$query);
-
-  if($resultado):
-    while($log = mysqli_fetch_assoc($resultado)):
-      array_push($logs, $log);
-    endwhile;     
-  endif;  
-
-  return $logs;  
-}
-
-/*function geraHeaderWebLog()
+function geraHeaderWebLog()
 {
   $logs = [];  
   $conexao = bancoMysqli();  
@@ -1955,7 +1931,7 @@ function cleanerWeblog()
   endwhile;  
   
   return $logs;  
-}*/
+}
 
 function geraHeaderWebLog()
 {
@@ -2110,55 +2086,5 @@ function retornaDados($logs, $tipo)
 
   return $array;
 }  
-
-function limpaRegistrosSemAlteracoes($idLog)
-{
-  $conexao = bancoMysqli();  
-
-  $query = "DELETE FROM weblogs WHERE idWebLog = {$idLog}";
-  return mysqli_query($conexao, $query);    
-}
-
-function buscaRegistrosSemAlteracoes($logs)
-{
-  foreach($logs as $log):          
-    $ids = geraWebLogDetalhes($log['idWebLog']); 
-    $old = retornaDados($ids, 'antes');
-    $new = retornaDados($ids, 'depois');
-    $numLinhas = array_diff($old, $new);  
-
-    sizeof($numLinhas) == 0 
-        ? limpaRegistrosSemAlteracoes($log['idWebLog'])
-        : '';     
-  endforeach;
-}
-
-function limpaRegistrosNulos()
-{
-  $logs = [];  
-  $conexao = bancoMysqli();  
-
-  $query =  "SELECT 
-               idWeblog               
-             FROM 
-               weblogs
-             WHERE antes is null
-             OR    depois is null";
-
-  $resultado = mysqli_query($conexao,$query);
-    
-  while($log = mysqli_fetch_assoc($resultado)) 
-  {
-    array_push($logs, $log);    
-  }  
-
-  if($resultado):
-    foreach($logs as $log):
-      foreach($log as $idWeblog):
-        limpaRegistrosSemAlteracoes($idWeblog);  	
-      endforeach;	
-    endforeach; 	
-  endif;	  
-}
 
 ?>
