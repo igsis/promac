@@ -140,7 +140,7 @@ if(isset($_POST['reabreProjeto']))
 
 if($projeto['tipoPessoa'] == 1)
 {
-	$pf = recuperaDados("pessoa_fisica","idPf",$projeto['idPf']);
+	$pf = recuperaDados("pessoa_fisica","idPf",$projeto['idpf']);
 }
 else
 {
