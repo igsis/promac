@@ -105,9 +105,9 @@
 				<?php
 					if ($tentativa >= 3)
 					{?>
-							<div class="col-md-offset-4 col-md-4 form-group">
-								<a href="https://drive.google.com/open?id=11W-UF7HakT6lKZt-0qAJ9b0DCactPHsyuLCUSxdcWwo" target="_blank" class="btn btn-theme btn-md btn-block form-control">Utilize nosso Formulário</a>
-							</div>
+						<div class="col-md-offset-4 col-md-4 form-group">
+							<font color='#FF0000'><strong>Não foi possível recuperar sua senha. Por gentileza, entre em contato conosco através do e-mail promac@prefeitura.sp.gov.br.</strong></font>
+						</div>
 			<?php	}
 				if ($etapa == 1)
 				{?>
