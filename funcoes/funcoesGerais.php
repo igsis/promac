@@ -2100,7 +2100,7 @@ function geraHeaderWebLogParam($dtInicio, $dtFim, $tabela, $nome)
   
 }
 
-function geraHeaderWebLogTodos($dtInicio, $dtFim, $nome) 
+function geraHeaderWebLogTodos($dtInicio, $dtFim) 
 {
   $logs = [];  
   $conexao = bancoMysqli();  
