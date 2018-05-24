@@ -2293,9 +2293,8 @@ function pegaProjetoRepresentante($idProjeto)
     INNER JOIN representante_legal AS rl
     ON rl.idRepresentanteLegal = pj.idRepresentanteLegal 
  
-    WHERE p.idProjeto = ".$idProjeto; 
+    WHERE p.idProjeto = ".$idProjeto;   
   
-  //var_dump($query);
   $resultado = mysqli_query($conexao,$query); 
   return $pessoaFisica = mysqli_fetch_assoc($resultado);
 }

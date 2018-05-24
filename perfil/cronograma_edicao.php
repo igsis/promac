@@ -1,6 +1,7 @@
 <?php
 $con = bancoMysqli();
 $idProjeto = $_SESSION['idProjeto'];
+$usuarioLogado = pegaUsuarioLogado();
 
 $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 $idCronograma = $projeto['idCronograma'];
@@ -18,7 +19,8 @@ if(isset($_POST['editaCronograma']))
 	preProducao = '$preProducao',
 	producao = '$producao',
 	posProducao = '$posProducao',
-	prestacaoContas = '$prestacaoContas'
+	prestacaoContas = '$prestacaoContas',
+	alteradoPor = '$usuarioLogado'
 	WHERE idCronograma = '$idCronograma'";
 	if(mysqli_query($con,$sql_edita_cronograma))
 	{
