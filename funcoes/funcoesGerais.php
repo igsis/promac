@@ -1034,12 +1034,18 @@ function listaArquivosPessoaObs($idPessoa,$tipoPessoa)
 function exibirArquivos($tipoPessoa,$idPessoa)
 {
 	$con = bancoMysqli();
-	$sql = "SELECT *
-			FROM lista_documento as list
-			INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
-			WHERE arq.idPessoa = '$idPessoa'
-			AND arq.idTipo = '$tipoPessoa'
-			AND arq.publicado = '1'";
+	$sql = "
+	   SELECT 
+	     *
+	  FROM 
+	    lista_documento as list
+	  INNER JOIN upload_arquivo AS arq 
+	  ON arq.idListaDocumento = list.idListaDocumento
+	  
+	  WHERE arq.idPessoa = '$idPessoa'
+	  AND arq.idTipo = '$tipoPessoa'
+	  AND arq.publicado = '1'";
+
 	$query = mysqli_query($con,$sql);
 	echo "
 		<table class='table table-bordered'>
@@ -2300,6 +2306,7 @@ function pegaProjetoPessoaFisica($idProjeto)
   
   $query ="
     SELECT       
+      pf.idPf,
       pf.nome,
       pf.cpf, 
       pf.rg, 

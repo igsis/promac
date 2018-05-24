@@ -172,13 +172,11 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 						<li class="nav active"><a href="#adm" data-toggle="tab">Administrativo</a></li>
 						<li class="nav"><a href="#prazo" data-toggle="tab">Prazos</a></li>
 						<li class="nav"><a href="#projeto" data-toggle="tab">Projeto</a></li>
-						<?php if(isset($representante)): ?>
-						  <li class="nav"><a href="#R" data-toggle="tab">Representante</a></li>
+						<?php if(isset($representante)):?>						  
 						  <li class="nav"><a href="#J" data-toggle="tab">Pessoa Jurídica</a></li>
-						<?php endif; ?>  
-						<?php if(isset($pessoaFisica)): ?>
+						<?php else: ?>
 						  <li class="nav"><a href="#F" data-toggle="tab">Pessoa Física</a></li>
-						<?php endif; ?>  
+						<?php endif ?>  
 					</ul>					
 					<div class="tab-content">						
  					  <!-- LABEL ADMINISTRATIVO-->
@@ -676,120 +674,31 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 								<li class="list-group-item"><?php exibirArquivos(3,$projeto['idProjeto']); ?></li>
 							</ul>
 						</div>
-						
-						<!-- LABEL REPRESENTANTE LEGAL XURA -->
-						<div role="tabpanel" class="tab-pane fade" id="R" align="left">
-						  <br>
-						    <table class="table table-bordered">
-							  <tr>
-							    <td colspan="2">
-							      <strong>Nome:</strong> 
-							      <?php //echo isset($pf['nome']) ? $pf['nome'] : null; ?>
-							      <?= isset($representante['nome']) ? $representante['nome'] : ''; ?>	
-							    </td>
-							  </tr>
-							  <tr>
-							    <td width="50%">
-							      <strong>CPF:</strong> 
-							      <?php //echo isset($pf['cpf']) ? $pf['cpf'] : null; ?>
-							      <?= isset($representante['cpf']) ? $representante['cpf'] : ''; ?>	
-							    </td>
-								<td>
-								  <strong>RG:</strong>
-								  <?php //echo isset($pf['rg']) ? $pf['rg'] : null; ?>
-								  <?= isset($representante['rg']) ? $representante['rg'] : ''; ?>	
-								</td>
-							  </tr>
-							<tr>
-							  <td colspan="2">
-							    <strong>Endereço:</strong> 
-							    <?php //echo isset($pf['logradouro']) ? $pf['logradouro'] : null; ?> 
-							    <?php //echo isset($pf['numero']) ? $pf['numero'] : null; ?> 
-							    <?php //echo isset($pf['complemento']) ? $pf['complemento'] : null; ?>  <?php //echo isset($pf['bairro']) ? $pf['bairro'] : null; ?>  
-							    <?php //echo isset($pf['cidade']) ? $pf['cidade'] : null; ?>  
-							    <?php //echo isset($pf['estado']) ? $pf['estado'] : null; ?>   
-							    <?php //echo isset($pf['cep']) ? $pf['cep'] : null; ?>
-							    <?= 
-							      isset($representante['logradouro']) 
-							        ? $representante['logradouro'] 
-							        : ''; ?>
-							    ,
 
-							    <?= 
-							      isset($representante['numero']) 
-							        ? $representante['numero'] 
-							        : ''; ?> 
-
-							    <b>Bairro</b>:    
-
-							      <?= 
-							      isset($representante['bairro']) 
-							        ? $representante['bairro'] 
-							        : ''; ?> 
-
-							    <b>Cep</b>:        
-							      <?= 
-							      isset($representante['cep']) 
-							        ? $representante['cep'] 
-							        : ''; ?> 
-
-							    <b>Cidade</b>:        
-							      <?= 
-							      isset($representante['cidade']) 
-							        ? $representante['cidade'] 
-							        : ''; ?>     
-							    -    
-							      <?= 
-							      isset($representante['estado']) 
-							        ? $representante['estado'] 
-							        : ''; ?> 
-							 </td>				    
-							</tr>
-							<tr>
-							  <td>
-							    <strong>Telefone:</strong> 
-							    <?php //echo isset($pf['telefone']) ? $pf['telefone'] : null; ?>
-							    <?= isset($representante['telefone']) ? $representante['telefone'] : ''; ?>
-							  </td>
-							  <td>
-							  	<strong>Celular:</strong> 
-							  	<?php //echo isset($pf['celular']) ? $pf['celular'] : null; ?>
-							  	<?= isset($representante['celular']) ? $representante['celular'] : ''; ?>	
-							  </td>
-							</tr>
-							<tr>
-							  <td>
-							    <strong>E-mail:</strong> 
-							    <?php //echo isset($pf['email']) ? $pf['email'] : null; ?>
-							    <?= isset($representante['email']) ? $representante['email'] : ''; ?>
-							 </td>							  
-							 <td>
-							  	<strong>Cooperado:</strong> 
-							  	<?php //if($pf['cooperado'] == 1){ echo "Sim"; } else { echo "Não"; } ?>
-							  	<?= $representante['cooperativa'] == 1 ? 'SIM' : 'NÃO' ?>
-							  </td>
-							</tr>
-							</table>
-							<ul class="list-group">
-								<li class="list-group-item list-group-item-success"><b>Arquivos da Pessoa Física</b></li>
-								<li class="list-group-item"><?php exibirArquivos(1,$pf['idPf']); ?></li>
-							</ul>
-						</div>
-
-						<!-- LABEL PESSOA JURÍDICA -->
+						<!-- LABEL PESSOA JURÍDICA -->						
 						<div role="tabpanel" class="tab-pane fade" id="J">
-							<br>
-							<?php if($projeto['tipoPessoa'] == 2) { ?>
-							<table class="table table-bordered">
-								<tr>
-									<td colspan="2"><strong>Razão Social:</strong> <?php echo isset($pj['razaoSocial']) ? $pj['razaoSocial'] : null; ?></td>
-								</tr>
-								<tr>
-									<td width="50%"><strong>CNPJ:</strong> <?php echo isset($pj['cnpj']) ? $pj['cnpj'] : null; ?></td>
-									<td><strong>CCM:</strong> <?php echo isset($pj['ccm']) ? $pj['ccm'] : null; ?></td>
-								</tr>
-								<tr>
-									<td colspan="2"><strong>Endereço:</strong> <?php echo isset($pj['logradouro']) ? $pj['logradouro'] : null; ?>, <?php echo isset($pj['numero']) ? $pj['numero'] : null; ?> <?php echo isset($pj['complemento']) ? $pj['complemento'] : null; ?> - <?php echo isset($pj['bairro']) ? $pj['bairro'] : null; ?> - <?php echo isset($pj['cidade']) ? $pj['cidade'] : null; ?> - <?php echo isset($pj['estado']) ? $pj['estado'] : null; ?> - CEP <?php echo isset($pj['cep']) ? $pj['cep'] : null; ?></td>
+						  <br>
+						  <?php if($projeto['tipoPessoa'] == 2) { ?>
+						  <li class="list-group-item list-group-item-success">
+						    <b>Dados Pessoa Jurídica</b>
+						  </li>
+						  <table class="table table-bordered">
+						    <tr>
+							  <td colspan="2">
+							    <strong>Razão Social:</strong> 
+							    <?php echo isset($pj['razaoSocial']) ? $pj['razaoSocial'] : null; ?>
+							  </td>
+							</tr>
+							<tr>
+							  <td width="50%">
+							    <strong>CNPJ:</strong> 
+							    <?php echo isset($pj['cnpj']) ? $pj['cnpj'] : null; ?></td>
+								<td>
+								  <strong>CCM:</strong> 
+								  <?php echo isset($pj['ccm']) ? $pj['ccm'] : null; ?></td>
+							</tr>
+							<tr>
+							  <td colspan="2"><strong>Endereço:</strong> <?php echo isset($pj['logradouro']) ? $pj['logradouro'] : null; ?>, <?php echo isset($pj['numero']) ? $pj['numero'] : null; ?> <?php echo isset($pj['complemento']) ? $pj['complemento'] : null; ?> - <?php echo isset($pj['bairro']) ? $pj['bairro'] : null; ?> - <?php echo isset($pj['cidade']) ? $pj['cidade'] : null; ?> - <?php echo isset($pj['estado']) ? $pj['estado'] : null; ?> - CEP <?php echo isset($pj['cep']) ? $pj['cep'] : null; ?></td>
 								</tr>
 								<tr>
 									<td><strong>Telefone:</strong> <?php echo isset($pj['telefone']) ? $pj['telefone'] : null; ?></td>
@@ -800,17 +709,105 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 									<td><strong>Cooperativa:</strong> <?php if($pj['cooperativa'] == 1){ echo "Sim"; } else { echo "Não"; } ?></td>
 								</tr>
 							</table>
-							<ul class="list-group">
-								<li class="list-group-item list-group-item-success"><b>Arquivos da Pessoa Jurídica</b></li>
-								<li class="list-group-item"><?php exibirArquivos(2,$pj['idPj']); ?></li>
-							</ul>
+
+							<li class="list-group-item list-group-item-success">
+							  <b>Dados Representante</b>
+							</li>
+							<!--Dados Representante xura -->
+							<table class="table table-bordered">
+							  <tr>
+							    <td colspan="2">
+							      <strong>Nome:</strong> 							      
+							      <?= isset($representante['nome']) ? $representante['nome'] : ''; ?>	
+							    </td>
+							  </tr>
+							  <tr>
+							    <td width="50%">
+							      <strong>CPF:</strong> 							      
+							      <?= isset($representante['cpf']) ? $representante['cpf'] : ''; ?>	
+							    </td>
+								<td>
+								  <strong>RG:</strong>								  
+								  <?= isset($representante['rg']) ? $representante['rg'] : ''; ?>	
+								</td>
+							  </tr>
+							  <tr>
+							    <td colspan="2">
+							      <strong>Endereço:</strong> 							    
+							      <?= 
+							        isset($representante['logradouro']) 
+							          ? $representante['logradouro'] 
+							          : ''; ?>
+							      ,  
+							      <?= 
+							        isset($representante['numero']) 
+							          ? $representante['numero'] 
+							          : ''; ?> 
+
+							      <b>Bairro</b>:    
+							      <?= 
+							        isset($representante['bairro']) 
+							          ? $representante['bairro'] 
+							          : ''; ?> 
+
+							      <b>Cep</b>:        
+							      <?= 
+							      isset($representante['cep']) 
+							        ? $representante['cep'] 
+							        : ''; ?> 
+
+							      <b>Cidade</b>:        
+							      <?= 
+							      isset($representante['cidade']) 
+							        ? $representante['cidade'] 
+							        : ''; ?>     
+							      -    
+							      <?= 
+							      isset($representante['estado']) 
+							        ? $representante['estado'] 
+							        : ''; ?> 
+							   </td>				    
+							  </tr>
+							<tr>
+							  <td>
+							    <strong>Telefone:</strong> 							    
+							    <?= isset($representante['telefone']) ? $representante['telefone'] : ''; ?>
+							  </td>
+							  <td>
+							  	<strong>Celular:</strong> 							  	
+							  	<?= isset($representante['celular']) ? $representante['celular'] : ''; ?>	
+							  </td>
+							</tr>
+							<tr>
+							  <td>
+							    <strong>E-mail:</strong> 							    
+							    <?= isset($representante['email']) ? $representante['email'] : ''; ?>
+							 </td>							  
+							 <td>
+							  	<strong>Cooperado:</strong> 							  	
+							  	<?= $representante['cooperativa'] == 1 ? 'SIM' : 'NÃO' ?>
+							  </td>
+							</tr>
+					      </table>							
+						  <ul class="list-group">
+						    <li class="list-group-item list-group-item-success">
+						      <b>Arquivos da Pessoa Jurídica</b></li>
+							<li class="list-group-item">
+							  <?php exibirArquivos(2,$pj['idPj']); ?>
+							  </li>
+						  </ul>
 							<?php } else { echo "<strong>Não há pessoa jurídica cadastrada.</strong>"; } ?>
 						</div>						
 						
 						<!--LABEL PESSOA FISICA XURA-->
 						<div role="tabpanel" class="tab-pane fade" id="F" align="left">
 						  <br>
-						  <table class="table table-bordered">
+						  <li class="list-group-item list-group-item-success">
+						    <center>
+						      <b>Dados Pessoa Física</b>
+						    </center>
+						  </li>
+						  <table class="table table-bordered">						    
 						    <tr>
 							  <td colspan="2">
 							    <strong>Nome:</strong> 
@@ -901,8 +898,14 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 							</tr>
 							</table>
 							<ul class="list-group">
-								<li class="list-group-item list-group-item-success"><b>Arquivos da Pessoa Física</b></li>
-								<li class="list-group-item"><?php exibirArquivos(1,$pf['idPf']); ?></li>
+							  <li class="list-group-item list-group-item-success">
+							  	<center>
+							  	  <b>Arquivos da Pessoa Física</b>
+							  	</center>  
+							  </li>
+							  <li class="list-group-item">
+							    <?php exibirArquivos(1,$pessoaFisica['idPf']); ?>
+							  </li>
 							</ul>
 						</div>
 					</div>
