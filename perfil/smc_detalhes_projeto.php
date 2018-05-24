@@ -147,6 +147,9 @@ else
 	$pj = recuperaDados("pessoa_juridica","idPj",$projeto['idpj']);   
 }
 
+/*xura busca*/
+$pessoaFisica = pegaProjetoDetalhes($idProjeto); 
+
 $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 $prazos = recuperaDados("prazos_projeto","idProjeto",$idProjeto);
 $area = recuperaDados("area_atuacao","idArea",$projeto['idAreaAtuacao']);
@@ -170,10 +173,9 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 						<li class="nav"><a href="#projeto" data-toggle="tab">Projeto</a></li>
 						<li class="nav"><a href="#F" data-toggle="tab">Pessoa Fisica</a></li>
 						<li class="nav"><a href="#J" data-toggle="tab">Pessoa Jurídica</a></li>
-					</ul>
-
-					<div class="tab-content">
-						<!-- LABEL ADMINISTRATIVO-->
+					</ul>					
+					<div class="tab-content">						
+ 					  <!-- LABEL ADMINISTRATIVO-->
 						<div role="tabpanel" class="tab-pane fade in active" id="adm">
 							<h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
 							<form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
@@ -669,28 +671,99 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 							</ul>
 						</div>
 
+						<!--Xura pf-->
 						<!-- LABEL PESSOA FÍSICA -->
 						<div role="tabpanel" class="tab-pane fade" id="F" align="left">
-							<br>
-							<table class="table table-bordered">
-								<tr>
-									<td colspan="2"><strong>Nome:</strong> <?php echo isset($pf['nome']) ? $pf['nome'] : null; ?></td>
-								</tr>
-								<tr>
-									<td width="50%"><strong>CPF:</strong> <?php echo isset($pf['cpf']) ? $pf['cpf'] : null; ?></td>
-									<td><strong>RG:</strong> <?php echo isset($pf['rg']) ? $pf['rg'] : null; ?></td>
-								</tr>
-								<tr>
-									<td colspan="2"><strong>Endereço:</strong> <?php echo isset($pf['logradouro']) ? $pf['logradouro'] : null; ?>, <?php echo isset($pf['numero']) ? $pf['numero'] : null; ?> <?php echo isset($pf['complemento']) ? $pf['complemento'] : null; ?> - <?php echo isset($pf['bairro']) ? $pf['bairro'] : null; ?> - <?php echo isset($pf['cidade']) ? $pf['cidade'] : null; ?> - <?php echo isset($pf['estado']) ? $pf['estado'] : null; ?> - CEP <?php echo isset($pf['cep']) ? $pf['cep'] : null; ?></td>
-								</tr>
-								<tr>
-									<td><strong>Telefone:</strong> <?php echo isset($pf['telefone']) ? $pf['telefone'] : null; ?></td>
-									<td><strong>Celular:</strong> <?php echo isset($pf['celular']) ? $pf['celular'] : null; ?></td>
-								</tr>
-								<tr>
-									<td><strong>E-mail:</strong> <?php echo isset($pf['email']) ? $pf['email'] : null; ?></td>
-									<td><strong>Cooperado:</strong> <?php if($pf['cooperado'] == 1){ echo "Sim"; } else { echo "Não"; } ?></td>
-								</tr>
+						  <br>
+						    <table class="table table-bordered">
+							  <tr>
+							    <td colspan="2">
+							      <strong>Nome:</strong> 
+							      <?php //echo isset($pf['nome']) ? $pf['nome'] : null; ?>
+							      <?= isset($pessoaFisica['nome']) ? $pessoaFisica['nome'] : ''; ?>	
+							    </td>
+							  </tr>
+							  <tr>
+							    <td width="50%">
+							      <strong>CPF:</strong> 
+							      <?php //echo isset($pf['cpf']) ? $pf['cpf'] : null; ?>
+							      <?= isset($pessoaFisica['cpf']) ? $pessoaFisica['cpf'] : ''; ?>	
+							    </td>
+								<td>
+								  <strong>RG:</strong>
+								  <?php //echo isset($pf['rg']) ? $pf['rg'] : null; ?>
+								  <?= isset($pessoaFisica['rg']) ? $pessoaFisica['rg'] : ''; ?>	
+								</td>
+							  </tr>
+							<tr>
+							  <td colspan="2">
+							    <strong>Endereço:</strong> 
+							    <?php //echo isset($pf['logradouro']) ? $pf['logradouro'] : null; ?> 
+							    <?php //echo isset($pf['numero']) ? $pf['numero'] : null; ?> 
+							    <?php //echo isset($pf['complemento']) ? $pf['complemento'] : null; ?>  <?php //echo isset($pf['bairro']) ? $pf['bairro'] : null; ?>  
+							    <?php //echo isset($pf['cidade']) ? $pf['cidade'] : null; ?>  
+							    <?php //echo isset($pf['estado']) ? $pf['estado'] : null; ?>   
+							    <?php //echo isset($pf['cep']) ? $pf['cep'] : null; ?>
+							    <?= 
+							      isset($pessoaFisica['logradouro']) 
+							        ? $pessoaFisica['logradouro'] 
+							        : ''; ?>
+							    ,
+
+							    <?= 
+							      isset($pessoaFisica['numero']) 
+							        ? $pessoaFisica['numero'] 
+							        : ''; ?> 
+
+							    <b>Bairro</b>:    
+
+							      <?= 
+							      isset($pessoaFisica['bairro']) 
+							        ? $pessoaFisica['bairro'] 
+							        : ''; ?> 
+
+							    <b>Cep</b>:        
+							      <?= 
+							      isset($pessoaFisica['cep']) 
+							        ? $pessoaFisica['cep'] 
+							        : ''; ?> 
+
+							    <b>Cidade</b>:        
+							      <?= 
+							      isset($pessoaFisica['cidade']) 
+							        ? $pessoaFisica['cidade'] 
+							        : ''; ?>     
+							    -    
+							      <?= 
+							      isset($pessoaFisica['estado']) 
+							        ? $pessoaFisica['estado'] 
+							        : ''; ?> 
+							 </td>				    
+							</tr>
+							<tr>
+							  <td>
+							    <strong>Telefone:</strong> 
+							    <?php //echo isset($pf['telefone']) ? $pf['telefone'] : null; ?>
+							    <?= isset($pessoaFisica['telefone']) ? $pessoaFisica['telefone'] : ''; ?>
+							  </td>
+							  <td>
+							  	<strong>Celular:</strong> 
+							  	<?php //echo isset($pf['celular']) ? $pf['celular'] : null; ?>
+							  	<?= isset($pessoaFisica['celular']) ? $pessoaFisica['celular'] : ''; ?>	
+							  </td>
+							</tr>
+							<tr>
+							  <td>
+							    <strong>E-mail:</strong> 
+							    <?php //echo isset($pf['email']) ? $pf['email'] : null; ?>
+							    <?= isset($pessoaFisica['email']) ? $pessoaFisica['email'] : ''; ?>
+							 </td>							  
+							 <td>
+							  	<strong>Cooperado:</strong> 
+							  	<?php //if($pf['cooperado'] == 1){ echo "Sim"; } else { echo "Não"; } ?>
+							  	<?= $pessoaFisica['cooperado'] == 1 ? 'SIM' : 'NÃO' ?>
+							  </td>
+							</tr>
 							</table>
 							<ul class="list-group">
 								<li class="list-group-item list-group-item-success"><b>Arquivos da Pessoa Física</b></li>
