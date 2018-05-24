@@ -6,7 +6,7 @@
     : 1;
 
   $totalRegistros = sizeof($logsTotal);
-  $qtdRegistrosPorPag = 10;
+  $qtdRegistrosPorPag = 25;
   $numPaginas = ceil($totalRegistros/$qtdRegistrosPorPag); 
 
   $inicio = $qtdRegistrosPorPag*$pagina-$qtdRegistrosPorPag;
