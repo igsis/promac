@@ -2259,26 +2259,67 @@ function pr_limpa_registros()
   endif;
 } 
 
-function pegaProjetoDetalhes($idProjeto)
+function pegaProjetoRepresentante($idProjeto)
 {
   $conexao = bancoMysqli();  
   
   $query ="
     SELECT 
-      p.*, pf.nome, pf.cpf, pf.rg, pf.logradouro, pf.numero, pf.bairro, pf.cep, pf.cidade, pf.estado,
-      pf.telefone, pf.celular, pf.email, pf.cooperado
+      p.*, 
+      rl.nome,
+      rl.cpf, 
+      rl.rg, 
+      rl.logradouro, 
+      rl.numero, 
+      rl.bairro, 
+      rl.cep, 
+      rl.cidade, 
+      rl.estado,
+      rl.telefone, 
+      rl.celular, 
+      rl.email,
+      pj.cooperativa      
     FROM projeto AS p  
     
     INNER JOIN pessoa_juridica AS pj
     ON pj.idPj = p.idPj
  
-    INNER JOIN pessoa_fisica AS pf 
-    ON pf.idPf = pj.idRepresentanteLegal
+    INNER JOIN representante_legal AS rl
+    ON rl.idRepresentanteLegal = pj.idRepresentanteLegal 
  
     WHERE p.idProjeto = ".$idProjeto; 
-
+  
+  //var_dump($query);
   $resultado = mysqli_query($conexao,$query); 
+  return $pessoaFisica = mysqli_fetch_assoc($resultado);
+}
 
+function pegaProjetoPessoaFisica($idProjeto)
+{
+  $conexao = bancoMysqli();  
+  
+  $query ="
+    SELECT       
+      pf.nome,
+      pf.cpf, 
+      pf.rg, 
+      pf.logradouro, 
+      pf.numero, 
+      pf.bairro, 
+      pf.cep, 
+      pf.cidade, 
+      pf.estado,
+      pf.telefone, 
+      pf.celular, 
+      pf.email,
+      pf.cooperado
+    FROM projeto AS p  
+    
+    INNER JOIN pessoa_fisica AS pf
+    ON pf.idPf = p.idPf 
+    WHERE p.idProjeto = ".$idProjeto; 
+  
+  $resultado = mysqli_query($conexao,$query); 
   return $pessoaFisica = mysqli_fetch_assoc($resultado);
 }
 
