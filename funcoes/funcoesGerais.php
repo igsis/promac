@@ -1959,7 +1959,9 @@ function webLogPaginacao($inicio, $qtdRegistrosPorPag)
                  WHERE P.idProjeto = log.idRegistro) AS nomePo                       
              FROM 
                weblogs AS log
-             LIMIT $inicio, $qtdRegistrosPorPag";              
+             ORDER BY log.idWeblog DESC
+             LIMIT $inicio, $qtdRegistrosPorPag";
+                           
     
   $resultado = mysqli_query($conexao,$query);
 
@@ -2067,6 +2069,33 @@ function locaisQuery($dtInicio, $dtFim, $tabela, $nome)
    return $query;          
 }
 
+function fichaQuery($dtInicio, $dtFim, $tabela, $nome)
+{
+  $query =  "SELECT 
+               log.idWebLog, 
+               log.tabela, 
+               log.acao, 
+               log.IdRegistro,
+               log.dataOcorrencia, 
+               log.usuario,
+               p.nomeProjeto as nome,
+               f.alteradoPor 
+             FROM 
+               weblogs AS log
+             INNER JOIN ficha_tecnica AS f
+             ON f.idProjeto =  log.idRegistro
+             
+             INNER JOIN projeto AS p 
+             ON p.idProjeto =  log.idRegistro             
+             
+             WHERE log.dataOcorrencia >= '$dtInicio'
+             AND   log.dataOcorrencia <= '$dtFim'
+             AND   log.tabela = '$tabela' 
+             AND   p.nomeProjeto LIKE '%$nome%'";                  
+   
+   return $query;          
+}
+
 function geraHeaderWebLogParam($dtInicio, $dtFim, $tabela, $nome) 
 {
   $logs = [];  
@@ -2092,6 +2121,11 @@ function geraHeaderWebLogParam($dtInicio, $dtFim, $tabela, $nome)
   	  $query = locaisQuery($dtInicio, $dtFim, $tabela, 
   	  	$nome);
   	  break;      
+
+  	case 'ficha_tecnica':
+  	  $query = fichaQuery($dtInicio, $dtFim, $tabela, 
+  	  	$nome);
+  	  break;        
 
   endswitch;
   
