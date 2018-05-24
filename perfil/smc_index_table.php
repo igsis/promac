@@ -3,10 +3,10 @@
     <tr>
   	  <th>Protocolo (nº ISP)</th>
    	  <th>Nome do Projeto</th>
-	  <th>Proponente</th>
-	  <th>Documento</th>
-	  <th>Área de Atuação</th>
-	  <th width='10%'></th>
+	    <th>Proponente</th>
+	    <th>Documento</th>
+	    <th>Área de Atuação</th>
+	    <th width='10%'></th>
     </tr>	
   </thead>  
   <tbody>  	
@@ -28,13 +28,13 @@
   	          : $campo['cnpj'];
   	      ?>
   	    </td>  
- 	   <td><?=$campo['areaAtuacao']?></td>  	
- 	   <td class='list_description'>
-	     <form method='POST' action='?perfil=smc_detalhes_projeto'>
-		   <input type='hidden' name='idProjeto' value='<?=$campo['idProjeto']?>'>
-		   <input type ='submit' class='btn btn-theme btn-block' value='Visualizar'>
-		 </form>
-	  </td> 
+ 	      <td><?=$campo['areaAtuacao']?></td>  	
+ 	      <td class='list_description'>
+	        <form method='POST' action='?perfil=smc_detalhes_projeto'>
+		        <input type='hidden' name='idProjeto' value='<?=$campo['idProjeto']?>'>
+		        <input type ='submit' class='btn btn-theme btn-block' value='Visualizar'>
+		      </form>
+	      </td> 
   	  </tr>   
   	<?php endforeach ?>  
   </tbody>

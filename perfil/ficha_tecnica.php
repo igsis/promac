@@ -1,6 +1,7 @@
 <?php
 $con = bancoMysqli();
 $idProjeto = $_SESSION['idProjeto'];
+$usuarioLogado = pegaUsuarioLogado();
 
 if(isset($_POST['insereFicha']))
 {
@@ -39,7 +40,8 @@ if(isset($_POST['editaFicha']))
 	$sql_edita_ficha = "UPDATE `ficha_tecnica` SET
 	`nome`= '$nome',
 	`cpf`= '$cpf',
-	`funcao`= '$funcao'
+	`funcao`= '$funcao',
+	`AlteradoPor` = '$usuarioLogado'
 	WHERE idFichaTecnica = '$idFichaTecnica'";
 	if(mysqli_query($con,$sql_edita_ficha))
 	{

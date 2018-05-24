@@ -264,29 +264,56 @@ if(isset($_POST['liberacaoPJ']))
 					$campos = [];					
 					$sql = 
 					"SELECT   
-  					  p.idProjeto,
-  					  p.protocolo,
-  					  p.nomeProjeto,
-  					  (SELECT nome FROM pessoa_fisica as pf WHERE pf.idPf = p.idPf limit 1) as nomePf,
-  					  (SELECT razaoSocial FROM pessoa_juridica as pj WHERE pj.idPj = p.idPj limit 1) as nomePj,
-  					  (SELECT cpf FROM pessoa_fisica as pf WHERE pf.idPf = p.idPf limit 1) as cpf,
-   					  (SELECT cnpj FROM pessoa_juridica as pj WHERE pj.idPj = p.idPj limit 1) as cnpj,
-   					  (SELECT areaAtuacao FROM area_atuacao as a WHERE a.idArea = p.idAreaAtuacao limit 1) as areaAtuacao   
+  					   p.idProjeto,
+  					   p.protocolo,
+  					   p.nomeProjeto,
+  					  
+  					  (SELECT 
+  					     nome 
+  					   FROM 
+  					     pessoa_fisica AS pf 
+  					   WHERE pf.idPf = p.idPf LIMIT 1) AS nomePf,
+  					  
+  					  (SELECT 
+  					    razaoSocial 
+  					   FROM 
+  					     pessoa_juridica AS pj 
+  					   WHERE pj.idPj = p.idPj 
+  					   LIMIT 1) AS nomePj,
+
+  					  (SELECT 
+  					    cpf 
+  					   FROM 
+  					     pessoa_fisica AS pf 
+  					   WHERE pf.idPf = p.idPf 
+  					   LIMIT 1) AS cpf,
+   					  
+   					  (SELECT 
+   					    cnpj 
+   					  FROM 
+   					    pessoa_juridica AS pj 
+   					  WHERE pj.idPj = p.idPj 
+   					  LIMIT 1) AS cnpj,
+   					  
+   					  (SELECT 
+   					    areaAtuacao 
+   					   FROM area_atuacao AS a 
+   					   WHERE a.idArea = p.idAreaAtuacao 
+   					   LIMIT 1) AS areaAtuacao   
 					FROM 
- 					 	projeto as p 
-						WHERE publicado = 1 
-						AND idStatus = 2 
-		  
-						ORDER BY idProjeto 
-						DESC LIMIT 0,10";
+ 					  projeto as p 
+					  WHERE publicado = 1 
+					  AND idStatus = 2 		  
+					  ORDER BY idProjeto 
+					  DESC LIMIT 0,10";
+					
 					$query = mysqli_query($con,$sql);										
 
-					while($dados = mysqli_fetch_array($query))
-					{
-  					   array_push($campos, $dados); 
-					}	
-					require_once('smc_index_table.php');					
-					?>
+					while($dados = mysqli_fetch_array($query)):					
+  					  array_push($campos, $dados); 
+					endwhile;						
+					
+					require_once('smc_index_table.php'); ?>										
 				</div>
 			</div>
 		</div>
