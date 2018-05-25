@@ -1932,6 +1932,7 @@ function geraHeaderWebLog()
   return $logs;  
 }
 
+
 function webLogPaginacao($inicio, $qtdRegistrosPorPag)
 {
   $logs = [];  
@@ -1945,7 +1946,9 @@ function webLogPaginacao($inicio, $qtdRegistrosPorPag)
                log.dataOcorrencia, 
                log.usuario,               
                fn_busca_registro
-                 (log.documento, log.idRegistro) as alteradoPor,
+                 (log.documento, log.idRegistro,
+                  log.idCronograma) AS alteradoPor,
+               
                (SELECT 
                   nome 
                  FROM 
@@ -1962,20 +1965,27 @@ function webLogPaginacao($inicio, $qtdRegistrosPorPag)
                   nomeProjeto 
                  FROM 
                    projeto AS P
-                 WHERE P.idProjeto = log.idRegistro) AS nomePo                       
+                 WHERE P.idProjeto = log.idRegistro) AS nomePo,                       
+                 
+                 (SELECT 
+                  nomeProjeto 
+                 FROM 
+                   projeto AS p
+                 INNER JOIN cronograma AS c 
+                 ON c.idCronograma = p.idCronograma
+                 WHERE c.idCronograma = log.idCronograma LIMIT 1) AS crono
              FROM 
                weblogs AS log
              ORDER BY log.idWeblog DESC
              LIMIT $inicio, $qtdRegistrosPorPag";
-                           
-    
+  
   $resultado = mysqli_query($conexao,$query);
 
   while($log = mysqli_fetch_assoc($resultado)):
     array_push($logs, $log);
   endwhile;  
   
-  return $logs;  
+  return $logs;
 }
 
 function pessoaFisicaQuery($dtInicio, $dtFim, $tabela, $nome)
@@ -2102,6 +2112,33 @@ function fichaQuery($dtInicio, $dtFim, $tabela, $nome)
    return $query;          
 }
 
+function cronogramaQuery($dtInicio, $dtFim, $tabela, $nome)
+{
+  $query =  "SELECT 
+               log.idWebLog, 
+               log.tabela, 
+               log.acao, 
+               log.IdRegistro,
+               log.dataOcorrencia, 
+               log.usuario,
+               p.nomeProjeto as nome,
+               c.alteradoPor 
+             FROM 
+               weblogs AS log
+             INNER JOIN cronograma AS c
+             ON c.idCronograma =  log.idCronograma
+             
+             INNER JOIN projeto AS p 
+             ON p.idCronograma =  log.idCronograma
+             
+             WHERE log.dataOcorrencia >= '$dtInicio'
+             AND   log.dataOcorrencia <= '$dtFim'
+             AND   log.tabela = '$tabela' 
+             AND   p.nomeProjeto LIKE '%$nome%'";
+   
+   return $query;          
+}
+
 function geraHeaderWebLogParam($dtInicio, $dtFim, $tabela, $nome) 
 {
   $logs = [];  
@@ -2133,6 +2170,11 @@ function geraHeaderWebLogParam($dtInicio, $dtFim, $tabela, $nome)
   	  	$nome);
   	  break;        
 
+  	case 'cronograma':
+  	  $query = cronogramaQuery($dtInicio, $dtFim, $tabela, 
+  	  	$nome);
+  	  break;          
+
   endswitch;
   
   $resultado = mysqli_query($conexao,$query);  
@@ -2147,6 +2189,7 @@ function geraHeaderWebLogParam($dtInicio, $dtFim, $tabela, $nome)
   
 }
 
+
 function geraHeaderWebLogTodos($dtInicio, $dtFim) 
 {
   $logs = [];  
@@ -2158,9 +2201,11 @@ function geraHeaderWebLogTodos($dtInicio, $dtFim)
                log.acao, 
                log.idRegistro,
                log.dataOcorrencia, 
-               log.usuario,               
+               log.usuario,                              
                fn_busca_registro
-                 (log.documento, log.idRegistro) AS alteradoPor,
+                 (log.documento, log.idRegistro,
+                  log.idCronograma) AS alteradoPor,  
+
                 (SELECT 
                   nome 
                  FROM 
@@ -2177,7 +2222,15 @@ function geraHeaderWebLogTodos($dtInicio, $dtFim)
                   nomeProjeto 
                  FROM 
                    projeto AS P
-                 WHERE P.idProjeto = log.idRegistro) AS nomePo
+                 WHERE P.idProjeto = log.idRegistro) AS nomePo,
+
+                 (SELECT 
+                  nomeProjeto 
+                 FROM 
+                   projeto AS p
+                 INNER JOIN cronograma AS c 
+                 ON c.idCronograma = p.idCronograma
+                 WHERE c.idCronograma = log.idCronograma LIMIT 1) AS crono
              FROM 
                weblogs AS log             
              WHERE log.dataOcorrencia >= '$dtInicio'

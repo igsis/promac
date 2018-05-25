@@ -33,8 +33,7 @@
       </div>  
       <div>
         <label id="tabela">Tabelas</label>  
-        <?php $tabelas = ['pessoa_fisica', 'pessoa_juridica', 'projeto', 'locais', 'ficha_tecnica', 
-        'todos' ] ?>
+        <?php $tabelas = ['pessoa_fisica', 'pessoa_juridica', 'projeto', 'locais', 'ficha_tecnica', 'cronograma', 'todos' ] ?>
         <select name="tabela" id="tabela">
           <?php foreach($tabelas as $tabela): ?>
             <option value="<?=$tabela?>"><?=$tabela?></option>

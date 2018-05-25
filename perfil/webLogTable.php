@@ -23,6 +23,7 @@
             <?=isset($log['nomePf']) ? $log['nomePf'] : ''; ?>   
             <?=isset($log['nomePj']) ? $log['nomePj'] : ''; ?>
             <?=isset($log['nomePo']) ? $log['nomePo'] : ''; ?>
+            <?=isset($log['crono'])  ? $log['crono']  : ''; ?>
             <?=isset($log['nome'])   ? $log['nome']   : ''; ?>
           </td>
           <td>
