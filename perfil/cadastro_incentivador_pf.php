@@ -60,8 +60,26 @@ if(isset($_POST['cadastraNovoPf']) and $_POST['numero'] and empty($endereço)):
     $mensagem = "<font color='#01DF3A'><strong>Erro ao atualizar! Tente novamente.</strong>
                 </font> <br/>".$sql_atualiza_pf;
   endif;
-endif; ?>
+endif; 
 
+if($pf['liberado'] == 3)
+{
+	echo "<div class='alert alert-warning'>
+	<strong>Aviso!</strong> Seus dados já foram aceitos, portanto, não podem ser alterados.</div>";
+
+	include 'includes/resumo_dados_incentivador_pf.php';
+}
+elseif ($pf['liberado'] == 1) 
+{
+	echo "<div class='alert alert-warning'>
+	<strong>Aviso!</strong> Seus dados foram encaminhados para análise, portanto, não podem ser alterados.</div>";
+
+	include 'includes/resumo_dados_incentivador_pf.php';
+}
+else
+{
+
+?>
 
   <section id="contact" class="home-section bg-white">
     <div class="container"><?php include 'includes/menu_interno_pf.php'; ?>
@@ -343,3 +361,6 @@ endif; ?>
     });    	
   }
 </script>
+<?php
+}
+?>

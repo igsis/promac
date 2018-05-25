@@ -59,10 +59,28 @@ if(isset($_POST['cadastraNovoPj']) and $_POST['numero'] and empty($endereço)):
     $mensagem = "<font color='#01DF3A'><strong>Erro ao atualizar! Tente novamente.
                  </strong></ont> <br/>".$sql_atualiza_pj;
   endif;	
-endif;  ?>
+endif;  
+
+if($pj['liberado'] == 3)
+{
+	echo "<div class='alert alert-warning'>
+	<strong>Aviso!</strong> Seus dados já foram aceitos, portanto, não podem ser alterados.</div>";
+
+	include 'includes/resumo_dados_incentivador_pj.php';
+}
+elseif ($pj['liberado'] == 1) 
+{
+	echo "<div class='alert alert-warning'>
+	<strong>Aviso!</strong> Seus dados foram encaminhados para análise, portanto, não podem ser alterados.</div>";
+
+	include 'includes/resumo_dados_incentivador_pj.php';
+}
+else
+{
+?>
 
 <section id="contact" class="home-section bg-white">
-  <div class="container"><?php include 'includes/menu_interno_pf.php'; ?>
+  <div class="container"><?php include 'includes/menu_interno_pj.php'; ?>
     <div class="form-group">
 	  <h4>Cadastro de Incentivador<br>
 	    <small>Pessoa Jurídica</small>
@@ -323,3 +341,6 @@ endif;  ?>
     });    	
   }
 </script>
+<?php
+}
+?>
