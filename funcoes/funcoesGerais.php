@@ -1918,8 +1918,7 @@ function geraHeaderWebLog()
                log.tabela, 
                log.acao, 
                log.IdRegistro,
-               log.dataOcorrencia, 
-               log.usuario
+               log.dataOcorrencia                
              FROM 
                weblogs AS log";             
 
@@ -1943,8 +1942,7 @@ function webLogPaginacao($inicio, $qtdRegistrosPorPag)
                log.tabela, 
                log.acao, 
                log.idRegistro,
-               log.dataOcorrencia, 
-               log.usuario,               
+               log.dataOcorrencia,                
                fn_busca_registro
                  (log.documento, log.idRegistro,
                   log.idCronograma) AS alteradoPor,
@@ -1995,8 +1993,7 @@ function pessoaFisicaQuery($dtInicio, $dtFim, $tabela, $nome)
                log.tabela, 
                log.acao, 
                log.IdRegistro,
-               log.dataOcorrencia, 
-               log.usuario,
+               log.dataOcorrencia,                
                pf.nome as nome,
                pf.alteradoPor 
              FROM 
@@ -2019,8 +2016,7 @@ function pessoaJuridicaQuery($dtInicio, $dtFim, $tabela, $nome)
                log.tabela, 
                log.acao, 
                log.IdRegistro,
-               log.dataOcorrencia, 
-               log.usuario,
+               log.dataOcorrencia,                
                pj.razaoSocial as nome,
                pj.alteradoPor 
              FROM 
@@ -2042,8 +2038,7 @@ function projetoQuery($dtInicio, $dtFim, $tabela, $nome)
                log.tabela, 
                log.acao, 
                log.IdRegistro,
-               log.dataOcorrencia, 
-               log.usuario,
+               log.dataOcorrencia,                
                p.nomeProjeto as nome,
                p.alteradoPor 
              FROM 
@@ -2065,8 +2060,7 @@ function locaisQuery($dtInicio, $dtFim, $tabela, $nome)
                log.tabela, 
                log.acao, 
                log.IdRegistro,
-               log.dataOcorrencia, 
-               log.usuario,
+               log.dataOcorrencia,                
                p.nomeProjeto as nome,
                loc.alteradoPor 
              FROM 
@@ -2092,8 +2086,7 @@ function fichaQuery($dtInicio, $dtFim, $tabela, $nome)
                log.tabela, 
                log.acao, 
                log.IdRegistro,
-               log.dataOcorrencia, 
-               log.usuario,
+               log.dataOcorrencia,                
                p.nomeProjeto as nome,
                f.alteradoPor 
              FROM 
@@ -2119,8 +2112,7 @@ function cronogramaQuery($dtInicio, $dtFim, $tabela, $nome)
                log.tabela, 
                log.acao, 
                log.IdRegistro,
-               log.dataOcorrencia, 
-               log.usuario,
+               log.dataOcorrencia,                
                p.nomeProjeto as nome,
                c.alteradoPor 
              FROM 
@@ -2200,8 +2192,7 @@ function geraHeaderWebLogTodos($dtInicio, $dtFim)
                log.tabela, 
                log.acao, 
                log.idRegistro,
-               log.dataOcorrencia, 
-               log.usuario,                              
+               log.dataOcorrencia,                
                fn_busca_registro
                  (log.documento, log.idRegistro,
                   log.idCronograma) AS alteradoPor,  
