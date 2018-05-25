@@ -22,7 +22,7 @@ $NomeProjeto = $projeto["nomeProjeto"];
 
 if($projeto['tipoPessoa'] == 1)//Pessoa Física
 {
-  $pf = recuperaDados("pessoa_fisica","idPf",$projeto['idPf']);
+  $pf = recuperaDados("pessoa_fisica","idPf",$projeto['idpf']);
   $Nome = $pf["nome"];
   $RG = $pf["rg"];
   $CPF = $pf["cpf"];
