@@ -1,6 +1,7 @@
 <?php
 $con = bancoMysqli();
 $idProjeto = $_SESSION['idProjeto'];
+$usuarioLogado = pegaUsuarioLogado();
 
 if(isset($_POST['insereOrcamento']) || isset($_POST['editaOrcamento']))
 {
@@ -43,7 +44,8 @@ if(isset($_POST['editaOrcamento']))
 	quantidade = '$quantidade',
 	quantidadeUnidade = '$quantidadeUnidade',
 	valorUnitario = '$valorUnitario',
-	valorTotal = '$valorTotal'
+	valorTotal = '$valorTotal',
+	alteradoPor = '$usuarioLogado'
 	WHERE idOrcamento = '$idOrcamento'";
 	if(mysqli_query($con,$sql_edita))
 	{
