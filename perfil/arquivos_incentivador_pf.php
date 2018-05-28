@@ -80,19 +80,6 @@ if(isset($_POST['apagar']))
 
 $pf = recuperaDados("incentivador_pessoa_fisica","idPf",$idPf);
 
-if($pf['liberado'] == 3)
-{
-	echo "<div class='alert alert-warning'>
-  	<strong>Aviso!</strong> Seus dados já foram aceitos, portanto, não podem ser alterados.</div>";
-
-  	include 'resumo_arquivos_usuario.php';
-}elseif ($pf['liberado'] == 1)
-{
-	echo "<div class='alert alert-warning'>
-	<strong>Aviso!</strong> Seus dados foram encaminhados para análise, portanto, não podem ser alterados.</div>";
-	include 'resumo_arquivos_usuario.php';
-}
-else{
 ?>
 
 <section id="list_items" class="home-section bg-white">
@@ -119,7 +106,20 @@ else{
 				</div>
 			<?php 
 				}
+				elseif($pf['liberado'] == 3 OR $pf['liberado'] == 1)
+				{
 				?>
+				<!-- Exibir arquivos -->
+				<div class="form-group">
+					<div class="col-md-12">
+						<div class="table-responsive list_info"><h6>Arquivo(s) Anexado(s)</h6>
+							<?php listaArquivosPessoaVisualizacao($idPf,$tipoPessoa,"arquivos_incentivador_pf"); ?>
+						</div>
+					</div>
+				</div>
+				<?php
+			} 
+			?>
 				<div class="form-group">
 					<div class="col-md-12">
 						<div class="table-responsive list_info"><h6>Upload de Arquivo(s) Somente em PDF</h6>
@@ -180,7 +180,6 @@ else{
 							</div>
 						</div>
 					</div>
-					<?php } ?>
 				<!-- Fim Confirmação de Exclusão -->
 			</div>
 		</div>

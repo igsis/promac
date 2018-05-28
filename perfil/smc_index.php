@@ -166,7 +166,6 @@ if(isset($_POST['liberacaoPJ']))
 									<tr class='list_menu'>
 										<td>Nome</td>
 										<td>CPF</td>
-										<td>RG</td>
 										<td>Email</td>
 										<td>Telefone</td>
 										<td width='10%'></td>
@@ -178,7 +177,6 @@ if(isset($_POST['liberacaoPJ']))
 									echo "<tr>";
 									echo "<td class='list_description'>".$campo['nome']."</td>";
 									echo "<td class='list_description'>".$campo['cpf']."</td>";
-									echo "<td class='list_description'>".$campo['rg']."</td>";
 									echo "<td class='list_description'>".$campo['email']."</td>";
 									echo "<td class='list_description'>".$campo['telefone']."</td>";
 									echo "

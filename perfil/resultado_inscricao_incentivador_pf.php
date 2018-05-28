@@ -122,7 +122,7 @@ if(isset($_POST['apagar']))
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
 			<?php
-				if($pf['liberado'] == 0) // ainda não foi solicitado liberação
+				if($pf['liberado'] == NULL OR $pf['liberado'] == 2 OR $pf['liberado'] == 4) 
 				{
 					include 'includes/resumo_incentivador_pf.php';
 				?>
@@ -164,7 +164,7 @@ if(isset($_POST['apagar']))
 			</div>
 			<?php
 				}
-				if($pf['liberado'] == 1)// foi solicitado liberação, porém a SMC não analisou ainda.
+				elseif($pf['liberado'] == 1)// foi solicitada a liberação, porém a SMC não analisou ainda.
 				{
 			?>
 					<div class="alert alert-success">
@@ -172,35 +172,31 @@ if(isset($_POST['apagar']))
 					</div>
 			<?php
 				}
-				if(($pf['liberado'] == 2) || ($pf['liberado'] == 4))// a liberação de projetos foi rejeitada pela SMC.
+				else// a inscrição para incentivo foi aceita pela SMC.
 				{
-					if ($pf['liberado'] == 2) 
-					{
 			?>
-					<div class="alert alert-danger">
-						<strong>Sua inscrição para incentivo foi rejeitada pela Secretaria Municipal de Cultura.</strong>
-					</div>
+					<div class="alert alert-success">
+						<strong>Sua inscrição para incentivo foi aceita pela Secretaria Municipal de Cultura.</strong>
+					</div>		
 			<?php 
-					}
-					else
-					{
-			?>
-					<div class="alert alert-danger">
-						<strong>Sua inscrição para incentivo foi liberada para edição.</strong>
-					</div>
-			<?php 
-					}
+				}
 			?>
 
 					<div>
 				 		<?php listaArquivosPessoaObs($idPf,4) ?>
 				 	</div>
 
-				<!-- Exibir arquivos -->
+
+			<?php
+				if($pf['liberado'] == NULL OR $pf['liberado'] == 2 OR $pf['liberado'] == 4)
+				{
+			?>
+
+			 	<!-- Exibir arquivos -->
 				<div class="form-group">
 					<div class="col-md-12">
 						<div class="table-responsive list_info"><h6>Arquivo(s) Anexado(s)</h6>
-							<?php listaArquivosPendentePessoa($idPf,$tipoPessoa,"resultado_inscricao_incentivador_pf"); ?>
+							<?php listaArquivosPendentePessoa($idPf,$tipoPessoa,"resultado_inscricao_pf"); ?>
 						</div>
 					</div>
 				</div>
@@ -265,6 +261,7 @@ if(isset($_POST['apagar']))
 							</div>
 						</div>
 					</div>
+		
 				 	<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<form class="form-horizontal" role="form" action="?perfil=resultado_inscricao_incentivador_pf" method="post">
@@ -272,20 +269,10 @@ if(isset($_POST['apagar']))
 							</form>
 						</div>
 					</div>
+		</div>
 			<?php
 				}
-				if($pf['liberado'] == 3) // liberação concedida pela SMC - liberado = 3
-				{
-			?>
-					<div class="form-group">
-						<div class="alert alert-warning">
-							<div class="col-md-offset-2 col-md-8">Sua inscrição foi aprovada pela SMC.</div><br/>
-						</div>
-					</div>
-				<?php
-				}
 				?>
-		</div>
 		<!-- Confirmação de Exclusão -->
 			<div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel" aria-hidden="true">
 				<div class="modal-dialog">
