@@ -1,12 +1,12 @@
 <?php
 
 $con = bancoMysqli();
-$idPj = $_SESSION['idUser']; 
+$idPj = $_SESSION['idUser'];
 $tipoPessoa = '5';
 
 if(isset($_POST["enviar"]))
 {
-	$sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa'";
+	$sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '5'";
 	$query_arquivos = mysqli_query($con,$sql_arquivos);
 	while($arq = mysqli_fetch_array($query_arquivos))
 	{
@@ -16,11 +16,11 @@ if(isset($_POST["enviar"]))
 		$f_size = isset($_FILES['arquivo']['size'][$x]) ? $_FILES['arquivo']['size'][$x] : null;
 
 		//Extensões permitidas
-		$ext = array("PDF","pdf");
+		$ext = array("PDF","pdf"); 
 
 		if($f_size > 5242880) // 5MB em bytes
 		{
-			$mensagem = "<font color='#FF0000'><strong>Erro! Tamanho de arquivo excedido! Tamanho máximo permitido: 03 MB.</strong></font>";
+			$mensagem = "<font color='#FF0000'><strong>Erro! Tamanho de arquivo excedido! Tamanho máximo permitido: 05 MB.</strong></font>";
 		}
 		else
 		{
@@ -30,7 +30,6 @@ if(isset($_POST["enviar"]))
 				$new_name = date("YmdHis")."_".semAcento($nome_arquivo); //Definindo um novo nome para o arquivo
 				$hoje = date("Y-m-d H:i:s");
 				$dir = '../uploadsdocs/'; //Diretório para uploads				
-
 				$allowedExts = array(".pdf", ".PDF"); //Extensões permitidas
 				$ext = strtolower(substr($nome_arquivo,-4));
 
@@ -81,27 +80,22 @@ if(isset($_POST['apagar']))
 
 $pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
 
-if($pj['liberado'] == 3)
-{
-	echo "<div class='alert alert-warning'>
-  	<strong>Aviso!</strong> Seus dados já foram aceitos, portanto, não podem ser alterados.</div>";
-
-  	include 'resumo_usuario.php';
-}
-else{
 ?>
 
 <section id="list_items" class="home-section bg-white">
-	<div class="container"><?php include 'includes/menu_interno_pf.php'; ?>
+	<div class="container"><?php include 'includes/menu_interno_pj.php'; ?>
 		<div class="form-group">
-			<h4>Documentos do Proponente<br>
-				<small>Pessoa Jurídica</small>
+			<h4>Documentos do Incentivador <br>
+				<small>Pessoa Física</small>
 			</h4>
-			<h5><?php if(isset($mensagem)){echo $mensagem;};?></h5>
+			<h5><?php if(isset($mensagem)){echo $mensagem;};?></h5>			    
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
-				
+				<?php 
+				if($pj['liberado'] == NULL OR $pj['liberado'] == 2 OR $pj['liberado'] == 4)
+				{
+				?>
 				<!-- Exibir arquivos -->
 				<div class="form-group">
 					<div class="col-md-12">
@@ -110,7 +104,22 @@ else{
 						</div>
 					</div>
 				</div>
-
+			<?php 
+				}
+				elseif($pj['liberado'] == 3 OR $pj['liberado'] == 1)
+				{
+				?>
+				<!-- Exibir arquivos -->
+				<div class="form-group">
+					<div class="col-md-12">
+						<div class="table-responsive list_info"><h6>Arquivo(s) Anexado(s)</h6>
+							<?php listaArquivosPessoaVisualizacao($idPj,$tipoPessoa,"arquivos_incentivador_pj"); ?>
+						</div>
+					</div>
+				</div>
+				<?php
+			} 
+			?>
 				<div class="form-group">
 					<div class="col-md-12">
 						<div class="table-responsive list_info"><h6>Upload de Arquivo(s) Somente em PDF</h6>
@@ -171,10 +180,8 @@ else{
 							</div>
 						</div>
 					</div>
-					<?php } ?>
 				<!-- Fim Confirmação de Exclusão -->
 			</div>
 		</div>
 	</div>
 </section>
-
