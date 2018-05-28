@@ -50,8 +50,8 @@ if(isset($_POST['editaOrcamento']))
 	valorUnitario = '$valorUnitario',
 	valorTotal = '$valorTotal',
 	observacoes = '$observacoes',
-	alteradoPor = '$usuarioLogado'	
-	WHERE idOrcamento = '$idOrcamento'";		
+	alteradoPor = '$usuarioLogado'		
+	WHERE idOrcamento = '$idOrcamento'";			
 	if(mysqli_query($con,$sql_edita))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Editado com sucesso! Utilize o menu para avançar.</strong></font>";

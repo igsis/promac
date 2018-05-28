@@ -1971,7 +1971,8 @@ function webLogPaginacao($inicio, $qtdRegistrosPorPag)
                    projeto AS p
                  INNER JOIN cronograma AS c 
                  ON c.idCronograma = p.idCronograma
-                 WHERE c.idCronograma = log.idCronograma LIMIT 1) AS crono
+                 WHERE c.idCronograma = log.idCronograma LIMIT 1) AS crono,                 
+
              FROM 
                weblogs AS log
              ORDER BY log.idWeblog DESC
@@ -2131,6 +2132,32 @@ function cronogramaQuery($dtInicio, $dtFim, $tabela, $nome)
    return $query;          
 }
 
+function orcamentoQuery($dtInicio, $dtFim, $tabela, $nome)
+{
+  $query =  "SELECT 
+               log.idWebLog, 
+               log.tabela, 
+               log.acao, 
+               log.IdRegistro,
+               log.dataOcorrencia,                
+               p.nomeProjeto as nome,
+               o.alteradoPor 
+             FROM 
+               weblogs AS log
+             INNER JOIN orcamento AS o
+             ON o.idProjeto =  log.idRegistro
+             
+             INNER JOIN projeto AS p 
+             ON p.idProjeto =  log.idRegistro             
+             
+             WHERE log.dataOcorrencia >= '$dtInicio'
+             AND   log.dataOcorrencia <= '$dtFim'
+             AND   log.tabela = '$tabela' 
+             AND   p.nomeProjeto LIKE '%$nome%'";                  
+   
+   return $query;          
+}
+
 function geraHeaderWebLogParam($dtInicio, $dtFim, $tabela, $nome) 
 {
   $logs = [];  
@@ -2166,6 +2193,11 @@ function geraHeaderWebLogParam($dtInicio, $dtFim, $tabela, $nome)
   	  $query = cronogramaQuery($dtInicio, $dtFim, $tabela, 
   	  	$nome);
   	  break;          
+
+  	case 'orcamento':
+  	  $query = orcamentoQuery($dtInicio, $dtFim, $tabela, 
+  	  	$nome);
+  	  break;            
 
   endswitch;
   
