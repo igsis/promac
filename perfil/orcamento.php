@@ -39,14 +39,19 @@ if(isset($_POST['editaOrcamento']))
 	$und_medida = $_POST['idUnidadeMedida'];
 	$observacoes = $_POST['observacoes'];
 	$idOrcamento = $_POST['editaOrcamento'];
+	$quantidadeUnidade = $_POST['quantidadeUnidade'];
 	$sql_edita = "UPDATE orcamento SET
+	idEtapa = $etapas,
+	observacoesEtapa = '$obs_etapa',
 	descricao = '$descricao',
 	quantidade = '$quantidade',
+	idUnidadeMedida = $und_medida,
 	quantidadeUnidade = '$quantidadeUnidade',
 	valorUnitario = '$valorUnitario',
 	valorTotal = '$valorTotal',
-	alteradoPor = '$usuarioLogado'
-	WHERE idOrcamento = '$idOrcamento'";
+	observacoes = '$observacoes',
+	alteradoPor = '$usuarioLogado'	
+	WHERE idOrcamento = '$idOrcamento'";		
 	if(mysqli_query($con,$sql_edita))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Editado com sucesso! Utilize o menu para avançar.</strong></font>";
