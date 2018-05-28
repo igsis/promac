@@ -1,6 +1,7 @@
 <?php 
 # Barra Incentivador PJ
 $con  = bancoMysqli();
+$pj   = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
 
 $urlIncentivadorPj = array(
 	// Rotas
@@ -45,9 +46,15 @@ for ($i = 0; $i < count($urlIncentivadorPj); $i++) {
             <li class="<?php echo $liga2 ?? 'clickable'; ?>">
                 <a onclick="location.href='incentivador_index_pj.php?perfil=incentivador_representante_pj'" href=""><br />Representante Legal</a>
             </li>
+            <?php
+                if ($pj['liberado'] != 3) {
+            ?>
             <li class="<?php echo $liga3 ?? 'clickable'; ?>">
                 <a onclick="location.href='incentivador_index_pj.php?perfil=arquivos_incentivador_pj'" href=""><br />Documentos do Incentivador</a>
             </li>
+            <?php 
+                }
+            ?>
             <li class="<?php echo $liga5 ?? 'clickable'; ?>">
                 <a onclick="location.href='incentivador_index_pj.php?perfil=resultado_inscricao_incentivador_pj'" href=""><br /><small>Resultado Inscrição</small></a>
             </li>
