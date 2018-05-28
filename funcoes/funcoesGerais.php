@@ -1971,7 +1971,7 @@ function webLogPaginacao($inicio, $qtdRegistrosPorPag)
                    projeto AS p
                  INNER JOIN cronograma AS c 
                  ON c.idCronograma = p.idCronograma
-                 WHERE c.idCronograma = log.idCronograma LIMIT 1) AS crono,                 
+                 WHERE c.idCronograma = log.idCronograma LIMIT 1) AS crono                 
 
              FROM 
                weblogs AS log
@@ -2253,11 +2253,13 @@ function geraHeaderWebLogTodos($dtInicio, $dtFim)
                    projeto AS p
                  INNER JOIN cronograma AS c 
                  ON c.idCronograma = p.idCronograma
-                 WHERE c.idCronograma = log.idCronograma LIMIT 1) AS crono
+                 WHERE c.idCronograma = log.idCronograma LIMIT 1) AS crono                 
+
              FROM 
                weblogs AS log             
              WHERE log.dataOcorrencia >= '$dtInicio'
-             AND   log.dataOcorrencia <= '$dtFim'";
+             AND   log.dataOcorrencia <= '$dtFim'
+             ORDER BY idWeblog DESC";
 
   $resultado = mysqli_query($conexao,$query);  
 
