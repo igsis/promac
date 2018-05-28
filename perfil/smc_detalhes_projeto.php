@@ -147,7 +147,7 @@ else
 	$pj = recuperaDados("pessoa_juridica","idPj",$projeto['idpj']);   
 }
 
-/*xura busca*/
+
 $representante = pegaProjetoRepresentante($idProjeto); 
 $pessoaFisica = pegaProjetoPessoaFisica($idProjeto); 
 
@@ -452,7 +452,12 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 									<?php } ?>
 								</tr>
 								<tr>
-									<td><strong>Valor do projeto:</strong> R$ <?php echo isset($projeto['valorProjeto']) ? $projeto['valorProjeto'] : null; ?></td>
+							      <td>
+							        <strong>Valor do projeto:</strong>R$ <?php echo 
+							        isset($projeto['valorprojeto']) 
+							          ? $projeto['valorprojeto'] 
+									  :  ''; ?>
+								  </td>
 									<td><strong>Valor do incentivo:</strong> R$ <?php echo isset($projeto['valorIncentivo']) ? $projeto['valorIncentivo'] : null; ?></td>
 									<td><strong>Valor do financiamento:</strong> R$ <?php echo isset($projeto['valorFinanciamento']) ? $projeto['valorFinanciamento'] : null; ?></td>
 								</tr>
