@@ -6,6 +6,7 @@ $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 $estados = formataDados(listaEstados());
 $cidades = formataDados(listaCidades());
 $habilitaCampo = false;
+$usuarioLogado = pegaUsuarioLogado();
 
 if(isset($_POST['cep'])):          
 	$enderecos = retornaEndereco($_POST['cep']);  
@@ -41,8 +42,6 @@ if(isset($_POST['atualizarJuridica']) and $_POST['numero'] and empty($endereço)
 	$idZona = $_POST['idZona'];
   	$idSubprefeitura = $_POST['idSubprefeitura'];
   	$idDistrito = $_POST['idDistrito'];
-  	$usuarioLogado = 
-  	  $pj['razaoSocial'].' [ID='.$pj['idPj'].']';	
 
 	$sql_atualiza_pj = "UPDATE pessoa_juridica SET
 	`razaoSocial` = '$razaoSocial',

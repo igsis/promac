@@ -7,6 +7,7 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 $estados = formataDados(listaEstados());
 $cidades = formataDados(listaCidades());
 $habilitaCampo = false;
+$usuarioLogado = pegaUsuarioLogado();
 
 if(isset($_POST['cep'])):
 	$enderecos = retornaEndereco($_POST['cep']);
@@ -40,8 +41,7 @@ if(isset($_POST['atualizarFisica']) and $_POST['numero'] and empty($endereço))
   $cooperado = $_POST['cooperado'];
   $idZona = $_POST['idZona'];
   $idSubprefeitura = $_POST['idSubprefeitura'];
-  $idDistrito = $_POST['idDistrito'];
-  $usuarioLogado = $pf['nome'].' [ID='.$pf['idPf'].']';	
+  $idDistrito = $_POST['idDistrito'];  
 
 
   $sql_atualiza_pf =
