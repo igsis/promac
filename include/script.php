@@ -13,7 +13,7 @@
     $('.valor').maskMoney({thousands:'.', decimal:',', allowZero:true, suffix: ''});
   });
   $(function() {
-    $('#valor,#valorProjeto,#valorIncentivo,#valorFinanciamento,#valor01,#valor_individual,#duracao')
+    $('#valor,#valor1,#valor2,#valor3,#valor01,#valor_individual,#duracao')
       .maskMoney({thousands:'.', decimal:',', allowZero:true, suffix: ''});
   });
   $(function(){
