@@ -1,6 +1,7 @@
 <?php 
 # Barra Incentivador PF
 $con  = bancoMysqli();
+$pf   = recuperaDados("incentivador_pessoa_fisica","idPf",$idPf);
 
 $urlIncentivadorPf = array(
 	// Rotas
@@ -34,9 +35,15 @@ for ($i = 0; $i < count($urlIncentivadorPf); $i++) {
             <li class="<?php echo $ligar1 ?? 'clickable'; ?>">
                 <a onclick="location.href='incentivador_index_pf.php'" href=""><br />Incentivador</a>
             </li>
+            <?php 
+                if ($pf['liberado'] != 3) {
+            ?>
             <li class="<?php echo $ligar2 ?? 'clickable'; ?>">
                 <a onclick="location.href='incentivador_index_pf.php?perfil=arquivos_incentivador_pf'" href=""><br />Documentos do Incentivador</a>
             </li>
+            <?php 
+                }
+            ?>
             <li class="<?php echo $ligar4 ?? 'clickable'; ?>">
                 <a onclick="location.href='incentivador_index_pf.php?perfil=resultado_inscricao_incentivador_pf'" href=""><br /><small>Resultado Inscrição</small></a>
             </li>
