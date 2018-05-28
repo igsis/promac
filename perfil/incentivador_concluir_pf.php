@@ -51,11 +51,25 @@ if(isset($_POST['liberacao']))
 			if($pf['liberado'] == 3)// liberação concedida pela SMC - liberado = 3
 			{
 			?>
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8">Sua inscrição foi aprovada pela SMC.</div><br/>
+
+			<div class="alert alert-success">
+				<strong>Sua inscrição foi aprovada pela SMC.</strong>
 				</div>
+			</div>
+
 			<?php
-				include 'includes/resumo_incentivador_pf.php';
+				include 'includes/resumo_dados_incentivador_pf.php';
+			?>	
+				<!-- Exibir arquivos -->
+				<div class="form-group">
+					<div class="col-md-12">
+						<div class="table-responsive list_info"><h6>Arquivo(s) Anexado(s)</h6>
+							<?php listaArquivosPessoaVisualizacao($idPf,$tipoPessoa,"arquivos_incentivador_pf"); ?>
+						</div>
+					</div>
+				</div>
+
+			<?php
 			}else {
 			?>
 				<div class="form-group">
