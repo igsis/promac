@@ -6,6 +6,9 @@ $pf = recuperaDados("incentivador_pessoa_fisica","idPf",$idPf);
 $estados = formataDados(listaEstados());
 $cidades = formataDados(listaCidades());
 $habilitaCampo = false;
+$userIn = $pf['nome'].' [ID='.$pf['idPf'].']';
+
+
 
 if(isset($_POST['cep'])):          
   $enderecos = retornaEndereco($_POST['cep']);  
@@ -48,7 +51,8 @@ if(isset($_POST['cadastraNovoPf']) and $_POST['numero'] and empty($endereço)):
 	`estado` = '$Estado',
 	`cep` = '$CEP',
 	`numero` = '$Numero',
-	`complemento` = '$Complemento'
+	`complemento` = '$Complemento',
+	`alteradoPor` = '$userIn'
   WHERE `idPf` = '$idPf'";
 
 
@@ -356,6 +360,7 @@ else
   function pegaCep()
   {
     cep.addEventListener('focusout', function(){
+      event.preventDefault();
       form = document.querySelector('#frmCad');    
       form.submit();        
     });    	
