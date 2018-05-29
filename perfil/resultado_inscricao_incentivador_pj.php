@@ -1,4 +1,4 @@
-<?php 
+<?php
 $con = bancoMysqli();
 $tipoPessoa = '5';
 
@@ -41,7 +41,7 @@ if(isset($_POST['liberacao']))
 
 if(isset($_POST["enviar"]))
 {
-	$sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa'";
+	$sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '5'";
 	$query_arquivos = mysqli_query($con,$sql_arquivos);
 	while($arq = mysqli_fetch_array($query_arquivos))
 	{
@@ -51,11 +51,11 @@ if(isset($_POST["enviar"]))
 		$f_size = isset($_FILES['arquivo']['size'][$x]) ? $_FILES['arquivo']['size'][$x] : null;
 
 		//Extensões permitidas
-		$ext = array("PDF","pdf");
+		$ext = array("PDF","pdf"); 
 
 		if($f_size > 5242880) // 5MB em bytes
 		{
-			$mensagem = "<font color='#FF0000'><strong>Erro! Tamanho de arquivo excedido! Tamanho máximo permitido: 03 MB.</strong></font>";
+			$mensagem = "<font color='#FF0000'><strong>Erro! Tamanho de arquivo excedido! Tamanho máximo permitido: 05 MB.</strong></font>";
 		}
 		else
 		{
@@ -65,7 +65,6 @@ if(isset($_POST["enviar"]))
 				$new_name = date("YmdHis")."_".semAcento($nome_arquivo); //Definindo um novo nome para o arquivo
 				$hoje = date("Y-m-d H:i:s");
 				$dir = '../uploadsdocs/'; //Diretório para uploads				
-
 				$allowedExts = array(".pdf", ".PDF"); //Extensões permitidas
 				$ext = strtolower(substr($nome_arquivo,-4));
 
@@ -114,17 +113,17 @@ if(isset($_POST['apagar']))
 	}
 }
 
-$pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
+
 ?>
 <section id="list_items" class="home-section bg-white">
-	<div class="container"><?php include 'includes/menu_interno_pf.php'; ?>
+	<div class="container"><?php include 'includes/menu_interno_pj.php'; ?>
 		<div class="form-group">
 			<h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
 			<?php
-				if($pj['liberado'] == 0) // ainda não foi solicitado liberação
+				if($pj['liberado'] == NULL OR $pj['liberado'] == 2 OR $pj['liberado'] == 4) 
 				{
 					include 'includes/resumo_incentivador_pj.php';
 				?>
@@ -148,7 +147,7 @@ $pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
 								
 								$enviaArquivos = mysqli_query($con, $queryArquivos);
 								$numRow = mysqli_num_rows($enviaArquivos);
-								if($numRow == 8)
+								if($numRow == 5)
 								{?>
 							<form class="form-horizontal" role="form" action="?perfil=resultado_inscricao_incentivador_pj" method="post">
 								<input type="submit" name="liberacao" value="Concluir inscrição do Incentivador" class="btn btn-theme btn-lg btn-block">
@@ -166,7 +165,7 @@ $pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
 			</div>
 			<?php
 				}
-				elseif($pj['liberado'] == 1)// foi solicitado liberação, porém a SMC não analisou ainda.
+				elseif($pj['liberado'] == 1)// foi solicitada a liberação, porém a SMC não analisou ainda.
 				{
 			?>
 					<div class="alert alert-success">
@@ -174,36 +173,31 @@ $pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
 					</div>
 			<?php
 				}
-				elseif(($pj['liberado'] == 2) || ($pj['liberado'] == 4))// a liberação de projetos foi rejeitada pela SMC.
+				else// a inscrição para incentivo foi aceita pela SMC.
 				{
-					if ($pj['liberado'] == 2) 
-					{
-						
-					
 			?>
-					<div class="alert alert-danger">
-						<strong>Sua inscrição para incentivo foi rejeitada pela Secretaria Municipal de Cultura.</strong>
-					</div>
+					<div class="alert alert-success">
+						<strong>Sua inscrição para incentivo foi aceita pela Secretaria Municipal de Cultura.</strong>
+					</div>		
 			<?php 
-					}
-					else // liberado == 4
-					{
+				}
 			?>
-					<div class="alert alert-danger">
-						<strong>Sua inscrição para incentivo foi liberada para edição.</strong>
-					</div>
-			<?php 
-					}
-			?>
+
 					<div>
 				 		<?php listaArquivosPessoaObs($idPj,5) ?>
 				 	</div>
-					
-					<!-- Exibir arquivos -->
+
+
+			<?php
+				if($pj['liberado'] == NULL OR $pj['liberado'] == 2 OR $pj['liberado'] == 4)
+				{
+			?>
+
+			 	<!-- Exibir arquivos -->
 				<div class="form-group">
 					<div class="col-md-12">
 						<div class="table-responsive list_info"><h6>Arquivo(s) Anexado(s)</h6>
-							<?php listaArquivosPendentePessoa($idPj,$tipoPessoa,"resultado_inscricao_incentivador_pf"); ?>
+							<?php listaArquivosPendentePessoa($idPj,$tipoPessoa,"resultado_inscricao_pj"); ?>
 						</div>
 					</div>
 				</div>
@@ -211,7 +205,7 @@ $pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
 				<div class="form-group">
 					<div class="col-md-12">
 						<div class="table-responsive list_info"><h6>Upload de Arquivo(s) Somente em PDF</h6>
-						<form method="POST" action="?perfil=resultado_inscricao_incentivador_pf" enctype="multipart/form-data">
+						<form method="POST" action="?perfil=resultado_inscricao_incentivador_pj" enctype="multipart/form-data">
 							<table class='table table-condensed'>
 								<tr class='list_menu'>
 									<td>Tipo de Arquivo</td>
@@ -230,7 +224,7 @@ $pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
 											$envio = $con->query($query);
 											$row = $envio->fetch_array(MYSQLI_ASSOC);
 
-											if(verificaArquivosExistentesPF($idPj,$row['idListaDocumento'])){
+											if(verificaArquivosExistentesIncentivador($idPj,$row['idListaDocumento'])){
 												echo '<div class="alert alert-success">O arquivo ' . $doc . ' já foi enviado.</div>';
 											}
 											else{ ?>
@@ -268,7 +262,7 @@ $pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
 							</div>
 						</div>
 					</div>
-
+		
 				 	<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<form class="form-horizontal" role="form" action="?perfil=resultado_inscricao_incentivador_pj" method="post">
@@ -276,19 +270,10 @@ $pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
 							</form>
 						</div>
 					</div>
+		</div>
 			<?php
 				}
-				else // liberação concedida pela SMC - liberado = 3
-				{
-			?>
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-8">Sua inscrição foi aprovada pela SMC.</div><br/>
-					</div>
-				<?php
-					include 'includes/resumo_incentivador_pj.php';
-				}
 				?>
-		</div>
 		<!-- Confirmação de Exclusão -->
 			<div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel" aria-hidden="true">
 				<div class="modal-dialog">
