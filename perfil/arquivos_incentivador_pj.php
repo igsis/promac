@@ -86,7 +86,7 @@ $pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
 	<div class="container"><?php include 'includes/menu_interno_pj.php'; ?>
 		<div class="form-group">
 			<h4>Documentos do Incentivador <br>
-				<small>Pessoa Física</small>
+				<small>Pessoa Jurídica</small>
 			</h4>
 			<h5><?php if(isset($mensagem)){echo $mensagem;};?></h5>			    
 		</div>
@@ -106,7 +106,7 @@ $pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
 				</div>
 			<?php 
 				}
-				elseif($pj['liberado'] == 3 OR $pj['liberado'] == 1)
+				else
 				{
 				?>
 				<!-- Exibir arquivos -->
