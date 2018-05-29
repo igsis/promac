@@ -94,7 +94,7 @@ if($pj['liberado'] == 3)
 }elseif (($pj['liberado'] == 2)||($pj['liberado'] == 4)) {
 	echo "<div class='alert alert-warning'>
   	<strong>Aviso!</strong> Seus dados foram liberados para edição.</div>";
-  	include 'resumo_usuario.php';
+  	include 'resumo_arquivos_usuario.php';
 }
 else{
 ?>
