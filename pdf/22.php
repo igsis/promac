@@ -34,7 +34,7 @@ if($projeto['tipoPessoa'] == 1)//Pessoa Física
 }
 else //Pessoa Jurídica
 {
-  $pj = recuperaDados("pessoa_juridica","idPj",$projeto['idPj']);
+  $pj = recuperaDados("pessoa_juridica","idPj",$projeto['idpj']);
   $representante1 = recuperaDados("representante_legal","idRepresentanteLegal",$pj['idRepresentanteLegal']);
   //Pessoa Jurídica
   $RazaoSocial = $pj["razaoSocial"];
