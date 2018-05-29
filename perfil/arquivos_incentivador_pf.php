@@ -106,7 +106,7 @@ $pf = recuperaDados("incentivador_pessoa_fisica","idPf",$idPf);
 				</div>
 			<?php 
 				}
-				elseif($pf['liberado'] == 3 OR $pf['liberado'] == 1)
+				else
 				{
 				?>
 				<!-- Exibir arquivos -->
