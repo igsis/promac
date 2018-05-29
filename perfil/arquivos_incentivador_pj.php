@@ -104,22 +104,7 @@ $pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
 						</div>
 					</div>
 				</div>
-			<?php 
-				}
-				else
-				{
-				?>
-				<!-- Exibir arquivos -->
-				<div class="form-group">
-					<div class="col-md-12">
-						<div class="table-responsive list_info"><h6>Arquivo(s) Anexado(s)</h6>
-							<?php listaArquivosPessoaVisualizacao($idPj,$tipoPessoa,"arquivos_incentivador_pj"); ?>
-						</div>
-					</div>
-				</div>
-				<?php
-			} 
-			?>
+
 				<div class="form-group">
 					<div class="col-md-12">
 						<div class="table-responsive list_info"><h6>Upload de Arquivo(s) Somente em PDF</h6>
@@ -162,6 +147,7 @@ $pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
 					</div>
 				</div>
 				<!-- Fim Upload de arquivo -->
+				
 				<!-- Confirmação de Exclusão -->
 					<div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel" aria-hidden="true">
 						<div class="modal-dialog">
@@ -183,5 +169,22 @@ $pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
 				<!-- Fim Confirmação de Exclusão -->
 			</div>
 		</div>
+
+			<?php 
+				}
+				else
+				{
+				?>
+				<!-- Exibir arquivos -->
+				<div class="form-group">
+					<div class="col-md-12">
+						<div class="table-responsive list_info"><h6>Arquivo(s) Anexado(s)</h6>
+							<?php listaArquivosPessoaVisualizacao($idPj,$tipoPessoa,"arquivos_incentivador_pj"); ?>
+						</div>
+					</div>
+				</div>
+				<?php
+			} 
+			?>
 	</div>
 </section>
