@@ -124,43 +124,12 @@ if(isset($_POST['apagar']))
 			<?php
 				if($pf['liberado'] == NULL OR $pf['liberado'] == 2 OR $pf['liberado'] == 4) 
 				{
-					include 'includes/resumo_incentivador_pf.php';
+					include 'includes/resumo_dados_incentivador_pf.php';
 				?>
 					<div class="alert alert-info">
 						Após o preenchimento de todos os dados pessoais, conclua a inscrição do proponente e aguarde a análise da sua documentação pela Secretaria Municipal de Cultura.
 					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-8">
-							<?php							
-							if ($cpo == false)							{
-								
-								$idPess = $pf['idPf'];
-								$queryArquivos = 
-								  "SELECT 
-								    idUploadArquivo 
-								   FROM 
-								     upload_arquivo 
-								   WHERE 
-								     idPessoa = $idPess 
-								   AND idTipo = '4' AND publicado = '1'";
-								
-								$enviaArquivos = mysqli_query($con, $queryArquivos);
-								$numRow = mysqli_num_rows($enviaArquivos);
-								if($numRow == 5)
-								{?>
-							<form class="form-horizontal" role="form" action="?perfil=resultado_inscricao_incentivador_pf" method="post">
-								<input type="submit" name="liberacao" value="Concluir inscrição do Incentivador" class="btn btn-theme btn-lg btn-block">
-							</form>
-							<?php
-							}
-							else{
-								echo "<div class='alert alert-warning'>
-								<strong>Erro: </strong> Você deve enviar todos os documentos para prosseguir.
-								</div>";
-							}
-						}?>
-						</div>
-					</div>
+
 			</div>
 			<?php
 				}
@@ -196,7 +165,7 @@ if(isset($_POST['apagar']))
 				<div class="form-group">
 					<div class="col-md-12">
 						<div class="table-responsive list_info"><h6>Arquivo(s) Anexado(s)</h6>
-							<?php listaArquivosPendentePessoa($idPf,$tipoPessoa,"resultado_inscricao_pf"); ?>
+							<?php listaArquivosPendentePessoa($idPf,$tipoPessoa,"resultado_inscricao_incentivador_pf"); ?>
 						</div>
 					</div>
 				</div>
@@ -262,13 +231,6 @@ if(isset($_POST['apagar']))
 						</div>
 					</div>
 		
-				 	<div class="form-group">
-						<div class="col-md-offset-2 col-md-8">
-							<form class="form-horizontal" role="form" action="?perfil=resultado_inscricao_incentivador_pf" method="post">
-								<input type="submit" name="liberacao" value="Concluir inscrição do Incentivador" class="btn btn-theme btn-lg btn-block">
-							</form>
-						</div>
-					</div>
 		</div>
 			<?php
 				}
@@ -292,5 +254,40 @@ if(isset($_POST['apagar']))
 				</div>
 			</div>
 		<!-- Fim Confirmação de Exclusão -->
+
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-8">
+				<?php							
+				if ($cpo == false)
+				{
+					
+					$idPess = $pf['idPf'];
+					$queryArquivos = 
+					  "SELECT 
+					    idUploadArquivo 
+					   FROM 
+					     upload_arquivo 
+					   WHERE 
+					     idPessoa = $idPess 
+					   AND idTipo = '4' AND publicado = '1'";
+					
+					$enviaArquivos = mysqli_query($con, $queryArquivos);
+					$numRow = mysqli_num_rows($enviaArquivos);
+					if($numRow == 5)
+					{?>
+				<form class="form-horizontal" role="form" action="?perfil=resultado_inscricao_incentivador_pf" method="post">
+					<input type="submit" name="liberacao" value="Concluir inscrição do Incentivador" class="btn btn-theme btn-lg btn-block">
+				</form>
+				<?php
+				}
+				else{
+					echo "<div class='alert alert-warning'>
+					<strong>Erro: </strong> Você deve enviar todos os documentos para prosseguir.
+					</div>";
+				}
+			}?>
+			</div>
+		</div>
+
 	</div>
 </section>
