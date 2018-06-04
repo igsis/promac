@@ -199,7 +199,7 @@ $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 			 		<?php listaArquivosPessoaObs($idPj,2) ?>
 			 	</div>
 
-				<div class='alert alert-warning'>Reenvie o arquivo com as alterações sujeridas.</div>
+				<div class='alert alert-warning'>Reenvie o arquivo com as alterações sugeridas.</div>
 
 			 	<!-- Exibir arquivos Pendentes-->
 				<div class="form-group">
