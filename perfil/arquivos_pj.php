@@ -20,7 +20,7 @@ if(isset($_POST["enviar"]))
 		$f_size = isset($_FILES['arquivo']['size'][$x]) ? $_FILES['arquivo']['size'][$x] : null;
 
 		//Extensões permitidas
-		$ext = array("PDF","pdf");
+		$ext = array("PDF","pdf"); 
 		
 		if($f_size > 5242880) // 5MB em bytes
 		{
@@ -33,7 +33,7 @@ if(isset($_POST["enviar"]))
 				$nome_temporario = $_FILES['arquivo']['tmp_name'][$x];
 				$new_name = date("YmdHis")."_".semAcento($nome_arquivo); //Definindo um novo nome para o arquivo
 				$hoje = date("Y-m-d H:i:s");
-				$dir = '../uploadsdocs/'; //Diretório para uploads				
+				$dir = '../uploadsdocs/'; //Diretório para uploads
 				$allowedExts = array(".pdf", ".PDF"); //Extensões permitidas
 				$ext = strtolower(substr($nome_arquivo,-4));
 
@@ -41,7 +41,7 @@ if(isset($_POST["enviar"]))
 				{
 					if(move_uploaded_file($nome_temporario, $dir.$new_name))
 					{
-						$sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('$tipoPessoa', '$idPj', '$y', '$new_name', '$hoje', '1'); ";
+						$sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('$tipoPessoa', '$idPj', '$y', '$new_name', '$hoje', '2'); ";
 						$query = mysqli_query($con,$sql_insere_arquivo);
 						if($query)
 						{
@@ -84,19 +84,6 @@ if(isset($_POST['apagar']))
 
 $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 
-if($pj['liberado'] == 3)
-{
-	echo "<div class='alert alert-warning'>
-  	<strong>Aviso!</strong> Seus dados já foram aceitos, portanto, não podem ser alterados.</div>";
-
-  	include 'resumo_usuario.php';
-
-}elseif (($pj['liberado'] == 2)||($pj['liberado'] == 4)) {
-	echo "<div class='alert alert-warning'>
-  	<strong>Aviso!</strong> Seus dados foram liberados para edição.</div>";
-  	include 'resumo_arquivos_usuario.php';
-}
-else{
 ?>
 
 <section id="list_items" class="home-section bg-white">
@@ -108,10 +95,8 @@ else{
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
 				<?php 
-					if ($pj['liberado'] == 1) {
-						echo "<div class='alert alert-warning'>
-				  		<strong>Status!</strong> Aguardando a verificação da inscrição</div>";
-  					}else{
+				if($pj['liberado'] == NULL)
+				{
 				?>
 				<!-- Exibir arquivos -->
 				<div class="form-group">
@@ -121,9 +106,7 @@ else{
 						</div>
 					</div>
 				</div>
-				<?php 
-					}
-				?>
+
 				<div class="form-group">
 					<div class="col-md-12">
 						<div class="table-responsive list_info"><h6>Upload de Arquivo(s) Somente em PDF</h6>
@@ -142,15 +125,17 @@ else{
 										<tr>
 											<?php
 											$doc = $arq['documento'];
-											$query = "SELECT idListaDocumento FROM lista_documento WHERE documento='$doc' AND publicado='1' AND idTipoUpload='2'";
+											$query = "SELECT idListaDocumento FROM lista_documento WHERE documento='$doc' AND publicado='2' AND idTipoUpload='2'";
 											$envio = $con->query($query);
 											$row = $envio->fetch_array(MYSQLI_ASSOC);
 
 											if(verificaArquivosExistentesPF($idPj,$row['idListaDocumento'])){
 												echo '<div class="alert alert-success">O arquivo ' . $doc . ' já foi enviado.</div>';
 											}
-											elseif ($arq['idListaDocumento'] == 15) 
-											{?>
+											else{ ?>
+											<?php 
+										    $urlArquivo = $http.$arq['idListaDocumento'];
+											if(arquivosExiste($urlArquivo)): ?>	
 											  <td class="list_description path">
                                                 <?php              
                                                  $path = selecionaArquivoAnexo(
@@ -159,15 +144,14 @@ else{
                                                   	 target="_blank">
                                                      <?=$arq['documento'] ?> 	
                                                   </a>
-                                              </td>
-                                              <td class="list_description"><input type='file' name='arquivo[<?php echo $arq['sigla']; ?>]'></td>
-											
-                                      <?php }	else { ?>
+                                              </td>	
+                                            <?php else: ?>
                                               <td class="list_description path">
                                                 <?=$arq['documento']?>	
                                               </td>	
+                                            <?php endif ?>  
 											<td class="list_description"><input type='file' name='arquivo[<?php echo $arq['sigla']; ?>]'></td>
-                                            <?php } ?>  
+											<?php } ?>
 										</tr>
 								<?php
 									}
@@ -199,9 +183,25 @@ else{
 							</div>
 						</div>
 					</div>
-					<?php } ?>
 				<!-- Fim Confirmação de Exclusão -->
 			</div>
 		</div>
+
+		<?php 
+				}
+				else
+				{
+				?>
+				<!-- Exibir arquivos -->
+				<div class="form-group">
+					<div class="col-md-12">
+						<div class="table-responsive list_info"><h6>Arquivo(s) Anexado(s)</h6>
+							<?php listaArquivosPessoaVisualizacao($idPj,$tipoPessoa,"arquivos_pj"); ?>
+						</div>
+					</div>
+				</div>
+				<?php
+			} 
+			?>
 	</div>
 </section>
