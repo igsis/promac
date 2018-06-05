@@ -83,6 +83,26 @@ if(isset($_POST['gravarAdm']))
 	}
 }
 
+if(isset($_POST['gravarFin1']))
+{
+	$idP = $_POST['IDP'];
+	$valorAprovado = dinheiroDeBr($_POST['valorAprovado']);
+	$renunciaFiscal = $_POST['idRenunciaFiscal'];
+	$processoSEI = $_POST['processoSei'];
+	$assinaturaTermo = exibirDataMysql($_POST['assinaturaTermo']);
+	$sql_gravarFin1 = "UPDATE projeto SET valorAprovado = '$valorAprovado', renunciaFiscal = '$renunciaFiscal', processoSei = '$processoSEI', assinaturaTermo = '$assinaturaTermo' WHERE idProjeto = '$idP' ";
+	if(mysqli_query($con,$sql_gravarFin1))
+	{
+		$mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
+		echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
+		gravarLog($sql_gravarFin1);
+	}
+	else
+	{
+		$mensagem = "<font color='#FF0000'><strong>Erro ao atualizar! Tente novamente.</strong></font>";
+	}
+}
+
 if(isset($_POST['gravarNota']))
 {
 	$idP = $_POST['IDP'];
@@ -170,13 +190,14 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 					<!-- LABELS xura-->
 					<ul class="nav nav-tabs">
 						<li class="nav active"><a href="#adm" data-toggle="tab">Administrativo</a></li>
-						<li class="nav"><a href="#prazo" data-toggle="tab">Prazos</a></li>
 						<li class="nav"><a href="#projeto" data-toggle="tab">Projeto</a></li>
 						<?php if(isset($representante)):?>						  
 						  <li class="nav"><a href="#J" data-toggle="tab">Pessoa Jurídica</a></li>
 						<?php else: ?>
 						  <li class="nav"><a href="#F" data-toggle="tab">Pessoa Física</a></li>
-						<?php endif ?>  
+						<?php endif ?> 
+						<li class="nav"><a href="#prazo" data-toggle="tab">Prazos</a></li>
+ 						<li class="nav"><a href="#financeiro" data-toggle="tab">Financeiro</a></li>
 					</ul>					
 					<div class="tab-content">						
  					  <!-- LABEL ADMINISTRATIVO-->
@@ -804,7 +825,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 							<?php } else { echo "<strong>Não há pessoa jurídica cadastrada.</strong>"; } ?>
 						</div>						
 						
-						<!--LABEL PESSOA FISICA XURA-->
+						<!--LABEL PESSOA FISICA-->
 						<div role="tabpanel" class="tab-pane fade" id="F" align="left">
 						  <br>
 						  <li class="list-group-item list-group-item-success">
@@ -912,6 +933,48 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 							    <?php exibirArquivos(1,$pessoaFisica['idPf']); ?>
 							  </li>
 							</ul>
+						</div>
+
+						<!-- LABEL FINANCEIRO-->
+						<div role="tabpanel" class="tab-pane fade in active" id="financeiro">
+							<h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
+							
+							<div class="form-group">
+								<div class="col-md-12"><hr/></div>
+							</div>
+
+							<form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
+								<div class="form-group">
+									<div class="col-md-offset-2 col-md-6"><label>Valor Aprovado</label><br/>
+										<input type="text" name="valorAprovado" id='valor' class="form-control" value="<?php echo dinheiroParaBr($projeto['valorAprovado']) ?>">
+									</div>
+
+									<div class="col-md-6"><label>Valor da Renúncia</label><br/>
+										<select class="form-control" name="idRenunciaFiscal" >
+											<?php echo geraOpcao("renuncia_fiscal",$projeto['idRenunciaFiscal']) ?>
+										</select>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-md-offset-2 col-md-6"><label>Nº do Processo no SEI</label><br/>
+										<input type="text" name="processoSei" class="form-control" value="<?php echo $projeto['processoSei'] ?>">
+									</div>
+
+								<div class="col-md-6"><label>Assinatura do Termo de Responsabilidade</label>
+									<input type="text" name="assinaturaTermo" id='datepicker07' class="form-control" placeholder = "DD/MM/AA ou MM/AAAA" required value="<?php echo $projeto['assinaturaTermo'] ?>">
+								</div>
+
+								</div>
+
+								<div class="form-group">
+									<div class="col-md-offset-2 col-md-8">
+										<?php echo "<input type='hidden' name='IDP' value='$idProjeto'>"; ?>
+										<input type="submit" name="gravarFin1" class="btn btn-theme btn-md btn-block" value="Gravar">
+									</div>
+								</div>
+							</form>
+							
 						</div>
 					</div>
 				</div>
