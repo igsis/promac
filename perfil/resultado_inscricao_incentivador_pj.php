@@ -165,7 +165,7 @@ if(isset($_POST['apagar']))
 			 	<!-- Exibir arquivos -->
 				<div class="form-group">
 					<div class="col-md-12">
-						<div class="table-responsive list_info"><h6>Arquivo(s) Anexado(s) com pendências</h6>
+						<div class="table-responsive list_info"><h6>Documentos não aprovados</h6>
 							<?php listaArquivosPendentePessoa($idPj,$tipoPessoa,"resultado_inscricao_incentivador_pj"); ?>
 						</div>
 					</div>
