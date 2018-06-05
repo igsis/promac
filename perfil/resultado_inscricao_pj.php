@@ -1,31 +1,18 @@
 <?php
-
 $con = bancoMysqli();
-$idPj = $_SESSION['idUser'];
 $tipoPessoa = '2';
 
+$idPj = $_SESSION['idUser'];
+$pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 $rl = recuperaDados("representante_legal","idRepresentanteLegal",$pj['idRepresentanteLegal']);
 $campos = array($pj['razaoSocial'], $pj['cnpj'], $pj['email'], $pj['cep'], $pj['numero']);
 $cpo = false;
 
-foreach ($campos as $cpos) {
+foreach ($campos as $cpos)
+{
 	if ($cpos == null)
 	{
 		$cpo = true;
-	}
-}
-// Enviar projeto para analise 
-if(isset($_POST['liberacao']))
-{
-	$date = date('Y:m:d H:i:s');
-	$sql_liberacao = "UPDATE pessoa_juridica SET liberado = 1, dataInscricao = '$date' WHERE idPj = '$idPj'";
-	if(mysqli_query($con,$sql_liberacao))
-	{
-		echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=?perfil=resultado_inscricao_pj'>";
-	}
-	else
-	{
-		$mensagem = "<font color='#01DF3A'><strong>Erro ao atualizar! Tente novamente.</strong></font>";
 	}
 }
 
@@ -37,13 +24,24 @@ if(isset($tipoPessoa)):
   require_once('validacaoArquivosObrigatorios.php');
 endif;
 
-// Gerar documentos
-$server = "http://".$_SERVER['SERVER_NAME']."/promac";
-$http = $server."/pdf/";
+if(isset($_POST['liberacao']))
+{
+	$date = date('Y:m:d H:i:s');
+	$sql_liberacao = "UPDATE pessoa_juridica SET liberado = 1, dataInscricao = '$date' WHERE idPj = '$idPj'";
+	if(mysqli_query($con,$sql_liberacao))
+	{
+		$mensagem = "Sua inscrição foi enviada à SMC!";
+		gravarLog($sql_liberacao);
+	}
+	else
+	{
+		$mensagem = "<font color='#01DF3A'><strong>Erro ao atualizar! Tente novamente.</strong></font> <br/>";
+	}
+}
 
 if(isset($_POST["enviar"]))
 {
-	$sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa'";
+	$sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '2'";
 	$query_arquivos = mysqli_query($con,$sql_arquivos);
 	while($arq = mysqli_fetch_array($query_arquivos))
 	{
@@ -53,8 +51,8 @@ if(isset($_POST["enviar"]))
 		$f_size = isset($_FILES['arquivo']['size'][$x]) ? $_FILES['arquivo']['size'][$x] : null;
 
 		//Extensões permitidas
-		$ext = array("PDF","pdf");
-		
+		$ext = array("PDF","pdf"); 
+
 		if($f_size > 5242880) // 5MB em bytes
 		{
 			$mensagem = "<font color='#FF0000'><strong>Erro! Tamanho de arquivo excedido! Tamanho máximo permitido: 05 MB.</strong></font>";
@@ -100,7 +98,6 @@ if(isset($_POST["enviar"]))
 	}
 }
 
-// Apagar uploads da validação
 if(isset($_POST['apagar']))
 {
 	$idArquivo = $_POST['apagar'];
@@ -116,92 +113,56 @@ if(isset($_POST['apagar']))
 	}
 }
 
-$pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 
 ?>
-
 <section id="list_items" class="home-section bg-white">
-	<div class="container"><?php if ($pj['liberado'] == 0){include 'includes/menu_interno_pj.php';} ?>
+	<div class="container"><?php include 'includes/menu_interno_pj.php'; ?>
 		<div class="form-group">
-			<!-- <h4>Resultado da Inscrição</h4> -->
-			<h5><?php if(isset($mensagem)){echo $mensagem;};?></h5>
+			<h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
-				<?php
-				if($pj['liberado'] == 0)// ainda não foi solicitado liberação
+			<?php
+				if($pj['liberado'] == NULL OR $pj['liberado'] == 2 OR $pj['liberado'] == 4) 
 				{
-
-				include 'includes/resumo_pj.php';
+					include 'includes/resumo_pj.php';
 				?>
-				<div class="alert alert-info">
-					Após o preenchimento de todos os dados pessoais, conclua a inscrição do proponente e aguarde a análise da sua documentação pela Secretaria Municipal de Cultura.
-				</div>
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
-						<?php
-						if ($cpo == false)
-						{
-							$queryArquivos = "SELECT idUploadArquivo FROM upload_arquivo WHERE idPessoa = $idPj AND idTipo = '2' AND publicado = '1'";
-							$enviaArquivos = mysqli_query($con, $queryArquivos);
-							$numRow = mysqli_num_rows($enviaArquivos);
-
-							if($numRow != 0)
-							{?>
-						<form class="form-horizontal" role="form" action="?perfil=resultado_inscricao_pj" method="post">
-							<input type="submit" name="liberacao" value="Concluir inscrição do proponente" class="btn btn-theme btn-lg btn-block">
-						</form>
-						<?php
-						}
-						else{
-							echo "<div class='alert alert-warning'>
-							<strong>Erro: </strong> Você deve enviar todos os documentos para prosseguir.
-							</div>";
-						}
-					}?>
+					<div class="alert alert-info">
+						Após o preenchimento de todos os dados pessoais, conclua a inscrição do proponente e aguarde a análise da sua documentação pela Secretaria Municipal de Cultura.
 					</div>
-				</div>
-				<?php
-				} // Fim liberado 0 ou null
 
-				if($pj['liberado'] == 1)// foi solicitado liberação, porém a SMC não analisou ainda.
+			</div>
+			<?php
+				}
+				elseif($pj['liberado'] == 1)// foi solicitada a liberação, porém a SMC não analisou ainda.
 				{
-				?>
-				<div class="alert alert-success">
-					<strong>Sua solicitação de inscrição foi enviada com sucesso à Secretaria Municipal de Cultura. Aguarde a análise da documentação.</strong>
-				</div>
-				<?php
-				}// Fim liberado 1
-
-				if(($pj['liberado'] == 2) || ($pj['liberado'] == 4))// a liberação de projetos foi rejeitada pela SMC.
+			?>
+					<div class="alert alert-success">
+						<strong>Sua solicitação de inscrição foi enviada com sucesso à Secretaria Municipal de Cultura. Aguarde a análise da documentação.</strong>
+					</div>
+			<?php
+				}
+				else// a inscrição para incentivo foi aceita pela SMC.
 				{
-					if ($pj['liberado'] == 2)
-					{
-				?>
-						<div class="alert alert-danger">
-							<strong>Sua solicitação para a liberação de envio de projetos foi rejeitada pela Secretaria Municipal de Cultura.</strong>
-						</div>
-				<?php 
-					}
-					else // Liberado 4
-					{
-				?>		
+			?>
+					<div class="alert alert-success">
+						<strong>Sua inscrição para incentivo foi aceita pela Secretaria Municipal de Cultura.</strong>
+					</div>		
+			<?php 
+				}
+			?>
 
-						<div class="alert alert-danger">
-							<strong>Seu cadastro foi desbloqueado para edição</strong>
-						</div>
+					<div>
+				 		<?php listaArquivosPessoaObs($idPj,2) ?>
+				 	</div>
 
-				<?php 
-					}
-				?>
-				<!-- Exibir Staus da incrição  -->
-				<div>
-			 		<?php listaArquivosPessoaObs($idPj,2) ?>
-			 	</div>
 
-				<div class='alert alert-warning'>Reenvie o arquivo com as alterações sugeridas.</div>
+			<?php
+				if($pj['liberado'] == NULL OR $pj['liberado'] == 2 OR $pj['liberado'] == 4)
+				{
+			?>
 
-			 	<!-- Exibir arquivos Pendentes-->
+			 	<!-- Exibir arquivos -->
 				<div class="form-group">
 					<div class="col-md-12">
 						<div class="table-responsive list_info"><h6>Documentos não aprovados</h6>
@@ -235,25 +196,10 @@ $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 											if(verificaArquivosExistentesPF($idPj,$row['idListaDocumento'])){
 												echo '<div class="alert alert-success">O arquivo ' . $doc . ' já foi enviado.</div>';
 											}
-											elseif ($arq['idListaDocumento'] == 15) 
-											{?>
-											  <td class="list_description path">
-                                                <?php              
-                                                 $path = selecionaArquivoAnexo(
-                                                  $http, $arq['idListaDocumento']); ?>                  
-                                                  <a href='<?=$path?>'  
-                                                  	 target="_blank">
-                                                     <?=$arq['documento'] ?> 	
-                                                  </a>
-                                              </td>
-                                              <td class="list_description"><input type='file' name='arquivo[<?php echo $arq['sigla']; ?>]'></td>
-											
-                                      <?php }	else { ?>
-                                              <td class="list_description path">
-                                                <?=$arq['documento']?>	
-                                              </td>	
+											else{ ?>
+											<td class="list_description"><label><?php echo $arq['documento']?></label></td>
 											<td class="list_description"><input type='file' name='arquivo[<?php echo $arq['sigla']; ?>]'></td>
-                                            <?php } ?>  
+											<?php } ?>
 										</tr>
 								<?php
 									}
@@ -267,20 +213,6 @@ $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 					</div>
 				</div>
 				<!-- Fim Upload de arquivo -->
-
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
-						<form class="form-horizontal" role="form" action="?perfil=resultado_inscricao_pj" method="post">
-							<input type="submit" name="liberacao" value="Concluir inscrição do proponente" class="btn btn-theme btn-lg btn-block">
-						</form>
-					</div>
-				</div>
-
-				<?php
-				} // Fim liberado 2 e 4
-				?>
-				
-
 				<!-- Confirmação de Exclusão -->
 					<div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel" aria-hidden="true">
 						<div class="modal-dialog">
@@ -299,17 +231,64 @@ $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 							</div>
 						</div>
 					</div>
-				<!-- Fim Confirmação de Exclusão -->
-			</div>
-				<?php 
-				if($pj['liberado'] == 3)
-				{
-					echo "<div class='alert alert-warning'>
-				  	<strong>Aviso!</strong> Seus dados já foram aceitos, portanto, não podem ser alterados.</div>";
-				  	include 'resumo_arquivos_usuario.php';
 
-				} // Fim liberado 3
-				?>
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-8">
+				<?php							
+				if ($cpo == false)
+				{
+					
+					$idPess = $pj['idPj'];
+					$queryArquivos = 
+					  "SELECT 
+					    idUploadArquivo 
+					   FROM 
+					     upload_arquivo 
+					   WHERE 
+					     idPessoa = $idPess 
+					   AND idTipo = '2' AND publicado = '1'";
+					
+					$enviaArquivos = mysqli_query($con, $queryArquivos);
+					$numRow = mysqli_num_rows($enviaArquivos);
+					if($numRow == 11)
+					{?>
+				<form class="form-horizontal" role="form" action="?perfil=resultado_inscricao_pj" method="post">
+					<input type="submit" name="liberacao" value="Concluir inscrição do proponente" class="btn btn-theme btn-lg btn-block">
+				</form>
+				<?php
+				}
+				else{
+					echo "<div class='alert alert-warning'>
+					<strong>Erro: </strong> Você deve enviar todos os documentos para prosseguir.
+					</div>";
+				}
+			}?>
+			</div>
 		</div>
+		
+		</div>
+			<?php
+				}
+				?>
+		<!-- Confirmação de Exclusão -->
+			<div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							<h4 class="modal-title">Excluir Arquivo?</h4>
+						</div>
+						<div class="modal-body">
+							<p>Confirma?</p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+							<button type="button" class="btn btn-danger" id="confirm">Remover</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		<!-- Fim Confirmação de Exclusão -->
+
 	</div>
 </section>
