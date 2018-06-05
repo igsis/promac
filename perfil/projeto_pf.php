@@ -28,7 +28,7 @@ if(isset($_POST['apagar']))
 	<div class="container"><?php include '../perfil/includes/menu_interno_pf.php'; ?>
 		<div class="form-group">
 			<?php			
-				if($pf['liberado'] != 0)
+				if($pf['liberado'] != NULL)
 				echo "<h4>Projetos</h4>";
 				?>
 				<h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
@@ -36,7 +36,7 @@ if(isset($_POST['apagar']))
 			<div class="row">
 				<div class="col-md-offset-1 col-md-10">
 				<?php
-					if ($pf['liberado'] == 0)
+					if ($pf['liberado'] == NULL OR $pf['liberado'] == 2 OR $pf['liberado'] == 4)
 					{
 						echo "<div class='alert alert-warning'>
 				  		<strong></strong>Aguardando Aprovação da Inscrição.
