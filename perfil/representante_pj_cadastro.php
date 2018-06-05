@@ -163,7 +163,7 @@ if($pj['liberado'] == 1){
 }
 
 
-if($pj['liberado'] != 3)
+if($pj['liberado'] == NULL or $pj['liberado'] == 2 OR $pj['liberado'] == 4)
 {
 ?>
 <section id="list_items" class="home-section bg-white">
