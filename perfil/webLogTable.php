@@ -19,14 +19,13 @@
           <td>
             <?=date('d/m/y',strtotime($log['dataOcorrencia']))?>
           </td>           
-          <?php if($log['tabela'] == 'incentivador_pessoa_fisica' or
-                   $log['tabela'] == 'pessoa_fisica' or 
-                   $log['tabela'] == 'pessoa_juridica'): ?>            
-            <td></td>    
+          <?php 
+            if($log['tabela'] == 'incentivador_pessoa_fisica' or
+              $log['tabela'] == 'pessoa_fisica' or 
+              $log['tabela'] == 'pessoa_juridica'): ?>            
+              <td></td>    
           <?php else: ?>  
-            <td>  
-              <?=isset($log['nomePf']) ? $log['nomePf'] : ''; ?>   
-              <?=isset($log['nomePj']) ? $log['nomePj'] : ''; ?>
+            <td>                
               <?=isset($log['nomePo']) ? $log['nomePo'] : ''; ?>
               <?=isset($log['crono'])  ? $log['crono']  : ''; ?>
               <?=isset($log['nome'])   ? $log['nome']   : ''; ?>            

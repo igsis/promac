@@ -1986,18 +1986,6 @@ function webLogPaginacao($inicio, $qtdRegistrosPorPag)
                fn_busca_registro
                  (log.documento, log.idRegistro,
                   log.idCronograma, log.tabela) AS alteradoPor,
-               
-               (SELECT 
-                  nome 
-                 FROM 
-                   pessoa_fisica AS PF
-                 WHERE PF.cpf = log.documento) AS nomePf,
-
-                (SELECT 
-                  razaoSocial 
-                 FROM 
-                   pessoa_juridica AS PJ
-                 WHERE PJ.cnpj = log.documento) AS nomePj, 
 
                  (SELECT 
                   nomeProjeto 
@@ -2198,6 +2186,28 @@ function orcamentoQuery($dtInicio, $dtFim, $tabela, $nome)
    return $query;          
 }
 
+function incentivadorPfQuery($dtInicio, $dtFim, $tabela, $nome)
+{
+  $query =  "SELECT 
+               log.idWebLog, 
+               log.tabela, 
+               log.acao, 
+               log.IdRegistro,
+               log.dataOcorrencia,                               
+               ipf.alteradoPor 
+             FROM 
+               weblogs AS log  
+
+             INNER JOIN incentivador_pessoa_fisica AS ipf
+             ON ipf.cpf =  log.documento                          
+             
+             WHERE log.dataOcorrencia >= '$dtInicio'
+             AND   log.dataOcorrencia <= '$dtFim'
+             AND   log.tabela = '$tabela'";
+   
+   return $query;          
+}
+
 function geraHeaderWebLogParam($dtInicio, $dtFim, $tabela, $nome) 
 {
   $logs = [];  
@@ -2239,6 +2249,11 @@ function geraHeaderWebLogParam($dtInicio, $dtFim, $tabela, $nome)
   	  	$nome);
   	  break;            
 
+  	case 'incentivador_pessoa_fisica':
+  	  $query = incentivadorPfQuery($dtInicio, $dtFim, $tabela, 
+  	  	$nome);
+  	  break;              
+
   endswitch;
   
   $resultado = mysqli_query($conexao,$query);  
@@ -2253,7 +2268,6 @@ function geraHeaderWebLogParam($dtInicio, $dtFim, $tabela, $nome)
   
 }
 
-
 function geraHeaderWebLogTodos($dtInicio, $dtFim) 
 {
   $logs = [];  
@@ -2267,19 +2281,7 @@ function geraHeaderWebLogTodos($dtInicio, $dtFim)
                log.dataOcorrencia,                
                fn_busca_registro
                  (log.documento, log.idRegistro,
-                  log.idCronograma) AS alteradoPor,  
-
-                (SELECT 
-                  nome 
-                 FROM 
-                   pessoa_fisica AS PF
-                 WHERE PF.cpf = log.documento) AS nomePf,
-
-                (SELECT 
-                  razaoSocial 
-                 FROM 
-                   pessoa_juridica AS PJ
-                 WHERE PJ.cnpj = log.documento) AS nomePj, 
+                  log.idCronograma, log.tabela) AS alteradoPor,                  
 
                  (SELECT 
                   nomeProjeto 
