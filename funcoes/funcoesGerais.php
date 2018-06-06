@@ -1985,7 +1985,7 @@ function webLogPaginacao($inicio, $qtdRegistrosPorPag)
                log.dataOcorrencia,                
                fn_busca_registro
                  (log.documento, log.idRegistro,
-                  log.idCronograma) AS alteradoPor,
+                  log.idCronograma, log.tabela) AS alteradoPor,
                
                (SELECT 
                   nome 

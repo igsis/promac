@@ -6,7 +6,7 @@
         <th>TABELA</th>  
         <th>AÇÃO</th>
         <th>DATA</th>    
-        <th>NOME</th>    
+        <th>PROJETO</th>    
         <th>ALTERADO POR</th>
       </tr>  
     </thead>  
@@ -19,13 +19,19 @@
           <td>
             <?=date('d/m/y',strtotime($log['dataOcorrencia']))?>
           </td>           
-          <td>
-            <?=isset($log['nomePf']) ? $log['nomePf'] : ''; ?>   
-            <?=isset($log['nomePj']) ? $log['nomePj'] : ''; ?>
-            <?=isset($log['nomePo']) ? $log['nomePo'] : ''; ?>
-            <?=isset($log['crono'])  ? $log['crono']  : ''; ?>
-            <?=isset($log['nome'])   ? $log['nome']   : ''; ?>            
-          </td>
+          <?php if($log['tabela'] == 'incentivador_pessoa_fisica' or
+                   $log['tabela'] == 'pessoa_fisica' or 
+                   $log['tabela'] == 'pessoa_juridica'): ?>            
+            <td></td>    
+          <?php else: ?>  
+            <td>  
+              <?=isset($log['nomePf']) ? $log['nomePf'] : ''; ?>   
+              <?=isset($log['nomePj']) ? $log['nomePj'] : ''; ?>
+              <?=isset($log['nomePo']) ? $log['nomePo'] : ''; ?>
+              <?=isset($log['crono'])  ? $log['crono']  : ''; ?>
+              <?=isset($log['nome'])   ? $log['nome']   : ''; ?>            
+            </td>
+          <?php endif ?>  
           <td>
             <?=$log['alteradoPor'] == 'none'
               ? ''
