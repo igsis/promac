@@ -48,11 +48,11 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('V1', 'CEP')
             ->setCellValue('W1', 'Status')
             ->setCellValue('X1', 'Início da captação')
-            ->setCellValue('Y1', 'Prorrogação')
+            ->setCellValue('Y1', 'Prorrogação Captação')
             ->setCellValue('Z1', 'Final da captação')
             ->setCellValue('AA1', 'Início da execução')
             ->setCellValue('AB1', 'Fim da execução')
-            ->setCellValue('AC1', 'Prorrogação?')
+            ->setCellValue('AC1', 'Prorrogação Execução')
             ->setCellValue('AD1', 'Data para prestar contas');
 
 //Colorir a primeira fila
@@ -103,9 +103,10 @@ $objPHPExcel->getActiveSheet()->getColumnDimension('AD')->setAutoSize(true);
 
 
 //Dados Projeto
-$sql = "SELECT idProjeto, protocolo, nomeProjeto, valorProjeto, valorIncentivo, resumoProjeto, publicoAlvo, tipoPessoa, idPj, idPf, status, tipoPessoa
+$sql = "SELECT idProjeto, protocolo, nomeProjeto, valorProjeto, valorIncentivo, resumoProjeto, publicoAlvo, tipoPessoa, idPj, idPf, status, tipoPessoa, valorAprovado, idRenunciaFiscal
          FROM projeto AS pr
          INNER JOIN status AS st ON pr.idStatus = st.idStatus
+         INNER JOIN renuncia_fiscal AS renuncia ON pr.idRenunciaFiscal = renuncia.idRenuncia
          WHERE publicado = 1 ORDER BY protocolo";
 $query = mysqli_query($con,$sql);
 $campo = mysqli_fetch_array($query);
