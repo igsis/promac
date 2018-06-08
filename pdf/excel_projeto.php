@@ -46,14 +46,21 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('T1', 'Cidade')
             ->setCellValue('U1', 'Estado')
             ->setCellValue('V1', 'CEP')
-            ->setCellValue('W1', 'Status');
+            ->setCellValue('W1', 'Status')
+            ->setCellValue('X1', 'Início da captação')
+            ->setCellValue('Y1', 'Prorrogação')
+            ->setCellValue('Z1', 'Final da captação')
+            ->setCellValue('AA1', 'Início da execução')
+            ->setCellValue('AB1', 'Fim da execução')
+            ->setCellValue('AC1', 'Prorrogação?')
+            ->setCellValue('AD1', 'Data para prestar contas');
 
 //Colorir a primeira fila
-$objPHPExcel->getActiveSheet()->getStyle('A1:W1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
-$objPHPExcel->getActiveSheet()->getStyle('A1:W1')->getFill()->getStartColor()->setARGB('#29bb04');
+$objPHPExcel->getActiveSheet()->getStyle('A1:AD1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+$objPHPExcel->getActiveSheet()->getStyle('A1:AD1')->getFill()->getStartColor()->setARGB('#29bb04');
 // Add some data
-$objPHPExcel->getActiveSheet()->getStyle("A1:W1")->getFont()->setBold(true);
-$objPHPExcel->getActiveSheet()->getStyle('A1:W1')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+$objPHPExcel->getActiveSheet()->getStyle("A1:AD1")->getFont()->setBold(true);
+$objPHPExcel->getActiveSheet()->getStyle('A1:AD1')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
 $styleArray = array(
       'borders' => array(
           'allborders' => array(
@@ -86,14 +93,27 @@ $objPHPExcel->getActiveSheet()->getColumnDimension('T')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('U')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('V')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('W')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('X')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('Y')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('Z')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('AA')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('AB')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('AC')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('AD')->setAutoSize(true);
 
-//Dados
+
+//Dados Projeto
 $sql = "SELECT idProjeto, protocolo, nomeProjeto, valorProjeto, valorIncentivo, resumoProjeto, publicoAlvo, tipoPessoa, idPj, idPf, status, tipoPessoa
          FROM projeto AS pr
          INNER JOIN status AS st ON pr.idStatus = st.idStatus
          WHERE publicado = 1 ORDER BY protocolo";
 $query = mysqli_query($con,$sql);
 $campo = mysqli_fetch_array($query);
+
+/*//Dados Prazos
+$sql_prazos = "SELECT * FROM prazos_projeto WHERE idProjeto = '$idProjeto' AND publicado = '1'";
+$query_prazos = mysqli_query($con,$sql_prazos);
+$campo = mysqli_fetch_array($query_prazos);*/
 
 //Recupera todos os integrantes daquele projeto
 function listaFicha($idProjeto)
@@ -185,6 +205,7 @@ while($row = mysqli_fetch_array($query))
 
    $lista_ficha = listaFicha($row['idProjeto']);
    $lista_local = listaLocal($row['idProjeto']);
+   $lista_prazos = recuperaDados("prazos_projeto","idProjeto",$row['idProjeto']);
 
    $tipoPessoa = $row['tipoPessoa'];
    if($tipoPessoa == 1)
@@ -223,7 +244,16 @@ while($row = mysqli_fetch_array($query))
                ->setCellValue('T'.$i, $cidade)
                ->setCellValue('U'.$i, $estado)
                ->setCellValue('V'.$i, $cep)
-               ->setCellValue('W'.$i, $row['status']);
+               ->setCellValue('W'.$i, $row['status'])
+               ->setCellValue('X'.$i, $lista_prazos['prazoCaptacao'])
+               ->setCellValue('Y'.$i, $lista_prazos['prorrogaCaptacao'])
+               ->setCellValue('Z'.$i, $lista_prazos['finalCaptacao'])
+               ->setCellValue('AA'.$i, $lista_prazos['inicioExecucao'])
+               ->setCellValue('AB'.$i, $lista_prazos['fimExecucao'])
+               ->setCellValue('AC'.$i, $lista_prazos['prorrogacaoExecucao'])
+               ->setCellValue('AD'.$i, $lista_prazos['prestarContas']);
+
+
    $i++;
 }
 
