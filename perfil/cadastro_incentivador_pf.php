@@ -8,8 +8,6 @@ $cidades = formataDados(listaCidades());
 $habilitaCampo = false;
 $userIn = $pf['nome'].' [ID='.$pf['idPf'].']';
 
-
-
 if(isset($_POST['cep'])):          
   $enderecos = retornaEndereco($_POST['cep']);  
   

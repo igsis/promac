@@ -5,6 +5,7 @@ $pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
 $estados = formataDados(listaEstados());
 $cidades = formataDados(listaCidades());
 $habilitaCampo = false;
+$userIn = $pj['razaoSocial'].' [ID='.$pj['idPj'].']';
 
 if(isset($_POST['cep'])):          
   $enderecos = retornaEndereco($_POST['cep']);  
@@ -48,7 +49,8 @@ if(isset($_POST['cadastraNovoPj']) and $_POST['numero'] and empty($endereço)):
 	`estado` = '$Estado',
 	`cep` = '$CEP',
 	`numero` = '$Numero',
-	`complemento` = '$Complemento'
+	`complemento` = '$Complemento',
+	`alteradoPor` = '$userIn'
 	WHERE `idPj` = '$idPj'";
 
   if(mysqli_query($con,$sql_atualiza_pj)):
