@@ -83,19 +83,23 @@ if(isset($_POST['gravarAdm']))
 	}
 }
 
-if(isset($_POST['gravarFin1']))
+if(isset($_POST['gravarFin']))
 {
 	$idP = $_POST['IDP'];
 	$valorAprovado = dinheiroDeBr($_POST['valorAprovado']);
 	$renunciaFiscal = $_POST['idRenunciaFiscal'];
-	$processoSEI = $_POST['processoSei'];
+	$processoSei = $_POST['processoSei'];
 	$assinaturaTermo = exibirDataMysql($_POST['assinaturaTermo']);
-	$sql_gravarFin1 = "UPDATE projeto SET valorAprovado = '$valorAprovado', renunciaFiscal = '$renunciaFiscal', processoSei = '$processoSEI', assinaturaTermo = '$assinaturaTermo' WHERE idProjeto = '$idP' ";
-	if(mysqli_query($con,$sql_gravarFin1))
+	$agencia = $_POST['agencia'];
+	$contaCaptacao = $_POST['contaCaptacao'];
+	$contaMovimentacao = $_POST['contaMovimentacao'];
+
+	$sql_gravarFin = "UPDATE projeto SET valorAprovado = '$valorAprovado', renunciaFiscal = '$renunciaFiscal', processoSei = '$processoSei', assinaturaTermo = '$assinaturaTermo', agencia = '$agencia', contaCaptacao = '$contaCaptacao', contaMovimentacao = '$contaMovimentacao' WHERE idProjeto = '$idP' ";
+	if(mysqli_query($con,$sql_gravarFin))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
 		echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
-		gravarLog($sql_gravarFin1);
+		gravarLog($sql_gravarFin);
 	}
 	else
 	{
@@ -314,146 +318,6 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 									</div>
 								</div>
 							</div>
-
-						</div>
-
-						<!-- LABEL PRAZOS -->
-						<div role="tabpanel" class="tab-pane fade" id="prazo">
-							<form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
-								<h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
-								<div class="form-group">
-									<div class="col-md-offset-2 col-md-8"><br/></div>
-								</div>
-
-								<div class="form-group">
-									<div class="col-md-offset-2 col-md-3">
-										<label>Data inicial de Captação</label><br/>
-										<input type="text" name="prazoCaptacao" id="datepicker01" class="form-control" value="<?php
-										if(returnEmptyDate('prazoCaptacao', $idProjeto) > 0 ){
-											$var = strtotime(returnEmptyDate('prazoCaptacao', $idProjeto));
-											echo date("d",$var) . "/";
-											echo date("m",$var) . "/";
-											echo date("Y",$var);
-										} else{
-											echo "00/00/0000";
-										}?>">
-									</div>
-
-									<div class="col-md-2"><label>Prorrogação</label><br/>
-										<select class="form-control" name="prorrogacaoCaptacao" value="">
-											<option value="<?php echo $prazos['prorrogacaoCaptacao'] ?>" selected >
-												<?php
-													if($prazos['prorrogacaoCaptacao'] == 1){ echo "Sim"; }
-													else { echo "Não"; }
-												?>
-											</option>
-											<option value="0">Não</option>
-											<option value="1">Sim</option>
-										</select>
-									</div>
-
-									<div class="col-md-3">
-										<label>Data Final da Captação</label>
-										<input type="text" name="finalCaptacao" id="datepicker02" class="form-control" value="<?php
-										 if(returnEmptyDate('finalCaptacao', $idProjeto) > 0 ){
-											$var = strtotime(returnEmptyDate('finalCaptacao', $idProjeto));
-											echo date("d",$var) . "/";
-											echo date("m",$var) . "/";
-											echo date("Y",$var);
-										} else{
-											echo "00/00/0000";
-										}
-										?>">
-									</div>
-								</div>
-
-								<div class="form-group">
-									<div class="col-md-offset-2 col-md-6"><label>Início da execução do projeto</label>
-										<input type="text" name="inicioExecucao" id="datepicker03" class="form-control" value="<?php
-										if(returnEmptyDate('inicioExecucao', $idProjeto) > 0 ){
-											$var = strtotime(returnEmptyDate('inicioExecucao', $idProjeto));
-											echo date("d",$var) . "/";
-											echo date("m",$var) . "/";
-											echo date("Y",$var);
-										} else{
-											echo "00/00/0000";
-										}
-										?>">
-									</div>
-									<div class="col-md-6"><label>Fim da execução do projeto</label>
-										<input type="text" name="fimExecucao" id="datepicker04" class="form-control" value="<?php
-										if(returnEmptyDate('fimExecucao', $idProjeto) > 0 ){
-											$var = strtotime(returnEmptyDate('fimExecucao', $idProjeto));
-											echo date("d",$var) . "/";
-											echo date("m",$var) . "/";
-											echo date("Y",$var);
-										} else{
-											echo "00/00/0000";
-										}
-										?>">
-									</div>
-								</div>
-
-								<div class="form-group">
-									<div class="col-md-offset-2 col-md-2"><label>Prorrogação</label><br/>
-										<select class="form-control" name="prorrogacaoExecucao" >
-											<option value="<?php echo $prazos['prorrogacaoExecucao'] ?>" selected >
-												<?php
-													if($prazos['prorrogacaoExecucao'] == 1){ echo "Sim"; }
-													else { echo "Não"; }
-												?>
-											</option>
-											<option value="0">Não</option>
-											<option value="1">Sim</option>
-										</select>
-									</div>
-									<?php
-									if($prazos['prorrogacaoExecucao'] == 1)
-									{
-									?>
-										<div class="col-md-3"><label>Data final do projeto</label>
-											<input type="text" name="finalProjeto" id="datepicker05" class="form-control" value="<?php
-											if(returnEmptyDate('finalProjeto', $idProjeto) > 0 ){
-												$var = strtotime(returnEmptyDate('finalProjeto', $idProjeto));
-												echo date("d",$var) . "/";
-												echo date("m",$var) . "/";
-												echo date("Y",$var);
-											} else{
-												echo "00/00/0000";
-											}
-											?>">
-										</div>
-									<?php
-									}
-									else
-									{
-									?>
-										<div class="col-md-3"><label>Data final do projeto</label><br/>
-											<i>Não há prorrogração</i>
-										</div>
-									<?php
-									}
-									?>
-									<div class="col-md-3"><label>Data para prestar contas</label>
-										<input type="text" name="prestarContas" id="datepicker06" class="form-control" value="<?php
-										if(returnEmptyDate('prestarContas', $idProjeto) > 0 ){
-											$var = strtotime(returnEmptyDate('prestarContas', $idProjeto));
-											echo date("d",$var) . "/";
-											echo date("m",$var) . "/";
-											echo date("Y",$var);
-										} else{
-											echo "00/00/0000";
-										}
-										?>">
-									</div>
-								</div>
-
-								<div class="form-group">
-									<div class="col-md-offset-2 col-md-8">
-										<?php echo "<input type='hidden' name='IDP' value='$idProjeto'>"; ?>
-										<input type="submit" name="gravarPrazos" class="btn btn-theme btn-lg btn-block" value="Gravar"></div>
-								</div>
-							</form>
 
 						</div>
 
@@ -935,6 +799,145 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 							</ul>
 						</div>
 
+						<!-- LABEL PRAZOS -->
+						<div role="tabpanel" class="tab-pane fade" id="prazo">
+							<form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
+								<h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
+								<div class="form-group">
+									<div class="col-md-offset-2 col-md-8"><br/></div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-md-offset-2 col-md-3">
+										<label>Data inicial de Captação</label><br/>
+										<input type="text" name="prazoCaptacao" id="datepicker01" class="form-control" value="<?php
+										if(returnEmptyDate('prazoCaptacao', $idProjeto) > 0 ){
+											$var = strtotime(returnEmptyDate('prazoCaptacao', $idProjeto));
+											echo date("d",$var) . "/";
+											echo date("m",$var) . "/";
+											echo date("Y",$var);
+										} else{
+											echo "00/00/0000";
+										}?>">
+									</div>
+
+									<div class="col-md-2"><label>Prorrogação</label><br/>
+										<select class="form-control" name="prorrogacaoCaptacao" value="">
+											<option value="<?php echo $prazos['prorrogacaoCaptacao'] ?>" selected >
+												<?php
+													if($prazos['prorrogacaoCaptacao'] == 1){ echo "Sim"; }
+													else { echo "Não"; }
+												?>
+											</option>
+											<option value="0">Não</option>
+											<option value="1">Sim</option>
+										</select>
+									</div>
+
+									<div class="col-md-3">
+										<label>Data Final da Captação</label>
+										<input type="text" name="finalCaptacao" id="datepicker02" class="form-control" value="<?php
+										 if(returnEmptyDate('finalCaptacao', $idProjeto) > 0 ){
+											$var = strtotime(returnEmptyDate('finalCaptacao', $idProjeto));
+											echo date("d",$var) . "/";
+											echo date("m",$var) . "/";
+											echo date("Y",$var);
+										} else{
+											echo "00/00/0000";
+										}
+										?>">
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-md-offset-2 col-md-6"><label>Início da execução do projeto</label>
+										<input type="text" name="inicioExecucao" id="datepicker03" class="form-control" value="<?php
+										if(returnEmptyDate('inicioExecucao', $idProjeto) > 0 ){
+											$var = strtotime(returnEmptyDate('inicioExecucao', $idProjeto));
+											echo date("d",$var) . "/";
+											echo date("m",$var) . "/";
+											echo date("Y",$var);
+										} else{
+											echo "00/00/0000";
+										}
+										?>">
+									</div>
+									<div class="col-md-6"><label>Fim da execução do projeto</label>
+										<input type="text" name="fimExecucao" id="datepicker04" class="form-control" value="<?php
+										if(returnEmptyDate('fimExecucao', $idProjeto) > 0 ){
+											$var = strtotime(returnEmptyDate('fimExecucao', $idProjeto));
+											echo date("d",$var) . "/";
+											echo date("m",$var) . "/";
+											echo date("Y",$var);
+										} else{
+											echo "00/00/0000";
+										}
+										?>">
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-md-offset-2 col-md-2"><label>Prorrogação</label><br/>
+										<select class="form-control" name="prorrogacaoExecucao" >
+											<option value="<?php echo $prazos['prorrogacaoExecucao'] ?>" selected >
+												<?php
+													if($prazos['prorrogacaoExecucao'] == 1){ echo "Sim"; }
+													else { echo "Não"; }
+												?>
+											</option>
+											<option value="0">Não</option>
+											<option value="1">Sim</option>
+										</select>
+									</div>
+									<?php
+									if($prazos['prorrogacaoExecucao'] == 1)
+									{
+									?>
+										<div class="col-md-3"><label>Data final do projeto</label>
+											<input type="text" name="finalProjeto" id="datepicker05" class="form-control" value="<?php
+											if(returnEmptyDate('finalProjeto', $idProjeto) > 0 ){
+												$var = strtotime(returnEmptyDate('finalProjeto', $idProjeto));
+												echo date("d",$var) . "/";
+												echo date("m",$var) . "/";
+												echo date("Y",$var);
+											} else{
+												echo "00/00/0000";
+											}
+											?>">
+										</div>
+									<?php
+									}
+									else
+									{
+									?>
+										<div class="col-md-3"><label>Data final do projeto</label><br/>
+											<i>Não há prorrogração</i>
+										</div>
+									<?php
+									}
+									?>
+									<div class="col-md-3"><label>Data para prestar contas</label>
+										<input type="text" name="prestarContas" id="datepicker06" class="form-control" value="<?php
+										if(returnEmptyDate('prestarContas', $idProjeto) > 0 ){
+											$var = strtotime(returnEmptyDate('prestarContas', $idProjeto));
+											echo date("d",$var) . "/";
+											echo date("m",$var) . "/";
+											echo date("Y",$var);
+										} else{
+											echo "00/00/0000";
+										}
+										?>">
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-md-offset-2 col-md-8">
+										<?php echo "<input type='hidden' name='IDP' value='$idProjeto'>"; ?>
+										<input type="submit" name="gravarPrazos" class="btn btn-theme btn-lg btn-block" value="Gravar"></div>
+								</div>
+							</form>
+
+						</div>
 						<!-- LABEL FINANCEIRO-->
 						<div role="tabpanel" class="tab-pane fade in active" id="financeiro">
 							<h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
@@ -961,18 +964,34 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 										<input type="text" name="processoSei" class="form-control" value="<?php echo $projeto['processoSei'] ?>">
 									</div>
 
-								<div class="col-md-6"><label>Assinatura do Termo de Responsabilidade</label>
-									<input type="text" name="assinaturaTermo" id='datepicker07' class="form-control" placeholder = "DD/MM/AA ou MM/AAAA" required value="<?php echo $projeto['assinaturaTermo'] ?>">
+									<div class="col-md-6"><label>Assinatura do Termo de Responsabilidade</label>
+										<input type="text" name="assinaturaTermo" id='datepicker07' class="form-control" placeholder = "DD/MM/AA ou MM/AAAA" required value="<?php echo $projeto['assinaturaTermo'] ?>">
+									</div>
 								</div>
 
+								<div class="form-group">
+									<div class="col-md-offset-2 col-md-6"><label>Nº da Agência no BB</label><br/>
+										<input type="text" name="agencia" class="form-control" value="<?php echo $projeto['agencia'] ?>">
+									</div>
+
+									<<div class="col-md-6"><label>Nº da Conta de Captação</label><br/>
+										<input type="text" name="contaCaptacao" class="form-control" value="<?php echo $projeto['contaCaptacao'] ?>">
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-md-offset-2 col-md-6"><label>Nº da Conta de Movimentação</label><br/>
+										<input type="text" name="contaMovimentacao" class="form-control" value="<?php echo $projeto['contaMovimentacao'] ?>">
+									</div>
 								</div>
 
 								<div class="form-group">
 									<div class="col-md-offset-2 col-md-8">
 										<?php echo "<input type='hidden' name='IDP' value='$idProjeto'>"; ?>
-										<input type="submit" name="gravarFin1" class="btn btn-theme btn-md btn-block" value="Gravar">
+										<input type="submit" name="gravarFin" class="btn btn-theme btn-md btn-block" value="Gravar">
 									</div>
 								</div>
+
 							</form>
 							
 						</div>
