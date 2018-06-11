@@ -111,11 +111,6 @@ $sql = "SELECT idProjeto, protocolo, nomeProjeto, valorProjeto, valorIncentivo, 
 $query = mysqli_query($con,$sql);
 $campo = mysqli_fetch_array($query);
 
-/*//Dados Prazos
-$sql_prazos = "SELECT * FROM prazos_projeto WHERE idProjeto = '$idProjeto' AND publicado = '1'";
-$query_prazos = mysqli_query($con,$sql_prazos);
-$campo = mysqli_fetch_array($query_prazos);*/
-
 //Recupera todos os integrantes daquele projeto
 function listaFicha($idProjeto)
 {
