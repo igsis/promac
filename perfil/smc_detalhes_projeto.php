@@ -8,6 +8,7 @@ if($idProjeto == null)
 }
 $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 
+
 // Gerar documentos
 $server = "http://".$_SERVER['SERVER_NAME']."/promac/";
 $http = $server."/pdf/";
@@ -182,7 +183,11 @@ $renuncia = recuperaDados("renuncia_fiscal","idRenuncia",$projeto['idRenunciaFis
 $cronograma = recuperaDados("cronograma","idCronograma",$projeto['idCronograma']);
 $video = recuperaDados("projeto","idProjeto",$idProjeto);
 $v = array($video['video1'], $video['video2'], $video['video3']);
+
+var_dump($idProjeto);
+
 ?>
+
 <section id="list_items" class="home-section bg-white">
 	<div class="container"><?php include 'includes/menu_smc.php'; ?>
 		<div class="form-group">
@@ -320,6 +325,65 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 							</div>
 
 						</div>
+
+						<!-- LABEL FINANCEIRO -->
+						<div role="tabpanel" class="tab-pane fade" id="financeiro">
+							<form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
+								<h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
+								<div class="form-group">
+									<div class="col-md-offset-2 col-md-8"><br/></div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-md-offset-2 col-md-6"><label>Valor Aprovado</label><br/>
+										<input type="text" name="valorAprovado" id='valor' class="form-control" value="<?php echo dinheiroParaBr($projeto['valorAprovado']) ?>">
+									</div>
+
+									<div class="col-md-6"><label>Valor da Renúncia</label><br/>
+										<select class="form-control" name="idRenunciaFiscal" >
+											<?php echo geraOpcao("renuncia_fiscal",$projeto['idRenunciaFiscal']) ?>
+										</select>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-md-offset-2 col-md-6"><label>Nº do Processo no SEI</label><br/>
+										<input type="text" name="processoSei" class="form-control" value="<?php echo $projeto['processoSei'] ?>">
+									</div>
+
+									<div class="col-md-6"><label>Assinatura do Termo de Responsabilidade</label>
+										<input type="text" name="assinaturaTermo" id='datepicker07' class="form-control" placeholder = "DD/MM/AA ou MM/AAAA" required value="<?php echo $projeto['assinaturaTermo'] ?>">
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-md-offset-2 col-md-2"><label>Agência BB Nº</label><br/>
+										<input type="text" name="agencia" class="form-control" value="<?php echo $projeto['agencia'] ?>">
+									</div>
+
+									<<div class="col-md-3"><label>Nº da Conta de Captação</label><br/>
+										<input type="text" name="contaCaptacao" class="form-control" value="<?php echo $projeto['contaCaptacao'] ?>">
+									</div>
+
+									<div class="col-md-3"><label>Nº da Conta de Movimentação</label><br/>
+										<input type="text" name="contaMovimentacao" class="form-control" value="<?php echo $projeto['contaMovimentacao'] ?>">
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-md-offset-2 col-md-8">
+										<?php echo "<input type='hidden' name='IDP' value='$idProjeto'>"; ?>
+										<input type="submit" name="gravarFin" class="btn btn-theme btn-md btn-block" value="Gravar">
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-md-12"><hr/></div>
+								</div>
+
+							</form>
+						</div>
+
 
 						<!-- LABEL PROJETO -->
 						<div role="tabpanel" class="tab-pane fade" id="projeto" align="left">
@@ -936,62 +1000,6 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 										<input type="submit" name="gravarPrazos" class="btn btn-theme btn-lg btn-block" value="Gravar"></div>
 								</div>
 							</form>
-
-						</div>
-						<!-- LABEL FINANCEIRO-->
-						<div role="tabpanel" class="tab-pane fade in active" id="financeiro">
-							<h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
-							
-							<div class="form-group">
-								<div class="col-md-12"><hr/></div>
-							</div>
-
-							<form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
-								<div class="form-group">
-									<div class="col-md-offset-2 col-md-6"><label>Valor Aprovado</label><br/>
-										<input type="text" name="valorAprovado" id='valor' class="form-control" value="<?php echo dinheiroParaBr($projeto['valorAprovado']) ?>">
-									</div>
-
-									<div class="col-md-6"><label>Valor da Renúncia</label><br/>
-										<select class="form-control" name="idRenunciaFiscal" >
-											<?php echo geraOpcao("renuncia_fiscal",$projeto['idRenunciaFiscal']) ?>
-										</select>
-									</div>
-								</div>
-
-								<div class="form-group">
-									<div class="col-md-offset-2 col-md-6"><label>Nº do Processo no SEI</label><br/>
-										<input type="text" name="processoSei" class="form-control" value="<?php echo $projeto['processoSei'] ?>">
-									</div>
-
-									<div class="col-md-6"><label>Assinatura do Termo de Responsabilidade</label>
-										<input type="text" name="assinaturaTermo" id='datepicker07' class="form-control" placeholder = "DD/MM/AA ou MM/AAAA" required value="<?php echo $projeto['assinaturaTermo'] ?>">
-									</div>
-								</div>
-
-								<div class="form-group">
-									<div class="col-md-offset-2 col-md-2"><label>Agência BB Nº</label><br/>
-										<input type="text" name="agencia" class="form-control" value="<?php echo $projeto['agencia'] ?>">
-									</div>
-
-									<<div class="col-md-3"><label>Nº da Conta de Captação</label><br/>
-										<input type="text" name="contaCaptacao" class="form-control" value="<?php echo $projeto['contaCaptacao'] ?>">
-									</div>
-
-									<div class="col-md-3"><label>Nº da Conta de Movimentação</label><br/>
-										<input type="text" name="contaMovimentacao" class="form-control" value="<?php echo $projeto['contaMovimentacao'] ?>">
-									</div>
-								</div>
-
-								<div class="form-group">
-									<div class="col-md-offset-2 col-md-8">
-										<?php echo "<input type='hidden' name='IDP' value='$idProjeto'>"; ?>
-										<input type="submit" name="gravarFin" class="btn btn-theme btn-md btn-block" value="Gravar">
-									</div>
-								</div>
-
-							</form>
-							
 						</div>
 					</div>
 				</div>
