@@ -95,7 +95,7 @@ if(isset($_POST['gravarFin']))
 	$contaCaptacao = $_POST['contaCaptacao'];
 	$contaMovimentacao = $_POST['contaMovimentacao'];
 
-	$sql_gravarFin = "UPDATE projeto SET valorAprovado = '$valorAprovado', renunciaFiscal = '$renunciaFiscal', processoSei = '$processoSei', assinaturaTermo = '$assinaturaTermo', agencia = '$agencia', contaCaptacao = '$contaCaptacao', contaMovimentacao = '$contaMovimentacao' WHERE idProjeto = '$idP' ";
+	$sql_gravarFin = "UPDATE projeto SET valorAprovado = '$valorAprovado', idRenunciaFiscal = '$renunciaFiscal', processoSei = '$processoSei', assinaturaTermo = '$assinaturaTermo', agencia = '$agencia', contaCaptacao = '$contaCaptacao', contaMovimentacao = '$contaMovimentacao' WHERE idProjeto = '$idP' ";
 	if(mysqli_query($con,$sql_gravarFin))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
