@@ -970,17 +970,15 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 								</div>
 
 								<div class="form-group">
-									<div class="col-md-offset-2 col-md-6"><label>Nº da Agência no BB</label><br/>
+									<div class="col-md-offset-2 col-md-2"><label>Agência BB Nº</label><br/>
 										<input type="text" name="agencia" class="form-control" value="<?php echo $projeto['agencia'] ?>">
 									</div>
 
-									<<div class="col-md-6"><label>Nº da Conta de Captação</label><br/>
+									<<div class="col-md-3"><label>Nº da Conta de Captação</label><br/>
 										<input type="text" name="contaCaptacao" class="form-control" value="<?php echo $projeto['contaCaptacao'] ?>">
 									</div>
-								</div>
 
-								<div class="form-group">
-									<div class="col-md-offset-2 col-md-6"><label>Nº da Conta de Movimentação</label><br/>
+									<div class="col-md-3"><label>Nº da Conta de Movimentação</label><br/>
 										<input type="text" name="contaMovimentacao" class="form-control" value="<?php echo $projeto['contaMovimentacao'] ?>">
 									</div>
 								</div>
