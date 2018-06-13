@@ -207,6 +207,7 @@ var_dump($idProjeto);
 						<?php endif ?> 
 						<li class="nav"><a href="#prazo" data-toggle="tab">Prazos</a></li>
  						<li class="nav"><a href="#financeiro" data-toggle="tab">Financeiro</a></li>
+						<li class="nav"><a href="#incentivadores" data-toggle="tab">Incentivadores</a></li>
 					</ul>					
 					<div class="tab-content">						
  					  <!-- LABEL ADMINISTRATIVO-->
@@ -999,6 +1000,28 @@ var_dump($idProjeto);
 										<?php echo "<input type='hidden' name='IDP' value='$idProjeto'>"; ?>
 										<input type="submit" name="gravarPrazos" class="btn btn-theme btn-lg btn-block" value="Gravar"></div>
 								</div>
+							</form>
+						</div>
+
+						<!-- LABEL INCENTIVADORES -->
+						<div role="tabpanel" class="tab-pane fade" id="incentivadores">
+							<form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
+								<h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
+								<div class="form-group">
+									<div class="col-md-offset-2 col-md-8"><br/></div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-md-offset-2 col-md-8">
+										
+										<input type="submit" name="gravarFin" class="btn btn-theme btn-md btn-block" value="INSERIR INCENTIVADOR">
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-md-12"><hr/></div>
+								</div>
+
 							</form>
 						</div>
 					</div>
