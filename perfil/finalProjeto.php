@@ -316,8 +316,9 @@ if($projeto['idStatus'] == 6)
 			</ul>
 		</div>
 
+		<!--Pessoa Juridica-->
 		<?php
-		if($projeto['idpj'] != NULL)
+		if($projeto['tipoPessoa'] == 2)
 		{
 			$pj = recuperaDados("pessoa_juridica","idPj",$projeto['idpj']);
 		?>
@@ -340,8 +341,30 @@ if($projeto['idStatus'] == 6)
 				<p align="justify"><strong>Email:</strong> <?php echo isset($pj['email']) ? $pj['email'] : null; ?></p>
 			</div>
 		<?php
+		}else{
+			$pf = recuperaDados("pessoa_fisica", "idPf", $projeto['idpf']);
+		?>
+		<div class="page-header">
+				<h5>Pessoa Física</h5>
+			</div> 
+
+			<div class="well">
+			 	<p align="justify"><strong>Nome:</strong> <?php echo isset($pf['nome']) ? $pf['nome'] : null; ?></p>
+			 	<p align="justify"><strong>CPF:</strong> <?php echo isset($pf['cpf']) ? $pf['cpf'] : null; ?></p>
+				<p align="justify"><strong>Logradouro:</strong> <?php echo isset($pf['logradouro']) ? $pf['logradouro'] : null; ?></p>
+				<p align="justify"><strong>Bairro:</strong> <?php echo isset($pf['bairro']) ? $pf['bairro'] : null; ?></p>
+				<p align="justify"><strong>Cidade:</strong> <?php echo isset($pf['cidade']) ? $pf['cidade'] : null; ?></p>
+				<p align="justify"><strong>Estado:</strong> <?php echo isset($pf['estado']) ? $pf['estado'] : null; ?></p>
+				<p align="justify"><strong>CEP:</strong> <?php echo isset($pf['cep']) ? $pf['cep'] : null; ?></p>
+				<p align="justify"><strong>Número:</strong> <?php echo isset($pf['numero']) ? $pf['numero'] : null; ?></p>
+				<p align="justify"><strong>Telefone:</strong> <?php echo isset($pf['telefone']) ? $pf['telefone'] : null; ?></p>
+				<p align="justify"><strong>Celular:</strong> <?php echo isset($pf['celular']) ? $pf['celular'] : null; ?></p>
+				<p align="justify"><strong>Email:</strong> <?php echo isset($pf['email']) ? $pf['email'] : null; ?></p>
+			</div>
+		<?php
 		}
 		?>
+
 	</div>
     <!--Inicio do termo do contrato-->
     <?php if(sizeof($erros) == 0 && sizeof($arqPendentes) == 0) : ?>
