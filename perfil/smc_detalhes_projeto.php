@@ -1059,7 +1059,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 
                                     <!-- LABEL INCENTIVADORES -->
                                     <div role="tabpanel" class="tab-pane fade" id="incentivadores">
-                                        <form method="POST" action="?perfil=insere_incentivador_projeto" class="form-horizontal" role="form">
+                                        <form method="POST" action="?perfil=insere_incentivador_projeto&idProjeto=<?=$idProjeto?>" class="form-horizontal" role="form">
                                             <h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
                                             <div class="form-group">
                                                 <div class="col-md-offset-2 col-md-8"><br/></div>
@@ -1067,7 +1067,6 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 
                                             <div class="form-group">
                                                 <div class="col-md-offset-2 col-md-8">
-                                                    <input type="hidden" name="IDP" value="<?=$idProjeto?>">
                                                     <input type="submit" name="insereIncentivador" class="btn btn-theme btn-md btn-block" value="INSERIR INCENTIVADOR">
                                                 </div>
                                             </div>
