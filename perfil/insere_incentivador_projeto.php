@@ -39,8 +39,6 @@ if(isset($_POST['consulta']))
                   ON IPF.idPf = IP.idIncentivador AND IP.idProjeto = $idProjeto AND IP.tipoPessoa = $tipoPessoa
                 WHERE IPF.idPf > 0 $filtro_nome $filtro_cpf AND IP.idIncentivador IS NULL
                 ORDER BY IPF.nome";
-        /*$sql = "SELECT * FROM $tabela
-                WHERE idPf > 0 $filtro_nome $filtro_cpf ORDER BY nome";*/
         $query = mysqli_query($con,$sql);
         $num = mysqli_num_rows($query);
         if($num > 0)
@@ -78,7 +76,11 @@ if(isset($_POST['consulta']))
         {
             $filtro_cnpj = "";
         }
-        $sql = "SELECT * FROM $tabela WHERE idPj > 0 $filtro_razaoSocial $filtro_cnpj ORDER BY razaoSocial";
+        $sql = "SELECT * FROM $tabela AS IPJ
+                LEFT JOIN incentivador_projeto AS IP
+                  ON IPJ.idPj = IP.idIncentivador AND IP.idProjeto = $idProjeto AND IP.tipoPessoa = $tipoPessoa
+                WHERE IPJ.idPj > 0 $filtro_razaoSocial $filtro_cnpj AND IP.idIncentivador IS NULL
+                ORDER BY IPJ.razaoSocial";
         $query = mysqli_query($con,$sql);
         $num = mysqli_num_rows($query);
         if($num > 0)
