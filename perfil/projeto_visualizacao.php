@@ -125,7 +125,7 @@ $status = recuperaDados("status","idStatus",$projeto['idStatus']);
 									<?php } ?>
 								</tr>
 								<tr>
-									<td><strong>Valor do projeto:</strong> R$ <?php echo dinheiroParaBr($projeto['valorProjeto']) ?></td>
+									<td><strong>Valor do projeto:</strong> R$ <?php echo dinheiroParaBr($projeto['valorprojeto']) ?></td>
 									<td><strong>Valor do incentivo:</strong> R$ <?php echo dinheiroParaBr($projeto['valorIncentivo']) ?></td>
 									<td><strong>Valor do financiamento:</strong> R$ <?php echo dinheiroParaBr($projeto['valorFinanciamento']) ?></td>
 								</tr>
