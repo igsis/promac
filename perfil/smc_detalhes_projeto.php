@@ -412,7 +412,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                         </tr>
                                         <?php
                                         $sql = "SELECT * FROM locais_realizacao
-                                        WHERE publicado = 1 AND idProjeto = ".$projeto['idProjeto']."";
+                                        WHERE publicado = 1 AND idProjeto = ".$projeto['idProjeto'];
                                         $query = mysqli_query($con,$sql);
                                         while($campo = mysqli_fetch_array($query))
                                         {
