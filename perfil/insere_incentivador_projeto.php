@@ -182,7 +182,7 @@ if(isset($_POST['consulta']))
                                 <td class="list_description"><?=$linha['email']?></td>
                                 <td class="list_description">
                                     <form method="POST" action="?perfil=smc_detalhes_projeto&idFF=<?=$idProjeto?>">
-                                        <input type="hidden" name="idFinanceiro" value="<?=($tipoPessoa == 4 ? $linha['idPf'] : $linha['idPj'])?>">
+                                        <input type="hidden" name="idIncentivador" value="<?=($tipoPessoa == 4 ? $linha['idPf'] : $linha['idPj'])?>">
                                         <input type="hidden" name="tipoPessoa" value="<?=$tipoPessoa?>">
                                         <input type="submit" class="btn btn-theme" name="insereIncentivador" value="Inserir">
                                     </form>
