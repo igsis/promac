@@ -31,7 +31,7 @@ $pasta = "?perfil=";
 					<li><a href="../perfil/webLog.php" target="_blank">WebLog</a></li>
 				</ul>
 			</li>
-			<li><a href="?perfil=fazenda.php">Fazenda</a></li>
+			<li><a href="<?php echo $pasta ?>fazenda">Fazenda</a></li>
 			<li><a href="?perfil=informacoes_iniciais_pf">Módulo Proponente (provisório)</a></li>
 			<li><a href="<?php echo $pasta ?>comissao_index">Módulo Comissão (provisório)</a></li>
 			<li><a href="#">Cadastro de projetos</a>
