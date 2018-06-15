@@ -111,7 +111,7 @@ if(isset($_POST['gravarDadosBancariosPF'])){
     $agencia = $_POST['agencia'];
     $contaCaptacao = $_POST['contaCaptacao'];
     $contaMovimentacao = $_POST['contaMovimentacao'];
-    
+
 
     $sql_gravarDadosBancariosPF = "UPDATE pessoa_fisica SET agencia = '$agencia', contaCaptacao = '$contaCaptacao', contaMovimentacao = '$contaMovimentacao' WHERE idPf = '$idPf' ";
 
@@ -179,6 +179,24 @@ if(isset($_POST['reabreProjeto']))
     else
     {
         $mensagem = "<font color='#FF0000'><strong>Erro ao reabrir! Tente novamente.</strong></font>";
+    }
+}
+
+if(isset($_POST['insereIncentivador']))
+{
+    $tipoPessoa = $_POST['tipoPessoa'];
+    $idIncentivador = $_POST['idIncentivador'];
+
+    $sql = "INSERT INTO financeiro (idIncentivador, tipoPessoa, idProjeto)
+            VALUES ('$idIncentivador', '$tipoPessoa', '$idProjeto')";
+    if (mysqli_query($con, $sql))
+    {
+        $mensagem = "Incentivador inserido com sucesso";
+        gravarLog($sql);
+    }
+    else
+    {
+        $mensagem = "Erro ao inserir o incentivador no projeto";
     }
 }
 
@@ -716,9 +734,9 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                     <div role="tabpanel" class="tab-pane fade" id="F" align="left">
                                         <br>
                                         <li class="list-group-item list-group-item-success">
-                                            <center>
+                                            <div style="text-align: center;">
                                                 <b>Dados Pessoa Física</b>
-                                            </center>
+                                            </div>
                                         </li>
                                         <table class="table table-bordered">
                                             <tr>
@@ -1021,7 +1039,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                                     <input type="submit" name="gravarDadosBancariosPF" class="btn btn-theme btn-md btn-block" value="Gravar">
                                                 </div>
                                             </div>
-                                                <?php       
+                                                <?php
                                             }else{
                                                 ?>
                                                 <div class="form-group">
@@ -1044,11 +1062,11 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                                     <input type="submit" name="gravarDadosBancariosPJ" class="btn btn-theme btn-md btn-block" value="Gravar">
                                                 </div>
                                             </div>
-                                                <?php    
+                                                <?php
                                             }
                                             ?>
 
-                                            
+
 
                                             <div class="form-group">
                                                 <div class="col-md-12"><hr/></div>
@@ -1074,8 +1092,55 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                             <div class="form-group">
                                                 <div class="col-md-12"><hr/></div>
                                             </div>
-
                                         </form>
+
+                                        <?php
+                                            $sql = "SELECT * FROM financeiro WHERE idProjeto = '$idProjeto'";
+                                            $query = mysqli_query($con, $sql);
+                                            $num = mysqli_num_rows($query);
+                                            if($num > 0) { ?>
+                                                <div class="table-responsive list_info">
+                                                    <table class='table table-condensed'>
+                                                        <thead>
+                                                        <tr class='list_menu'>
+                                                            <td>Incentivador</td>
+                                                            <td>Documento</td>
+                                                            <td>Opção</td>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <?php while ($linha = mysqli_fetch_array($query)) {
+                                                                if($linha['tipoPessoa'] == 4)
+                                                                {
+                                                                    $incentivadorPF = "incentivador_pessoa_fisica";
+                                                                    $pf = recuperaDados($incentivadorPF, 'idPf', $linha['idIncentivador']);
+                                                                }
+                                                                else
+                                                                {
+                                                                    $incentivadorPJ = "incentivador_pessoa_juridica";
+                                                                    $pj = recuperaDados($incentivadorPJ, 'idPj', $linha['idIncentivador']);
+                                                                }
+                                                            ?>
+                                                                <tr>
+                                                                    <td class="list_description"><?=($linha['tipoPessoa'] == 4 ? $pf['nome'] : $pj['razaoSocial'])?></td>
+                                                                    <td class="list_description"><?=($linha['tipoPessoa'] == 4 ? $pf['cpf'] : $pj['cnpj'])?></td>
+                                                                    <td class="list_description">
+                                                                        <form method="POST" action="?perfil=financeiro">
+                                                                            <input type="hidden" name="idIncentivador" value="<?=$linha['idIncentivador']?>">
+                                                                            <input type="hidden" name="tipoPessoa" value="<?=$linha['tipoPessoa']?>">
+                                                                            <input type="submit" class="btn btn-theme" name="editaFinanceiro" value="Editar Financeiro">
+                                                                        </form>
+                                                                    </td>
+                                                                </tr>
+                                                            <?php } ?>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            <?php
+                                            }
+                                            else {?>
+                                                <h4>Não existem incentivadores para este projeto</h4>
+                                        <?php } ?>
                                     </div>
                                 </div>
                             </div>

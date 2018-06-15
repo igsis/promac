@@ -35,9 +35,9 @@ if(isset($_POST['consulta']))
         }
 
         $sql = "SELECT * FROM $tabela AS IPF
-                LEFT JOIN incentivador_projeto AS IP
-                  ON IPF.idPf = IP.idIncentivador AND IP.idProjeto = $idProjeto AND IP.tipoPessoa = $tipoPessoa
-                WHERE IPF.idPf > 0 $filtro_nome $filtro_cpf AND IP.idIncentivador IS NULL
+                LEFT JOIN financeiro AS F
+                  ON IPF.idPf = F.idIncentivador AND F.idProjeto = $idProjeto AND F.tipoPessoa = $tipoPessoa
+                WHERE IPF.idPf > 0 $filtro_nome $filtro_cpf AND F.idIncentivador IS NULL
                 ORDER BY IPF.nome";
         $query = mysqli_query($con,$sql);
         $num = mysqli_num_rows($query);
@@ -77,9 +77,9 @@ if(isset($_POST['consulta']))
             $filtro_cnpj = "";
         }
         $sql = "SELECT * FROM $tabela AS IPJ
-                LEFT JOIN incentivador_projeto AS IP
-                  ON IPJ.idPj = IP.idIncentivador AND IP.idProjeto = $idProjeto AND IP.tipoPessoa = $tipoPessoa
-                WHERE IPJ.idPj > 0 $filtro_razaoSocial $filtro_cnpj AND IP.idIncentivador IS NULL
+                LEFT JOIN financeiro AS F
+                  ON IPJ.idPj = F.idIncentivador AND F.idProjeto = $idProjeto AND F.tipoPessoa = $tipoPessoa
+                WHERE IPJ.idPj > 0 $filtro_razaoSocial $filtro_cnpj AND F.idIncentivador IS NULL
                 ORDER BY IPJ.razaoSocial";
         $query = mysqli_query($con,$sql);
         $num = mysqli_num_rows($query);
@@ -182,14 +182,14 @@ if(isset($_POST['consulta']))
                                 <td class="list_description"><?=$linha['email']?></td>
                                 <td class="list_description">
                                     <form method="POST" action="?perfil=smc_detalhes_projeto&idFF=<?=$idProjeto?>">
-                                        <input type="hidden" name="idIncentivador" value="<?=($tipoPessoa == 4 ? $linha['idPf'] : $linha['idPj'])?>">
-                                        <input type="hidden" name="idProjeto" value="<?=$idProjeto?>">
+                                        <input type="hidden" name="idFinanceiro" value="<?=($tipoPessoa == 4 ? $linha['idPf'] : $linha['idPj'])?>">
                                         <input type="hidden" name="tipoPessoa" value="<?=$tipoPessoa?>">
-                                        <button class="btn btn-theme" type="button" data-toggle="modal" data-target="#insereIncentivador" data-id="" data-tipo="" data-projeto="">Inserir</button>
+                                        <input type="submit" class="btn btn-theme" name="insereIncentivador" value="Inserir">
                                     </form>
                                 </td>
                             </tr>
                         <?php } ?>
+
                         </tbody>
                     </table>
                 </div>
