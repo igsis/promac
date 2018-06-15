@@ -1,28 +1,28 @@
 <?php
 $con = bancoMysqli();
 
-$idProjeto = isset($_POST['idProjeto']) ? $_POST['idProjeto'] : null;
-if($idProjeto == null)
+$idFinanceiro = isset($_POST['idFinanceiro']) ? $_POST['idFinanceiro'] : null;
+if($idFinanceiro == null)
 {
-    $idProjeto = isset($_GET['idFF']) ? $_GET['idFF'] : null;
+    $idFinanceiro = isset($_GET['idFF']) ? $_GET['idFF'] : null;
 }
 $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
-$financeiro = recuperaDados("financeiro","idProjeto",$idProjeto);
+$financeiro = recuperaDados("financeiro","id",$idFinanceiro);
 
 
 if(isset($_POST['gravarDeposito']))
 {
-    $idP = $_POST['IDP'];
+    $idFin = $_POST['IDF'];
     $dataDeposito = exibirDataMysql($_POST['dataDeposito']);
     $valorDeposito = dinheiroDeBr($_POST['valorDeposito']);
     $valorRenuncia = dinheiroDeBr($_POST['valorRenuncia']);
     $porcentagemRenuncia = $_POST['porcentagemValorRenuncia'];
 
-    $sql_gravarDeposito = "UPDATE financeiro SET dataDeposito = '$dataDeposito', valorDeposito = '$valorDeposito', valorRenuncia = '$valorRenuncia', porcentagemValorRenuncia = '$porcentagemRenuncia' WHERE idProjeto = '$idP' ";
+    $sql_gravarDeposito = "UPDATE financeiro SET dataDeposito = '$dataDeposito', valorDeposito = '$valorDeposito', valorRenuncia = '$valorRenuncia', porcentagemValorRenuncia = '$porcentagemRenuncia' WHERE idProjeto = '$idFin' ";
     if(mysqli_query($con,$sql_gravarDeposito))
     {
         $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
-        echo "<script>window.location = '?perfil=financeiro&idFF=$idP';</script>";
+        echo "<script>window.location = '?perfil=financeiro&idFF=$idFin';</script>";
         gravarLog($sql_gravarDeposito);
     }
     else
@@ -33,16 +33,16 @@ if(isset($_POST['gravarDeposito']))
 
 if(isset($_POST['gravarReserva']))
 {
-    $idP = $_POST['IDP'];
+    $idFin = $_POST['IDF'];
     $dataReserva = exibirDataMysql($_POST['dataReserva']);
     $valorReserva = dinheiroDeBr($_POST['valorReserva']);
     $numeroReserva = $_POST['numeroReserva'];
 
-    $sql_gravarReserva = "UPDATE financeiro SET dataReserva = '$dataReserva', valorReserva = '$valorReserva', numeroReserva = 'numeroReserva' WHERE idProjeto = '$idP' ";
+    $sql_gravarReserva = "UPDATE financeiro SET dataReserva = '$dataReserva', valorReserva = '$valorReserva', numeroReserva = 'numeroReserva' WHERE idFinanceiro = '$idFin' ";
     if(mysqli_query($con,$sql_gravarReserva))
     {
         $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
-        echo "<script>window.location = '?perfil=financeiro&idFF=$idP';</script>";
+        echo "<script>window.location = '?perfil=financeiro&idFF=$idFin';</script>";
         gravarLog($sql_gravarReserva);
     }
     else
