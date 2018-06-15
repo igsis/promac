@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.9
+-- version 4.7.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 15-Jun-2018 às 13:28
--- Versão do servidor: 10.1.31-MariaDB
--- PHP Version: 7.2.3
+-- Generation Time: 15-Jun-2018 às 21:10
+-- Versão do servidor: 10.1.22-MariaDB
+-- PHP Version: 7.1.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -21,8 +21,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `promac`
 --
-CREATE DATABASE IF NOT EXISTS `promac` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `promac`;
 
 -- --------------------------------------------------------
 
@@ -440,6 +438,18 @@ CREATE TRIGGER `tr_log_orcamento` AFTER UPDATE ON `orcamento` FOR EACH ROW INSER
       ))
 $$
 DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `orcamento_anual`
+--
+
+CREATE TABLE `orcamento_anual` (
+  `idOrcamentoAnual` int(11) NOT NULL,
+  `ano` int(4) NOT NULL,
+  `valor` decimal(9,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -964,6 +974,12 @@ ALTER TABLE `orcamento`
   ADD PRIMARY KEY (`idOrcamento`);
 
 --
+-- Indexes for table `orcamento_anual`
+--
+ALTER TABLE `orcamento_anual`
+  ADD PRIMARY KEY (`idOrcamentoAnual`);
+
+--
 -- Indexes for table `pessoa_fisica`
 --
 ALTER TABLE `pessoa_fisica`
@@ -1064,175 +1080,146 @@ ALTER TABLE `zona`
 --
 ALTER TABLE `area_atuacao`
   MODIFY `idArea` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
-
 --
 -- AUTO_INCREMENT for table `cronograma`
 --
 ALTER TABLE `cronograma`
   MODIFY `idCronograma` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
-
 --
 -- AUTO_INCREMENT for table `distrito`
 --
 ALTER TABLE `distrito`
   MODIFY `idDistrito` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
-
 --
 -- AUTO_INCREMENT for table `etapa`
 --
 ALTER TABLE `etapa`
   MODIFY `idEtapa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
 --
 -- AUTO_INCREMENT for table `ficha_tecnica`
 --
 ALTER TABLE `ficha_tecnica`
   MODIFY `idFichaTecnica` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=371;
-
 --
 -- AUTO_INCREMENT for table `financeiro`
 --
 ALTER TABLE `financeiro`
   MODIFY `idFinanceiro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
 --
 -- AUTO_INCREMENT for table `frase_seguranca`
 --
 ALTER TABLE `frase_seguranca`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
 --
 -- AUTO_INCREMENT for table `incentivador_pessoa_fisica`
 --
 ALTER TABLE `incentivador_pessoa_fisica`
   MODIFY `idPf` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
-
 --
 -- AUTO_INCREMENT for table `incentivador_pessoa_juridica`
 --
 ALTER TABLE `incentivador_pessoa_juridica`
   MODIFY `idPj` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
-
 --
 -- AUTO_INCREMENT for table `lista_documento`
 --
 ALTER TABLE `lista_documento`
   MODIFY `idListaDocumento` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
-
 --
 -- AUTO_INCREMENT for table `locais_realizacao`
 --
 ALTER TABLE `locais_realizacao`
   MODIFY `idLocaisRealizacao` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=174;
-
 --
 -- AUTO_INCREMENT for table `log`
 --
 ALTER TABLE `log`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12821;
-
 --
 -- AUTO_INCREMENT for table `nivel_acesso`
 --
 ALTER TABLE `nivel_acesso`
   MODIFY `idNivelAcesso` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `notas`
 --
 ALTER TABLE `notas`
   MODIFY `idNotas` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `orcamento`
 --
 ALTER TABLE `orcamento`
   MODIFY `idOrcamento` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2357;
-
 --
 -- AUTO_INCREMENT for table `pessoa_fisica`
 --
 ALTER TABLE `pessoa_fisica`
   MODIFY `idPf` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=229;
-
 --
 -- AUTO_INCREMENT for table `pessoa_juridica`
 --
 ALTER TABLE `pessoa_juridica`
   MODIFY `idPj` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=467;
-
 --
 -- AUTO_INCREMENT for table `prazos_projeto`
 --
 ALTER TABLE `prazos_projeto`
   MODIFY `idPrazo` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
 --
 -- AUTO_INCREMENT for table `projeto`
 --
 ALTER TABLE `projeto`
   MODIFY `idProjeto` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=144;
-
 --
 -- AUTO_INCREMENT for table `renuncia_fiscal`
 --
 ALTER TABLE `renuncia_fiscal`
   MODIFY `idRenuncia` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
 --
 -- AUTO_INCREMENT for table `representante_legal`
 --
 ALTER TABLE `representante_legal`
   MODIFY `idRepresentanteLegal` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=320;
-
 --
 -- AUTO_INCREMENT for table `status`
 --
 ALTER TABLE `status`
   MODIFY `idStatus` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
 --
 -- AUTO_INCREMENT for table `statusprojeto`
 --
 ALTER TABLE `statusprojeto`
   MODIFY `idStatus` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
 --
 -- AUTO_INCREMENT for table `status_documento`
 --
 ALTER TABLE `status_documento`
   MODIFY `idStatusDocumento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
 --
 -- AUTO_INCREMENT for table `subprefeitura`
 --
 ALTER TABLE `subprefeitura`
   MODIFY `idSubprefeitura` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
-
 --
 -- AUTO_INCREMENT for table `unidade_medida`
 --
 ALTER TABLE `unidade_medida`
   MODIFY `idUnidadeMedida` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
 --
 -- AUTO_INCREMENT for table `upload_arquivo`
 --
 ALTER TABLE `upload_arquivo`
   MODIFY `idUploadArquivo` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3361;
-
 --
 -- AUTO_INCREMENT for table `weblogs`
 --
 ALTER TABLE `weblogs`
   MODIFY `idWebLog` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2048;
-
 --
 -- AUTO_INCREMENT for table `zona`
 --
 ALTER TABLE `zona`
-  MODIFY `idZona` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-COMMIT;
+  MODIFY `idZona` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
