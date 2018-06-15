@@ -1126,8 +1126,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                                                     <td class="list_description"><?=($linha['tipoPessoa'] == 4 ? $pf['cpf'] : $pj['cnpj'])?></td>
                                                                     <td class="list_description">
                                                                         <form method="POST" action="?perfil=financeiro">
-                                                                            <input type="hidden" name="idIncentivador" value="<?=$linha['idIncentivador']?>">
-                                                                            <input type="hidden" name="tipoPessoa" value="<?=$linha['tipoPessoa']?>">
+                                                                            <input type="hidden" name="idFinanceiro" value="<?=$linha['id']?>">
                                                                             <input type="submit" class="btn btn-theme" name="editaFinanceiro" value="Editar Financeiro">
                                                                         </form>
                                                                     </td>

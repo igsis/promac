@@ -915,7 +915,7 @@ ALTER TABLE `ficha_tecnica`
 -- Indexes for table `financeiro`
 --
 ALTER TABLE `financeiro`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (idFinanceiro);
 
 --
 -- Indexes for table `frase_seguranca`
@@ -1097,7 +1097,7 @@ ALTER TABLE `ficha_tecnica`
 -- AUTO_INCREMENT for table `financeiro`
 --
 ALTER TABLE `financeiro`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY idFinanceiro int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `frase_seguranca`
 --
