@@ -108,6 +108,7 @@ if(isset($_POST['gravarFin']))
 
 if(isset($_POST['gravarDadosBancariosPF'])){
     $idPf = $_POST['IDPF'];
+    $idP = $_POST['IDP'];
     $agencia = $_POST['agencia'];
     $contaCaptacao = $_POST['contaCaptacao'];
     $contaMovimentacao = $_POST['contaMovimentacao'];
@@ -115,15 +116,31 @@ if(isset($_POST['gravarDadosBancariosPF'])){
 
     $sql_gravarDadosBancariosPF = "UPDATE pessoa_fisica SET agencia = '$agencia', contaCaptacao = '$contaCaptacao', contaMovimentacao = '$contaMovimentacao' WHERE idPf = '$idPf' ";
 
-    if(mysqli_query($con,$sql_gravarDadosBancariosPF))
-    {
+    if(mysqli_query($con,$sql_gravarDadosBancariosPF)){
         $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
         echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
-        gravarLog($sql_gravarFin);
-    }
-    else
-    {
+        gravarLog($sql_gravarDadosBancariosPF);
+    }else{
         $mensagem = "<font color='#FF0000'><strong>Erro ao atualizar! Tente novamente.</strong></font>";
+    }
+}
+
+if(isset($_POST['gravarDadosBancariosPJ'])){
+    $idPj = $_POST['IDPJ'];
+    $idP = $_POST['IDP'];
+    $agencia = $_POST['agencia'];
+    $contaCaptacao = $_POST['contaCaptacao'];
+    $contaMovimentacao = $_POST['contaMovimentacao'];
+
+    $sql_gravarDadosBancariosPJ = "UPDATE pessoa_juridica SET agencia = '$agencia', contaCaptacao = '$contaCaptacao', contaMovimentacao = '$contaMovimentacao' WHERE idPj = '$idPj' ";
+
+    if(mysqli_query($con,$sql_gravarDadosBancariosPJ)){
+        $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
+        echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
+        gravarLog($sql_gravarDadosBancariosPJ);
+    }else{
+        $mensagem = "<font color='#FF0000'><strong>Erro ao atualizar! Tente novamente.</strong></font>";
+
     }
 }
 
@@ -998,7 +1015,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                         </select>
                                     </div>
                                 </div>
-
+                            
                                 <div class="form-group">
                                     <div class="col-md-offset-2 col-md-6"><label>Nº do Processo no SEI</label><br/>
                                         <input type="text" name="processoSei" class="form-control" value="<?php echo $projeto['processoSei'] ?>">
@@ -1015,7 +1032,8 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                         <input type="submit" name="gravarFin" class="btn btn-theme btn-md btn-block" value="Gravar">
                                     </div>
                                 </div>
-
+                            </form>
+                            <form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
                                 <?php
                                 if($projeto['tipoPessoa'] == 1){
                                     ?>
@@ -1036,6 +1054,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                     <div class="form-group">
                                         <div class="col-md-offset-2 col-md-8">
                                             <input type="hidden" name="IDPF" value="<?php echo $pf['idPf'] ?>">
+                                            <?php echo "<input type='hidden' name='IDP' value='$idProjeto'>"; ?>
                                             <input type="submit" name="gravarDadosBancariosPF" class="btn btn-theme btn-md btn-block" value="Gravar">
                                         </div>
                                     </div>
@@ -1058,21 +1077,19 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 
                                     <div class="form-group">
                                         <div class="col-md-offset-2 col-md-8">
-                                            <input type="hidden" name="IDPF" value="<?php echo $pj['idPj'] ?>">
+                                            <input type="hidden" name="IDPJ" value="<?php echo $pj['idPj'] ?>">
+                                            <?php echo "<input type='hidden' name='IDP' value='$idProjeto'>"; ?>
                                             <input type="submit" name="gravarDadosBancariosPJ" class="btn btn-theme btn-md btn-block" value="Gravar">
                                         </div>
                                     </div>
                                     <?php
                                 }
                                 ?>
-
-
+                            </form>
 
                                 <div class="form-group">
                                     <div class="col-md-12"><hr/></div>
                                 </div>
-
-                            </form>
                         </div>
 
                         <!-- LABEL INCENTIVADORES -->
