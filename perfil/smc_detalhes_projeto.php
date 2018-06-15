@@ -372,17 +372,17 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                         <?php if($projeto['tipoPessoa'] == 1){ echo "Pessoa Física"; } else { echo "Pessoa Jurídica"; } ?>
                                     </td>
                                     <?php if($projeto['tipoPessoa'] == 1) { ?>
-                                    <td><strong>Cooperado:</strong> <?php if($pf['cooperado'] == 1){ echo "Sim"; } else { echo "Não"; } ?></td>
+                                        <td><strong>Cooperado:</strong> <?php if($pf['cooperado'] == 1){ echo "Sim"; } else { echo "Não"; } ?></td>
                                     <?php } else { ?>
-                                    <td><strong>Cooperativa:</strong> <?php if($pj['cooperativa'] == 1){ echo "Sim"; } else { echo "Não"; } ?></td>
+                                        <td><strong>Cooperativa:</strong> <?php if($pj['cooperativa'] == 1){ echo "Sim"; } else { echo "Não"; } ?></td>
                                     <?php } ?>
                                 </tr>
                                 <tr>
                                     <td>
                                         <strong>Valor do projeto:</strong>R$ <?php echo
                                         isset($projeto['valorprojeto'])
-                                        ? $projeto['valorprojeto']
-                                        :  ''; ?>
+                                            ? $projeto['valorprojeto']
+                                            :  ''; ?>
                                     </td>
                                     <td><strong>Valor do incentivo:</strong> R$ <?php echo isset($projeto['valorIncentivo']) ? $projeto['valorIncentivo'] : null; ?></td>
                                     <td><strong>Valor do financiamento:</strong> R$ <?php echo isset($projeto['valorFinanciamento']) ? $projeto['valorFinanciamento'] : null; ?></td>
@@ -577,15 +577,15 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                                         </div>";
                                                     }
                                                     if(isYoutubeVideo($m) == "youtube"){ ?>
-                                                    <tr>
-                                                        <td>
-                                                            <img src="<?php echo $obj['thumbnail_url']; ?>" style='width: 150px;'>
-                                                        </td>
-                                                        <td>
-                                                            <?php echo $obj['title']; ?><br/>
-                                                            <?php echo $m ?>
-                                                        </td>
-                                                    </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <img src="<?php echo $obj['thumbnail_url']; ?>" style='width: 150px;'>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $obj['title']; ?><br/>
+                                                                <?php echo $m ?>
+                                                            </td>
+                                                        </tr>
                                                     <?php } ?>
                                                     <?php
                                                 }
@@ -610,540 +610,540 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                         <div role="tabpanel" class="tab-pane fade" id="J">
                             <br>
                             <?php if($projeto['tipoPessoa'] == 2) { ?>
+                                <li class="list-group-item list-group-item-success">
+                                    <b>Dados Pessoa Jurídica</b>
+                                </li>
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <td colspan="2">
+                                            <strong>Razão Social:</strong>
+                                            <?php echo isset($pj['razaoSocial']) ? $pj['razaoSocial'] : null; ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="50%">
+                                            <strong>CNPJ:</strong>
+                                            <?php echo isset($pj['cnpj']) ? $pj['cnpj'] : null; ?></td>
+                                        <td>
+                                            <strong>CCM:</strong>
+                                            <?php echo isset($pj['ccm']) ? $pj['ccm'] : null; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><strong>Endereço:</strong> <?php echo isset($pj['logradouro']) ? $pj['logradouro'] : null; ?>, <?php echo isset($pj['numero']) ? $pj['numero'] : null; ?> <?php echo isset($pj['complemento']) ? $pj['complemento'] : null; ?> - <?php echo isset($pj['bairro']) ? $pj['bairro'] : null; ?> - <?php echo isset($pj['cidade']) ? $pj['cidade'] : null; ?> - <?php echo isset($pj['estado']) ? $pj['estado'] : null; ?> - CEP <?php echo isset($pj['cep']) ? $pj['cep'] : null; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Telefone:</strong> <?php echo isset($pj['telefone']) ? $pj['telefone'] : null; ?></td>
+                                        <td><strong>Celular:</strong> <?php echo isset($pj['celular']) ? $pj['celular'] : null; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>E-mail:</strong> <?php echo isset($pj['email']) ? $pj['email'] : null; ?></td>
+                                        <td><strong>Cooperativa:</strong> <?php if($pj['cooperativa'] == 1){ echo "Sim"; } else { echo "Não"; } ?></td>
+                                    </tr>
+                                </table>
+
+                                <li class="list-group-item list-group-item-success">
+                                    <b>Dados Representante</b>
+                                </li>
+                                <!--Dados Representante xura -->
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <td colspan="2">
+                                            <strong>Nome:</strong>
+                                            <?= isset($representante['nome']) ? $representante['nome'] : ''; ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="50%">
+                                            <strong>CPF:</strong>
+                                            <?= isset($representante['cpf']) ? $representante['cpf'] : ''; ?>
+                                        </td>
+                                        <td>
+                                            <strong>RG:</strong>
+                                            <?= isset($representante['rg']) ? $representante['rg'] : ''; ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <strong>Endereço:</strong>
+                                            <?=
+                                            isset($representante['logradouro'])
+                                                ? $representante['logradouro']
+                                                : ''; ?>
+                                            ,
+                                            <?=
+                                            isset($representante['numero'])
+                                                ? $representante['numero']
+                                                : ''; ?>
+
+                                            <b>Bairro</b>:
+                                            <?=
+                                            isset($representante['bairro'])
+                                                ? $representante['bairro']
+                                                : ''; ?>
+
+                                            <b>Cep</b>:
+                                            <?=
+                                            isset($representante['cep'])
+                                                ? $representante['cep']
+                                                : ''; ?>
+
+                                            <b>Cidade</b>:
+                                            <?=
+                                            isset($representante['cidade'])
+                                                ? $representante['cidade']
+                                                : ''; ?>
+                                            -
+                                            <?=
+                                            isset($representante['estado'])
+                                                ? $representante['estado']
+                                                : ''; ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Telefone:</strong>
+                                            <?= isset($representante['telefone']) ? $representante['telefone'] : ''; ?>
+                                        </td>
+                                        <td>
+                                            <strong>Celular:</strong>
+                                            <?= isset($representante['celular']) ? $representante['celular'] : ''; ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>E-mail:</strong>
+                                            <?= isset($representante['email']) ? $representante['email'] : ''; ?>
+                                        </td>
+                                        <td>
+                                            <strong>Cooperado:</strong>
+                                            <?= $representante['cooperativa'] == 1 ? 'SIM' : 'NÃO' ?>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <ul class="list-group">
+                                    <li class="list-group-item list-group-item-success">
+                                        <b>Arquivos da Pessoa Jurídica</b></li>
+                                    <li class="list-group-item">
+                                        <?php exibirArquivos(2,$pj['idPj']); ?>
+                                    </li>
+                                </ul>
+                            <?php } else { echo "<strong>Não há pessoa jurídica cadastrada.</strong>"; } ?>
+                        </div>
+
+                        <!--LABEL PESSOA FISICA-->
+                        <div role="tabpanel" class="tab-pane fade" id="F" align="left">
+                            <br>
                             <li class="list-group-item list-group-item-success">
-                                <b>Dados Pessoa Jurídica</b>
+                                <div style="text-align: center;">
+                                    <b>Dados Pessoa Física</b>
+                                </div>
                             </li>
                             <table class="table table-bordered">
                                 <tr>
                                     <td colspan="2">
-                                        <strong>Razão Social:</strong>
-                                        <?php echo isset($pj['razaoSocial']) ? $pj['razaoSocial'] : null; ?>
+                                        <strong>Nome:</strong>
+                                        <?php //echo isset($pf['nome']) ? $pf['nome'] : null; ?>
+                                        <?= isset($pessoaFisica['nome']) ? $pessoaFisica['nome'] : ''; ?>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td width="50%">
-                                        <strong>CNPJ:</strong>
-                                        <?php echo isset($pj['cnpj']) ? $pj['cnpj'] : null; ?></td>
-                                        <td>
-                                            <strong>CCM:</strong>
-                                            <?php echo isset($pj['ccm']) ? $pj['ccm'] : null; ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2"><strong>Endereço:</strong> <?php echo isset($pj['logradouro']) ? $pj['logradouro'] : null; ?>, <?php echo isset($pj['numero']) ? $pj['numero'] : null; ?> <?php echo isset($pj['complemento']) ? $pj['complemento'] : null; ?> - <?php echo isset($pj['bairro']) ? $pj['bairro'] : null; ?> - <?php echo isset($pj['cidade']) ? $pj['cidade'] : null; ?> - <?php echo isset($pj['estado']) ? $pj['estado'] : null; ?> - CEP <?php echo isset($pj['cep']) ? $pj['cep'] : null; ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Telefone:</strong> <?php echo isset($pj['telefone']) ? $pj['telefone'] : null; ?></td>
-                                            <td><strong>Celular:</strong> <?php echo isset($pj['celular']) ? $pj['celular'] : null; ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>E-mail:</strong> <?php echo isset($pj['email']) ? $pj['email'] : null; ?></td>
-                                            <td><strong>Cooperativa:</strong> <?php if($pj['cooperativa'] == 1){ echo "Sim"; } else { echo "Não"; } ?></td>
-                                        </tr>
-                                    </table>
+                                        <strong>CPF:</strong>
+                                        <?php //echo isset($pf['cpf']) ? $pf['cpf'] : null; ?>
+                                        <?= isset($pessoaFisica['cpf']) ? $pessoaFisica['cpf'] : ''; ?>
+                                    </td>
+                                    <td>
+                                        <strong>RG:</strong>
+                                        <?php //echo isset($pf['rg']) ? $pf['rg'] : null; ?>
+                                        <?= isset($pessoaFisica['rg']) ? $pessoaFisica['rg'] : ''; ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <strong>Endereço:</strong>
+                                        <?php //echo isset($pf['logradouro']) ? $pf['logradouro'] : null; ?>
+                                        <?php //echo isset($pf['numero']) ? $pf['numero'] : null; ?>
+                                        <?php //echo isset($pf['complemento']) ? $pf['complemento'] : null; ?>  <?php //echo isset($pf['bairro']) ? $pf['bairro'] : null; ?>
+                                        <?php //echo isset($pf['cidade']) ? $pf['cidade'] : null; ?>
+                                        <?php //echo isset($pf['estado']) ? $pf['estado'] : null; ?>
+                                        <?php //echo isset($pf['cep']) ? $pf['cep'] : null; ?>
+                                        <?=
+                                        isset($pessoaFisica['logradouro'])
+                                            ? $pessoaFisica['logradouro']
+                                            : ''; ?>
+                                        ,
 
-                                    <li class="list-group-item list-group-item-success">
-                                        <b>Dados Representante</b>
-                                    </li>
-                                    <!--Dados Representante xura -->
-                                    <table class="table table-bordered">
-                                        <tr>
-                                            <td colspan="2">
-                                                <strong>Nome:</strong>
-                                                <?= isset($representante['nome']) ? $representante['nome'] : ''; ?>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td width="50%">
-                                                <strong>CPF:</strong>
-                                                <?= isset($representante['cpf']) ? $representante['cpf'] : ''; ?>
-                                            </td>
-                                            <td>
-                                                <strong>RG:</strong>
-                                                <?= isset($representante['rg']) ? $representante['rg'] : ''; ?>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">
-                                                <strong>Endereço:</strong>
-                                                <?=
-                                                isset($representante['logradouro'])
-                                                ? $representante['logradouro']
-                                                : ''; ?>
-                                                ,
-                                                <?=
-                                                isset($representante['numero'])
-                                                ? $representante['numero']
-                                                : ''; ?>
+                                        <?=
+                                        isset($pessoaFisica['numero'])
+                                            ? $pessoaFisica['numero']
+                                            : ''; ?>
 
-                                                <b>Bairro</b>:
-                                                <?=
-                                                isset($representante['bairro'])
-                                                ? $representante['bairro']
-                                                : ''; ?>
+                                        <b>Bairro</b>:
 
-                                                <b>Cep</b>:
-                                                <?=
-                                                isset($representante['cep'])
-                                                ? $representante['cep']
-                                                : ''; ?>
+                                        <?=
+                                        isset($pessoaFisica['bairro'])
+                                            ? $pessoaFisica['bairro']
+                                            : ''; ?>
 
-                                                <b>Cidade</b>:
-                                                <?=
-                                                isset($representante['cidade'])
-                                                ? $representante['cidade']
-                                                : ''; ?>
-                                                -
-                                                <?=
-                                                isset($representante['estado'])
-                                                ? $representante['estado']
-                                                : ''; ?>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <strong>Telefone:</strong>
-                                                <?= isset($representante['telefone']) ? $representante['telefone'] : ''; ?>
-                                            </td>
-                                            <td>
-                                                <strong>Celular:</strong>
-                                                <?= isset($representante['celular']) ? $representante['celular'] : ''; ?>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <strong>E-mail:</strong>
-                                                <?= isset($representante['email']) ? $representante['email'] : ''; ?>
-                                            </td>
-                                            <td>
-                                                <strong>Cooperado:</strong>
-                                                <?= $representante['cooperativa'] == 1 ? 'SIM' : 'NÃO' ?>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                    <ul class="list-group">
-                                        <li class="list-group-item list-group-item-success">
-                                            <b>Arquivos da Pessoa Jurídica</b></li>
-                                            <li class="list-group-item">
-                                                <?php exibirArquivos(2,$pj['idPj']); ?>
-                                            </li>
-                                        </ul>
-                                        <?php } else { echo "<strong>Não há pessoa jurídica cadastrada.</strong>"; } ?>
+                                        <b>Cep</b>:
+                                        <?=
+                                        isset($pessoaFisica['cep'])
+                                            ? $pessoaFisica['cep']
+                                            : ''; ?>
+
+                                        <b>Cidade</b>:
+                                        <?=
+                                        isset($pessoaFisica['cidade'])
+                                            ? $pessoaFisica['cidade']
+                                            : ''; ?>
+                                        -
+                                        <?=
+                                        isset($pessoaFisica['estado'])
+                                            ? $pessoaFisica['estado']
+                                            : ''; ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>Telefone:</strong>
+                                        <?php //echo isset($pf['telefone']) ? $pf['telefone'] : null; ?>
+                                        <?= isset($pessoaFisica['telefone']) ? $pessoaFisica['telefone'] : ''; ?>
+                                    </td>
+                                    <td>
+                                        <strong>Celular:</strong>
+                                        <?php //echo isset($pf['celular']) ? $pf['celular'] : null; ?>
+                                        <?= isset($pessoaFisica['celular']) ? $pessoaFisica['celular'] : ''; ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>E-mail:</strong>
+                                        <?php //echo isset($pf['email']) ? $pf['email'] : null; ?>
+                                        <?= isset($pessoaFisica['email']) ? $pessoaFisica['email'] : ''; ?>
+                                    </td>
+                                    <td>
+                                        <strong>Cooperado:</strong>
+                                        <?php //if($pf['cooperado'] == 1){ echo "Sim"; } else { echo "Não"; } ?>
+                                        <?= $pessoaFisica['cooperado'] == 1 ? 'SIM' : 'NÃO' ?>
+                                    </td>
+                                </tr>
+                            </table>
+                            <ul class="list-group">
+                                <li class="list-group-item list-group-item-success">
+                                    <center>
+                                        <b>Arquivos da Pessoa Física</b>
+                                    </center>
+                                </li>
+                                <li class="list-group-item">
+                                    <?php exibirArquivos(1,$pessoaFisica['idPf']); ?>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- LABEL PRAZOS -->
+                        <div role="tabpanel" class="tab-pane fade" id="prazo">
+                            <form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
+                                <h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-8"><br/></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-3">
+                                        <label>Data inicial de Captação</label><br/>
+                                        <input type="text" name="prazoCaptacao" id="datepicker01" class="form-control" value="<?php
+                                        if(returnEmptyDate('prazoCaptacao', $idProjeto) > 0 ){
+                                            $var = strtotime(returnEmptyDate('prazoCaptacao', $idProjeto));
+                                            echo date("d",$var) . "/";
+                                            echo date("m",$var) . "/";
+                                            echo date("Y",$var);
+                                        } else{
+                                            echo "00/00/0000";
+                                        }?>">
                                     </div>
 
-                                    <!--LABEL PESSOA FISICA-->
-                                    <div role="tabpanel" class="tab-pane fade" id="F" align="left">
-                                        <br>
-                                        <li class="list-group-item list-group-item-success">
-                                            <div style="text-align: center;">
-                                                <b>Dados Pessoa Física</b>
-                                            </div>
-                                        </li>
-                                        <table class="table table-bordered">
-                                            <tr>
-                                                <td colspan="2">
-                                                    <strong>Nome:</strong>
-                                                    <?php //echo isset($pf['nome']) ? $pf['nome'] : null; ?>
-                                                    <?= isset($pessoaFisica['nome']) ? $pessoaFisica['nome'] : ''; ?>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td width="50%">
-                                                    <strong>CPF:</strong>
-                                                    <?php //echo isset($pf['cpf']) ? $pf['cpf'] : null; ?>
-                                                    <?= isset($pessoaFisica['cpf']) ? $pessoaFisica['cpf'] : ''; ?>
-                                                </td>
-                                                <td>
-                                                    <strong>RG:</strong>
-                                                    <?php //echo isset($pf['rg']) ? $pf['rg'] : null; ?>
-                                                    <?= isset($pessoaFisica['rg']) ? $pessoaFisica['rg'] : ''; ?>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2">
-                                                    <strong>Endereço:</strong>
-                                                    <?php //echo isset($pf['logradouro']) ? $pf['logradouro'] : null; ?>
-                                                    <?php //echo isset($pf['numero']) ? $pf['numero'] : null; ?>
-                                                    <?php //echo isset($pf['complemento']) ? $pf['complemento'] : null; ?>  <?php //echo isset($pf['bairro']) ? $pf['bairro'] : null; ?>
-                                                    <?php //echo isset($pf['cidade']) ? $pf['cidade'] : null; ?>
-                                                    <?php //echo isset($pf['estado']) ? $pf['estado'] : null; ?>
-                                                    <?php //echo isset($pf['cep']) ? $pf['cep'] : null; ?>
-                                                    <?=
-                                                    isset($pessoaFisica['logradouro'])
-                                                    ? $pessoaFisica['logradouro']
-                                                    : ''; ?>
-                                                    ,
-
-                                                    <?=
-                                                    isset($pessoaFisica['numero'])
-                                                    ? $pessoaFisica['numero']
-                                                    : ''; ?>
-
-                                                    <b>Bairro</b>:
-
-                                                    <?=
-                                                    isset($pessoaFisica['bairro'])
-                                                    ? $pessoaFisica['bairro']
-                                                    : ''; ?>
-
-                                                    <b>Cep</b>:
-                                                    <?=
-                                                    isset($pessoaFisica['cep'])
-                                                    ? $pessoaFisica['cep']
-                                                    : ''; ?>
-
-                                                    <b>Cidade</b>:
-                                                    <?=
-                                                    isset($pessoaFisica['cidade'])
-                                                    ? $pessoaFisica['cidade']
-                                                    : ''; ?>
-                                                    -
-                                                    <?=
-                                                    isset($pessoaFisica['estado'])
-                                                    ? $pessoaFisica['estado']
-                                                    : ''; ?>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <strong>Telefone:</strong>
-                                                    <?php //echo isset($pf['telefone']) ? $pf['telefone'] : null; ?>
-                                                    <?= isset($pessoaFisica['telefone']) ? $pessoaFisica['telefone'] : ''; ?>
-                                                </td>
-                                                <td>
-                                                    <strong>Celular:</strong>
-                                                    <?php //echo isset($pf['celular']) ? $pf['celular'] : null; ?>
-                                                    <?= isset($pessoaFisica['celular']) ? $pessoaFisica['celular'] : ''; ?>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <strong>E-mail:</strong>
-                                                    <?php //echo isset($pf['email']) ? $pf['email'] : null; ?>
-                                                    <?= isset($pessoaFisica['email']) ? $pessoaFisica['email'] : ''; ?>
-                                                </td>
-                                                <td>
-                                                    <strong>Cooperado:</strong>
-                                                    <?php //if($pf['cooperado'] == 1){ echo "Sim"; } else { echo "Não"; } ?>
-                                                    <?= $pessoaFisica['cooperado'] == 1 ? 'SIM' : 'NÃO' ?>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                        <ul class="list-group">
-                                            <li class="list-group-item list-group-item-success">
-                                                <center>
-                                                    <b>Arquivos da Pessoa Física</b>
-                                                </center>
-                                            </li>
-                                            <li class="list-group-item">
-                                                <?php exibirArquivos(1,$pessoaFisica['idPf']); ?>
-                                            </li>
-                                        </ul>
-                                    </div>
-
-                                    <!-- LABEL PRAZOS -->
-                                    <div role="tabpanel" class="tab-pane fade" id="prazo">
-                                        <form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
-                                            <h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
-                                            <div class="form-group">
-                                                <div class="col-md-offset-2 col-md-8"><br/></div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <div class="col-md-offset-2 col-md-3">
-                                                    <label>Data inicial de Captação</label><br/>
-                                                    <input type="text" name="prazoCaptacao" id="datepicker01" class="form-control" value="<?php
-                                                    if(returnEmptyDate('prazoCaptacao', $idProjeto) > 0 ){
-                                                        $var = strtotime(returnEmptyDate('prazoCaptacao', $idProjeto));
-                                                        echo date("d",$var) . "/";
-                                                        echo date("m",$var) . "/";
-                                                        echo date("Y",$var);
-                                                    } else{
-                                                        echo "00/00/0000";
-                                                    }?>">
-                                                </div>
-
-                                                <div class="col-md-2"><label>Prorrogação</label><br/>
-                                                    <select class="form-control" name="prorrogacaoCaptacao" value="">
-                                                        <option value="<?php echo $prazos['prorrogacaoCaptacao'] ?>" selected >
-                                                            <?php
-                                                            if($prazos['prorrogacaoCaptacao'] == 1){ echo "Sim"; }
-                                                            else { echo "Não"; }
-                                                            ?>
-                                                        </option>
-                                                        <option value="0">Não</option>
-                                                        <option value="1">Sim</option>
-                                                    </select>
-                                                </div>
-
-                                                <div class="col-md-3">
-                                                    <label>Data Final da Captação</label>
-                                                    <input type="text" name="finalCaptacao" id="datepicker02" class="form-control" value="<?php
-                                                    if(returnEmptyDate('finalCaptacao', $idProjeto) > 0 ){
-                                                        $var = strtotime(returnEmptyDate('finalCaptacao', $idProjeto));
-                                                        echo date("d",$var) . "/";
-                                                        echo date("m",$var) . "/";
-                                                        echo date("Y",$var);
-                                                    } else{
-                                                        echo "00/00/0000";
-                                                    }
-                                                    ?>">
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <div class="col-md-offset-2 col-md-6"><label>Início da execução do projeto</label>
-                                                    <input type="text" name="inicioExecucao" id="datepicker03" class="form-control" value="<?php
-                                                    if(returnEmptyDate('inicioExecucao', $idProjeto) > 0 ){
-                                                        $var = strtotime(returnEmptyDate('inicioExecucao', $idProjeto));
-                                                        echo date("d",$var) . "/";
-                                                        echo date("m",$var) . "/";
-                                                        echo date("Y",$var);
-                                                    } else{
-                                                        echo "00/00/0000";
-                                                    }
-                                                    ?>">
-                                                </div>
-                                                <div class="col-md-6"><label>Fim da execução do projeto</label>
-                                                    <input type="text" name="fimExecucao" id="datepicker04" class="form-control" value="<?php
-                                                    if(returnEmptyDate('fimExecucao', $idProjeto) > 0 ){
-                                                        $var = strtotime(returnEmptyDate('fimExecucao', $idProjeto));
-                                                        echo date("d",$var) . "/";
-                                                        echo date("m",$var) . "/";
-                                                        echo date("Y",$var);
-                                                    } else{
-                                                        echo "00/00/0000";
-                                                    }
-                                                    ?>">
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <div class="col-md-offset-2 col-md-2"><label>Prorrogação</label><br/>
-                                                    <select class="form-control" name="prorrogacaoExecucao" >
-                                                        <option value="<?php echo $prazos['prorrogacaoExecucao'] ?>" selected >
-                                                            <?php
-                                                            if($prazos['prorrogacaoExecucao'] == 1){ echo "Sim"; }
-                                                            else { echo "Não"; }
-                                                            ?>
-                                                        </option>
-                                                        <option value="0">Não</option>
-                                                        <option value="1">Sim</option>
-                                                    </select>
-                                                </div>
+                                    <div class="col-md-2"><label>Prorrogação</label><br/>
+                                        <select class="form-control" name="prorrogacaoCaptacao" value="">
+                                            <option value="<?php echo $prazos['prorrogacaoCaptacao'] ?>" selected >
                                                 <?php
-                                                if($prazos['prorrogacaoExecucao'] == 1)
-                                                {
-                                                    ?>
-                                                    <div class="col-md-3"><label>Data final do projeto</label>
-                                                        <input type="text" name="finalProjeto" id="datepicker05" class="form-control" value="<?php
-                                                        if(returnEmptyDate('finalProjeto', $idProjeto) > 0 ){
-                                                            $var = strtotime(returnEmptyDate('finalProjeto', $idProjeto));
-                                                            echo date("d",$var) . "/";
-                                                            echo date("m",$var) . "/";
-                                                            echo date("Y",$var);
-                                                        } else{
-                                                            echo "00/00/0000";
-                                                        }
-                                                        ?>">
-                                                    </div>
-                                                    <?php
-                                                }
-                                                else
-                                                {
-                                                    ?>
-                                                    <div class="col-md-3"><label>Data final do projeto</label><br/>
-                                                        <i>Não há prorrogração</i>
-                                                    </div>
-                                                    <?php
-                                                }
+                                                if($prazos['prorrogacaoCaptacao'] == 1){ echo "Sim"; }
+                                                else { echo "Não"; }
                                                 ?>
-                                                <div class="col-md-3"><label>Data para prestar contas</label>
-                                                    <input type="text" name="prestarContas" id="datepicker06" class="form-control" value="<?php
-                                                    if(returnEmptyDate('prestarContas', $idProjeto) > 0 ){
-                                                        $var = strtotime(returnEmptyDate('prestarContas', $idProjeto));
-                                                        echo date("d",$var) . "/";
-                                                        echo date("m",$var) . "/";
-                                                        echo date("Y",$var);
-                                                    } else{
-                                                        echo "00/00/0000";
-                                                    }
-                                                    ?>">
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <div class="col-md-offset-2 col-md-8">
-                                                    <?php echo "<input type='hidden' name='IDP' value='$idProjeto'>"; ?>
-                                                    <input type="submit" name="gravarPrazos" class="btn btn-theme btn-lg btn-block" value="Gravar"></div>
-                                                </div>
-                                            </form>
-                                        </div>
-
-                                        <!-- LABEL FINANCEIRO -->
-                                        <div role="tabpanel" class="tab-pane fade" id="financeiro">
-                                            <form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
-                                                <h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
-                                                <div class="form-group">
-                                                    <div class="col-md-offset-2 col-md-8"><br/></div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <div class="col-md-offset-2 col-md-6"><label>Valor Aprovado</label><br/>
-                                                        <input type="text" name="valorAprovado" id='valor' class="form-control" value="<?php echo dinheiroParaBr($projeto['valorAprovado']) ?>">
-                                                    </div>
-
-                                                    <div class="col-md-6"><label>Valor da Renúncia</label><br/>
-                                                        <select class="form-control" name="idRenunciaFiscal" >
-                                                            <?php echo geraOpcao("renuncia_fiscal",$projeto['idRenunciaFiscal']) ?>
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <div class="col-md-offset-2 col-md-6"><label>Nº do Processo no SEI</label><br/>
-                                                        <input type="text" name="processoSei" class="form-control" value="<?php echo $projeto['processoSei'] ?>">
-                                                    </div>
-
-                                                    <div class="col-md-6"><label>Assinatura do Termo de Responsabilidade</label>
-                                                        <input type="text" name="assinaturaTermo" id='datepicker07' class="form-control" placeholder = "DD/MM/AA ou MM/AAAA" required value="<?php echo $projeto['assinaturaTermo'] ?>">
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <div class="col-md-offset-2 col-md-8">
-                                                        <?php echo "<input type='hidden' name='IDP' value='$idProjeto'>"; ?>
-                                                        <input type="submit" name="gravarFin" class="btn btn-theme btn-md btn-block" value="Gravar">
-                                                    </div>
-                                                </div>
-
-                                                <?php
-                                                if($projeto['tipoPessoa'] == 1){
-                                                 ?>
-                                                 <div class="form-group">
-                                                    <div class="col-md-offset-2 col-md-2"><label>Agência BB Nº</label><br/>
-                                                        <input type="text" name="agencia" class="form-control" value="<?php echo $pf['agencia'] ?>">
-                                                    </div>
-
-                                                    <<div class="col-md-3"><label>Nº da Conta de Captação</label><br/>
-                                                        <input type="text" name="contaCaptacao" class="form-control" value="<?php echo $pf['contaCaptacao'] ?>">
-                                                    </div>
-
-                                                    <div class="col-md-3"><label>Nº da Conta de Movimentação</label><br/>
-                                                        <input type="text" name="contaMovimentacao" class="form-control" value="<?php echo $pf['contaMovimentacao'] ?>">
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                <div class="col-md-offset-2 col-md-8">
-                                                    <input type="hidden" name="IDPF" value="<?php echo $pf['idPf'] ?>">
-                                                    <input type="submit" name="gravarDadosBancariosPF" class="btn btn-theme btn-md btn-block" value="Gravar">
-                                                </div>
-                                            </div>
-                                                <?php
-                                            }else{
-                                                ?>
-                                                <div class="form-group">
-                                                    <div class="col-md-offset-2 col-md-2"><label>Agência BB Nº</label><br/>
-                                                        <input type="text" name="agencia" class="form-control" value="<?php echo $pj['agencia'] ?>">
-                                                    </div>
-
-                                                    <<div class="col-md-3"><label>Nº da Conta de Captação</label><br/>
-                                                        <input type="text" name="contaCaptacao" class="form-control" value="<?php echo $pj['contaCaptacao'] ?>">
-                                                    </div>
-
-                                                    <div class="col-md-3"><label>Nº da Conta de Movimentação</label><br/>
-                                                        <input type="text" name="contaMovimentacao" class="form-control" value="<?php echo $pj['contaMovimentacao'] ?>">
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                <div class="col-md-offset-2 col-md-8">
-                                                    <input type="hidden" name="IDPF" value="<?php echo $pj['idPj'] ?>">
-                                                    <input type="submit" name="gravarDadosBancariosPJ" class="btn btn-theme btn-md btn-block" value="Gravar">
-                                                </div>
-                                            </div>
-                                                <?php
-                                            }
-                                            ?>
-
-
-
-                                            <div class="form-group">
-                                                <div class="col-md-12"><hr/></div>
-                                            </div>
-
-                                        </form>
+                                            </option>
+                                            <option value="0">Não</option>
+                                            <option value="1">Sim</option>
+                                        </select>
                                     </div>
 
-                                    <!-- LABEL INCENTIVADORES -->
-                                    <div role="tabpanel" class="tab-pane fade" id="incentivadores">
-                                        <form method="POST" action="?perfil=insere_incentivador_projeto&idProjeto=<?=$idProjeto?>" class="form-horizontal" role="form">
-                                            <h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
-                                            <div class="form-group">
-                                                <div class="col-md-offset-2 col-md-8"><br/></div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <div class="col-md-offset-2 col-md-8">
-                                                    <input type="submit" name="insereIncentivador" class="btn btn-theme btn-md btn-block" value="INSERIR INCENTIVADOR">
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <div class="col-md-12"><hr/></div>
-                                            </div>
-                                        </form>
-
-                                        <?php
-                                            $sql = "SELECT * FROM financeiro WHERE idProjeto = '$idProjeto'";
-                                            $query = mysqli_query($con, $sql);
-                                            $num = mysqli_num_rows($query);
-                                            if($num > 0) { ?>
-                                                <div class="table-responsive list_info">
-                                                    <table class='table table-condensed'>
-                                                        <thead>
-                                                        <tr class='list_menu'>
-                                                            <td>Incentivador</td>
-                                                            <td>Documento</td>
-                                                            <td>Opção</td>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <?php while ($linha = mysqli_fetch_array($query)) {
-                                                                if($linha['tipoPessoa'] == 4)
-                                                                {
-                                                                    $incentivadorPF = "incentivador_pessoa_fisica";
-                                                                    $pf = recuperaDados($incentivadorPF, 'idPf', $linha['idIncentivador']);
-                                                                }
-                                                                else
-                                                                {
-                                                                    $incentivadorPJ = "incentivador_pessoa_juridica";
-                                                                    $pj = recuperaDados($incentivadorPJ, 'idPj', $linha['idIncentivador']);
-                                                                }
-                                                            ?>
-                                                                <tr>
-                                                                    <td class="list_description"><?=($linha['tipoPessoa'] == 4 ? $pf['nome'] : $pj['razaoSocial'])?></td>
-                                                                    <td class="list_description"><?=($linha['tipoPessoa'] == 4 ? $pf['cpf'] : $pj['cnpj'])?></td>
-                                                                    <td class="list_description">
-                                                                        <form method="POST" action="?perfil=financeiro">
-                                                                            <input type="hidden" name="idFinanceiro" value="<?=$linha['id']?>">
-                                                                            <input type="submit" class="btn btn-theme" name="editaFinanceiro" value="Editar Financeiro">
-                                                                        </form>
-                                                                    </td>
-                                                                </tr>
-                                                            <?php } ?>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            <?php
-                                            }
-                                            else {?>
-                                                <h4>Não existem incentivadores para este projeto</h4>
-                                        <?php } ?>
+                                    <div class="col-md-3">
+                                        <label>Data Final da Captação</label>
+                                        <input type="text" name="finalCaptacao" id="datepicker02" class="form-control" value="<?php
+                                        if(returnEmptyDate('finalCaptacao', $idProjeto) > 0 ){
+                                            $var = strtotime(returnEmptyDate('finalCaptacao', $idProjeto));
+                                            echo date("d",$var) . "/";
+                                            echo date("m",$var) . "/";
+                                            echo date("Y",$var);
+                                        } else{
+                                            echo "00/00/0000";
+                                        }
+                                        ?>">
                                     </div>
                                 </div>
-                            </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-6"><label>Início da execução do projeto</label>
+                                        <input type="text" name="inicioExecucao" id="datepicker03" class="form-control" value="<?php
+                                        if(returnEmptyDate('inicioExecucao', $idProjeto) > 0 ){
+                                            $var = strtotime(returnEmptyDate('inicioExecucao', $idProjeto));
+                                            echo date("d",$var) . "/";
+                                            echo date("m",$var) . "/";
+                                            echo date("Y",$var);
+                                        } else{
+                                            echo "00/00/0000";
+                                        }
+                                        ?>">
+                                    </div>
+                                    <div class="col-md-6"><label>Fim da execução do projeto</label>
+                                        <input type="text" name="fimExecucao" id="datepicker04" class="form-control" value="<?php
+                                        if(returnEmptyDate('fimExecucao', $idProjeto) > 0 ){
+                                            $var = strtotime(returnEmptyDate('fimExecucao', $idProjeto));
+                                            echo date("d",$var) . "/";
+                                            echo date("m",$var) . "/";
+                                            echo date("Y",$var);
+                                        } else{
+                                            echo "00/00/0000";
+                                        }
+                                        ?>">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-2"><label>Prorrogação</label><br/>
+                                        <select class="form-control" name="prorrogacaoExecucao" >
+                                            <option value="<?php echo $prazos['prorrogacaoExecucao'] ?>" selected >
+                                                <?php
+                                                if($prazos['prorrogacaoExecucao'] == 1){ echo "Sim"; }
+                                                else { echo "Não"; }
+                                                ?>
+                                            </option>
+                                            <option value="0">Não</option>
+                                            <option value="1">Sim</option>
+                                        </select>
+                                    </div>
+                                    <?php
+                                    if($prazos['prorrogacaoExecucao'] == 1)
+                                    {
+                                        ?>
+                                        <div class="col-md-3"><label>Data final do projeto</label>
+                                            <input type="text" name="finalProjeto" id="datepicker05" class="form-control" value="<?php
+                                            if(returnEmptyDate('finalProjeto', $idProjeto) > 0 ){
+                                                $var = strtotime(returnEmptyDate('finalProjeto', $idProjeto));
+                                                echo date("d",$var) . "/";
+                                                echo date("m",$var) . "/";
+                                                echo date("Y",$var);
+                                            } else{
+                                                echo "00/00/0000";
+                                            }
+                                            ?>">
+                                        </div>
+                                        <?php
+                                    }
+                                    else
+                                    {
+                                        ?>
+                                        <div class="col-md-3"><label>Data final do projeto</label><br/>
+                                            <i>Não há prorrogração</i>
+                                        </div>
+                                        <?php
+                                    }
+                                    ?>
+                                    <div class="col-md-3"><label>Data para prestar contas</label>
+                                        <input type="text" name="prestarContas" id="datepicker06" class="form-control" value="<?php
+                                        if(returnEmptyDate('prestarContas', $idProjeto) > 0 ){
+                                            $var = strtotime(returnEmptyDate('prestarContas', $idProjeto));
+                                            echo date("d",$var) . "/";
+                                            echo date("m",$var) . "/";
+                                            echo date("Y",$var);
+                                        } else{
+                                            echo "00/00/0000";
+                                        }
+                                        ?>">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-8">
+                                        <?php echo "<input type='hidden' name='IDP' value='$idProjeto'>"; ?>
+                                        <input type="submit" name="gravarPrazos" class="btn btn-theme btn-lg btn-block" value="Gravar"></div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- LABEL FINANCEIRO -->
+                        <div role="tabpanel" class="tab-pane fade" id="financeiro">
+                            <form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
+                                <h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-8"><br/></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-6"><label>Valor Aprovado</label><br/>
+                                        <input type="text" name="valorAprovado" id='valor' class="form-control" value="<?php echo dinheiroParaBr($projeto['valorAprovado']) ?>">
+                                    </div>
+
+                                    <div class="col-md-6"><label>Valor da Renúncia</label><br/>
+                                        <select class="form-control" name="idRenunciaFiscal" >
+                                            <?php echo geraOpcao("renuncia_fiscal",$projeto['idRenunciaFiscal']) ?>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-6"><label>Nº do Processo no SEI</label><br/>
+                                        <input type="text" name="processoSei" class="form-control" value="<?php echo $projeto['processoSei'] ?>">
+                                    </div>
+
+                                    <div class="col-md-6"><label>Assinatura do Termo de Responsabilidade</label>
+                                        <input type="text" name="assinaturaTermo" id='datepicker07' class="form-control" placeholder = "DD/MM/AA ou MM/AAAA" required value="<?php echo $projeto['assinaturaTermo'] ?>">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-8">
+                                        <?php echo "<input type='hidden' name='IDP' value='$idProjeto'>"; ?>
+                                        <input type="submit" name="gravarFin" class="btn btn-theme btn-md btn-block" value="Gravar">
+                                    </div>
+                                </div>
+
+                                <?php
+                                if($projeto['tipoPessoa'] == 1){
+                                    ?>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-2"><label>Agência BB Nº</label><br/>
+                                            <input type="text" name="agencia" class="form-control" value="<?php echo $pf['agencia'] ?>">
+                                        </div>
+
+                                        <<div class="col-md-3"><label>Nº da Conta de Captação</label><br/>
+                                            <input type="text" name="contaCaptacao" class="form-control" value="<?php echo $pf['contaCaptacao'] ?>">
+                                        </div>
+
+                                        <div class="col-md-3"><label>Nº da Conta de Movimentação</label><br/>
+                                            <input type="text" name="contaMovimentacao" class="form-control" value="<?php echo $pf['contaMovimentacao'] ?>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-8">
+                                            <input type="hidden" name="IDPF" value="<?php echo $pf['idPf'] ?>">
+                                            <input type="submit" name="gravarDadosBancariosPF" class="btn btn-theme btn-md btn-block" value="Gravar">
+                                        </div>
+                                    </div>
+                                    <?php
+                                }else{
+                                    ?>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-2"><label>Agência BB Nº</label><br/>
+                                            <input type="text" name="agencia" class="form-control" value="<?php echo $pj['agencia'] ?>">
+                                        </div>
+
+                                        <<div class="col-md-3"><label>Nº da Conta de Captação</label><br/>
+                                            <input type="text" name="contaCaptacao" class="form-control" value="<?php echo $pj['contaCaptacao'] ?>">
+                                        </div>
+
+                                        <div class="col-md-3"><label>Nº da Conta de Movimentação</label><br/>
+                                            <input type="text" name="contaMovimentacao" class="form-control" value="<?php echo $pj['contaMovimentacao'] ?>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-8">
+                                            <input type="hidden" name="IDPF" value="<?php echo $pj['idPj'] ?>">
+                                            <input type="submit" name="gravarDadosBancariosPJ" class="btn btn-theme btn-md btn-block" value="Gravar">
+                                        </div>
+                                    </div>
+                                    <?php
+                                }
+                                ?>
+
+
+
+                                <div class="form-group">
+                                    <div class="col-md-12"><hr/></div>
+                                </div>
+
+                            </form>
+                        </div>
+
+                        <!-- LABEL INCENTIVADORES -->
+                        <div role="tabpanel" class="tab-pane fade" id="incentivadores">
+                            <form method="POST" action="?perfil=insere_incentivador_projeto&idProjeto=<?=$idProjeto?>" class="form-horizontal" role="form">
+                                <h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-8"><br/></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-8">
+                                        <input type="submit" name="insereIncentivador" class="btn btn-theme btn-md btn-block" value="INSERIR INCENTIVADOR">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-12"><hr/></div>
+                                </div>
+                            </form>
+
+                            <?php
+                            $sql = "SELECT * FROM financeiro WHERE idProjeto = '$idProjeto'";
+                            $query = mysqli_query($con, $sql);
+                            $num = mysqli_num_rows($query);
+                            if($num > 0) { ?>
+                                <div class="table-responsive list_info">
+                                    <table class='table table-condensed'>
+                                        <thead>
+                                        <tr class='list_menu'>
+                                            <td>Incentivador</td>
+                                            <td>Documento</td>
+                                            <td>Opção</td>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php while ($linha = mysqli_fetch_array($query)) {
+                                            if($linha['tipoPessoa'] == 4)
+                                            {
+                                                $incentivadorPF = "incentivador_pessoa_fisica";
+                                                $pf = recuperaDados($incentivadorPF, 'idPf', $linha['idIncentivador']);
+                                            }
+                                            else
+                                            {
+                                                $incentivadorPJ = "incentivador_pessoa_juridica";
+                                                $pj = recuperaDados($incentivadorPJ, 'idPj', $linha['idIncentivador']);
+                                            }
+                                            ?>
+                                            <tr>
+                                                <td class="list_description"><?=($linha['tipoPessoa'] == 4 ? $pf['nome'] : $pj['razaoSocial'])?></td>
+                                                <td class="list_description"><?=($linha['tipoPessoa'] == 4 ? $pf['cpf'] : $pj['cnpj'])?></td>
+                                                <td class="list_description">
+                                                    <form method="POST" action="?perfil=financeiro">
+                                                        <input type="hidden" name="idFinanceiro" value="<?=$linha['idFinanceiro']?>">
+                                                        <input type="submit" class="btn btn-theme" name="editaFinanceiro" value="Editar Financeiro">
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <?php
+                            }
+                            else {?>
+                                <h4>Não existem incentivadores para este projeto</h4>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
+        </div>
+    </div>
+</section>
