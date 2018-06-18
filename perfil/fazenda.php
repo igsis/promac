@@ -1,8 +1,13 @@
 <?php
 $con = bancoMysqli();
 $valorTotalDisponivel;
+$valorReservaNaoLiquidada;
 function calculaValorDisponivel($valor, $valorTotal){
 	return $valorTotalDisponivel = $valor - $valorTotal;
+}
+
+function calculaValorReservaNaoLiquidada($valorDaReserva, $valorDaLiquidacao){
+	return $valorReservaNaoLiquidada = $valorDaReserva - $valorDaLiquidacao;
 }
 ?>
 <section id="list_items" class="home-section bg-white">
@@ -16,8 +21,10 @@ function calculaValorDisponivel($valor, $valorTotal){
 					$sql_financeiro = "SELECT * FROM financeiro WHERE publicado = 1";
 					$query_financeiro = mysqli_query($con, $sql_financeiro);
 					$valorReserva = 0;
+					$valorLiquidacao = 0;
 					while($campo = mysqli_fetch_array($query_financeiro)){
-						$valorReserva += $campo['valorReserva']; 
+						$valorReserva += $campo['valorReserva'];
+						$valorLiquidacao += $campo['valorLiquidacao'];
 					}
 
 					$sql = "SELECT * FROM orcamento_anual LIMIT 0,10";
@@ -26,13 +33,14 @@ function calculaValorDisponivel($valor, $valorTotal){
 					if($num > 0)
 					{
 						echo "
-								<table class='table table-condensed'>
+								<table class='table table-condensed' style='text-align:center'>
            							<thead>
 									<tr class='list_menu'>
 										<td>Ano</td>
 										<td>Valor Anual Total</td>
 										<td>Valor Anual Disponivel</td>
-										<td width='10%'></td>
+										<td>Reserva Não Liquidada</td>
+										<!--<td width='10%'></td>-->
 									</tr>
 								</thead>
 								<tbody>";
@@ -40,8 +48,9 @@ function calculaValorDisponivel($valor, $valorTotal){
 								{
 									echo "<tr>";
 									echo "<td class='list_description'>".$campo['ano']."</td>";
-									echo "<td class='list_description'>".$campo['valor']."</td>";
-									echo "<td class='list_description'>".calculaValorDisponivel($campo['valor'], $valorReserva)."</td>";
+									echo "<td class='list_description'>R$ ".number_format($campo['valor'], 2, ',', '.')."</td>";
+									echo "<td class='list_description'>R$ ".number_format(calculaValorDisponivel($campo['valor'], $valorReserva), 2, ',', '.') ."</td>";
+									echo "<td class='list_description'>R$ ".number_format(calculaValorReservaNaoLiquidada($valorReserva, $valorLiquidacao), 2, ',', '.')."</td>";
 								}
 							echo "</tr>";
 							echo "</tbody>
