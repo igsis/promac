@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 15-Jun-2018 às 21:10
+-- Generation Time: 18-Jun-2018 às 21:23
 -- Versão do servidor: 10.1.22-MariaDB
 -- PHP Version: 7.1.4
 
@@ -21,6 +21,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `promac`
 --
+CREATE DATABASE IF NOT EXISTS `promac` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `promac`;
 
 -- --------------------------------------------------------
 
@@ -79,12 +81,43 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `deposito`
+--
+
+CREATE TABLE `deposito` (
+  `idDeposito` int(11) NOT NULL,
+  `tipoPessoa` tinyint(1) NOT NULL,
+  `idIncentivador` int(11) NOT NULL,
+  `idReserva` int(11) NOT NULL,
+  `data` date NOT NULL,
+  `ValorDeposito` decimal(9,2) NOT NULL,
+  `valorRenuncia` decimal(9,2) NOT NULL,
+  `porcentagemValorRenuncia` varchar(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `distrito`
 --
 
 CREATE TABLE `distrito` (
   `idDistrito` int(10) NOT NULL,
   `distrito` varchar(25) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `empenho`
+--
+
+CREATE TABLE `empenho` (
+  `idEmpenho` int(11) NOT NULL,
+  `idReserva` int(11) NOT NULL,
+  `data` date NOT NULL,
+  `valor` decimal(9,2) NOT NULL,
+  `numeroEmpenho` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -282,6 +315,20 @@ CREATE TABLE `incentivador_pessoa_juridica` (
   `respostaFrase` varchar(10) DEFAULT NULL,
   `dataInscricao` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `liquidacao`
+--
+
+CREATE TABLE `liquidacao` (
+  `idLiquidacao` int(11) NOT NULL,
+  `idDeposito` int(11) NOT NULL,
+  `data` date NOT NULL,
+  `valor` decimal(9,2) NOT NULL,
+  `numeroLiquidacao` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -638,7 +685,8 @@ CREATE TABLE `projeto` (
   `reaberturaProjeto` datetime DEFAULT NULL,
   `alteradoPor` varchar(150) DEFAULT 'none',
   `processoSei` varchar(30) DEFAULT NULL,
-  `assinaturaTermo` date DEFAULT NULL
+  `assinaturaTermo` date DEFAULT NULL,
+  `observacoes` longtext
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -763,6 +811,20 @@ CREATE TABLE `representante_legal` (
   `celular` varchar(15) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `reserva`
+--
+
+CREATE TABLE `reserva` (
+  `idReserva` int(11) NOT NULL,
+  `idProjeto` int(11) NOT NULL,
+  `data` date NOT NULL,
+  `valor` decimal(9,2) NOT NULL,
+  `numeroReserva` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -895,10 +957,23 @@ ALTER TABLE `cronograma`
   ADD PRIMARY KEY (`idCronograma`);
 
 --
+-- Indexes for table `deposito`
+--
+ALTER TABLE `deposito`
+  ADD PRIMARY KEY (`idDeposito`),
+  ADD KEY `idReserva` (`idReserva`);
+
+--
 -- Indexes for table `distrito`
 --
 ALTER TABLE `distrito`
   ADD PRIMARY KEY (`idDistrito`);
+
+--
+-- Indexes for table `empenho`
+--
+ALTER TABLE `empenho`
+  ADD PRIMARY KEY (`idEmpenho`);
 
 --
 -- Indexes for table `etapa`
@@ -936,6 +1011,13 @@ ALTER TABLE `incentivador_pessoa_fisica`
 ALTER TABLE `incentivador_pessoa_juridica`
   ADD PRIMARY KEY (`idPj`),
   ADD UNIQUE KEY `email_UNIQUE` (`email`);
+
+--
+-- Indexes for table `liquidacao`
+--
+ALTER TABLE `liquidacao`
+  ADD PRIMARY KEY (`idLiquidacao`),
+  ADD KEY `idDeposito` (`idDeposito`);
 
 --
 -- Indexes for table `lista_documento`
@@ -1017,6 +1099,12 @@ ALTER TABLE `representante_legal`
   ADD PRIMARY KEY (`idRepresentanteLegal`);
 
 --
+-- Indexes for table `reserva`
+--
+ALTER TABLE `reserva`
+  ADD PRIMARY KEY (`idReserva`);
+
+--
 -- Indexes for table `status`
 --
 ALTER TABLE `status`
@@ -1086,10 +1174,20 @@ ALTER TABLE `area_atuacao`
 ALTER TABLE `cronograma`
   MODIFY `idCronograma` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
 --
+-- AUTO_INCREMENT for table `deposito`
+--
+ALTER TABLE `deposito`
+  MODIFY `idDeposito` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `distrito`
 --
 ALTER TABLE `distrito`
   MODIFY `idDistrito` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
+--
+-- AUTO_INCREMENT for table `empenho`
+--
+ALTER TABLE `empenho`
+  MODIFY `idEmpenho` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `etapa`
 --
@@ -1120,6 +1218,11 @@ ALTER TABLE `incentivador_pessoa_fisica`
 --
 ALTER TABLE `incentivador_pessoa_juridica`
   MODIFY `idPj` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+--
+-- AUTO_INCREMENT for table `liquidacao`
+--
+ALTER TABLE `liquidacao`
+  MODIFY `idLiquidacao` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `lista_documento`
 --
@@ -1181,6 +1284,11 @@ ALTER TABLE `renuncia_fiscal`
 ALTER TABLE `representante_legal`
   MODIFY `idRepresentanteLegal` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=320;
 --
+-- AUTO_INCREMENT for table `reserva`
+--
+ALTER TABLE `reserva`
+  MODIFY `idReserva` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `status`
 --
 ALTER TABLE `status`
@@ -1219,7 +1327,23 @@ ALTER TABLE `weblogs`
 -- AUTO_INCREMENT for table `zona`
 --
 ALTER TABLE `zona`
-  MODIFY `idZona` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;COMMIT;
+  MODIFY `idZona` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Limitadores para a tabela `deposito`
+--
+ALTER TABLE `deposito`
+  ADD CONSTRAINT `idReserva` FOREIGN KEY (`idReserva`) REFERENCES `reserva` (`idReserva`);
+
+--
+-- Limitadores para a tabela `liquidacao`
+--
+ALTER TABLE `liquidacao`
+  ADD CONSTRAINT `idDeposito` FOREIGN KEY (`idDeposito`) REFERENCES `deposito` (`idDeposito`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
