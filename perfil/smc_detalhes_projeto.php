@@ -91,8 +91,9 @@ if(isset($_POST['gravarFin']))
     $renunciaFiscal = $_POST['idRenunciaFiscal'];
     $processoSei = $_POST['processoSei'];
     $assinaturaTermo = exibirDataMysql($_POST['assinaturaTermo']);
+    $observacoes = $_POST['observacoes'];
 
-    $sql_gravarFin = "UPDATE projeto SET valorAprovado = '$valorAprovado', idRenunciaFiscal = '$renunciaFiscal', processoSei = '$processoSei', assinaturaTermo = '$assinaturaTermo', agencia = '$agencia', contaCaptacao = '$contaCaptacao', contaMovimentacao = '$contaMovimentacao' WHERE idProjeto = '$idP' ";
+    $sql_gravarFin = "UPDATE projeto SET valorAprovado = '$valorAprovado', idRenunciaFiscal = '$renunciaFiscal', processoSei = '$processoSei', assinaturaTermo = '$assinaturaTermo', observacoes = '$observacoes' WHERE idProjeto = '$idP' ";
     if(mysqli_query($con,$sql_gravarFin))
     {
         $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
@@ -217,6 +218,21 @@ if(isset($_POST['insereIncentivador']))
     }
 }
 
+if(isset($_POST['apagar']))
+{
+    $idFinanceiro = $_POST['apagar'];
+    $sql_apagar_financeiro = "UPDATE financeiro SET publicado = 0 WHERE idUploadArquivo = '$idArquivo'";
+    if(mysqli_query($con,$sql_apagar_arquivo))
+    {
+        $mensagem = "<font color='#01DF3A'><strong>Arquivo apagado com sucesso!</strong></font>";
+        gravarLog($sql_apagar_arquivo);
+    }
+    else
+    {
+        $mensagem = "<font color='#FF0000'><strong>Erro ao apagar arquivo!</strong></font>";
+    }
+}
+
 if($projeto['tipoPessoa'] == 1)
 {
     $pf = recuperaDados("pessoa_fisica","idPf",$projeto['idpf']);
@@ -259,7 +275,6 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                         <?php endif ?>
                         <li class="nav"><a href="#prazo" data-toggle="tab">Prazos</a></li>
                         <li class="nav"><a href="#financeiro" data-toggle="tab">Financeiro</a></li>
-                        <li class="nav"><a href="#incentivadores" data-toggle="tab">Incentivadores</a></li>
                     </ul>
                     <div class="tab-content">
                         <!-- LABEL ADMINISTRATIVO-->
@@ -1026,6 +1041,12 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                     </div>
                                 </div>
 
+                                 <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-8"><label>Observações</label><br/>
+                                        <input type="text" name="observacoes" class="form-control" value="<?php echo $projeto['observacoes'] ?>">
+                                    </div>
+                                </div>
+
                                 <div class="form-group">
                                     <div class="col-md-offset-2 col-md-8">
                                         <?php echo "<input type='hidden' name='IDP' value='$idProjeto'>"; ?>
@@ -1088,14 +1109,13 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                             </form>
 
                                 <div class="form-group">
-                                    <div class="col-md-12"><hr/></div>
+                                    <div class="col-md-offset-2 col-md-8"><br/></div>
                                 </div>
-                        </div>
 
-                        <!-- LABEL INCENTIVADORES -->
-                        <div role="tabpanel" class="tab-pane fade" id="incentivadores">
-                            <form method="POST" action="?perfil=insere_incentivador_projeto&idProjeto=<?=$idProjeto?>" class="form-horizontal" role="form">
-                                <h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
+                              <div class="form-group">
+                                   <h4>Incentivadores do Projeto</hh4>
+                              </div>
+
                                 <div class="form-group">
                                     <div class="col-md-offset-2 col-md-8"><br/></div>
                                 </div>
@@ -1122,7 +1142,6 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                         <tr class='list_menu'>
                                             <td>Incentivador</td>
                                             <td>Documento</td>
-                                            <td>Opção</td>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -1141,12 +1160,6 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                             <tr>
                                                 <td class="list_description"><?=($linha['tipoPessoa'] == 4 ? $pf['nome'] : $pj['razaoSocial'])?></td>
                                                 <td class="list_description"><?=($linha['tipoPessoa'] == 4 ? $pf['cpf'] : $pj['cnpj'])?></td>
-                                                <td class="list_description">
-                                                    <form method="POST" action="?perfil=financeiro">
-                                                        <input type="hidden" name="idFinanceiro" value="<?=$linha['idFinanceiro']?>">
-                                                        <input type="submit" class="btn btn-theme" name="editaFinanceiro" value="Editar Financeiro">
-                                                    </form>
-                                                </td>
                                             </tr>
                                         <?php } ?>
                                         </tbody>
