@@ -74,6 +74,7 @@
 											<li class="list-group-item"><a href="pdf/Decreto_ProMac.pdf" target="_blank">Decreto</a></li>
 											<li class="list-group-item"><a href="pdf/AlteracaoDecreto_ProMac.pdf" target="_blank">Alteração de Decreto</a></li>
 											<li class="list-group-item"><a href="pdf/Portaria_publicado.pdf">Portaria de procedimentos e documentos para inscrição (republicada)</a></li>
+											<li class="list-group-item"><a href="pdf/Portaria_SF_procedimentos_contabeis_incentivador.pdf">Portaria de Procedimentos Contábeis – Incentivador</a></li>
 											<li class="list-group-item"><a href="#">Portarias de prestação de contas</a></li>
 											<li class="list-group-item"><a href="pdf/manual_utilizacao.pdf" target="_blank">Manual de utilização do sistema</a></li>
 											<li class="list-group-item"><a href="pdf/identidade_visual.zip">Manual de uso da marca</a></li>
