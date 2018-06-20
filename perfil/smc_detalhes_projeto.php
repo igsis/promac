@@ -7,6 +7,7 @@ if($idProjeto == null
     $idProjeto = isset($_GET['idFF']) ? $_GET['idFF'] : null;
 }
 $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
+$reserva = recuperaDados("reserva","idReserva",$idProjeto);
 
 
 // Gerar documentos
@@ -220,18 +221,16 @@ if(isset($_POST['insereIncentivador']))
 
 if(isset($_POST['insereReserva']))
 {
-    $idIncentivador = $_POST['idIncentivador'];
-
-    $sql = "INSERT INTO reserva (idReserva, idProjeto, dataReserva, )
-            VALUES ('$idIncentivador', '$tipoPessoa', '$idProjeto')";
+    $sql = "INSERT INTO reserva (idProjeto, data, valor, numeroReserva)
+            VALUES ('$idProjeto', '$data', '$valor' '$numeroReserva')";
     if (mysqli_query($con, $sql))
     {
-        $mensagem = "Incentivador inserido com sucesso";
+        $mensagem = "Reserva inserida com sucesso";
         gravarLog($sql);
     }
     else
     {
-        $mensagem = "Erro ao inserir o incentivador no projeto";
+        $mensagem = "Erro ao inserir reserva!";
     }
 }
 
@@ -292,7 +291,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                         <?php endif ?>
                         <li class="nav"><a href="#prazo" data-toggle="tab">Prazos</a></li>
                         <li class="nav"><a href="#financeiro" data-toggle="tab">Financeiro</a></li>
-                        <li class="nav"><a href="#detalhes_financeiro" data-toggle="tab">Detalhes Financeiro</a></li>
+                        <li class="nav"><a href="#pagamentos" data-toggle="tab">Pagamentos</a></li>
                     </ul>
                     <div class="tab-content">
                         <!-- LABEL ADMINISTRATIVO-->
@@ -1029,14 +1028,10 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                             </form>
                         </div>
 
-                        <!-- LABEL DETALHES FINANCEIRO -->
-                        <div role="tabpanel" class="tab-pane fade" id="detalhes_financeiro">
-                            <form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
+                          <!-- LABEL PAGAMENTOS -->
+                        <div role="tabpanel" class="tab-pane fade" id="pagamentos">
+                            <form method="POST" action="?perfil=cadastro_reserva&idProjeto=<?=$idProjeto?>" class="form-horizontal" role="form">
                                 <h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
-                                <div class="form-group">
-                                    <div class="col-md-offset-2 col-md-8"><br/></div>
-                                </div>
-
                               <div class="form-group">
                                    <h4>Reservas</hh4>
                               </div>
@@ -1050,6 +1045,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                 <div class="form-group">
                                     <div class="col-md-12"><hr/></div>
                                 </div>
+                            </form>
 
                             <?php
                             $sql = "SELECT * FROM reserva WHERE idProjeto = '$idProjeto'";
@@ -1064,39 +1060,41 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                             <td>Data</td>
                                             <td>Valor</td>
                                             <td>Número da Reserva</td>
+                                            <td></td>
+                                            <td></td>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <?php while ($linha = mysqli_fetch_array($query)) {
-                                            if($linha['tipoPessoa'] == 4)
-                                            {
-                                                $incentivadorPF = "incentivador_pessoa_fisica";
-                                                $pf = recuperaDados($incentivadorPF, 'idPf', $linha['idIncentivador']);
-                                            }
-                                            else
-                                            {
-                                                $incentivadorPJ = "incentivador_pessoa_juridica";
-                                                $pj = recuperaDados($incentivadorPJ, 'idPj', $linha['idIncentivador']);
-                                            }
+                                        <?php while ($reserva = mysqli_fetch_array($query)) {
                                             ?>
                                             <tr>
-                                                <td class="list_description"><?=($linha['tipoPessoa'] == 4 ? $pf['nome'] : $pj['razaoSocial'])?></td>
-                                                <td class="list_description"><?=($linha['tipoPessoa'] == 4 ? $pf['cpf'] : $pj['cnpj'])?></td>
+                                              <td><?php echo $reserva['idReserva']; ?></td>
+                                               <td><?php echo exibirDataBr($reserva['data']) ?></td>
+                                               <td><?php echo $reserva['valor']; ?></td>
+                                               <td><?php echo $reserva['numeroReserva']; ?></td>
+                                               <td class='list_description'>
+                                                <form method='POST' action='?perfil=local_edicao'>
+                                                    <input type='hidden' name='editarLocal' value='".$campo['idLocaisRealizacao']."' />
+                                                    <input type ='submit' class='btn btn-theme btn-block' value='editar'>
+                                                </form>
+                                             </td>
+                                                <td class='list_description'>
+                                                    <form method='POST' action='?perfil=local_edicao'>
+                                                        <input type='hidden' name='editarLocal' value='".$campo['idLocaisRealizacao']."' />
+                                                        <input type ='submit' class='btn btn-theme btn-block' value='abrir depósitos'>
+                                                     </form>
+                                                </td>
                                             </tr>
                                         <?php } ?>
                                         </tbody>
-                                           <td class="list_description">
-                                                    <form method="POST" action="?perfil=financeiro">
-                                                        <input type="hidden" name="idReserva" value="<?=$linha['idFinanceiro']?>">
-                                                        <input type="submit" class="btn btn-theme" name="editaReserva" value="Editar">
-                                                    </form>
-                                                </td>
-                                            </tr>
+                                    </table>
+                                </div>
                                 <?php
                             }
                             else {?>
-                                <h4>Não existem reservas cadastradas neste projeto.</h4>
+                                <h4>Não existem incentivadores para este projeto</h4>
                             <?php } ?>
+                        </form>
                         </div>
 
                         <!-- LABEL FINANCEIRO -->
@@ -1142,11 +1140,6 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                     </div>
                                 </div>
                             </form>
-
-                            <div class="form-group">
-                                    <div class="col-md-offset-2 col-md-8"><br/></div>
-                            </div>
-
                             <form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
                                 <?php
                                 if($projeto['tipoPessoa'] == 1){
@@ -1205,13 +1198,11 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                     <div class="col-md-offset-2 col-md-8"><br/></div>
                                 </div>
 
+                            <form method="POST" action="?perfil=insere_incentivador_projeto&idProjeto=<?=$idProjeto?>" class="form-horizontal" role="form">
+                                <h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
                               <div class="form-group">
                                    <h4>Incentivadores do Projeto</hh4>
                               </div>
-
-                                <div class="form-group">
-                                    <div class="col-md-offset-2 col-md-8"><br/></div>
-                                </div>
 
                                 <div class="form-group">
                                     <div class="col-md-offset-2 col-md-8">
@@ -1222,6 +1213,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                 <div class="form-group">
                                     <div class="col-md-12"><hr/></div>
                                 </div>
+                            </form>
 
                             <?php
                             $sql = "SELECT * FROM financeiro WHERE idProjeto = '$idProjeto'";
@@ -1262,6 +1254,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                             else {?>
                                 <h4>Não existem incentivadores para este projeto</h4>
                             <?php } ?>
+                        </form>
                         </div>
                     </div>
                 </div>
