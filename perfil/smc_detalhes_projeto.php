@@ -1073,14 +1073,14 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                                <td><?php echo $reserva['valor']; ?></td>
                                                <td><?php echo $reserva['numeroReserva']; ?></td>
                                                <td class='list_description'>
-                                                <form method='POST' action='?perfil=local_edicao'>
-                                                    <input type='hidden' name='editarLocal' value='".$campo['idLocaisRealizacao']."' />
+                                                <form method='POST' action='?perfil='>
+                                                    <input type='hidden' name='' value='".$campo['']."' />
                                                     <input type ='submit' class='btn btn-theme btn-block' value='editar'>
                                                 </form>
                                              </td>
                                                 <td class='list_description'>
-                                                    <form method='POST' action='?perfil=local_edicao'>
-                                                        <input type='hidden' name='editarLocal' value='".$campo['idLocaisRealizacao']."' />
+                                                    <form method='POST' action='?perfil='>
+                                                        <input type='hidden' name='' value='".$campo['']."' />
                                                         <input type ='submit' class='btn btn-theme btn-block' value='abrir depósitos'>
                                                      </form>
                                                 </td>
