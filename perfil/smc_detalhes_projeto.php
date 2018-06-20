@@ -1030,7 +1030,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 
                           <!-- LABEL PAGAMENTOS -->
                         <div role="tabpanel" class="tab-pane fade" id="pagamentos">
-                            <form method="POST" action="?perfil=cadastro_reserva&idProjeto=<?=$idProjeto?>" class="form-horizontal" role="form">
+                            <form method="POST" action="?perfil=cadastro_reserva&idFF=<?=$idProjeto?>" class="form-horizontal" role="form">
                                 <h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
                               <div class="form-group">
                                    <h4>Reservas</hh4>
@@ -1072,10 +1072,11 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                                <td><?php echo exibirDataBr($reserva['data']) ?></td>
                                                <td><?php echo $reserva['valor']; ?></td>
                                                <td><?php echo $reserva['numeroReserva']; ?></td>
-                                               <td class='list_description'>
-                                                <form method='POST' action='?perfil='>
-                                                    <input type='hidden' name='' value='".$campo['']."' />
-                                                    <input type ='submit' class='btn btn-theme btn-block' value='editar'>
+                                               <td class="list_description">
+                                                   <!--AAAA TA ERRADO ISSO AQUI AAAAAA -->
+                                                <form method="POST" action="?perfil=cadastro_reserva&idRF=<?=$idReserva?>">
+                                                    <input type="hidden" name="" value="'.$campo[''].'" />
+                                                    <input type ="submit" name="editarReserva" class="btn btn-theme btn-block" value="editar">
                                                 </form>
                                              </td>
                                                 <td class='list_description'>
