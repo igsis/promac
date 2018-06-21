@@ -54,12 +54,10 @@ if(isset($_POST['inserirReserva'])){
                             <br>
                             <br>
                             <br>
-                            
                             <input type="submit" name="inserirReserva" class="btn btn-theme btn-md btn-block" value="Gravar">
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-
     </section>
