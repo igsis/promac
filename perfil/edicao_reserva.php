@@ -7,7 +7,7 @@ $reserva = recuperaDados("reserva", "idReserva", $idReserva);
 if(isset($_POST['alteraReserva'])){
     $idP = $_POST['IDP'];
     $idReserva = $_POST['IDR'];
-    $data = exibirDataMysql['data'];
+    $data = exibirDataMysql($_POST['data']);
     $valor = $_POST['valor'];
     $numeroReserva = $_POST['numeroReserva'];
     

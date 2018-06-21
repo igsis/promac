@@ -7,7 +7,7 @@ $empenho = recuperaDados("empenho", "idEmpenho", $idEmpenho);
 if(isset($_POST['alteraEmpenho'])){
     $idEmpenho = $_POST['IDE'];
     $idReserva = $_POST['IDR'];
-    $data = exibirDataMysql['data'];
+    $data = exibirDataMysql($_POST['data']);
     $valor = $_POST['valor'];
     $numeroEmpenho = $_POST['numeroEmpenho'];
     
