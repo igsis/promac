@@ -45,35 +45,38 @@ if(isset($_POST['editaEmpenho']))
 }
 
 ?>
-        <section id="list_items" class="home-section bg-white">
-            <div class="container"><?php include '../perfil/includes/menu_interno_pf.php'; ?>
-                <div class="form-group">
-                    <h4>Empenhos</h4>
-                    <h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
-                </div>
-                <div class="row">
-                    <div class="col-md-offset-1 col-md-10">
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-8">
-                                <form class="form-horizontal" role="form" action="?perfil=cadastro_empenho&idReserva=<?=$idReserva?>" method="post">
-                                    <input type="submit" value="Inserir novo empenho" class="btn btn-theme btn-lg btn-block">
-                                </form>
-                            </div>
+    <section id="list_items" class="home-section bg-white">
+        <div class="container">
+            <?php include 'includes/menu_smc.php';?>
+            <div class="form-group">
+                <h4>Empenhos</h4>
+                <h5>
+                    <?php if(isset($mensagem)){echo $mensagem;}; ?>
+                </h5>
+            </div>
+            <div class="row">
+                <div class="col-md-offset-1 col-md-10">
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-8">
+                            <form class="form-horizontal" role="form" action="?perfil=cadastro_empenho&idReserva=<?=$idReserva?>" method="post">
+                                <input type="submit" value="Inserir novo empenho" class="btn btn-theme btn-lg btn-block">
+                            </form>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-8"><br></div>
-                    </div>
-                    <div class="col-md-offset-1 col-md-10">
-                        <div class="table-responsive list_info">
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-8"><br></div>
+                </div>
+                <div class="col-md-offset-1 col-md-10">
+                    <div class="table-responsive list_info">
                         <?php
                             $sql = "SELECT * FROM empenho WHERE idReserva = '$idReserva'";
                             $query = mysqli_query($con, $sql);
                             $num = mysqli_num_rows($query);
                             if($num > 0) { ?>
-                                <div class="table-responsive list_info">
-                                    <table class='table table-condensed'>
-                                        <thead>
+                            <div class="table-responsive list_info">
+                                <table class='table table-condensed'>
+                                    <thead>
                                         <tr class='list_menu'>
                                             <td>Data</td>
                                             <td>Valor</td>
@@ -81,38 +84,43 @@ if(isset($_POST['editaEmpenho']))
                                             <td></td>
                                             <td></td>
                                         </tr>
-                                        </thead>
-                                        <tbody>
+                                    </thead>
+                                    <tbody>
                                         <?php while ($empenho = mysqli_fetch_array($query)) {
                                             ?>
-                                            <tr>
-                                               <td><?php echo exibirDataBr($empenho['data']); ?></td>
-                                               <td><?php echo $empenho['valor']; ?></td>
-                                               <td><?php echo $empenho['numeroEmpenho']; ?></td>
-                                               <td class='list_description'>
+                                        <tr>
+                                            <td>
+                                                <?php echo exibirDataBr($empenho['data']); ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $empenho['valor']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $empenho['numeroEmpenho']; ?>
+                                            </td>
+                                            <td class='list_description'>
                                                 <form method="POST" action="?perfil=edicao_empenho&idEmpenho=<?=$empenho['idEmpenho'] ?>">
-                                                    <input type='hidden' name='' value='".$campo['']."' />
-                                                    <input type ='submit' class='btn btn-theme btn-block' value='editar'>
+                                                    <input type='hidden' name='' value='".$campo[' ']."' />
+                                                    <input type='submit' class='btn btn-theme btn-block' value='editar'>
                                                 </form>
-                                                </td>
-                                                 <td class='list_description'>
-                                                    <form method='POST' action='?perfil='>
-                                                        <input type='hidden' name='' value='".$campo['']."' />
-                                                        <input type ='submit' class='btn btn-theme btn-block' value='reservas'>
-                                                     </form>
-                                                </td>
-                                            </tr>
-                                            </tr>
+                                            </td>
+                                            <td class='list_description'>
+                                                <form method='POST' action='?perfil='>
+                                                    <input type='hidden' name='' value='".$campo[' ']."' />
+                                                    <input type='submit' class='btn btn-theme btn-block' value='reservas'>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        </tr>
                                         <?php } ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <?php
+                                    </tbody>
+                                </table>
+                            </div>
+                            <?php
                             }
                             else {?>
                                 <h4>Não existem empenhos cadastrados!</h4>
-                            <?php } ?>
+                                <?php } ?>
                     </div>
-            </div>        
-        </section>
-
+                </div>
+    </section>

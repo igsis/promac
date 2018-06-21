@@ -26,11 +26,11 @@ if(isset($_POST['inserirEmpenho'])){
 ?>
     <section class="home-section bg-white">
         <div class="container">
-            <!--<?php include 'includes/menu_smc.php';?>-->
+            <?php include 'includes/menu_smc.php';?>
             <div class="form-group">
                 <h4>Inserir Empenho</h4>
             </div>
-            
+
             <div class="col-md-offset-1 col-md-10">
                 <div class="table-responsive list_info">
                     <form method="POST" action="?perfil=cadastro_empenho&idReserva=<?=$idReserva?>" class="form-horizontal" role="form">

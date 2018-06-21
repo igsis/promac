@@ -25,6 +25,7 @@ if(isset($_POST['alteraEmpenho'])){
 ?>
     <section id="list_items" class="home-section bg-white">
         <div class="container">
+            <?php include 'includes/menu_smc.php';?>
             <div class="form-group">
                 <h4>Edição de Empenho</h4>
                 <p><strong><?php if(isset($mensagem)){echo $mensagem;} ?></strong></p>

@@ -26,7 +26,7 @@ if(isset($_POST['inserirReserva'])){
 ?>
     <section class="home-section bg-white">
         <div class="container">
-            <!--<?php include 'includes/menu_smc.php';?>-->
+            <?php include 'includes/menu_smc.php';?>
             <div class="form-group">
                 <h4>Inserir Reserva</h4>
             </div>
