@@ -36,7 +36,7 @@ $reserva = recuperaDados("reserva", "idReserva", $idReserva);
 
 					<div class="form-group">
 						<div class="col-md-offset-1 col-md-10">
-							<input type="hidden" name="editaReserva" value="<?php echo $idReserva ?>">
+							<input type="hidden" name="editarReserva" value="<?php echo $idReserva ?>">
 							<input type="submit" class="btn btn-theme btn-lg btn-block" value="Gravar">
 						</div>
 					</div>

@@ -34,23 +34,6 @@ if(isset($_POST['inserirReserva'])){
     }
 }
 
-if(isset($_POST['editarReserva'])){
-    $idR = $_POST['IDR'];
-    $data = exibirDataMysql($_POST['data']);
-    $valor = $_POST['valor'];
-    $numeroReserva = $_POST['numeroReserva'];
-    
-    $sql = "UPDATE reserva SET data = '$data', valor = '$valor', numeroReserva = '$numeroReserva' WHERE idReserva = '$idR'";
-    
-    if(mysqli_query($con,$sql)){
-        $mensagem = "<font color='#01DF3A'><strong>Reserva cadastrada com sucesso!</strong></font>";
-        echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
-        gravarLog($sql);
-    }else{
-        $mensagem = "<font color='#FF0000'><strong>Erro ao cadastrar!
-        </strong></font>";
-    }
-}
 ?>
     <section class="home-section bg-white">
         <div class="container">
