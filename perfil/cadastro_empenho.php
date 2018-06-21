@@ -8,7 +8,7 @@ $reserva = recuperaDados("reserva","idReserva",$idReserva);
 if(isset($_POST['inserirEmpenho'])){
     $idReserva = $_POST['idReserva'];
     $data = exibirDataMysql($_POST['data']);
-    $valor = $_POST['valor'];
+    $valor = dinheiroDeBr($_POST['valor']);
     $numeroEmpenho = $_POST['numeroEmpenho'];
     
     $sql = "INSERT INTO empenho (idReserva, data, valor, numeroEmpenho) values ('$idReserva', '$data', '$valor', '$numeroEmpenho')";
@@ -42,7 +42,7 @@ if(isset($_POST['inserirEmpenho'])){
 
                             <div class="col-md-3">
                                 <label>Valor</label>
-                                <input type="number" name="valor" class="form-control" required>
+                                <input type="text" id='valor' name="valor" class="form-control" required>
                             </div>
 
                             <div class="col-md-3">

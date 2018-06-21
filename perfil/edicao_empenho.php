@@ -8,7 +8,7 @@ if(isset($_POST['alteraEmpenho'])){
     $idEmpenho = $_POST['IDE'];
     $idReserva = $_POST['IDR'];
     $data = exibirDataMysql($_POST['data']);
-    $valor = $_POST['valor'];
+    $valor = dinheiroDeBr($_POST['valor']);
     $numeroEmpenho = $_POST['numeroEmpenho'];
     
     $sql = "UPDATE empenho SET data = '$data', valor = '$valor', numeroEmpenho = '$numeroEmpenho' WHERE idEmpenho = '$idEmpenho' ";
@@ -40,7 +40,7 @@ if(isset($_POST['alteraEmpenho'])){
                             </div>
 
                             <div class="col-md-3"><label>Valor</label>
-                                <input type="text" id='valor' name="valor" class="form-control" value="<?php echo $empenho['valor'] ?>" required>
+                                <input type="text" id='valor' name="valor" class="form-control" value="<?php echo dinheiroParaBr($empenho['valor']) ?>" required>
                             </div>
 
                             <div class="col-md-3"><label>Número do Empenho</label>
