@@ -34,22 +34,22 @@ if(isset($_POST['alteraEmpenho'])){
                     <form method="POST" action="?perfil=edicao_empenho&idEmpenho=<?=$idEmpenho?>" class="form-horizontal" role="form">
 
                         <div class="form-group">
-                            <div class="col-md-offset-1 col-md-3">
-                                <label><br/>Data</label><br/>
-                                <input type="text" id='datepicker01' name="data" class="form-control" maxlength="100" value="<?php echo $empenho['data'] ?>">
+                            <div class="col-md-offset-2 col-md-2">
+                                <label>Data</label>
+                                <input type="text" id='datepicker01' name="data" class="form-control" maxlength="100" value="<?php echo exibirDataBr($empenho['data']) ?>">
                             </div>
 
-                            <div class="col-md-1"><label>Valor</label><br/>
+                            <div class="col-md-3"><label>Valor</label>
                                 <input type="text" id='valor' name="valor" class="form-control" value="<?php echo $empenho['valor'] ?>" required>
                             </div>
 
-                            <div class="col-md-1"><label>Número do Empenho</label><br/>
+                            <div class="col-md-3"><label>Número do Empenho</label>
                                 <input type="text" name="numeroEmpenho" class="form-control" value="<?php echo $empenho['numeroEmpenho'] ?>" required>
                             </div>
                         </div>
                         <input type="hidden" name="IDE" value="<?php echo $empenho['idEmpenho'] ?>">
                         <input type="hidden" name="IDR" value="<?php echo $empenho['idReserva'] ?>">
-                        
+
                         <div class="form-group">
                             <div class="col-md-offset-1 col-md-10">
                                 <input type="submit" name="alteraEmpenho" class="btn btn-theme btn-lg btn-block" value="Gravar">
