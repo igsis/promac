@@ -1,17 +1,7 @@
 <?php
 $con = bancoMysqli();
 
-$idProjeto = isset($_POST['idProjeto']) ? $_POST['idProjeto'] : null;
-if($idProjeto == null
-){
-    $idProjeto = isset($_GET['idFF']) ? $_GET['idFF'] : null;
-}
-
-$idReserva = isset($_POST['idReserva']) ? $_POST['idReserva'] : null;
-if($idProjeto == null
-){
-    $idProjeto = isset($_GET['idRF']) ? $_GET['idRF'] : null;
-}
+$idProjeto = $_GET['idProjeto'];
 
 $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 $reserva = recuperaDados("reserva", "idReserva", $idReserva);
@@ -22,7 +12,7 @@ if(isset($_POST['inserirReserva'])){
     $valor = $_POST['valor'];
     $numeroReserva = $_POST['numeroReserva'];
     
-    $sql = "INSERT INTO reserva (idProjeto, data, valor, numeroReserva) values ('$idProjeto', '$data', '$valor', '$numeroReserva')";
+    $sql = "INSERT INTO reserva (idProjeto, data, valor, numeroReserva) values ('$idP', '$data', '$valor', '$numeroReserva')";
     
     if(mysqli_query($con,$sql)){
         $mensagem = "<font color='#01DF3A'><strong>Reserva cadastrada com sucesso!</strong></font>";
@@ -44,7 +34,7 @@ if(isset($_POST['inserirReserva'])){
             
             <div class="col-md-offset-1 col-md-10">
                 <div class="table-responsive list_info">
-                    <form method="POST" , action="?perfil=cadastro_reserva&idProjeto<?=$idProjeto?>" class="form-horizontal" role="form">
+                    <form method="POST" , action="?perfil=cadastro_reserva&idProjeto=<?=$idProjeto?>" class="form-horizontal" role="form">
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-2">
                                 <label>Data </label>
