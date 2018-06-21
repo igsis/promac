@@ -4,7 +4,6 @@ $con = bancoMysqli();
 $idProjeto = $_GET['idProjeto'];
 
 $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
-$reserva = recuperaDados("reserva", "idReserva", $idReserva);
 
 if(isset($_POST['inserirReserva'])){
     $idP = $_POST['IDP'];

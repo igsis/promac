@@ -8,7 +8,6 @@ if($idProjeto == null
 }
 $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 $reserva = recuperaDados("reserva","idReserva",$idProjeto);
-$empenho = recuperaDados("empenho","idEmpenho",$idReserva);
 
 
 // Gerar documentos
