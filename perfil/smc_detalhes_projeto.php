@@ -1098,7 +1098,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                                        <input type="hidden" name="idReserva" value="'.$linha['idReserva'].'" />
                                                        <input type ="submit" name="editarReserva" class="btn btn-theme btn-block" value="editar">
                                                  </form>
-                                             </td>
+                                             </td>  
                                                 <td class='list_description'>
                                                     <form method='POST' action='?perfil=deposito.php'>
                                                         <input type='hidden' name='' value='".$campo['']."' />
@@ -1106,7 +1106,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                                      </form>
                                                 </td>
                                                 <td class='list_description'>
-                                                    <form method='POST' action='?perfil='>
+                                                    <form method="POST" action="?perfil=empenho&idReserva=<?=$reserva['idReserva']?>">
                                                         <input type='hidden' name='' value='".$campo['']."' />
                                                         <input type ='submit' class='btn btn-theme btn-block' value='empenhos'>
                                                      </form>

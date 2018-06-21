@@ -15,7 +15,7 @@ if(isset($_POST['inserirEmpenho'])){
     
     if(mysqli_query($con,$sql)){
         $mensagem = "<font color='#01DF3A'><strong>Empenho cadastrado com sucesso!</strong></font>";
-        echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
+        echo "<script>window.location = '?perfil=empenho&idReserva=$idReserva';</script>";
         gravarLog($sql);
     }else{
         $mensagem = "<font color='#FF0000'><strong>Erro ao cadastrar!
@@ -33,7 +33,7 @@ if(isset($_POST['inserirEmpenho'])){
             
             <div class="col-md-offset-1 col-md-10">
                 <div class="table-responsive list_info">
-                    <form method="POST" , action="?perfil=cadastro_reserva&idProjeto=<?=$idProjeto?>" class="form-horizontal" role="form">
+                    <form method="POST" action="?perfil=cadastro_empenho&idReserva=<?=$idReserva?>" class="form-horizontal" role="form">
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-2">
                                 <label>Data</label>
@@ -50,7 +50,7 @@ if(isset($_POST['inserirEmpenho'])){
                                 <input type="text" name="numeroEmpenho" class="form-control">
                             </div>
 
-                            <?php echo "<input type='hidden' name='idReserva' value='$idProjeto'>";?>
+                            <?php echo "<input type='hidden' name='idReserva' value='$idReserva'>";?>
                             <br>
                             <br>
                             <br>

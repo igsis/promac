@@ -1,6 +1,6 @@
 <?php
 $con = bancoMysqli();
-$idReserva = $_SESSION['idReserva'];
+$idReserva = $_GET['idReserva'];
 
 if(isset($_POST['insereEmpenho']))
 {
@@ -55,7 +55,7 @@ if(isset($_POST['editaEmpenho']))
                     <div class="col-md-offset-1 col-md-10">
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-8">
-                                <form class="form-horizontal" role="form" action="?perfil=cadastro_empenho" method="post">
+                                <form class="form-horizontal" role="form" action="?perfil=cadastro_empenho&idReserva=<?=$idReserva?>" method="post">
                                     <input type="submit" value="Inserir novo empenho" class="btn btn-theme btn-lg btn-block">
                                 </form>
                             </div>
@@ -90,7 +90,7 @@ if(isset($_POST['editaEmpenho']))
                                                <td><?php echo $empenho['valor']; ?></td>
                                                <td><?php echo $empenho['numeroEmpenho']; ?></td>
                                                <td class='list_description'>
-                                                <form method='POST' action='?perfil='>
+                                                <form method="POST" action="?perfil=edicao_empenho&idEmpenho=<?=$empenho['idEmpenho'] ?>">
                                                     <input type='hidden' name='' value='".$campo['']."' />
                                                     <input type ='submit' class='btn btn-theme btn-block' value='editar'>
                                                 </form>
