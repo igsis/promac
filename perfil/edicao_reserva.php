@@ -7,7 +7,7 @@ $reserva = recuperaDados("reserva", "idReserva", $idReserva);
 if(isset($_POST['alteraReserva'])){
     $idP = $_POST['IDP'];
     $idReserva = $_POST['IDR'];
-    $data = exibirDataMysql['data'];
+    $data = exibirDataMysql($_POST['data']);
     $valor = $_POST['valor'];
     $numeroReserva = $_POST['numeroReserva'];
     
@@ -30,21 +30,24 @@ if(isset($_POST['alteraReserva'])){
                 <p><strong><?php if(isset($mensagem)){echo $mensagem;} ?></strong></p>
             </div>
             <div class="row">
+
                 <div class="col-md-offset-1 col-md-10">
                     <form method="POST" action="?perfil=edicao_reserva&idReserva=<?=$idReserva?>" class="form-horizontal" role="form">
 
                         <div class="form-group">
-                            <div class="col-md-offset-1 col-md-3">
-                                <label><br/>Data</label><br/>
-                                <input type="text" id='datepicker01' name="data" class="form-control" maxlength="100" value="<?php echo $reserva['data'] ?>">
+                            <div class="col-md-offset-2 col-md-2">
+                                <label>Data</label>
+                                <input type="text" id="datepicker01" name="data" class="form-control" maxlength="100" value="<?php echo exibirDataBr($reserva['data']) ?>">
                             </div>
 
-                            <div class="col-md-1"><label>Valor</label><br/>
+                            <div class="col-md-3">
+                                <label>Valor</label>
                                 <input type="text" id='valor' name="valor" class="form-control" value="<?php echo $reserva['valor'] ?>" required>
                             </div>
 
-                            <div class="col-md-1"><label>Número da Reserva</label><br/>
-                                <input type="text" name="numeroReserva" class="form-control" value="<?php echo $reserva['numeroReserva'] ?>" required>
+                            <div class="col-md-3">
+                                <label>Número da Reserva</label>
+                                <input type="text" id="numeroReserva" name="numeroReserva" class="form-control" value="<?php echo $reserva['numeroReserva'] ?>" required>
                             </div>
                         </div>
                         <input type="hidden" name="IDR" value="<?php echo $reserva['idReserva'] ?>">
@@ -55,7 +58,6 @@ if(isset($_POST['alteraReserva'])){
                             </div>
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>

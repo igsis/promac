@@ -28,7 +28,7 @@ if(isset($_POST['inserirEmpenho'])){
         <div class="container">
             <!--<?php include 'includes/menu_smc.php';?>-->
             <div class="form-group">
-                <h4>Inserir Reserva</h4>
+                <h4>Inserir Empenho</h4>
             </div>
             
             <div class="col-md-offset-1 col-md-10">
