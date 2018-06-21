@@ -8,6 +8,7 @@ if($idProjeto == null
 }
 $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 $reserva = recuperaDados("reserva","idReserva",$idProjeto);
+$empenho = recuperaDados("empenho","idEmpenho",$idReserva);
 
 
 // Gerar documentos
@@ -234,20 +235,21 @@ if(isset($_POST['insereReserva']))
     }
 }
 
-if(isset($_POST['apagar']))
+if(isset($_POST['insereEmpenho']))
 {
-    $idFinanceiro = $_POST['apagar'];
-    $sql_apagar_financeiro = "UPDATE financeiro SET publicado = 0 WHERE idUploadArquivo = '$idArquivo'";
-    if(mysqli_query($con,$sql_apagar_arquivo))
+    $sql = "INSERT INTO empenho (idReserva, data, valor, numeroEmpenho)
+            VALUES ('$idReserva', '$data', '$valor' '$numeroEmpenho')";
+    if (mysqli_query($con, $sql))
     {
-        $mensagem = "<font color='#01DF3A'><strong>Arquivo apagado com sucesso!</strong></font>";
-        gravarLog($sql_apagar_arquivo);
+        $mensagem = "Empenho inserido com sucesso";
+        gravarLog($sql);
     }
     else
     {
-        $mensagem = "<font color='#FF0000'><strong>Erro ao apagar arquivo!</strong></font>";
+        $mensagem = "Erro ao inserir empenho!";
     }
 }
+
 
 if($projeto['tipoPessoa'] == 1)
 {
@@ -1030,7 +1032,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 
                           <!-- LABEL PAGAMENTOS -->
                         <div role="tabpanel" class="tab-pane fade" id="pagamentos">
-                            <form method="POST" action="?perfil=cadastro_reserva&idFF=<?=$idProjeto?>" class="form-horizontal" role="form">
+                              <form method="POST" action="?perfil=cadastro_reserva&idProjeto=<?=$idProjeto?>" class="form-horizontal" role="form">
                                 <h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
                               <div class="form-group">
                                    <h4>Reservas</hh4>
@@ -1056,11 +1058,11 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                     <table class='table table-condensed'>
                                         <thead>
                                         <tr class='list_menu'>
-                                            <td>Reserva</td>
                                             <td>Data</td>
                                             <td>Valor</td>
                                             <td>Número da Reserva</td>
                                             <td></td>
+                                            <td></td>   
                                             <td></td>
                                         </tr>
                                         </thead>
@@ -1068,21 +1070,26 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                         <?php while ($reserva = mysqli_fetch_array($query)) {
                                             ?>
                                             <tr>
-                                              <td><?php echo $reserva['idReserva']; ?></td>
                                                <td><?php echo exibirDataBr($reserva['data']) ?></td>
                                                <td><?php echo $reserva['valor']; ?></td>
                                                <td><?php echo $reserva['numeroReserva']; ?></td>
-                                               <td class="list_description">
-                                                   <!--AAAA TA ERRADO ISSO AQUI AAAAAA -->
-                                                <form method="POST" action="?perfil=cadastro_reserva&idRF=<?=$idReserva?>">
-                                                    <input type="hidden" name="" value="'.$campo[''].'" />
-                                                    <input type ="submit" name="editarReserva" class="btn btn-theme btn-block" value="editar">
-                                                </form>
+                                              <td class="list_description">
+                                                      <!--AAAA TA ERRADO ISSO AQUI AAAAAA -->
+                                                  <form method="POST" action="?perfil=edicao_reserva">
+                                                       <input type="hidden" name="idReserva" value="'.$linha['idReserva'].'" />
+                                                       <input type ="submit" name="editarReserva" class="btn btn-theme btn-block" value="editar">
+                                                 </form>
                                              </td>
+                                                <td class='list_description'>
+                                                    <form method='POST' action='?perfil=deposito.php'>
+                                                        <input type='hidden' name='' value='".$campo['']."' />
+                                                        <input type ='submit' class='btn btn-theme btn-block' value='depósitos'>
+                                                     </form>
+                                                </td>
                                                 <td class='list_description'>
                                                     <form method='POST' action='?perfil='>
                                                         <input type='hidden' name='' value='".$campo['']."' />
-                                                        <input type ='submit' class='btn btn-theme btn-block' value='abrir depósitos'>
+                                                        <input type ='submit' class='btn btn-theme btn-block' value='empenhos'>
                                                      </form>
                                                 </td>
                                             </tr>
@@ -1093,9 +1100,9 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                 <?php
                             }
                             else {?>
-                                <h4>Não existem incentivadores para este projeto</h4>
+                                <h4>Não existem reservas cadastradas!</h4>
                             <?php } ?>
-                        </form>
+                          </form>
                         </div>
 
                         <!-- LABEL FINANCEIRO -->

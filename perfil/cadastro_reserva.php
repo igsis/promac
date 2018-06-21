@@ -22,7 +22,7 @@ if(isset($_POST['inserirReserva'])){
     $valor = $_POST['valor'];
     $numeroReserva = $_POST['numeroReserva'];
     
-    $sql = "INSERT INTO reserva (idProjeto, data, valor, numeroReserva) values ('$idP', '$data', '$valor', '$numeroReserva')";
+    $sql = "INSERT INTO reserva (idProjeto, data, valor, numeroReserva) values ('$idProjeto', '$data', '$valor', '$numeroReserva')";
     
     if(mysqli_query($con,$sql)){
         $mensagem = "<font color='#01DF3A'><strong>Reserva cadastrada com sucesso!</strong></font>";
@@ -65,7 +65,7 @@ if(isset($_POST['editarReserva'])){
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-2">
                                 <label>Data </label>
-                                <input type="text" name="data" id='datepicker07' class="form-control" placeholder="DD/MM/AA ou MM/AAAA" required>
+                                <input type="text" name="data" id='datepicker01' class="form-control" placeholder="DD/MM/AA ou MM/AAAA" required>
                             </div>
 
                             <div class="col-md-3">
