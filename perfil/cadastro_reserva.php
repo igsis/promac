@@ -8,7 +8,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 if(isset($_POST['inserirReserva'])){
     $idP = $_POST['IDP'];
     $data = exibirDataMysql($_POST['data']);
-    $valor = $_POST['valor'];
+    $valor = dinheiroDeBr($_POST['valor']);
     $numeroReserva = $_POST['numeroReserva'];
     
     $sql = "INSERT INTO reserva (idProjeto, data, valor, numeroReserva) values ('$idP', '$data', '$valor', '$numeroReserva')";
@@ -30,7 +30,7 @@ if(isset($_POST['inserirReserva'])){
             <div class="form-group">
                 <h4>Inserir Reserva</h4>
             </div>
-            
+
             <div class="col-md-offset-1 col-md-10">
                 <div class="table-responsive list_info">
                     <form method="POST" , action="?perfil=cadastro_reserva&idProjeto=<?=$idProjeto?>" class="form-horizontal" role="form">
@@ -42,7 +42,7 @@ if(isset($_POST['inserirReserva'])){
 
                             <div class="col-md-3">
                                 <label>Valor </label>
-                                <input type="number" name="valor" class="form-control" required>
+                                <input type="text" id='valor' name="valor" class="form-control" required>
                             </div>
 
                             <div class="col-md-3">

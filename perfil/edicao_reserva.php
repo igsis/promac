@@ -8,7 +8,7 @@ if(isset($_POST['alteraReserva'])){
     $idP = $_POST['IDP'];
     $idReserva = $_POST['IDR'];
     $data = exibirDataMysql($_POST['data']);
-    $valor = $_POST['valor'];
+    $valor = dinheiroDeBr($_POST['valor']);
     $numeroReserva = $_POST['numeroReserva'];
     
     $sql = "UPDATE reserva SET data = '$data', valor = '$valor', numeroReserva = '$numeroReserva' WHERE idReserva = '$idReserva' ";
@@ -42,7 +42,7 @@ if(isset($_POST['alteraReserva'])){
 
                             <div class="col-md-3">
                                 <label>Valor</label>
-                                <input type="text" id='valor' name="valor" class="form-control" value="<?php echo $reserva['valor'] ?>" required>
+                                <input type="text" id='valor' name="valor" class="form-control" value="<?php echo dinheiroParaBr($reserva['valor']) ?>" required>
                             </div>
 
                             <div class="col-md-3">
