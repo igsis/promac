@@ -450,12 +450,12 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                 <tr>
                                     <td>
                                         <strong>Valor do projeto:</strong>R$ <?php echo
-                                        isset($projeto['valorprojeto'])
+                                        dinheiroParabr(isset($projeto['valorprojeto'])
                                             ? $projeto['valorprojeto']
-                                            :  ''; ?>
+                                            :  ''); ?>
                                     </td>
-                                    <td><strong>Valor do incentivo:</strong> R$ <?php echo isset($projeto['valorIncentivo']) ? $projeto['valorIncentivo'] : null; ?></td>
-                                    <td><strong>Valor do financiamento:</strong> R$ <?php echo isset($projeto['valorFinanciamento']) ? $projeto['valorFinanciamento'] : null; ?></td>
+                                    <td><strong>Valor do incentivo:</strong> R$ <?php echo dinheiroParabr(isset($projeto['valorIncentivo']) ? $projeto['valorIncentivo'] : null); ?></td>
+                                    <td><strong>Valor do financiamento:</strong> R$ <?php echo dinheiroParabr(isset($projeto['valorFinanciamento']) ? $projeto['valorFinanciamento'] : null); ?></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2"><strong>Área de atuação:</strong> <?php echo $area['areaAtuacao'] ?></td>
@@ -1090,7 +1090,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                             ?>
                                             <tr>
                                                <td><?php echo exibirDataBr($reserva['data']) ?></td>
-                                               <td><?php echo $reserva['valor']; ?></td>
+                                               <td><?php echo dinheiroParabr($reserva['valor']); ?></td>
                                                <td><?php echo $reserva['numeroReserva']; ?></td>
                                               <td class="list_description">
                                                       <!--AAAA TA ERRADO ISSO AQUI AAAAAA -->
@@ -1150,7 +1150,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                     </div>
 
                                     <div class="col-md-6"><label>Assinatura do Termo de Responsabilidade</label>
-                                        <input type="text" name="assinaturaTermo" id='datepicker07' class="form-control" placeholder = "DD/MM/AA ou MM/AAAA" required value="<?php echo $projeto['assinaturaTermo'] ?>">
+                                        <input type="text" name="assinaturaTermo" id='datepicker07' class="form-control" placeholder = "DD/MM/AA ou MM/AAAA" required value="<?php echo exibirDataBr($projeto['assinaturaTermo']) ?>">
                                     </div>
                                 </div>
 

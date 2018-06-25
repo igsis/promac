@@ -93,7 +93,7 @@ if(isset($_POST['editaEmpenho']))
                                                 <?php echo exibirDataBr($empenho['data']); ?>
                                             </td>
                                             <td>
-                                                <?php echo $empenho['valor']; ?>
+                                                <?php echo dinheiroParabr($empenho['valor']); ?>
                                             </td>
                                             <td>
                                                 <?php echo $empenho['numeroEmpenho']; ?>
