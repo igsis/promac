@@ -1093,14 +1093,13 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                                <td><?php echo dinheiroParabr($reserva['valor']); ?></td>
                                                <td><?php echo $reserva['numeroReserva']; ?></td>
                                               <td class="list_description">
-                                                      <!--AAAA TA ERRADO ISSO AQUI AAAAAA -->
                                                   <form method="POST" action="?perfil=edicao_reserva&idReserva=<?=$reserva['idReserva']?>">
                                                        <input type="hidden" name="idReserva" value="'.$linha['idReserva'].'" />
                                                        <input type ="submit" name="editarReserva" class="btn btn-theme btn-block" value="editar">
                                                  </form>
                                              </td>  
                                                 <td class='list_description'>
-                                                    <form method='POST' action='?perfil=deposito.php'>
+                                                    <form method='POST' action="?perfil=deposito&idReserva=<?=$reserva['idReserva']?>&idProjeto=<?=$reserva['idProjeto']?>">
                                                         <input type='hidden' name='' value='".$campo['']."' />
                                                         <input type ='submit' class='btn btn-theme btn-block' value='depósitos'>
                                                      </form>

@@ -1,6 +1,7 @@
 <?php
 $con = bancoMysqli();
-$idReserva = $_SESSION['idReserva'];
+$idReserva = $_GET['idReserva'];
+$idProjeto = $_GET['idProjeto'];
 
 if(isset($_POST['insereDeposito']))
 {
@@ -55,7 +56,8 @@ if(isset($_POST['editaDeposito']))
 
 ?>
         <section id="list_items" class="home-section bg-white">
-            <div class="container"><?php include '../perfil/includes/menu_interno_pf.php'; ?>
+            <div class="container">
+                <?php include 'includes/menu_smc.php';?>
                 <div class="form-group">
                     <h4>Depósitos</h4>
                     <h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
@@ -64,7 +66,7 @@ if(isset($_POST['editaDeposito']))
                     <div class="col-md-offset-1 col-md-10">
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-8">
-                                <form class="form-horizontal" role="form" action="?perfil=cadastro_deposito" method="post">
+                                <form class="form-horizontal" role="form" action="?perfil=cadastro_deposito&idReserva=<?=$idReserva?>&idProjeto=<?=$idProjeto?>" method="POST">
                                     <input type="submit" value="Inserir novo depósito" class="btn btn-theme btn-lg btn-block">
                                 </form>
                             </div>
@@ -95,15 +97,16 @@ if(isset($_POST['editaDeposito']))
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <?php while ($empenho = mysqli_fetch_array($query)) {
-                                            ?>
+                                        <?php while ($deposito = mysqli_fetch_array($query)) { ?>
                                             <tr>
+                                               <td><?php echo $deposito['idDeposito'];?></td>
+                                               <td><?php echo $deposito['idIncentivador']; ?></td>
                                                <td><?php echo exibirDataBr($deposito['data']); ?></td>
                                                <td><?php echo dinheiroParaBr($deposito['valorDeposito']); ?></td>
-                                               td><?php echo dinheiroParaBr($deposito['valorRenuncia']); ?></td>
+                                               <td><?php echo dinheiroParaBr($deposito['valorRenuncia']); ?></td>
                                                <td><?php echo $deposito['porcentagemValorRenuncia']; ?></td>
                                                <td class='list_description'>
-                                                <form method='POST' action='?perfil='>
+                                                <form method='POST' action="?perfil=">
                                                     <input type='hidden' name='' value='".$campo['']."' />
                                                     <input type ='submit' class='btn btn-theme btn-block' value='editar'>
                                                 </form>
