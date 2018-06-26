@@ -54,7 +54,7 @@ $idProjeto = $_GET['idProjeto'];
                                           $query = mysqli_query($con, $sql);
                                           while ($deposito = mysqli_fetch_array($query)) { ?>
                                             <tr>
-                                               <td><?php echo $deposito['rg']; ?></td>
+                                               <td><?php echo $deposito['cpf']; ?></td>
                                                <td><?php echo $deposito['nome']; ?></td>
                                                <td><?php echo exibirDataBr($deposito['data']); ?></td>
                                                <td><?php echo dinheiroParaBr($deposito['valorDeposito']); ?></td>
