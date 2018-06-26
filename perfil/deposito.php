@@ -3,56 +3,7 @@ $con = bancoMysqli();
 $idReserva = $_GET['idReserva'];
 $idProjeto = $_GET['idProjeto'];
 
-if(isset($_POST['insereDeposito']))
-{
-    $tipoPessoa = $_POST['tipoPessoa'];
-    $idIncentivador = $_POST['idIncentivador'];
-    $data = exibirDataBr($_POST['data']);
-    $valorDeposito = $_POST['valorDeposito'];
-    $valorRenuncia = $_POST['valorRenuncia'];
-    $porcentagemValorRenuncia = $_POST['porcentagemValorRenuncia'];
-   
-    $sql_insere_deposito = "INSERT INTO `deposito`(`tipoPessoa`,`idIncentivador`,`idDeposito`, `data`, `valor`, `numeroLiquidacao`) VALUES ('$tipoPessoa, '$idIncentivador','$idDeposito', '$data', '$valor', '$numeroLiquidacao')";
 
-    if(mysqli_query($con,$sql_insere_deposito))
-    {
-        $mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso!</strong></font>";
-        gravarLog($sql_insere_deposito);
-    }
-    else
-    {
-        $mensagem = "<font color='#FF0000'><strong>Erro ao gravar! Tente novamente.</strong></font>";
-    }
-}
-
-if(isset($_POST['editaDeposito']))
-{
-    $idDeposito = $_POST['editaDeposito'];
-    $tipoPessoa = $_POST['tipoPessoa'];
-    $idIncentivador = $_POST['idIncentivador'];
-    $data = exibirDataBr($_POST['data']);
-    $valorDeposito = dinheiroDeBr($_POST['valorDeposito']);
-    $valorRenuncia = dinheiroDeBr($_POST['valorRenuncia']);
-    $porcentagemValorRenuncia = $_POST['porcentagemValorRenuncia'];
-
-    $sql_edita_deposito = "UPDATE `deposito` SET
-    `tipoPessoa`= '$tipoPessoa',
-    `idIncentivador` = '$idIncentivador',
-    `data` = '$data',
-    `valorDeposito` = '$valorDeposito',
-    `valorRenuncia` = '$valorRenuncia',
-    `porcentagemValorRenuncia` = '$porcentagemValorRenuncia'
-    WHERE idDeposito = '$idDeposito'";
-    if(mysqli_query($con,$sql_edita_liquidacao))
-    {
-        $mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso!</strong></font>";
-        gravarLog($sql_edita_liquidacao);
-    }
-    else
-    {       
-        $mensagem = "<font color='#FF0000'><strong>Erro ao gravar! Tente novamente.</strong></font>";
-    }
-}
 
 ?>
         <section id="list_items" class="home-section bg-white">
@@ -97,17 +48,54 @@ if(isset($_POST['editaDeposito']))
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <?php while ($deposito = mysqli_fetch_array($query)) { ?>
+                                            
+                                        <?php 
+                                          $sql = "SELECT * FROM deposito d INNER JOIN incentivador_pessoa_fisica pf ON d.idIncentivador = pf.idPf WHERE d.idReserva = '$idReserva' AND d.tipoPessoa = 4";
+                                          $query = mysqli_query($con, $sql);
+                                          while ($deposito = mysqli_fetch_array($query)) { ?>
                                             <tr>
-                                               <td><?php echo $deposito['idDeposito'];?></td>
-                                               <td><?php echo $deposito['idIncentivador']; ?></td>
+                                               <td><?php echo $deposito['rg']; ?></td>
+                                               <td><?php echo $deposito['nome']; ?></td>
                                                <td><?php echo exibirDataBr($deposito['data']); ?></td>
                                                <td><?php echo dinheiroParaBr($deposito['valorDeposito']); ?></td>
                                                <td><?php echo dinheiroParaBr($deposito['valorRenuncia']); ?></td>
                                                <td><?php echo $deposito['porcentagemValorRenuncia']; ?></td>
                                                <td class='list_description'>
-                                                <form method='POST' action="?perfil=">
+                                                <form method='POST' action="?perfil=edicao_deposito&idDeposito=<?=$deposito['idDeposito']?>&idProjeto=<?=$idProjeto?>">
                                                     <input type='hidden' name='' value='".$campo['']."' />
+                                                    <input type="hidden" name="idIncentivador" value="<?php echo $deposito['idIncentivador'] ;?>">
+                                                    <input type="hidden" name="nome" value="<?php echo $deposito['nome'] ;?>">
+                                                    <input type="hidden" name="tipoPessoa" value="<?php echo $deposito['tipoPessoa'] ;?>">
+                                                    <input type="hidden" name="idReserva" value="<?php echo $deposito['idReserva'] ;?>">
+                                                    <input type ='submit' class='btn btn-theme btn-block' value='editar'>
+                                                </form>
+                                                </td>
+                                                 <td class='list_description'>
+                                                    <form method='POST' action='?perfil='>
+                                                        <input type='hidden' name='' value='".$campo['']."' />
+                                                        <input type ='submit' class='btn btn-theme btn-block' value='reservas'>
+                                                     </form>
+                                                </td>
+                                            </tr>
+                                            </tr>
+                                        <?php }
+                                          $sql = "SELECT * FROM deposito d INNER JOIN incentivador_pessoa_juridica pj ON d.idIncentivador = pj.idPj WHERE d.idReserva = '$idReserva' AND d.tipoPessoa = 5";
+                                          $query = mysqli_query($con, $sql);
+                                          while ($deposito = mysqli_fetch_array($query)) { ?>
+                                            <tr>
+                                               <td><?php echo $deposito['cnpj']; ?></td>
+                                               <td><?php echo $deposito['razaoSocial']; ?></td>
+                                               <td><?php echo exibirDataBr($deposito['data']); ?></td>
+                                               <td><?php echo dinheiroParaBr($deposito['valorDeposito']); ?></td>
+                                               <td><?php echo dinheiroParaBr($deposito['valorRenuncia']); ?></td>
+                                               <td><?php echo $deposito['porcentagemValorRenuncia']; ?></td>
+                                               <td class='list_description'>
+                                                <form method='POST' action="?perfil=edicao_deposito&idDeposito=<?=$deposito['idDeposito']?>&idProjeto=<?=$idProjeto?>">
+                                                    <input type='hidden' name='' value='".$campo['']."' />
+                                                    <input type="hidden" name="idIncentivador" value="<?php echo $deposito['idIncentivador'] ;?>">
+                                                    <input type="hidden" name="nome" value="<?php echo $deposito['razaoSocial'] ;?>">
+                                                    <input type="hidden" name="tipoPessoa" value="<?php echo $deposito['tipoPessoa'] ;?>">
+                                                    <input type="hidden" name="idReserva" value="<?php echo $deposito['idReserva'] ;?>">
                                                     <input type ='submit' class='btn btn-theme btn-block' value='editar'>
                                                 </form>
                                                 </td>
