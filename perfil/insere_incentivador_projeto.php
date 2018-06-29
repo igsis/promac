@@ -35,7 +35,7 @@ if(isset($_POST['consulta']))
         }
 
         $sql = "SELECT * FROM $tabela AS IPF
-                LEFT JOIN financeiro AS F
+                LEFT JOIN incentivador_projeto AS F
                   ON IPF.idPf = F.idIncentivador AND F.idProjeto = $idProjeto AND F.tipoPessoa = $tipoPessoa
                 WHERE IPF.idPf > 0 $filtro_nome $filtro_cpf AND F.idIncentivador IS NULL
                 ORDER BY IPF.nome";
@@ -77,7 +77,7 @@ if(isset($_POST['consulta']))
             $filtro_cnpj = "";
         }
         $sql = "SELECT * FROM $tabela AS IPJ
-                LEFT JOIN financeiro AS F
+                LEFT JOIN incentivador_projeto AS F
                   ON IPJ.idPj = F.idIncentivador AND F.idProjeto = $idProjeto AND F.tipoPessoa = $tipoPessoa
                 WHERE IPJ.idPj > 0 $filtro_razaoSocial $filtro_cnpj AND F.idIncentivador IS NULL
                 ORDER BY IPJ.razaoSocial";

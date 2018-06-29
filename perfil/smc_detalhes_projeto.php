@@ -206,7 +206,7 @@ if(isset($_POST['insereIncentivador']))
     $tipoPessoa = $_POST['tipoPessoa'];
     $idIncentivador = $_POST['idIncentivador'];
 
-    $sql = "INSERT INTO financeiro (idIncentivador, tipoPessoa, idProjeto)
+    $sql = "INSERT INTO incentivador_projeto (idIncentivador, tipoPessoa, idProjeto)
             VALUES ('$idIncentivador', '$tipoPessoa', '$idProjeto')";
     if (mysqli_query($con, $sql))
     {
@@ -1242,7 +1242,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                             </form>
 
                             <?php
-                            $sql = "SELECT * FROM financeiro WHERE idProjeto = '$idProjeto'";
+                            $sql = "SELECT * FROM incentivador_projeto WHERE idProjeto = '$idProjeto'";
                             $query = mysqli_query($con, $sql);
                             $num = mysqli_num_rows($query);
                             if($num > 0) { ?>
