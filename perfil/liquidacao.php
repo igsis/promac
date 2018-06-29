@@ -6,48 +6,6 @@ $idDeposito = $_GET['idDeposito'];
 $deposito = recuperaDados("deposito", "idDeposito", $idDeposito);
 
 
-if(isset($_POST['insereLiquidacao']))
-{
-        $data = exibirDataBr($_POST['data']);
-        $valor = $_POST['valor'];
-        $numeroLiquidacao = $_POST['numeroLiquidacao'];
-      
-        $sql_insere_liquidacao = "INSERT INTO `liquidacao`(`idLiquidacao`, `data`, `valor`, `numeroLiquidacao`) VALUES ('$idLiquidacao', '$data', '$valor', '$numeroLiquidacao')";
-
-        if(mysqli_query($con,$sql_insere_liquidacao))
-        {
-                $mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso!</strong></font>";
-                gravarLog($sql_insere_liquidacao);
-        }
-        else
-        {
-                $mensagem = "<font color='#FF0000'><strong>Erro ao gravar! Tente novamente.</strong></font>";
-        }
-}
-
-if(isset($_POST['editaLiquidacao']))
-{
-        $idLiquidacao = $_POST['editaLiquidacao'];
-        $data = exibirDataBr($_POST['data']);
-        $valor = $_POST['valor'];
-        $numeroLiquidacao = $_POST['numeroLiquidacao'];
-
-        $sql_edita_liquidacao = "UPDATE `liquidacao` SET
-        `data`= '$data',
-        `valor` = '$valor',
-        `numeroLiquidacao` = '$numeroLiquidacao'
-        WHERE idLiquidacao = '$idLiquidacao'";
-        if(mysqli_query($con,$sql_edita_liquidacao))
-        {
-                $mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso!</strong></font>";
-                gravarLog($sql_edita_liquidacao);
-        }
-        else
-        {       
-                $mensagem = "<font color='#FF0000'><strong>Erro ao gravar! Tente novamente.</strong></font>";
-        }
-}
-
 ?>
       <section id="list_items" class="home-section bg-white">
         <div class="container">

@@ -5,48 +5,6 @@ $idReserva = $_GET['idReserva'];
 $reserva = recuperaDados("reserva", "idReserva", $idReserva);
 
 
-if(isset($_POST['insereEmpenho']))
-{
-    $data = exibirDataBr($_POST['data']);
-    $valor = $_POST['valor'];
-    $numeroEmpenho = $_POST['numeroEmpenho'];
-   
-    $sql_insere_empenho = "INSERT INTO `empenho`(`idReserva`, `data`, `valor`, `numeroEmpenho`) VALUES ('$idReserva', '$data', '$valor', '$numeroEmpenho')";
-
-    if(mysqli_query($con,$sql_insere_empenho))
-    {
-        $mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso!</strong></font>";
-        gravarLog($sql_insere_empenho);
-    }
-    else
-    {
-        $mensagem = "<font color='#FF0000'><strong>Erro ao gravar! Tente novamente.</strong></font>";
-    }
-}
-
-if(isset($_POST['editaEmpenho']))
-{
-    $idEmpenho = $_POST['editaEmpenho'];
-    $data = exibirDataBr($_POST['data']);
-    $valor = $_POST['valor'];
-    $numeroEmpenho = $_POST['numeroEmpenho'];
-
-    $sql_edita_empenho = "UPDATE `empenho` SET
-    `data`= '$data',
-    `valor` = '$valor',
-    `numeroEmpenho` = '$numeroEmpenho'
-    WHERE idEmpenho = '$idEmpenho'";
-    if(mysqli_query($con,$sql_edita_empenho))
-    {
-        $mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso!</strong></font>";
-        gravarLog($sql_edita_empenho);
-    }
-    else
-    {       
-        $mensagem = "<font color='#FF0000'><strong>Erro ao gravar! Tente novamente.</strong></font>";
-    }
-}
-
 ?>
     <section id="list_items" class="home-section bg-white">
         <div class="container">

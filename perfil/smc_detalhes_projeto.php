@@ -1059,7 +1059,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 
                                 <div class="form-group">
                                     <div class="col-md-offset-2 col-md-8">
-                                        <input type="submit" name="insereReserva" class="btn btn-theme btn-md btn-block" value="INSERIR RESERVA">
+                                        <input type="submit" class="btn btn-theme btn-md btn-block" value="INSERIR RESERVA">
                                     </div>
                                 </div>
 
@@ -1095,7 +1095,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                                 <td class="list_description">
                                                   <form method="POST" action="?perfil=edicao_reserva&idReserva=<?=$reserva['idReserva']?>">
                                                        <input type="hidden" name="idReserva" value="'.$linha['idReserva'].'" />
-                                                       <input type ="submit" name="editarReserva" class="btn btn-theme btn-block" value="editar">
+                                                       <input type ="submit" class="btn btn-theme btn-block" value="editar">
                                                  </form>
                                                 </td> 
                                                 <td class='list_description'>
