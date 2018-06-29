@@ -1,14 +1,14 @@
 <?php
 $con = bancoMysqli();
 
-$idDeposito = $_GET['idDeposito'];
+$idLiquidacao = $_GET['idLiquidacao'];
 $liquidacao = recuperaDados("liquidacao", "idLiquidacao", $idLiquidacao);
 
 if(isset($_POST['alteraLiquidacao'])){
     $idLiquidacao = $_POST['IDL'];
     $idDeposito = $_POST['IDD'];
-    $data = exibirDataMysql(['data']);
-    $valor = $_POST['valor'];
+    $data = exibirDataMysql($_POST['data']);
+    $valor = dinheiroDeBr($_POST['valor']);
     $numeroLiquidacao = $_POST['numeroLiquidacao'];
     
     $sql = "UPDATE liquidacao SET data = '$data', valor = '$valor', numeroLiquidacao = '$numeroLiquidacao' WHERE idLiquidacao = '$idLiquidacao' ";
@@ -25,8 +25,9 @@ if(isset($_POST['alteraLiquidacao'])){
 ?>
     <section id="list_items" class="home-section bg-white">
         <div class="container">
+            <?php include 'includes/menu_smc.php';?>
             <div class="form-group">
-                <h4>Edição de Liquidação/h4>
+                <h4>Edição de Liquidação</h4>
                 <p><strong><?php if(isset($mensagem)){echo $mensagem;} ?></strong></p>
             </div>
             <div class="row">
@@ -34,22 +35,22 @@ if(isset($_POST['alteraLiquidacao'])){
                     <form method="POST" action="?perfil=edicao_liquidacao&idLiquidacao=<?=$idLiquidacao?>" class="form-horizontal" role="form">
 
                         <div class="form-group">
-                            <div class="col-md-offset-1 col-md-3">
-                                <label><br/>Data</label><br/>
-                                <input type="text" id='datepicker01' name="data" class="form-control" maxlength="100" value="<?php echo $liquidacao['data'] ?>">
+                            <div class="col-md-offset-2 col-md-2">
+                                <label>Data</label>
+                                <input type="text" id='datepicker01' name="data" class="form-control" maxlength="100" value="<?php echo exibirDataBr($liquidacao['data']) ?>">
                             </div>
 
-                            <div class="col-md-1"><label>Valor</label><br/>
-                                <input type="text" id='valor' name="valor" class="form-control" value="<?php echo $liquidacao['valor'] ?>" required>
+                            <div class="col-md-3"><label>Valor</label>
+                                <input type="text" id='valor' name="valor" class="form-control" value="<?php echo dinheiroParaBr($liquidacao['valor']) ?>" required>
                             </div>
 
-                            <div class="col-md-1"><label>Número da Liquidação</label><br/>
+                            <div class="col-md-3"><label>Número da Liquidação</label>
                                 <input type="text" name="numeroLiquidacao" class="form-control" value="<?php echo $liquidacao['numeroLiquidacao'] ?>" required>
                             </div>
                         </div>
-                        <input type="hidden" name="IDL" value="<?php echo $empenho['idLiquidacao'] ?>">
-                        <input type="hidden" name="IDD" value="<?php echo $empenho['idDeposito'] ?>">
-                        
+                        <input type="hidden" name="IDL" value="<?php echo $liquidacao['idLiquidacao'] ?>">
+                        <input type="hidden" name="IDD" value="<?php echo $liquidacao['idDeposito'] ?>">
+
                         <div class="form-group">
                             <div class="col-md-offset-1 col-md-10">
                                 <input type="submit" name="alteraLiquidacao" class="btn btn-theme btn-lg btn-block" value="Gravar">

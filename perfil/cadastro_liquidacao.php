@@ -8,14 +8,14 @@ $deposito = recuperaDados("deposito","idDeposito",$idDeposito);
 if(isset($_POST['inserirLiquidacao'])){
     $idDeposito = $_POST['idDeposito'];
     $data = exibirDataMysql($_POST['data']);
-    $valor = $_POST['valor'];
+    $valor = dinheiroDeBr($_POST['valor']);
     $numeroLiquidacao = $_POST['numeroLiquidacao'];
     
-    $sql = "INSERT INTO liquidacao (idDeposito, data, valor, numeroLiquidacao) values ('$idDeposito', '$data', '$valor','$numeroLiquidacao')";
+    $sql = "INSERT INTO liquidacao (idDeposito, data, valor, numeroLiquidacao) values ('$idDeposito', '$data', '$valor', '$numeroLiquidacao')";
     
     if(mysqli_query($con,$sql)){
         $mensagem = "<font color='#01DF3A'><strong>Liquidação cadastrada com sucesso!</strong></font>";
-        echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
+        echo "<script>window.location = '?perfil=liquidacao&idDeposito=$idDeposito';</script>";
         gravarLog($sql);
     }else{
         $mensagem = "<font color='#FF0000'><strong>Erro ao cadastrar!
@@ -26,14 +26,14 @@ if(isset($_POST['inserirLiquidacao'])){
 ?>
     <section class="home-section bg-white">
         <div class="container">
-            <!--<?php include 'includes/menu_smc.php';?>-->
+            <?php include 'includes/menu_smc.php';?>
             <div class="form-group">
                 <h4>Inserir Liquidação</h4>
             </div>
-            
+
             <div class="col-md-offset-1 col-md-10">
                 <div class="table-responsive list_info">
-                    <form method="POST" , action="?perfil=cadastro_reserva&idProjeto=<?=$idProjeto?>" class="form-horizontal" role="form">
+                    <form method="POST" action="?perfil=cadastro_liquidacao&idDeposito=<?=$idDeposito?>" class="form-horizontal" role="form">
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-2">
                                 <label>Data</label>
@@ -42,7 +42,7 @@ if(isset($_POST['inserirLiquidacao'])){
 
                             <div class="col-md-3">
                                 <label>Valor</label>
-                                <input type="number" name="valor" class="form-control" required>
+                                <input type="text" id='valor' name="valor" class="form-control" required>
                             </div>
 
                             <div class="col-md-3">

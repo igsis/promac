@@ -149,6 +149,12 @@ $reserva = recuperaDados("reserva", "idReserva", $idReserva);
                                                 <input type='submit' class='btn btn-theme btn-block' value='editar'>
                                             </form>
                                         </td>
+                                        <td class='list_description'>
+                                            <form method="POST" action="?perfil=liquidacao&idDeposito=<?=$deposito['idDeposito']?>">
+                                                <input type='hidden' name='' value='".$campo['']."' />
+                                                <input type ='submit' class='btn btn-theme btn-block' value='Liquidação'>
+                                             </form>
+                                        </td>
                                     </tr>
                                 <?php } ?>
                                 </tbody>
