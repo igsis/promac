@@ -2,6 +2,9 @@
 $con = bancoMysqli();
 $idReserva = $_GET['idReserva'];
 
+$reserva = recuperaDados("reserva", "idReserva", $idReserva);
+
+
 if(isset($_POST['insereEmpenho']))
 {
     $data = exibirDataBr($_POST['data']);
@@ -64,6 +67,49 @@ if(isset($_POST['editaEmpenho']))
                         </div>
                     </div>
                 </div>
+
+                 <!--Botao Modal-->
+
+            <div class="col-md-offset-1 col-md-10">
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-8">
+                        <button class='btn btn-theme btn-lg btn-block' data-toggle='modal' data-target='#modal_reserva'>
+                            Detalhes da reserva
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!--MODAL-->
+
+            <div class="modal fade" id="modal_reserva" role="dialog" aria-labelledby="proponenteLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">Detalhes da reserva</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>
+                                <label>Data: <?php echo exibirDataBr($reserva['data']); ?></label>
+                            </p>
+
+                            <p>
+                                <label>Valor da Reserva: R$ <?php echo dinheiroParaBr($reserva['valor']); ?></label>
+                            </p>
+
+                            <p>
+                                <label>Número da Reserva: <?php echo $reserva['numeroReserva']; ?></label>
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-8"><br></div>
                 </div>
@@ -104,13 +150,6 @@ if(isset($_POST['editaEmpenho']))
                                                     <input type='submit' class='btn btn-theme btn-block' value='editar'>
                                                 </form>
                                             </td>
-                                            <td class='list_description'>
-                                                <form method='POST' action='?perfil='>
-                                                    <input type='hidden' name='' value='".$campo[' ']."' />
-                                                    <input type='submit' class='btn btn-theme btn-block' value='reservas'>
-                                                </form>
-                                            </td>
-                                        </tr>
                                         </tr>
                                         <?php } ?>
                                     </tbody>
