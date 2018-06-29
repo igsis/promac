@@ -34,7 +34,7 @@ $reserva = recuperaDados("reserva", "idReserva", $idReserva);
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-8">
                         <button class='btn btn-theme btn-lg btn-block' data-toggle='modal' data-target='#modal_reserva'>
-                            Detalhes desta reserva
+                            Detalhes da reserva
                         </button>
                     </div>
                 </div>
