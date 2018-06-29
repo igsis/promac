@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 18-Jun-2018 às 21:23
+-- Generation Time: 29-Jun-2018 às 18:03
 -- Versão do servidor: 10.1.22-MariaDB
 -- PHP Version: 7.1.4
 
@@ -21,8 +21,33 @@ SET time_zone = "+00:00";
 --
 -- Database: `promac`
 --
-CREATE DATABASE IF NOT EXISTS `promac` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `promac`;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `administrators`
+--
+
+CREATE TABLE `administrators` (
+  `id` int(11) NOT NULL,
+  `login` varchar(10) NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
+  `local` varchar(100) CHARACTER SET utf8mb4 NOT NULL,
+  `phone` varchar(20) NOT NULL,
+  `email` varchar(100) CHARACTER SET utf8mb4 NOT NULL,
+  `dateCreated` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `administrators_users`
+--
+
+CREATE TABLE `administrators_users` (
+  `users_id` int(11) NOT NULL,
+  `admininstrators_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -36,6 +61,18 @@ CREATE TABLE `area_atuacao` (
   `tipo` tinyint(1) DEFAULT NULL COMMENT 'PJ e PF = 1 | PF = 1 | PJ = 2',
   `publicado` tinyint(1) DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `categories`
+--
+
+CREATE TABLE `categories` (
+  `id` int(2) NOT NULL,
+  `category` varchar(120) NOT NULL,
+  `published` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -90,7 +127,7 @@ CREATE TABLE `deposito` (
   `idIncentivador` int(11) NOT NULL,
   `idReserva` int(11) NOT NULL,
   `data` date NOT NULL,
-  `ValorDeposito` decimal(9,2) NOT NULL,
+  `valorDeposito` decimal(9,2) NOT NULL,
   `valorRenuncia` decimal(9,2) NOT NULL,
   `porcentagemValorRenuncia` varchar(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -118,6 +155,31 @@ CREATE TABLE `empenho` (
   `data` date NOT NULL,
   `valor` decimal(9,2) NOT NULL,
   `numeroEmpenho` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `employees`
+--
+
+CREATE TABLE `employees` (
+  `id` int(11) NOT NULL,
+  `name` varchar(45) NOT NULL,
+  `role` varchar(45) NOT NULL,
+  `published` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `employees_problems`
+--
+
+CREATE TABLE `employees_problems` (
+  `problems_id` int(11) NOT NULL,
+  `employee_id` int(11) NOT NULL,
+  `toolMaterial` longtext
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -168,33 +230,6 @@ CREATE TRIGGER `tr_ficha_tecnica` AFTER UPDATE ON `ficha_tecnica` FOR EACH ROW I
       ))
 $$
 DELIMITER ;
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `financeiro`
---
-
-CREATE TABLE `financeiro` (
-  `idFinanceiro` int(11) NOT NULL,
-  `idIncentivador` int(11) NOT NULL,
-  `tipoPessoa` tinyint(1) NOT NULL,
-  `idProjeto` int(11) NOT NULL,
-  `dataDeposito` date NOT NULL,
-  `valorDeposito` decimal(9,2) NOT NULL,
-  `valorRenuncia` decimal(9,2) NOT NULL,
-  `porcentagemValorRenuncia` varchar(4) NOT NULL,
-  `dataReserva` date NOT NULL,
-  `valorReserva` decimal(9,2) NOT NULL,
-  `numeroReserva` varchar(30) NOT NULL,
-  `dataEmpenho` date NOT NULL,
-  `valorEmpenho` decimal(9,2) NOT NULL,
-  `numeroEmpenho` varchar(30) NOT NULL,
-  `dataLiquidacao` date NOT NULL,
-  `valorLiquidacao` decimal(9,2) NOT NULL,
-  `numeroLiquidacao` varchar(30) NOT NULL,
-  `publicado` tinyint(1) DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -319,6 +354,18 @@ CREATE TABLE `incentivador_pessoa_juridica` (
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `incentivador_projeto`
+--
+
+CREATE TABLE `incentivador_projeto` (
+  `idIncentivador` int(11) NOT NULL,
+  `tipoPessoa` tinyint(1) NOT NULL,
+  `idProjeto` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `liquidacao`
 --
 
@@ -431,6 +478,22 @@ CREATE TABLE `notas` (
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `notes`
+--
+
+CREATE TABLE `notes` (
+  `id` int(11) NOT NULL,
+  `problems_id` int(11) NOT NULL,
+  `administrator_id` int(11) DEFAULT NULL,
+  `users_id` int(11) DEFAULT NULL,
+  `note` longtext NOT NULL,
+  `private` tinyint(1) NOT NULL,
+  `date` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `orcamento`
 --
 
@@ -495,7 +558,7 @@ DELIMITER ;
 CREATE TABLE `orcamento_anual` (
   `idOrcamentoAnual` int(11) NOT NULL,
   `ano` int(4) NOT NULL,
-  `valor` decimal(9,2) NOT NULL
+  `valor` decimal(11,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -634,6 +697,51 @@ CREATE TABLE `prazos_projeto` (
   `prestarContas` date DEFAULT NULL,
   `publicado` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `priorities`
+--
+
+CREATE TABLE `priorities` (
+  `id` int(1) NOT NULL,
+  `priority` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `problems`
+--
+
+CREATE TABLE `problems` (
+  `id` int(11) NOT NULL,
+  `users_id` int(11) NOT NULL,
+  `local` varchar(100) NOT NULL,
+  `phone` varchar(45) NOT NULL,
+  `email` varchar(100) CHARACTER SET utf8mb4 NOT NULL,
+  `contact` varchar(20) NOT NULL,
+  `priorities_id` int(1) NOT NULL,
+  `categories_id` int(2) NOT NULL,
+  `description` longtext NOT NULL,
+  `solution` longtext,
+  `startDate` datetime NOT NULL,
+  `closedate` datetime DEFAULT NULL,
+  `problem_status_id` int(1) NOT NULL,
+  `administrators_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `problem_status`
+--
+
+CREATE TABLE `problem_status` (
+  `id` int(1) NOT NULL,
+  `status` varchar(12) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -781,6 +889,17 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `regions`
+--
+
+CREATE TABLE `regions` (
+  `id` int(1) NOT NULL,
+  `region` varchar(6) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `renuncia_fiscal`
 --
 
@@ -914,6 +1033,40 @@ CREATE TABLE `upload_arquivo` (
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `login` varchar(10) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `local` varchar(100) NOT NULL,
+  `phone` varchar(20) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `contact` varchar(20) NOT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `idRegion` int(1) DEFAULT NULL,
+  `operatingHours` varchar(100) DEFAULT NULL,
+  `historicalBuilding` tinyint(1) DEFAULT NULL,
+  `dateCreated` datetime NOT NULL,
+  `dateLastAccess` datetime DEFAULT NULL,
+  `user_status_id` int(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `user_status`
+--
+
+CREATE TABLE `user_status` (
+  `id` int(1) NOT NULL,
+  `status` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `weblogs`
 --
 
@@ -945,10 +1098,30 @@ CREATE TABLE `zona` (
 --
 
 --
+-- Indexes for table `administrators`
+--
+ALTER TABLE `administrators`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `administrators_users`
+--
+ALTER TABLE `administrators_users`
+  ADD KEY `fk_administrators_idx` (`admininstrators_id`),
+  ADD KEY `fk_users_idx` (`users_id`);
+
+--
 -- Indexes for table `area_atuacao`
 --
 ALTER TABLE `area_atuacao`
   ADD PRIMARY KEY (`idArea`);
+
+--
+-- Indexes for table `categories`
+--
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `category_UNIQUE` (`category`);
 
 --
 -- Indexes for table `cronograma`
@@ -976,6 +1149,19 @@ ALTER TABLE `empenho`
   ADD PRIMARY KEY (`idEmpenho`);
 
 --
+-- Indexes for table `employees`
+--
+ALTER TABLE `employees`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `employees_problems`
+--
+ALTER TABLE `employees_problems`
+  ADD KEY `fk_emploees_idx` (`problems_id`),
+  ADD KEY `fk_employee_idx` (`employee_id`);
+
+--
 -- Indexes for table `etapa`
 --
 ALTER TABLE `etapa`
@@ -986,12 +1172,6 @@ ALTER TABLE `etapa`
 --
 ALTER TABLE `ficha_tecnica`
   ADD PRIMARY KEY (`idFichaTecnica`);
-
---
--- Indexes for table `financeiro`
---
-ALTER TABLE `financeiro`
-  ADD PRIMARY KEY (`idFinanceiro`);
 
 --
 -- Indexes for table `frase_seguranca`
@@ -1050,6 +1230,15 @@ ALTER TABLE `notas`
   ADD PRIMARY KEY (`idNotas`);
 
 --
+-- Indexes for table `notes`
+--
+ALTER TABLE `notes`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_notes_problems_idx` (`problems_id`),
+  ADD KEY `fk_notes_administrators_idx` (`administrator_id`),
+  ADD KEY `fk_notes_users_idx` (`users_id`);
+
+--
 -- Indexes for table `orcamento`
 --
 ALTER TABLE `orcamento`
@@ -1081,10 +1270,42 @@ ALTER TABLE `prazos_projeto`
   ADD PRIMARY KEY (`idPrazo`);
 
 --
+-- Indexes for table `priorities`
+--
+ALTER TABLE `priorities`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `priority_UNIQUE` (`priority`);
+
+--
+-- Indexes for table `problems`
+--
+ALTER TABLE `problems`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_problems_user_idx` (`users_id`),
+  ADD KEY `fk_problems_proprieties_idx` (`priorities_id`),
+  ADD KEY `fk_problems_categories_idx` (`categories_id`),
+  ADD KEY `fk_problems_administrators_idx` (`administrators_id`),
+  ADD KEY `fk_problems_status_idx` (`problem_status_id`);
+
+--
+-- Indexes for table `problem_status`
+--
+ALTER TABLE `problem_status`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `status_UNIQUE` (`status`);
+
+--
 -- Indexes for table `projeto`
 --
 ALTER TABLE `projeto`
   ADD PRIMARY KEY (`idProjeto`);
+
+--
+-- Indexes for table `regions`
+--
+ALTER TABLE `regions`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `region_UNIQUE` (`region`);
 
 --
 -- Indexes for table `renuncia_fiscal`
@@ -1147,6 +1368,23 @@ ALTER TABLE `upload_arquivo`
   ADD PRIMARY KEY (`idUploadArquivo`);
 
 --
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `users_email_unique` (`email`),
+  ADD UNIQUE KEY `dapartment_UNIQUE` (`local`),
+  ADD KEY `fk_regios_users_idx` (`idRegion`),
+  ADD KEY `fk_user_status_users_idx` (`user_status_id`);
+
+--
+-- Indexes for table `user_status`
+--
+ALTER TABLE `user_status`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `status_UNIQUE` (`status`);
+
+--
 -- Indexes for table `weblogs`
 --
 ALTER TABLE `weblogs`
@@ -1164,10 +1402,20 @@ ALTER TABLE `zona`
 --
 
 --
+-- AUTO_INCREMENT for table `administrators`
+--
+ALTER TABLE `administrators`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
 -- AUTO_INCREMENT for table `area_atuacao`
 --
 ALTER TABLE `area_atuacao`
   MODIFY `idArea` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+--
+-- AUTO_INCREMENT for table `categories`
+--
+ALTER TABLE `categories`
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `cronograma`
 --
@@ -1177,7 +1425,7 @@ ALTER TABLE `cronograma`
 -- AUTO_INCREMENT for table `deposito`
 --
 ALTER TABLE `deposito`
-  MODIFY `idDeposito` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idDeposito` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `distrito`
 --
@@ -1187,7 +1435,12 @@ ALTER TABLE `distrito`
 -- AUTO_INCREMENT for table `empenho`
 --
 ALTER TABLE `empenho`
-  MODIFY `idEmpenho` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idEmpenho` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `employees`
+--
+ALTER TABLE `employees`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `etapa`
 --
@@ -1198,11 +1451,6 @@ ALTER TABLE `etapa`
 --
 ALTER TABLE `ficha_tecnica`
   MODIFY `idFichaTecnica` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=371;
---
--- AUTO_INCREMENT for table `financeiro`
---
-ALTER TABLE `financeiro`
-  MODIFY `idFinanceiro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `frase_seguranca`
 --
@@ -1237,7 +1485,7 @@ ALTER TABLE `locais_realizacao`
 -- AUTO_INCREMENT for table `log`
 --
 ALTER TABLE `log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12821;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12901;
 --
 -- AUTO_INCREMENT for table `nivel_acesso`
 --
@@ -1248,6 +1496,11 @@ ALTER TABLE `nivel_acesso`
 --
 ALTER TABLE `notas`
   MODIFY `idNotas` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `notes`
+--
+ALTER TABLE `notes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `orcamento`
 --
@@ -1269,10 +1522,30 @@ ALTER TABLE `pessoa_juridica`
 ALTER TABLE `prazos_projeto`
   MODIFY `idPrazo` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
+-- AUTO_INCREMENT for table `priorities`
+--
+ALTER TABLE `priorities`
+  MODIFY `id` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `problems`
+--
+ALTER TABLE `problems`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `problem_status`
+--
+ALTER TABLE `problem_status`
+  MODIFY `id` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
 -- AUTO_INCREMENT for table `projeto`
 --
 ALTER TABLE `projeto`
   MODIFY `idProjeto` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=144;
+--
+-- AUTO_INCREMENT for table `regions`
+--
+ALTER TABLE `regions`
+  MODIFY `id` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `renuncia_fiscal`
 --
@@ -1287,7 +1560,7 @@ ALTER TABLE `representante_legal`
 -- AUTO_INCREMENT for table `reserva`
 --
 ALTER TABLE `reserva`
-  MODIFY `idReserva` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idReserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `status`
 --
@@ -1319,10 +1592,15 @@ ALTER TABLE `unidade_medida`
 ALTER TABLE `upload_arquivo`
   MODIFY `idUploadArquivo` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3361;
 --
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
 -- AUTO_INCREMENT for table `weblogs`
 --
 ALTER TABLE `weblogs`
-  MODIFY `idWebLog` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2048;
+  MODIFY `idWebLog` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2049;
 --
 -- AUTO_INCREMENT for table `zona`
 --
@@ -1333,16 +1611,55 @@ ALTER TABLE `zona`
 --
 
 --
+-- Limitadores para a tabela `administrators_users`
+--
+ALTER TABLE `administrators_users`
+  ADD CONSTRAINT `fk_administrators` FOREIGN KEY (`admininstrators_id`) REFERENCES `administrators` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_users` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
 -- Limitadores para a tabela `deposito`
 --
 ALTER TABLE `deposito`
   ADD CONSTRAINT `idReserva` FOREIGN KEY (`idReserva`) REFERENCES `reserva` (`idReserva`);
 
 --
+-- Limitadores para a tabela `employees_problems`
+--
+ALTER TABLE `employees_problems`
+  ADD CONSTRAINT `fk_employee` FOREIGN KEY (`employee_id`) REFERENCES `employees` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_problems` FOREIGN KEY (`problems_id`) REFERENCES `problems` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
 -- Limitadores para a tabela `liquidacao`
 --
 ALTER TABLE `liquidacao`
   ADD CONSTRAINT `idDeposito` FOREIGN KEY (`idDeposito`) REFERENCES `deposito` (`idDeposito`);
+
+--
+-- Limitadores para a tabela `notes`
+--
+ALTER TABLE `notes`
+  ADD CONSTRAINT `fk_notes_administrators` FOREIGN KEY (`administrator_id`) REFERENCES `administrators` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_notes_problems` FOREIGN KEY (`problems_id`) REFERENCES `problems` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_notes_users` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Limitadores para a tabela `problems`
+--
+ALTER TABLE `problems`
+  ADD CONSTRAINT `fk_problems_administrators` FOREIGN KEY (`administrators_id`) REFERENCES `administrators` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_problems_categories` FOREIGN KEY (`categories_id`) REFERENCES `categories` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_problems_proprieties` FOREIGN KEY (`priorities_id`) REFERENCES `priorities` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_problems_status` FOREIGN KEY (`problem_status_id`) REFERENCES `problem_status` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_problems_users` FOREIGN KEY (`users_id`) REFERENCES `administrators_users` (`users_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Limitadores para a tabela `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `fk_regios_users` FOREIGN KEY (`idRegion`) REFERENCES `regions` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_user_status_users` FOREIGN KEY (`user_status_id`) REFERENCES `user_status` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
