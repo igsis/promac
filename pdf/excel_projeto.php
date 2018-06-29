@@ -54,31 +54,14 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('AA1', 'Início da execução')
             ->setCellValue('AB1', 'Fim da execução')
             ->setCellValue('AC1', 'Prorrogação Execução')
-            ->setCellValue('AD1', 'Data para prestar contas')
-	        	->setCellValue('AE1', 'Incentivador')
-            ->setCellValue('AF1', 'Tipo Incentivador')
-            ->setCellValue('AG1', 'Documento Incentivador')
-            ->setCellValue('AH1', 'Data Depósito')
-            ->setCellValue('AI1', 'Valor Depósito')
-            ->setCellValue('AJ1', 'Valor Renúncia')
-            ->setCellValue('AK1', 'Porcentagem Valor Renúncia')
-            ->setCellValue('AL1', 'Data Reserva')
-            ->setCellValue('AM1', 'Valor Reserva')
-            ->setCellValue('AN1', 'Numero Reserva')
-            ->setCellValue('AO1', 'Data Empenho')
-            ->setCellValue('AP1', 'Valor Empenho')
-            ->setCellValue('AQ1', 'Número Empenho')
-            ->setCellValue('AR1', 'Data Liquidação')
-            ->setCellValue('AS1', 'Valor Liquidação')
-            ->setCellValue('AT1', 'Número Liquidação');
-
+            ->setCellValue('AD1', 'Data para prestar contas');
 
 //Colorir a primeira fila
-$objPHPExcel->getActiveSheet()->getStyle('A1:AT1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
-$objPHPExcel->getActiveSheet()->getStyle('A1:AT1')->getFill()->getStartColor()->setARGB('#29bb04');
+$objPHPExcel->getActiveSheet()->getStyle('A1:AD1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+$objPHPExcel->getActiveSheet()->getStyle('A1:AD1')->getFill()->getStartColor()->setARGB('#29bb04');
 // Add some data
-$objPHPExcel->getActiveSheet()->getStyle("A1:AT1")->getFont()->setBold(true);
-$objPHPExcel->getActiveSheet()->getStyle('A1:AT1')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+$objPHPExcel->getActiveSheet()->getStyle("A1:AD1")->getFont()->setBold(true);
+$objPHPExcel->getActiveSheet()->getStyle('A1:AD1')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
 $styleArray = array(
       'borders' => array(
           'allborders' => array(
@@ -118,22 +101,6 @@ $objPHPExcel->getActiveSheet()->getColumnDimension('AA')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('AB')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('AC')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('AD')->setAutoSize(true);
-$objPHPExcel->getActiveSheet()->getColumnDimension('AE')->setAutoSize(true);
-$objPHPExcel->getActiveSheet()->getColumnDimension('AF')->setAutoSize(true);
-$objPHPExcel->getActiveSheet()->getColumnDimension('AG')->setAutoSize(true);
-$objPHPExcel->getActiveSheet()->getColumnDimension('AH')->setAutoSize(true);
-$objPHPExcel->getActiveSheet()->getColumnDimension('AI')->setAutoSize(true);
-$objPHPExcel->getActiveSheet()->getColumnDimension('AJ')->setAutoSize(true);
-$objPHPExcel->getActiveSheet()->getColumnDimension('AK')->setAutoSize(true);
-$objPHPExcel->getActiveSheet()->getColumnDimension('AL')->setAutoSize(true);
-$objPHPExcel->getActiveSheet()->getColumnDimension('AM')->setAutoSize(true);
-$objPHPExcel->getActiveSheet()->getColumnDimension('AN')->setAutoSize(true);
-$objPHPExcel->getActiveSheet()->getColumnDimension('AO')->setAutoSize(true);
-$objPHPExcel->getActiveSheet()->getColumnDimension('AP')->setAutoSize(true);
-$objPHPExcel->getActiveSheet()->getColumnDimension('AQ')->setAutoSize(true);
-$objPHPExcel->getActiveSheet()->getColumnDimension('AR')->setAutoSize(true);
-$objPHPExcel->getActiveSheet()->getColumnDimension('AS')->setAutoSize(true);
-$objPHPExcel->getActiveSheet()->getColumnDimension('AT')->setAutoSize(true);
 
 
 //Dados Projeto
@@ -185,54 +152,6 @@ locais_realizacao WHERE idProjeto = '$idProjeto' AND publicado = '1'";
           $t_zona = recuperaDados("zona","idZona",$row['idZona']);
           $t_subprefeitura = recuperaDados("subprefeitura","idSubprefeitura",$row['idSubprefeitura']);
           $t_distrito = recuperaDados("distrito","idDistrito",$row['idDistrito']);
-
-          $local .= $row['local']."\r";
-          $estimativa .= $row['estimativaPublico']."\r";
-          $zona .= $t_zona['zona']."\r";
-          $subprefeitura .= $t_subprefeitura['subprefeitura']."\r";
-          $distrito .= $t_distrito['distrito']."\r";
-
-          $array = array(
-            "local" => substr($local,0,-1),
-            "estimativa" => substr($estimativa,0,-1),
-            "zona" => substr($zona,0,-1),
-            "subprefeitura" => substr($subprefeitura,0,-1),
-            "distrito" => substr($distrito,0,-1));
-        }
-      return $array;
-      }
-}
-
-//Recupera todos os incentivadores e situaçaõ financeira daquele projeto
-function listaFinanceiro($idProjeto)
-{
-   $con = bancoMysqli();
-
-   $sql_financeiro = "SELECT idIncentivador, tipoPessoa, dataDeposito, valorDeposito, valorRenuncia, porcentagemValorRenuncia, dataReserva, valorReserva, numeroReserva, dataEmpenho, valorEmpenho, numeroEmpenho, dataLiquidacao, valorLiquidacao, numeroLiquidacao FROM
-    financeiro WHERE idProjeto = '$idProjeto' AND publicado = '1'";
-
-     $query_financeiro = mysqli_query($con,$sql_financeiro);
-     $num = mysqli_num_rows($query_financeiro);
-     if($num > 0)
-     {
-        $idIncentivador = "";
-        $tipoPessoa = "";
-        $dataDeposito = "";
-        $valorDeposito = "";
-        $valorRenuncia = "";
-        $porcentagemValorRenuncia = "";
-        $dataReserva = "";
-        $valorReserva = "";
-        $numeroReserva = "";
-        $dataEmpenho = "";
-        $valorEmpenho = "";
-        $numeroEmpenho = "";
-        $dataLiquidacao = "";
-        $valorLiquidacao = "";
-        $numeroLiquidacao = "";
-        while($row = mysqli_fetch_array($query_financeiro))
-        {
-         // $t_idIncentivador = recuperaDados("zona","idZona",$row['idZona']);
 
           $local .= $row['local']."\r";
           $estimativa .= $row['estimativaPublico']."\r";
