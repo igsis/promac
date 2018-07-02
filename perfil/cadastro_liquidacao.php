@@ -45,18 +45,19 @@ if(isset($_POST['inserirLiquidacao'])){
                                 <input type="text" id='valor' name="valor" class="form-control" required>
                             </div>
 
-                            <div class="col-md-3">
-                                <label>Número da Liquidação</label>
+                            <div class="col-md-3"><label>Número da Liquidação</label>
                                 <input type="text" name="numeroLiquidacao" class="form-control">
                             </div>
+                        </div>
+                        <input type='hidden' name='idDeposito' value='$idDeposito'>
 
-                            <?php echo "<input type='hidden' name='idDeposito' value='$idDeposito'>";?>
-                            <br>
-                            <br>
-                            <br>
-                            <input type="submit" name="inserirLiquidacao" class="btn btn-theme btn-md btn-block" value="Gravar">
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-8">
+                                <input type="submit" name="inserirLiquidacao" class="btn btn-theme btn-md btn-block" value="Gravar">
+                            </div>
                         </div>
                     </form>
+
                 </div>
             </div>
         </div>

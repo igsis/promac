@@ -40,7 +40,6 @@ $deposito = recuperaDados("deposito", "idDeposito", $idDeposito);
                                 <td>Valor</td>
                                 <td>Número da Liquidação</td>
                                 <td></td>
-                                <td></td>
                             </tr>
                           </thead>
                         <tbody>

@@ -52,7 +52,7 @@ if(isset($_POST['alteraLiquidacao'])){
                         <input type="hidden" name="IDD" value="<?php echo $liquidacao['idDeposito'] ?>">
 
                         <div class="form-group">
-                            <div class="col-md-offset-1 col-md-10">
+                            <div class="col-md-offset-2 col-md-8">
                                 <input type="submit" name="alteraLiquidacao" class="btn btn-theme btn-lg btn-block" value="Gravar">
                             </div>
                         </div>
