@@ -29,6 +29,13 @@ $pasta = "?perfil=";
 					<li><a href="../pdf/excel_projeto.php">Projetos</a></li>
 					<li><a href="../pdf/excel_publico.php">Público</a></li>
 					<li><a href="../perfil/webLog.php" target="_blank">WebLog</a></li>
+					<li><a href="#">Financeiro</a>
+					<ul class="dl-submenu">
+						<li><a href="../pdf/excel_reserva.php">Reservas</a></li>
+						<li><a href="../pdf/excel_empenho.php">Empenhos</a></li>
+						<li><a href="../pdf/excel_deposito.php">Depósitos</a></li>
+						<li><a href="../pdf/excel_liquidacao.php">Liquidações</a></li>
+					</ul>
 				</ul>
 			</li>
 			<li><a href="<?php echo $pasta ?>fazenda">Fazenda</a></li>
