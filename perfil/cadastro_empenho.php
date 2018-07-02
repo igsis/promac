@@ -45,18 +45,19 @@ if(isset($_POST['inserirEmpenho'])){
                                 <input type="text" id='valor' name="valor" class="form-control" required>
                             </div>
 
-                            <div class="col-md-3">
-                                <label>Número do Empenho</label>
+                             <div class="col-md-3"><label>Número do Empenho</label>
                                 <input type="text" name="numeroEmpenho" class="form-control">
                             </div>
-
-                            <?php echo "<input type='hidden' name='idReserva' value='$idReserva'>";?>
-                            <br>
-                            <br>
-                            <br>
-                            <input type="submit" name="inserirEmpenho" class="btn btn-theme btn-md btn-block" value="Gravar">
+                        </div>
+                        
+                        <input type='hidden' name='idReserva' value='$idReserva'>                        
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-8">
+                                <input type="submit" name="alteraEmpenho" class="btn btn-theme btn-lg btn-block" value="Gravar">
+                            </div>
                         </div>
                     </form>
+
                 </div>
             </div>
         </div>

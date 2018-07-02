@@ -52,7 +52,7 @@ if(isset($_POST['alteraEmpenho'])){
                         <input type="hidden" name="IDR" value="<?php echo $empenho['idReserva'] ?>">
 
                         <div class="form-group">
-                            <div class="col-md-offset-1 col-md-10">
+                            <div class="col-md-offset-2 col-md-8">
                                 <input type="submit" name="alteraEmpenho" class="btn btn-theme btn-lg btn-block" value="Gravar">
                             </div>
                         </div>
