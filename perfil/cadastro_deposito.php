@@ -42,7 +42,7 @@ if(isset($_POST['inserirDeposito'])){
                     <form method="POST" , action="?perfil=cadastro_deposito&idReserva=<?=$idReserva?>&idProjeto=<?=$idProjeto?>" class="form-horizontal" role="form">
                         <div class="form-group">
 
-                            <div class="col-md-offset-1 col-md-3">
+                            <div class="col-md-offset-2 col-md-8">
                                 <label>Incentivadores</label>
                                 <select name="incentivador">
                                 <option value="" selected disabled="disabled" hidden>Selecione o Incentivador</option>
@@ -71,17 +71,17 @@ if(isset($_POST['inserirDeposito'])){
                                 </select>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-offset-2 col-md-4">
                                 <label>Data</label>
                                 <input type="text" name="data" id='datepicker01' class="form-control" placeholder="DD/MM/AA ou MM/AAAA" required>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <label>Valor do Depósito</label>
                                 <input type="text" id='valor' name="valorDeposito" class="form-control" required>
                             </div>
 
-                            <div class="col-md-offset-2 col-md-3">
+                            <div class="col-md-offset-3 col-md-3">
                                 <label>Valor da Renúncia</label>
                                 <input type="text" id='valor' name="valorRenuncia" class="form-control" required>
                             </div>
@@ -90,12 +90,11 @@ if(isset($_POST['inserirDeposito'])){
                                 <label>Porcentagem Renúncia</label>
                                 <input type="text" name="porcentagemValorRenuncia" class="form-control">
                             </div>
-                            <br>
-                            <div class="col-md-10">
+                        </div>
+                            <div class="col-md-offset-2 col-md-8">
                                 <?php echo "<input type='hidden' name='idReserva' value='$idReserva'>";?>
                                 <input type="submit" name="inserirDeposito" class="btn btn-theme btn-md btn-block" value="Gravar">
                             </div>
-                        </div>
                     </form>
                 </div>
             </div>

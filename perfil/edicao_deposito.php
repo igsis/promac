@@ -61,7 +61,7 @@ if(isset($_POST['alteraDeposito'])){
 
                         <div class="form-group">
 
-                            <div class="col-md-offset-2 col-md-3">
+                            <div class="col-md-offset-2 col-md-8">
                                 <label>Incentivadores</label>
                                 <select name="incentivador">
                                 <option value="<?php echo $idIncentivador;?>|<?php echo $tipoPessoa;?>" select="disable" selected hidden><?php echo $nmIncentivador ; ?></option>
@@ -90,12 +90,12 @@ if(isset($_POST['alteraDeposito'])){
                                 </select>
                             </div>
                             
-                            <div class="col-md-3">
+                            <div class="col-md-offset-2 col-md-4">
                                 <label>Data</label>
                                 <input type="text" id="datepicker01" name="data" class="form-control" maxlength="100" value="<?php echo exibirDataBr($deposito['data']) ?>">
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <label>Valor do Depósito</label>
                                 <input type="text" id='valor' name="valorDeposito" class="form-control" value="<?php echo dinheiroParaBr($deposito['valorDeposito']); ?>" required>
                             </div>
@@ -113,7 +113,7 @@ if(isset($_POST['alteraDeposito'])){
                         <?php echo "<input type='hidden' name='idDeposito' value='$idDeposito'>";?>
                         <?php echo "<input type='hidden' name='idReserva' value='$idReserva'>";?>
                         <div class="form-group">
-                            <div class="col-md-offset-1 col-md-10">
+                            <div class="col-md-offset-2 col-md-8">
                                 <input type="submit" name="alteraDeposito" class="btn btn-theme btn-md btn-block" value="Gravar">
                             </div>
                         </div>
