@@ -54,7 +54,7 @@ if(isset($_POST['alteraReserva'])){
                         <input type="hidden" name="IDR" value="<?php echo $reserva['idReserva'] ?>">
                         <input type="hidden" name="IDP" value="<?php echo $reserva['idProjeto'] ?>">
                         <div class="form-group">
-                            <div class="col-md-offset-1 col-md-10">
+                            <div class="col-md-offset-2 col-md-8">
                                 <input type="submit" name="alteraReserva" class="btn btn-theme btn-lg btn-block" value="Gravar">
                             </div>
                         </div>

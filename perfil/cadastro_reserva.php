@@ -45,16 +45,16 @@ if(isset($_POST['inserirReserva'])){
                                 <input type="text" id='valor' name="valor" class="form-control" required>
                             </div>
 
-                            <div class="col-md-3">
-                                <label>Número da Reserva </label>
-                                <input type="text" name="numeroReserva" class="form-control">
+                             <div class="col-md-3">
+                                <label>Número da Reserva</label>
+                                <input type="text" name="numeroReserva" class="form-control" required>
                             </div>
-
-                            <?php echo "<input type='hidden' name='IDP' value='$idProjeto'>";?>
-                            <br>
-                            <br>
-                            <br>
-                            <input type="submit" name="inserirReserva" class="btn btn-theme btn-md btn-block" value="Gravar">
+                        </div>
+                        <input type='hidden' name='IDP' value='$idProjeto'>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-8">
+                             <input type="submit" name="inserirReserva" class="btn btn-theme btn-md btn-block" value="Gravar">
+                            </div>
                         </div>
                     </form>
                 </div>
