@@ -210,12 +210,12 @@ if(isset($_POST['insereIncentivador']))
             VALUES ('$idIncentivador', '$tipoPessoa', '$idProjeto')";
     if (mysqli_query($con, $sql))
     {
-        $mensagem = "Incentivador inserido com sucesso";
+        $mensagem = "<font color='#01DF3A'><strong>Incentivador inserido com sucesso!</strong></font>";
         gravarLog($sql);
     }
     else
     {
-        $mensagem = "Erro ao inserir o incentivador no projeto";
+        $mensagem = "<font color='#FF0000'><strong>Erro ao inserir incentivador! Tente novamente.</strong></font>";
     }
 }
 
@@ -225,12 +225,12 @@ if(isset($_POST['insereReserva']))
             VALUES ('$idProjeto', '$data', '$valor' '$numeroReserva')";
     if (mysqli_query($con, $sql))
     {
-        $mensagem = "Reserva inserida com sucesso";
+        $mensagem = "<font color='#01DF3A'><strong>Reserva inserida com sucesso!</strong></font>";
         gravarLog($sql);
     }
     else
     {
-        $mensagem = "Erro ao inserir reserva!";
+        $mensagem = "<font color='#FF0000'><strong>Erro ao inserir reserva! Tente novamente.</strong></font>";
     }
 }
 
@@ -251,24 +251,6 @@ if(isset($_POST['editarReserva'])){
         </strong></font>";
     }
 }
-
-
-
-if(isset($_POST['insereEmpenho']))
-{
-    $sql = "INSERT INTO empenho (idReserva, data, valor, numeroEmpenho)
-            VALUES ('$idReserva', '$data', '$valor' '$numeroEmpenho')";
-    if (mysqli_query($con, $sql))
-    {
-        $mensagem = "Empenho inserido com sucesso";
-        gravarLog($sql);
-    }
-    else
-    {
-        $mensagem = "Erro ao inserir empenho!";
-    }
-}
-
 
 if($projeto['tipoPessoa'] == 1)
 {
@@ -1225,7 +1207,6 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                 </div>
 
                             <form method="POST" action="?perfil=insere_incentivador_projeto&idProjeto=<?=$idProjeto?>" class="form-horizontal" role="form">
-                                <h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
                               <div class="form-group">
                                    <h4>Incentivadores do Projeto</h4>
                               </div>
