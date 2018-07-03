@@ -49,7 +49,8 @@ if(isset($_POST['inserirLiquidacao'])){
                                 <input type="text" name="numeroLiquidacao" class="form-control">
                             </div>
                         </div>
-                        <input type='hidden' name='idDeposito' value='$idDeposito'>
+
+                        <?php echo "<input type='hidden' name='idDeposito' value='$idDeposito'>";?>
 
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-8">

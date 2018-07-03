@@ -50,10 +50,10 @@ if(isset($_POST['inserirEmpenho'])){
                             </div>
                         </div>
                         
-                        <input type='hidden' name='idReserva' value='$idReserva'>                        
+                        <?php echo "<input type='hidden' name='idReserva' value='$idReserva'>";?>
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-8">
-                                <input type="submit" name="alteraEmpenho" class="btn btn-theme btn-lg btn-block" value="Gravar">
+                                <input type="submit" name="inserirEmpenho" class="btn btn-theme btn-lg btn-block" value="Gravar">
                             </div>
                         </div>
                     </form>

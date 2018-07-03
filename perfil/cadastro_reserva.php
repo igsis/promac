@@ -50,7 +50,7 @@ if(isset($_POST['inserirReserva'])){
                                 <input type="text" name="numeroReserva" class="form-control" required>
                             </div>
                         </div>
-                        <input type='hidden' name='IDP' value='$idProjeto'>
+                        <?php echo "<input type='hidden' name='IDP' value='$idProjeto'>";?>
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-8">
                              <input type="submit" name="inserirReserva" class="btn btn-theme btn-md btn-block" value="Gravar">
