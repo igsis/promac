@@ -6,6 +6,7 @@ $idProjeto = $_GET['idProjeto'];
 
 $deposito = recuperaDados("deposito","idReserva", $idReserva);
 $incentivador_projeto = recuperaDados("incentivador_projeto", "idProjeto", $idProjeto);
+$projeto = recuperaDados("projeto", "idProjeto", $idProjeto);
 
 if(isset($_POST['inserirDeposito'])){
     $idReserva = $_POST['idReserva'];
@@ -15,7 +16,8 @@ if(isset($_POST['inserirDeposito'])){
     $data = exibirDataMysql($_POST['data']);
     $valorDeposito = dinheiroDeBr($_POST['valorDeposito']);
     $valorRenuncia = dinheiroDeBr($_POST['valorRenuncia']);
-    $porcentagemValorRenuncia = $_POST['porcentagemValorRenuncia'];
+    $valorAprovado = dinheiroDeBr($_POST['valorAprovado']);
+    $porcentagemValorRenuncia = ($valorDeposito * 100) / $valorAprovado;
     
     $sql = "INSERT INTO deposito (idReserva, tipoPessoa, idIncentivador, data, valorDeposito, valorRenuncia, porcentagemValorRenuncia) values ('$idReserva', '$tipoPessoa', '$idIncentivador', '$data', '$valorDeposito', '$valorRenuncia', '$porcentagemValorRenuncia')";
     
@@ -78,7 +80,7 @@ if(isset($_POST['inserirDeposito'])){
 
                             <div class="col-md-4">
                                 <label>Valor do Depósito</label>
-                                <input type="text" id='valor' name="valorDeposito" class="form-control" required>
+                                <input type="text" id='valor' name="valorDeposito" class="form-control valorDeposito" required>
                             </div>
 
                             <div class="col-md-offset-3 col-md-3">
@@ -88,9 +90,10 @@ if(isset($_POST['inserirDeposito'])){
 
                             <div class="col-md-3">
                                 <label>Porcentagem Renúncia</label>
-                                <input type="text" name="porcentagemValorRenuncia" class="form-control">
+                                <input type="text" name="porcentagemRenuncia" class="form-control" id="porcentagemRenuncia" readonly>
                             </div>
                         </div>
+                        <input type="hidden" id='valor' name="valorAprovado" class="form-control valorAprovado" value="<?php echo dinheiroParaBr($projeto['valorAprovado']); ?>">
                             <div class="col-md-offset-2 col-md-8">
                                 <?php echo "<input type='hidden' name='idReserva' value='$idReserva'>";?>
                                 <input type="submit" name="inserirDeposito" class="btn btn-theme btn-md btn-block" value="Gravar">
@@ -100,3 +103,28 @@ if(isset($_POST['inserirDeposito'])){
             </div>
         </div>
     </section>
+
+<script type="text/javascript">
+
+    var valorDeposito = document.querySelector (".valorDeposito");
+    var valorAprovado = document.querySelector (".valorAprovado");
+    var porcentagemRenuncia = document.querySelector ("#porcentagemRenuncia");
+
+    valorDeposito.addEventListener('click', function(){
+        porcentagemRenuncia.value = (valorDeposito.value * 100) / valorAprovado.value;
+        document.getElementById("porcentagemRenuncia").setAttribute('value', porcentagemRenuncia.value);
+        if(parseInt(valorDeposito.value) && parseInt(valorAprovado.value))
+
+        porcentagemRenuncia.value = (valorDeposito.value * 100) / valorAprovado.value;
+        document.getElementById("porcentagemRenuncia").setAttribute('value', porcentagemRenuncia.value);
+    });
+
+    valorAprovado.addEventListener('input', function(){
+
+        if(parseInt(valorDeposito.value) && parseInt(valorAprovado.value))
+            porcentagemRenuncia.value = (valorDeposito.value * 100) / valorAprovado.value;
+        document.getElementById('porcentagemRenuncia').value= porcentagemRenuncia.value;
+    });
+
+
+</script>

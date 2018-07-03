@@ -22,6 +22,7 @@ if(isset($_POST['idReserva'])){
 
 $deposito = recuperaDados("deposito","idDeposito", $idDeposito);
 $incentivador_projeto = recuperaDados("incentivador_projeto", "idProjeto", $idProjeto);
+$projeto = recuperaDados("projeto", "idProjeto", $idProjeto);
 
 
 if(isset($_POST['alteraDeposito'])){
@@ -34,7 +35,8 @@ if(isset($_POST['alteraDeposito'])){
     $data = exibirDataMysql($_POST['data']);
     $valorDeposito = dinheiroDeBr($_POST['valorDeposito']);
     $valorRenuncia = dinheiroDeBr($_POST['valorRenuncia']);
-    $porcentagemValorRenuncia = $_POST['porcentagemValorRenuncia'];
+    $valorAprovado = dinheiroDeBr($_POST['valorAprovado']);
+    $porcentagemValorRenuncia = ($valorDeposito * 100) / $valorAprovado;
     
     $sql = "UPDATE deposito SET idIncentivador = '$idIncentivador', tipoPessoa = '$tipoPessoa', data = '$data', valorDeposito = '$valorDeposito', valorRenuncia = '$valorRenuncia', porcentagemValorRenuncia = '$porcentagemValorRenuncia' WHERE idDeposito = '$idDeposito' ";
     
@@ -108,11 +110,12 @@ if(isset($_POST['alteraDeposito'])){
 
                             <div class="col-md-3">
                                 <label>Porcentagem Renúncia</label>
-                                <input type="text" name="porcentagemValorRenuncia" class="form-control" value="<?php echo $deposito['porcentagemValorRenuncia'] ?>" required>
+                                <input type="text" disabled name="porcentagemValorRenuncia" class="form-control" value="<?php echo $deposito['porcentagemValorRenuncia'] ?>%" required>
                             </div>
                         </div>
                         <?php echo "<input type='hidden' name='idDeposito' value='$idDeposito'>";?>
                         <?php echo "<input type='hidden' name='idReserva' value='$idReserva'>";?>
+                        <input type="hidden" id='valor' name="valorAprovado" value="<?php echo dinheiroParaBr($projeto['valorAprovado']); ?>" >
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-8">
                                 <input type="submit" name="alteraDeposito" class="btn btn-theme btn-md btn-block" value="Gravar">
