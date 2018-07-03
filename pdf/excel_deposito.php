@@ -26,18 +26,19 @@ $objPHPExcel->getProperties()->setCategory("Relatório de Depósitos");
 $objPHPExcel->setActiveSheetIndex(0)
     ->setCellValue('A1', 'Incentivador')
     ->setCellValue('B1', 'Documento')
-    ->setCellValue('C1', 'Número da Reserva')
+    ->setCellValue('C1', 'Tipo')
     ->setCellValue('D1', 'Data Depósito')
     ->setCellValue('E1', 'Valor Depósito')
     ->setCellValue('F1', 'Valor Renúncia')    
-    ->setCellValue('G1', 'Porcentagem do Valor Renúncia');    
+    ->setCellValue('G1', 'Porcentagem do Valor Renúncia')    
+    ->setCellValue('H1', 'Número da Reserva');    
 
 //Colorir a primeira fila
-$objPHPExcel->getActiveSheet()->getStyle('A1:G1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
-$objPHPExcel->getActiveSheet()->getStyle('A1:G1')->getFill()->getStartColor()->setARGB('#29bb04');
+$objPHPExcel->getActiveSheet()->getStyle('A1:H1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+$objPHPExcel->getActiveSheet()->getStyle('A1:H1')->getFill()->getStartColor()->setARGB('#29bb04');
 // Add some data
-$objPHPExcel->getActiveSheet()->getStyle("A1:G1")->getFont()->setBold(true);
-$objPHPExcel->getActiveSheet()->getStyle('A1:G1')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+$objPHPExcel->getActiveSheet()->getStyle("A1:H1")->getFont()->setBold(true);
+$objPHPExcel->getActiveSheet()->getStyle('A1:H1')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
 $styleArray = array(
     'borders' => array(
         'allborders' => array(
@@ -57,6 +58,7 @@ $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('G')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('H')->setAutoSize(true);
 
 
 //Dados
@@ -71,7 +73,7 @@ $sql = "SELECT
           D.valorRenuncia,
           D.porcentagemValorRenuncia
           FROM deposito AS D
-          LEFT JOIN reserva AS R ON R.idReserva = D.idReserva
+          LEFT JOIN reserva AS R ON D.idReserva = R.idReserva
         ORDER BY D.idDeposito";
 $query = mysqli_query($con,$sql);
 $campo = mysqli_fetch_array($query);
@@ -82,13 +84,25 @@ while($linha = mysqli_fetch_array($query))
     if($linha['tipoPessoa'] == 5)
     {
         $pj = recuperaDados("incentivador_pessoa_juridica","idPj",$linha['idIncentivador']);
-        $proponente = $pj['razaoSocial'];
+        $incentivador = $pj['razaoSocial'];
     }
     else
     {
         $pf = recuperaDados("incentivador_pessoa_fisica","idPf",$linha['idIncentivador']);
-        $proponente = $pf['nome'];
+        $incentivador = $pf['nome'];
     }
+
+    if($linha['tipoPessoa'] == 5)
+    {
+        $pjDoc = recuperaDados("incentivador_pessoa_juridica","idPj",$linha['idIncentivador']);
+        $incentivadorDoc = $pjDoc['cnpj'];
+    }
+    else
+    {
+        $pfDoc = recuperaDados("incentivador_pessoa_fisica","idPf",$linha['idIncentivador']);
+        $incentivadorDoc = $pfDoc['cpf'];
+    }
+
 
     $tipoPessoa = $linha['tipoPessoa'];
     
@@ -110,13 +124,15 @@ while($linha = mysqli_fetch_array($query))
     }
 
     $objPHPExcel->setActiveSheetIndex(0)
-        ->setCellValue('A'.$i, $proponente)
-        ->setCellValue('B'.$i, $linha['tipoPessoa'])
-        ->setCellValue('C'.$i, $linha['data'])
-        ->setCellValue('D'.$i, $linha['valorDeposito'])
-        ->setCellValue('E'.$i, $linha['valorRenuncia'])
-        ->setCellValue('F'.$i, $linha['porcentagemValorRenuncia'])
-        ->setCellValue('G'.$i, $linha['numeroReserva']);
+        ->setCellValue('A'.$i, $incentivador)
+        ->setCellValue('B'.$i, $incentivadorDoc)
+        ->setCellValue('C'.$i, $tipo)
+        ->setCellValue('D'.$i, $linha['data'])
+        ->setCellValue('E'.$i, $linha['valorDeposito'])
+        ->setCellValue('F'.$i, $linha['valorRenuncia'])
+        ->setCellValue('G'.$i, $linha['porcentagemValorRenuncia'])
+        ->setCellValue('H'.$i, $linha['numeroReserva']);
+
 
     $i++;
 }
