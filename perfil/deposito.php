@@ -5,6 +5,8 @@ $idProjeto = $_GET['idProjeto'];
 
 $reserva = recuperaDados("reserva", "idReserva", $idReserva);
 
+
+$porcentagemTotal = 0;
 ?>
 <section id="list_items" class="home-section bg-white">
     <div class="container">
@@ -95,18 +97,19 @@ $reserva = recuperaDados("reserva", "idReserva", $idReserva);
                                 </tr>
                                 </thead>
                                 <tbody>
-
+                                <!--INCENTIVADOR PESSOA FISICA-->
                                 <?php
                                 $sql = "SELECT * FROM deposito d INNER JOIN incentivador_pessoa_fisica pf ON d.idIncentivador = pf.idPf WHERE d.idReserva = '$idReserva' AND d.tipoPessoa = 4";
                                 $query = mysqli_query($con, $sql);
-                                while ($deposito = mysqli_fetch_array($query)) { ?>
+                                while ($deposito = mysqli_fetch_array($query)) {
+                                    $porcentagemTotal += $deposito['porcentagemValorRenuncia'];?>
                                     <tr>
                                         <td><?php echo $deposito['cpf']; ?></td>
                                         <td><?php echo $deposito['nome']; ?></td>
                                         <td><?php echo exibirDataBr($deposito['data']); ?></td>
                                         <td><?php echo dinheiroParaBr($deposito['valorDeposito']); ?></td>
                                         <td><?php echo dinheiroParaBr($deposito['valorRenuncia']); ?></td>
-                                        <td><?php echo $deposito['porcentagemValorRenuncia']; ?></td>
+                                        <td><?php echo $deposito['porcentagemValorRenuncia']; ?>%</td>
                                         <td class='list_description'>
                                             <form method='POST'
                                                   action="?perfil=edicao_deposito&idDeposito=<?= $deposito['idDeposito'] ?>&idProjeto=<?= $idProjeto ?>">
@@ -122,18 +125,28 @@ $reserva = recuperaDados("reserva", "idReserva", $idReserva);
                                                 <input type='submit' class='btn btn-theme btn-block' value='editar'>
                                             </form>
                                         </td>
+                                        <td class='list_description'>
+                                            <form method="POST" action="?perfil=liquidacao&idDeposito=<?=$deposito['idDeposito']?>">
+                                                <input type='hidden' name='' value='".$campo['']."' />
+                                                <input type ='submit' class='btn btn-theme btn-block' value='Liquidação'>
+                                            </form>
+                                        </td>
                                     </tr>
+                                <!--INCENTIVADOR PESSOA JURIDICA-->
                                 <?php }
                                 $sql = "SELECT * FROM deposito d INNER JOIN incentivador_pessoa_juridica pj ON d.idIncentivador = pj.idPj WHERE d.idReserva = '$idReserva' AND d.tipoPessoa = 5";
                                 $query = mysqli_query($con, $sql);
-                                while ($deposito = mysqli_fetch_array($query)) { ?>
+                                while ($deposito = mysqli_fetch_array($query)) {
+                                    $porcentagemTotal += $deposito['porcentagemValorRenuncia'];
+                                    ?>
                                     <tr>
                                         <td><?php echo $deposito['cnpj']; ?></td>
                                         <td><?php echo $deposito['razaoSocial']; ?></td>
                                         <td><?php echo exibirDataBr($deposito['data']); ?></td>
                                         <td><?php echo dinheiroParaBr($deposito['valorDeposito']); ?></td>
                                         <td><?php echo dinheiroParaBr($deposito['valorRenuncia']); ?></td>
-                                        <td><?php echo $deposito['porcentagemValorRenuncia']; ?></td>
+                                        <td><?php echo $deposito['porcentagemValorRenuncia']; ?>%</td>
+
                                         <td class='list_description'>
                                             <form method='POST'
                                                   action="?perfil=edicao_deposito&idDeposito=<?= $deposito['idDeposito'] ?>&idProjeto=<?= $idProjeto ?>">
@@ -158,6 +171,13 @@ $reserva = recuperaDados("reserva", "idReserva", $idReserva);
                                     </tr>
                                 <?php } ?>
                                 </tbody>
+                                <tr>
+                                    <td colspan="5" align="right"><b>TOTAL PORCENTAGEM: </b></td>
+                                    <td colspan="1" align="left">
+                                        <?php echo $porcentagemTotal; ?>%
+                                    </td>
+
+                                </tr>
                             </table>
                         </div>
                         <?php
@@ -167,4 +187,3 @@ $reserva = recuperaDados("reserva", "idReserva", $idReserva);
                 </div>
             </div>
 </section>
-

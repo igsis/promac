@@ -68,6 +68,8 @@ $deposito = recuperaDados("deposito", "idDeposito", $idDeposito);
                   <?php
                   }
                   else {?>
+                      <p>&nbsp</p>
+                      <p>&nbsp</p>
                           <h4>Não existem liquidações cadastradas!</h4>
                           <?php } ?>
      </div>
