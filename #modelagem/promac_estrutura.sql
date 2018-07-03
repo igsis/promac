@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 03-Jul-2018 às 18:49
+-- Generation Time: 03-Jul-2018 às 20:37
 -- Versão do servidor: 10.1.22-MariaDB
 -- PHP Version: 7.1.4
 
@@ -500,7 +500,10 @@ CREATE TABLE `pessoa_fisica` (
   `idFraseSeguranca` int(11) DEFAULT NULL,
   `respostaFrase` varchar(10) DEFAULT NULL,
   `dataInscricao` datetime DEFAULT NULL,
-  `alteradoPor` varchar(150) DEFAULT 'none'
+  `alteradoPor` varchar(150) DEFAULT 'none',
+  `agencia` varchar(12) NOT NULL,
+  `contaCaptacao` varchar(12) NOT NULL,
+  `contaMovimentacao` varchar(12) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -555,7 +558,10 @@ CREATE TABLE `pessoa_juridica` (
   `idFraseSeguranca` int(11) DEFAULT NULL,
   `respostaFrase` varchar(10) DEFAULT NULL,
   `dataInscricao` datetime DEFAULT NULL,
-  `alteradoPor` varchar(150) DEFAULT 'none'
+  `alteradoPor` varchar(150) DEFAULT 'none',
+  `agencia` varchar(12) NOT NULL,
+  `contaCaptacao` varchar(12) NOT NULL,
+  `contaMovimentacao` varchar(12) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -615,7 +621,7 @@ CREATE TABLE `projeto` (
   `idpf` int(11) DEFAULT '0',
   `nomeProjeto` varchar(200) DEFAULT NULL,
   `idAreaAtuacao` int(11) DEFAULT NULL,
-  `valorprojeto` decimal(9,2) DEFAULT '0.00',
+  `valorProjeto` decimal(9,2) DEFAULT '0.00',
   `valorIncentivo` decimal(9,2) DEFAULT '0.00',
   `valorFinanciamento` decimal(9,2) DEFAULT '0.00',
   `idRenunciaFiscal` int(11) DEFAULT '4',
@@ -1170,7 +1176,7 @@ ALTER TABLE `incentivador_pessoa_juridica`
 -- AUTO_INCREMENT for table `liquidacao`
 --
 ALTER TABLE `liquidacao`
-  MODIFY `idLiquidacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `idLiquidacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `lista_documento`
 --
@@ -1185,7 +1191,7 @@ ALTER TABLE `locais_realizacao`
 -- AUTO_INCREMENT for table `log`
 --
 ALTER TABLE `log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13241;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13242;
 --
 -- AUTO_INCREMENT for table `nivel_acesso`
 --
