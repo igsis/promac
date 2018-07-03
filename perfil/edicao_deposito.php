@@ -21,7 +21,7 @@ if(isset($_POST['idReserva'])){
 }
 
 $deposito = recuperaDados("deposito","idDeposito", $idDeposito);
-$financeiro = recuperaDados("financeiro", "idProjeto", $idProjeto);
+$incentivador_projeto = recuperaDados("incentivador_projeto", "idProjeto", $idProjeto);
 
 
 if(isset($_POST['alteraDeposito'])){
@@ -67,7 +67,7 @@ if(isset($_POST['alteraDeposito'])){
                                 <select name="incentivador">
                                 <option value="<?php echo $idIncentivador;?>|<?php echo $tipoPessoa;?>" select="disable" selected hidden><?php echo $nmIncentivador ; ?></option>
                                 <?php
-                                        $sql_busca_incentivador = "SELECT * FROM financeiro f INNER JOIN incentivador_pessoa_fisica pf ON f.idIncentivador = pf.idPf WHERE f.idProjeto = '$idProjeto' AND f.tipoPessoa = 4";
+                                        $sql_busca_incentivador = "SELECT * FROM incentivador_projeto ip INNER JOIN incentivador_pessoa_fisica pf ON ip.idIncentivador = pf.idPf WHERE ip.idProjeto = '$idProjeto' AND ip.tipoPessoa = 4";
                                         $query_busca_incentivador = mysqli_query($con, $sql_busca_incentivador);
                                     
                                         while($dados = mysqli_fetch_array($query_busca_incentivador)){ 
@@ -78,7 +78,7 @@ if(isset($_POST['alteraDeposito'])){
                                             
                                         }
                           
-                                        $sql_busca_incentivador = "SELECT * FROM financeiro f INNER JOIN incentivador_pessoa_juridica pj ON f.idIncentivador = pj.idPj WHERE f.idProjeto = '$idProjeto' AND f.tipoPessoa = 5";
+                                        $sql_busca_incentivador = "SELECT * FROM incentivador_projeto ip INNER JOIN incentivador_pessoa_juridica pj ON ip.idIncentivador = pj.idPj WHERE ip.idProjeto = '$idProjeto' AND ip.tipoPessoa = 5";
                                         $query_busca_incentivador = mysqli_query($con, $sql_busca_incentivador);
                                     
                                         while($dados = mysqli_fetch_array($query_busca_incentivador)){ 
