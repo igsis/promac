@@ -58,10 +58,9 @@ $sql = "SELECT
           D.idDeposito,
           L.data,
           L.valor,
-          L.numeroLiquidacao,
-          L.idLiquidacao
+          L.numeroLiquidacao
         FROM liquidacao AS L
-          LEFT JOIN deposito AS D ON D.idDeposito = L.idDeposito
+          LEFT JOIN deposito AS D ON L.idDeposito = D.idDeposito
         ORDER BY L.idLiquidacao";
 $query = mysqli_query($con,$sql);
 $campo = mysqli_fetch_array($query);
