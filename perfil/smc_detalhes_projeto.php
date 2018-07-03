@@ -450,8 +450,8 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                 <tr>
                                     <td>
                                         <strong>Valor do projeto:</strong>R$ <?php echo
-                                        dinheiroParabr(isset($projeto['valorprojeto'])
-                                            ? $projeto['valorprojeto']
+                                        dinheiroParabr(isset($projeto['valorProjeto'])
+                                            ? $projeto['valorProjeto']
                                             :  ''); ?>
                                     </td>
                                     <td><strong>Valor do incentivo:</strong> R$ <?php echo dinheiroParabr(isset($projeto['valorIncentivo']) ? $projeto['valorIncentivo'] : null); ?></td>
@@ -1054,7 +1054,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                               <form method="POST" action="?perfil=cadastro_reserva&idProjeto=<?=$idProjeto?>" class="form-horizontal" role="form">
                                 <h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
                               <div class="form-group">
-                                   <h4>Reservas</hh4>
+                                   <h4>Reservas</h4>
                               </div>
 
                                 <div class="form-group">
@@ -1227,7 +1227,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                             <form method="POST" action="?perfil=insere_incentivador_projeto&idProjeto=<?=$idProjeto?>" class="form-horizontal" role="form">
                                 <h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
                               <div class="form-group">
-                                   <h4>Incentivadores do Projeto</hh4>
+                                   <h4>Incentivadores do Projeto</h4>
                               </div>
 
                                 <div class="form-group">
