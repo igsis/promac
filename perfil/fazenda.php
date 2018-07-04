@@ -6,6 +6,10 @@ $valorReservaNaoLiquidada;
 function calculaValorDisponivel($valorDaReserva, $valorDaLiquidacao){
 	return $valorReservaNaoLiquidada = $valorDaReserva - $valorDaLiquidacao;
 }
+
+function calculaPorcentagem($valorDaReserva, $valorTotal){
+    return $porcentagem = ($valorDaReserva * 100) / $valorTotal;
+}
 ?>
     <section id="list_items" class="home-section bg-white">
         <div class="container">
@@ -57,7 +61,9 @@ function calculaValorDisponivel($valorDaReserva, $valorDaLiquidacao){
                                     R$ ".dinheiroParaBr($campo['valor'])."</td>";
                                     
 									echo "<td class='list_description'>
-                                    R$ ".dinheiroParaBr($valorReserva)."</td>";
+                                    R$ ".dinheiroParaBr($valorReserva)."<br>
+                                    (".number_format(calculaPorcentagem($valorReserva, $campo['valor']), 2, ',', '.')."%)
+                                    </td>";
 
                                     echo "<td class='list_description'>
                                     R$ ".dinheiroParaBr($valorLiquidacao)."</td>";
