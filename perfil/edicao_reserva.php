@@ -59,6 +59,11 @@ if(isset($_POST['alteraReserva'])){
                             </div>
                         </div>
                     </form>
+                    <div class="col-md-offset-2 col-md-8" style="margin-top: 5px">
+                        <form method="POST" action="?perfil=smc_detalhes_projeto&idFF=<?=$reserva['idProjeto']?>">
+                            <input type ='submit' class='btn btn-theme btn-block' value='cancelar'>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
