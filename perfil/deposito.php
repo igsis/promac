@@ -174,7 +174,13 @@ $porcentagemTotal = 0;
                                 <tr>
                                     <td colspan="5" align="right"><b>TOTAL PORCENTAGEM: </b></td>
                                     <td colspan="1" align="left">
-                                        <?php echo $porcentagemTotal; ?>%
+                                        <?php
+                                        if($porcentagemTotal > 35){
+                                            echo "<label style='color: red'>".$porcentagemTotal."%</label>";
+                                        }else{
+                                            echo "<label>".$porcentagemTotal."%</label>";
+                                        }
+                                        ?>
                                     </td>
 
                                 </tr>
