@@ -46,7 +46,7 @@ if(isset($_POST['inserirDeposito'])){
 
                             <div class="col-md-offset-2 col-md-8">
                                 <label>Incentivadores</label>
-                                <select name="incentivador">
+                                <select name="incentivador" required>
                                 <option value="" selected disabled="disabled" hidden>Selecione o Incentivador</option>
                                 <?php
                                         $sql_busca_incentivador = "SELECT * FROM incentivador_projeto ip INNER JOIN incentivador_pessoa_fisica pf ON ip.idIncentivador = pf.idPf WHERE ip.idProjeto = '$idProjeto' AND ip.tipoPessoa = 4";
