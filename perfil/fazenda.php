@@ -42,10 +42,11 @@ function calculaValorReservaNaoLiquidada($valorDaReserva, $valorDaLiquidacao){
 								<table class='table table-condensed' style='text-align:center'>
            							<thead>
 									<tr class='list_menu'>
-										<td>Ano</td>
-										<td>Valor Anual Total</td>
-										<td>Valor Anual Disponivel</td>
-										<td>Reserva Não Liquidada</td>
+										<td>Ano de Referência</td>
+										<td>Valor Total</td>
+										<td>Valor Reserva</td>
+										<td>Valor Liquidação Total</td>
+										<td>Valor Disponível</td>
 										<!--<td width='10%'></td>-->
 									</tr>
 								</thead>
