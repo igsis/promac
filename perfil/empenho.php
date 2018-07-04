@@ -118,6 +118,12 @@ $reserva = recuperaDados("reserva", "idReserva", $idReserva);
                             else {?>
                                 <h4>Não existem empenhos cadastrados!</h4>
                                 <?php } ?>
+
+                        <div class="col-md-offset-1 col-md-10">
+                            <form method="POST" action="?perfil=smc_detalhes_projeto&idFF=<?=$reserva['idProjeto']?>">
+                                <input type ='submit' class='btn btn-theme btn-block' value='voltar'>
+                            </form>
+                        </div>
                     </div>
                 </div>
     </section>
