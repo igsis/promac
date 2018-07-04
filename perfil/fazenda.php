@@ -2,11 +2,8 @@
 $con = bancoMysqli();
 $valorTotalDisponivel;
 $valorReservaNaoLiquidada;
-function calculaValorDisponivel($valor, $valorTotal){
-	return $valorTotalDisponivel = $valor - $valorTotal;
-}
 
-function calculaValorReservaNaoLiquidada($valorDaReserva, $valorDaLiquidacao){
+function calculaValorDisponivel($valorDaReserva, $valorDaLiquidacao){
 	return $valorReservaNaoLiquidada = $valorDaReserva - $valorDaLiquidacao;
 }
 ?>
@@ -57,13 +54,16 @@ function calculaValorReservaNaoLiquidada($valorDaReserva, $valorDaLiquidacao){
 									echo "<td class='list_description'>".$campo['ano']."</td>";
                                     
 									echo "<td class='list_description'>
-                                    R$ ".number_format($campo['valor'], 2, ',', '.')."</td>";
+                                    R$ ".dinheiroParaBr($campo['valor'])."</td>";
                                     
 									echo "<td class='list_description'>
-                                    R$ ".number_format(calculaValorDisponivel($campo['valor'], $valorReserva), 2, ',', '.') ."</td>";
-                                    
+                                    R$ ".dinheiroParaBr($valorReserva)."</td>";
+
+                                    echo "<td class='list_description'>
+                                    R$ ".dinheiroParaBr($valorLiquidacao)."</td>";
+
 									echo "<td class='list_description'>
-                                    R$ ".number_format(calculaValorReservaNaoLiquidada($valorReserva, $valorLiquidacao), 2, ',', '.')."</td>";
+                                    R$ ".dinheiroParaBr(calculaValorDisponivel($valorReserva, $valorLiquidacao))."</td>";
 								}
 							echo "</tr>";
 							echo "</tbody>
