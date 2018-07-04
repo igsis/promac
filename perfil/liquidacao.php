@@ -4,6 +4,7 @@ $con = bancoMysqli();
 $idDeposito = $_GET['idDeposito'];
 
 $deposito = recuperaDados("deposito", "idDeposito", $idDeposito);
+$reserva = recuperaDados("reserva", "idReserva", $deposito['idReserva']);
 
 
 ?>
@@ -17,15 +18,7 @@ $deposito = recuperaDados("deposito", "idDeposito", $idDeposito);
                       </h5>
               </div>
               <div class="row">
-                <div class="col-md-offset-1 col-md-10">
-                  <div class="form-group">
-                    <div class="col-md-offset-2 col-md-8">
-                      <form class="form-horizontal" role="form" action="?perfil=cadastro_liquidacao&idDeposito=<?=$idDeposito?>" method="post">
-                              <input type="submit" value="Inserir liquidação" class="btn btn-theme btn-lg btn-block">
-                      </form>
-                    </div>
-                  </div>
-                </div>
+
 
                 <?php
                   $sql = "SELECT * FROM liquidacao WHERE idDeposito = '$idDeposito'";
@@ -68,10 +61,26 @@ $deposito = recuperaDados("deposito", "idDeposito", $idDeposito);
                   <?php
                   }
                   else {?>
+
+                      <div class="col-md-offset-1 col-md-10">
+                          <div class="form-group">
+                              <div class="col-md-offset-2 col-md-8">
+                                  <form class="form-horizontal" role="form" action="?perfil=cadastro_liquidacao&idDeposito=<?=$idDeposito?>" method="post">
+                                      <input type="submit" value="Inserir liquidação" class="btn btn-theme btn-lg btn-block">
+                                  </form>
+                              </div>
+                          </div>
+                      </div>
                       <p>&nbsp</p>
                       <p>&nbsp</p>
                           <h4>Não existem liquidações cadastradas!</h4>
                           <?php } ?>
+
+                  <div class="col-md-offset-1 col-md-10">
+                      <form method="POST" action="?perfil=deposito&idReserva=<?=$reserva['idReserva']?>&idProjeto=<?=$reserva['idProjeto']?>">
+                          <input type ='submit' class='btn btn-theme btn-block' value='voltar'>
+                      </form>
+                  </div>
      </div>
         </div>
       </section>
