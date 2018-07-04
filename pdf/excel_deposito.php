@@ -115,11 +115,11 @@ while($linha = mysqli_fetch_array($query))
         $tipo = "Jurídica";
     }
 
-    $reserva = $objPHPExcel->getActiveSheet()->getCell('G'.($i-1))->getValue();
+    $reserva = $objPHPExcel->getActiveSheet()->getCell('H'.($i-1))->getValue();
 
-    if ($incentivador == $linha['numeroReserva'])
+    if ($reserva == $linha['numeroReserva'])
     {
-        $objPHPExcel->setActiveSheetIndex(0)->mergeCells('G'.($i-1).':'.'G'.$i);
+        $objPHPExcel->setActiveSheetIndex(0)->mergeCells('H'.($i-1).':'.'H'.$i);
 
     }
 
