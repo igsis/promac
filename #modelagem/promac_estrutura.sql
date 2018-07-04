@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 03-Jul-2018 às 20:37
+-- Generation Time: 04-Jul-2018 às 15:17
 -- Versão do servidor: 10.1.22-MariaDB
 -- PHP Version: 7.1.4
 
@@ -468,6 +468,18 @@ CREATE TRIGGER `tr_log_orcamento` AFTER UPDATE ON `orcamento` FOR EACH ROW INSER
       ))
 $$
 DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `orcamento_anual`
+--
+
+CREATE TABLE `orcamento_anual` (
+  `idOrcamentoAnual` int(11) NOT NULL,
+  `ano` int(4) NOT NULL,
+  `valor` decimal(9,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -1021,6 +1033,12 @@ ALTER TABLE `orcamento`
   ADD PRIMARY KEY (`idOrcamento`);
 
 --
+-- Indexes for table `orcamento_anual`
+--
+ALTER TABLE `orcamento_anual`
+  ADD PRIMARY KEY (`idOrcamentoAnual`);
+
+--
 -- Indexes for table `pessoa_fisica`
 --
 ALTER TABLE `pessoa_fisica`
@@ -1191,7 +1209,7 @@ ALTER TABLE `locais_realizacao`
 -- AUTO_INCREMENT for table `log`
 --
 ALTER TABLE `log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13242;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13250;
 --
 -- AUTO_INCREMENT for table `nivel_acesso`
 --
@@ -1207,6 +1225,11 @@ ALTER TABLE `notas`
 --
 ALTER TABLE `orcamento`
   MODIFY `idOrcamento` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2356;
+--
+-- AUTO_INCREMENT for table `orcamento_anual`
+--
+ALTER TABLE `orcamento_anual`
+  MODIFY `idOrcamentoAnual` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `pessoa_fisica`
 --
@@ -1241,7 +1264,7 @@ ALTER TABLE `representante_legal`
 -- AUTO_INCREMENT for table `reserva`
 --
 ALTER TABLE `reserva`
-  MODIFY `idReserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `idReserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `status`
 --
