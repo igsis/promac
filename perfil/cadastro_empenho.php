@@ -45,11 +45,11 @@ if(isset($_POST['inserirEmpenho'])){
                                 <input type="text" id='valor' name="valor" class="form-control" required>
                             </div>
 
-                             <div class="col-md-3"><label>Número do Empenho</label>
+                            <div class="col-md-3"><label>Número do Empenho</label>
                                 <input type="text" name="numeroEmpenho" class="form-control">
                             </div>
                         </div>
-                        
+
                         <?php echo "<input type='hidden' name='idReserva' value='$idReserva'>";?>
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-8">
@@ -59,7 +59,7 @@ if(isset($_POST['inserirEmpenho'])){
                     </form>
                     <div class="col-md-offset-2 col-md-8" style="margin-top: 5px">
                         <form method="POST" action="?perfil=empenho&idReserva=<?=$idReserva?>">
-                            <input type ='submit' class='btn btn-theme btn-block' value='cancelar'>
+                            <input type='submit' class='btn btn-theme btn-block' value='cancelar'>
                         </form>
                     </div>
                 </div>

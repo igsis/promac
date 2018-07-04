@@ -59,7 +59,7 @@ if(isset($_POST['alteraEmpenho'])){
                     </form>
                     <div class="col-md-offset-2 col-md-8" style="margin-top: 5px">
                         <form method="POST" action="?perfil=empenho&idReserva=<?=$empenho['idReserva']?>">
-                            <input type ='submit' class='btn btn-theme btn-block' value='cancelar'>
+                            <input type='submit' class='btn btn-theme btn-block' value='cancelar'>
                         </form>
                     </div>
                 </div>

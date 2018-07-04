@@ -94,14 +94,14 @@ if(isset($_POST['inserirDeposito'])){
                             </div>
                         </div>
                         <input type="hidden" id='valor' name="valorAprovado" class="form-control valorAprovado" value="<?php echo dinheiroParaBr($projeto['valorAprovado']); ?>">
-                            <div class="col-md-offset-2 col-md-8">
-                                <?php echo "<input type='hidden' name='idReserva' value='$idReserva'>";?>
-                                <input type="submit" name="inserirDeposito" class="btn btn-theme btn-md btn-block" value="Gravar">
-                            </div>
+                        <div class="col-md-offset-2 col-md-8">
+                            <?php echo "<input type='hidden' name='idReserva' value='$idReserva'>";?>
+                            <input type="submit" name="inserirDeposito" class="btn btn-theme btn-md btn-block" value="Gravar">
+                        </div>
                     </form>
                     <div class="col-md-offset-2 col-md-8" style="margin-top: 5px">
                         <form method="POST" action="?perfil=deposito&idReserva=<?=$idReserva?>&idProjeto=<?=$idProjeto?>">
-                            <input type ='submit' class='btn btn-theme btn-block' value='cancelar'>
+                            <input type='submit' class='btn btn-theme btn-block' value='cancelar'>
                         </form>
                     </div>
                 </div>
@@ -109,27 +109,25 @@ if(isset($_POST['inserirDeposito'])){
         </div>
     </section>
 
-<script type="text/javascript">
+    <script type="text/javascript">
+        var valorDeposito = document.querySelector(".valorDeposito");
+        var valorAprovado = document.querySelector(".valorAprovado");
+        var porcentagemRenuncia = document.querySelector("#porcentagemRenuncia");
 
-    var valorDeposito = document.querySelector (".valorDeposito");
-    var valorAprovado = document.querySelector (".valorAprovado");
-    var porcentagemRenuncia = document.querySelector ("#porcentagemRenuncia");
-
-    valorDeposito.addEventListener('click', function(){
-        porcentagemRenuncia.value = (valorDeposito.value * 100) / valorAprovado.value;
-        document.getElementById("porcentagemRenuncia").setAttribute('value', porcentagemRenuncia.value);
-        if(parseInt(valorDeposito.value) && parseInt(valorAprovado.value))
-
-        porcentagemRenuncia.value = (valorDeposito.value * 100) / valorAprovado.value;
-        document.getElementById("porcentagemRenuncia").setAttribute('value', porcentagemRenuncia.value);
-    });
-
-    valorAprovado.addEventListener('input', function(){
-
-        if(parseInt(valorDeposito.value) && parseInt(valorAprovado.value))
+        valorDeposito.addEventListener('click', function() {
             porcentagemRenuncia.value = (valorDeposito.value * 100) / valorAprovado.value;
-        document.getElementById('porcentagemRenuncia').value= porcentagemRenuncia.value;
-    });
+            document.getElementById("porcentagemRenuncia").setAttribute('value', porcentagemRenuncia.value);
+            if (parseInt(valorDeposito.value) && parseInt(valorAprovado.value))
 
+                porcentagemRenuncia.value = (valorDeposito.value * 100) / valorAprovado.value;
+            document.getElementById("porcentagemRenuncia").setAttribute('value', porcentagemRenuncia.value);
+        });
 
-</script>
+        valorAprovado.addEventListener('input', function() {
+
+            if (parseInt(valorDeposito.value) && parseInt(valorAprovado.value))
+                porcentagemRenuncia.value = (valorDeposito.value * 100) / valorAprovado.value;
+            document.getElementById('porcentagemRenuncia').value = porcentagemRenuncia.value;
+        });
+
+    </script>

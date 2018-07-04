@@ -92,7 +92,7 @@ if(isset($_POST['alteraDeposito'])){
                                 
                                 </select>
                             </div>
-                            
+
                             <div class="col-md-offset-2 col-md-4">
                                 <label>Data</label>
                                 <input type="text" id="datepicker01" name="data" class="form-control" maxlength="100" value="<?php echo exibirDataBr($deposito['data']) ?>">
@@ -115,7 +115,7 @@ if(isset($_POST['alteraDeposito'])){
                         </div>
                         <?php echo "<input type='hidden' name='idDeposito' value='$idDeposito'>";?>
                         <?php echo "<input type='hidden' name='idReserva' value='$idReserva'>";?>
-                        <input type="hidden" id='valor' name="valorAprovado" value="<?php echo dinheiroParaBr($projeto['valorAprovado']); ?>" >
+                        <input type="hidden" id='valor' name="valorAprovado" value="<?php echo dinheiroParaBr($projeto['valorAprovado']); ?>">
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-8">
                                 <input type="submit" name="alteraDeposito" class="btn btn-theme btn-md btn-block" value="Gravar">
@@ -124,7 +124,7 @@ if(isset($_POST['alteraDeposito'])){
                     </form>
                     <div class="col-md-offset-2 col-md-8" style="margin-top: 5px">
                         <form method="POST" action="?perfil=deposito&idReserva=<?=$idReserva?>&idProjeto=<?=$idProjeto?>">
-                            <input type ='submit' class='btn btn-theme btn-block' value='cancelar'>
+                            <input type='submit' class='btn btn-theme btn-block' value='cancelar'>
                         </form>
                     </div>
                 </div>

@@ -26,47 +26,46 @@ $reserva = recuperaDados("reserva", "idReserva", $idReserva);
                     </div>
                 </div>
 
-                 <!--Botao Modal-->
+                <!--Botao Modal-->
 
-            <div class="col-md-offset-1 col-md-10">
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-8">
-                        <button class='btn btn-theme btn-lg btn-block' data-toggle='modal' data-target='#modal_reserva'>
+                <div class="col-md-offset-1 col-md-10">
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-8">
+                            <button class='btn btn-theme btn-lg btn-block' data-toggle='modal' data-target='#modal_reserva'>
                             Detalhes da reserva
                         </button>
-                    </div>
-                </div>
-            </div>
-
-            <!--MODAL-->
-
-            <div class="modal fade" id="modal_reserva" role="dialog" aria-labelledby="proponenteLabel"
-                 aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title">Detalhes da reserva</h4>
-                        </div>
-                        <div class="modal-body">
-                            <p>
-                                <label>Data: <?php echo exibirDataBr($reserva['data']); ?></label>
-                            </p>
-
-                            <p>
-                                <label>Valor da Reserva: R$ <?php echo dinheiroParaBr($reserva['valor']); ?></label>
-                            </p>
-
-                            <p>
-                                <label>Número da Reserva: <?php echo $reserva['numeroReserva']; ?></label>
-                            </p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
                         </div>
                     </div>
                 </div>
-            </div>
+
+                <!--MODAL-->
+
+                <div class="modal fade" id="modal_reserva" role="dialog" aria-labelledby="proponenteLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">Detalhes da reserva</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>
+                                    <label>Data: <?php echo exibirDataBr($reserva['data']); ?></label>
+                                </p>
+
+                                <p>
+                                    <label>Valor da Reserva: R$ <?php echo dinheiroParaBr($reserva['valor']); ?></label>
+                                </p>
+
+                                <p>
+                                    <label>Número da Reserva: <?php echo $reserva['numeroReserva']; ?></label>
+                                </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-8"><br></div>
@@ -119,11 +118,11 @@ $reserva = recuperaDados("reserva", "idReserva", $idReserva);
                                 <h4>Não existem empenhos cadastrados!</h4>
                                 <?php } ?>
 
-                        <div class="col-md-offset-1 col-md-10">
-                            <form method="POST" action="?perfil=smc_detalhes_projeto&idFF=<?=$reserva['idProjeto']?>">
-                                <input type ='submit' class='btn btn-theme btn-block' value='voltar'>
-                            </form>
-                        </div>
+                                <div class="col-md-offset-1 col-md-10">
+                                    <form method="POST" action="?perfil=smc_detalhes_projeto&idFF=<?=$reserva['idProjeto']?>">
+                                        <input type='submit' class='btn btn-theme btn-block' value='voltar'>
+                                    </form>
+                                </div>
                     </div>
                 </div>
     </section>
