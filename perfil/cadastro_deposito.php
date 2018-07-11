@@ -73,26 +73,27 @@ if(isset($_POST['inserirDeposito'])){
                                 </select>
                             </div>
 
-                            <div class="col-md-offset-2 col-md-4">
+                            <div class="col-md-offset-2 col-md-2">
                                 <label>Data</label>
-                                <input type="text" name="data" id='datepicker01' class="form-control" placeholder="DD/MM/AA ou MM/AAAA" required>
+                                <input type="text" name="data" id='datepicker01' class="form-control" placeholder="DD/MM/AA" required>
                             </div>
 
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label>Valor do Depósito</label>
                                 <input type="text" id='valor' name="valorDeposito" class="form-control valorDeposito" required>
                             </div>
 
-                            <div class="col-md-offset-3 col-md-3">
+                            <div class="col-md-3">
                                 <label>Valor da Renúncia</label>
                                 <input type="text" id='valor' name="valorRenuncia" class="form-control" required>
                             </div>
-
+<!--
                             <div class="col-md-3">
                                 <label>Porcentagem Renúncia</label>
                                 <input type="text" name="porcentagemRenuncia" class="form-control" id="porcentagemRenuncia" readonly>
                             </div>
-                        </div>
+--> 
+                          </div>
                         <input type="hidden" id='valor' name="valorAprovado" class="form-control valorAprovado" value="<?php echo dinheiroParaBr($projeto['valorAprovado']); ?>">
                         <div class="col-md-offset-2 col-md-8">
                             <?php echo "<input type='hidden' name='idReserva' value='$idReserva'>";?>
