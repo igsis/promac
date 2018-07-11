@@ -7,8 +7,8 @@ function calculaValorDisponivel($valorDaReserva, $valorDaLiquidacao){
 	return $valorReservaNaoLiquidada = $valorDaReserva - $valorDaLiquidacao;
 }
 
-function calculaPorcentagem($valorDaReserva, $valorTotal){
-    return $porcentagem = ($valorDaReserva * 100) / $valorTotal;
+function calculaPorcentagem($valorDoEmpenho, $valorTotal){
+    return $porcentagem = ($valorDoEmpenho * 100) / $valorTotal;
 }
 ?>
     <section id="list_items" class="home-section bg-white">
@@ -26,6 +26,13 @@ function calculaPorcentagem($valorDaReserva, $valorTotal){
 					while($campo = mysqli_fetch_array($query_reserva)){
 						$valorReserva += $campo['valor'];
 					}
+
+					$sql_empenho = "SELECT * FROM empenho";
+                    $query_empenho = mysqli_query($con, $sql_empenho);
+                    $valorEmpenho = 0;
+                    while($campo = mysqli_fetch_array($query_empenho)){
+                        $valorEmpenho += $campo['valor'];
+                    }
                     
                     $sql_liquidacao = "SELECT * FROM liquidacao";
                     $query_liquidacao = mysqli_query($con, $sql_liquidacao);
@@ -45,7 +52,7 @@ function calculaPorcentagem($valorDaReserva, $valorTotal){
 									<tr class='list_menu'>
 										<td>Ano de Referência</td>
 										<td>Valor Total</td>
-										<td>Valor Reserva</td>
+										<td>Valor Empenho</td>
 										<td>Valor Liquidação Total</td>
 										<td>Valor Disponível</td>
 										<!--<td width='10%'></td>-->
@@ -61,8 +68,8 @@ function calculaPorcentagem($valorDaReserva, $valorTotal){
                                     R$ ".dinheiroParaBr($campo['valor'])."</td>";
                                     
 									echo "<td class='list_description'>
-                                    R$ ".dinheiroParaBr($valorReserva)."<br>
-                                    (".number_format(calculaPorcentagem($valorReserva, $campo['valor']), 2, ',', '.')."%)
+                                    R$ ".dinheiroParaBr($valorEmpenho)."<br>
+                                    (".number_format(calculaPorcentagem($valorEmpenho, $campo['valor']), 2, ',', '.')."%)
                                     </td>";
 
                                     echo "<td class='list_description'>
@@ -71,9 +78,9 @@ function calculaPorcentagem($valorDaReserva, $valorTotal){
 									echo "<td class='list_description'>
                                     R$ ".dinheiroParaBr(calculaValorDisponivel($valorReserva, $valorLiquidacao))."</td>";
 								}
-							echo "</tr>";
-							echo "</tbody>
-								</table>";
+									echo "</tr>";
+									echo "</tbody>
+										</table>";
 						}
 						else
 						{
