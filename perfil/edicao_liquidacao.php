@@ -10,8 +10,9 @@ if(isset($_POST['alteraLiquidacao'])){
     $data = exibirDataMysql($_POST['data']);
     $valor = dinheiroDeBr($_POST['valor']);
     $numeroLiquidacao = $_POST['numeroLiquidacao'];
+    $processoSei = $_POST['processoSei'];
     
-    $sql = "UPDATE liquidacao SET data = '$data', valor = '$valor', numeroLiquidacao = '$numeroLiquidacao' WHERE idLiquidacao = '$idLiquidacao' ";
+    $sql = "UPDATE liquidacao SET data = '$data', valor = '$valor', numeroLiquidacao = '$numeroLiquidacao', processoSei = '$processoSei' WHERE idLiquidacao = '$idLiquidacao' ";
     
     if(mysqli_query($con,$sql)){
         $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
@@ -35,17 +36,25 @@ if(isset($_POST['alteraLiquidacao'])){
                     <form method="POST" action="?perfil=edicao_liquidacao&idLiquidacao=<?=$idLiquidacao?>" class="form-horizontal" role="form">
 
                         <div class="form-group">
-                            <div class="col-md-offset-2 col-md-2">
+                            <div class="col-md-offset-2 col-md-4">                               
                                 <label>Data</label>
                                 <input type="text" id='datepicker01' name="data" class="form-control" maxlength="100" value="<?php echo exibirDataBr($liquidacao['data']) ?>">
                             </div>
 
-                            <div class="col-md-3"><label>Valor</label>
+                            <div class="col-md-4"><label>Valor</label>
                                 <input type="text" id='valor' name="valor" class="form-control" value="<?php echo dinheiroParaBr($liquidacao['valor']) ?>" required>
                             </div>
+                        </div>    
 
-                            <div class="col-md-3"><label>Número da Liquidação</label>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-4">
+                                <label>Número da Liquidação</label>
                                 <input type="text" name="numeroLiquidacao" class="form-control" value="<?php echo $liquidacao['numeroLiquidacao'] ?>" required>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label>Nº Processo SEI</label>
+                                <input type="text" name="processoSei" class="form-control" value="<?php echo $liquidacao['processoSei'] ?>" required>
                             </div>
                         </div>
                         <input type="hidden" name="IDL" value="<?php echo $liquidacao['idLiquidacao'] ?>">

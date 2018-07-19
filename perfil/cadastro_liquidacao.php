@@ -10,8 +10,10 @@ if(isset($_POST['inserirLiquidacao'])){
     $data = exibirDataMysql($_POST['data']);
     $valor = dinheiroDeBr($_POST['valor']);
     $numeroLiquidacao = $_POST['numeroLiquidacao'];
+    $processoSei = $_POST['processoSei'];
+
     
-    $sql = "INSERT INTO liquidacao (idDeposito, data, valor, numeroLiquidacao) values ('$idDeposito', '$data', '$valor', '$numeroLiquidacao')";
+    $sql = "INSERT INTO liquidacao (idDeposito, data, valor, numeroLiquidacao,processoSei) values ('$idDeposito', '$data', '$valor', '$numeroLiquidacao', '$processoSei')";
     
     if(mysqli_query($con,$sql)){
         $mensagem = "<font color='#01DF3A'><strong>Liquidação cadastrada com sucesso!</strong></font>";
@@ -35,18 +37,24 @@ if(isset($_POST['inserirLiquidacao'])){
                 <div class="table-responsive list_info">
                     <form method="POST" action="?perfil=cadastro_liquidacao&idDeposito=<?=$idDeposito?>" class="form-horizontal" role="form">
                         <div class="form-group">
-                            <div class="col-md-offset-2 col-md-2">
+                            <div class="col-md-offset-2 col-md-4">
                                 <label>Data</label>
                                 <input type="text" name="data" id='datepicker01' class="form-control" placeholder="DD/MM/AA ou MM/AAAA" required>
                             </div>
-
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <label>Valor</label>
                                 <input type="text" id='valor' name="valor" class="form-control" required>
                             </div>
+                        </div>    
 
-                            <div class="col-md-3"><label>Número da Liquidação</label>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-4">                                
+                                <label>Número da Liquidação</label>
                                 <input type="text" name="numeroLiquidacao" class="form-control">
+                            </div>
+                            <div class="col-md-4">                                
+                                <label>Nº Processo SEI</label>
+                                <input type="text" name="processoSei" class="form-control">
                             </div>
                         </div>
 
