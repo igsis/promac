@@ -209,7 +209,7 @@ if($projeto['tipoPessoa'] == 1)
 }
 else
 {
-	$pj = recuperaDados("pessoa_juridica","idPj",$projeto['idPj']);
+	$pj = recuperaDados("pessoa_juridica","idPj",$projeto['idpj']);
 }
 
 $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
