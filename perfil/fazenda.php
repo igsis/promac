@@ -1,10 +1,9 @@
 <?php
 $con = bancoMysqli();
-$valorTotalDisponivel;
-$valorReservaNaoLiquidada;
+$valorDisponivel;
 
-function calculaValorDisponivel($valorDaReserva, $valorDaLiquidacao){
-	return $valorReservaNaoLiquidada = $valorDaReserva - $valorDaLiquidacao;
+function calculaValorDisponivel($valorTotal, $valorDoEmpenho){
+	return $valorDisponivel = $valorTotal - $valorDoEmpenho;
 }
 
 function calculaPorcentagem($valorDoEmpenho, $valorTotal){
@@ -76,7 +75,7 @@ function calculaPorcentagem($valorDoEmpenho, $valorTotal){
                                     R$ ".dinheiroParaBr($valorLiquidacao)."</td>";
 
 									echo "<td class='list_description'>
-                                    R$ ".dinheiroParaBr(calculaValorDisponivel($valorReserva, $valorLiquidacao))."</td>";
+                                    R$ ".dinheiroParaBr(calculaValorDisponivel($campo['valor'], $valorEmpenho))."</td>";
 								}
 									echo "</tr>";
 									echo "</tbody>
