@@ -93,8 +93,11 @@ if(isset($_POST['gravarFin']))
     $processoSei = $_POST['processoSei'];
     $assinaturaTermo = exibirDataMysql($_POST['assinaturaTermo']);
     $observacoes = $_POST['observacoes'];
+    $agencia = $_POST['observacoes'];
+    $contaMovimentacao = $_POST['contaMovimentacao'];
+    $contaCaptacao = $_POST['contaCaptacao'];
 
-    $sql_gravarFin = "UPDATE projeto SET valorAprovado = '$valorAprovado', idRenunciaFiscal = '$renunciaFiscal', processoSei = '$processoSei', assinaturaTermo = '$assinaturaTermo', observacoes = '$observacoes' WHERE idProjeto = '$idP' ";
+    $sql_gravarFin = "UPDATE projeto SET valorAprovado = '$valorAprovado', idRenunciaFiscal = '$renunciaFiscal', processoSei = '$processoSei', assinaturaTermo = '$assinaturaTermo', observacoes = '$observacoes', agencia = '$agencia', contaMovimentacao = '$contaMovimentacao', contaCaptacao = '$contaCaptacao' WHERE idProjeto = '$idP' ";
     if(mysqli_query($con,$sql_gravarFin))
     {
         $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
@@ -105,44 +108,6 @@ if(isset($_POST['gravarFin']))
     else
     {
         $mensagem = "<font color='#FF0000'><strong>Erro ao atualizar! Tente novamente.</strong></font>";
-    }
-}
-
-if(isset($_POST['gravarDadosBancariosPF'])){
-    $idPf = $_POST['IDPF'];
-    $idP = $_POST['IDP'];
-    $agencia = $_POST['agencia'];
-    $contaCaptacao = $_POST['contaCaptacao'];
-    $contaMovimentacao = $_POST['contaMovimentacao'];
-
-
-    $sql_gravarDadosBancariosPF = "UPDATE pessoa_fisica SET agencia = '$agencia', contaCaptacao = '$contaCaptacao', contaMovimentacao = '$contaMovimentacao' WHERE idPf = '$idPf' ";
-
-    if(mysqli_query($con,$sql_gravarDadosBancariosPF)){
-        $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
-        echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
-        gravarLog($sql_gravarDadosBancariosPF);
-    }else{
-        $mensagem = "<font color='#FF0000'><strong>Erro ao atualizar! Tente novamente.</strong></font>";
-    }
-}
-
-if(isset($_POST['gravarDadosBancariosPJ'])){
-    $idPj = $_POST['IDPJ'];
-    $idP = $_POST['IDP'];
-    $agencia = $_POST['agencia'];
-    $contaCaptacao = $_POST['contaCaptacao'];
-    $contaMovimentacao = $_POST['contaMovimentacao'];
-
-    $sql_gravarDadosBancariosPJ = "UPDATE pessoa_juridica SET agencia = '$agencia', contaCaptacao = '$contaCaptacao', contaMovimentacao = '$contaMovimentacao' WHERE idPj = '$idPj' ";
-
-    if(mysqli_query($con,$sql_gravarDadosBancariosPJ)){
-        $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
-        echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
-        gravarLog($sql_gravarDadosBancariosPJ);
-    }else{
-        $mensagem = "<font color='#FF0000'><strong>Erro ao atualizar! Tente novamente.</strong></font>";
-
     }
 }
 
@@ -1237,66 +1202,30 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
-                                        <div class="col-md-offset-2 col-md-8">
-                                            <?php echo "<input type='hidden' name='IDP' value='$idProjeto'>"; ?>
-                                            <input type="submit" name="gravarFin" class="btn btn-theme btn-md btn-block" value="Gravar">
+                                    <div class="form-group">   
+                                        <div class="col-md-offset-2 col-md-2"><label>Agência BB Nº</label><br/>
+                                            <input type="text" name="agencia" class="form-control" value="<?php echo $projeto['agencia'] ?>">
                                         </div>
-                                    </div>
-                                </form>
-                                <form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
-                                    <?php
-                                if($projeto['tipoPessoa'] == 1){
-                                    ?>
-                                        <div class="form-group">
-                                            <div class="col-md-offset-2 col-md-2"><label>Agência BB Nº</label><br/>
-                                                <input type="text" name="agencia" class="form-control" value="<?php echo $pf['agencia'] ?>">
-                                            </div>
 
-                                            <<div class="col-md-3"><label>Nº da Conta de Captação</label><br/>
-                                                <input type="text" name="contaCaptacao" class="form-control" value="<?php echo $pf['contaCaptacao'] ?>">
+                                        <<div class="col-md-3"><label>Nº da Conta de Captação</label><br/>
+                                            <input type="text" name="contaCaptacao" class="form-control" value="<?php echo $projeto['contaCaptacao'] ?>">
                                         </div>
 
                                         <div class="col-md-3"><label>Nº da Conta de Movimentação</label><br/>
-                                            <input type="text" name="contaMovimentacao" class="form-control" value="<?php echo $pf['contaMovimentacao'] ?>">
+                                            <input type="text" name="contaMovimentacao" class="form-control" value="<?php echo $projeto['contaMovimentacao'] ?>">
                                         </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-md-offset-2 col-md-8">
-                                    <input type="hidden" name="IDPF" value="<?php echo $pf['idPf'] ?>">
-                                    <?php echo "<input type='hidden' name='IDP' value='$idProjeto'>"; ?>
-                                    <input type="submit" name="gravarDadosBancariosPF" class="btn btn-theme btn-md btn-block" value="Gravar">
-                                </div>
-                            </div>
-                            <?php
-                                }else{
-                                    ?>
-                                <div class="form-group">
-                                    <div class="col-md-offset-2 col-md-2"><label>Agência BB Nº</label><br/>
-                                        <input type="text" name="agencia" class="form-control" value="<?php echo $pj['agencia'] ?>">
-                                    </div>
-
-                                    <<div class="col-md-3"><label>Nº da Conta de Captação</label><br/>
-                                        <input type="text" name="contaCaptacao" class="form-control" value="<?php echo $pj['contaCaptacao'] ?>">
-                                </div>
-
-                                <div class="col-md-3"><label>Nº da Conta de Movimentação</label><br/>
-                                    <input type="text" name="contaMovimentacao" class="form-control" value="<?php echo $pj['contaMovimentacao'] ?>">
-                                </div>
+                                    </div>                                
                         </div>
 
                         <div class="form-group">
-                            <div class="col-md-offset-2 col-md-8">
-                                <input type="hidden" name="IDPJ" value="<?php echo $pj['idPj'] ?>">
-                                <?php echo "<input type='hidden' name='IDP' value='$idProjeto'>"; ?>
-                                <input type="submit" name="gravarDadosBancariosPJ" class="btn btn-theme btn-md btn-block" value="Gravar">
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-8">
+                                    <?php echo "<input type='hidden' name='IDP' value='$idProjeto'>"; ?>
+                                    <input type="submit" name="gravarFin" class="btn btn-theme btn-md btn-block" value="Gravar">
+                                </div>
                             </div>
                         </div>
-                        <?php
-                                }
-                                ?>
-                            </form>
+                </form>
 
                             <div class="form-group">
                                 <div class="col-md-offset-2 col-md-8"><br/></div>
