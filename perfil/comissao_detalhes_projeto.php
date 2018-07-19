@@ -259,10 +259,10 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 										$idP = $projeto['idProjeto'];
 										if($id == 1)
 										{
-											$idPess = $projeto['idPf'];
+											$idPess = $projeto['idpf'];
 										} else if($id == 2)
 										{
-											$idPess = $projeto['idPj'];
+											$idPess = $projeto['idpj'];
 										}
 									?>
 										<a href='<?php echo "../pdf/gera_pdf.php?tipo=$id&projeto=$idP&pessoa=$idPess"; ?>' target='_blank' class="btn btn-theme btn-md btn-block"><strong>Gerar PDF do Projeto</strong></a><br/>
