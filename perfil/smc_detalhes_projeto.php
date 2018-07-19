@@ -171,8 +171,8 @@ if(isset($_POST['insereIncentivador']))
     $tipoPessoa = $_POST['tipoPessoa'];
     $idIncentivador = $_POST['idIncentivador'];
 
-    $sql = "INSERT INTO incentivador_projeto (idIncentivador, tipoPessoa, idProjeto)
-            VALUES ('$idIncentivador', '$tipoPessoa', '$idProjeto')";
+    $sql = "INSERT INTO incentivador_projeto (idIncentivador, tipoPessoa, idProjeto, publicado)
+            VALUES ('$idIncentivador', '$tipoPessoa', '$idProjeto', '1')";
     if (mysqli_query($con, $sql))
     {
         $mensagem = "<font color='#01DF3A'><strong>Incentivador inserido com sucesso!</strong></font>";
@@ -181,6 +181,23 @@ if(isset($_POST['insereIncentivador']))
     else
     {
         $mensagem = "<font color='#FF0000'><strong>Erro ao inserir incentivador! Tente novamente.</strong></font>";
+    }
+}
+
+if(isset($_POST['apagaIncentivador']))
+{
+    $tipoPessoa = $_POST['tipoPessoa'];
+    $idIncentivador = $_POST['idIncentivador'];
+
+    $sql = "UPDATE incentivador_projeto SET publicado = '0' WHERE idIncentivador = '$idIncentivador'";
+    if (mysqli_query($con, $sql))
+    {
+        $mensagem = "<font color='#01DF3A'><strong>Incentivador removido com sucesso!</strong></font>";
+        gravarLog($sql);
+    }
+    else
+    {
+        $mensagem = "<font color='#FF0000'><strong>Erro ao remover incentivador! Tente novamente.</strong></font>";
     }
 }
 
@@ -1250,7 +1267,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                             </form>
 
                             <?php
-                            $sql = "SELECT * FROM incentivador_projeto WHERE idProjeto = '$idProjeto'";
+                            $sql = "SELECT * FROM incentivador_projeto WHERE idProjeto = '$idProjeto' AND publicado = '1'";
                             $query = mysqli_query($con, $sql);
                             $num = mysqli_num_rows($query);
                             if($num > 0) { ?>
@@ -1260,6 +1277,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                             <tr class='list_menu'>
                                                 <td>Incentivador</td>
                                                 <td>Documento</td>
+                                                <td></td>
                                             </tr>
                                         </thead>
                                         <tbody>
