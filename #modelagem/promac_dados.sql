@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 04-Jul-2018 às 15:17
+-- Generation Time: 19-Jul-2018 às 23:52
 -- Versão do servidor: 10.1.22-MariaDB
 -- PHP Version: 7.1.4
 
@@ -294,9 +294,11 @@ CREATE TABLE `incentivador_pessoa_juridica` (
 --
 
 CREATE TABLE `incentivador_projeto` (
+  `idIncentivadorProjeto` int(11) NOT NULL,
   `idIncentivador` int(11) NOT NULL,
   `tipoPessoa` tinyint(1) NOT NULL,
-  `idProjeto` int(11) NOT NULL
+  `idProjeto` int(11) NOT NULL,
+  `publicado` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -310,7 +312,8 @@ CREATE TABLE `liquidacao` (
   `idDeposito` int(11) NOT NULL,
   `data` date NOT NULL,
   `valor` decimal(9,2) NOT NULL,
-  `numeroLiquidacao` varchar(30) NOT NULL
+  `numeroLiquidacao` varchar(30) NOT NULL,
+  `processoSei` varchar(30) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -512,10 +515,7 @@ CREATE TABLE `pessoa_fisica` (
   `idFraseSeguranca` int(11) DEFAULT NULL,
   `respostaFrase` varchar(10) DEFAULT NULL,
   `dataInscricao` datetime DEFAULT NULL,
-  `alteradoPor` varchar(150) DEFAULT 'none',
-  `agencia` varchar(12) NOT NULL,
-  `contaCaptacao` varchar(12) NOT NULL,
-  `contaMovimentacao` varchar(12) NOT NULL
+  `alteradoPor` varchar(150) DEFAULT 'none'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -570,10 +570,7 @@ CREATE TABLE `pessoa_juridica` (
   `idFraseSeguranca` int(11) DEFAULT NULL,
   `respostaFrase` varchar(10) DEFAULT NULL,
   `dataInscricao` datetime DEFAULT NULL,
-  `alteradoPor` varchar(150) DEFAULT 'none',
-  `agencia` varchar(12) NOT NULL,
-  `contaCaptacao` varchar(12) NOT NULL,
-  `contaMovimentacao` varchar(12) NOT NULL
+  `alteradoPor` varchar(150) DEFAULT 'none'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -669,7 +666,10 @@ CREATE TABLE `projeto` (
   `alteradoPor` varchar(150) DEFAULT 'none',
   `processoSei` varchar(30) DEFAULT NULL,
   `assinaturaTermo` date DEFAULT NULL,
-  `observacoes` longtext
+  `observacoes` longtext,
+  `agencia` varchar(12) NOT NULL,
+  `contaCaptacao` varchar(12) NOT NULL,
+  `contaMovimentacao` varchar(12) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -980,7 +980,8 @@ ALTER TABLE `frase_seguranca`
 -- Indexes for table `incentivador_pessoa_fisica`
 --
 ALTER TABLE `incentivador_pessoa_fisica`
-  ADD PRIMARY KEY (`idPf`);
+  ADD PRIMARY KEY (`idPf`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- Indexes for table `incentivador_pessoa_juridica`
@@ -988,6 +989,12 @@ ALTER TABLE `incentivador_pessoa_fisica`
 ALTER TABLE `incentivador_pessoa_juridica`
   ADD PRIMARY KEY (`idPj`),
   ADD UNIQUE KEY `email_UNIQUE` (`email`);
+
+--
+-- Indexes for table `incentivador_projeto`
+--
+ALTER TABLE `incentivador_projeto`
+  ADD PRIMARY KEY (`idIncentivadorProjeto`);
 
 --
 -- Indexes for table `liquidacao`
@@ -1042,7 +1049,8 @@ ALTER TABLE `orcamento_anual`
 -- Indexes for table `pessoa_fisica`
 --
 ALTER TABLE `pessoa_fisica`
-  ADD PRIMARY KEY (`idPf`);
+  ADD PRIMARY KEY (`idPf`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- Indexes for table `pessoa_juridica`
@@ -1154,7 +1162,7 @@ ALTER TABLE `cronograma`
 -- AUTO_INCREMENT for table `deposito`
 --
 ALTER TABLE `deposito`
-  MODIFY `idDeposito` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idDeposito` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `distrito`
 --
@@ -1164,7 +1172,7 @@ ALTER TABLE `distrito`
 -- AUTO_INCREMENT for table `empenho`
 --
 ALTER TABLE `empenho`
-  MODIFY `idEmpenho` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idEmpenho` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `etapa`
 --
@@ -1191,10 +1199,15 @@ ALTER TABLE `incentivador_pessoa_fisica`
 ALTER TABLE `incentivador_pessoa_juridica`
   MODIFY `idPj` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 --
+-- AUTO_INCREMENT for table `incentivador_projeto`
+--
+ALTER TABLE `incentivador_projeto`
+  MODIFY `idIncentivadorProjeto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+--
 -- AUTO_INCREMENT for table `liquidacao`
 --
 ALTER TABLE `liquidacao`
-  MODIFY `idLiquidacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `idLiquidacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `lista_documento`
 --
@@ -1209,7 +1222,7 @@ ALTER TABLE `locais_realizacao`
 -- AUTO_INCREMENT for table `log`
 --
 ALTER TABLE `log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13250;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13322;
 --
 -- AUTO_INCREMENT for table `nivel_acesso`
 --
@@ -1234,7 +1247,7 @@ ALTER TABLE `orcamento_anual`
 -- AUTO_INCREMENT for table `pessoa_fisica`
 --
 ALTER TABLE `pessoa_fisica`
-  MODIFY `idPf` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=264;
+  MODIFY `idPf` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=267;
 --
 -- AUTO_INCREMENT for table `pessoa_juridica`
 --
@@ -1264,7 +1277,7 @@ ALTER TABLE `representante_legal`
 -- AUTO_INCREMENT for table `reserva`
 --
 ALTER TABLE `reserva`
-  MODIFY `idReserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `idReserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `status`
 --
@@ -1294,12 +1307,12 @@ ALTER TABLE `unidade_medida`
 -- AUTO_INCREMENT for table `upload_arquivo`
 --
 ALTER TABLE `upload_arquivo`
-  MODIFY `idUploadArquivo` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3353;
+  MODIFY `idUploadArquivo` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3354;
 --
 -- AUTO_INCREMENT for table `weblogs`
 --
 ALTER TABLE `weblogs`
-  MODIFY `idWebLog` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2040;
+  MODIFY `idWebLog` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2061;
 --
 -- AUTO_INCREMENT for table `zona`
 --
