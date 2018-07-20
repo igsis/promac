@@ -85,6 +85,14 @@ if(isset($_POST['gravarAdm']))
     }
 }
 
+if(isset($_POST['removerIncentivador'])){
+    $idIncentivadorProjeto = $_POST['IIP'];
+    ?>
+
+    <script>alert(<?php echo $idIncentivadorProjeto; ?>);</script>
+<?php
+}
+
 if(isset($_POST['gravarFin']))
 {
     $idP = $_POST['IDP'];
@@ -93,7 +101,7 @@ if(isset($_POST['gravarFin']))
     $processoSei = $_POST['processoSei'];
     $assinaturaTermo = exibirDataMysql($_POST['assinaturaTermo']);
     $observacoes = $_POST['observacoes'];
-    $agencia = $_POST['observacoes'];
+    $agencia = $_POST['agencia'];
     $contaMovimentacao = $_POST['contaMovimentacao'];
     $contaCaptacao = $_POST['contaCaptacao'];
 
@@ -1178,7 +1186,6 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                             else {?>
                                         <h4>Não existem reservas cadastradas!</h4>
                                         <?php } ?>
-                                        </form>
                             </div>
 
                             <!-- LABEL FINANCEIRO -->
@@ -1219,102 +1226,129 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                         </div>
                                     </div>
 
-                                    <div class="form-group">   
+                                    <div class="form-group">
                                         <div class="col-md-offset-2 col-md-2"><label>Agência BB Nº</label><br/>
                                             <input type="text" name="agencia" class="form-control" value="<?php echo $projeto['agencia'] ?>">
                                         </div>
 
-                                        <<div class="col-md-3"><label>Nº da Conta de Captação</label><br/>
+                                        <div class="col-md-3"><label>Nº da Conta de Captação</label><br/>
                                             <input type="text" name="contaCaptacao" class="form-control" value="<?php echo $projeto['contaCaptacao'] ?>">
                                         </div>
 
                                         <div class="col-md-3"><label>Nº da Conta de Movimentação</label><br/>
                                             <input type="text" name="contaMovimentacao" class="form-control" value="<?php echo $projeto['contaMovimentacao'] ?>">
                                         </div>
-                                    </div>                                
-                        </div>
-
-                        <div class="form-group">
-                            <div class="form-group">
-                                <div class="col-md-offset-2 col-md-8">
-                                    <?php echo "<input type='hidden' name='IDP' value='$idProjeto'>"; ?>
-                                    <input type="submit" name="gravarFin" class="btn btn-theme btn-md btn-block" value="Gravar">
-                                </div>
-                            </div>
-                        </div>
-                </form>
-
-                            <div class="form-group">
-                                <div class="col-md-offset-2 col-md-8"><br/></div>
-                            </div>
-
-                            <form method="POST" action="?perfil=insere_incentivador_projeto&idProjeto=<?=$idProjeto?>" class="form-horizontal" role="form">
-                                <div class="form-group">
-                                    <h4>Incentivadores do Projeto</h4>
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="col-md-offset-2 col-md-8">
-                                        <input type="submit" name="insereIncentivador" class="btn btn-theme btn-md btn-block" value="INSERIR INCENTIVADOR">
                                     </div>
-                                </div>
+
+
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <div class="col-md-offset-2 col-md-8">
+                                                <?php echo "<input type='hidden' name='IDP' value='$idProjeto'>"; ?>
+                                                <input type="submit" name="gravarFin" class="btn btn-theme btn-md btn-block" value="Gravar">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
 
                                 <div class="form-group">
-                                    <div class="col-md-12">
-                                        <hr/>
-                                    </div>
+                                    <div class="col-md-offset-2 col-md-8"><br/></div>
                                 </div>
-                            </form>
 
-                            <?php
+                                <form method="POST" action="?perfil=insere_incentivador_projeto&idProjeto=<?=$idProjeto?>" class="form-horizontal" role="form">
+                                    <div class="form-group">
+                                        <h4>Incentivadores do Projeto</h4>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-8">
+                                            <input type="submit" name="insereIncentivador" class="btn btn-theme btn-md btn-block" value="INSERIR INCENTIVADOR">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <hr/>
+                                        </div>
+                                    </div>
+                                </form>
+
+                                <?php
                             $sql = "SELECT * FROM incentivador_projeto WHERE idProjeto = '$idProjeto' AND publicado = '1'";
                             $query = mysqli_query($con, $sql);
                             $num = mysqli_num_rows($query);
                             if($num > 0) { ?>
-                                <div class="table-responsive list_info">
-                                    <table class='table table-condensed'>
-                                        <thead>
-                                            <tr class='list_menu'>
-                                                <td>Incentivador</td>
-                                                <td>Documento</td>
-                                                <td></td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php while ($linha = mysqli_fetch_array($query)) {
+                                    <div class="table-responsive list_info">
+                                        <table class='table table-condensed'>
+                                            <thead>
+                                                <tr class='list_menu'>
+                                                    <td>Incentivador</td>
+                                                    <td>Documento</td>
+                                                    <td></td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php while ($linha = mysqli_fetch_array($query)) {
                                             if($linha['tipoPessoa'] == 4)
                                             {
                                                 $incentivadorPF = "incentivador_pessoa_fisica";
                                                 $pf = recuperaDados($incentivadorPF, 'idPf', $linha['idIncentivador']);
+                                                $incentivadorProjeto = $linha['idIncentivadorProjeto'];
                                             }
                                             else
                                             {
                                                 $incentivadorPJ = "incentivador_pessoa_juridica";
                                                 $pj = recuperaDados($incentivadorPJ, 'idPj', $linha['idIncentivador']);
+                                                $incentivadorProjeto = $linha['idIncentivadorProjeto'];
                                             }
                                             ?>
-                                            <tr>
-                                                <td class="list_description">
-                                                    <?=($linha['tipoPessoa'] == 4 ? $pf['nome'] : $pj['razaoSocial'])?>
-                                                </td>
-                                                <td class="list_description">
-                                                    <?=($linha['tipoPessoa'] == 4 ? $pf['cpf'] : $pj['cnpj'])?>
-                                                </td>
-                                            </tr>
-                                            <?php } ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <?php
+                                                <tr>
+                                                    <td class="list_description">
+                                                        <?=($linha['tipoPessoa'] == 4 ? $pf['nome'] : $pj['razaoSocial'])?>
+                                                    </td>
+                                                    <td class="list_description">
+                                                        <?=($linha['tipoPessoa'] == 4 ? $pf['cpf'] : $pj['cnpj'])?>
+                                                    </td>
+                                                    <td>
+                                                        <form method='POST' action='?perfil=smc_detalhes_projeto&idFF=<?=$idP?>'>
+                                                            <?php echo "<input type='hidden' name='IIP' value='".$linha['idIncentivadorProjeto']."'>"; ?>
+                                                            <button name="removerIncentivador" class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar'>Remover</button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                                <?php } ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                    <h4 class="modal-title">Deseja remover o icentivador do projeto?</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>&nbsp;
+                                                        <?php echo $incentivadorProjeto; ?>
+                                                    </p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                                    <button type="button" class="btn btn-danger" id="confirm">Remover</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <?php
                             }
                             else {?>
-                                    <h4>Não existem incentivadores para este projeto</h4>
-                                    <?php } ?>
-                                    </form>
+                                        <h4>Não existem incentivadores para este projeto</h4>
+                                        <?php } ?>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        </div>
         </div>
     </section>
