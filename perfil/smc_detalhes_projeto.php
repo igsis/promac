@@ -415,10 +415,10 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 
                                 <!-- Exibir arquivos -->
                                 <div class="form-group">
-                                    <div class="col-md-offset-2 col-md-8">
+                                    <div class="col-md-12">
                                         <div class="table-responsive list_info">
                                             <h6>Arquivo(s) Anexado(s)</h6>
-                                            <?php listaArquivosPessoa($idProjeto,9,"smc_detalhes_projeto"); ?>
+                                            <?php listaArquivosPessoaSMC($idProjeto,9,"smc_detalhes_projeto"); ?>
                                         </div>
                                     </div>
                                 </div>
