@@ -151,12 +151,12 @@ if($projeto['idStatus'] == 6)
 				</div>
 
 				<div class="well">
-					<p align="justify"><strong>Início do projeto:</strong> <?php echo isset($projeto['inicioCronograma']) ? $projeto['inicioCronograma'] : null; ?></p>
-					<p align="justify"><strong>Fim do projeto:</strong> <?php echo isset($projeto['fimCronograma']) ? $projeto['fimCronograma'] : null; ?></p>
+					<p align="justify"><strong>Início do projeto:</strong> <?= isset($projeto['inicioCronograma']) ? $projeto['inicioCronograma'] : null ?></p>
+					<p align="justify"><strong>Fim do projeto:</strong> <?= isset($projeto['fimCronograma']) ? $projeto['fimCronograma'] : null ?></p>
 					<table class="table table-bordered">
 						<tr>
-							<td><strong>Início do cronograma:</strong> <?php echo exibirDataBr($projeto['inicioCronograma']) ?></td>
-							<td><strong>Fim do cronograma:</strong> <?php echo exibirDataBr($projeto['fimCronograma']) ?></td>
+							<td><strong>Início do cronograma:</strong> <?= $projeto['inicioCronograma'] ?></td>
+							<td><strong>Fim do cronograma:</strong> <?= $projeto['fimCronograma'] ?></td>
 						</tr>
 						<tr>
 							<td><strong>Captação de recursos:</strong> <?php echo $cronograma['captacaoRecurso'] ?></td>
