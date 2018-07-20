@@ -86,11 +86,22 @@ if(isset($_POST['gravarAdm']))
 }
 
 if(isset($_POST['removerIncentivador'])){
+    $idP = $_POST['IDP'];
     $idIncentivadorProjeto = $_POST['IIP'];
-    ?>
 
-    <script>alert(<?php echo $idIncentivadorProjeto; ?>);</script>
-<?php
+    $sql_removeIncentivador = "UPDATE incentivador_projeto SET publicado = 0 WHERE idIncentivadorProjeto = '$idIncentivadorProjeto'";
+
+    if(mysqli_query($con, $sql_removeIncentivador))
+    {
+        $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
+        echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
+        gravarLog($sql_gravarFin);
+    }
+
+    else
+    {
+        $mensagem = "<font color='#FF0000'><strong>Erro ao atualizar! Tente novamente.</strong></font>";
+    }
 }
 
 if(isset($_POST['gravarFin']))
@@ -1311,34 +1322,41 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                                     </td>
                                                     <td>
                                                         <form method='POST' action='?perfil=smc_detalhes_projeto&idFF=<?=$idP?>'>
-                                                            <?php echo "<input type='hidden' name='IIP' value='".$linha['idIncentivadorProjeto']."'>"; ?>
-                                                            <button name="removerIncentivador" class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar'>Remover</button>
+                                                            <?php echo "<input type='hidden' name='IIP' value='".$linha['idIncentivadorProjeto']."'>";
+                                                            echo "<input type='hidden' name='IDP' value='$idProjeto'>"; ?>
+                                                            <input type="hidden" name="removerIncentivador" value="<?php $linha['idIncentivadorProjeto']; ?>">
+                                                            <button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar'>Remover</button>
                                                         </form>
                                                     </td>
                                                 </tr>
+
+                                                    <div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                                    <h4 class="modal-title">Deseja remover o icentivador do projeto?</h4>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <p>&nbsp;
+                                                                        <?=($linha['tipoPessoa'] == 4 ? $pf['nome'] : $pj['razaoSocial'])?>
+                                                                    </p>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                                                    <button type="button" class="btn btn-danger" id="confirm">Remover</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
                                                 <?php } ?>
                                             </tbody>
                                         </table>
                                     </div>
-                                    <div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                    <h4 class="modal-title">Deseja remover o icentivador do projeto?</h4>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <p>&nbsp;
-                                                        <?php echo $incentivadorProjeto; ?>
-                                                    </p>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                                                    <button type="button" class="btn btn-danger" id="confirm">Remover</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+
+
+
 
                                     <?php
                             }

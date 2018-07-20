@@ -49,7 +49,7 @@ if(isset($_POST['inserirDeposito'])){
                                 <select name="incentivador" required>
                                 <option value="" selected disabled="disabled" hidden>Selecione o Incentivador</option>
                                 <?php
-                                        $sql_busca_incentivador = "SELECT * FROM incentivador_projeto ip INNER JOIN incentivador_pessoa_fisica pf ON ip.idIncentivador = pf.idPf WHERE ip.idProjeto = '$idProjeto' AND ip.tipoPessoa = 4";
+                                        $sql_busca_incentivador = "SELECT * FROM incentivador_projeto ip INNER JOIN incentivador_pessoa_fisica pf ON ip.idIncentivador = pf.idPf WHERE ip.idProjeto = '$idProjeto' AND ip.tipoPessoa = 4 AND ip.publicado = 1";
                                         $query_busca_incentivador = mysqli_query($con, $sql_busca_incentivador);
                                     
                                         while($dados = mysqli_fetch_array($query_busca_incentivador)){ 
@@ -60,7 +60,7 @@ if(isset($_POST['inserirDeposito'])){
                                             
                                         }
                           
-                                        $sql_busca_incentivador = "SELECT * FROM incentivador_projeto ip INNER JOIN incentivador_pessoa_juridica pj ON ip.idIncentivador = pj.idPj WHERE ip.idProjeto = '$idProjeto' AND ip.tipoPessoa = 5";
+                                        $sql_busca_incentivador = "SELECT * FROM incentivador_projeto ip INNER JOIN incentivador_pessoa_juridica pj ON ip.idIncentivador = pj.idPj WHERE ip.idProjeto = '$idProjeto' AND ip.tipoPessoa = 5 AND ip.publicado = 1";
                                         $query_busca_incentivador = mysqli_query($con, $sql_busca_incentivador);
                                     
                                         while($dados = mysqli_fetch_array($query_busca_incentivador)){ 
