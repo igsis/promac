@@ -1330,7 +1330,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                                             <?php echo "<input type='hidden' name='IIP' value='".$linha['idIncentivadorProjeto']."'>";
                                                             echo "<input type='hidden' name='IDP' value='$idProjeto'>"; ?>
                                                             <input type="hidden" name="removerIncentivador" value="<?php $linha['idIncentivadorProjeto']; ?>">
-                                                            <button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar'>Remover</button>
+                                                            <button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-message="<?=$linha['tipoPessoa'] == 4 ? $pf['nome'] : $pj['razaoSocial']?>">Remover</button>
                                                         </form>
                                                     </td>
                                                 </tr>
@@ -1343,9 +1343,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                                                 <h4 class="modal-title">Deseja remover o icentivador do projeto?</h4>
                                                             </div>
                                                             <div class="modal-body">
-                                                                <p>&nbsp;
-                                                                    <?=($linha['tipoPessoa'] == 4 ? $pf['nome'] : $pj['razaoSocial'])?>
-                                                                </p>
+                                                                <p>a</p>
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
