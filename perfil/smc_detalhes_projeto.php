@@ -185,24 +185,6 @@ if(isset($_POST['reabreProjeto']))
     }
 }
 
-if(isset($_POST['insereIncentivador']))
-{
-    $tipoPessoa = $_POST['tipoPessoa'];
-    $idIncentivador = $_POST['idIncentivador'];
-
-    $sql = "INSERT INTO incentivador_projeto (idIncentivador, tipoPessoa, idProjeto, publicado)
-            VALUES ('$idIncentivador', '$tipoPessoa', '$idProjeto', '1')";
-    if (mysqli_query($con, $sql))
-    {
-        $mensagem = "<font color='#01DF3A'><strong>Incentivador inserido com sucesso!</strong></font>";
-        gravarLog($sql);
-    }
-    else
-    {
-        $mensagem = "<font color='#FF0000'><strong>Erro ao inserir incentivador! Tente novamente.</strong></font>";
-    }
-}
-
 if(isset($_POST['apagaIncentivador']))
 {
     $tipoPessoa = $_POST['tipoPessoa'];
@@ -1353,25 +1335,25 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                                     </td>
                                                 </tr>
 
-                                                    <div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel" aria-hidden="true">
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                                    <h4 class="modal-title">Deseja remover o icentivador do projeto?</h4>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <p>&nbsp;
-                                                                        <?=($linha['tipoPessoa'] == 4 ? $pf['nome'] : $pj['razaoSocial'])?>
-                                                                    </p>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                                                                    <button type="button" class="btn btn-danger" id="confirm">Remover</button>
-                                                                </div>
+                                                <div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                                <h4 class="modal-title">Deseja remover o icentivador do projeto?</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <p>&nbsp;
+                                                                    <?=($linha['tipoPessoa'] == 4 ? $pf['nome'] : $pj['razaoSocial'])?>
+                                                                </p>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                                                <button type="button" class="btn btn-danger" id="confirm">Remover</button>
                                                             </div>
                                                         </div>
                                                     </div>
+                                                </div>
 
                                                 <?php } ?>
                                             </tbody>
