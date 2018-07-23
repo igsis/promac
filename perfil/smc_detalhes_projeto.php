@@ -262,6 +262,29 @@ else
     $pj = recuperaDados("pessoa_juridica","idPj",$projeto['idpj']);
 }
 
+if(isset($_POST['editarParecer'])){
+
+    $status = $_POST['status'];
+    $observacoes = $_POST['observacoes'];
+    $idProjeto = $_POST['idPessoa'];
+    $idArquivo = $_POST['idArquivo'];
+
+    $query = "UPDATE upload_arquivo SET idStatusDocumento = '".$status."', observacoes = '".$observacoes."' WHERE idUploadArquivo = '".$idArquivo."' ";
+        $envia = mysqli_query($con, $query);
+        if($envia)
+        {
+            echo "<script>window.location.href = 'index_pf.php?perfil=smc_detalhes_projeto&idFF=".$idProjeto."';</script>";
+            $mensagem = "<font color='#01DF3A'><strong>Os arquivos foram atualizados com sucesso!</strong></font>";
+        }
+        else
+        {
+            echo "<script>window.location.href = 'index_pf.php?perfil=smc_detalhes_projeto&idFF=".$idProjeto."';</script>";
+            echo "<script>alert('Erro durante o processamento, entre em contato com os responsáveis pelo sistema para maiores informações.')</script>";
+        }
+
+}
+
+
 
 $representante = pegaProjetoRepresentante($idProjeto);
 $pessoaFisica = pegaProjetoPessoaFisica($idProjeto);

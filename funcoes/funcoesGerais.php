@@ -872,24 +872,22 @@ function listaArquivosPessoaSMC($idPessoa,$tipoPessoa,$pagina)
 					{
 						echo "<tr>";
 						echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
-						echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
+						echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";			
 						echo "<td class='list_description'>
-								<select name='status' id='statusOpt' value='teste'>";
+								<select name='status' id='statusOpt'>";
 								echo "<option>Selecione</option>";
-								geraOpcao('status_documento', $row['idStatusDocumento']);
+								geraOpcao('status_documento', $arquivo['idStatusDocumento']);
 								echo " </select>
 							</td>";
-						$queryOBS = "SELECT observacoes FROM upload_arquivo WHERE idUploadArquivo = '".$arquivo['idUploadArquivo']."'";
-						$send = mysqli_query($con, $queryOBS);
-						$row = mysqli_fetch_array($send);
 						echo "<td class='list_description'>
-						<input type='text' name='observ' maxlength='100' id='observ' value='".$row['observacoes']."'/>
+						<input type='text' name='observacoes' maxlength='100' id='observ' value='".$arquivo['observacoes']."'/>
+						<input type='hidden' name='idArquivo' value='".$arquivo['idUploadArquivo']."' />
 						</td>";
 					}
 					echo "
 							<td class='list_description'>	
-								<input type='hidden' name='idArquivo' value='".$arquivo['idUploadArquivo']."' />
-								<button class='btn btn-theme' type='submit' >Atualizar
+								<input type='hidden' name='idPessoa' value='".$idPessoa."' />
+								<button class='btn btn-theme' type='submit' name='editarParecer'>Atualizar
 								</button>
 							</td>";
 					echo "</tr>";
