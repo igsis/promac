@@ -291,7 +291,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 							<div class="form-group">
 								<div class="col-md-offset-2 col-md-8">
 									<div class="table-responsive list_info"><h6>Arquivo(s) Anexado(s)</h6>
-										<?php listaArquivosPessoa($idProjeto,9,"comissao_detalhes_projeto"); ?>
+										<?php listaArquivosComissao($idProjeto,9,"comissao_detalhes_projeto"); ?>
 									</div>
 								</div>
 							</div>
