@@ -51,7 +51,7 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('X1', 'Status')
             ->setCellValue('Y1', 'Início da captação')
             ->setCellValue('Z1', 'Prorrogação Captação')
-            ->setCellValue('A1', 'Final da captação')
+            ->setCellValue('AA1', 'Final da captação')
             ->setCellValue('AB1', 'Início da execução')
             ->setCellValue('AC1', 'Fim da execução')
             ->setCellValue('AD1', 'Prorrogação Execução')
@@ -106,12 +106,12 @@ $objPHPExcel->getActiveSheet()->getColumnDimension('AE')->setAutoSize(true);
 
 
 //Dados Projeto
-$sql = "SELECT idProjeto, idAreaAtuacao, protocolo, nomeProjeto, valorProjeto, valorIncentivo, resumoProjeto, publicoAlvo, tipoPessoa, idPj, idPf, status, tipoPessoa, valorAprovado, idRenunciaFiscal
+$sql = "SELECT idProjeto, areaAtuacao, protocolo, nomeProjeto, valorProjeto, valorIncentivo, resumoProjeto, publicoAlvo, tipoPessoa, idPj, idPf, status, tipoPessoa, valorAprovado, idRenunciaFiscal
          FROM projeto AS pr
          INNER JOIN status AS st ON pr.idStatus = st.idStatus
-         INNER JOIN area_atuacao AS aa pr.idAreaAtuacao = aa.idArea
+         INNER JOIN area_atuacao AS area ON pr.idAreaAtuacao = area.idArea
          INNER JOIN renuncia_fiscal AS renuncia ON pr.idRenunciaFiscal = renuncia.idRenuncia
-         WHERE publicado = 1 ORDER BY protocolo";
+         WHERE pr.publicado = '1' ORDER BY protocolo";
 $query = mysqli_query($con,$sql);
 $campo = mysqli_fetch_array($query);
 
@@ -218,19 +218,14 @@ while($row = mysqli_fetch_array($query))
    }
    //$objPHPExcel->getActiveSheet()->getStyle('A'.$i.'')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
 
-   $objPHPExcel->getActiveSheet()->getStyle('C'.$i.'')->getNumberFormat()->setFormatCode("#,##0.00");
    $objPHPExcel->getActiveSheet()->getStyle('D'.$i.'')->getNumberFormat()->setFormatCode("#,##0.00");
-   $objPHPExcel->getActiveSheet()->getStyle('AI'.$i.'')->getNumberFormat()->setFormatCode("#,##0.00");
-   $objPHPExcel->getActiveSheet()->getStyle('AJ'.$i.'')->getNumberFormat()->setFormatCode("#,##0.00");
-   $objPHPExcel->getActiveSheet()->getStyle('AM'.$i.'')->getNumberFormat()->setFormatCode("#,##0.00");
-   $objPHPExcel->getActiveSheet()->getStyle('AP'.$i.'')->getNumberFormat()->setFormatCode("#,##0.00");
-   $objPHPExcel->getActiveSheet()->getStyle('AS'.$i.'')->getNumberFormat()->setFormatCode("#,##0.00");
+   $objPHPExcel->getActiveSheet()->getStyle('E'.$i.'')->getNumberFormat()->setFormatCode("#,##0.00");
 
 
    $objPHPExcel->setActiveSheetIndex(0)
                ->setCellValue('A'.$i, $row['protocolo'])
                ->setCellValue('B'.$i, $row['nomeProjeto'])
-               ->setCellValue('C'.$i, $row['idAreaAtuacao'])
+               ->setCellValue('C'.$i, $row['areaAtuacao'])
                ->setCellValue('D'.$i, $row['valorProjeto'])
                ->setCellValue('E'.$i, $row['valorIncentivo'])
                ->setCellValue('F'.$i, $row['resumoProjeto'])
