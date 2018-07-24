@@ -901,6 +901,33 @@ function listaArquivosComissao($idPessoa,$tipoPessoa,$pagina)
 	}
 }
 
+
+function exibirArquivoParecer($tipoPessoa,$idPessoa)
+{
+	$con = bancoMysqli();
+	$sql = "
+	   SELECT 
+	     *
+	  FROM 
+	    lista_documento as list
+	  INNER JOIN upload_arquivo AS arq 
+	  ON arq.idListaDocumento = list.idListaDocumento
+	  
+	  WHERE arq.idPessoa = '$idPessoa'
+	  AND arq.idTipo = '$tipoPessoa'
+	  -- AND arq.idListaDocumento = '37'
+	  AND arq.publicado = '1'";
+
+	$query = mysqli_query($con,$sql);
+
+	while($arquivo = mysqli_fetch_array($query))
+	{
+		echo "<a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>".$arquivo['arquivo']."</a>";
+
+	}
+
+}
+
 function listaArquivosPessoaSMC($idPessoa,$tipoPessoa,$pagina)
 {
 	$con = bancoMysqli();

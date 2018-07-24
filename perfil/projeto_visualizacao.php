@@ -75,6 +75,11 @@ $status = recuperaDados("status","idStatus",$projeto['idStatus']);
 													}
 												?>
                                                     </li>
+                                                    <li class='list-group-item'><strong>Parecer da Comissão:</strong>
+                                                    <?php 
+                                                        exibirArquivoParecer(9,$projeto['idProjeto']);
+                                                    ?>
+                                                    </li>
                                                 </li>
                                             </ul>
                                         </div>
