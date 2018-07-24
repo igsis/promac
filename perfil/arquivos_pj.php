@@ -41,7 +41,7 @@ if(isset($_POST["enviar"]))
 				{
 					if(move_uploaded_file($nome_temporario, $dir.$new_name))
 					{
-						$sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('$tipoPessoa', '$idPj', '$y', '$new_name', '$hoje', '2'); ";
+						$sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('$tipoPessoa', '$idPj', '$y', '$new_name', '$hoje', '1'); ";
 						$query = mysqli_query($con,$sql_insere_arquivo);
 						if($query)
 						{
@@ -125,7 +125,7 @@ $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 										<tr>
 											<?php
 											$doc = $arq['documento'];
-											$query = "SELECT idListaDocumento FROM lista_documento WHERE documento='$doc' AND publicado='2' AND idTipoUpload='2'";
+											$query = "SELECT idListaDocumento FROM lista_documento WHERE documento='$doc' AND publicado='1' AND idTipoUpload='2'";
 											$envio = $con->query($query);
 											$row = $envio->fetch_array(MYSQLI_ASSOC);
 
