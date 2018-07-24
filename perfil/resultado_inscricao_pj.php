@@ -237,7 +237,7 @@ if(isset($_POST['apagar']))
 				<?php							
 				if ($cpo == false)
 				{
-					
+					$qtdArquivos = 11;
 					$idPess = $pj['idPj'];
 					$queryArquivos = 
 					  "SELECT 
@@ -249,8 +249,23 @@ if(isset($_POST['apagar']))
 					   AND idTipo = '2' AND publicado = '1'";
 					
 					$enviaArquivos = mysqli_query($con, $queryArquivos);
+
+					$sqlArquivosNaoObrigatorios =
+                        "SELECT idUploadArquivo FROM upload_arquivo 
+                          WHERE idPessoa = $idPess 
+                          AND idTipo = '2' 
+                          AND publicado = '1' 
+                          AND (idListaDocumento = '10' OR idListaDocumento = '17')";
+					$queryArquivosNaoObrigatorios = mysqli_query($con, $sqlArquivosNaoObrigatorios);
+                    $numRowArquivosNaoObrigatorios = mysqli_num_rows($queryArquivosNaoObrigatorios);
+                    if($numRowArquivosNaoObrigatorios == 0){
+                        $qtdArquivos -= 2;
+                    }else if($numRowArquivosNaoObrigatorios == 1){
+                        $qtdArquivos -=1;
+                    }
+
 					$numRow = mysqli_num_rows($enviaArquivos);
-					if($numRow == 11)
+					if($numRow == $qtdArquivos)
 					{?>
 				<form class="form-horizontal" role="form" action="?perfil=resultado_inscricao_pj" method="post">
 					<input type="submit" name="liberacao" value="Concluir inscrição do proponente" class="btn btn-theme btn-lg btn-block">
