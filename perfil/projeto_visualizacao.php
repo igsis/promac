@@ -76,7 +76,7 @@ $status = recuperaDados("status","idStatus",$projeto['idStatus']);
 												?>
                                                     </li>
                                                     <li class='list-group-item'><strong>Parecer da Comissão:</strong>
-                                                    <?php 
+                                                        <?php 
                                                         exibirArquivoParecer(9,$projeto['idProjeto']);
                                                     ?>
                                                     </li>
@@ -158,51 +158,62 @@ $status = recuperaDados("status","idStatus",$projeto['idStatus']);
                                                 <?php echo $renuncia['renunciaFiscal'] ?>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td colspan="3"><strong>Nome do Projeto:</strong>
-                                                <?php echo isset($projeto['nomeProjeto']) ? $projeto['nomeProjeto'] : null; ?>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="3"><strong>Exposição da Marca:</strong>
-                                                <?php echo isset($projeto['exposicaoMarca']) ? $projeto['exposicaoMarca'] : null; ?>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="3"><strong>Resumo do projeto:</strong>
-                                                <?php echo isset($projeto['resumoProjeto']) ? $projeto['resumoProjeto'] : null; ?>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="3"><strong>Currículo:</strong>
-                                                <?php echo isset($projeto['curriculo']) ? $projeto['curriculo'] : null; ?>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="3"><strong>Descrição:</strong>
-                                                <?php echo isset($projeto['descricao']) ? $projeto['descricao'] : null; ?>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="3"><strong>Justificativa:</strong>
-                                                <?php echo isset($projeto['justificativa']) ? $projeto['justificativa'] : null; ?>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="3"><strong>Objetivo:</strong>
-                                                <?php echo isset($projeto['objetivo']) ? $projeto['objetivo'] : null; ?>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="3"><strong>Metodologia:</strong>
-                                                <?php echo isset($projeto['metodologia']) ? $projeto['metodologia'] : null; ?>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="3"><strong>Contrapartida:</strong>
-                                                <?php echo isset($projeto['contrapartida']) ? $projeto['contrapartida'] : null; ?>
-                                            </td>
-                                        </tr>
+                                        <?php
+                                        if($projeto['idAreaAtuacao'] == 22){
+                                        ?>
+                                            <tr>
+                                                <td colspan="3"><strong>Segmento:</strong>
+                                                    <?php echo isset($projeto['segmento']) ? $projeto['segmento'] : null; ?>
+                                                </td>
+                                            </tr>
+                                            <?php
+                                        }
+                                        ?>
+                                                <tr>
+                                                    <td colspan="3"><strong>Nome do Projeto:</strong>
+                                                        <?php echo isset($projeto['nomeProjeto']) ? $projeto['nomeProjeto'] : null; ?>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3"><strong>Exposição da Marca:</strong>
+                                                        <?php echo isset($projeto['exposicaoMarca']) ? $projeto['exposicaoMarca'] : null; ?>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3"><strong>Resumo do projeto:</strong>
+                                                        <?php echo isset($projeto['resumoProjeto']) ? $projeto['resumoProjeto'] : null; ?>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3"><strong>Currículo:</strong>
+                                                        <?php echo isset($projeto['curriculo']) ? $projeto['curriculo'] : null; ?>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3"><strong>Descrição:</strong>
+                                                        <?php echo isset($projeto['descricao']) ? $projeto['descricao'] : null; ?>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3"><strong>Justificativa:</strong>
+                                                        <?php echo isset($projeto['justificativa']) ? $projeto['justificativa'] : null; ?>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3"><strong>Objetivo:</strong>
+                                                        <?php echo isset($projeto['objetivo']) ? $projeto['objetivo'] : null; ?>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3"><strong>Metodologia:</strong>
+                                                        <?php echo isset($projeto['metodologia']) ? $projeto['metodologia'] : null; ?>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3"><strong>Contrapartida:</strong>
+                                                        <?php echo isset($projeto['contrapartida']) ? $projeto['contrapartida'] : null; ?>
+                                                    </td>
+                                                </tr>
                                     </table>
                                     <ul class="list-group">
                                         <li class="list-group-item list-group-item-success"><b>Local</b></li>

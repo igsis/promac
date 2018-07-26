@@ -20,6 +20,12 @@ if(isset($_POST['novoPj'])) //tipoePessoa = 2
 	$idPj = $_SESSION['idUser'];
 	$nomeProjeto = $_POST['nomeProjeto'];
 	$idAreaAtuacao = $_POST['idAreaAtuacao'];
+    if(isset($_POST['segmento'])){
+        $segmento = $_POST['segmento'];
+    }else{
+        $segmento = null;
+    }
+    
 	if(isset($_POST['contratoGestao']))
 	{
 		$contratoGestao = $_POST['contratoGestao'];
@@ -32,7 +38,8 @@ if(isset($_POST['novoPj'])) //tipoePessoa = 2
 		contratoGestao = '$contratoGestao',
 		nomeProjeto = '$nomeProjeto',
 		idAreaAtuacao = '$idAreaAtuacao',
-		alteradoPor   = '$usuarioLogado' 
+        segmento = '$segmento',
+		alteradoPor   = '$usuarioLogado'
 		WHERE idProjeto = '$idProjeto'";
 	if(mysqli_query($con,$sql_insere_projeto))
 	{
@@ -72,9 +79,9 @@ if(isset($_POST['insereAtuacao']))
 
 $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 ?>
-<section id="list_items" class="home-section bg-white">
-    <div class="container">
-    	<?php
+    <section id="list_items" class="home-section bg-white">
+        <div class="container">
+            <?php
     	if($projeto['tipoPessoa'] == 1)
 		{
 			$idPf= $_SESSION['idUser'];
@@ -88,59 +95,65 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 			include '../perfil/includes/menu_interno_pj.php';
 		}
     	?>
-		<div class="form-group">
-			<h4>Cadastro de Projeto</h4>
-			<p><strong><?php if(isset($mensagem)){echo $mensagem;} ?></strong></p>
-		</div>
-		<div class="row">
-			<div class="col-md-offset-1 col-md-10">
+                <div class="form-group">
+                    <h4>Cadastro de Projeto</h4>
+                    <p><strong><?php if(isset($mensagem)){echo $mensagem;} ?></strong></p>
+                </div>
+                <div class="row">
+                    <div class="col-md-offset-1 col-md-10">
 
-				<?php
+                        <?php
 				if($projeto['tipoPessoa'] == 2) //Pessoa Jurídica
 				{
 				?>
-					<form method="POST" action="?perfil=projeto_edicao" class="form-horizontal" role="form">
-						<div class="form-group">
-							<div class="col-md-offset-2 col-md-8">
-								<strong>Possui Contrato de Gestão ou Termo de Colaboração com o Poder Público?* </strong>&nbsp;&nbsp;&nbsp;<input type="checkbox" name="contratoGestao" value="1" <?php checar($projeto['contratoGestao']) ?>>
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-md-offset-2 col-md-8"><label>Nome do projeto</label>
-								<input type="text" name="nomeProjeto" class="form-control" value="<?= $projeto['nomeProjeto'] ?>">
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-md-offset-2 col-md-8">
-								<label>Área de atuação *</label>
-								<select class="form-control" name="idAreaAtuacao" >
+                            <form method="POST" action="?perfil=projeto_edicao" class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-8">
+                                        <strong>Possui Contrato de Gestão ou Termo de Colaboração com o Poder Público?* </strong>&nbsp;&nbsp;&nbsp;<input type="checkbox" name="contratoGestao" value="1" <?php checar($projeto[ 'contratoGestao']) ?>>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-8"><label>Nome do projeto</label>
+                                        <input type="text" name="nomeProjeto" class="form-control" value="<?= $projeto['nomeProjeto'] ?>">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-8">
+                                        <label>Área de atuação *</label>
+                                        <select class="form-control" name="idAreaAtuacao">
 									<option value="1"></option>
 									<?php echo geraOpcao("area_atuacao",$projeto['idAreaAtuacao']) ?>
 								</select>
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-md-offset-2 col-md-8">
-								<input type="submit" name="novoPj" class="btn btn-theme btn-md btn-block" value="gravar">
-							</div>
-						</div>
-					</form>
-				<?php
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-8">
+                                        <label>Segmento *</label>
+                                        <input type="text" name="segmento" class="form-control" value="<?= isset($projeto['segmento']) ? $projeto['segmento'] : null ?>">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-8">
+                                        <input type="submit" name="novoPj" class="btn btn-theme btn-md btn-block" value="gravar">
+                                    </div>
+                                </div>
+                            </form>
+                            <?php
 				}
 				if($projeto['tipoPessoa'] == 1) //Pessoa Física
 				{
 				?>
-					<form method="POST" action="?perfil=projeto_edicao" class="form-horizontal" role="form">
-						<div class="form-group">
-							<div class="col-md-offset-2 col-md-8"><label>Nome do projeto</label>
-								<input type="text" name="nomeProjeto" class="form-control" value="<?= $projeto['nomeProjeto'] ?>">
-							</div>
-						</div>
+                                <form method="POST" action="?perfil=projeto_edicao" class="form-horizontal" role="form">
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-8"><label>Nome do projeto</label>
+                                            <input type="text" name="nomeProjeto" class="form-control" value="<?= $projeto['nomeProjeto'] ?>">
+                                        </div>
+                                    </div>
 
-						<div class="form-group">
-							<div class="col-md-offset-2 col-md-8">
-								<label>Área de atuação *</label><br/>
-								<select class="form-control" name="idAreaAtuacao" >
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-8">
+                                            <label>Área de atuação *</label><br/>
+                                            <select class="form-control" name="idAreaAtuacao">
 									<?php
 									if($cooperado == 1)
 									{
@@ -152,55 +165,58 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 									}
 									?>
 								</select>
-							</div>
-						</div>
+                                        </div>
+                                    </div>
 
-						<div class="form-group">
-							<div class="col-md-offset-2 col-md-8">
-								<input type="submit" name="insereAtuacao" class="btn btn-theme btn-md btn-block" value="Inserir">
-							</div>
-						</div>
-					</form>
-					<?php
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-8">
+                                            <input type="submit" name="insereAtuacao" class="btn btn-theme btn-md btn-block" value="Inserir">
+                                        </div>
+                                    </div>
+                                </form>
+                                <?php
 					if($cooperado == 1)
 					{
 						$pj= recuperaDados("pessoa_juridica", "idPj",$projeto['idPj']);
 					?>
-						<div class="form-group">
-							<div class="col-md-offset-2 col-md-8"><hr/></div>
-						</div>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-8">
+                                            <hr/>
+                                        </div>
+                                    </div>
 
-						<div class="form-group">
-							<div class="col-md-offset-2 col-md-8" align="left">
-								<strong>Cooperativa:</strong> <?php echo $pj['razaoSocial'] ?>
-							</div>
-						</div>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-8" align="left">
+                                            <strong>Cooperativa:</strong>
+                                            <?php echo $pj['razaoSocial'] ?>
+                                        </div>
+                                    </div>
 
-						<div class="form-group">
-							<div class="col-md-offset-2 col-md-8"><br/></div>
-						</div>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-8"><br/></div>
+                                    </div>
 
-						<div class="form-group">
-							<div class="col-md-offset-2 col-md-8">
-								<strong>Insira o CNPJ da Cooperativa: </strong>
-							</div>
-						</div>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-8">
+                                            <strong>Insira o CNPJ da Cooperativa: </strong>
+                                        </div>
+                                    </div>
 
-						<div class="form-group">
-							<form method="POST" action="?perfil=cooperativa_resultado_busca" class="form-horizontal" role="form">
-								<div class="col-md-offset-4 col-md-3">
-									<input type="text" name="busca" class="form-control" placeholder="CNPJ" id="cnpj" >
-								</div>
-								<div class="col-md-2">
-									<input type="submit" name="pesquisar" class="btn btn-theme btn-md btn-block" value="Pesquisar">
-								</div>
-							</form>
-						</div>
-					<?php
+                                    <div class="form-group">
+                                        <form method="POST" action="?perfil=cooperativa_resultado_busca" class="form-horizontal" role="form">
+                                            <div class="col-md-offset-4 col-md-3">
+                                                <input type="text" name="busca" class="form-control" placeholder="CNPJ" id="cnpj">
+                                            </div>
+                                            <div class="col-md-2">
+                                                <input type="submit" name="pesquisar" class="btn btn-theme btn-md btn-block" value="Pesquisar">
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <?php
 					}
 				}
 				?>
-			</div>
-		</div>
-	</div>
-</section>
+                    </div>
+                </div>
+        </div>
+    </section>
