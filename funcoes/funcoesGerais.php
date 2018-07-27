@@ -2602,8 +2602,8 @@ function geraOpcaoComissao($id)
 		$con = bancoMysqli();
 		$sql = "SELECT * 
 			FROM pessoa_fisica 
-			WHERE (nivelAcesso = '3' 
-			OR nivelAcesso = '4') 
+			WHERE (idNivelAcesso = '3' 
+			OR idNivelAcesso = '4') 
 			ORDER BY nome";
 		$query = mysqli_query($con,$sql);
 		while($user = mysqli_fetch_array($query))

@@ -258,8 +258,8 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 						<div role="tabpanel" class="tab-pane fade in active" id="adm">
 							<!-- Diretor da Comissão -->
 						<?php 
-							$direcao = recuperaDados("pessoa_fisica","idPf",$_SESSION['idPf']);
-							if($direcao['idNivelAcesso'] ==  3)
+							$direcao = recuperaDados("pessoa_fisica","idNivelAcesso",3);
+							if($direcao['idNivelAcesso'] ==  )
 							{
 						?>	
 						<form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_edita_propostapf&id_ped=<?php echo $id_ped; ?>" method="post">
@@ -271,7 +271,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 								</select>
 							</div>
 							<div class="col-md-3"><br/>
-								<input type="hidden" name="idContrato" value="<?php echo $id_ped; ?>" />
+								<input type="hidden" name="idComissao" value="<?php echo $idProjeto; ?>" />
 								<input type="submit" class="btn btn-theme  btn-block" value="Atualizar responsável">
 							</div>
 						</div>
