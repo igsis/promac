@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 19-Jul-2018 às 23:52
+-- Generation Time: 27-Jul-2018 às 20:59
 -- Versão do servidor: 10.1.22-MariaDB
 -- PHP Version: 7.1.4
 
@@ -199,7 +199,7 @@ CREATE TABLE `incentivador_pessoa_fisica` (
   `telefone` varchar(15) DEFAULT '',
   `celular` varchar(15) DEFAULT '',
   `email` varchar(50) DEFAULT NULL,
-  `liberado` tinyint(4) DEFAULT '0',
+  `liberado` tinyint(4) DEFAULT NULL,
   `senha` varchar(60) DEFAULT NULL,
   `idNivelAcesso` int(11) DEFAULT '1',
   `idFraseSeguranca` int(11) DEFAULT NULL,
@@ -268,24 +268,76 @@ CREATE TABLE `incentivador_pessoa_juridica` (
   `idPj` int(10) UNSIGNED NOT NULL,
   `razaoSocial` varchar(150) DEFAULT NULL,
   `cnpj` char(18) NOT NULL,
-  `logradouro` varchar(150) DEFAULT NULL,
-  `bairro` varchar(30) DEFAULT NULL,
-  `cidade` varchar(50) DEFAULT NULL,
-  `estado` char(2) DEFAULT NULL,
-  `cep` char(9) DEFAULT NULL,
-  `numero` int(5) DEFAULT NULL,
-  `complemento` varchar(15) DEFAULT NULL,
-  `telefone` varchar(15) DEFAULT NULL,
-  `celular` varchar(15) DEFAULT NULL,
+  `logradouro` varchar(150) DEFAULT '',
+  `bairro` varchar(30) DEFAULT '',
+  `cidade` varchar(50) DEFAULT '',
+  `estado` char(2) DEFAULT '',
+  `cep` char(9) DEFAULT '',
+  `numero` int(5) DEFAULT '0',
+  `complemento` varchar(15) DEFAULT '',
+  `telefone` varchar(15) DEFAULT '',
+  `celular` varchar(15) DEFAULT '',
   `email` varchar(50) DEFAULT NULL,
-  `idRepresentanteLegal` int(10) UNSIGNED DEFAULT NULL,
+  `idRepresentanteLegal` int(10) UNSIGNED DEFAULT '0',
   `liberado` tinyint(1) DEFAULT NULL,
   `senha` varchar(60) DEFAULT NULL,
   `idNivelAcesso` int(11) DEFAULT '1',
   `idFraseSeguranca` int(11) DEFAULT NULL,
   `respostaFrase` varchar(10) DEFAULT NULL,
-  `dataInscricao` datetime DEFAULT NULL
+  `dataInscricao` datetime DEFAULT '0000-00-00 00:00:00',
+  `alteradoPor` varchar(150) DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Acionadores `incentivador_pessoa_juridica`
+--
+DELIMITER $$
+CREATE TRIGGER `tr_log_incentivador_pj` AFTER UPDATE ON `incentivador_pessoa_juridica` FOR EACH ROW INSERT INTO  weblogs(tabela, acao, idRegistro, documento, dataOcorrencia,  antes, depois)     
+    
+    VALUES('incentivador_pessoa_juridica', 'UPDATE', new.idPj, new.cnpj, now(),        
+      concat('NOME:',old.razaoSocial,
+			'|','CNPJ:', old.cnpj,
+            '|','LOGRADOURO:', old.logradouro,
+            '|','BAIRRO:', old.bairro,
+            '|','CIDADE:', old.cidade,
+            '|','ESTADO:', old.estado,
+            '|','CEP:', old.cep,
+            '|','NUMERO:', old.numero,
+            '|','COMPLE:', old.complemento,
+            '|','TELEFONE:', old.telefone,
+            '|','CELULAR:', old.celular,
+            '|','EMAIL:', old.email,
+            '|','ID-REPRESENT:', old.idRepresentanteLegal,
+            '|','LIBERADO:', old.liberado,
+            '|','SENHA:', old.senha,
+            '|','ID-NIV-ACESS:', old.idNivelAcesso,
+            '|','FRASE-SEGUR:', old.idFraseSeguranca,
+            '|','RESP-FRASE:', old.respostaFrase,
+            '|','DT-INSCRICAO:', old.dataInscricao
+         ),
+         
+     concat('NOME:',new.razaoSocial,
+            '|','CNPJ:', new.cnpj,
+            '|','LOGRADOURO:', new.logradouro,
+            '|','BAIRRO:', new.bairro,
+            '|','CIDADE:', new.cidade,
+            '|','ESTADO:', new.estado,
+            '|','CEP:', new.cep,
+            '|','NUMERO:', new.numero,
+            '|','COMPLE:', new.complemento,
+            '|','TELEFONE:', new.telefone,
+            '|','CELULAR:', new.celular,
+            '|','EMAIL:', new.email,
+            '|','ID-REPRESENT:', new.idRepresentanteLegal,
+            '|','LIBERADO:', new.liberado,
+            '|','SENHA:', new.senha,
+            '|','ID-NIV-ACESS:', new.idNivelAcesso,
+            '|','FRASE-SEGUR:', new.idFraseSeguranca,
+            '|','RESP-FRASE:', new.respostaFrase,
+            '|','DT-INSCRICAO:', new.dataInscricao     
+    ))
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -313,7 +365,7 @@ CREATE TABLE `liquidacao` (
   `data` date NOT NULL,
   `valor` decimal(9,2) NOT NULL,
   `numeroLiquidacao` varchar(30) NOT NULL,
-  `processoSei` varchar(30) DEFAULT NULL
+  `numeroSei` varchar(30) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -481,7 +533,7 @@ DELIMITER ;
 CREATE TABLE `orcamento_anual` (
   `idOrcamentoAnual` int(11) NOT NULL,
   `ano` int(4) NOT NULL,
-  `valor` decimal(9,2) NOT NULL
+  `valor` decimal(11,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -630,6 +682,7 @@ CREATE TABLE `projeto` (
   `idpf` int(11) DEFAULT '0',
   `nomeProjeto` varchar(200) DEFAULT NULL,
   `idAreaAtuacao` int(11) DEFAULT NULL,
+  `segmento` varchar(80) NOT NULL,
   `valorProjeto` decimal(9,2) DEFAULT '0.00',
   `valorIncentivo` decimal(9,2) DEFAULT '0.00',
   `valorFinanciamento` decimal(9,2) DEFAULT '0.00',
@@ -661,15 +714,16 @@ CREATE TABLE `projeto` (
   `idStatus` int(11) DEFAULT NULL,
   `publicado` tinyint(1) DEFAULT NULL,
   `envioComissao` datetime DEFAULT NULL,
+  `idComissao` int(11) DEFAULT NULL,
   `solicitacaoReabertura` datetime DEFAULT NULL,
   `reaberturaProjeto` datetime DEFAULT NULL,
   `alteradoPor` varchar(150) DEFAULT 'none',
-  `processoSei` varchar(30) DEFAULT NULL,
-  `assinaturaTermo` date DEFAULT NULL,
-  `observacoes` longtext,
+  `processoSei` varchar(30) NOT NULL,
+  `assinaturaTermo` date NOT NULL,
+  `observacoes` longtext NOT NULL,
   `agencia` varchar(12) NOT NULL,
-  `contaCaptacao` varchar(12) NOT NULL,
-  `contaMovimentacao` varchar(12) NOT NULL
+  `contaMovimentacao` varchar(12) NOT NULL,
+  `contaCaptacao` varchar(12) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -1049,8 +1103,7 @@ ALTER TABLE `orcamento_anual`
 -- Indexes for table `pessoa_fisica`
 --
 ALTER TABLE `pessoa_fisica`
-  ADD PRIMARY KEY (`idPf`),
-  ADD UNIQUE KEY `email` (`email`);
+  ADD PRIMARY KEY (`idPf`);
 
 --
 -- Indexes for table `pessoa_juridica`
@@ -1157,12 +1210,12 @@ ALTER TABLE `area_atuacao`
 -- AUTO_INCREMENT for table `cronograma`
 --
 ALTER TABLE `cronograma`
-  MODIFY `idCronograma` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
+  MODIFY `idCronograma` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
 --
 -- AUTO_INCREMENT for table `deposito`
 --
 ALTER TABLE `deposito`
-  MODIFY `idDeposito` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `idDeposito` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `distrito`
 --
@@ -1172,7 +1225,7 @@ ALTER TABLE `distrito`
 -- AUTO_INCREMENT for table `empenho`
 --
 ALTER TABLE `empenho`
-  MODIFY `idEmpenho` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idEmpenho` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `etapa`
 --
@@ -1182,7 +1235,7 @@ ALTER TABLE `etapa`
 -- AUTO_INCREMENT for table `ficha_tecnica`
 --
 ALTER TABLE `ficha_tecnica`
-  MODIFY `idFichaTecnica` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=370;
+  MODIFY `idFichaTecnica` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=419;
 --
 -- AUTO_INCREMENT for table `frase_seguranca`
 --
@@ -1192,22 +1245,22 @@ ALTER TABLE `frase_seguranca`
 -- AUTO_INCREMENT for table `incentivador_pessoa_fisica`
 --
 ALTER TABLE `incentivador_pessoa_fisica`
-  MODIFY `idPf` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `idPf` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT for table `incentivador_pessoa_juridica`
 --
 ALTER TABLE `incentivador_pessoa_juridica`
-  MODIFY `idPj` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `idPj` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 --
 -- AUTO_INCREMENT for table `incentivador_projeto`
 --
 ALTER TABLE `incentivador_projeto`
-  MODIFY `idIncentivadorProjeto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `idIncentivadorProjeto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `liquidacao`
 --
 ALTER TABLE `liquidacao`
-  MODIFY `idLiquidacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `idLiquidacao` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `lista_documento`
 --
@@ -1217,12 +1270,12 @@ ALTER TABLE `lista_documento`
 -- AUTO_INCREMENT for table `locais_realizacao`
 --
 ALTER TABLE `locais_realizacao`
-  MODIFY `idLocaisRealizacao` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=173;
+  MODIFY `idLocaisRealizacao` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=195;
 --
 -- AUTO_INCREMENT for table `log`
 --
 ALTER TABLE `log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13322;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15890;
 --
 -- AUTO_INCREMENT for table `nivel_acesso`
 --
@@ -1237,22 +1290,22 @@ ALTER TABLE `notas`
 -- AUTO_INCREMENT for table `orcamento`
 --
 ALTER TABLE `orcamento`
-  MODIFY `idOrcamento` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2356;
+  MODIFY `idOrcamento` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2729;
 --
 -- AUTO_INCREMENT for table `orcamento_anual`
 --
 ALTER TABLE `orcamento_anual`
-  MODIFY `idOrcamentoAnual` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idOrcamentoAnual` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `pessoa_fisica`
 --
 ALTER TABLE `pessoa_fisica`
-  MODIFY `idPf` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=267;
+  MODIFY `idPf` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=309;
 --
 -- AUTO_INCREMENT for table `pessoa_juridica`
 --
 ALTER TABLE `pessoa_juridica`
-  MODIFY `idPj` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=473;
+  MODIFY `idPj` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=504;
 --
 -- AUTO_INCREMENT for table `prazos_projeto`
 --
@@ -1262,7 +1315,7 @@ ALTER TABLE `prazos_projeto`
 -- AUTO_INCREMENT for table `projeto`
 --
 ALTER TABLE `projeto`
-  MODIFY `idProjeto` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=144;
+  MODIFY `idProjeto` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=169;
 --
 -- AUTO_INCREMENT for table `renuncia_fiscal`
 --
@@ -1272,12 +1325,12 @@ ALTER TABLE `renuncia_fiscal`
 -- AUTO_INCREMENT for table `representante_legal`
 --
 ALTER TABLE `representante_legal`
-  MODIFY `idRepresentanteLegal` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=320;
+  MODIFY `idRepresentanteLegal` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=359;
 --
 -- AUTO_INCREMENT for table `reserva`
 --
 ALTER TABLE `reserva`
-  MODIFY `idReserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idReserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `status`
 --
@@ -1307,12 +1360,12 @@ ALTER TABLE `unidade_medida`
 -- AUTO_INCREMENT for table `upload_arquivo`
 --
 ALTER TABLE `upload_arquivo`
-  MODIFY `idUploadArquivo` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3354;
+  MODIFY `idUploadArquivo` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3818;
 --
 -- AUTO_INCREMENT for table `weblogs`
 --
 ALTER TABLE `weblogs`
-  MODIFY `idWebLog` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2061;
+  MODIFY `idWebLog` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3423;
 --
 -- AUTO_INCREMENT for table `zona`
 --
