@@ -27,14 +27,15 @@ $objPHPExcel->setActiveSheetIndex(0)
     ->setCellValue('A1', 'Data')
     ->setCellValue('B1', 'Valor')
     ->setCellValue('C1', 'Número da Liquidação')
-    ->setCellValue('D1', 'ID Depósito');
+    ->setCellValue('D1', 'Processo SEI')
+    ->setCellValue('E1', 'ID Depósito');
 
 //Colorir a primeira fila
-$objPHPExcel->getActiveSheet()->getStyle('A1:D1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
-$objPHPExcel->getActiveSheet()->getStyle('A1:D1')->getFill()->getStartColor()->setARGB('#29bb04');
+$objPHPExcel->getActiveSheet()->getStyle('A1:E1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+$objPHPExcel->getActiveSheet()->getStyle('A1:E1')->getFill()->getStartColor()->setARGB('#29bb04');
 // Add some data
-$objPHPExcel->getActiveSheet()->getStyle("A1:D1")->getFont()->setBold(true);
-$objPHPExcel->getActiveSheet()->getStyle('A1:D1')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+$objPHPExcel->getActiveSheet()->getStyle("A1:E1")->getFont()->setBold(true);
+$objPHPExcel->getActiveSheet()->getStyle('A1:E1')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
 $styleArray = array(
     'borders' => array(
         'allborders' => array(
@@ -51,6 +52,8 @@ $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('E')->setAutoSize(true);
+
 
 
 //Dados
@@ -58,7 +61,8 @@ $sql = "SELECT
           D.idDeposito,
           L.data,
           L.valor,
-          L.numeroLiquidacao
+          L.numeroLiquidacao,
+          L.numeroSei
         FROM liquidacao AS L
           LEFT JOIN deposito AS D ON L.idDeposito = D.idDeposito
         ORDER BY L.idLiquidacao";
@@ -79,7 +83,8 @@ while($linha = mysqli_fetch_array($query))
         ->setCellValue('A'.$i, $linha['data'])
         ->setCellValue('B'.$i, $linha['valor'])
         ->setCellValue('C'.$i, $linha['numeroLiquidacao'])
-        ->setCellValue('D'.$i, $linha['idDeposito']);
+        ->setCellValue('D'.$i, $linha['numeroSei'])
+        ->setCellValue('E'.$i, $linha['idDeposito']);
     $i++;
 }
 
