@@ -50,7 +50,7 @@ function autenticaloginpf($login, $senha)
 					header("Location: visual/index_pf.php?perfil=smc_index");
 					$_SESSION['tipoUsuario'] = 2;
 				}
-				else if($nAcesso == 3)
+				else if($nAcesso == 3 OR $nAcesso == 4)
 					header("Location:  visual/index_pf.php?perfil=comissao_index");
 			}
 			else
@@ -2596,5 +2596,27 @@ function pegaProjetoPessoaFisica($idProjeto)
   $resultado = mysqli_query($conexao,$query); 
   return $pessoaFisica = mysqli_fetch_assoc($resultado);
 }
+
+function geraOpcaoComissao($id)
+	{
+		$con = bancoMysqli();
+		$sql = "SELECT * 
+			FROM pessoa_fisica 
+			WHERE (nivelAcesso = '3' 
+			OR nivelAcesso = '4') 
+			ORDER BY nome";
+		$query = mysqli_query($con,$sql);
+		while($user = mysqli_fetch_array($query))
+		{
+			if($user['idUsuario'] == $id)
+			{
+				echo "<option value='".$user['idUsuario']."' selected>".$user['nome']."</option>";	
+			}
+			else
+			{
+				echo "<option value='".$user['idUsuario']."'>".$user['nome']."</option>";			
+			}
+		}
+	}
 
 ?>

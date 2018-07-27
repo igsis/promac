@@ -108,7 +108,9 @@ if (isset($_POST['alterarPf'])) {
 									}elseif ($value['idNivelAcesso'] == 2){
 										$acesso = 'SMC';
 									}elseif ($value['idNivelAcesso'] == 3) {
-										$acesso = 'Comissão';
+										$acesso = 'Comissão - Direção';
+									}elseif ($value['idNivelAcesso'] == 4) {
+										$acesso = 'Comissão - Operador';
 									}else {
 										$acesso = '';
 									}
@@ -121,7 +123,9 @@ if (isset($_POST['alterarPf'])) {
 												<option value='".$value['idNivelAcesso']."'>".$acesso."</option>
 												<option value='1'>Proponente</option>
 												<option value='2'>SMC</option>
-												<option value='3'>Comissão</option>									
+												<option value='3'>Comissão - Direção</option>	
+												<option value='4'>Comissão - Operador</option>	
+							
 											</select>
 										</td>";
 									echo "<td class='list_description'>

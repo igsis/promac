@@ -212,6 +212,23 @@ else
 	$pj = recuperaDados("pessoa_juridica","idPj",$projeto['idpj']);
 }
 
+if(isset($_POST['idComissao']))
+{
+	$con = bancoMysqli();
+	$idComissao = $_POST['comissao'];
+	$idProjeto = $_POST['idProjeto'];
+	$sql_atualiza_comissao = "UPDATE projeto SET idComissao = '$idComissao' WHERE idProjeto = '$idProjeto'";
+	$query_atualiza_comissao = mysqli_query($con,$sql_atualiza_comissao);
+	if($query_atualiza_comissao)
+	{
+		$mensagem = "Parecerista responsável pelo projeto atualizado!";
+	}
+	else
+	{
+		$mensagem = "Erro o atribuir! Tente novamente.";
+	}
+}
+
 $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 $prazos = recuperaDados("prazos_projeto","idProjeto",$idProjeto);
 $area = recuperaDados("area_atuacao","idArea",$projeto['idAreaAtuacao']);
@@ -239,6 +256,29 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 					<div class="tab-content">
 						<!-- LABEL ADMINISTRATIVO-->
 						<div role="tabpanel" class="tab-pane fade in active" id="adm">
+							<!-- Diretor da Comissão -->
+						<?php 
+							$direcao = recuperaDados("pessoa_fisica","idPf",$_SESSION['idPf']);
+							if($direcao['idNivelAcesso'] ==  3)
+							{
+						?>	
+						<form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_edita_propostapf&id_ped=<?php echo $id_ped; ?>" method="post">
+						<div class="form-group">
+							<div class="col-md-offset-2 col-md-5"><strong>Parecerista responsável no Setor de Comissão:</strong><br/>
+								<select class="form-control" name="comissao" id="">
+									<option value='0'></option>
+									<?php  geraOpcaoComissao($projeto['idComissao']); ?>
+								</select>
+							</div>
+							<div class="col-md-3"><br/>
+								<input type="hidden" name="idContrato" value="<?php echo $id_ped; ?>" />
+								<input type="submit" class="btn btn-theme  btn-block" value="Atualizar responsável">
+							</div>
+						</div>
+						</form>
+						<?php
+						}
+						?>
 							<form method="POST" action="?perfil=comissao_detalhes_projeto" class="form-horizontal" role="form">
 								<div class="form-group">
 									<div class="col-md-offset-2 col-md-6" align="right"><br/><label>Solicitar reabertura do projeto para edição?</label><br><?php echo exibirDataHoraBr($projeto['solicitacaoReabertura']) ?>

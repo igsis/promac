@@ -25,6 +25,7 @@ $con = bancoMysqli();
 										<td>Proponente</td>
 										<td>Documento</td>
 										<td>Área de Atuação</td>
+										<td>Parecerista</td>
 										<td width='10%'></td>
 									</tr>
 								</thead>
