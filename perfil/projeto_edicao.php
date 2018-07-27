@@ -129,7 +129,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
                                 <div class="form-group">
                                     <div class="col-md-offset-2 col-md-8">
                                         <label>Segmento *</label>
-                                        <input type="text" name="segmento" class="form-control" value="<?= isset($projeto['segmento']) ? $projeto['segmento'] : null ?>">
+                                        <input type="text" name="segmento" data-ls-module="charCounter" maxlength="80" class="form-control" value="<?= isset($projeto['segmento']) ? $projeto['segmento'] : null ?>">
                                     </div>
                                 </div>
                                 <div class="form-group">
