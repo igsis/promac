@@ -28,38 +28,39 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('A1', 'Nº ISP')
             ->setCellValue('B1', 'Nome do projeto')
             ->setCellValue('C1', 'Área de Atuação')
-            ->setCellValue('D1', 'Valor total')
-            ->setCellValue('E1', 'Valor incentivo')
-            ->setCellValue('F1', 'Resumo')
-            ->setCellValue('G1', 'Local')
-            ->setCellValue('H1', 'Público estimado')
-            ->setCellValue('I1', 'Zona')
-            ->setCellValue('J1', 'Subprefeitura')
-            ->setCellValue('K1', 'Distrito')
-            ->setCellValue('L1', 'Público alvo')
-            ->setCellValue('M1', 'Ficha técnica')
-            ->setCellValue('N1', 'Pessoa')
-            ->setCellValue('O1', 'Proponente')
-            ->setCellValue('P1', 'Documento')
-            ->setCellValue('Q1', 'Logradouro')
-            ->setCellValue('R1', 'Número')
-            ->setCellValue('S1', 'Complemento')
-            ->setCellValue('T1', 'Bairro')
-            ->setCellValue('U1', 'Cidade')
-            ->setCellValue('V1', 'Estado')
-            ->setCellValue('W1', 'CEP')
-            ->setCellValue('X1', 'Status')
-            ->setCellValue('Y1', 'Início da captação')
-            ->setCellValue('Z1', 'Prorrogação Captação')
-            ->setCellValue('AA1', 'Final da captação')
-            ->setCellValue('AB1', 'Início da execução')
-            ->setCellValue('AC1', 'Fim da execução')
-            ->setCellValue('AD1', 'Prorrogação Execução')
-            ->setCellValue('AE1', 'Data para prestar contas');
+            ->setCellValue('D1', 'Segmento')
+            ->setCellValue('E1', 'Valor total')
+            ->setCellValue('F1', 'Valor incentivo')
+            ->setCellValue('G1', 'Resumo')
+            ->setCellValue('H1', 'Local')
+            ->setCellValue('I1', 'Público estimado')
+            ->setCellValue('J1', 'Zona')
+            ->setCellValue('K1', 'Subprefeitura')
+            ->setCellValue('L1', 'Distrito')
+            ->setCellValue('M1', 'Público alvo')
+            ->setCellValue('N1', 'Ficha técnica')
+            ->setCellValue('O1', 'Pessoa')
+            ->setCellValue('P1', 'Proponente')
+            ->setCellValue('Q1', 'Documento')
+            ->setCellValue('R1', 'Logradouro')
+            ->setCellValue('S1', 'Número')
+            ->setCellValue('T1', 'Complemento')
+            ->setCellValue('U1', 'Bairro')
+            ->setCellValue('V1', 'Cidade')
+            ->setCellValue('W1', 'Estado')
+            ->setCellValue('X1', 'CEP')
+            ->setCellValue('Y1', 'Status')
+            ->setCellValue('Z1', 'Início da captação')
+            ->setCellValue('AA1', 'Prorrogação Captação')
+            ->setCellValue('AB1', 'Final da captação')
+            ->setCellValue('AC1', 'Início da execução')
+            ->setCellValue('AD1', 'Fim da execução')
+            ->setCellValue('AE1', 'Prorrogação Execução')
+            ->setCellValue('AF1', 'Data para prestar contas');
 
 //Colorir a primeira fila
-$objPHPExcel->getActiveSheet()->getStyle('A1:AE1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
-$objPHPExcel->getActiveSheet()->getStyle('A1:AE1')->getFill()->getStartColor()->setARGB('#29bb04');
+$objPHPExcel->getActiveSheet()->getStyle('A1:AF1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+$objPHPExcel->getActiveSheet()->getStyle('A1:AF1')->getFill()->getStartColor()->setARGB('#29bb04');
 // Add some data
 $objPHPExcel->getActiveSheet()->getStyle("A1:AE1")->getFont()->setBold(true);
 $objPHPExcel->getActiveSheet()->getStyle('A1:AE1')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
@@ -103,10 +104,11 @@ $objPHPExcel->getActiveSheet()->getColumnDimension('AB')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('AC')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('AD')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('AE')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('AF')->setAutoSize(true);
 
 
 //Dados Projeto
-$sql = "SELECT idProjeto, areaAtuacao, protocolo, nomeProjeto, valorProjeto, valorIncentivo, resumoProjeto, publicoAlvo, tipoPessoa, idPj, idPf, status, tipoPessoa, valorAprovado, idRenunciaFiscal
+$sql = "SELECT idProjeto, areaAtuacao, segmento, protocolo, nomeProjeto, valorProjeto, valorIncentivo, resumoProjeto, publicoAlvo, tipoPessoa, idPj, idPf, status, tipoPessoa, valorAprovado, idRenunciaFiscal
          FROM projeto AS pr
          INNER JOIN status AS st ON pr.idStatus = st.idStatus
          INNER JOIN area_atuacao AS area ON pr.idAreaAtuacao = area.idArea
@@ -218,42 +220,43 @@ while($row = mysqli_fetch_array($query))
    }
    //$objPHPExcel->getActiveSheet()->getStyle('A'.$i.'')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
 
-   $objPHPExcel->getActiveSheet()->getStyle('D'.$i.'')->getNumberFormat()->setFormatCode("#,##0.00");
    $objPHPExcel->getActiveSheet()->getStyle('E'.$i.'')->getNumberFormat()->setFormatCode("#,##0.00");
+   $objPHPExcel->getActiveSheet()->getStyle('F'.$i.'')->getNumberFormat()->setFormatCode("#,##0.00");
 
 
    $objPHPExcel->setActiveSheetIndex(0)
                ->setCellValue('A'.$i, $row['protocolo'])
                ->setCellValue('B'.$i, $row['nomeProjeto'])
                ->setCellValue('C'.$i, $row['areaAtuacao'])
-               ->setCellValue('D'.$i, $row['valorProjeto'])
-               ->setCellValue('E'.$i, $row['valorIncentivo'])
-               ->setCellValue('F'.$i, $row['resumoProjeto'])
-               ->setCellValue('G'.$i, $lista_local['local'])
-               ->setCellValue('H'.$i, $lista_local['estimativa'])
-               ->setCellValue('I'.$i, $lista_local['zona'])
-               ->setCellValue('J'.$i, $lista_local['subprefeitura'])
-               ->setCellValue('K'.$i, $lista_local['distrito'])
-               ->setCellValue('L'.$i, $row['publicoAlvo'])
-               ->setCellValue('M'.$i, $lista_ficha)
-               ->setCellValue('N'.$i, $tipo)
-               ->setCellValue('O'.$i, $proponente)
-               ->setCellValue('P'.$i, $documento)
-               ->setCellValue('Q'.$i, $logradouro)
-               ->setCellValue('R'.$i, $numero)
-               ->setCellValue('S'.$i, $complemento)
-               ->setCellValue('T'.$i, $bairro)
-               ->setCellValue('U'.$i, $cidade)
-               ->setCellValue('V'.$i, $estado)
-               ->setCellValue('W'.$i, $cep)
-               ->setCellValue('X'.$i, $row['status'])
-               ->setCellValue('Y'.$i, $lista_prazos['prazoCaptacao'])
-               ->setCellValue('Z'.$i, $lista_prazos['prorrogacaoCaptacao'])
-               ->setCellValue('AA'.$i, $lista_prazos['finalCaptacao'])
-               ->setCellValue('AB'.$i, $lista_prazos['inicioExecucao'])
-               ->setCellValue('AC'.$i, $lista_prazos['fimExecucao'])
-               ->setCellValue('AD'.$i, $lista_prazos['prorrogacaoExecucao'])
-               ->setCellValue('AE'.$i, $lista_prazos['prestarContas']);
+	           ->setCellValue('D'.$i, $row['segmento'])
+               ->setCellValue('E'.$i, $row['valorProjeto'])
+               ->setCellValue('F'.$i, $row['valorIncentivo'])
+               ->setCellValue('G'.$i, $row['resumoProjeto'])
+               ->setCellValue('H'.$i, $lista_local['local'])
+               ->setCellValue('I'.$i, $lista_local['estimativa'])
+               ->setCellValue('J'.$i, $lista_local['zona'])
+               ->setCellValue('K'.$i, $lista_local['subprefeitura'])
+               ->setCellValue('L'.$i, $lista_local['distrito'])
+               ->setCellValue('M'.$i, $row['publicoAlvo'])
+               ->setCellValue('N'.$i, $lista_ficha)
+               ->setCellValue('O'.$i, $tipo)
+               ->setCellValue('P'.$i, $proponente)
+               ->setCellValue('Q'.$i, $documento)
+               ->setCellValue('R'.$i, $logradouro)
+               ->setCellValue('S'.$i, $numero)
+               ->setCellValue('T'.$i, $complemento)
+               ->setCellValue('U'.$i, $bairro)
+               ->setCellValue('V'.$i, $cidade)
+               ->setCellValue('W'.$i, $estado)
+               ->setCellValue('X'.$i, $cep)
+               ->setCellValue('Y'.$i, $row['status'])
+               ->setCellValue('Z'.$i, $lista_prazos['prazoCaptacao'])
+               ->setCellValue('AA'.$i, $lista_prazos['prorrogacaoCaptacao'])
+               ->setCellValue('AB'.$i, $lista_prazos['finalCaptacao'])
+               ->setCellValue('AC'.$i, $lista_prazos['inicioExecucao'])
+               ->setCellValue('AD'.$i, $lista_prazos['fimExecucao'])
+               ->setCellValue('AE'.$i, $lista_prazos['prorrogacaoExecucao'])
+               ->setCellValue('AF'.$i, $lista_prazos['prestarContas']);
 
 
    $i++;
