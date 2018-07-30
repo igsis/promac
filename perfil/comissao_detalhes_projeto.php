@@ -259,7 +259,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 							<!-- Diretor da Comissão -->
 						<?php 
 							$direcao = recuperaDados("pessoa_fisica","idPf", $_SESSION['idUser']);
-							if($direcao['idNivelAcesso'] ==  )
+							if($direcao['idNivelAcesso'] == 3)
 							{
 						?>	
 						<form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_edita_propostapf&id_ped=<?php echo $id_ped; ?>" method="post">
