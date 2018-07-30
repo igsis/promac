@@ -2608,13 +2608,13 @@ function geraOpcaoComissao($id)
 		$query = mysqli_query($con,$sql);
 		while($user = mysqli_fetch_array($query))
 		{
-			if($user['idUsuario'] == $id)
+			if($user['idUser'] == $id)
 			{
-				echo "<option value='".$user['idUsuario']."' selected>".$user['nome']."</option>";	
+				echo "<option value='".$user['idUser']."' selected>".$user['nome']."</option>";	
 			}
 			else
 			{
-				echo "<option value='".$user['idUsuario']."'>".$user['nome']."</option>";			
+				echo "<option value='".$user['idUser']."'>".$user['nome']."</option>";			
 			}
 		}
 	}

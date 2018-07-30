@@ -258,7 +258,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 						<div role="tabpanel" class="tab-pane fade in active" id="adm">
 							<!-- Diretor da Comissão -->
 						<?php 
-							$direcao = recuperaDados("pessoa_fisica","idNivelAcesso",3);
+							$direcao = recuperaDados("pessoa_fisica","idPf", $_SESSION['idUser']);
 							if($direcao['idNivelAcesso'] ==  )
 							{
 						?>	
