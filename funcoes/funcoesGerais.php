@@ -2597,7 +2597,7 @@ function pegaProjetoPessoaFisica($idProjeto)
   return $pessoaFisica = mysqli_fetch_assoc($resultado);
 }
 
-function geraOpcaoComissao($id)
+function geraOpcaoComissao($temParecerista)
 {
 	$con = bancoMysqli();
 	$sql = "SELECT * 
@@ -2606,17 +2606,14 @@ function geraOpcaoComissao($id)
 		OR idNivelAcesso = '4') 
 		ORDER BY nome";
 	$query = mysqli_query($con,$sql);
+    if($temParecerista == 0)
+    {
+        echo "<option value='null' selected>Selecione um parecerista</option>";
+    }
 	while($user = mysqli_fetch_array($query))
 	{
-		if($user['idUser'] == $id)
-		{
-			echo "<option value='null' selected>Selecione um parecerista</option>";
-		}
-		else
-		{
 			echo "<option value='".$user['idPf']."'>".$user['nome']."</option>";			
 		}
-	}
 }
 
 function recuperaUsuario($idPf)

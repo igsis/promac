@@ -270,15 +270,16 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                     <div class="form-group">
                                         <div class="col-md-offset-2 col-md-5"><strong>Parecerista responsável no Setor de Comissão:</strong><br/>
                                             <select class="form-control" name="idComissao" id="">
-                                                <?php 
+                                                <?php
+                                                $temParecerista = 0;
                                     if($projeto['idComissao'] != NULL){
                                         $pfParecer = recuperaDados("pessoa_fisica", "idPf", $projeto['idComissao']);
-
+                                        $temParecerista = 1;
                                     }?>
 
                                                 <option value="<?php echo $projeto['idComissao']; ?>" select="disable" selected hidden><?php echo $pfParecer['nome'] ; ?></option>
 
-                                                <?php  geraOpcaoComissao($projeto['idComissao']); ?>
+                                                <?php  geraOpcaoComissao($temParecerista); ?>
                                             </select>
                                         </div>
                                         <div class="col-md-3"><br/>
