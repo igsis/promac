@@ -2598,25 +2598,39 @@ function pegaProjetoPessoaFisica($idProjeto)
 }
 
 function geraOpcaoComissao($id)
+{
+	$con = bancoMysqli();
+	$sql = "SELECT * 
+		FROM pessoa_fisica 
+		WHERE (idNivelAcesso = '3' 
+		OR idNivelAcesso = '4') 
+		ORDER BY nome";
+	$query = mysqli_query($con,$sql);
+	while($user = mysqli_fetch_array($query))
 	{
-		$con = bancoMysqli();
-		$sql = "SELECT * 
-			FROM pessoa_fisica 
-			WHERE (idNivelAcesso = '3' 
-			OR idNivelAcesso = '4') 
-			ORDER BY nome";
-		$query = mysqli_query($con,$sql);
-		while($user = mysqli_fetch_array($query))
+		if($user['idUser'] == $id)
 		{
-			if($user['idUser'] == $id)
-			{
-				echo "<option value='".$user['idUser']."' selected>".$user['nome']."</option>";	
-			}
-			else
-			{
-				echo "<option value='".$user['idUser']."'>".$user['nome']."</option>";			
-			}
+			echo "<option value='".$user['idUser']."' selected>".$user['nome']."</option>";	
+		}
+		else
+		{
+			echo "<option value='".$user['idUser']."'>".$user['nome']."</option>";			
 		}
 	}
+}
+
+function recuperaUsuario($idPf)
+{
+	//retorna dados do usuário
+	$recupera = recuperaDados('pessoa_fisica',$idPf,'idPf');
+	if($recupera)
+	{
+		return $recupera;
+	}
+	else
+	{
+		return NULL;
+	}	
+}
 
 ?>

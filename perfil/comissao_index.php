@@ -37,6 +37,8 @@ $con = bancoMysqli();
 									$status = recuperaDados("status","idStatus",$campo['idStatus']);
 									$pf = recuperaDados("pessoa_fisica","idPf",$campo['idpf']);
 									$pj = recuperaDados("pessoa_juridica","idPj",$campo['idpj']);
+									$comissao = recuperaUsuario($campo['idComissao']);
+
 
 									echo "<tr>";
 									echo "<td class='list_description'>".$campo['protocolo']."</td>";
@@ -52,6 +54,7 @@ $con = bancoMysqli();
 										echo "<td class='list_description'>".$pj['cnpj']."</td>";
 									}
 									echo "<td class='list_description'>".$area['areaAtuacao']."</td>";
+									echo "<td class='list_description'>".$comissao['nome']."</td>";
 									echo "
 										<td class='list_description'>
 											<form method='POST' action='?perfil=comissao_detalhes_projeto'>

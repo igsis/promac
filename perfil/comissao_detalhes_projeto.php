@@ -216,7 +216,7 @@ if(isset($_POST['idComissao']))
 {
 	$con = bancoMysqli();
 	$idComissao = $_POST['comissao'];
-	$idProjeto = $_POST['idProjeto'];
+	$idProjeto = $_POST['idComissao'];
 	$sql_atualiza_comissao = "UPDATE projeto SET idComissao = '$idComissao' WHERE idProjeto = '$idProjeto'";
 	$query_atualiza_comissao = mysqli_query($con,$sql_atualiza_comissao);
 	if($query_atualiza_comissao)
@@ -256,13 +256,16 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 					<div class="tab-content">
 						<!-- LABEL ADMINISTRATIVO-->
 						<div role="tabpanel" class="tab-pane fade in active" id="adm">
+							<div class="form-group">
+								<div class="col-md-offset-1 col-md-10"></div>
+							</div>
 							<!-- Diretor da Comissão -->
 						<?php 
 							$direcao = recuperaDados("pessoa_fisica","idPf", $_SESSION['idUser']);
 							if($direcao['idNivelAcesso'] == 3)
 							{
 						?>	
-						<form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_edita_propostapf&id_ped=<?php echo $id_ped; ?>" method="post">
+						<form class="form-horizontal" role="form" action="?perfil=comissao_detalhes_projeto" method="post">
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-5"><strong>Parecerista responsável no Setor de Comissão:</strong><br/>
 								<select class="form-control" name="comissao" id="">
