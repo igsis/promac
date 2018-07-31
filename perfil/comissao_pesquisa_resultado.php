@@ -8,6 +8,7 @@ $cnpj = $_POST['cnpj'];
 $nomeProjeto = $_POST['nomeProjeto'];
 $idProjeto = $_POST['idProjeto'];
 $idAreaAtuacao = $_POST['idAreaAtuacao'];
+$idComissao = $_POST['idComissao'];
 
 // Inicio Pessoa Física
 if($nome != '' || $cpf != '')
@@ -31,7 +32,7 @@ if($nome != '' || $cpf != '')
 	}
 
 	$sql = "SELECT * FROM projeto AS prj
-			INNER JOIN pessoa_fisica AS pf ON prj.idPf = pf.idPf
+			INNER JOIN pessoa_fisica AS pf ON prj.idpf = pf.idpf
 			WHERE publicado = 1 AND idStatus = 7
 			$filtro_nome $filtro_cpf";
 	$query = mysqli_query($con,$sql);
@@ -80,7 +81,7 @@ elseif($razaoSocial != '' || $cnpj != '')
 		$filtro_cnpj = "";
 	}
 	$sql = "SELECT * FROM projeto AS prj
-			INNER JOIN pessoa_juridica AS pj ON prj.idPj = pj.idPj
+			INNER JOIN pessoa_juridica AS pj ON prj.idpj = pj.idpj
 			WHERE publicado = 1 AND idStatus = 7
 			$filtro_razaSocial $filtro_cnpj";
 	$query = mysqli_query($con,$sql);
@@ -138,9 +139,18 @@ else
 		$filtro_idAreaAtuacao = "";
 	}
 
+	if($idComissao !=0)
+	{
+		$filtro_idComissao = "AND idComissao = '$idComissao'";
+	}
+	else
+	{
+		$filtro_idComissao = "";
+	}
+
 	$sql = "SELECT * FROM projeto AS prj
 			WHERE publicado = 1 AND idStatus = 7
-			$filtro_nomeProjeto $filtro_idProjeto $filtro_idAreaAtuacao";
+			$filtro_nomeProjeto $filtro_idProjeto $filtro_idAreaAtuacao $filtro_idComissao";
 	$query = mysqli_query($con,$sql);
 	$num = mysqli_num_rows($query);
 	if($num > 0)
@@ -150,8 +160,8 @@ else
 		{
 			$area = recuperaDados("area_atuacao","idArea",$lista['idAreaAtuacao']);
 			$status = recuperaDados("status","idStatus",$lista['idStatus']);
-			$pf = recuperaDados("pessoa_fisica","idPf",$lista['idPf']);
-			$pj = recuperaDados("pessoa_juridica","idPj",$lista['idPj']);
+			$pf = recuperaDados("pessoa_fisica","idPf",$lista['idpf']);
+			$pj = recuperaDados("pessoa_juridica","idPj",$lista['idpj']);
 			$x[$i]['idProjeto'] = $lista['idProjeto'];
 			$x[$i]['protocolo'] = $lista['protocolo'];
 			$x[$i]['nomeProjeto'] = $lista['nomeProjeto'];

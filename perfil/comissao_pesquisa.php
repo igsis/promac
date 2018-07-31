@@ -57,6 +57,16 @@
 					</div>
 
 					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8"><label>Acesso</label>
+							<select class="form-control" name="idComissao" >
+								<option value="0">Selecione...</option>
+								<option value="3">Direção da Comissão</option>
+								<option value="4">Operador / Parecerista</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<input type="submit" name="pesquisar" class="btn btn-theme btn-lg btn-block" value="Pesquisar">
 						</div>
