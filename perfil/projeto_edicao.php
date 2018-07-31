@@ -126,17 +126,21 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 								</select>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <div class="col-md-offset-2 col-md-8">
-                                        <label>Segmento *</label>
-                                        <input type="text" name="segmento" maxlength="80" class="form-control" value="<?= isset($projeto['segmento']) ? $projeto['segmento'] : null ?>">
+                                <?php
+                                if($projeto['idAreaAtuacao'] == 22){
+                                ?>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-8">
+                                            <label>Segmento *</label>
+                                            <input type="text" name="segmento" maxlength="80" class="form-control" value="<?= isset($projeto['segmento']) ? $projeto['segmento'] : null ?>">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-md-offset-2 col-md-8">
-                                        <input type="submit" name="novoPj" class="btn btn-theme btn-md btn-block" value="gravar">
+                                    <?php } ?>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-8">
+                                            <input type="submit" name="novoPj" class="btn btn-theme btn-md btn-block" value="gravar">
+                                        </div>
                                     </div>
-                                </div>
                             </form>
                             <?php
 				}
