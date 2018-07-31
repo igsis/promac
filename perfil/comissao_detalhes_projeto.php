@@ -273,10 +273,11 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                                 <?php 
                                     if($projeto['idComissao'] != NULL){
                                         $pfParecer = recuperaDados("pessoa_fisica", "idPf", $projeto['idComissao']);
+
                                     }?>
-                                                    
-                                                <option value="<?php echo $projeto['idComissao'];?>" select="disable" selected hidden><?php echo $pfParecer['nome'] ; ?></option>
-                                                    
+
+                                                <option value="<?php echo $projeto['idComissao']; ?>" select="disable" selected hidden><?php echo $pfParecer['nome'] ; ?></option>
+
                                                 <?php  geraOpcaoComissao($projeto['idComissao']); ?>
                                             </select>
                                         </div>

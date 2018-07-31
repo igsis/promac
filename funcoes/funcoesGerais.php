@@ -2610,7 +2610,7 @@ function geraOpcaoComissao($id)
 	{
 		if($user['idUser'] == $id)
 		{
-			echo "<option value='".$user['idPf']."' selected>".$user['nome']."</option>";	
+			echo "<option value='null' selected>Selecione um parecerista</option>";
 		}
 		else
 		{

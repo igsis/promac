@@ -1,16 +1,17 @@
 <?php
 $con = bancoMysqli();
 ?>
-<section id="list_items" class="home-section bg-white">
-	<div class="container"><?php include 'includes/menu_comissao.php'; ?>
-		<p align="left"><strong><?php echo saudacao(); ?>, <?php echo $_SESSION['nome']; ?></strong></p>
-		<div class="form-group">
-			<h5>Lista de projetos enviados.</h5>
-		</div>
-		<div class="row">
-			<div class="col-md-offset-1 col-md-10">
-				<div class="table-responsive list_info">
-				<?php
+    <section id="list_items" class="home-section bg-white">
+        <div class="container">
+            <?php include 'includes/menu_comissao.php'; ?>
+            <p align="left"><strong><?php echo saudacao(); ?>, <?php echo $_SESSION['nome']; ?></strong></p>
+            <div class="form-group">
+                <h5>Lista de projetos enviados.</h5>
+            </div>
+            <div class="row">
+                <div class="col-md-offset-1 col-md-10">
+                    <div class="table-responsive list_info">
+                        <?php
 					$sql = "SELECT * FROM projeto WHERE publicado = 1 AND idStatus = 7 ORDER BY envioComissao";
 					$query = mysqli_query($con,$sql);
 					$num = mysqli_num_rows($query);
@@ -37,7 +38,10 @@ $con = bancoMysqli();
 									$status = recuperaDados("status","idStatus",$campo['idStatus']);
 									$pf = recuperaDados("pessoa_fisica","idPf",$campo['idpf']);
 									$pj = recuperaDados("pessoa_juridica","idPj",$campo['idpj']);
-									$comissao = recuperaUsuario($campo['idComissao']);
+                                    if($campo['idComissao'] != NULL){                                        			$comissao = recuperaDados("pessoa_fisica", "idPf", $campo['idComissao']);
+                                    }else{
+                                        $comissao['nome'] = " ";
+                                    }
 
 
 									echo "<tr>";
@@ -73,8 +77,8 @@ $con = bancoMysqli();
 							echo "Nada consta.";
 						}
 					?>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
