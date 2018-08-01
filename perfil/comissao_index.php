@@ -1,5 +1,7 @@
 <?php
 $con = bancoMysqli();
+$idPf = $_SESSION['idUser'];
+
 ?>
     <section id="list_items" class="home-section bg-white">
         <div class="container">
@@ -12,7 +14,15 @@ $con = bancoMysqli();
                 <div class="col-md-offset-1 col-md-10">
                     <div class="table-responsive list_info">
                         <?php
-					$sql = "SELECT * FROM projeto WHERE publicado = 1 AND idStatus = 7 ORDER BY envioComissao";
+                        $direcao = recuperaDados("pessoa_fisica","idPf", $_SESSION['idUser']);
+						if($direcao['idNivelAcesso'] == 3)
+						{
+						$sql = "SELECT * FROM projeto WHERE publicado = 1 AND idStatus = 7 ORDER BY envioComissao ";
+							}
+							else
+							{
+						$sql = "SELECT * FROM projeto WHERE publicado = 1 AND idComissao = $idPf AND idStatus = 7 ORDER BY envioComissao ";	
+						}
 					$query = mysqli_query($con,$sql);
 					$num = mysqli_num_rows($query);
 					if($num > 0)
