@@ -162,6 +162,10 @@ else
 			$status = recuperaDados("status","idStatus",$lista['idStatus']);
 			$pf = recuperaDados("pessoa_fisica","idPf",$lista['idpf']);
 			$pj = recuperaDados("pessoa_juridica","idPj",$lista['idpj']);
+			if($lista['idComissao'] != NULL){                                        								$comissao = recuperaDados("pessoa_fisica", "idPf", $lista['idComissao']);
+	                }else{
+	                    $comissao['nome'] = " ";
+	                }
 			$x[$i]['idProjeto'] = $lista['idProjeto'];
 			$x[$i]['protocolo'] = $lista['protocolo'];
 			$x[$i]['nomeProjeto'] = $lista['nomeProjeto'];
@@ -177,6 +181,7 @@ else
 			}
 			$x[$i]['areaAtuacao'] = $area['areaAtuacao'];
 			$x[$i]['status'] = $status['status'];
+			$x[$i]['nome'] = $comissao['nome'];
 			$i++;
 		}
 		$x['num'] = $i;
@@ -208,6 +213,7 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 								<td>Documento</td>
 								<td>Área de Atuação</td>
 								<td>Status</td>
+								<td>Parecerista</td>
 								<td width='10%'></td>
 							</tr>
 						</thead>
@@ -222,6 +228,7 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 								echo "<td class='list_description'>".$x[$h]['documento']."</td>";
 								echo "<td class='list_description'>".$x[$h]['areaAtuacao']."</td>";
 								echo "<td class='list_description'>".$x[$h]['status']."</td>";
+								echo "<td class='list_description'>".$x[$h]['nome']."</td>";
 								echo "<td class='list_description'>
 										<form method='POST' action='?perfil=comissao_detalhes_projeto'>
 											<input type='hidden' name='idProjeto' value='".$x[$h]['idProjeto']."' />
