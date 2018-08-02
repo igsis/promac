@@ -234,7 +234,7 @@ if(isset($_POST['apagar']))
 
 		<div class="form-group">
 			<div class="col-md-offset-2 col-md-8">
-				<?php							
+				<?php /*						
 				if ($cpo == false)
 				{
 					$qtdArquivos = 11;
@@ -266,18 +266,18 @@ if(isset($_POST['apagar']))
 
 					$numRow = mysqli_num_rows($enviaArquivos);
 					if($numRow == $qtdArquivos)
-					{?>
+					{*/?>
 				<form class="form-horizontal" role="form" action="?perfil=resultado_inscricao_pj" method="post">
 					<input type="submit" name="liberacao" value="Concluir inscrição do proponente" class="btn btn-theme btn-lg btn-block">
 				</form>
 				<?php
-				}
+				/*}
 				else{
 					echo "<div class='alert alert-warning'>
 					<strong>Erro: </strong> Você deve enviar todos os documentos para prosseguir.
 					</div>";
 				}
-			}?>
+			}*/?>
 			</div>
 		</div>
 		
