@@ -320,7 +320,7 @@ if($projeto['idStatus'] == 6)
 				<?php
 				if($projeto['tipoPessoa'] == 2)
 				{
-					$pj = recuperaDados("pessoa_juridica","idPj",$projeto['idpj']);
+					$pj = recuperaDados("pessoa_juridica","idPj",$projeto['idPj']);
 					?>
 					<div class = "page-header">
 						<h5>Pessoa Jurídica</h5>
@@ -342,7 +342,7 @@ if($projeto['idStatus'] == 6)
 					</div>
 					<?php
 				}else{
-					$pf = recuperaDados("pessoa_fisica", "idPf", $projeto['idpf']);
+					$pf = recuperaDados("pessoa_fisica", "idPf", $projeto['idPf']);
 					?>
 					<div class="page-header">
 						<h5>Pessoa Física</h5>

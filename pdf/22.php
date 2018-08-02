@@ -22,7 +22,7 @@ $NomeProjeto = $projeto["nomeProjeto"];
 
 if($projeto['tipoPessoa'] == 1)//Pessoa Física
 {
-  $pf = recuperaDados("pessoa_fisica","idPf",$projeto['idpf']);
+  $pf = recuperaDados("pessoa_fisica","idPf",$projeto['idPf']);
   $Nome = $pf["nome"];
   $RG = $pf["rg"];
   $CPF = $pf["cpf"];
@@ -34,7 +34,7 @@ if($projeto['tipoPessoa'] == 1)//Pessoa Física
 }
 else //Pessoa Jurídica
 {
-  $pj = recuperaDados("pessoa_juridica","idPj",$projeto['idpj']);
+  $pj = recuperaDados("pessoa_juridica","idPj",$projeto['idPj']);
   $representante1 = recuperaDados("representante_legal","idRepresentanteLegal",$pj['idRepresentanteLegal']);
   //Pessoa Jurídica
   $RazaoSocial = $pj["razaoSocial"];

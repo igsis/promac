@@ -237,11 +237,11 @@ if(isset($_POST['editarReserva'])){
 
 if($projeto['tipoPessoa'] == 1)
 {
-    $pf = recuperaDados("pessoa_fisica","idPf",$projeto['idpf']);
+    $pf = recuperaDados("pessoa_fisica","idPf",$projeto['idPf']);
 }
 else
 {
-    $pj = recuperaDados("pessoa_juridica","idPj",$projeto['idpj']);
+    $pj = recuperaDados("pessoa_juridica","idPj",$projeto['idPj']);
 }
 
 if(isset($_POST['editarParecer'])){
@@ -344,10 +344,10 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                     $idP = $projeto['idProjeto'];
                                     if($id == 1)
                                     {
-                                        $idPess = $projeto['idpf'];
+                                        $idPess = $projeto['idPf'];
                                     } else if($id == 2)
                                     {
-                                        $idPess = $projeto['idpj'];
+                                        $idPess = $projeto['idPj'];
                                     }
                                     ?>
                                             <a href='<?php echo "../pdf/gera_pdf.php?tipo=$id&projeto=$idP&pessoa=$idPess"; ?>' target='_blank' class="btn btn-theme btn-md btn-block"><strong>Gerar PDF do Projeto</strong></a><br/>

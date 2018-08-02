@@ -44,8 +44,8 @@ $con = bancoMysqli();
 								{
 									$area = recuperaDados("area_atuacao","idArea",$campo['idAreaAtuacao']);
 									$status = recuperaDados("status","idStatus",$campo['idStatus']);
-									$pf = recuperaDados("pessoa_fisica","idPf",$campo['idpf']);
-									$pj = recuperaDados("pessoa_juridica","idPj",$campo['idpj']);
+									$pf = recuperaDados("pessoa_fisica","idPf",$campo['idPf']);
+									$pj = recuperaDados("pessoa_juridica","idPj",$campo['idPj']);
                                     if($campo['idComissao'] != NULL){                                        			$comissao = recuperaDados("pessoa_fisica", "idPf", $campo['idComissao']);
                                     }else{
                                         $comissao['nome'] = " ";

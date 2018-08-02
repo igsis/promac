@@ -32,7 +32,7 @@ if($nome != '' || $cpf != '')
 	}
 
 	$sql = "SELECT * FROM projeto AS prj
-			INNER JOIN pessoa_fisica AS pf ON prj.idpf = pf.idpf
+			INNER JOIN pessoa_fisica AS pf ON prj.idPf = pf.idPf
 			WHERE publicado = 1 AND idStatus = 7
 			$filtro_nome $filtro_cpf";
 	$query = mysqli_query($con,$sql);
@@ -81,7 +81,7 @@ elseif($razaoSocial != '' || $cnpj != '')
 		$filtro_cnpj = "";
 	}
 	$sql = "SELECT * FROM projeto AS prj
-			INNER JOIN pessoa_juridica AS pj ON prj.idpj = pj.idpj
+			INNER JOIN pessoa_juridica AS pj ON prj.idPj = pj.idPj
 			WHERE publicado = 1 AND idStatus = 7
 			$filtro_razaSocial $filtro_cnpj";
 	$query = mysqli_query($con,$sql);
@@ -160,8 +160,8 @@ else
 		{
 			$area = recuperaDados("area_atuacao","idArea",$lista['idAreaAtuacao']);
 			$status = recuperaDados("status","idStatus",$lista['idStatus']);
-			$pf = recuperaDados("pessoa_fisica","idPf",$lista['idpf']);
-			$pj = recuperaDados("pessoa_juridica","idPj",$lista['idpj']);
+			$pf = recuperaDados("pessoa_fisica","idPf",$lista['idPf']);
+			$pj = recuperaDados("pessoa_juridica","idPj",$lista['idPj']);
 			if($lista['idComissao'] != NULL){                                        								$comissao = recuperaDados("pessoa_fisica", "idPf", $lista['idComissao']);
 	                }else{
 	                    $comissao['nome'] = " ";

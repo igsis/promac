@@ -160,8 +160,8 @@ else
 		{
 			$area = recuperaDados("area_atuacao","idArea",$lista['idAreaAtuacao']);
 			$status = recuperaDados("status","idStatus",$lista['idStatus']);
-			$pf = recuperaDados("pessoa_fisica","idPf",$lista['idpf']);
-			$pj = recuperaDados("pessoa_juridica","idPj",$lista['idpj']);
+			$pf = recuperaDados("pessoa_fisica","idPf",$lista['idPf']);
+			$pj = recuperaDados("pessoa_juridica","idPj",$lista['idPj']);
 			$x[$i]['idProjeto'] = $lista['idProjeto'];
 			$x[$i]['protocolo'] = $lista['protocolo'];
 			$x[$i]['nomeProjeto'] = $lista['nomeProjeto'];
