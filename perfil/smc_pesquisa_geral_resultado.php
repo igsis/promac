@@ -9,6 +9,7 @@ $nomeProjeto = $_POST['nomeProjeto'];
 $idProjeto = $_POST['idProjeto'];
 $idAreaAtuacao = $_POST['idAreaAtuacao'];
 $idStatus = $_POST['idStatus'];
+$idComissao = $_POST['idComissao'];
 
 // Inicio Pessoa Física
 if($nome != '' || $cpf != '')
@@ -148,9 +149,18 @@ else
 		$filtro_idStatus = "";
 	}
 
+	if($idComissao !=0)
+	{
+		$filtro_idComissao = "AND idComissao = '$idComissao'";
+	}
+	else
+	{
+		$filtro_idComissao = "";
+	}
+
 	$sql = "SELECT * FROM projeto AS prj
 			WHERE publicado = 1
-			$filtro_nomeProjeto $filtro_idProjeto $filtro_idAreaAtuacao $filtro_idStatus";
+			$filtro_nomeProjeto $filtro_idProjeto $filtro_idAreaAtuacao $filtro_idStatus $filtro_idComissao";
 	$query = mysqli_query($con,$sql);
 	$num = mysqli_num_rows($query);
 	if($num > 0)

@@ -66,6 +66,15 @@
 					</div>
 
 					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8"><label>Parecerista da Comissão</label>
+							<select class="form-control" name="idComissao" >
+								<option value="0">Selecione...</option>
+								<?php echo geraUsuarioComissao("") ?>
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<input type="submit" name="pesquisar" class="btn btn-theme btn-lg btn-block" value="Pesquisar">
 						</div>
