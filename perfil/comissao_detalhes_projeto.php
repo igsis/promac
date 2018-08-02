@@ -120,9 +120,26 @@ if(isset($_POST['solicitaReabertura']))
 	$sql_solicitaReabertura = "UPDATE projeto SET idStatus = '8', solicitacaoReabertura = '$dateNow' WHERE idProjeto = '$idP' ";
 	if(mysqli_query($con,$sql_solicitaReabertura))
 	{
-		$mensagem = "<font color='#01DF3A'><strong>Reaberto com sucesso!</strong></font>";
+		$mensagem = "<font color='#01DF3A'><strong>Solicitação de reabertura enviada com sucesso!</strong></font>";
 		echo "<script>window.location = '?perfil=comissao_detalhes_projeto&idFF=$idP';</script>";
 		gravarLog($sql_solicitaReabertura);
+	}
+	else
+	{
+		$mensagem = "<font color='#FF0000'><strong>Erro ao reabrir! Tente novamente.</strong></font>";
+	}
+}
+
+if(isset($_POST['finalizaComissao']))
+{
+	$idP = $_POST['IDP'];
+	$dateNow = date('Y:m:d h:i:s');
+	$sql_finalizaComissao = "UPDATE projeto SET idStatus = '10', finalizacaoComissao = '$dateNow' WHERE idProjeto = '$idP' ";
+	if(mysqli_query($con,$sql_finalizaComissao))
+	{
+		$mensagem = "<font color='#01DF3A'><strong>Finalizado com sucesso!</strong></font>";
+		echo "<script>window.location = '?perfil=comissao_detalhes_projeto&idFF=$idP';</script>";
+		gravarLog($sql_finalizaComissao);
 	}
 	else
 	{
@@ -302,6 +319,18 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                         <div class="col-md-2"><br/>
                                             <?php echo "<input type='hidden' name='IDP' value='$idProjeto'>"; ?>
                                             <input type="submit" name="solicitaReabertura" class="btn btn-theme btn-md btn-block" value="Sim">
+                                        </div>
+                                    </div>
+                                </form>
+
+                                <form method="POST" action="?perfil=comissao_detalhes_projeto" class="form-horizontal" role="form">
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-6" align="right"><br/><label>Finalizar evento e enviar à SMC?</label><br>
+                                            <?php echo exibirDataHoraBr($projeto['finalizacaoComissao']) ?>
+                                        </div>
+                                        <div class="col-md-2"><br/>
+                                            <?php echo "<input type='hidden' name='IDP' value='$idProjeto'>"; ?>
+                                            <input type="submit" name="finalizaComissao" class="btn btn-theme btn-md btn-block" value="Sim">
                                         </div>
                                     </div>
                                 </form>
