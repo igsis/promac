@@ -57,7 +57,7 @@
 					</div>
 
 					<div class="form-group">
-						<div class="col-md-offset-2 col-md-8"><label>Operador da Comissão</label>
+						<div class="col-md-offset-2 col-md-8"><label>Parecerista da Comissão</label>
 							<select class="form-control" name="idComissao" >
 								<option value="0">Selecione...</option>
 								<?php echo geraUsuarioComissao("") ?>
