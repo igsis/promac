@@ -79,7 +79,10 @@ if(isset($_POST['gravarPrazos']))
 if(isset($_POST['gravarAdm']))
 {
 	$valorAprovado = dinheiroDeBr($_POST['valorAprovado']);
-	$sql_gravarAdm = "UPDATE projeto SET valorAprovado = '$valorAprovado' WHERE idProjeto = '$idProjeto'";
+    $renunciaFiscal = $_POST['idRenunciaFiscal'];
+    $dataReuniao = exibirDataMysql($_POST['dataReuniao']);
+    $statusParecerista = $_POST['idStatusParecerista'];
+	$sql_gravarAdm = "UPDATE projeto SET valorAprovado = '$valorAprovado', idRenunciaFiscal = '$renunciaFiscal', dataReuniao = '$dataReuniao', idStatusParecerista = '$statusParecerista' WHERE idProjeto = '$idProjeto'";
 	if(mysqli_query($con,$sql_gravarAdm))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
@@ -328,10 +331,26 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <div class="col-md-offset-2 col-md-6"><label>Valor Aprovado</label><br/>
+                                        <div class="col-md-offset-2 col-md-4"><label>Valor Aprovado</label><br/>
                                             <input type="text" name="valorAprovado" id='valor' class="form-control" value="<?php echo dinheiroParaBr($projeto['valorAprovado']) ?>">
                                         </div>
-                                        <div class="col-md-6"><label><br/></label>
+                                        <div class="col-md-4"><label>Valor da Renúncia</label><br/>
+                                            <select class="form-control" name="idRenunciaFiscal">
+                                            <?php echo geraOpcao("renuncia_fiscal",$projeto['idRenunciaFiscal']) ?>
+                                            </select>
+                                        </div>
+                                     </div>
+                                     <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-4"><label>Assinatura do Termo de Responsabilidade</label>
+                                            <input type="text" name="dataReuniao" id='datepicker01' class="form-control" placeholder="DD/MM/AA" required value="<?php echo exibirDataBr($projeto['dataReuniao']) ?>">
+                                        </div>
+                                        <div class="col-md-4"><label>Status do Parecerista</label><br/>
+                                            <select class="form-control" name="idStatusParecerista">
+            									<option value="0"></option>
+                                            <?php echo geraOpcao("status_parecerista",$projeto['idStatusParecerista']) ?>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-offset-2 col-md-8"><label><br/></label>
                                             <input type="hidden" name="idProjeto" value="<?php echo $idProjeto ?>">
                                             <input type="submit" name="gravarAdm" class="btn btn-theme btn-md btn-block" value="Gravar">
                                         </div>
