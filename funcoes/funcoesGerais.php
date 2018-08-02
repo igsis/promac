@@ -243,7 +243,7 @@ function retornaDataSemHora($data)
 //retorna data d/m/y de mysql/datetime(a-m-d H:i:s)
 function exibirDataHoraBr($data)
 {
-	if($data == '0000-00-00 00:00:00')
+	if($data == '0000-00-00 00:00:00' || $data == NULL)
 	{
 		return "0000-00-00 00:00:00";
 	}
