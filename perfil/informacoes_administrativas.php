@@ -34,7 +34,8 @@ $ano = date('Y');
     	?>
 		<div class="form-group">
 			<h4>Informações da Inscrição</h4>
-			<p><strong><font color='#01DF3A'><strong>O status da sua inscrição é <?php echo $status['status'] ?>!</strong></font></strong></p>
+			<p><strong><font color='#01DF3A'><strong>Caro proponente, o status da sua inscrição é <?php echo $status['status'] ?>!</font></strong></p>
+				<p>Acompanhe através do sistema o resultado da análise da comissão sobre o seu projeto, e em caso de aprovação compareça na Secretaria Municipal de Cultura para assinatura do termo de responsabilidade.</strong></font></strong></p>
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
