@@ -28,6 +28,7 @@ $pasta = "?perfil=";
 					<li><a href="../pdf/excel_pj.php">Pessoa Jurídica</a></li>
 					<li><a href="../pdf/excel_projeto.php">Projetos</a></li>
 					<li><a href="../pdf/excel_publico.php">Público</a></li>
+					<li><a href="../pdf/excel_comissao.php">Comissão</a></li>
 					<li><a href="../perfil/webLog.php" target="_blank">WebLog</a></li>
 					<li><a href="#">Financeiro</a>
 					<ul class="dl-submenu">
