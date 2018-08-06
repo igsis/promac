@@ -234,7 +234,7 @@ if(isset($_POST['apagar']))
 					
 		<div class="form-group">
 			<div class="col-md-offset-2 col-md-8">
-				<?php							
+				<?php/*							
 				if ($cpo == false)
 				{
 					
@@ -251,17 +251,17 @@ if(isset($_POST['apagar']))
 					$enviaArquivos = mysqli_query($con, $queryArquivos);
 					$numRow = mysqli_num_rows($enviaArquivos);
 					if($numRow == 5)
-					{?>
+					{*/?>
 				<form class="form-horizontal" role="form" action="?perfil=resultado_inscricao_incentivador_pf" method="post">
 					<input type="submit" name="liberacao" value="Concluir inscrição do Incentivador" class="btn btn-theme btn-lg btn-block">
 				</form>
 				<?php
-				}
+				/*}
 				else{
 					echo "<div class='alert alert-warning'>
 					<strong>Erro: </strong> Você deve enviar todos os documentos para prosseguir.
 					</div>";
-				}
+				}*/
 			}?>
 			</div>
 		</div>
