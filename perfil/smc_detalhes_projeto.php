@@ -155,12 +155,12 @@ if(isset($_POST['envioComissao']))
 {
     $idP = $_POST['IDP'];
     $dateNow = date('Y:m:d h:i:s');
-    $sql_gravarAdm = "UPDATE projeto SET idStatus = '7', envioComissao = '$dateNow' WHERE idProjeto = '$idP' ";
-    if(mysqli_query($con,$sql_gravarAdm))
+    $sql_envioComissao = "UPDATE projeto SET idStatus = '7', envioComissao = '$dateNow' WHERE idProjeto = '$idP' ";
+    if(mysqli_query($con,$sql_envioComissao))
     {
         $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
         echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
-        gravarLog($sql_gravarAdm);
+        gravarLog($sql_envioComissao);
     }
     else
     {
