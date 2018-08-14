@@ -112,19 +112,27 @@ if(isset($_POST["enviar"]))
 				{
 				$empresaApenada = 0;
 				}
+				if(isset($_POST['idStatus']))
+				{
+					$idStatus = $_POST['idStatus'];
+				}
+				else
+				{
+				$idStatus = 0;
+				}
 				if(in_array($ext, $allowedExts)) //Pergunta se a extensão do arquivo, está presente no array das extensões permitidas
 				{
 					if(move_uploaded_file($nome_temporario, $dir.$new_name))
 					{
 						$sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('3', '$idProjeto', '$y', '$new_name', '$hoje', '1'); ";
-							$sql_empresa_apenada = "UPDATE projeto SET empresaApenada = '$empresaApenada'WHERE idProjeto = '$idProjeto'";
+							$sql_check = "UPDATE projeto SET empresaApenada = '$empresaApenada', idStatus = '11' WHERE idProjeto = '$idProjeto'";
 						$query = mysqli_query($con,$sql_insere_arquivo);
-						$query = mysqli_query($con,$sql_empresa_apenada);
+						$query = mysqli_query($con,$sql_check);
 						if($query)
 						{
 							$mensagem = "<font color='#01DF3A'><strong>Arquivo recebido com sucesso!</strong></font>";
 							gravarLog($sql_insere_arquivo);
-							gravarLog($sql_empresa_apenada);
+							gravarLog($sql_check);
 						}
 						else
 						{
@@ -246,9 +254,13 @@ if(isset($_POST['apagar']))
 							</table>
 							<div class="form-group">
               					  <div class="col-md-offset-2 col-md-8">
-		                  			  <strong>Não pertence às listas de Empresas Apenadas</strong>&nbsp;&nbsp;&nbsp;<input type="checkbox" name="empresaApenada" value="1">
-               		    	</div>
-               		    	<br>
+		                  			  <strong>Declaro não pertecencer às listas de Empresas Apenadas.</strong>&nbsp;&nbsp;&nbsp;<input type="checkbox" name="empresaApenada" value="1">
+               		    		  </div>
+              					<div class="col-md-offset-2 col-md-8">
+		                  			<strong>Declaro ter anexado todos os certificados necessários.</strong>&nbsp;&nbsp;&nbsp;<input type="checkbox" name="idStatus" value="1">
+               		    	    </div>
+               		    	<br/>
+               		    	<br/>
            					</div>
 							<input type="hidden" name="idPessoa" value="<?php echo $idProjeto; ?>"  />
 							<input type="hidden" name="tipoPessoa" value="<?php echo $tipoPessoa; ?>"  />
