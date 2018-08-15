@@ -1252,7 +1252,8 @@ function exibirArquivos($tipoPessoa,$idPessoa)
 	  
 	  WHERE arq.idPessoa = '$idPessoa'
 	  AND arq.idTipo = '$tipoPessoa'
-	  AND arq.publicado = '1'";
+	  AND arq.publicado = '1'
+	  AND list.idListaDocumento NOT IN (39,40,41,42,43,44)";
 
 	$query = mysqli_query($con,$sql);
 	echo "
@@ -1275,6 +1276,43 @@ function exibirArquivos($tipoPessoa,$idPessoa)
 		$statusDoc = recuperaDados("status_documento","idStatusDocumento",$row['idStatusDocumento']);
 		echo "<td class='list_description'>".$statusDoc['status']."</td>";
 		echo "<td class='list_description'>".$arquivo['observacoes']."</td>";
+		echo "</tr>";
+	}
+	echo "</table>";
+}
+
+function exibirCertificados($tipoPessoa,$idPessoa)
+{
+	$con = bancoMysqli();
+	$sql = "
+	   SELECT 
+	     *
+	  FROM 
+	    lista_documento as list
+	  INNER JOIN upload_arquivo AS arq 
+	  ON arq.idListaDocumento = list.idListaDocumento
+	  
+	  WHERE arq.idPessoa = '$idPessoa'
+	  AND arq.idTipo = '$tipoPessoa'
+	  AND arq.publicado = '1'
+	  AND list.idListaDocumento IN (39,40,41,42,43,44)";
+
+	$query = mysqli_query($con,$sql);
+	echo "
+		<table class='table table-bordered'>
+			<tr>
+				<td><strong>Tipo de arquivo</strong></td>
+				<td><strong>Nome do arquivo</strong></td>
+			</tr>
+	";
+	while($arquivo = mysqli_fetch_array($query))
+	{
+		echo "<tr>";
+		echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
+		echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>".$arquivo['arquivo']."</a></td>";
+		$queryy = "SELECT idStatusDocumento FROM upload_arquivo WHERE idUploadArquivo = '".$arquivo['idUploadArquivo']."'";
+		$send = mysqli_query($con, $queryy);
+		$row = mysqli_fetch_array($send);
 		echo "</tr>";
 	}
 	echo "</table>";

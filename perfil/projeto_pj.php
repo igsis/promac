@@ -193,6 +193,17 @@ if(isset($_POST['apagar']))
 													<input type ='submit' class='btn btn-theme btn-block' value='carregar'>
 												</form>
 											</td>";
+											break;
+											//projeto com certificados anexados
+											case 11: 
+												echo "<td class='list_description'>".$rowStatus['status']." </td>";
+													echo "
+												<td class='list_description'>
+													<form method='POST' action='?perfil=projeto_visualizacao'>
+														<input type='hidden' name='carregar' value='".$campo['idProjeto']."' />
+														<input type ='submit' class='btn btn-theme btn-block' value='visualizar'>
+													</form>
+												</td>";
 										}
 										echo "</tr>";
 									}

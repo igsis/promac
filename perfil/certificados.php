@@ -253,11 +253,11 @@ if(isset($_POST['apagar']))
 								?>
 							</table>
 							<div class="form-group">
-              					  <div class="col-md-offset-2 col-md-8">
-		                  			  <strong>Declaro não pertecencer às listas de Empresas Apenadas.</strong>&nbsp;&nbsp;&nbsp;<input type="checkbox" name="empresaApenada" value="1">
-               		    		  </div>
               					<div class="col-md-offset-2 col-md-8">
-		                  			<strong>Declaro ter anexado todos os certificados necessários.</strong>&nbsp;&nbsp;&nbsp;<input type="checkbox" name="idStatus" value="1">
+		                  			 <strong>Declaro não pertecencer às listas de Empresas Apenadas. </strong>&nbsp;&nbsp;&nbsp;<input type="checkbox" name="empresaApenada" value="1" <?php checar($projeto[ 'empresaApenada']) ?>>
+           		    		    </div>
+              					<div class="col-md-offset-2 col-md-8">
+									<strong>Declaro ter anexado todos os certificados necessários.</strong>&nbsp;&nbsp;&nbsp;<input type="checkbox" name="idStatus" <?php checar($projeto['idStatus']) ?>>
                		    	    </div>
                		    	<br/>
                		    	<br/>
@@ -270,6 +270,29 @@ if(isset($_POST['apagar']))
 					</div>
 				</div>
 				<!-- Fim Upload de arquivo -->
+
+                <!-- Botão para Voltar -->
+                <div class="form-group">
+                    <div class="col-md-offset-4 col-md-6">
+                        <?php
+				if($projeto['tipoPessoa'] == 1)
+				{
+				?>
+               		 <form class="form-horizontal" role="form" action="?perfil=projeto_pf" method="post">
+                <?php
+				}
+				else
+				{
+				?>
+                    <form class="form-horizontal" role="form" action="?perfil=projeto_pj" method="post">
+                <?php
+				}
+				?>
+                   		 <input type="submit" value="Voltar" class="btn btn-theme btn-md btn-block">
+                    </form>
+                    </div>
+                </div>
+
 				<!-- Confirmação de Exclusão -->
 					<div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel" aria-hidden="true">
 						<div class="modal-dialog">

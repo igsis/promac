@@ -85,28 +85,6 @@ $status = recuperaDados("status","idStatus",$projeto['idStatus']);
                                         </div>
                                     </div>
 
-                                    <!-- Botão para anexar certificados -->
-                                    <div class="form-group">
-                                        <div class="col-md-offset-4 col-md-6">
-                                            <?php
-                                    if($projeto['idStatus'] == 5)
-                                    {
-                                    ?>
-                                        <form class="form-horizontal" role="form" action="?perfil=certificados&idProjeto=<?=$idProjeto?>" method="post">
-                                        <input type="submit" value="anexar certificados" class="btn btn-theme btn-md btn-block">
-                                    <?php
-                                    }
-                                    ?>
-                                    </form>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="col-md-offset-2 col-md-8">
-                                            <hr/>
-                                        </div>
-                                    </div>
-
                                     <div class="form-group">
                                         <div class="col-md-offset-2 col-md-8" align="left">
                                             <ul class='list-group'>
@@ -134,6 +112,23 @@ $status = recuperaDados("status","idStatus",$projeto['idStatus']);
                                         </div>
                                     </div>
                                 </div>
+
+                                <!-- Botão para anexar certificados -->
+                                <div class="form-group">
+                                    <div class="col-md-offset-4 col-md-6">
+                                        <?php
+                                if($projeto['idStatus'] == 5)
+                                {
+                                ?>
+                                    <form class="form-horizontal" role="form" action="?perfil=certificados&idProjeto=<?=$idProjeto?>" method="post">
+                                    <input type="submit" value="anexar certificados" class="btn btn-theme btn-md btn-block">
+                                <?php
+                                }
+                                ?>
+                                     </form>
+                                    </div>
+                                </div>
+
                                 <!-- LABEL PROJETO -->
                                 <div role="tabpanel" class="tab-pane fade" id="projeto" align="left">
                                     <br>

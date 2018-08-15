@@ -577,6 +577,7 @@ $comissao = recuperaDados("pessoa_fisica","idPf",$projeto['idComissao']);
                                     </td>
                                 </tr>
                             </table>
+
                             <ul class="list-group">
                                 <li class="list-group-item list-group-item-success"><b>Ficha Técnica</b></li>
                                 <li class="list-group-item">
@@ -742,6 +743,19 @@ $comissao = recuperaDados("pessoa_fisica","idPf",$projeto['idComissao']);
                                 <li class="list-group-item list-group-item-success"><b>Arquivos do Projeto</b></li>
                                 <li class="list-group-item">
                                     <?php exibirArquivos(3,$projeto['idProjeto']); ?>
+                                </li>
+                            </ul>
+                            <table class="table table-bordered">
+                                <tr>
+                                    <td colspan="3"><strong>Pertence às listas de empresas apenadas?</strong>
+                                        <?php if($projeto['empresaApenada'] == 1){ echo "Não"; } else { echo "Sim"; } ?>
+                                    </td>
+                                </tr>
+                            </table>
+                            <ul class="list-group">
+                                <li class="list-group-item list-group-item-success"><b>Certificados do Projeto</b></li>
+                                <li class="list-group-item">
+                                    <?php exibirCertificados(3,$projeto['idProjeto']); ?>
                                 </li>
                             </ul>
                         </div>
