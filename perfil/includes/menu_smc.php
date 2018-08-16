@@ -12,6 +12,7 @@ $pasta = "?perfil=";
 					<li><a href="<?php echo $pasta ?>smc_pesquisa_reseta_senha">Reiniciar senha</a></li>
 				</ul>
 			</li>
+			<li><a href="<?php echo $pasta ?>smc_arquivos">Uploads</a></li>
 			<li><a href="#">Pesquisas</a>
 				<ul class="dl-submenu">
 					<li><a href="<?php echo $pasta ?>smc_pesquisa_pf">Pessoa Física</a></li>
@@ -41,7 +42,6 @@ $pasta = "?perfil=";
 			</li>
 			<li><a href="<?php echo $pasta ?>fazenda">Fazenda</a></li>
 			<li><a href="?perfil=informacoes_iniciais_pf">Módulo Proponente (provisório)</a></li>
-			<li><a href="<?php echo $pasta ?>comissao_index">Módulo Comissão (provisório)</a></li>
 			<li><a href="#">Cadastro de projetos</a>
 				<ul class="dl-submenu">
 					<li><a href="?perfil=smc_gerenciar_projeto&id=1">Liberar</a></li>
