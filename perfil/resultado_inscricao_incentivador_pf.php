@@ -267,8 +267,8 @@ if(isset($_POST['apagar']))
 		</div>
 		
 		</div>
-			<?php
-				}
+			<?php/*
+				}*/
 				?>
 		<!-- Confirmação de Exclusão -->
 			<div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel" aria-hidden="true">
