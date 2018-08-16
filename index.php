@@ -46,6 +46,14 @@ $tipoPessoa = '6';
 
 						<p align="justify">Para saber como participar, clique em <button class='btn btn-theme btn-md' type='button' data-toggle='modal' data-target='#regulamento' style="border-radius: 30px;">Regulamento</button> e se inscreva no link abaixo.</p>
 
+						<div class="well" style="padding-top: 60px;">
+								<div class="form-group" style="padding-bottom: 60px;">
+									<div class="col-md-offset-4 col-md-4">
+										<button class='btn btn-theme btn-md' type='button' data-toggle='modal' data-target='#analise' style="border-radius: 30px;">Confira a análise do seu projeto aqui</button>	
+									</div>
+								</div>
+						</div>
+
 						<p>&nbsp;</p>
 
 						<div class="well">
@@ -73,15 +81,7 @@ $tipoPessoa = '6';
 							</div>
 						</div>
 
-						<div class="form-group">
-							<div class="well" style="padding-top: 60px;">
-								<div class="form-group" style="padding-bottom: 60px;">
-									<div class="col-md-offset-4 col-md-4">
-										<button class='btn btn-theme btn-md' type='button' data-toggle='modal' data-target='#analise' style="border-radius: 30px;">Confira a análise do seu projeto aqui</button>										
-									</div>
-								</div>
-							</div>
-						</div>	
+						
 						<!-- Inicio Modal Regulamento -->
 						<div class="modal fade" id="regulamento" role="dialog" aria-labelledby="regulamentoLabel" aria-hidden="true">
 							<div class="modal-dialog">
