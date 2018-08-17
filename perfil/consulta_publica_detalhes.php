@@ -80,7 +80,14 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 								</tr>
 								<tr>
 									<td colspan="2"><strong>Nome do Projeto:</strong> <?php echo isset($projeto['nomeProjeto']) ? $projeto['nomeProjeto'] : null; ?></td>
+									<?php
+									if ($projeto['idStatus'] == 5 )
+									{
+									?>	
 									<td><strong>Valor Aprovado:</strong> R$ <?php echo isset($projeto['valorAprovado']) ? $projeto['valorAprovado'] : null; ?></td>
+									<?php
+									}
+									?>
 								</tr>
 								<tr>
 									<td colspan="3"><strong>Exposição da Marca:</strong> <?php echo isset($projeto['exposicaoMarca']) ? $projeto['exposicaoMarca'] : null; ?></td>
