@@ -26,6 +26,8 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 $server = "http://".$_SERVER['SERVER_NAME']."/promac/";
 $http = $server."/pdf/";
 $link1 = $http."rlt_projeto.php";
+$tipoPessoa = '9';
+
 
 if(isset($_POST['gravarPrazos']))
 {
@@ -149,7 +151,7 @@ if(isset($_POST['finalizaComissao']))
 
 if(isset($_POST["enviar"]))
 {
-	$sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '9'";
+	$sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa'";
 	$query_arquivos = mysqli_query($con,$sql_arquivos);
 	while($arq = mysqli_fetch_array($query_arquivos))
 	{
@@ -159,11 +161,11 @@ if(isset($_POST["enviar"]))
 		$f_size = isset($_FILES['arquivo']['size'][$x]) ? $_FILES['arquivo']['size'][$x] : null;
 
 		//Extensões permitidas
-		$ext = array("PDF","pdf");
-
-		if($f_size > 3145728) // 3MB em bytes
+		$ext = array("PDF","pdf"); 
+		
+		if($f_size > 5242880) // 5MB em bytes
 		{
-			$mensagem = "<font color='#01DF3A'><strong>Erro! Tamanho de arquivo excedido! Tamanho máximo permitido: 03 MB.</strong></font>";
+			$mensagem = "<font color='#FF0000'><strong>Erro! Tamanho de arquivo excedido! Tamanho máximo permitido: 05 MB.</strong></font>";
 		}
 		else
 		{
@@ -172,8 +174,7 @@ if(isset($_POST["enviar"]))
 				$nome_temporario = $_FILES['arquivo']['tmp_name'][$x];
 				$new_name = date("YmdHis")."_".semAcento($nome_arquivo); //Definindo um novo nome para o arquivo
 				$hoje = date("Y-m-d H:i:s");
-				$dir = '../uploadsdocs/'; //Diretório para uploads*/
-
+				$dir = '../uploadsdocs/'; //Diretório para uploads
 				$allowedExts = array(".pdf", ".PDF"); //Extensões permitidas
 				$ext = strtolower(substr($nome_arquivo,-4));
 
@@ -181,13 +182,12 @@ if(isset($_POST["enviar"]))
 				{
 					if(move_uploaded_file($nome_temporario, $dir.$new_name))
 					{
-						$sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('9', '$idProjeto', '$y', '$new_name', '$hoje', '1'); ";
+						$sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('$tipoPessoa', '$idProjeto', '$y', '$new_name', '$hoje', '1'); ";
 						$query = mysqli_query($con,$sql_insere_arquivo);
 						if($query)
 						{
 							$mensagem = "<font color='#01DF3A'><strong>Arquivo recebido com sucesso!</strong></font>";
 							gravarLog($sql_insere_arquivo);
-							//echo '<script>window.location = "?perfil=anexos"</script>';
 						}
 						else
 						{
@@ -207,7 +207,6 @@ if(isset($_POST["enviar"]))
 		}
 	}
 }
-
 if(isset($_POST['apagar']))
 {
 	$idArquivo = $_POST['apagar'];
@@ -402,52 +401,65 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                     </div>
                                 </div>
 
-                                <form method="POST" action="?perfil=comissao_detalhes_projeto" enctype="multipart/form-data">
-                                    <div class="col-md-offset-2 col-md-8">
-                                        <div class="table-responsive list_info">
-                                            <h6>Upload de Arquivo(s) Somente em PDF</h6>
-                                            <table class='table table-condensed'>
-                                                <tr class='list_menu'>
-                                                    <td>Tipo de Arquivo</td>
-                                                    <td></td>
-                                                </tr>
-                                                <?php
-										  $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '9'";
-											$query_arquivos = mysqli_query($con,$sql_arquivos);
-											while($arq = mysqli_fetch_array($query_arquivos))
-											{
-										?>
-                                                    <tr>
-                                                        <?php
-													$doc = $arq['documento'];
-													$query = "SELECT idListaDocumento FROM lista_documento WHERE documento='$doc' AND publicado='1' AND idTipoUpload='9'";
-													$envio = $con->query($query);
-													$row = $envio->fetch_array(MYSQLI_ASSOC);
+   				<div class="form-group">
+					<div class="col-md-12">
+						<div class="table-responsive list_info"><h6>Upload de Arquivo(s) Somente em PDF</h6>
+						<form method="POST" action="?perfil=comissao_detalhes_projeto" enctype="multipart/form-data">
+							<table class='table table-condensed'>
+								<tr class='list_menu'>
+									<td>Tipo de Arquivo</td>
+									<td></td>
+								</tr>
+								<?php
+									$sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa'";
+									$query_arquivos = mysqli_query($con,$sql_arquivos);
+									while($arq = mysqli_fetch_array($query_arquivos))
+									{
+								?>
+										<tr>
+											<?php
+											$doc = $arq['documento'];
+											$query = "SELECT idListaDocumento FROM lista_documento WHERE documento='$doc' AND publicado='1' AND idTipoUpload='1'";
+											$envio = $con->query($query);
+											$row = $envio->fetch_array(MYSQLI_ASSOC);
 
-													if(verificaArquivosExistentesPF($idProjeto,$row['idListaDocumento'])){
-														echo '<div class="alert alert-success">O arquivo ' . $doc . ' já foi enviado.</div>';
-													}
-													else{ ?>
-                                                            <td class="list_description path">
-                                                                <?php
-		                                                $path = selecionaArquivoAnexo(
-		                                                $http, $arq['documento'] ) ?>
-                                                                    <?=$arq['documento'] ?>
-                                                            </td>
-                                                            <td class="list_description"><input type='file' name='arquivo[<?php echo $arq[' sigla ']; ?>]'></td>
-                                                            <?php } ?>
-                                                    </tr>
-                                                    <?php
+											if(verificaArquivosExistentesPF($idPf,$row['idListaDocumento'])){
+												echo '<div class="alert alert-success">O arquivo ' . $doc . ' já foi enviado.</div>';
 											}
-										?>
-                                            </table><br>
-                                            <input type="hidden" name="idPessoa" value="<?php echo $idProjeto; ?>" />
-                                            <input type="hidden" name="idProjeto" value="<?php echo $idProjeto ?>">
-                                            <input type="hidden" name="tipoPessoa" value="4" />
-                                            <input type="submit" name="enviar" class="btn btn-theme btn-lg btn-block" value='Enviar'>
-                                        </div>
-                                    </div>
-                                </form>
+											else{ ?>
+											<?php 
+										    $urlArquivo = $http.$arq['idListaDocumento'];
+											if(arquivosExiste($urlArquivo)): ?>	
+											  <td class="list_description path">
+                                                <?php              
+                                                 $path = selecionaArquivoAnexo(
+                                                  $http, $arq['idListaDocumento']); ?>                  
+                                                  <a href='<?=$path?>'  
+                                                  	 target="_blank">
+                                                     <?=$arq['documento'] ?> 	
+                                                  </a>
+                                              </td>	
+                                            <?php else: ?>
+                                              <td class="list_description path">
+                                                <?=$arq['documento']?>	
+                                              </td>	
+                                            <?php endif ?>  
+											<td class="list_description"><input type='file' name='arquivo[<?php echo $arq['sigla']; ?>]'></td>
+											<?php } ?>
+										</tr>
+								<?php
+									}
+								?>
+							</table><br>
+							<input type="hidden" name="idPessoa" value="<?php echo $idProjeto; ?>"  />
+							<input type="hidden" name="tipoPessoa" value="<?php echo $tipoPessoa; ?>"  />
+							<input type="submit" name="enviar" class="btn btn-theme btn-lg btn-block" value='Enviar'>
+						</form>
+						</div>
+					</div>
+				</div>
+				<!-- Fim Upload de arquivo -->
+
                                 <!-- Confirmação de Exclusão -->
                                 <div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel" aria-hidden="true">
                                     <div class="modal-dialog">
