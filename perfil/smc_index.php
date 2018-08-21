@@ -326,15 +326,16 @@ if(isset($_POST['liberacaoPJ']))
                         </div>
                     </div>
                 </div>
+
                 <!-- Lista 6 -->
-                <div class="form-group">
-                    <h5>Lista de solicitações de reabertura de projeto para edição</h5>
+                 <div class="form-group">
+                    <h5>Lista de projetos em complemento de informações</h5>
                 </div>
                 <div class="row">
                     <div class="col-md-offset-1 col-md-10">
                         <div class="table-responsive list_info">
                             <?php
-					$sql = "SELECT * FROM projeto WHERE publicado = 1 AND idStatus = 8 ORDER BY idProjeto DESC LIMIT 0,10";
+					$sql = "SELECT * FROM projeto WHERE publicado = 1 AND idStatus = 12 ORDER BY idProjeto DESC LIMIT 0,10";
 					$query = mysqli_query($con,$sql);
 					$num = mysqli_num_rows($query);
 					if($num > 0)
@@ -348,7 +349,7 @@ if(isset($_POST['liberacaoPJ']))
 										<td>Proponente</td>
 										<td>Documento</td>
 										<td>Área de Atuação</td>
-										<td>Data da Solicitação</td>
+										<td>Parecerista</td>
 										<td width='10%'></td>
 									</tr>
 								</thead>
@@ -360,6 +361,7 @@ if(isset($_POST['liberacaoPJ']))
 									$status = recuperaDados("status","idStatus",$campo['idStatus']);
 									$pf = recuperaDados("pessoa_fisica","idPf",$campo['idPf']);
 									$pj = recuperaDados("pessoa_juridica","idPj",$campo['idPj']);
+									$comissao = recuperaDados("pessoa_fisica","idPf",$campo['idComissao']);
 
 									echo "<tr>";
 									echo "<td class='list_description'>".$campo['protocolo']."</td>";
@@ -375,7 +377,7 @@ if(isset($_POST['liberacaoPJ']))
 										echo "<td class='list_description'>".$pj['cnpj']."</td>";
 									}
 									echo "<td class='list_description'>".$area['areaAtuacao']."</td>";
-									echo "<td class='list_description'>".$campo['solicitacaoReabertura']."</td>";
+									echo "<td class='list_description'>".explode(' ', $comissao['nome'])[0]."</td>";
 									echo "
 										<td class='list_description'>
 											<form method='POST' action='?perfil=smc_detalhes_projeto'>
@@ -396,6 +398,7 @@ if(isset($_POST['liberacaoPJ']))
                         </div>
                     </div>
                 </div>
+
 
                 <!-- Lista 6.5 -->
                  <div class="form-group">

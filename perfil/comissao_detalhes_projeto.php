@@ -115,22 +115,6 @@ if(isset($_POST['gravarNota']))
 	}
 }
 
-if(isset($_POST['solicitaReabertura']))
-{
-	$idP = $_POST['IDP'];
-	$dateNow = date('Y:m:d h:i:s');
-	$sql_solicitaReabertura = "UPDATE projeto SET idStatus = '8', solicitacaoReabertura = '$dateNow' WHERE idProjeto = '$idP' ";
-	if(mysqli_query($con,$sql_solicitaReabertura))
-	{
-		$mensagem = "<font color='#01DF3A'><strong>Solicitação de reabertura enviada com sucesso!</strong></font>";
-		echo "<script>window.location = '?perfil=comissao_detalhes_projeto&idFF=$idP';</script>";
-		gravarLog($sql_solicitaReabertura);
-	}
-	else
-	{
-		$mensagem = "<font color='#FF0000'><strong>Erro ao reabrir! Tente novamente.</strong></font>";
-	}
-}
 
 if(isset($_POST['finalizaComissao']))
 {
@@ -310,18 +294,6 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                 <?php
 						}
 						?>
-                                <form method="POST" action="?perfil=comissao_detalhes_projeto" class="form-horizontal" role="form">
-                                    <div class="form-group">
-                                        <div class="col-md-offset-2 col-md-6" align="right"><br/><label>Solicitar reabertura do projeto para edição?</label><br>
-                                            <?php echo exibirDataHoraBr($projeto['solicitacaoReabertura']) ?>
-                                        </div>
-                                        <div class="col-md-2"><br/>
-                                            <?php echo "<input type='hidden' name='IDP' value='$idProjeto'>"; ?>
-                                            <input type="submit" name="solicitaReabertura" class="btn btn-theme btn-md btn-block" value="Sim">
-                                        </div>
-                                    </div>
-                                </form>
-
                                 <form method="POST" action="?perfil=comissao_detalhes_projeto" class="form-horizontal" role="form">
                                     <div class="form-group">
                                         <div class="col-md-offset-2 col-md-6" align="right"><br/><label>Finalizar evento e enviar à SMC?</label><br>

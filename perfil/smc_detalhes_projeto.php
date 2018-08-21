@@ -168,23 +168,6 @@ if(isset($_POST['envioComissao']))
     }
 }
 
-if(isset($_POST['reabreProjeto']))
-{
-    $idP = $_POST['IDP'];
-    $dateNow = date('Y:m:d h:i:s');
-    $sql_reabreProjeto = "UPDATE projeto SET idStatus = '9', reaberturaProjeto = '$dateNow' WHERE idProjeto = '$idP' ";
-    if(mysqli_query($con,$sql_reabreProjeto))
-    {
-        $mensagem = "<font color='#01DF3A'><strong>Reaberto com sucesso!</strong></font>";
-        echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
-        gravarLog($sql_reabreProjeto);
-    }
-    else
-    {
-        $mensagem = "<font color='#FF0000'><strong>Erro ao reabrir! Tente novamente.</strong></font>";
-    }
-}
-
 if(isset($_POST['apagaIncentivador']))
 {
     $tipoPessoa = $_POST['tipoPessoa'];
@@ -312,16 +295,7 @@ $comissao = recuperaDados("pessoa_fisica","idPf",$projeto['idComissao']);
                             </h5>
 
                             <div class="form-group">
-                                <div class="col-md-offset-2 col-md-3" align="right"><br/><label>Reabrir projeto para edição?</label><br>
-                                    <?php echo exibirDataHoraBr($projeto['reaberturaProjeto']) ?>
-                                </div>
-                                <div class="col-md-1"><br/>
-                                    <form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
-                                        <input type='hidden' name='IDP' value='<?php echo $idProjeto ?>'>
-                                        <input type="submit" name="reabreProjeto" class="btn btn-theme btn-lg btn-block" value="Sim">
-                                    </form>
-                                </div>
-                                <div class="col-md-3" align="right"><br/><label>Enviar projeto para comissão</label><br>
+                                <div class="col-md-offset-2 col-md-3" align="right"><br/><label>Enviar projeto para comissão</label><br>
                                     <?php echo exibirDataHoraBr($projeto['envioComissao'])?>
                                 </div>
                                 <div class="col-md-1"><br/>
