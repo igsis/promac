@@ -1406,6 +1406,43 @@ function exibirCertificados($tipoPessoa,$idPessoa)
 	echo "</table>";
 }
 
+function exibirComplemento($tipoPessoa,$idPessoa)
+{
+	$con = bancoMysqli();
+	$sql = "
+	   SELECT 
+	     *
+	  FROM 
+	    lista_documento as list
+	  INNER JOIN upload_arquivo AS arq 
+	  ON arq.idListaDocumento = list.idListaDocumento
+	  
+	  WHERE arq.idPessoa = '$idPessoa'
+	  AND arq.idTipo = '$tipoPessoa'
+	  AND arq.publicado = '1'
+	  AND list.idListaDocumento IN (46)";
+
+	$query = mysqli_query($con,$sql);
+	echo "
+		<table class='table table-bordered'>
+			<tr>
+				<td><strong>Tipo de arquivo</strong></td>
+				<td><strong>Nome do arquivo</strong></td>
+			</tr>
+	";
+	while($arquivo = mysqli_fetch_array($query))
+	{
+		echo "<tr>";
+		echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
+		echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>".$arquivo['arquivo']."</a></td>";
+		$queryy = "SELECT idStatusDocumento FROM upload_arquivo WHERE idUploadArquivo = '".$arquivo['idUploadArquivo']."'";
+		$send = mysqli_query($con, $queryy);
+		$row = mysqli_fetch_array($send);
+		echo "</tr>";
+	}
+	echo "</table>";
+}
+
 // Função que valida o CPF
 function validaCPF($cpf)
 {

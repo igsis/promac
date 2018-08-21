@@ -129,6 +129,22 @@ $status = recuperaDados("status","idStatus",$projeto['idStatus']);
                                     </div>
                                 </div>
 
+                                <!-- Botão para anexar complemento de informações -->
+                                <div class="form-group">
+                                    <div class="col-md-offset-4 col-md-6">
+                                        <?php
+                                if($projeto['idStatus'] == 12 OR $projeto['idStatus'] == 13)
+                                {
+                                ?>
+                                    <form class="form-horizontal" role="form" action="?perfil=complemento_informacoes&idProjeto=<?=$idProjeto?>" method="post">
+                                    <input type="submit" value="anexar complementos" class="btn btn-theme btn-md btn-block">
+                                <?php
+                                }
+                                ?>
+                                     </form>
+                                    </div>
+                                </div>
+
                                 <!-- LABEL PROJETO -->
                                 <div role="tabpanel" class="tab-pane fade" id="projeto" align="left">
                                     <br>

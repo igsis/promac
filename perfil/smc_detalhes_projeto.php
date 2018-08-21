@@ -72,7 +72,8 @@ if(isset($_POST['gravarAdm']))
     $idP = $_POST['IDP'];
     $idStatus = $_POST['idStatus'];
     $valorAprovado = dinheiroDeBr($_POST['valorAprovado']);
-    $sql_gravarAdm = "UPDATE projeto SET idStatus = '$idStatus', valorAprovado = '$valorAprovado' WHERE idProjeto = '$idP' ";
+    $statusParecerista = $_POST['idStatusParecerista'];
+    $sql_gravarAdm = "UPDATE projeto SET idStatus = '$idStatus', valorAprovado = '$valorAprovado',idStatusParecerista = '$statusParecerista' WHERE idProjeto = '$idP' ";
     if(mysqli_query($con,$sql_gravarAdm))
     {
         $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
@@ -348,13 +349,22 @@ $comissao = recuperaDados("pessoa_fisica","idPf",$projeto['idComissao']);
 
                             <form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
                                 <div class="form-group">
-                                    <div class="col-md-offset-2 col-md-6"><label>Status</label><br/>
+                                    <div class="col-md-offset-2 col-md-6"><label>Status do Projeto</label><br/>
                                         <select class="form-control" name="idStatus">
                                         <?php echo geraOpcao("status",$projeto['idStatus']) ?>
                                     </select>
                                     </div>
                                     <div class="col-md-6"><label>Valor Aprovado</label><br/>
                                         <input type="text" name="valorAprovado" id='valor' class="form-control" value="<?php echo dinheiroParaBr($projeto['valorAprovado']) ?>">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-8"><label>Status do Parecerista</label><br/>
+                                        <select class="form-control" name="idStatusParecerista">
+                                                <option value="0"></option>
+                                            <?php echo geraOpcao("status_parecerista",$projeto['idStatusParecerista']) ?>
+                                        </select>
                                     </div>
                                 </div>
 
@@ -730,6 +740,12 @@ $comissao = recuperaDados("pessoa_fisica","idPf",$projeto['idComissao']);
                                 <li class="list-group-item list-group-item-success"><b>Certificados do Projeto</b></li>
                                 <li class="list-group-item">
                                     <?php exibirCertificados(3,$projeto['idProjeto']); ?>
+                                </li>
+                            </ul>
+                             <ul class="list-group">
+                                <li class="list-group-item list-group-item-success"><b>Complemento de Informações</b></li>
+                                <li class="list-group-item">
+                                    <?php exibirComplemento(3,$projeto['idProjeto']); ?>
                                 </li>
                             </ul>
                         </div>
