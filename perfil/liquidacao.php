@@ -49,7 +49,7 @@ $reserva = recuperaDados("reserva", "idReserva", $deposito['idReserva']);
                                         <?php echo $liquidacao['numeroLiquidacao']; ?>
                                     </td>
                                     <td>
-                                        <?php echo $liquidacao['processoSei']; ?>
+                                        <?php echo $liquidacao['numeroSei']; ?>
                                     </td>
                                     <td class='list_description'>
                                         <form method="POST" action="?perfil=edicao_liquidacao&idLiquidacao=<?=$liquidacao['idLiquidacao'] ?>">

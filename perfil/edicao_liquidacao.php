@@ -10,9 +10,9 @@ if(isset($_POST['alteraLiquidacao'])){
     $data = exibirDataMysql($_POST['data']);
     $valor = dinheiroDeBr($_POST['valor']);
     $numeroLiquidacao = $_POST['numeroLiquidacao'];
-    $processoSei = $_POST['processoSei'];
+    $numeroSei = $_POST['numeroSei'];
     
-    $sql = "UPDATE liquidacao SET data = '$data', valor = '$valor', numeroLiquidacao = '$numeroLiquidacao', processoSei = '$processoSei' WHERE idLiquidacao = '$idLiquidacao' ";
+    $sql = "UPDATE liquidacao SET data = '$data', valor = '$valor', numeroLiquidacao = '$numeroLiquidacao', numeroSei = '$numeroSei' WHERE idLiquidacao = '$idLiquidacao' ";
     
     if(mysqli_query($con,$sql)){
         $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
@@ -54,7 +54,7 @@ if(isset($_POST['alteraLiquidacao'])){
 
                             <div class="col-md-4">
                                 <label>Nº Processo SEI</label>
-                                <input type="text" name="processoSei" class="form-control" value="<?php echo $liquidacao['processoSei'] ?>" required>
+                                <input type="text" name="numeroSei" class="form-control" value="<?php echo $liquidacao['numeroSei'] ?>" required>
                             </div>
                         </div>
                         <input type="hidden" name="IDL" value="<?php echo $liquidacao['idLiquidacao'] ?>">

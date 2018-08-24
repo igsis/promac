@@ -10,10 +10,10 @@ if(isset($_POST['inserirLiquidacao'])){
     $data = exibirDataMysql($_POST['data']);
     $valor = dinheiroDeBr($_POST['valor']);
     $numeroLiquidacao = $_POST['numeroLiquidacao'];
-    $processoSei = $_POST['processoSei'];
+    $numeroSei = $_POST['numeroSei'];
 
     
-    $sql = "INSERT INTO liquidacao (idDeposito, data, valor, numeroLiquidacao,processoSei) values ('$idDeposito', '$data', '$valor', '$numeroLiquidacao', '$processoSei')";
+    $sql = "INSERT INTO liquidacao (idDeposito, data, valor, numeroLiquidacao,numeroSei) values ('$idDeposito', '$data', '$valor', '$numeroLiquidacao', '$numeroSei')";
     
     if(mysqli_query($con,$sql)){
         $mensagem = "<font color='#01DF3A'><strong>Liquidação cadastrada com sucesso!</strong></font>";
@@ -54,7 +54,7 @@ if(isset($_POST['inserirLiquidacao'])){
                             </div>
                             <div class="col-md-4">                                
                                 <label>Nº Processo SEI</label>
-                                <input type="text" name="processoSei" class="form-control">
+                                <input type="text" name="numeroSei" class="form-control">
                             </div>
                         </div>
 
