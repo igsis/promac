@@ -72,8 +72,9 @@ if(isset($_POST['gravarAdm']))
     $idP = $_POST['IDP'];
     $idStatus = $_POST['idStatus'];
     $valorAprovado = dinheiroDeBr($_POST['valorAprovado']);
+    $idRenunciaFiscal = $_POST['idRenunciaFiscal'];
     $statusParecerista = $_POST['idStatusParecerista'];
-    $sql_gravarAdm = "UPDATE projeto SET idStatus = '$idStatus', valorAprovado = '$valorAprovado',idStatusParecerista = '$statusParecerista' WHERE idProjeto = '$idP' ";
+    $sql_gravarAdm = "UPDATE projeto SET idStatus = '$idStatus', valorAprovado = '$valorAprovado', idRenunciaFiscal = '$idRenunciaFiscal', idStatusParecerista = '$statusParecerista' WHERE idProjeto = '$idP' ";
     if(mysqli_query($con,$sql_gravarAdm))
     {
         $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
@@ -349,13 +350,18 @@ $comissao = recuperaDados("pessoa_fisica","idPf",$projeto['idComissao']);
 
                             <form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
                                 <div class="form-group">
-                                    <div class="col-md-offset-2 col-md-6"><label>Status do Projeto</label><br/>
+                                    <div class="col-md-offset-2 col-md-3"><label>Status do Projeto</label><br/>
                                         <select class="form-control" name="idStatus">
                                         <?php echo geraOpcao("status",$projeto['idStatus']) ?>
                                     </select>
                                     </div>
-                                    <div class="col-md-6"><label>Valor Aprovado</label><br/>
+                                    <div class="col-md-3"><label>Valor Aprovado</label><br/>
                                         <input type="text" name="valorAprovado" id='valor' class="form-control" value="<?php echo dinheiroParaBr($projeto['valorAprovado']) ?>">
+                                    </div>                                    
+                                    <div class="col-md-2"><label>Valor Renúncia</label><br/>
+                                        <select class="form-control" name="idRenunciaFiscal">
+                                            <?php echo geraOpcao("renuncia_fiscal",$projeto['idRenunciaFiscal']) ?>
+                                        </select>
                                     </div>
                                 </div>
 
