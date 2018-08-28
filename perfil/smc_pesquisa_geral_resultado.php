@@ -64,13 +64,13 @@ if($nome != '' || $cpf != '')
 // Inicio Pessoa Jurídica
 elseif($razaoSocial != '' || $cnpj != '')
 {
-	if($razaSocial != '')
+	if($razaoSocial != '')
 	{
-		$filtro_razaSocial = " AND razaSocial LIKE '%$razaSocial%'";
+		$filtro_razaoSocial = " AND razaoSocial LIKE '%$razaoSocial%'";
 	}
 	else
 	{
-		$filtro_razaSocial = "";
+		$filtro_razaoSocial = "";
 	}
 
 	if($cnpj != '')
@@ -84,7 +84,7 @@ elseif($razaoSocial != '' || $cnpj != '')
 	$sql = "SELECT * FROM projeto AS prj
 			INNER JOIN pessoa_juridica AS pj ON prj.idPj = pj.idPj
 			WHERE publicado = 1
-			$filtro_razaSocial $filtro_cnpj";
+			$filtro_razaoSocial $filtro_cnpj";
 	$query = mysqli_query($con,$sql);
 	$num = mysqli_num_rows($query);
 	if($num > 0)
@@ -97,7 +97,7 @@ elseif($razaoSocial != '' || $cnpj != '')
 			$x[$i]['idProjeto'] = $lista['idProjeto'];
 			$x[$i]['protocolo'] = $lista['protocolo'];
 			$x[$i]['nomeProjeto'] = $lista['nomeProjeto'];
-			$x[$i]['proponente'] = $lista['razaSocial'];
+			$x[$i]['proponente'] = $lista['razaoSocial'];
 			$x[$i]['documento'] = $lista['cnpj'];
 			$x[$i]['areaAtuacao'] = $area['areaAtuacao'];
 			$x[$i]['status'] = $status['status'];
