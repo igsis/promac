@@ -136,6 +136,7 @@ class PDF extends FPDF
   */
     $queryOrca = "SELECT * FROM orcamento WHERE idProjeto = '$idProjeto'";
     $enviaOrca = mysqli_query($con, $queryOrca);
+    $o_num = 0;
     while($rowOrca = mysqli_fetch_array($enviaOrca))
     {
       $idEtapa = $rowOrca['idEtapa']; //search it
@@ -145,6 +146,7 @@ class PDF extends FPDF
       $quantidadeUnidade = $rowOrca['quantidadeUnidade'];
       $valorUnitario = $rowOrca['valorUnitario'];
       $valorTotal = $rowOrca['valorTotal'];
+      $o_num ++;
     }
 
     /*
@@ -205,8 +207,8 @@ class PDF extends FPDF
     $pdf->SetXY( $x , 15 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
      
      $pdf->SetX($x);
-     $pdf->SetFont('Arial','B', 14);
-     $pdf->Cell(180,5,utf8_decode("Projeto: $nomeProjeto"),0,1,'C');
+     $pdf->SetFont('Arial','B', 16);
+     $pdf->Cell(180,5,utf8_decode(strtoupper("Projeto: $nomeProjeto")),0,1,'C');
      
      $pdf->Ln();
      $pdf->Ln();
@@ -239,58 +241,47 @@ class PDF extends FPDF
         $cooperadoPF = "não";
       }
 
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','B', 12);
-     $pdf->Cell(180,5,utf8_decode("Dados de pessoa física"),0,1,'C');
-     $pdf->Ln();
+      $pdf->SetX($x);
+      $pdf->SetFont('Arial','B', 14);
+      $pdf->Cell(180,5,utf8_decode("Dados de pessoa física"),0,1,'C');
+      
+      $pdf->Ln();
 
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("Nome: " . $NomePF));
+      $pdf->SetX($x);
+      $pdf->SetFont('Arial','B', 11);
+      $pdf->Cell(14,$l,utf8_decode("Nome:"),0,0,'L');
+      $pdf->SetFont('Arial','', 11);
+      $pdf->MultiCell(162,$l,utf8_decode($NomePF));
 
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("RG: " . $RGPF));
+      $pdf->SetX($x);
+      $pdf->SetFont('Arial','B', 11);
+      $pdf->Cell(8,$l,utf8_decode("RG:"),0,0,'L');
+      $pdf->SetFont('Arial','', 11);
+      $pdf->MultiCell(170,$l,utf8_decode($RGPF));
 
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("CPF: " . $CPF));
+      $pdf->SetX($x);
+      $pdf->SetFont('Arial','B', 11);
+      $pdf->Cell(10,$l,utf8_decode("CPF:"),0,0,'L');
+      $pdf->SetFont('Arial','', 11);
+      $pdf->MultiCell(170,$l,utf8_decode($CPF));
 
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("Endereço: " . $EnderecoPF));
+      $pdf->SetX($x);
+      $pdf->SetFont('Arial','B', 11);
+      $pdf->Cell(20,$l,utf8_decode("Endereço:"),0,0,'L');
+      $pdf->SetFont('Arial','', 11);
+      $pdf->MultiCell(180,$l,utf8_decode($EnderecoPF.", ".$numeroPF." ".$complementoPF." - ".$CidadePF." - ".$estadoPF));
 
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("Número: " . $numeroPF));
+      $pdf->SetX($x);
+      $pdf->SetFont('Arial','B', 11);
+      $pdf->Cell(20,$l,utf8_decode("Telefone:"),0,0,'L');
+      $pdf->SetFont('Arial','', 11);
+      $pdf->MultiCell(170,$l,utf8_decode($telefonePF." | ".$celularPF));
 
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("Complemento: " . $complementoPF));
-
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("CEP: " . $CepPF));
-
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("Cidade: " . $CidadePF));
-
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("Estado: " . $estadoPF));
-
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("Telefone: " . $telefonePF));
-
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("Celular: " . $celularPF));
-
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("Email: " . $emailPF));
+      $pdf->SetX($x);
+      $pdf->SetFont('Arial','B', 11);
+      $pdf->Cell(13,$l,utf8_decode("Email:"),0,0,'L');
+      $pdf->SetFont('Arial','', 11);
+      $pdf->MultiCell(170,$l,utf8_decode($emailPF));
     }
     else if($tipoPessoa == 2)
     {
@@ -337,132 +328,134 @@ class PDF extends FPDF
       }
 
       $pdf->SetX($x);
-     $pdf->SetFont('Arial','B', 12);
-     $pdf->Cell(180,5,utf8_decode("Dados de pessoa jurídica"),0,1,'C');
-     $pdf->Ln();
+      $pdf->SetFont('Arial','B', 14);
+      $pdf->Cell(180,5,utf8_decode("Dados de pessoa jurídica"),0,1,'C');
+      $pdf->Ln();
 
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("Razão Social: " . $razaoSocial));
+      $pdf->SetX($x);
+      $pdf->SetFont('Arial','', 11);
+      $pdf->MultiCell(170,$l,utf8_decode("Razão Social: " . $razaoSocial));
 
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("CNPJ: " . $cnpj));
+      $pdf->SetX($x);
+      $pdf->SetFont('Arial','', 11);
+      $pdf->MultiCell(170,$l,utf8_decode("CNPJ: " . $cnpj));
 
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("Endereço: " . $logradouroPJ));
+      $pdf->SetX($x);
+      $pdf->SetFont('Arial','B', 11);
+      $pdf->Cell(20,$l,utf8_decode("Endereço:"),0,0,'L');
+      $pdf->SetFont('Arial','', 11);
+      $pdf->MultiCell(180,$l,utf8_decode($EnderecoPJ.", ".$numeroPJ." ".$complementoPJ." - ".$bairroPJ." - ".$CidadePJ." - ".$estadoPJ));
 
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("Bairro: " . $bairroPJ));
+      $pdf->SetX($x);
+      $pdf->SetFont('Arial','B', 11);
+      $pdf->Cell(20,$l,utf8_decode("Telefone:"),0,0,'L');
+      $pdf->SetFont('Arial','', 11);
+      $pdf->MultiCell(170,$l,utf8_decode($telefonePJ." | ".$celularPJ));
 
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("Cidade: " . $cidadePJ));
+      $pdf->SetX($x);
+      $pdf->SetFont('Arial','', 11);
+      $pdf->MultiCell(170,$l,utf8_decode("Email: " . $emailPJ));
 
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("Estado: " . $estadoPJ));
+      $pdf->SetX($x);
+      $pdf->SetFont('Arial','B', 12);
+      $pdf->Cell(180,5,utf8_decode("Representante legal"),0,1,'C');
+      $pdf->Ln();
 
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("Complemento: " . $complementoPJ));
+      $pdf->SetX($x);
+      $pdf->SetFont('Arial','', 11);
+      $pdf->MultiCell(170,$l,utf8_decode("Nome: " . $nomeRep));
 
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("Telefone: " . $telefonePJ));
+      $pdf->SetX($x);
+      $pdf->SetFont('Arial','', 11);
+      $pdf->MultiCell(170,$l,utf8_decode("CPF: " . $cpfRep));
 
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("Celular: " . $celularPJ));
+      $pdf->SetX($x);
+      $pdf->SetFont('Arial','', 11);
+      $pdf->MultiCell(170,$l,utf8_decode("RG: " . $rgRep));
 
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("Email: " . $emailPJ));
+      $pdf->SetX($x);
+      $pdf->SetFont('Arial','', 11);
+      $pdf->MultiCell(170,$l,utf8_decode("Endereço: " . $logradouroRep));
 
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','B', 12);
-     $pdf->Cell(180,5,utf8_decode("Representante legal"),0,1,'C');
-     $pdf->Ln();
+      $pdf->SetX($x);
+      $pdf->SetFont('Arial','', 11);
+      $pdf->MultiCell(170,$l,utf8_decode("Bairro: " . $bairroRep));
 
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("Nome: " . $nomeRep));
+      $pdf->SetX($x);
+      $pdf->SetFont('Arial','', 11);
+      $pdf->MultiCell(170,$l,utf8_decode("Estado: " . $estadoRep));
 
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("CPF: " . $cpfRep));
+      $pdf->SetX($x);
+      $pdf->SetFont('Arial','', 11);
+      $pdf->MultiCell(170,$l,utf8_decode("CEP: " . $cepRep));
 
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("RG: " . $rgRep));
+      $pdf->SetX($x);
+      $pdf->SetFont('Arial','', 11);
+      $pdf->MultiCell(170,$l,utf8_decode("Número: " . $numeroRep));
 
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("Endereço: " . $logradouroRep));
+      $pdf->SetX($x);
+      $pdf->SetFont('Arial','', 11);
+      $pdf->MultiCell(170,$l,utf8_decode("Complemento: " . $complementoRep));
 
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("Bairro: " . $bairroRep));
+      $pdf->SetX($x);
+      $pdf->SetFont('Arial','', 11);
+      $pdf->MultiCell(170,$l,utf8_decode("Telefone: " . $telefoneRep));
 
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("Estado: " . $estadoRep));
+      $pdf->SetX($x);
+      $pdf->SetFont('Arial','', 11);
+      $pdf->MultiCell(170,$l,utf8_decode("Celular: " . $celularRep));
 
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("CEP: " . $cepRep));
-
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("Número: " . $numeroRep));
-
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("Complemento: " . $complementoRep));
-
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("Telefone: " . $telefoneRep));
-
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("Celular: " . $celularRep));
-
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("Email: " . $emailRep));
+      $pdf->SetX($x);
+      $pdf->SetFont('Arial','', 11);
+      $pdf->MultiCell(170,$l,utf8_decode("Email: " . $emailRep));
     }
 
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','B', 12);
-     $pdf->Cell(180,5,utf8_decode("Dados do projeto"),0,1,'C');
-     $pdf->Ln();
+    $pdf->Ln();
+    $pdf->Ln();
 
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("Protocolo: " . $protocoloP));
+    $pdf->SetX($x);
+    $pdf->SetFont('Arial','B', 14);
+    $pdf->Cell(180,$l,utf8_decode("Dados do projeto"),0,1,'C');
 
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("Área de atuação: " . $areaAtuacao));
+    $pdf->Ln();
 
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("Valor do projeto: " . $vProjeto));
+    $pdf->SetX($x);
+    $pdf->SetFont('Arial','B', 11);
+    $pdf->Cell(21,$l,utf8_decode("Protocolo:"),0,0,'L');
+    $pdf->SetFont('Arial','', 11);
+    $pdf->Cell(60,$l,utf8_decode($protocoloP),0,1,'L');
 
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("Valor do incentivo: " . $vIncentivo));
+    $pdf->SetX($x);
+    $pdf->SetFont('Arial','B', 11);
+    $pdf->Cell(32,$l,utf8_decode("Área de atuação:"),0,1,'L');
+    $pdf->SetX($x);
+    $pdf->SetFont('Arial','', 11);
+    $pdf->MultiCell(170,$l,utf8_decode($areaAtuacao));
 
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("Renúncia fiscal: " . $renunciaFiscal));
+    $pdf->SetX($x);
+    $pdf->SetFont('Arial','B', 11);
+    $pdf->Cell(32,$l,utf8_decode("Valor do projeto:"),0,0,'L');
+    $pdf->SetFont('Arial','', 11);
+    $pdf->Cell(60,$l,utf8_decode("R$ ".dinheiroParabr($vProjeto)),0,1,'L');
 
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("Exposição da marca: " . $exposicaoMarca));
+    $pdf->SetX($x);
+    $pdf->SetFont('Arial','B', 11);
+    $pdf->Cell(36,$l,utf8_decode("Valor do incentivo:"),0,0,'L');
+    $pdf->SetFont('Arial','', 11);
+    $pdf->Cell(60,$l,utf8_decode("R$ ".dinheiroParabr($vIncentivo)),0,1,'L');
+
+    $pdf->SetX($x);
+    $pdf->SetFont('Arial','B', 11);
+    $pdf->Cell(31,$l,utf8_decode("Renúncia fiscal:"),0,0,'L');
+    $pdf->SetFont('Arial','', 11);
+    $pdf->Cell(60,$l,utf8_decode($renunciaFiscal),0,1,'L');
+
+    $pdf->SetX($x);
+    $pdf->SetFont('Arial','B', 11);
+    $pdf->Cell(31,$l,utf8_decode("Exposição da marca:"),0,1,'L');
+    $pdf->SetX($x);
+    $pdf->SetFont('Arial','', 11);
+    $pdf->MultiCell(170,$l,utf8_decode($exposicaoMarca));
 
      $pdf->SetX($x);
      $pdf->SetFont('Arial','', 11);
@@ -500,6 +493,7 @@ class PDF extends FPDF
      $pdf->SetFont('Arial','', 11);
      $pdf->MultiCell(170,$l,utf8_decode("Plano de divulgação: " . $planoDivulgacao));
 
+     $pdf->Ln();
 
      $pdf->SetX($x);
      $pdf->SetFont('Arial','B', 12);
@@ -571,35 +565,40 @@ class PDF extends FPDF
      $pdf->Cell(180,5,utf8_decode("Orçamento"),0,1,'C');
      $pdf->Ln();
 
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("Etapa: " . $etapaStatus));
+    for($i = 0; $i < $o_num; $i++)
+    {
+      $pdf->SetX($x);
+      $pdf->SetFont('Arial','', 11);
+      $pdf->MultiCell(170,$l,utf8_decode("Etapa: " . $etapaStatus));
 
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("Descrição: " . $descricao));
+      $pdf->SetX($x);
+      $pdf->SetFont('Arial','', 11);
+      $pdf->MultiCell(170,$l,utf8_decode("Descrição: " . $descricao));
 
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','B', 10);
-     $pdf->Cell(22,$l,'Quantidade:',0,0,'L');
-     $pdf->SetFont('Arial','', 10);
-     $pdf->MultiCell(150,$l,utf8_decode($quantidade));
+      $pdf->SetX($x);
+      $pdf->SetFont('Arial','B', 10);
+      $pdf->Cell(22,$l,'Quantidade:',0,0,'L');
+      $pdf->SetFont('Arial','', 10);
+      $pdf->MultiCell(150,$l,utf8_decode($quantidade));
 
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("Unidade de medida: " . $unidadeMedidaStatus));
+      $pdf->SetX($x);
+      $pdf->SetFont('Arial','', 11);
+      $pdf->MultiCell(170,$l,utf8_decode("Unidade de medida: " . $unidadeMedidaStatus));
 
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("Quantidade de unidades: " . $quantidadeUnidade));
+      $pdf->SetX($x);
+      $pdf->SetFont('Arial','', 11);
+      $pdf->MultiCell(170,$l,utf8_decode("Quantidade de unidades: " . $quantidadeUnidade));
 
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("Valor unitário: " . $valorUnitario));
+      $pdf->SetX($x);
+      $pdf->SetFont('Arial','', 11);
+      $pdf->MultiCell(170,$l,utf8_decode("Valor unitário: " . $valorUnitario));
 
-     $pdf->SetX($x);
-     $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("Valor total: " . $valorTotal));
+      $pdf->SetX($x);
+      $pdf->SetFont('Arial','', 11);
+      $pdf->MultiCell(170,$l,utf8_decode("Valor total: " . $valorTotal));
+
+      $pdf->Ln();
+    }
 
      $pdf->SetX($x);
      $pdf->SetFont('Arial','B', 12);
