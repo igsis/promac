@@ -334,10 +334,6 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 									<td><strong>Cooperativa:</strong> <?php if($pj['cooperativa'] == 1){ echo "Sim"; } else { echo "Não"; } ?></td>
 								</tr>
 							</table>
-							<ul class="list-group">
-								<li class="list-group-item list-group-item-success"><b>Arquivos da Pessoa Jurídica</b></li>
-								<li class="list-group-item"><?php exibirArquivos(2,$pj['idPj']); ?></li>
-							</ul>
 							<?php } else { echo "<strong>Não há pessoa jurídica cadastrada.</strong>"; } ?>
 						</div>
 					</div><!-- class="tab-content" -->

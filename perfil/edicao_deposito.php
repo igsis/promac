@@ -54,7 +54,7 @@ if(isset($_POST['alteraDeposito'])){
         <div class="container">
             <?php include 'includes/menu_smc.php';?>
             <div class="form-group">
-                <h4>Edição de Reserva</h4>
+                <h4>Edição de Depósito</h4>
                 <p><strong><?php if(isset($mensagem)){echo $mensagem;} ?></strong></p>
             </div>
             <div class="row">
