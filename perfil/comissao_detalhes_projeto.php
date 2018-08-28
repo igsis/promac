@@ -311,43 +311,40 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                         <?php if(isset($mensagem)){echo $mensagem;}; ?>
                                     </h5>
                                     <div class="form-group">
-                                        <div class="col-md-offset-2 col-md-4">
-                                            <?php
-										$id = $projeto['tipoPessoa'];
-										$idP = $projeto['idProjeto'];
-										if($id == 1)
-										{
-											$idPess = $projeto['idPf'];
-										} else if($id == 2)
-										{
-											$idPess = $projeto['idPj'];
-										}
-									?>
-                                                <a href='<?php echo "../pdf/gera_pdf.php?tipo=$id&projeto=$idP&pessoa=$idPess"; ?>' target='_blank' class="btn btn-theme btn-md btn-block"><strong>Gerar PDF do Projeto</strong></a><br/>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <a href='<?php echo "../pdf/gera_excel.php?tipo=$id&projeto=$idP&pessoa=$idPess"; ?>' target='_blank' class="btn btn-theme btn-md btn-block"><strong>Gerar Excel do Projeto</strong></a><br/>
-
+                                        <div class="col-md-offset-4 col-md-4">
+	                                        <?php
+											$id = $projeto['tipoPessoa'];
+											$idP = $projeto['idProjeto'];
+											if($id == 1)
+											{
+												$idPess = $projeto['idPf'];
+											} else if($id == 2)
+											{
+												$idPess = $projeto['idPj'];
+											}
+											?>
+                                            <a href='<?php echo "../pdf/gera_pdf.php?tipo=$id&projeto=$idP&pessoa=$idPess"; ?>' target='_blank' class="btn btn-theme btn-md btn-block"><strong>Gerar PDF do Projeto</strong></a><br/>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <div class="col-md-offset-2 col-md-4"><label>Valor Aprovado</label><br/>
-                                            <input type="text" name="valorAprovado" id='valor' class="form-control" value="<?php echo dinheiroParaBr($projeto['valorAprovado']) ?>">
+                                        <div class="col-md-offset-2 col-md-4"><label>Valor Aprovado *</label><br/>
+                                            <input type="text" name="valorAprovado" id='valor' required class="form-control" value="<?php echo dinheiroParaBr($projeto['valorAprovado']) ?>">
                                         </div>
-                                        <div class="col-md-4"><label>Valor da Renúncia</label><br/>
-                                            <select class="form-control" name="idRenunciaFiscal">
-                                            <?php echo geraOpcao("renuncia_fiscal",$projeto['idRenunciaFiscal']) ?>
+                                        <div class="col-md-4"><label>Valor da Renúncia *</label><br/>
+                                            <select class="form-control" name="idRenunciaFiscal" required>
+                                            	<option value="">Selecione...</option>
+                                            	<?php echo geraOpcao("renuncia_fiscal",$projeto['idRenunciaFiscal']) ?>
                                             </select>
                                         </div>
                                      </div>
                                      <div class="form-group">
-                                        <div class="col-md-offset-2 col-md-4"><label>Assinatura do Termo de Responsabilidade</label>
+                                        <div class="col-md-offset-2 col-md-4"><label>Data da reunião *</label>
                                             <input type="text" name="dataReuniao" id='datepicker01' class="form-control" placeholder="DD/MM/AA" required value="<?php echo exibirDataBr($projeto['dataReuniao']) ?>">
                                         </div>
-                                        <div class="col-md-4"><label>Status do Parecerista</label><br/>
-                                            <select class="form-control" name="idStatusParecerista">
-            									<option value="0"></option>
-                                            <?php echo geraOpcao("status_parecerista",$projeto['idStatusParecerista']) ?>
+                                        <div class="col-md-4"><label>Status do Parecerista *</label><br/>
+                                            <select class="form-control" name="idStatusParecerista" required>
+                                            	<option value="">Selecione...</option>
+                                            	<?php echo geraOpcao("status_parecerista",$projeto['idStatusParecerista']) ?>
                                             </select>
                                         </div>
                                         <div class="col-md-offset-2 col-md-8"><label><br/></label>

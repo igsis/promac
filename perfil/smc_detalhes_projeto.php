@@ -73,8 +73,9 @@ if(isset($_POST['gravarAdm']))
     $idStatus = $_POST['idStatus'];
     $valorAprovado = dinheiroDeBr($_POST['valorAprovado']);
     $idRenunciaFiscal = $_POST['idRenunciaFiscal'];
+    $dataReuniao = exibirDataMysql($_POST['dataReuniao']);
     $statusParecerista = $_POST['idStatusParecerista'];
-    $sql_gravarAdm = "UPDATE projeto SET idStatus = '$idStatus', valorAprovado = '$valorAprovado', idRenunciaFiscal = '$idRenunciaFiscal', idStatusParecerista = '$statusParecerista' WHERE idProjeto = '$idP' ";
+    $sql_gravarAdm = "UPDATE projeto SET idStatus = '$idStatus', valorAprovado = '$valorAprovado', idRenunciaFiscal = '$idRenunciaFiscal', dataReuniao = '$dataReuniao', idStatusParecerista = '$statusParecerista' WHERE idProjeto = '$idP' ";
     if(mysqli_query($con,$sql_gravarAdm))
     {
         $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
@@ -362,7 +363,10 @@ $comissao = recuperaDados("pessoa_fisica","idPf",$projeto['idComissao']);
                                 </div>
 
                                 <div class="form-group">
-                                    <div class="col-md-offset-2 col-md-8"><label>Status do Parecerista</label><br/>
+                                    <div class="col-md-offset-2 col-md-6"><label>Data da reunião</label>
+                                            <input type="text" name="dataReuniao" id='datepicker01' class="form-control" placeholder="DD/MM/AA" required value="<?php echo exibirDataBr($projeto['dataReuniao']) ?>">
+                                        </div>
+                                    <div class="col-md-6"><label>Status do Parecerista</label><br/>
                                         <select class="form-control" name="idStatusParecerista">
                                                 <option value="0"></option>
                                             <?php echo geraOpcao("status_parecerista",$projeto['idStatusParecerista']) ?>
