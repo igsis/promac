@@ -344,7 +344,7 @@ class PDF extends FPDF
       $pdf->SetFont('Arial','B', 11);
       $pdf->Cell(20,$l,utf8_decode("Endereço:"),0,0,'L');
       $pdf->SetFont('Arial','', 11);
-      $pdf->MultiCell(180,$l,utf8_decode($EnderecoPJ.", ".$numeroPJ." ".$complementoPJ." - ".$bairroPJ." - ".$CidadePJ." - ".$estadoPJ));
+      $pdf->MultiCell(180,$l,utf8_decode($logradouroPJ.", ".$numeroPJ." ".$complementoPJ." - ".$bairroPJ." - ".$cidadePJ." - ".$estadoPJ));
 
       $pdf->SetX($x);
       $pdf->SetFont('Arial','B', 11);
