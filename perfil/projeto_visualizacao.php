@@ -52,7 +52,7 @@ $status = recuperaDados("status","idStatus",$projeto['idStatus']);
                                                     </li>
                                                     <li class='list-group-item'><strong>Status:</strong>
                                                         <?php
-												if($status['status'] == 7)
+												if($projeto['idStatus'] == 3 OR $projeto['idStatus'] == 10 OR $projeto['idStatus'] == 11 OR $projeto['idStatus'] == 13)
 												{
 													echo "Projeto em análise";
 												}
@@ -65,7 +65,7 @@ $status = recuperaDados("status","idStatus",$projeto['idStatus']);
                                                     <li class='list-group-item'>
                                                         <strong>Valor Aprovado:</strong>
                                                         <?php
-													if($status['status'] == 5)
+													if($projeto['idStatus'] == 5)
 													{
 														echo "R$ ".dinheiroParaBr($projeto['valorAprovado']);
 													}

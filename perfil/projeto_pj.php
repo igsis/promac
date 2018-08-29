@@ -88,8 +88,6 @@ if(isset($_POST['apagar']))
 										<tr class='list_menu'>
 											<td>Nome do Projeto</td>
 											<td>Área de Atuação</td>
-											<td>Status</td>
-											<td width='10%'></td>
 											<td width='10%'></td>
 										</tr>
 									</thead>
@@ -108,7 +106,6 @@ if(isset($_POST['apagar']))
 										switch($campo['idStatus'])
 										{
 											case 1:
-												echo "<td class='list_description'> ".$rowStatus['status']."</td>";
 												echo "
 											<td class='list_description'>
 												<form method='POST' action='?perfil=projeto_edicao'>
@@ -126,7 +123,6 @@ if(isset($_POST['apagar']))
 											</td>";
 												break;
 											case 2:
-												echo "<td class='list_description'>".$rowStatus['status']." </td>";
 												echo "
 											<td class='list_description'>
 												<form method='POST' action='?perfil=projeto_visualizacao'>
@@ -136,7 +132,6 @@ if(isset($_POST['apagar']))
 											</td>";
 												break;
 											case 3:
-												echo "<td class='list_description'> ".$rowStatus['status']." </td>";
 												echo "
 											<td class='list_description'>
 												<form method='POST' action='?perfil=projeto_visualizacao'>
@@ -146,7 +141,6 @@ if(isset($_POST['apagar']))
 											</td>";
 												break;
 											case 4:
-												echo "<td class='list_description'> ".$rowStatus['status']." </td>";
 												echo "
 											<td class='list_description'>
 												<form method='POST' action='?perfil=projeto_edicao'>
@@ -156,7 +150,6 @@ if(isset($_POST['apagar']))
 											</td>";
 												break;
 											case 5:
-												echo "<td class='list_description'> ".$rowStatus['status']." </td>";
 												echo "
 											<td class='list_description'>
 												<form method='POST' action='?perfil=projeto_visualizacao'>
@@ -166,7 +159,6 @@ if(isset($_POST['apagar']))
 											</td>";
 											break;
 											case 6:
-												echo "<td class='list_description'> <a href='?perfil=informacoes_administrativas'>".$rowStatus['status']." </a></td>";
 												echo "
 											<td class='list_description'>
 												<form method='POST' action='?perfil=projeto_edicao'>
@@ -185,7 +177,6 @@ if(isset($_POST['apagar']))
 											break;
 											//projeto reaberto para edição
 											case 9:
-												echo "<td class='list_description'> ".$rowStatus['status']."</td>";
 												echo "
 											<td class='list_description'>
 												<form method='POST' action='?perfil=projeto_edicao'>
@@ -196,7 +187,6 @@ if(isset($_POST['apagar']))
 											break;
 											//projeto com certificados anexados
 											case 11: 
-												echo "<td class='list_description'>".$rowStatus['status']." </td>";
 													echo "
 												<td class='list_description'>
 													<form method='POST' action='?perfil=projeto_visualizacao'>
@@ -207,7 +197,6 @@ if(isset($_POST['apagar']))
 											break;
 											//projeto com complemento de informações pendente
 											case 12: 
-												echo "<td class='list_description'>".$rowStatus['status']." </td>";
 													echo "
 												<td class='list_description'>
 													<form method='POST' action='?perfil=projeto_visualizacao'>
@@ -218,7 +207,6 @@ if(isset($_POST['apagar']))
 												break;
 											//projeto com complemento de informações anexadas
 											case 13: 
-											echo "<td class='list_description'>".$rowStatus['status']." </td>";
 												echo "
 											<td class='list_description'>
 												<form method='POST' action='?perfil=projeto_visualizacao'>
