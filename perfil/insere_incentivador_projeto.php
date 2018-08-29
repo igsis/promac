@@ -188,6 +188,13 @@ if(isset($_POST['verificaEInsereIncentivador'])){
                                 </form>
                             </div>
                         </div>
+
+                        <div class="col-md-offset-2 col-md-8" style="margin-top: 5px">
+                             <form method="POST" action="?perfil=smc_detalhes_projeto&idFF=<?=$idProjeto?>">
+                                 <input type='submit' class='btn btn-theme btn-block' value='voltar'>
+                             </form>
+                        </div>
+
                     </div>
                 </div>
             </div>
