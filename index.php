@@ -92,8 +92,8 @@ $tipoPessoa = '6';
 									</div>
 									<div class="modal-body" align="left">
 										<div class="well">
-											<h6>Lei / Decreto / Portarias</h6>
-											<ul class="list-group">
+                                            <h6>Lei / Decreto / Portarias</h6>
+                                            <ul class="list-group">
 												<li class="list-group-item"><a href="pdf/Lei_ProMac.pdf" target="_blank">Lei</a></li>
 												<li class="list-group-item"><a href="pdf/Decreto_ProMac.pdf" target="_blank">Decreto</a></li>
 												<li class="list-group-item"><a href="pdf/AlteracaoDecreto_ProMac.pdf" target="_blank">Alteração de Decreto</a></li>
@@ -101,8 +101,16 @@ $tipoPessoa = '6';
 												<li class="list-group-item"><a href="pdf/Portaria_SF_procedimentos_contabeis_incentivador.pdf">Portaria de Procedimentos Contábeis – Incentivador</a></li>
 												<li class="list-group-item"><a href="pdf/Portaria_SMC_prestacao_contas.pdf">Portarias de prestação de contas</a></li>
 											</ul>
-										</div>
-										<div class="well">
+                                        </div>
+                                        <div class="well">
+                                            <h6>Modelos de Documentos</h6>
+                                            <ul class="list-group">
+                                                <li class="list-group-item"><a href="pdf/1. TERMO DE RESPONSABILIDADE DE REALIZAÇÃO DE PROJETO CULTURAL FINAL.docx" target="_blank">Termo de Responsabilidade de Realização de Projeto Cultural</a></li>
+                                                <li class="list-group-item"><a href="pdf/CARTA DE INTENCAO DE INCENTIVO.docx" target="_blank">Carta de Intenção de Incentivo</a></li>
+                                                <li class="list-group-item"><a href="pdf/Certificado_Incentivo.docx" target="_blank">Certificado de Incentivo</a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="well">
 											<h6>Manuais</h6>
 											<ul class="list-group">
 												<li class="list-group-item"><a href="pdf/manual_utilizacao.pdf" target="_blank">Manual de utilização do sistema</a></li>
