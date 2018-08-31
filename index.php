@@ -116,6 +116,7 @@ $tipoPessoa = '6';
 												<li class="list-group-item"><a href="pdf/manual_utilizacao.pdf" target="_blank">Manual de utilização do sistema</a></li>
 												<li class="list-group-item"><a href="pdf/identidade_visual.zip">Manual de uso da marca</a></li>
 												<li class="list-group-item"><a href="#">Manual de prestação de contas</a></li>
+												<li class="list-group-item"><a href="pdf/manual_incentivador.pdf">Manual do Incentivador</a></li>
 											</ul>
 										</div>
 
