@@ -73,10 +73,10 @@ if(isset($_POST['gravarAdm']))
     $idStatus = $_POST['idStatus'];
     $valorAprovado = dinheiroDeBr($_POST['valorAprovado']);
     $idRenunciaFiscal = $_POST['idRenunciaFiscal'];
-    $dataReuniao = exibirDataMysql($_POST['dataReuniao']);
     $statusParecerista = $_POST['idStatusParecerista'];
-    $sql_gravarAdm = "UPDATE projeto SET idStatus = '$idStatus', valorAprovado = '$valorAprovado', idRenunciaFiscal = '$idRenunciaFiscal', dataReuniao = '$dataReuniao', idStatusParecerista = '$statusParecerista' WHERE idProjeto = '$idP' ";
+    $sql_gravarAdm = "UPDATE projeto SET idStatus = '$idStatus', valorAprovado = '$valorAprovado', idRenunciaFiscal = '$idRenunciaFiscal', idStatusParecerista = '$statusParecerista' WHERE idProjeto = '$idP' ";
     if(mysqli_query($con,$sql_gravarAdm))
+
     {
         $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
         echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
@@ -87,6 +87,26 @@ if(isset($_POST['gravarAdm']))
         $mensagem = "<font color='#FF0000'><strong>Erro ao atualizar! Tente novamente.</strong></font>";
     }
 }
+
+if(isset($_POST['dataReuniao']))
+{
+    $idP = $_POST['IDP'];
+    $dataReuniao = exibirDataMysql($_POST['dataReuniao']);
+    $sql_dataReuniao = "INSERT INTO data_reuniao (idProjeto, dataReuniao) VALUES ('$idP', '$dataReuniao')";
+    $sql_dataReuniaoAtualizar = "UPDATE projeto SET dataReuniao = '$dataReuniao' WHERE idProjeto = '$idP' ";
+    if(mysqli_query($con,$sql_dataReuniao))
+    if(mysqli_query($con,$sql_dataReuniaoAtualizar))
+    {
+        $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
+        echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
+        gravarLog($sql_dataReuniaoAtualizar);
+    }
+    else
+    {
+        $mensagem = "<font color='#FF0000'><strong>Erro ao atualizar! Tente novamente.</strong></font>";
+    }
+}
+
 
 if(isset($_POST['removerIncentivador'])){
     $idP = $_POST['IDP'];
@@ -158,12 +178,16 @@ if(isset($_POST['envioComissao']))
 {
     $idP = $_POST['IDP'];
     $dateNow = date('Y:m:d h:i:s');
-    $sql_envioComissao = "UPDATE projeto SET idStatus = '7', envioComissao = '$dateNow' WHERE idProjeto = '$idP' ";
+    $sql_envioComissaoAtualiza = "UPDATE projeto SET idStatus = '7', envioComissao = '$dateNow' WHERE idProjeto = '$idP' ";
+    $sql_envioComissao = "INSERT INTO envio_comissao (idProjeto, data) VALUES ('$idP', '$dateNow')";    
+
     if(mysqli_query($con,$sql_envioComissao))
+    if(mysqli_query($con,$sql_envioComissaoAtualiza))
     {
         $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
         echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
         gravarLog($sql_envioComissao);
+        gravarLog($sql_envioComissaoAtualiza);
     }
     else
     {
@@ -264,6 +288,7 @@ $renuncia = recuperaDados("renuncia_fiscal","idRenuncia",$projeto['idRenunciaFis
 $cronograma = recuperaDados("cronograma","idCronograma",$projeto['idCronograma']);
 $video = recuperaDados("projeto","idProjeto",$idProjeto);
 $v = array($video['video1'], $video['video2'], $video['video3']);
+$data_reuniao = recuperaDados("data_reuniao", "idProjeto", $idProjeto);
 
 $comissao = recuperaDados("pessoa_fisica","idPf",$projeto['idComissao']);
 ?>
@@ -289,6 +314,7 @@ $comissao = recuperaDados("pessoa_fisica","idPf",$projeto['idComissao']);
                         <li class="nav"><a href="#prazo" data-toggle="tab">Prazos</a></li>
                         <li class="nav"><a href="#financeiro" data-toggle="tab">Financeiro</a></li>
                         <li class="nav"><a href="#pagamentos" data-toggle="tab">Pagamentos</a></li>
+                        <li class="nav"><a href="#historico" data-toggle="tab">Histórico</a></li>
                     </ul>
                     <div class="tab-content">
                         <!-- LABEL ADMINISTRATIVO-->
@@ -347,25 +373,22 @@ $comissao = recuperaDados("pessoa_fisica","idPf",$projeto['idComissao']);
 
                             <form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
                                 <div class="form-group">
-                                    <div class="col-md-offset-2 col-md-3"><label>Status do Projeto</label><br/>
+                                    <div class="col-md-offset-2 col-md-4"><label>Status do Projeto</label><br/>
                                         <select class="form-control" name="idStatus">
                                         <?php echo geraOpcao("status",$projeto['idStatus']) ?>
                                     </select>
                                     </div>
-                                    <div class="col-md-3"><label>Valor Aprovado</label><br/>
+                                    <div class="col-md-4"><label>Valor Aprovado</label><br/>
                                         <input type="text" name="valorAprovado" id='valor' class="form-control" value="<?php echo dinheiroParaBr($projeto['valorAprovado']) ?>">
-                                    </div>                                    
-                                    <div class="col-md-2"><label>Valor Renúncia</label><br/>
+                                    </div>                                  
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-4"><label>Valor Renúncia</label><br/>
                                         <select class="form-control" name="idRenunciaFiscal">
                                             <?php echo geraOpcao("renuncia_fiscal",$projeto['idRenunciaFiscal']) ?>
                                         </select>
                                     </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="col-md-offset-2 col-md-6"><label>Data da reunião</label>
-                                            <input type="text" name="dataReuniao" id='datepicker01' class="form-control" placeholder="DD/MM/AA" required value="<?php echo exibirDataBr($projeto['dataReuniao']) ?>">
-                                        </div>
                                     <div class="col-md-6"><label>Status do Parecerista</label><br/>
                                         <select class="form-control" name="idStatusParecerista">
                                                 <option value="0"></option>
@@ -383,6 +406,23 @@ $comissao = recuperaDados("pessoa_fisica","idPf",$projeto['idComissao']);
                             </form>
                             <form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
                                 <div class="form-group">
+                                   <div class="col-md-offset-2 col-md-8"><label>Data da Reunião</label>
+                                        <input type="text" name="dataReuniao" id='datepicker08' class="form-control" placeholder="DD/MM/AA ou MM/AAAA" required value="<?php echo exibirDataBr($projeto['dataReuniao']) ?>">
+                                    </div>
+                                </div>    
+
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-8">
+                                        <?php echo "<input type='hidden' name='IDP' value='$idProjeto'>"; ?>
+                                        <input type="submit" name="data" class="btn btn-theme btn-md btn-block" value="Gravar">
+                                    </div>
+                                </div>
+
+                                <br/>            
+                            </form>
+
+                            <form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
+                                <div class="form-group">
                                     <div class="col-md-offset-2 col-md-8"><label>Notas</label><br/>
                                         <textarea name="nota" class="form-control" rows="10" placeholder="Insira neste campo informações de notificações para o usuário."></textarea>
                                     </div>
@@ -396,7 +436,7 @@ $comissao = recuperaDados("pessoa_fisica","idPf",$projeto['idComissao']);
                                 </div>
                             </form>
                             <ul class='list-group'>
-                                <li class='list-group-item list-group-item-success'>Notas
+                                <li class='list-group-item list-group-item-success'>Notas</li>
                                     <?php
                                 $sql = "SELECT * FROM notas WHERE idProjeto = '$idProjeto'";
                                 $query = mysqli_query($con,$sql);
@@ -1233,8 +1273,8 @@ $comissao = recuperaDados("pessoa_fisica","idPf",$projeto['idComissao']);
                                     <?php } ?>
                         </div>
 
-                        <!-- LABEL FINANCEIRO -->
-                        <div role="tabpanel" class="tab-pane fade" id="financeiro">
+                        <!-- LABEL HISTÓRICO -->
+                        <div role="tabpanel" class="tab-pane fade" id="historico">
                             <form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
                                 <h5>
                                     <?php if(isset($mensagem)){echo $mensagem;}; ?>
@@ -1243,71 +1283,117 @@ $comissao = recuperaDados("pessoa_fisica","idPf",$projeto['idComissao']);
                                     <div class="col-md-offset-2 col-md-8"><br/></div>
                                 </div>
 
+                                <ul class='list-group'>
+                                    <li class='list-group-item list-group-item-success'>Histórico de Reuniões</li>
+                                   <?php
+                                        $sql_data_reuniao = "SELECT * FROM `data_reuniao` WHERE idProjeto = '$idProjeto' ORDER BY dataReuniao DESC";
+                                         $query_data_reuniao = mysqli_query($con,$sql_data_reuniao);
+                                         $num = mysqli_num_rows($query_data_reuniao);
+
+                                    if($num > 0)
+                                    {
+                                    ?>                          
+                                        <table class='table table-condensed'>
+                                            <?php                                   
+                                            while($dataReuniao = mysqli_fetch_array($query_data_reuniao))
+                                            {                                   
+                                            ?>  
+                                                    <tr>
+                                                        <td><?php  echo exibirDataHoraBr($dataReuniao['dataReuniao']); ?></td>
+                                                    </tr>
+                                            <?php
+                                            }
+                                            ?>
+                                        </table>
+                                    <?php
+                                    }
+                                    else
+                                    {
+                                        echo "<li class='list-group-item'>Não há registros disponíveis.</li>";
+                                    }   
+                                    ?>
+                                    </li>
+                                </ul> 
+
+                                <ul class='list-group'>
+                                    <li class='list-group-item list-group-item-success'>Histórico de envios para a Comissão</li>
+                                   <?php
+                                        $sql_envio_comissao = "SELECT * FROM `envio_comissao` WHERE idProjeto = '$idProjeto' ORDER BY data DESC";
+                                         $query_envio_comissao = mysqli_query($con,$sql_envio_comissao); 
+                                         $num = mysqli_num_rows($query_envio_comissao);
+
+                                    if($num > 0)
+                                    {
+                                    ?>                          
+                                        <table class='table table-condensed'>
+                                            <?php                                   
+                                            while($envioComissao = mysqli_fetch_array($query_envio_comissao))
+                                            {                                   
+                                            ?>  
+                                                    <tr>
+                                                        <td><?php  echo exibirDataHoraBr($envioComissao['data']); ?></td>
+                                                    </tr>
+                                            <?php
+                                            }
+                                            ?>
+                                        </table>
+                                    <?php
+                                    }
+                                    else
+                                    {
+                                        echo "<li class='list-group-item'>Não há registros disponíveis.</li>";
+                                    }   
+                                    ?>
+                                    </li>
+                                </ul> 
+
+
+                                <ul class='list-group'>
+                                    <li class='list-group-item list-group-item-success'>Histórico de finalização da Comissão e envio à SMC</li>
+                                   <?php
+                                        $sql_finalizacao_comissao = "SELECT * FROM `finalizacao_comissao` WHERE idProjeto = '$idProjeto' ORDER BY data DESC";
+                                         $query_finalizacao_comissao = mysqli_query($con,$sql_finalizacao_comissao); 
+                                         $num = mysqli_num_rows($query_finalizacao_comissao);
+
+                                    if($num > 0)
+                                    {
+                                    ?>                          
+                                        <table class='table table-condensed'>
+                                            <?php                                   
+                                            while($finalizacaoComissao = mysqli_fetch_array($query_finalizacao_comissao))
+                                            {                                   
+                                            ?>  
+                                                    <tr>
+                                                        <td><?php  echo exibirDataHoraBr($finalizacaoComissao['data']); ?></td>
+                                                    </tr>
+                                            <?php
+                                            }
+                                            ?>
+                                        </table>
+                                    <?php
+                                    }
+                                    else
+                                    {
+                                        echo "<li class='list-group-item'>Não há registros disponíveis.</li>";
+                                    }   
+                                    ?>
+                                    </li>
+                                </ul> 
+                        </div>
+
+                                                <!-- LABEL PAGAMENTOS -->
+                        <div role="tabpanel" class="tab-pane fade" id="pagamentos">
+                            <form method="POST" action="?perfil=cadastro_reserva&idProjeto=<?=$idProjeto?>" class="form-horizontal" role="form">
+                                <h5>
+                                    <?php if(isset($mensagem)){echo $mensagem;}; ?>
+                                </h5>
                                 <div class="form-group">
-                                    <div class="col-md-offset-2 col-md-6"><label>Valor Aprovado</label><br/>
-                                        <input type="text" name="valorAprovado" id='valor' class="form-control" value="<?php echo dinheiroParaBr($projeto['valorAprovado']) ?>">
-                                    </div>
-
-                                    <div class="col-md-6"><label>Valor da Renúncia</label><br/>
-                                        <select class="form-control" name="idRenunciaFiscal">
-                                        <?php echo geraOpcao("renuncia_fiscal",$projeto['idRenunciaFiscal']) ?>
-                                    </select>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="col-md-offset-2 col-md-6"><label>Nº do Processo no SEI</label><br/>
-                                        <input type="text" name="processoSei" class="form-control" value="<?php echo $projeto['processoSei'] ?>">
-                                    </div>
-
-                                    <div class="col-md-6"><label>Assinatura do Termo de Responsabilidade</label>
-                                        <input type="text" name="assinaturaTermo" id='datepicker07' class="form-control" placeholder="DD/MM/AA ou MM/AAAA" required value="<?php echo exibirDataBr($projeto['assinaturaTermo']) ?>">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="col-md-offset-2 col-md-8"><label>Observações</label><br/>
-                                        <input type="text" name="observacoes" class="form-control" value="<?php echo $projeto['observacoes'] ?>">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="col-md-offset-2 col-md-2"><label>Agência BB Nº</label><br/>
-                                        <input type="text" name="agencia" class="form-control" value="<?php echo $projeto['agencia'] ?>">
-                                    </div>
-
-                                    <div class="col-md-3"><label>Nº da Conta de Captação</label><br/>
-                                        <input type="text" name="contaCaptacao" class="form-control" value="<?php echo $projeto['contaCaptacao'] ?>">
-                                    </div>
-
-                                    <div class="col-md-3"><label>Nº da Conta de Movimentação</label><br/>
-                                        <input type="text" name="contaMovimentacao" class="form-control" value="<?php echo $projeto['contaMovimentacao'] ?>">
-                                    </div>
-                                </div>
-
-
-                                <div class="form-group">
-                                    <div class="form-group">
-                                        <div class="col-md-offset-2 col-md-8">
-                                            <?php echo "<input type='hidden' name='IDP' value='$idProjeto'>"; ?>
-                                            <input type="submit" name="gravarFin" class="btn btn-theme btn-md btn-block" value="Gravar">
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-
-                            <div class="form-group">
-                                <div class="col-md-offset-2 col-md-8"><br/></div>
-                            </div>
-
-                            <form method="POST" action="?perfil=insere_incentivador_projeto&idProjeto=<?=$idProjeto?>" class="form-horizontal" role="form">
-                                <div class="form-group">
-                                    <h4>Incentivadores do Projeto</h4>
+                                    <h4>Reservas</h4>
                                 </div>
 
                                 <div class="form-group">
                                     <div class="col-md-offset-2 col-md-8">
-                                        <input type="submit" name="insereIncentivador" class="btn btn-theme btn-md btn-block" value="INSERIR INCENTIVADOR">
+                                        <input type="submit" class="btn btn-theme btn-md btn-block" value="INSERIR RESERVA">
                                     </div>
                                 </div>
 
@@ -1319,7 +1405,7 @@ $comissao = recuperaDados("pessoa_fisica","idPf",$projeto['idComissao']);
                             </form>
 
                             <?php
-                        $sql = "SELECT * FROM incentivador_projeto WHERE idProjeto = '$idProjeto' AND publicado = '1'";
+                        $sql = "SELECT * FROM reserva WHERE idProjeto = '$idProjeto'";
                         $query = mysqli_query($con, $sql);
                         $num = mysqli_num_rows($query);
                         if($num > 0) { ?>
@@ -1327,75 +1413,57 @@ $comissao = recuperaDados("pessoa_fisica","idPf",$projeto['idComissao']);
                                     <table class='table table-condensed'>
                                         <thead>
                                             <tr class='list_menu'>
-                                                <td>Incentivador</td>
-                                                <td>Documento</td>
+                                                <td>Data</td>
+                                                <td>Valor</td>
+                                                <td>Número da Reserva</td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php while ($linha = mysqli_fetch_array($query)) {
-                                        if($linha['tipoPessoa'] == 4)
-                                        {
-                                            $incentivadorPF = "incentivador_pessoa_fisica";
-                                            $pf = recuperaDados($incentivadorPF, 'idPf', $linha['idIncentivador']);
-                                            $incentivadorProjeto = $linha['idIncentivadorProjeto'];
-                                        }
-                                        else
-                                        {
-                                            $incentivadorPJ = "incentivador_pessoa_juridica";
-                                            $pj = recuperaDados($incentivadorPJ, 'idPj', $linha['idIncentivador']);
-                                            $incentivadorProjeto = $linha['idIncentivadorProjeto'];
-                                        }
+                                            <?php while ($reserva = mysqli_fetch_array($query)) {
                                         ?>
                                             <tr>
-                                                <td class="list_description">
-                                                    <?=($linha['tipoPessoa'] == 4 ? $pf['nome'] : $pj['razaoSocial'])?>
-                                                </td>
-                                                <td class="list_description">
-                                                    <?=($linha['tipoPessoa'] == 4 ? $pf['cpf'] : $pj['cnpj'])?>
+                                                <td>
+                                                    <?php echo exibirDataBr($reserva['data']) ?>
                                                 </td>
                                                 <td>
-                                                    <form method='POST' action='?perfil=smc_detalhes_projeto&idFF=<?=$idP?>'>
-                                                        <?php echo "<input type='hidden' name='IIP' value='".$linha['idIncentivadorProjeto']."'>";
-                                                        echo "<input type='hidden' name='IDP' value='$idProjeto'>"; ?>
-                                                        <input type="hidden" name="removerIncentivador" value="<?php $linha['idIncentivadorProjeto']; ?>">
-                                                        <button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-message="<?=$linha['tipoPessoa'] == 4 ? $pf['nome'] : $pj['razaoSocial']?>">Remover</button>
+                                                    <?php echo dinheiroParabr($reserva['valor']); ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $reserva['numeroReserva']; ?>
+                                                </td>
+                                                <td class="list_description">
+                                                    <form method="POST" action="?perfil=edicao_reserva&idReserva=<?=$reserva['idReserva']?>">
+                                                        <input type="hidden" name="idReserva" value="'.$linha['idReserva'].'" />
+                                                        <input type="submit" class="btn btn-theme btn-block" value="editar">
+                                                    </form>
+                                                </td>
+                                                <td class='list_description'>
+                                                    <form method="POST" action="?perfil=empenho&idReserva=<?=$reserva['idReserva']?>">
+                                                        <input type='hidden' name='' value='".$campo[' ']."' />
+                                                        <input type='submit' class='btn btn-theme btn-block' value='empenhos'>
+                                                    </form>
+                                                </td>
+                                                <td class='list_description'>
+                                                    <form method='POST' action="?perfil=deposito&idReserva=<?=$reserva['idReserva']?>&idProjeto=<?=$reserva['idProjeto']?>">
+                                                        <input type='hidden' name='' value='".$campo[' ']."' />
+                                                        <input type='submit' class='btn btn-theme btn-block' value='depósitos'>
                                                     </form>
                                                 </td>
                                             </tr>
-
-                                            <div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                            <h4 class="modal-title">Deseja remover o icentivador do projeto?</h4>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <p>a</p>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                                                            <button type="button" class="btn btn-danger" id="confirm">Remover</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
                                             <?php } ?>
                                         </tbody>
                                     </table>
                                 </div>
-
-
-
-
                                 <?php
                         }
                         else {?>
-                                    <h4>Não existem incentivadores para este projeto</h4>
+                                    <h4>Não existem reservas cadastradas!</h4>
                                     <?php } ?>
                         </div>
+
                     </div>
                 </div>
             </div>
