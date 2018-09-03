@@ -120,12 +120,15 @@ if(isset($_POST['finalizaComissao']))
 {
 	$idP = $_POST['IDP'];
 	$dateNow = date('Y:m:d h:i:s');
-	$sql_finalizaComissao = "UPDATE projeto SET idStatus = '10', finalizacaoComissao = '$dateNow' WHERE idProjeto = '$idP' ";
+    $sql_finalizaComissao = "INSERT INTO finalizacao_comissao (idProjeto, data) VALUES ('$idP', '$dateNow')";
+	$sql_finalizaComissaoAtualiza = "UPDATE projeto SET idStatus = '10', finalizacaoComissao = '$dateNow' WHERE idProjeto = '$idP' ";
 	if(mysqli_query($con,$sql_finalizaComissao))
+	if(mysqli_query($con,$sql_finalizaComissaoAtualiza))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Finalizado com sucesso!</strong></font>";
 		echo "<script>window.location = '?perfil=comissao_detalhes_projeto&idFF=$idP';</script>";
 		gravarLog($sql_finalizaComissao);
+		gravarLog($sql_finalizaComissaoAtualiza);
 	}
 	else
 	{
@@ -476,7 +479,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                 </form>
                                 <ul class='list-group'>
                                     <li class='list-group-item list-group-item-success'>Notas
-                                        <?php
+                                    <?php
 									$sql = "SELECT * FROM notas WHERE idProjeto = '$idProjeto'";
 									$query = mysqli_query($con,$sql);
 									$num = mysqli_num_rows($query);
@@ -491,7 +494,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 									{
 										echo "<li class='list-group-item'>Não há notas disponíveis.</li>";
 									}
-								?>
+									?>
                                     </li>
                                 </ul>
                             </div>
