@@ -794,6 +794,12 @@ $comissao = recuperaDados("pessoa_fisica","idPf",$projeto['idComissao']);
                                     <?php exibirComplemento(3,$projeto['idProjeto']); ?>
                                 </li>
                             </ul>
+                            <ul class="list-group">
+                                <li class="list-group-item list-group-item-success"><b>Solicitação de Alteração</b></li>
+                                <li class="list-group-item">
+                                    <?php exibirComplemento(3,$projeto['idProjeto']); ?>
+                                </li>
+                            </ul>
                         </div>
 
                         <!-- LABEL PESSOA JURÍDICA -->
