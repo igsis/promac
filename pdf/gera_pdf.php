@@ -1,5 +1,4 @@
 <?php
-
 // INSTALAÇÃO DA CLASSE NA PASTA FPDF.
 require_once("../include/lib/fpdf/fpdf.php");
 require_once("../funcoes/funcoesConecta.php");
@@ -16,34 +15,6 @@ session_start();
 
 class PDF extends FPDF
 {
-
-    // Simple table
-    function BasicTable($header, $data)
-    {
-        // Header
-        foreach($header as $col)
-            $this->Cell(40,7,$col,1);
-        $this->Ln();
-        // Data
-        foreach($data as $row)
-        {
-            foreach($row as $col)
-                $this->Cell(40,6,$col,1);
-            $this->Ln();
-        }
-    }
-
-    // Simple table
-    function Cabecalho($header, $data)
-    {
-        // Header
-        foreach($header as $col)
-            $this->Cell(40,7,$col,1);
-        $this->Ln();
-        // Data
-
-    }
-
     // Simple table
     function Tabela($header, $data)
     {
@@ -52,15 +23,12 @@ class PDF extends FPDF
             $this->Cell(40,7,$col,1);
         $this->Ln();
         // Data
-
     }
-
-
 }
 
 $ano=date('Y');
 
-$queryProjeto = "SELECT * FROM projeto WHERE idProjeto = '$idProjeto'";
+$queryProjeto = "SELECT * FROM projeto WHERE idProjeto = '$idProjeto' AND publicado = 1";
 $enviaP = mysqli_query($con, $queryProjeto);
 /*
   Dados gerais do projeto.
@@ -102,6 +70,17 @@ while($row = mysqli_fetch_array($enviaP))
 }
 
 /*
+  Dados dos locais de realização.
+*/
+$queryLocal = "SELECT * FROM locais_realizacao AS LOC
+                LEFT JOIN zona ON LOC.idZona =  zona.idZona
+                LEFT JOIN subprefeitura ON LOC.idSubprefeitura = subprefeitura.idSubprefeitura
+                LEFT JOIN distrito ON LOC.idDistrito = distrito.idDistrito
+                WHERE idProjeto = '$idProjeto' AND publicado = 1";
+$enviaLocal = mysqli_query($con, $queryLocal);
+$rowLocal = mysqli_fetch_array($enviaLocal);
+
+/*
   Dados de renúncia fiscal.
 */
 $queryRen = "SELECT renunciaFiscal from renuncia_fiscal where idRenuncia = '$idRenunciaFiscal'";
@@ -134,56 +113,25 @@ $areaAtuacao = $rowArea['areaAtuacao'];
 /*
   Dados de orçamento.
 */
-$queryOrca = "SELECT * FROM orcamento WHERE idProjeto = '$idProjeto'";
+$queryOrca = "SELECT * FROM orcamento AS ORC
+              LEFT JOIN etapa ON ORC.idEtapa = etapa.idEtapa
+              LEFT JOIN unidade_medida ON ORC.idUnidadeMedida = unidade_medida.idUnidadeMedida
+              WHERE idProjeto = '$idProjeto' AND publicado = 1 ORDER BY idOrcamento ASC";
 $enviaOrca = mysqli_query($con, $queryOrca);
-$o_num = 0;
-while($rowOrca = mysqli_fetch_array($enviaOrca))
+$rowOrca = mysqli_fetch_array($enviaOrca);
+
+
+/*
+  Ficha técnica
+*/
+$queryFicha = "SELECT * FROM ficha_tecnica WHERE idProjeto = '$idProjeto' AND publicado = 1";
+$enviaFicha = mysqli_query($con,$queryFicha);
+while($rowFicha = mysqli_fetch_array($enviaFicha))
 {
-    $idEtapa = $rowOrca['idEtapa']; //search it
-    $descricao = $rowOrca['descricao'];
-    $quantidade = $rowOrca['quantidade'];
-    $unidadeMedida = $rowOrca['idUnidadeMedida']; // search it
-    $quantidadeUnidade = $rowOrca['quantidadeUnidade'];
-    $valorUnitario = $rowOrca['valorUnitario'];
-    $valorTotal = $rowOrca['valorTotal'];
-    $o_num ++;
+    $nomeFicha = $rowFicha['nome'];
+    $cpfFicha = $rowFicha['cpf'];
+    $funcaoFicha = $rowFicha['funcao'];
 }
-
-/*
-  Dados da etapa;
-*/
-$queryEtapa = "SELECT etapa FROM etapa WHERE idEtapa = '$idEtapa'";
-$enviaEtapa = mysqli_query($con, $queryEtapa);
-$rowEtapa = mysqli_fetch_array($enviaEtapa);
-$etapaStatus = $rowEtapa['etapa'];
-
-/*
-  Dados da unidade de medida.
-*/
-$queryUn = "SELECT unidadeMedida FROM unidade_medida WHERE idUnidadeMedida = '$unidadeMedida'";
-$enviaUn = mysqli_query($con, $queryUn);
-$rowUn = mysqli_fetch_array($enviaUn);
-$unidadeMedidaStatus = $rowUn['unidadeMedida'];
-
-/*
-  Dados dos locais de realização.
-*/
-$queryLocal = "SELECT * FROM locais_realizacao WHERE idProjeto = '$idProjeto'";
-$enviaLocal = mysqli_query($con, $queryLocal);
-while($rowLocal = mysqli_fetch_array($enviaLocal))
-{
-    $local = $rowLocal['local'];
-    $estimativa = $rowLocal['estimativaPublico'];
-    $idZona = $rowLocal['idZona']; //search it
-}
-
-/*
-  Dados da zona de localização.
-*/
-$queryZN = "SELECT zona FROM zona where idZona = '$idZona'";
-$enviaZN = mysqli_query($con, $queryZN);
-$rowZN = mysqli_fetch_array($enviaZN);
-$zona = $rowZN['zona'];
 
 /*
   Dados das notas.
@@ -367,7 +315,7 @@ else if($tipoPessoa == 2)
 
     $pdf->SetX($x);
     $pdf->SetFont('Arial','B', 14);
-    $pdf->Cell(180,5,utf8_decode("Representante legal"),0,1,'C');
+    $pdf->Cell(180,5,utf8_decode("Dados do representante legal"),0,1,'C');
 
     $pdf->Ln();
 
@@ -411,6 +359,9 @@ else if($tipoPessoa == 2)
 $pdf->Ln();
 $pdf->Ln();
 
+/*
+  DADOS DO PROJETO
+*/
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 14);
 $pdf->Cell(180,$l,utf8_decode("Dados do projeto"),0,1,'C');
@@ -421,36 +372,41 @@ $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 11);
 $pdf->Cell(21,$l,utf8_decode("Protocolo:"),0,0,'L');
 $pdf->SetFont('Arial','', 11);
-$pdf->Cell(60,$l,utf8_decode($protocoloP),0,1,'L');
+$pdf->Cell(60,$l,utf8_decode(substr($protocoloP, 0, 4).".".substr($protocoloP, 4, 2).".".substr($protocoloP, 6, 2).".".substr($protocoloP, -5)),0,1,'L');
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 11);
-$pdf->Cell(32,$l,utf8_decode("Área de atuação:"),0,1,'L');
-$pdf->SetX($x);
+$pdf->Cell(32,$l,utf8_decode("Área de atuação:"),0,0,'L');
 $pdf->SetFont('Arial','', 11);
-$pdf->MultiCell(170,$l,utf8_decode($areaAtuacao));
+$pdf->Cell(138,$l,utf8_decode($areaAtuacao),0,1,'L');
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 11);
-$pdf->Cell(32,$l,utf8_decode("Valor do projeto:"),0,0,'L');
+$pdf->Cell(42,$l,utf8_decode("Valor total do projeto:"),0,0,'L');
 $pdf->SetFont('Arial','', 11);
 $pdf->Cell(60,$l,utf8_decode("R$ ".dinheiroParabr($vProjeto)),0,1,'L');
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 11);
-$pdf->Cell(36,$l,utf8_decode("Valor do incentivo:"),0,0,'L');
+$pdf->Cell(78,$l,utf8_decode("Valor do Incentivo solicitado no Pro-Mac:"),0,0,'L');
 $pdf->SetFont('Arial','', 11);
 $pdf->Cell(60,$l,utf8_decode("R$ ".dinheiroParabr($vIncentivo)),0,1,'L');
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 11);
-$pdf->Cell(31,$l,utf8_decode("Renúncia fiscal:"),0,0,'L');
+$pdf->Cell(61,$l,utf8_decode("Valor de outros financiamentos:"),0,0,'L');
+$pdf->SetFont('Arial','', 11);
+$pdf->Cell(60,$l,utf8_decode("R$ ".dinheiroParabr($vFinanciamento)),0,1,'L');
+
+$pdf->SetX($x);
+$pdf->SetFont('Arial','B', 11);
+$pdf->Cell(66,$l,utf8_decode("Enquadramento da renúncia fiscal:"),0,0,'L');
 $pdf->SetFont('Arial','', 11);
 $pdf->Cell(60,$l,utf8_decode($renunciaFiscal),0,1,'L');
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 11);
-$pdf->Cell(31,$l,utf8_decode("Exposição da marca:"),0,1,'L');
+$pdf->Cell(31,$l,utf8_decode("Descrição da exposição da marca e indicação do valor do ingresso:"),0,1,'L');
 $pdf->SetX($x);
 $pdf->SetFont('Arial','', 11);
 $pdf->MultiCell(170,$l,utf8_decode($exposicaoMarca));
@@ -458,8 +414,8 @@ $pdf->MultiCell(170,$l,utf8_decode($exposicaoMarca));
 $pdf->Ln();
 
 $pdf->SetX($x);
-$pdf->SetFont('Arial','B', 11);
-$pdf->Cell(31,$l,utf8_decode("Resumo do projeto:"),0,1,'L');
+$pdf->SetFont('Arial','B', 12);
+$pdf->Cell(170,$l,utf8_decode("Resumo do projeto:"),'B',1,'L');
 $pdf->SetX($x);
 $pdf->SetFont('Arial','', 11);
 $pdf->MultiCell(170,$l,utf8_decode($resumoProjeto));
@@ -467,8 +423,8 @@ $pdf->MultiCell(170,$l,utf8_decode($resumoProjeto));
 $pdf->Ln();
 
 $pdf->SetX($x);
-$pdf->SetFont('Arial','B', 11);
-$pdf->Cell(21,$l,utf8_decode("Curriculo:"),0,1,'L');
+$pdf->SetFont('Arial','B', 12);
+$pdf->Cell(170,$l,utf8_decode("Curriculo:"),'B',1,'L');
 $pdf->SetX($x);
 $pdf->SetFont('Arial','', 11);
 $pdf->MultiCell(170,$l,utf8_decode($curriculo));
@@ -476,8 +432,8 @@ $pdf->MultiCell(170,$l,utf8_decode($curriculo));
 $pdf->Ln();
 
 $pdf->SetX($x);
-$pdf->SetFont('Arial','B', 11);
-$pdf->Cell(21,$l,utf8_decode("Descrição:"),0,1,'L');
+$pdf->SetFont('Arial','B', 12);
+$pdf->Cell(21,$l,utf8_decode("Descrição do objeto e atividades:"),0,1,'L');
 $pdf->SetX($x);
 $pdf->SetFont('Arial','', 11);
 $pdf->MultiCell(170,$l,utf8_decode($descricao));
@@ -485,8 +441,8 @@ $pdf->MultiCell(170,$l,utf8_decode($descricao));
 $pdf->Ln();
 
 $pdf->SetX($x);
-$pdf->SetFont('Arial','B', 11);
-$pdf->Cell(21,$l,utf8_decode("Justificativa:"),0,1,'L');
+$pdf->SetFont('Arial','B', 12);
+$pdf->Cell(21,$l,utf8_decode("Justificativa do projeto:"),0,1,'L');
 $pdf->SetX($x);
 $pdf->SetFont('Arial','', 11);
 $pdf->MultiCell(170,$l,utf8_decode($justificativa));
@@ -494,8 +450,8 @@ $pdf->MultiCell(170,$l,utf8_decode($justificativa));
 $pdf->Ln();
 
 $pdf->SetX($x);
-$pdf->SetFont('Arial','B', 11);
-$pdf->Cell(21,$l,utf8_decode("Objetivo:"),0,1,'L');
+$pdf->SetFont('Arial','B', 12);
+$pdf->Cell(21,$l,utf8_decode("Objetivos e metas:"),0,1,'L');
 $pdf->SetX($x);
 $pdf->SetFont('Arial','', 11);
 $pdf->MultiCell(170,$l,utf8_decode($objetivo));
@@ -503,8 +459,8 @@ $pdf->MultiCell(170,$l,utf8_decode($objetivo));
 $pdf->Ln();
 
 $pdf->SetX($x);
-$pdf->SetFont('Arial','B', 11);
-$pdf->Cell(21,$l,utf8_decode("Metodologia:"),0,1,'L');
+$pdf->SetFont('Arial','B', 12);
+$pdf->Cell(21,$l,utf8_decode("Metodologia e parâmetros a serem utilizados para aferição do cumprimento de metas:"),0,1,'L');
 $pdf->SetX($x);
 $pdf->SetFont('Arial','', 11);
 $pdf->MultiCell(170,$l,utf8_decode($metodologia));
@@ -512,8 +468,8 @@ $pdf->MultiCell(170,$l,utf8_decode($metodologia));
 $pdf->Ln();
 
 $pdf->SetX($x);
-$pdf->SetFont('Arial','B', 11);
-$pdf->Cell(21,$l,utf8_decode("Contrapartida:"),0,1,'L');
+$pdf->SetFont('Arial','B', 12);
+$pdf->Cell(21,$l,utf8_decode("Descrição da contrapartida:"),0,1,'L');
 $pdf->SetX($x);
 $pdf->SetFont('Arial','', 11);
 $pdf->MultiCell(170,$l,utf8_decode($contrapartida));
@@ -521,8 +477,47 @@ $pdf->MultiCell(170,$l,utf8_decode($contrapartida));
 $pdf->Ln();
 
 $pdf->SetX($x);
-$pdf->SetFont('Arial','B', 11);
-$pdf->Cell(21,$l,utf8_decode("Público alvo:"),0,1,'L');
+$pdf->SetFont('Arial','B', 12);
+$pdf->Cell(170,$l,utf8_decode("Locais:"),'B',1,'L');
+
+foreach ($enviaLocal as $loc)
+{
+    $pdf->SetX($x);
+    $pdf->SetFont('Arial','B', 11);
+    $pdf->Cell(13,$l,utf8_decode("Local:"),0,0,'L');
+    $pdf->SetFont('Arial','', 11);
+    $pdf->Cell(149,$l,utf8_decode($loc['local']),0,1,'L');
+
+    $pdf->SetX($x);
+    $pdf->SetFont('Arial','B', 11);
+    $pdf->Cell(35,$l,utf8_decode("Público estimado:"),0,0,'L');
+    $pdf->SetFont('Arial','', 11);
+    $pdf->Cell(149,$l,utf8_decode($loc['estimativaPublico']),0,1,'L');
+
+    $pdf->SetX($x);
+    $pdf->SetFont('Arial','B', 11);
+    $pdf->Cell(12,$l,utf8_decode("Zona:"),0,0,'L');
+    $pdf->SetFont('Arial','', 11);
+    $pdf->Cell(149,$l,utf8_decode($loc['zona']),0,1,'L');
+
+    $pdf->SetX($x);
+    $pdf->SetFont('Arial','B', 11);
+    $pdf->Cell(38,$l,utf8_decode("Prefeitura Regional:"),0,0,'L');
+    $pdf->SetFont('Arial','', 11);
+    $pdf->Cell(149,$l,utf8_decode($loc['subprefeitura']),0,1,'L');
+
+    $pdf->SetX($x);
+    $pdf->SetFont('Arial','B', 11);
+    $pdf->Cell(16,$l,utf8_decode("Distrito:"),0,0,'L');
+    $pdf->SetFont('Arial','', 11);
+    $pdf->Cell(149,$l,utf8_decode($loc['distrito']),0,1,'L');
+
+    $pdf->Ln();
+}
+
+$pdf->SetX($x);
+$pdf->SetFont('Arial','B', 12);
+$pdf->Cell(170,$l,utf8_decode("Público alvo:"),'B',1,'L');
 $pdf->SetX($x);
 $pdf->SetFont('Arial','', 11);
 $pdf->MultiCell(170,$l,utf8_decode($publicoAlvo));
@@ -530,8 +525,8 @@ $pdf->MultiCell(170,$l,utf8_decode($publicoAlvo));
 $pdf->Ln();
 
 $pdf->SetX($x);
-$pdf->SetFont('Arial','B', 11);
-$pdf->Cell(50,$l,utf8_decode("Plano de divulgação:"),0,1,'L');
+$pdf->SetFont('Arial','B', 12);
+$pdf->Cell(170,$l,utf8_decode("Plano de divulgação:"),'B',1,'L');
 $pdf->SetX($x);
 $pdf->SetFont('Arial','', 11);
 $pdf->MultiCell(170,$l,utf8_decode($planoDivulgacao));
@@ -540,45 +535,160 @@ $pdf->Ln();
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 12);
-$pdf->Cell(180,5,utf8_decode("Cronograma"),0,1,'L');
+$pdf->Cell(170,$l,utf8_decode("Ficha técnica:"),'B',1,'L');
+
+foreach ($enviaFicha as $fic)
+{
+    $pdf->SetX($x);
+    $pdf->SetFont('Arial','B', 11);
+    $pdf->Cell(13,$l,utf8_decode("Nome:"),0,0,'L');
+    $pdf->SetFont('Arial','', 11);
+    $pdf->Cell(157,$l,utf8_decode($fic['nome']),0,1,'L');
+
+    $pdf->SetX($x);
+    $pdf->SetFont('Arial','B', 11);
+    $pdf->Cell(12,$l,utf8_decode("CPF:"),0,0,'L');
+    $pdf->SetFont('Arial','', 11);
+    $pdf->Cell(149,$l,utf8_decode($fic['cpf']),0,1,'L');
+
+    $pdf->SetX($x);
+    $pdf->SetFont('Arial','B', 11);
+    $pdf->Cell(17,$l,utf8_decode("Função:"),0,0,'L');
+    $pdf->SetFont('Arial','', 11);
+    $pdf->Cell(153,$l,utf8_decode($fic['funcao']),0,1,'L');
+
+    $pdf->Ln();
+}
+
+$pdf->SetX($x);
+$pdf->SetFont('Arial','B', 12);
+$pdf->Cell(170,$l,utf8_decode("Cronograma"),'B',1,'L');
+
+$pdf->SetX($x);
+$pdf->SetFont('Arial','B', 11);
+$pdf->Cell(67,$l,utf8_decode("Data estimada de início do projeto:"),0,0,'L');
+$pdf->SetFont('Arial','', 11);
+$pdf->Cell(69,$l,utf8_decode($inicioCronograma),0,1,'L');
+
+$pdf->SetX($x);
+$pdf->SetFont('Arial','B', 11);
+$pdf->Cell(65,$l,utf8_decode("Data estimada do final do projeto:"),0,0,'L');
+$pdf->SetFont('Arial','', 11);
+$pdf->Cell(80,$l,utf8_decode($fimCronograma),0,1,'L');
 
 $pdf->Ln();
 
 $pdf->SetX($x);
-$pdf->SetFont('Arial','', 11);
-$pdf->MultiCell(170,$l,utf8_decode("Início do cronograma: " . $inicioCronograma));
+$pdf->SetFont('Arial','B', 12);
+$pdf->Cell(170,$l,utf8_decode("Etapas do cronograma"),'B',1,'L');
 
 $pdf->SetX($x);
+$pdf->SetFont('Arial','B', 11);
+$pdf->Cell(43,$l,utf8_decode("Captação de recursos:"),0,0,'L');
 $pdf->SetFont('Arial','', 11);
-$pdf->MultiCell(170,$l,utf8_decode("Fim do cronograma: " . $fimCronograma));
+$pdf->Cell(127,$l,utf8_decode($captacaoRecurso),0,1,'L');
 
 $pdf->SetX($x);
+$pdf->SetFont('Arial','B', 11);
+$pdf->Cell(28,$l,utf8_decode("Pré produção:"),0,0,'L');
 $pdf->SetFont('Arial','', 11);
-$pdf->MultiCell(170,$l,utf8_decode("Captão de recursos: " . $captacaoRecurso));
+$pdf->Cell(142,$l,utf8_decode($preProducao),0,1,'L');
 
 $pdf->SetX($x);
+$pdf->SetFont('Arial','B', 11);
+$pdf->Cell(20,$l,utf8_decode("Produção:"),0,0,'L');
 $pdf->SetFont('Arial','', 11);
-$pdf->MultiCell(170,$l,utf8_decode("Pré produção: " . $preProducao));
+$pdf->Cell(150,$l,utf8_decode($producao),0,1,'L');
 
+$pdf->SetX($x);
+$pdf->SetFont('Arial','B', 11);
+$pdf->Cell(29,$l,utf8_decode("Pós produção:"),0,0,'L');
+$pdf->SetFont('Arial','', 11);
+$pdf->Cell(141,$l,utf8_decode($posProducao),0,1,'L');
+
+$pdf->SetX($x);
+$pdf->SetFont('Arial','B', 11);
+$pdf->Cell(41,$l,utf8_decode("Prestação de contas:"),0,0,'L');
+$pdf->SetFont('Arial','', 11);
+$pdf->Cell(129,$l,utf8_decode($prestacaoContas),0,1,'L');
+
+$pdf->Ln();
+
+$pdf->SetX($x);
+$pdf->SetFont('Arial','B', 14);
+$pdf->Cell(180,$l,utf8_decode("Orçamento"),'B',1,'L');
+
+foreach ($enviaOrca as $orc)
+{
+    $pdf->SetX($x);
+    $pdf->SetFont('Arial','B', 11);
+    $pdf->Cell(14,$l,utf8_decode("Etapa:"),0,0,'L');
+    $pdf->SetFont('Arial','', 11);
+    $pdf->Cell(80,$l,utf8_decode($orc['etapa']),0,1,'L');
+
+    $pdf->SetX($x);
+    $pdf->SetFont('Arial','B', 11);
+    $pdf->Cell(23,$l,utf8_decode("Obs. etapa:"),0,0,'L');
+    $pdf->SetFont('Arial','', 11);
+    $pdf->Cell(80,$l,utf8_decode($orc['observacoesEtapa']),0,1,'L');
+
+    $pdf->SetX($x);
+    $pdf->SetFont('Arial','B', 11);
+    $pdf->Cell(22,$l,utf8_decode("Descrição:"),0,0,'L');
+    $pdf->SetFont('Arial','', 11);
+    $pdf->Cell(80,$l,utf8_decode($orc['descricao']),0,1,'L');
+
+    $pdf->SetX($x);
+    $pdf->SetFont('Arial','B', 11);
+    $pdf->Cell(24,$l,utf8_decode("Quantidade:"),0,0,'L');
+    $pdf->SetFont('Arial','', 11);
+    $pdf->Cell(80,$l,utf8_decode($orc['quantidade']),0,1,'L');
+
+    $pdf->SetX($x);
+    $pdf->SetFont('Arial','B', 11);
+    $pdf->Cell(38,$l,utf8_decode("Unidade de medida:"),0,0,'L');
+    $pdf->SetFont('Arial','', 11);
+    $pdf->Cell(80,$l,utf8_decode($orc['unidadeMedida']),0,1,'L');
+
+    $pdf->SetX($x);
+    $pdf->SetFont('Arial','B', 11);
+    $pdf->Cell(32,$l,utf8_decode("Obs. unid. med.:"),0,0,'L');
+    $pdf->SetFont('Arial','', 11);
+    $pdf->Cell(80,$l,utf8_decode($orc['observacoes']),0,1,'L');
+
+    $pdf->SetX($x);
+    $pdf->SetFont('Arial','B', 11);
+    $pdf->Cell(41,$l,utf8_decode("Quantidade Unidade:"),0,0,'L');
+    $pdf->SetFont('Arial','', 11);
+    $pdf->Cell(80,$l,utf8_decode($orc['quantidadeUnidade']),0,1,'L');
+
+    $pdf->SetX($x);
+    $pdf->SetFont('Arial','B', 11);
+    $pdf->Cell(28,$l,utf8_decode("Valor unitário:"),0,0,'L');
+    $pdf->SetFont('Arial','', 11);
+    $pdf->Cell(80,$l,utf8_decode("R$ ".dinheiroParaBr($orc['valorUnitario'])),0,1,'L');
+
+    $pdf->SetX($x);
+    $pdf->SetFont('Arial','B', 11);
+    $pdf->Cell(22,$l,utf8_decode("Valor total:"),0,0,'L');
+    $pdf->SetFont('Arial','', 11);
+    $pdf->Cell(80,$l,utf8_decode("R$ ".dinheiroParaBr($orc['valorTotal'])),0,1,'L');
+
+    $pdf->Ln();
+}
+
+$pdf->SetX($x);
+$pdf->SetFont('Arial','B', 14);
+$pdf->Cell(180,$l,utf8_decode("Totais"),'B',1,'L');
+
+/*
 $pdf->SetX($x);
 $pdf->SetFont('Arial','', 11);
 $pdf->MultiCell(170,$l,utf8_decode("Total pré produção: " . $totalProducao));
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','', 11);
-$pdf->MultiCell(170,$l,utf8_decode("Produção: " . $producao));
-
-$pdf->SetX($x);
-$pdf->SetFont('Arial','', 11);
 $pdf->MultiCell(170,$l,utf8_decode("Total produção: " . $totalProducao));
-
-$pdf->SetX($x);
-$pdf->SetFont('Arial','', 11);
-$pdf->MultiCell(170,$l,utf8_decode("Pós produção: " . $posProducao));
-
-$pdf->SetX($x);
-$pdf->SetFont('Arial','', 11);
-$pdf->MultiCell(170,$l,utf8_decode("Prestação de contas: " . $prestacaoContas));
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','', 11);
@@ -603,46 +713,7 @@ $pdf->MultiCell(170,$l,utf8_decode("Total de outros financiamentos: " . $totalOu
 $pdf->SetX($x);
 $pdf->SetFont('Arial','', 11);
 $pdf->MultiCell(170,$l,utf8_decode("Valor aprovado: " . $valorAProvado));
-
-$pdf->SetX($x);
-$pdf->SetFont('Arial','B', 12);
-$pdf->Cell(180,5,utf8_decode("Orçamento"),0,1,'C');
-$pdf->Ln();
-
-for($i = 0; $i < $o_num; $i++)
-{
-    $pdf->SetX($x);
-    $pdf->SetFont('Arial','', 11);
-    $pdf->MultiCell(170,$l,utf8_decode("Etapa: " . $etapaStatus));
-
-    $pdf->SetX($x);
-    $pdf->SetFont('Arial','', 11);
-    $pdf->MultiCell(170,$l,utf8_decode("Descrição: " . $descricao));
-
-    $pdf->SetX($x);
-    $pdf->SetFont('Arial','B', 10);
-    $pdf->Cell(22,$l,'Quantidade:',0,0,'L');
-    $pdf->SetFont('Arial','', 10);
-    $pdf->MultiCell(150,$l,utf8_decode($quantidade));
-
-    $pdf->SetX($x);
-    $pdf->SetFont('Arial','', 11);
-    $pdf->MultiCell(170,$l,utf8_decode("Unidade de medida: " . $unidadeMedidaStatus));
-
-    $pdf->SetX($x);
-    $pdf->SetFont('Arial','', 11);
-    $pdf->MultiCell(170,$l,utf8_decode("Quantidade de unidades: " . $quantidadeUnidade));
-
-    $pdf->SetX($x);
-    $pdf->SetFont('Arial','', 11);
-    $pdf->MultiCell(170,$l,utf8_decode("Valor unitário: " . $valorUnitario));
-
-    $pdf->SetX($x);
-    $pdf->SetFont('Arial','', 11);
-    $pdf->MultiCell(170,$l,utf8_decode("Valor total: " . $valorTotal));
-
-    $pdf->Ln();
-}
+*/
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 12);
@@ -668,15 +739,15 @@ $pdf->Ln();
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','', 11);
-$pdf->MultiCell(170,$l,utf8_decode("Local " . $local));
+//$pdf->MultiCell(170,$l,utf8_decode("Local " . $local));
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','', 11);
-$pdf->MultiCell(170,$l,utf8_decode("Estimativa: " . $estimativa));
+//$pdf->MultiCell(170,$l,utf8_decode("Estimativa: " . $estimativa));
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','', 11);
-$pdf->MultiCell(170,$l,utf8_decode("Zona: " . $zona));
+//$pdf->MultiCell(170,$l,utf8_decode("Zona: " . $zona));
 
 $pdf->Ln();
 $pdf->Ln();
