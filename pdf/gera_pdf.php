@@ -208,11 +208,10 @@ $pdf->SetXY( $x , 15 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 16);
-$pdf->Cell(180,5,utf8_decode(strtoupper("Projeto: $nomeProjeto")),0,1,'C');
+$pdf->MultiCell(170,$l,utf8_decode(strtoupper("Projeto: $nomeProjeto")));
 
 $pdf->Ln();
 $pdf->Ln();
-
 
 if($tipoPessoa == 1)
 {
@@ -465,43 +464,84 @@ $pdf->SetX($x);
 $pdf->SetFont('Arial','', 11);
 $pdf->MultiCell(170,$l,utf8_decode($resumoProjeto));
 
-$pdf->SetX($x);
-$pdf->SetFont('Arial','', 11);
-$pdf->MultiCell(170,$l,utf8_decode("Currículo: " . $curriculo));
+$pdf->Ln();
 
 $pdf->SetX($x);
-$pdf->SetFont('Arial','', 11);
-$pdf->MultiCell(170,$l,utf8_decode("Descrição: " . $descricao));
-
+$pdf->SetFont('Arial','B', 11);
+$pdf->Cell(21,$l,utf8_decode("Curriculo:"),0,1,'L');
 $pdf->SetX($x);
 $pdf->SetFont('Arial','', 11);
-$pdf->MultiCell(170,$l,utf8_decode("Justificativa: " . $justificativa));
+$pdf->MultiCell(170,$l,utf8_decode($curriculo));
+
+$pdf->Ln();
 
 $pdf->SetX($x);
-$pdf->SetFont('Arial','', 11);
-$pdf->MultiCell(170,$l,utf8_decode("Objetivo: " . $objetivo));
-
+$pdf->SetFont('Arial','B', 11);
+$pdf->Cell(21,$l,utf8_decode("Descrição:"),0,1,'L');
 $pdf->SetX($x);
 $pdf->SetFont('Arial','', 11);
-$pdf->MultiCell(170,$l,utf8_decode("Metodologia: " . $metodologia));
+$pdf->MultiCell(170,$l,utf8_decode($descricao));
+
+$pdf->Ln();
 
 $pdf->SetX($x);
-$pdf->SetFont('Arial','', 11);
-$pdf->MultiCell(170,$l,utf8_decode("Contrapartida: " . $contrapartida));
-
+$pdf->SetFont('Arial','B', 11);
+$pdf->Cell(21,$l,utf8_decode("Justificativa:"),0,1,'L');
 $pdf->SetX($x);
 $pdf->SetFont('Arial','', 11);
-$pdf->MultiCell(170,$l,utf8_decode("Público alvo: " . $publicoAlvo));
+$pdf->MultiCell(170,$l,utf8_decode($justificativa));
+
+$pdf->Ln();
 
 $pdf->SetX($x);
+$pdf->SetFont('Arial','B', 11);
+$pdf->Cell(21,$l,utf8_decode("Objetivo:"),0,1,'L');
+$pdf->SetX($x);
 $pdf->SetFont('Arial','', 11);
-$pdf->MultiCell(170,$l,utf8_decode("Plano de divulgação: " . $planoDivulgacao));
+$pdf->MultiCell(170,$l,utf8_decode($objetivo));
+
+$pdf->Ln();
+
+$pdf->SetX($x);
+$pdf->SetFont('Arial','B', 11);
+$pdf->Cell(21,$l,utf8_decode("Metodologia:"),0,1,'L');
+$pdf->SetX($x);
+$pdf->SetFont('Arial','', 11);
+$pdf->MultiCell(170,$l,utf8_decode($metodologia));
+
+$pdf->Ln();
+
+$pdf->SetX($x);
+$pdf->SetFont('Arial','B', 11);
+$pdf->Cell(21,$l,utf8_decode("Contrapartida:"),0,1,'L');
+$pdf->SetX($x);
+$pdf->SetFont('Arial','', 11);
+$pdf->MultiCell(170,$l,utf8_decode($contrapartida));
+
+$pdf->Ln();
+
+$pdf->SetX($x);
+$pdf->SetFont('Arial','B', 11);
+$pdf->Cell(21,$l,utf8_decode("Público alvo:"),0,1,'L');
+$pdf->SetX($x);
+$pdf->SetFont('Arial','', 11);
+$pdf->MultiCell(170,$l,utf8_decode($publicoAlvo));
+
+$pdf->Ln();
+
+$pdf->SetX($x);
+$pdf->SetFont('Arial','B', 11);
+$pdf->Cell(50,$l,utf8_decode("Plano de divulgação:"),0,1,'L');
+$pdf->SetX($x);
+$pdf->SetFont('Arial','', 11);
+$pdf->MultiCell(170,$l,utf8_decode($planoDivulgacao));
 
 $pdf->Ln();
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 12);
-$pdf->Cell(180,5,utf8_decode("Dados de custos e prazos"),0,1,'C');
+$pdf->Cell(180,5,utf8_decode("Cronograma"),0,1,'L');
+
 $pdf->Ln();
 
 $pdf->SetX($x);
