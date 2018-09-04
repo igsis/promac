@@ -82,9 +82,8 @@ if(isset($_POST['gravarAdm']))
 {
 	$valorAprovado = dinheiroDeBr($_POST['valorAprovado']);
     $renunciaFiscal = $_POST['idRenunciaFiscal'];
-    $dataReuniao = exibirDataMysql($_POST['dataReuniao']);
     $statusParecerista = $_POST['idStatusParecerista'];
-	$sql_gravarAdm = "UPDATE projeto SET valorAprovado = '$valorAprovado', idRenunciaFiscal = '$renunciaFiscal', dataReuniao = '$dataReuniao', idStatusParecerista = '$statusParecerista' WHERE idProjeto = '$idProjeto'";
+	$sql_gravarAdm = "UPDATE projeto SET valorAprovado = '$valorAprovado', idRenunciaFiscal = '$renunciaFiscal', idStatusParecerista = '$statusParecerista' WHERE idProjeto = '$idProjeto'";
 	if(mysqli_query($con,$sql_gravarAdm))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
@@ -134,6 +133,25 @@ if(isset($_POST['finalizaComissao']))
 	{
 		$mensagem = "<font color='#FF0000'><strong>Erro ao reabrir! Tente novamente.</strong></font>";
 	}
+}
+
+if(isset($_POST['dataReuniao']))
+{
+    $idP = $_POST['IDP'];
+    $dataReuniao = exibirDataMysql($_POST['dataReuniao']);
+    $sql_dataReuniao = "INSERT INTO data_reuniao (idProjeto, dataReuniao) VALUES ('$idP', '$dataReuniao')";
+    $sql_dataReuniaoAtualizar = "UPDATE projeto SET dataReuniao = '$dataReuniao' WHERE idProjeto = '$idP' ";
+    if(mysqli_query($con,$sql_dataReuniao))
+    if(mysqli_query($con,$sql_dataReuniaoAtualizar))
+    {
+        $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
+        echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
+        gravarLog($sql_dataReuniaoAtualizar);
+    }
+    else
+    {
+        $mensagem = "<font color='#FF0000'><strong>Erro ao atualizar! Tente novamente.</strong></font>";
+    }
 }
 
 if(isset($_POST["enviar"]))
@@ -264,7 +282,8 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 		                        <?php else: ?>
 		                        <li class="nav"><a href="#F" data-toggle="tab">Pessoa Física</a></li>
 		                        <?php endif ?>
-		                        </ul>
+                            <li class="nav"><a href="#historico" data-toggle="tab">Histórico</a></li>
+                        </ul>
 
                         <div class="tab-content">
                             <!-- LABEL ADMINISTRATIVO-->
@@ -346,11 +365,18 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                             </select>
                                         </div>
                                      </div>
-                                     <div class="form-group">
-                                        <div class="col-md-offset-2 col-md-4"><label>Data da reunião *</label>
-                                            <input type="text" name="dataReuniao" id='datepicker01' class="form-control" placeholder="DD/MM/AA" required value="<?php echo exibirDataBr($projeto['dataReuniao']) ?>">
-                                        </div>
-                                        <div class="col-md-4"><label>Status do Parecerista *</label><br/>
+                                    <div class="form-group">
+	                                    <div class="col-md-offset-2 col-md-4"><label>Status do Projeto</label><br/>
+	                                        <select class="form-control" name="idStatus">
+	                                        <?php echo geraOpcao("status",$projeto['idStatus']) ?>
+	                                    </select>
+                                    	</div>
+	                                    <div class="col-md-4"><label>Valor Aprovado</label><br/>
+	                                        <input type="text" name="valorAprovado" id='valor' class="form-control" value="<?php echo dinheiroParaBr($projeto['valorAprovado']) ?>">
+	                                    </div>                                  
+                          		    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-8"><label>Status do Parecerista *</label><br/>
                                             <select class="form-control" name="idStatusParecerista" required>
                                             	<option value="">Selecione...</option>
                                             	<?php echo geraOpcao("status_parecerista",$projeto['idStatusParecerista']) ?>
@@ -362,6 +388,22 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                         </div>
                                     </div>
                                 </form>
+
+                                <form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
+	                                <div class="form-group">
+	                                   <div class="col-md-offset-2 col-md-8"><label>Data da Reunião</label>
+	                                        <input type="text" name="dataReuniao" id='datepicker08' class="form-control" placeholder="DD/MM/AA ou MM/AAAA" required value="<?php echo exibirDataBr($projeto['dataReuniao']) ?>">
+	                                    </div>
+	                                </div>    
+
+	                                <div class="form-group">
+	                                    <div class="col-md-offset-2 col-md-8">
+	                                        <?php echo "<input type='hidden' name='IDP' value='$idProjeto'>"; ?>
+	                                        <input type="submit" name="data" class="btn btn-theme btn-md btn-block" value="Gravar">
+	                                    </div>
+	                                </div>
+                                <br/>            
+                            </form>
 
                                 <div class="form-group">
                                     <div class="col-md-offset-1 col-md-10">
@@ -1033,6 +1075,114 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                     <?php exibirArquivos(1,$pessoaFisica['idPf']); ?>
                                 </li>
                             </ul>
+                        </div>
+
+                           <!-- LABEL HISTÓRICO -->
+                        <div role="tabpanel" class="tab-pane fade" id="historico">
+                            <form method="POST" action="?perfil=comissao_detalhes_projeto" class="form-horizontal" role="form">
+                                <h5>
+                                    <?php if(isset($mensagem)){echo $mensagem;}; ?>
+                                </h5>
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-8"><br/></div>
+                                </div>
+
+                                <ul class='list-group'>
+                                    <li class='list-group-item list-group-item-success'>Histórico de Reuniões</li>
+                                   <?php
+                                        $sql_data_reuniao = "SELECT * FROM `data_reuniao` WHERE idProjeto = '$idProjeto' ORDER BY dataReuniao DESC";
+                                         $query_data_reuniao = mysqli_query($con,$sql_data_reuniao);
+                                         $num = mysqli_num_rows($query_data_reuniao);
+
+                                    if($num > 0)
+                                    {
+                                    ?>                          
+                                        <table class='table table-condensed'>
+                                            <?php                                   
+                                            while($dataReuniao = mysqli_fetch_array($query_data_reuniao))
+                                            {                                   
+                                            ?>  
+                                                    <tr>
+                                                        <td><?php  echo exibirDataHoraBr($dataReuniao['dataReuniao']); ?></td>
+                                                    </tr>
+                                            <?php
+                                            }
+                                            ?>
+                                        </table>
+                                    <?php
+                                    }
+                                    else
+                                    {
+                                        echo "<li class='list-group-item'>Não há registros disponíveis.</li>";
+                                    }   
+                                    ?>
+                                    </li>
+                                </ul> 
+
+                                <ul class='list-group'>
+                                    <li class='list-group-item list-group-item-success'>Histórico de envios para a Comissão</li>
+                                   <?php
+                                        $sql_envio_comissao = "SELECT * FROM `envio_comissao` WHERE idProjeto = '$idProjeto' ORDER BY data DESC";
+                                         $query_envio_comissao = mysqli_query($con,$sql_envio_comissao); 
+                                         $num = mysqli_num_rows($query_envio_comissao);
+
+                                    if($num > 0)
+                                    {
+                                    ?>                          
+                                        <table class='table table-condensed'>
+                                            <?php                                   
+                                            while($envioComissao = mysqli_fetch_array($query_envio_comissao))
+                                            {                                   
+                                            ?>  
+                                                    <tr>
+                                                        <td><?php  echo exibirDataHoraBr($envioComissao['data']); ?></td>
+                                                    </tr>
+                                            <?php
+                                            }
+                                            ?>
+                                        </table>
+                                    <?php
+                                    }
+                                    else
+                                    {
+                                        echo "<li class='list-group-item'>Não há registros disponíveis.</li>";
+                                    }   
+                                    ?>
+                                    </li>
+                                </ul> 
+
+
+                                <ul class='list-group'>
+                                    <li class='list-group-item list-group-item-success'>Histórico de finalização da Comissão e envio à SMC</li>
+                                   <?php
+                                        $sql_finalizacao_comissao = "SELECT * FROM `finalizacao_comissao` WHERE idProjeto = '$idProjeto' ORDER BY data DESC";
+                                         $query_finalizacao_comissao = mysqli_query($con,$sql_finalizacao_comissao); 
+                                         $num = mysqli_num_rows($query_finalizacao_comissao);
+
+                                    if($num > 0)
+                                    {
+                                    ?>                          
+                                        <table class='table table-condensed'>
+                                            <?php                                   
+                                            while($finalizacaoComissao = mysqli_fetch_array($query_finalizacao_comissao))
+                                            {                                   
+                                            ?>  
+                                                    <tr>
+                                                        <td><?php  echo exibirDataHoraBr($finalizacaoComissao['data']); ?></td>
+                                                    </tr>
+                                            <?php
+                                            }
+                                            ?>
+                                        </table>
+                                    <?php
+                                    }
+                                    else
+                                    {
+                                        echo "<li class='list-group-item'>Não há registros disponíveis.</li>";
+                                    }   
+                                    ?>
+                                    </li>
+                                </ul> 
                         </div>
 
 
