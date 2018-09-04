@@ -129,6 +129,22 @@ $status = recuperaDados("status","idStatus",$projeto['idStatus']);
                                     </div>
                                 </div>
 
+                                 <!-- Botão para solicitar alteração do projeto -->
+                                <div class="form-group">
+                                    <div class="col-md-offset-4 col-md-6">
+                                        <?php
+                                if($projeto['idStatus'] == 5 OR $projeto['idStatus'] == 14)
+                                {
+                                ?>
+                                    <form class="form-horizontal" role="form" action="?perfil=alteracao_projeto&idProjeto=<?=$idProjeto?>" method="post">
+                                    <input type="submit" value="solicitar alteração do projeto" class="btn btn-theme btn-md btn-block">
+                                <?php
+                                }
+                                ?>
+                                     </form>
+                                    </div>
+                                </div>
+
                                 <!-- Botão para anexar complemento de informações -->
                                 <div class="form-group">
                                     <div class="col-md-offset-4 col-md-6">
