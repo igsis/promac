@@ -949,7 +949,7 @@ function listaArquivosAnalise($tipoPessoa,$pagina)
 	}
 }
 
-function listaArquivosComissao($idPessoa,$tipoPessoa,$pagina)
+function listaParecer($idPessoa,$tipoPessoa,$pagina)
 {
 	$con = bancoMysqli();
 	$sql = "SELECT *
@@ -957,7 +957,67 @@ function listaArquivosComissao($idPessoa,$tipoPessoa,$pagina)
 			INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
 			WHERE arq.idPessoa = '$idPessoa'
 			AND arq.idTipo = '$tipoPessoa'
-			AND arq.publicado = '1'";
+			AND arq.publicado = '1' AND list.idListaDocumento = '37'";
+	$query = mysqli_query($con,$sql);
+	$linhas = mysqli_num_rows($query);
+
+	if ($linhas > 0)
+	{
+	echo "
+		<table class='table table-condensed'>
+			<thead>
+				<tr class='list_menu'>
+					<td>Tipo de arquivo</td>
+					<td>Nome do arquivo</td>
+					<td>Status</td>
+					<td>Observações</td>
+					<td width='15%'></td>
+				</tr>
+			</thead>
+			<tbody>";
+				while($arquivo = mysqli_fetch_array($query))
+				{
+					echo "<tr>";
+					echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
+					echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
+					$sql ="SELECT * FROM `status_documento` WHERE idStatusDocumento = '".$arquivo['idStatusDocumento'] ."'";
+					$consulta = mysqli_query($con,$sql);
+					$row = mysqli_fetch_array($consulta);
+					echo "<td class='list_description'>".$row['status']."</td>";
+					echo "<td class='list_description'>".$arquivo['observacoes']."</td>";
+					if ($row['idStatusDocumento'] == 2 || $row['idStatusDocumento'] == 3) 
+					{
+						echo "
+						<td class='list_description'>
+							<form id='apagarArq' method='POST' action='?perfil=".$pagina."'>
+								<input type='hidden' name='idPessoa' value='".$idPessoa."' />
+								<input type='hidden' name='tipoPessoa' value='".$tipoPessoa."' />
+								<input type='hidden' name='apagar' value='".$arquivo['idUploadArquivo']."' />
+								<button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Remover Arquivo?' data-message='Deseja realmente excluir o arquivo ".$arquivo['documento']."?'>Remover
+								</button></td>
+							</form>";
+					}
+					echo "</tr>";
+				}
+				echo "
+		</tbody>
+		</table>";
+	}
+	else
+	{
+		echo "<p>Não há arquivo(s) inserido(s).<p/><br/>";
+	}
+}
+
+function listaAlteracaoParecer($idPessoa,$tipoPessoa,$pagina)
+{
+	$con = bancoMysqli();
+	$sql = "SELECT *
+			FROM lista_documento as list
+			INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
+			WHERE arq.idPessoa = '$idPessoa'
+			AND arq.idTipo = '$tipoPessoa'
+			AND arq.publicado = '1' AND list.idListaDocumento = '48'";
 	$query = mysqli_query($con,$sql);
 	$linhas = mysqli_num_rows($query);
 
