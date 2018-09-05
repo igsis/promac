@@ -145,7 +145,7 @@ if(isset($_POST['dataReuniao']))
     if(mysqli_query($con,$sql_dataReuniaoAtualizar))
     {
         $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
-        echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
+        echo "<script>window.location = '?perfil=comissao_detalhes_projeto&idFF=$idP';</script>";
         gravarLog($sql_dataReuniaoAtualizar);
     }
     else
@@ -261,6 +261,28 @@ if(isset($_POST['atualizaResponsavel']))
 	{
 		$mensagem = "Erro o atribuir! Tente novamente.";
 	}
+}
+
+if(isset($_POST['editarSolicitacaoProponente'])){
+
+    $status = $_POST['status'];
+    $observacoes = $_POST['observacoes'];
+    $idProjeto = $_POST['idPessoa'];
+    $idArquivo = $_POST['idArquivo'];
+
+    $query = "UPDATE upload_arquivo SET idStatusDocumento = '".$status."', observacoes = '".$observacoes."' WHERE idUploadArquivo = '".$idArquivo."' ";
+        $envia = mysqli_query($con, $query);
+        if($envia)
+        {
+            echo "<script>window.location.href = 'index_pf.php?perfil=comissao_detalhes_projeto&idFF=".$idProjeto."';</script>";
+            $mensagem = "<font color='#01DF3A'><strong>Os arquivos foram atualizados com sucesso!</strong></font>";
+        }
+        else
+        {
+            echo "<script>window.location.href = 'index_pf.php?perfil=smc_detalhes_projeto&idFF=".$idProjeto."';</script>";
+            echo "<script>alert('Erro durante o processamento, entre em contato com os responsáveis pelo sistema para maiores informações.')</script>";
+        }
+
 }
 
 $representante = pegaProjetoRepresentante($idProjeto);
@@ -392,7 +414,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                           		    </div>
                                 </form>
 
-                                <form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
+                                <form method="POST" action="?perfil=comissao_detalhes_projeto" class="form-horizontal" role="form">
 	                                <div class="form-group">
 	                                   <div class="col-md-offset-2 col-md-8"><label>Data da Reunião</label>
 	                                        <input type="text" name="dataReuniao" id='datepicker08' class="form-control" placeholder="DD/MM/AA ou MM/AAAA" required value="<?php echo exibirDataBr($projeto['dataReuniao']) ?>">
@@ -407,6 +429,28 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 	                                </div>
                                 <br/>            
                             </form>
+
+                                <div class="form-group">
+                                    <div class="col-md-offset-1 col-md-10">
+                                        <hr/>
+                                    </div>
+                                </div>
+
+                            <!-- Exibir arquivos -->
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <div class="table-responsive list_info">
+                                        <h6>Solicitações de alteração do projeto</h6>
+                                        <?php listaSolicitacaoProponente($idProjeto,3,"comissao_detalhes_projeto"); ?>
+                                    </div>
+                                </div>
+                            </div>
+
+ 								<div class="form-group">
+                                    <div class="col-md-offset-1 col-md-10">
+                                        <hr/>
+                                    </div>
+                                </div>
 
                                 <!-- Exibir arquivos -->
                                 <div class="form-group">

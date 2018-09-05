@@ -50,7 +50,7 @@ $status = recuperaDados("status","idStatus",$projeto['idStatus']);
                                                     <li class='list-group-item'><strong>Protocolo (nº ISP):</strong>
                                                         <?php echo $projeto['protocolo'] ?>
                                                     </li>
-                                                    <li class='list-group-item'><strong>Status:</strong>
+                                                    <li class='list-group-item'><strong>Etapa do projeto:</strong>
                                                         <?php
 												if($projeto['idStatus'] == 3 OR $projeto['idStatus'] == 10 OR $projeto['idStatus'] == 11 OR $projeto['idStatus'] == 13)
 												{
