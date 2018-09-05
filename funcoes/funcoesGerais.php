@@ -1080,9 +1080,9 @@ function exibirArquivoParecer($tipoPessoa,$idPessoa)
 	    lista_documento as list
 	  INNER JOIN upload_arquivo AS arq 
 	  ON arq.idListaDocumento = list.idListaDocumento
-	  
 	  WHERE arq.idPessoa = '$idPessoa'
 	  AND arq.idTipo = '$tipoPessoa'
+	  AND arq.idStatusDocumento = '1'
 	  -- AND arq.idListaDocumento = '37'
 	  AND arq.publicado = '1'";
 
