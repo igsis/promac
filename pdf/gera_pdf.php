@@ -433,7 +433,7 @@ $pdf->Ln();
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 12);
-$pdf->Cell(21,$l,utf8_decode("Descrição do objeto e atividades:"),0,1,'L');
+$pdf->Cell(170,$l,utf8_decode("Descrição do objeto e atividades:"),'B',1,'L');
 $pdf->SetX($x);
 $pdf->SetFont('Arial','', 11);
 $pdf->MultiCell(170,$l,utf8_decode($descricao));
@@ -442,7 +442,7 @@ $pdf->Ln();
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 12);
-$pdf->Cell(21,$l,utf8_decode("Justificativa do projeto:"),0,1,'L');
+$pdf->Cell(170,$l,utf8_decode("Justificativa do projeto:"),'B',1,'L');
 $pdf->SetX($x);
 $pdf->SetFont('Arial','', 11);
 $pdf->MultiCell(170,$l,utf8_decode($justificativa));
@@ -451,7 +451,7 @@ $pdf->Ln();
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 12);
-$pdf->Cell(21,$l,utf8_decode("Objetivos e metas:"),0,1,'L');
+$pdf->Cell(170,$l,utf8_decode("Objetivos e metas:"),'B',1,'L');
 $pdf->SetX($x);
 $pdf->SetFont('Arial','', 11);
 $pdf->MultiCell(170,$l,utf8_decode($objetivo));
@@ -460,7 +460,7 @@ $pdf->Ln();
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 12);
-$pdf->Cell(21,$l,utf8_decode("Metodologia e parâmetros a serem utilizados para aferição do cumprimento de metas:"),0,1,'L');
+$pdf->Cell(170,$l,utf8_decode("Metodologia e parâmetros a serem utilizados para aferição do cumprimento de metas:"),'B',1,'L');
 $pdf->SetX($x);
 $pdf->SetFont('Arial','', 11);
 $pdf->MultiCell(170,$l,utf8_decode($metodologia));
@@ -469,7 +469,7 @@ $pdf->Ln();
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 12);
-$pdf->Cell(21,$l,utf8_decode("Descrição da contrapartida:"),0,1,'L');
+$pdf->Cell(170,$l,utf8_decode("Descrição da contrapartida:"),'B',1,'L');
 $pdf->SetX($x);
 $pdf->SetFont('Arial','', 11);
 $pdf->MultiCell(170,$l,utf8_decode($contrapartida));
@@ -615,7 +615,7 @@ $pdf->Cell(129,$l,utf8_decode($prestacaoContas),0,1,'L');
 $pdf->Ln();
 
 $pdf->SetX($x);
-$pdf->SetFont('Arial','B', 14);
+$pdf->SetFont('Arial','B', 12);
 $pdf->Cell(180,$l,utf8_decode("Orçamento"),'B',1,'L');
 
 foreach ($enviaOrca as $orc)
@@ -630,7 +630,7 @@ foreach ($enviaOrca as $orc)
     $pdf->SetFont('Arial','B', 11);
     $pdf->Cell(23,$l,utf8_decode("Obs. etapa:"),0,0,'L');
     $pdf->SetFont('Arial','', 11);
-    $pdf->Cell(80,$l,utf8_decode($orc['observacoesEtapa']),0,1,'L');
+    $pdf->MultiCell(147,$l,utf8_decode($orc['observacoesEtapa']));
 
     $pdf->SetX($x);
     $pdf->SetFont('Arial','B', 11);
@@ -678,47 +678,27 @@ foreach ($enviaOrca as $orc)
 }
 
 $pdf->SetX($x);
-$pdf->SetFont('Arial','B', 14);
+$pdf->SetFont('Arial','B', 12);
 $pdf->Cell(180,$l,utf8_decode("Totais"),'B',1,'L');
 
-/*
-$pdf->SetX($x);
-$pdf->SetFont('Arial','', 11);
-$pdf->MultiCell(170,$l,utf8_decode("Total pré produção: " . $totalProducao));
+for ($i = 1; $i <= 7; $i++)
+{
+    $sql_etapa = "SELECT SUM(valorTotal) AS tot FROM orcamento
+				  WHERE publicado > 0 AND idEtapa = '$i' AND idProjeto ='$idProjeto' 
+				  ORDER BY idOrcamento";
+    $query_etapa = mysqli_query($con,$sql_etapa);
+    $lista = mysqli_fetch_array($query_etapa);
+    $etapa = recuperaDados("etapa","idEtapa",$i);
 
-$pdf->SetX($x);
-$pdf->SetFont('Arial','', 11);
-$pdf->MultiCell(170,$l,utf8_decode("Total produção: " . $totalProducao));
-
-$pdf->SetX($x);
-$pdf->SetFont('Arial','', 11);
-$pdf->MultiCell(170,$l,utf8_decode("Total imprensa: " . $totalImprensa));
-
-$pdf->SetX($x);
-$pdf->SetFont('Arial','', 11);
-$pdf->MultiCell(170,$l,utf8_decode("Total dos custos administrativos: " . $totalAdministrativos));
-
-$pdf->SetX($x);
-$pdf->SetFont('Arial','', 11);
-$pdf->MultiCell(170,$l,utf8_decode("Total ímpostos: " . $totalImpostos));
-
-$pdf->SetX($x);
-$pdf->SetFont('Arial','', 11);
-$pdf->MultiCell(170,$l,utf8_decode("Total do agenciamento: " . $totalAgenciamento));
-
-$pdf->SetX($x);
-$pdf->SetFont('Arial','', 11);
-$pdf->MultiCell(170,$l,utf8_decode("Total de outros financiamentos: " . $totalOutrosFinanciamentos));
-
-$pdf->SetX($x);
-$pdf->SetFont('Arial','', 11);
-$pdf->MultiCell(170,$l,utf8_decode("Valor aprovado: " . $valorAProvado));
-*/
+    $pdf->SetX($x);
+    $pdf->SetFont('Arial','', 11);
+    $pdf->Cell(30,$l,utf8_decode($etapa['etapa'].": R$ ".dinheiroParaBr($lista['tot'])),0,1,'L');
+}
+$pdf->Ln();
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 12);
-$pdf->Cell(180,5,utf8_decode("Mídias"),0,1,'C');
-$pdf->Ln();
+$pdf->Cell(180,$l,utf8_decode("Link do Youtube"),'B',1,'L');
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','', 11);
@@ -731,23 +711,6 @@ $pdf->MultiCell(170,$l,utf8_decode("Link 2: " . $video2));
 $pdf->SetX($x);
 $pdf->SetFont('Arial','', 11);
 $pdf->MultiCell(170,$l,utf8_decode("Link 3: " . $video3));
-
-$pdf->SetX($x);
-$pdf->SetFont('Arial','B', 12);
-$pdf->Cell(180,5,utf8_decode("Locais de realização"),0,1,'C');
-$pdf->Ln();
-
-$pdf->SetX($x);
-$pdf->SetFont('Arial','', 11);
-//$pdf->MultiCell(170,$l,utf8_decode("Local " . $local));
-
-$pdf->SetX($x);
-$pdf->SetFont('Arial','', 11);
-//$pdf->MultiCell(170,$l,utf8_decode("Estimativa: " . $estimativa));
-
-$pdf->SetX($x);
-$pdf->SetFont('Arial','', 11);
-//$pdf->MultiCell(170,$l,utf8_decode("Zona: " . $zona));
 
 $pdf->Ln();
 $pdf->Ln();
