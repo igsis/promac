@@ -228,7 +228,6 @@ if(isset($_POST['apagar']))
 														break;
 														//projeto com solicitação de alteração enviada
 														case 14:
-														case 5:
 														echo "
 															<td class='list_description'>
 																<form method='POST' action='?perfil=projeto_visualizacao'>
