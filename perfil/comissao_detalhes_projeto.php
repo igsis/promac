@@ -376,7 +376,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                         </div>
                                      </div>
                                     <div class="form-group">
-	                                     <div class="col-md-offset-2 col-md-4"><label>Status do Parecerista *</label><br/>
+	                                     <div class="col-md-offset-2 col-md-4"><label>Status de Análise*</label><br/>
                                             <select class="form-control" name="idStatusParecerista" required>
                                             	<option value="">Selecione...</option>
                                             	<?php echo geraOpcao("status_parecerista",$projeto['idStatusParecerista']) ?>

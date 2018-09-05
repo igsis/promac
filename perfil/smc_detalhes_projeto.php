@@ -373,7 +373,7 @@ $comissao = recuperaDados("pessoa_fisica","idPf",$projeto['idComissao']);
 
                             <form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
                                 <div class="form-group">
-                                    <div class="col-md-offset-2 col-md-4"><label>Status do Projeto</label><br/>
+                                    <div class="col-md-offset-2 col-md-4"><label>Etapa do Projeto</label><br/>
                                         <select class="form-control" name="idStatus">
                                         <?php echo geraOpcao("status",$projeto['idStatus']) ?>
                                     </select>
@@ -389,7 +389,7 @@ $comissao = recuperaDados("pessoa_fisica","idPf",$projeto['idComissao']);
                                             <?php echo geraOpcao("renuncia_fiscal",$projeto['idRenunciaFiscal']) ?>
                                         </select>
                                     </div>
-                                    <div class="col-md-6"><label>Status do Parecerista</label><br/>
+                                    <div class="col-md-6"><label>Status de Análise</label><br/>
                                         <select class="form-control" name="idStatusParecerista">
                                                 <option value="0"></option>
                                             <?php echo geraOpcao("status_parecerista",$projeto['idStatusParecerista']) ?>
@@ -797,7 +797,7 @@ $comissao = recuperaDados("pessoa_fisica","idPf",$projeto['idComissao']);
                             <ul class="list-group">
                                 <li class="list-group-item list-group-item-success"><b>Solicitação de Alteração</b></li>
                                 <li class="list-group-item">
-                                    <?php exibirComplemento(3,$projeto['idProjeto']); ?>
+                                    <?php exibirSolicitacaoAlteracao(9,$projeto['idProjeto']); ?>
                                 </li>
                             </ul>
                         </div>
