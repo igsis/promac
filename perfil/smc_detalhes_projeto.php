@@ -74,7 +74,9 @@ if(isset($_POST['gravarAdm']))
     $valorAprovado = dinheiroDeBr($_POST['valorAprovado']);
     $idRenunciaFiscal = $_POST['idRenunciaFiscal'];
     $statusParecerista = $_POST['idStatusParecerista'];
-    $sql_gravarAdm = "UPDATE projeto SET idStatus = '$idStatus', valorAprovado = '$valorAprovado', idRenunciaFiscal = '$idRenunciaFiscal', idStatusParecerista = '$statusParecerista' WHERE idProjeto = '$idP' ";
+    $dataPublicacaoDoc = exibirDataMysql($_POST['dataPublicacaoDoc']);
+    $linkPublicacaoDoc = $_POST['linkPublicacaoDoc'];
+    $sql_gravarAdm = "UPDATE projeto SET idStatus = '$idStatus', valorAprovado = '$valorAprovado', idRenunciaFiscal = '$idRenunciaFiscal', idStatusParecerista = '$statusParecerista', dataPublicacaoDoc = '$dataPublicacaoDoc', linkPublicacaoDoc = '$linkPublicacaoDoc' WHERE idProjeto = '$idP' ";
     if(mysqli_query($con,$sql_gravarAdm))
 
     {
@@ -394,6 +396,18 @@ $comissao = recuperaDados("pessoa_fisica","idPf",$projeto['idComissao']);
                                                 <option value="0"></option>
                                             <?php echo geraOpcao("status_parecerista",$projeto['idStatusParecerista']) ?>
                                         </select>
+                                    </div>
+                                </div>
+
+                                 <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-8"><label>Data Publicação DOC</label>
+                                        <input type="text" name="dataPublicacaoDoc" id='datepicker09' class="form-control" placeholder="DD/MM/AA ou MM/AAAA" required value="<?php echo exibirDataBr($projeto['dataPublicacaoDoc']) ?>">
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">    
+                                   <div class="col-md-offset-2 col-md-8"><label>Link Publicação DOC</label>
+                                        <input type="text" name="linkPublicacaoDoc" class="form-control" value="<?php echo $projeto['linkPublicacaoDoc'] ?>">
                                     </div>
                                 </div>
 
