@@ -15,11 +15,11 @@ $con = bancoMysqli();
                         $direcao = recuperaDados("pessoa_fisica","idPf", $_SESSION['idUser']);
 						if($direcao['idNivelAcesso'] == 3)
 						{
-						$sql = "SELECT * FROM projeto WHERE publicado = 1 AND idStatus = 7 ORDER BY envioComissao ";
+						$sql = "SELECT * FROM projeto WHERE publicado = 1 AND idStatus = 7 OR idStatus = 14 ORDER BY envioComissao ";
 							}
 							else
 							{
-						$sql = "SELECT * FROM projeto WHERE publicado = 1 AND idComissao = $idPf AND idStatus = 7 ORDER BY envioComissao ";	
+						$sql = "SELECT * FROM projeto WHERE publicado = 1 AND idComissao = $idPf AND idStatus = 7 OR idStatus = 14 ORDER BY envioComissao ";	
 						}
 					$query = mysqli_query($con,$sql);
 					$num = mysqli_num_rows($query);
@@ -35,6 +35,7 @@ $con = bancoMysqli();
 										<td>Documento</td>
 										<td>Área de Atuação</td>
 										<td>Parecerista</td>
+										<td>Etapa do Projeto</td>
 										<td width='10%'></td>
 									</tr>
 								</thead>
@@ -67,6 +68,7 @@ $con = bancoMysqli();
 									}
 									echo "<td class='list_description'>".$area['areaAtuacao']."</td>";
 									echo "<td class='list_description'>".$comissao['nome']."</td>";
+									echo "<td class='list_description'>".$status['status']."</td>";
 									echo "
 										<td class='list_description'>
 											<form method='POST' action='?perfil=comissao_detalhes_projeto'>
