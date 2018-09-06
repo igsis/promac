@@ -61,8 +61,7 @@ function listaArquivosPessoaComStatus($idPessoa,$tipoPessoa,$pagina)
 								<input type='hidden' name='idPessoa' value='".$idPessoa."' />
 								<input type='hidden' name='tipoPessoa' value='".$tipoPessoa."' />
 								<input type='hidden' name='apagar' value='".$arquivo['idUploadArquivo']."' />
-								<button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Excluir Arquivo?' data-message='Deseja realmente excluir o arquivo ".$arquivo['documento']."?'>Remover
-								</button></td>
+						</td>
 							</form>";
 					echo "</tr>";
 				}
@@ -207,11 +206,7 @@ if(isset($_POST['apagar']))
 											$query = "SELECT idListaDocumento FROM lista_documento WHERE documento='$doc' AND publicado='1' AND idTipoUpload='3' AND idListaDocumento IN (47)";
 											$envio = $con->query($query);
 											$row = $envio->fetch_array(MYSQLI_ASSOC);
-
-											if(verificaArquivosExistentesPF($idProjeto,$row['idListaDocumento'])){
-												echo '<div class="alert alert-success">O arquivo ' . $doc . ' já foi enviado.</div>';
-											}
-											else{ ?>
+											 ?>
 											<?php 
 										    $urlArquivo = $http.$arq['idListaDocumento'];
 											if(arquivosExiste($urlArquivo)): ?>	
@@ -232,9 +227,7 @@ if(isset($_POST['apagar']))
 											<td class="list_description"><input type='file' name='arquivo[<?php echo $arq['sigla']; ?>]'></td>
 											<?php } ?>
 										</tr>
-								<?php
-									}
-								?>
+							
 							</table>
 							<input type="hidden" name="idPessoa" value="<?php echo $idProjeto; ?>"  />
 							<input type="hidden" name="tipoPessoa" value="<?php echo $tipoPessoa; ?>"  />

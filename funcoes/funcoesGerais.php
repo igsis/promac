@@ -971,7 +971,6 @@ function listaParecer($idPessoa,$tipoPessoa,$pagina)
 					<td>Nome do arquivo</td>
 					<td>Status</td>
 					<td>Observações</td>
-					<td width='15%'></td>
 				</tr>
 			</thead>
 			<tbody>";
@@ -993,8 +992,7 @@ function listaParecer($idPessoa,$tipoPessoa,$pagina)
 								<input type='hidden' name='idPessoa' value='".$idPessoa."' />
 								<input type='hidden' name='tipoPessoa' value='".$tipoPessoa."' />
 								<input type='hidden' name='apagar' value='".$arquivo['idUploadArquivo']."' />
-								<button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Remover Arquivo?' data-message='Deseja realmente excluir o arquivo ".$arquivo['documento']."?'>Remover
-								</button></td>
+						</td>
 							</form>";
 					}
 					echo "</tr>";
