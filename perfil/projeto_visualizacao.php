@@ -39,6 +39,7 @@ $status = recuperaDados("status","idStatus",$projeto['idStatus']);
                             <ul class="nav nav-tabs">
                                 <li class="nav active"><a href="#info" data-toggle="tab">Informações da Inscrição</a></li>
                                 <li class="nav"><a href="#projeto" data-toggle="tab">Projeto</a></li>
+                                <li class="nav"><a href="#parecer" data-toggle="tab">Parecer</a></li>
                             </ul>
                             <div class="tab-content">
                                 <!-- LABEL INFORMAÇÕES-->
@@ -75,11 +76,7 @@ $status = recuperaDados("status","idStatus",$projeto['idStatus']);
 													}
 												?>
                                                     </li>
-                                                    <li class='list-group-item'><strong>Parecer da Comissão:</strong>
-                                                        <?php 
-                                                        exibirArquivoParecer(9,$projeto['idProjeto']);
-                                                    ?>
-                                                    </li>
+                                                    
                                                 </li>
                                             </ul>
                                         </div>
@@ -111,9 +108,8 @@ $status = recuperaDados("status","idStatus",$projeto['idStatus']);
                                             </ul>
                                         </div>
                                     </div>
-                                </div>
 
-                                <!-- Botão para anexar certificados -->
+                                     <!-- Botão para anexar certificados -->
                                 <div class="form-group">
                                     <div class="col-md-offset-4 col-md-6">
                                         <?php
@@ -144,6 +140,8 @@ $status = recuperaDados("status","idStatus",$projeto['idStatus']);
                                      </form>
                                     </div>
                                 </div>
+                                </div>
+
 
                                 <!-- Botão para anexar complemento de informações -->
                                 <div class="form-group">
@@ -465,6 +463,32 @@ $status = recuperaDados("status","idStatus",$projeto['idStatus']);
                                     </ul>
                                 </div>
                                 <!-- FIM LABEL PROJETO -->
+
+                                <!-- LABEL PARECER -->
+                                <div role="tabpanel" class="tab-pane fade" id="parecer" align="left">
+                                <br>
+                                    <!-- Exibir arquivos -->
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-8">
+                                            <div class="table-responsive list_info">
+                                                <h6>Parecer da Solicitação de Alteração do Projeto</h6>
+                                                <?php listaAlteracaoParecer($idProjeto,9,"comissao_detalhes_projeto"); ?>
+                                            </div>
+                                        </div>
+                                    </div> 
+
+                                    <!-- Exibir arquivos -->
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-8">
+                                            <div class="table-responsive list_info">
+                                                <h6>Parecer do Projeto</h6>
+                                                <?php listaParecer($idProjeto,9,"comissao_detalhes_projeto"); ?>
+                                            </div>
+                                        </div>
+                                    </div>
+  
+                                </div>
+                                <!--FIM LABEL PARECER -->
                             </div>
                         </div>
                     </div>
