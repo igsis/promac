@@ -6,11 +6,17 @@ $alterar = isset($_POST['alterar']) ? $_POST['alterar'] : null;
 $protocolo = geraProtocolo($idProjeto);
 if($alterar == 1 || $alterar == 0)
 {
-	/*
-		Caso esteja alterando após indeferimento, muda o status para enviado
-	*/
-	$queryInsert = "UPDATE projeto SET idStatus='2', protocolo = '$protocolo' WHERE idProjeto='$idProjeto'";
-	$sendValue = mysqli_query($con, $queryInsert);
+    /*
+        Caso esteja alterando após indeferimento, muda o status para enviado
+    */
+    $queryInsert = "UPDATE projeto SET idStatus='2', protocolo = '$protocolo' WHERE idProjeto='$idProjeto'";
+    if(mysqli_query($con, $queryInsert))
+    {
+        gravarLog($queryInsert);
+        $data = date('Y-m-d h:i:s');
+        $sql_historico = "INSERT INTO `historico_status`(`idProjeto`, `idStatus`, `data`) VALUES ('$idProjeto', 2, '$data')";
+        $query_historico = mysqli_query($con, $sql_historico);
+    }
 }
 
 $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
@@ -44,7 +50,6 @@ $ano = date('Y');
 						<ul class='list-group'>
 							<li class='list-group-item list-group-item-success'>
 								<li class='list-group-item'><strong>Protocolo (nº ISP):</strong> <?php echo $projeto['protocolo'] ?></li>
-							</li>
 						</ul>
 					</div>
 				</div>
