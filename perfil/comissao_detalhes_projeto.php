@@ -166,7 +166,7 @@ if(isset($_POST['finalizaComissao']))
         $sql_historico = "INSERT INTO historico_status (idProjeto, idStatus, data) VALUES ('$idProjeto', '$statusEnvio', '$dateNow')";
         $query_historico = mysqli_query($con, $sql_historico);
         $mensagem = "<font color='#01DF3A'><strong>Finalizado com sucesso!</strong></font>";
-		echo "<script>window.location = '?perfil=comissao_detalhes_projeto&idFF=$idP';</script>";
+		echo "<script>window.location = '?perfil=comissao_index';</script>";
 		gravarLog($sql_finalizaComissao);
 	}
 	else
@@ -380,7 +380,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 						?>
                                 <form method="POST" action="?perfil=comissao_detalhes_projeto" class="form-horizontal" role="form">
                                     <div class="form-group">
-                                        <div class="col-md-offset-2 col-md-6" align="right"><br/><label>Finalizar evento e enviar à SMC?</label><br>
+                                        <div class="col-md-offset-2 col-md-6" align="right"><br/><label>Finalizar projeto e enviar à SMC?</label><br>
                                             <?php echo exibirDataHoraBr($projeto['finalizacaoComissao']) ?>
                                         </div>
                                         <div class="col-md-2"><br/>
@@ -413,7 +413,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                             </select>
                                         </div>
 	                                    <div class="col-md-4"><label>Data da Reunião</label>
-                                            <input type="text" name="dataReuniao" id='datepicker08' class="form-control" placeholder="DD/MM/AA ou MM/AAAA" required value="<?php echo exibirDataBr($projeto['dataReuniao']) ?>">
+                                            <input type="text" name="dataReuniao" id='datepicker08' class="form-control" required value="<?php echo exibirDataBr($projeto['dataReuniao']) ?>">
 	                                    </div>
                                     </div>
                                     <div class="form-group">
