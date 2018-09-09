@@ -2,18 +2,13 @@
 $con = bancoMysqli();
 
 $idProjeto = isset($_POST['idProjeto']) ? $_POST['idProjeto'] : null;
-if($idProjeto == null
-){
+if($idProjeto == null)
+{
     $idProjeto = isset($_GET['idFF']) ? $_GET['idFF'] : null;
 }
 $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 $reserva = recuperaDados("reserva","idReserva",$idProjeto);
 
-
-// Gerar documentos
-$server = "http://".$_SERVER['SERVER_NAME']."/promac/";
-$http = $server."/pdf/";
-$link1 = $http."rlt_projeto.php";
 
 if(isset($_POST['gravarPrazos']))
 {
@@ -74,15 +69,59 @@ if(isset($_POST['gravarAdm']))
     $valorAprovado = dinheiroDeBr($_POST['valorAprovado']);
     $idRenunciaFiscal = $_POST['idRenunciaFiscal'];
     $statusParecerista = $_POST['idStatusParecerista'];
-    $dataPublicacaoDoc = exibirDataMysql($_POST['dataPublicacaoDoc']);
+    if($_POST['dataReuniao'] == 0000-00-00)
+    {
+        $dataReuniao = '';
+    }
+    else
+    {
+        $dataReuniao = exibirDataMysql($_POST['dataReuniao']);
+    }
+    if($_POST['dataPublicacaoDoc'] == 0000-00-00)
+    {
+        $dataPublicacaoDoc = '';
+    }
+    else
+    {
+        $dataPublicacaoDoc = exibirDataMysql($_POST['dataPublicacaoDoc']);
+    }
     $linkPublicacaoDoc = $_POST['linkPublicacaoDoc'];
-    $sql_gravarAdm = "UPDATE projeto SET idStatus = '$idStatus', valorAprovado = '$valorAprovado', idRenunciaFiscal = '$idRenunciaFiscal', idStatusParecerista = '$statusParecerista', dataPublicacaoDoc = '$dataPublicacaoDoc', linkPublicacaoDoc = '$linkPublicacaoDoc' WHERE idProjeto = '$idP' ";
+    $data = date('Y-m-d h:i:s');
+    $idUsuario = $_SESSION['idUser'];
+    $sql_gravarAdm = "UPDATE projeto SET idStatus = '$idStatus', valorAprovado = '$valorAprovado', idRenunciaFiscal = '$idRenunciaFiscal', idStatusParecerista = '$statusParecerista', dataReuniao = '$dataReuniao', dataPublicacaoDoc = '$dataPublicacaoDoc', linkPublicacaoDoc = '$linkPublicacaoDoc' WHERE idProjeto = '$idP' ";
     if(mysqli_query($con,$sql_gravarAdm))
-
     {
         $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
         echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
         gravarLog($sql_gravarAdm);
+        if($dataReuniao != '' || $statusParecerista != 0)
+        {
+            $sql_historico_reuniao = "INSERT INTO historico_reuniao (idProjeto,idStatus,dataReuniao,idStatusParecerista,data,idUsuario) VALUES ('$idP','$idStatus','$dataReuniao','$statusParecerista','$data','$idUsuario')";
+            if(mysqli_query($con,$sql_historico_reuniao))
+            {
+                $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
+                echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
+                gravarLog($sql_historico_reuniao);
+            }
+            else
+            {
+                $mensagem = "<font color='#FF0000'><strong>Erro ao atualizar! Tente novamente.</strong></font>";
+            }
+        }
+        if($dataPublicacaoDoc != '' || $linkPublicacaoDoc != '')
+        {
+            $sql_historico_publicacao = "INSERT INTO historico_publicacao (idProjeto,idStatus,dataPublicacao,linkPublicacao,data,idUsuario) VALUES ('$idP','$idStatus','$dataPublicacaoDoc','$linkPublicacaoDoc','$data','$idUsuario')";
+            if(mysqli_query($con,$sql_historico_publicacao))
+            {
+                $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
+                echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
+                gravarLog($sql_historico_publicacao);
+            }
+            else
+            {
+                $mensagem = "<font color='#FF0000'><strong>Erro ao atualizar! Tente novamente.</strong></font>";
+            }
+        }
     }
     else
     {
@@ -90,18 +129,43 @@ if(isset($_POST['gravarAdm']))
     }
 }
 
-if(isset($_POST['dataReuniao']))
+if(isset($_POST['envioComissao']))
+{
+    $idProjeto = $_POST['idProjeto'];
+    $statusEnvio = $_POST['statusEnvio'];
+    $dateNow = date('Y:m:d h:i:s');
+    $sql_envioComissao = "UPDATE projeto SET idStatus = '$statusEnvio', envioComissao = '$dateNow' WHERE idProjeto = '$idProjeto' ";
+    if(mysqli_query($con,$sql_envioComissao))
+    {
+        $sql_historico = "INSERT INTO historico_status (idProjeto, idStatus, data) VALUES ('$idProjeto', '$statusEnvio', '$dateNow')";
+        $query_historico = mysqli_query($con, $sql_historico);
+        $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
+        echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idProjeto';</script>";
+        gravarLog($sql_historico);
+    }
+    else
+    {
+        $mensagem = "<font color='#FF0000'><strong>Erro ao atualizar! Tente novamente.</strong></font>";
+    }
+}
+/*
+if(isset($_POST['dataReuniao']) || isset($_POST['idStatusParecerista']))
 {
     $idP = $_POST['IDP'];
-    $dataReuniao = exibirDataMysql($_POST['dataReuniao']);
-    $sql_dataReuniao = "INSERT INTO data_reuniao (idProjeto, dataReuniao) VALUES ('$idP', '$dataReuniao')";
-    $sql_dataReuniaoAtualizar = "UPDATE projeto SET dataReuniao = '$dataReuniao' WHERE idProjeto = '$idP' ";
-    if(mysqli_query($con,$sql_dataReuniao))
-    if(mysqli_query($con,$sql_dataReuniaoAtualizar))
+
+    $projeto = recuperaDados("projeto","idProjeto",$idP);
+    $idStatus = $projeto['idStatus'];
+    $dataReuniao = $projeto['dataReuniao'];
+    $idStatusParecerista = $projeto['idStatusParecerista'];
+    $data = date('Y-m-d h:i:s');
+    $idUsuario = $_SESSION['idUser'];
+
+    $sql_historico_reuniao = "INSERT INTO historico_reuniao (idProjeto,idStatus,dataReuniao,idStatusParecerista,data,idUsuario) VALUES ('$idP','$idStatus',' $dataReuniao','$idStatusParecerista','$data','$idUsuario')";
+    if(mysqli_query($con,$sql_historico_reuniao))
     {
         $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
         echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
-        gravarLog($sql_dataReuniaoAtualizar);
+        gravarLog($sql_historico_reuniao);
     }
     else
     {
@@ -109,7 +173,30 @@ if(isset($_POST['dataReuniao']))
     }
 }
 
+if(isset($_POST['dataPublicacaoDoc']) || isset($_POST['linkPublicacaoDoc']))
+{
+    $idP = $_POST['IDP'];
 
+    $projeto = recuperaDados("projeto","idProjeto",$idP);
+    $idStatus = $projeto['idStatus'];
+    $dataPublicacaoDoc = $projeto['dataPublicacaoDoc'];
+    $linkPublicacaoDoc = $projeto['linkPublicacaoDoc'];
+    $data = date('Y-m-d h:i:s');
+    $idUsuario = $_SESSION['idUser'];
+
+    $sql_historico_publicacao = "INSERT INTO historico_publicacao (idProjeto,idStatus,dataPublicacao,linkPublicacao,data,idUsuario) VALUES ('$idP','$idStatus','$dataPublicacaoDoc','$linkPublicacaoDoc','$data','$idUsuario')";
+    if(mysqli_query($con,$sql_historico_publicacao))
+    {
+        $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
+        echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
+        gravarLog($sql_historico_publicacao);
+    }
+    else
+    {
+        $mensagem = "<font color='#FF0000'><strong>Erro ao atualizar! Tente novamente.</strong></font>";
+    }
+}
+*/
 if(isset($_POST['removerIncentivador'])){
     $idP = $_POST['IDP'];
     $idIncentivadorProjeto = $_POST['IIP'];
@@ -173,27 +260,6 @@ if(isset($_POST['gravarNota']))
         {
             $mensagem = "<font color='#FF0000'><strong>Erro ao inserir nota! Tente novamente.</strong></font>";
         }
-    }
-}
-
-if(isset($_POST['envioComissao']))
-{
-    $idP = $_POST['IDP'];
-    $dateNow = date('Y:m:d h:i:s');
-    $sql_envioComissaoAtualiza = "UPDATE projeto SET idStatus = '7', envioComissao = '$dateNow' WHERE idProjeto = '$idP' ";
-    $sql_envioComissao = "INSERT INTO envio_comissao (idProjeto, data) VALUES ('$idP', '$dateNow')";    
-
-    if(mysqli_query($con,$sql_envioComissao))
-    if(mysqli_query($con,$sql_envioComissaoAtualiza))
-    {
-        $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
-        echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
-        gravarLog($sql_envioComissao);
-        gravarLog($sql_envioComissaoAtualiza);
-    }
-    else
-    {
-        $mensagem = "<font color='#FF0000'><strong>Erro ao atualizar! Tente novamente.</strong></font>";
     }
 }
 
@@ -300,11 +366,12 @@ $comissao = recuperaDados("pessoa_fisica","idPf",$projeto['idComissao']);
         <?php include 'includes/menu_smc.php'; ?>
         <div class="form-group">
             <h4>Ambiente Coordenadoria</h4>
+            <h6><?= $projeto['nomeProjeto'] ?></h6>
         </div>
         <div class="row">
             <div class="col-md-offset-1 col-md-10">
                 <div role="tabpanel">
-                    <!-- LABELS xura-->
+                    <!-- LABELS -->
                     <ul class="nav nav-tabs">
                         <li class="nav active"><a href="#adm" data-toggle="tab">Administrativo</a></li>
                         <li class="nav"><a href="#projeto" data-toggle="tab">Projeto</a></li>
@@ -325,17 +392,26 @@ $comissao = recuperaDados("pessoa_fisica","idPf",$projeto['idComissao']);
                                 <?php if(isset($mensagem)){echo $mensagem;}; ?>
                             </h5>
 
-                            <div class="form-group">
-                                <div class="col-md-offset-2 col-md-3" align="right"><br/><label>Enviar projeto para comissão</label><br>
-                                    <?php echo exibirDataHoraBr($projeto['envioComissao'])?>
+                            <form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <div class="col-md-offset-1 col-md-7"><label>Enviar projeto para comissão como:</label><br>
+                                        <select class="form-control" name="statusEnvio">
+                                            <option>Selecione...</option>
+                                            <?php
+                                            $sql_status = "SELECT * FROM status WHERE idStatus IN (7, 19, 24, 30, 34) ORDER BY ordem";
+                                            $query_status = mysqli_query($con,$sql_status);
+                                            while($option = mysqli_fetch_row($query_status)) {
+                                                echo "<option value='" . $option[0] . "'>" . $option[1] . "</option>";
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3"><label><br/></label>
+                                        <input type='hidden' name='idProjeto' value='<?php echo $idProjeto?>'>
+                                        <input type="submit" name="envioComissao" class="btn btn-theme btn-md btn-block" value="Enviar">
+                                    </div>
                                 </div>
-                                <div class="col-md-1"><br/>
-                                     <form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
-                                        <input type='hidden' name='IDP' value='<?php echo $idProjeto?>'>
-                                        <input type="submit" name="envioComissao" class="btn btn-theme btn-lg btn-block" value="Sim">
-                                    </form>
-                                </div>
-                            </div>
+                            </form>
 
                             <!-- Se existir um parecerista -->
                             <?php if($projeto['idComissao'] > 0): ?>
@@ -350,63 +426,42 @@ $comissao = recuperaDados("pessoa_fisica","idPf",$projeto['idComissao']);
                                <div class="col-md-offset-0 col-md-12"><hr/></div>
                             </div>
 
-                            <div class="form-group">
-                                <div class="col-md-offset-4 col-md-4">
-                                    <?php
-                                    $id = $projeto['tipoPessoa'];
-                                    $idP = $projeto['idProjeto'];
-                                    if($id == 1)
-                                    {
-                                        $idPess = $projeto['idPf'];
-                                    } else if($id == 2)
-                                    {
-                                        $idPess = $projeto['idPj'];
-                                    }
-                                    ?>
-                                    <a href='<?php echo "../pdf/gera_pdf.php?tipo=$id&projeto=$idP&pessoa=$idPess"; ?>' target='_blank' class="btn btn-theme btn-md btn-block"><strong>Gerar PDF do Projeto</strong></a><br/>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-md-12">
-                                    <hr/>
-                                </div>
-                            </div>
-
                             <form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
                                 <div class="form-group">
-                                    <div class="col-md-offset-2 col-md-4"><label>Etapa do Projeto</label><br/>
+                                    <div class="col-md-offset-2 col-md-8"><label>Etapa do Projeto</label><br/>
                                         <select class="form-control" name="idStatus">
                                         <?php echo geraOpcao("status",$projeto['idStatus']) ?>
                                     </select>
                                     </div>
-                                    <div class="col-md-4"><label>Valor Aprovado</label><br/>
-                                        <input type="text" name="valorAprovado" id='valor' class="form-control" value="<?php echo dinheiroParaBr($projeto['valorAprovado']) ?>">
-                                    </div>                                  
                                 </div>
-
                                 <div class="form-group">
-                                    <div class="col-md-offset-2 col-md-4"><label>Valor Renúncia</label><br/>
+                                    <div class="col-md-offset-2 col-md-4"><label>Valor Aprovado</label><br/>
+                                        <input type="text" name="valorAprovado" id='valor' class="form-control" value="<?php echo dinheiroParaBr($projeto['valorAprovado']) ?>">
+                                    </div>
+                                    <div class="col-md-4"><label>Porcentagem Renúncia</label><br/>
                                         <select class="form-control" name="idRenunciaFiscal">
                                             <?php echo geraOpcao("renuncia_fiscal",$projeto['idRenunciaFiscal']) ?>
                                         </select>
                                     </div>
-                                    <div class="col-md-6"><label>Status de Análise</label><br/>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-6"><label>Status de Análise</label><br/>
                                         <select class="form-control" name="idStatusParecerista">
                                                 <option value="0"></option>
                                             <?php echo geraOpcao("status_parecerista",$projeto['idStatusParecerista']) ?>
                                         </select>
                                     </div>
+                                    <div class="col-md-6"><label>Data da Reunião</label>
+                                        <input type="text" name="dataReuniao" id='datepicker08' class="form-control" required value="<?php echo exibirDataBr($projeto['dataReuniao']) ?>">
+                                    </div>
                                 </div>
 
                                  <div class="form-group">
-                                    <div class="col-md-offset-2 col-md-8"><label>Data Publicação DOC</label>
-                                        <input type="text" name="dataPublicacaoDoc" id='datepicker09' class="form-control" placeholder="DD/MM/AA ou MM/AAAA" required value="<?php echo exibirDataBr($projeto['dataPublicacaoDoc']) ?>">
+                                    <div class="col-md-offset-2 col-md-3"><label>Data Publicação DOC</label>
+                                        <input type="text" name="dataPublicacaoDoc" id='datepicker09' class="form-control" value="<?php echo exibirDataBr($projeto['dataPublicacaoDoc']) ?>">
                                     </div>
-                                </div>
-                                
-                                <div class="form-group">    
-                                   <div class="col-md-offset-2 col-md-8"><label>Link Publicação DOC</label>
+                                   <div class="col-md-5"><label>Link Publicação DOC</label>
                                         <input type="text" name="linkPublicacaoDoc" class="form-control" value="<?php echo $projeto['linkPublicacaoDoc'] ?>">
                                     </div>
                                 </div>
@@ -417,22 +472,8 @@ $comissao = recuperaDados("pessoa_fisica","idPf",$projeto['idComissao']);
                                         <input type="submit" name="gravarAdm" class="btn btn-theme btn-md btn-block" value="Gravar">
                                     </div>
                                 </div>
-                            </form>
-                            <form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
-                                <div class="form-group">
-                                   <div class="col-md-offset-2 col-md-8"><label>Data da Reunião</label>
-                                        <input type="text" name="dataReuniao" id='datepicker08' class="form-control" placeholder="DD/MM/AA ou MM/AAAA" required value="<?php echo exibirDataBr($projeto['dataReuniao']) ?>">
-                                    </div>
-                                </div>    
 
-                                <div class="form-group">
-                                    <div class="col-md-offset-2 col-md-8">
-                                        <?php echo "<input type='hidden' name='IDP' value='$idProjeto'>"; ?>
-                                        <input type="submit" name="data" class="btn btn-theme btn-md btn-block" value="Gravar">
-                                    </div>
-                                </div>
-
-                                <br/>            
+                                <br/>
                             </form>
 
                             <form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
@@ -485,6 +526,22 @@ $comissao = recuperaDados("pessoa_fisica","idPf",$projeto['idComissao']);
                         <!-- LABEL PROJETO -->
                         <div role="tabpanel" class="tab-pane fade" id="projeto" align="left">
                             <br>
+                            <div class="form-group">
+                                <div class="col-md-offset-4 col-md-4">
+                                    <?php
+                                    $id = $projeto['tipoPessoa'];
+                                    $idP = $projeto['idProjeto'];
+                                    if($id == 1)
+                                    {
+                                        $idPess = $projeto['idPf'];
+                                    } else if($id == 2)
+                                    {
+                                        $idPess = $projeto['idPj'];
+                                    }
+                                    ?>
+                                    <a href='<?php echo "../pdf/gera_pdf.php?tipo=$id&projeto=$idP&pessoa=$idPess"; ?>' target='_blank' class="btn btn-theme btn-md btn-block"><strong>Gerar PDF do Projeto</strong></a><br/>
+                                </div>
+                            </div>
                             <table class="table table-bordered">
                                 <tr>
                                     <td><strong>Protocolo (nº ISP):</strong>
@@ -1295,110 +1352,131 @@ $comissao = recuperaDados("pessoa_fisica","idPf",$projeto['idComissao']);
 
                         <!-- LABEL HISTÓRICO -->
                         <div role="tabpanel" class="tab-pane fade" id="historico">
-                            <form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
-                                <h5>
-                                    <?php if(isset($mensagem)){echo $mensagem;}; ?>
-                                </h5>
-                                <div class="form-group">
-                                    <div class="col-md-offset-2 col-md-8"><br/></div>
-                                </div>
-
-                                <ul class='list-group'>
-                                    <li class='list-group-item list-group-item-success'>Histórico de Reuniões</li>
-                                   <?php
-                                        $sql_data_reuniao = "SELECT * FROM `data_reuniao` WHERE idProjeto = '$idProjeto' ORDER BY dataReuniao DESC";
-                                         $query_data_reuniao = mysqli_query($con,$sql_data_reuniao);
-                                         $num = mysqli_num_rows($query_data_reuniao);
-
-                                    if($num > 0)
+                            <br/>
+                            <ul class='list-group'>
+                                <li class='list-group-item list-group-item-success'><strong>HISTÓRICO DE ETAPA</strong></li>
+                            </ul>
+                            <table class='table table-condensed'>
+                                <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Status</th>
+                                </tr>
+                                </thead>
+                                <?php
+                                $sql_lista_historico = "SELECT st.status, hs.data AS data
+                                    FROM historico_status AS hs                                    
+                                    INNER JOIN status AS st ON hs.idStatus = st.idStatus
+                                    WHERE hs.idProjeto = '$idProjeto' ORDER BY hs.data,hs.idStatus";
+                                $query_lista_historico = mysqli_query($con,$sql_lista_historico);
+                                $num = mysqli_num_rows($query_lista_historico);
+                                if($num > 0)
+                                {
+                                    while($historico = mysqli_fetch_array($query_lista_historico))
                                     {
-                                    ?>                          
-                                        <table class='table table-condensed'>
-                                            <?php                                   
-                                            while($dataReuniao = mysqli_fetch_array($query_data_reuniao))
-                                            {                                   
-                                            ?>  
-                                                    <tr>
-                                                        <td><?php  echo exibirDataHoraBr($dataReuniao['dataReuniao']); ?></td>
-                                                    </tr>
-                                            <?php
-                                            }
-                                            ?>
-                                        </table>
-                                    <?php
+                                        echo "<tr>";
+                                        echo "<td>".exibirDataHoraBr($historico['status'])."</td>";
+                                        echo "<td>".$historico['status']."</td>";
+                                        echo "</tr>";
                                     }
-                                    else
-                                    {
-                                        echo "<li class='list-group-item'>Não há registros disponíveis.</li>";
-                                    }   
-                                    ?>
-                                    </li>
-                                </ul> 
+                                }
+                                else
+                                {
+                                    echo "<tr><td>Não há registros disponíveis.</td></tr>";
+                                }
+                                ?>
+                                </tr>
+                            </table>
 
+                            <br/>
+                            <table class='table table-condensed'>
                                 <ul class='list-group'>
-                                    <li class='list-group-item list-group-item-success'>Histórico de envios para a Comissão</li>
-                                   <?php
-                                        $sql_envio_comissao = "SELECT * FROM `envio_comissao` WHERE idProjeto = '$idProjeto' ORDER BY data DESC";
-                                         $query_envio_comissao = mysqli_query($con,$sql_envio_comissao); 
-                                         $num = mysqli_num_rows($query_envio_comissao);
-
-                                    if($num > 0)
+                                    <li class='list-group-item list-group-item-success'><strong>HISTÓRICO DE REUNIÃO</strong></li>
+                                </ul>
+                                <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Status</th>
+                                    <th>Data da reunião</th>
+                                    <th>Status de análise</th>
+                                    <th>Parecerista</th>
+                                    <th>Usuário</th>
+                                </tr>
+                                </thead>
+                                <?php
+                                $sql_lista_historico = "SELECT st.status AS h_st, rn.data AS dt, rn.dataReuniao, pr.status AS pr_s, cm.nome, us.nome AS user
+                                    FROM historico_reuniao AS rn
+                                    LEFT JOIN pessoa_fisica AS cm ON rn.idComissao = cm.idPf
+                                    INNER JOIN status_parecerista AS pr ON rn.idStatusParecerista = pr.idStatusParecerista
+                                    INNER JOIN pessoa_fisica AS us ON rn.idUsuario = us.idPf
+                                    INNER JOIN status AS st ON rn.idStatus = st.idStatus
+                                    WHERE rn.idProjeto = '$idProjeto' ORDER BY rn.data,rn.idStatus";
+                                $query_lista_historico = mysqli_query($con,$sql_lista_historico);
+                                $num = mysqli_num_rows($query_lista_historico);
+                                if($num > 0)
+                                {
+                                    while($historico = mysqli_fetch_array($query_lista_historico))
                                     {
-                                    ?>                          
-                                        <table class='table table-condensed'>
-                                            <?php                                   
-                                            while($envioComissao = mysqli_fetch_array($query_envio_comissao))
-                                            {                                   
-                                            ?>  
-                                                    <tr>
-                                                        <td><?php  echo exibirDataHoraBr($envioComissao['data']); ?></td>
-                                                    </tr>
-                                            <?php
-                                            }
-                                            ?>
-                                        </table>
-                                    <?php
+                                        echo "<tr>";
+                                        echo "<td>".exibirDataHoraBr($historico['dt'])."</td>";
+                                        echo "<td>".$historico['h_st']."</td>";
+                                        echo "<td>".exibirDataBr($historico['dataReuniao'])."</td>";
+                                        echo "<td>".$historico['pr_s']."</td>";
+                                        echo "<td>".$historico['nome']."</td>";
+                                        echo "<td>".$historico['user']."</td>";
+                                        echo "</tr>";
                                     }
-                                    else
-                                    {
-                                        echo "<li class='list-group-item'>Não há registros disponíveis.</li>";
-                                    }   
-                                    ?>
-                                    </li>
-                                </ul> 
+                                }
+                                else
+                                {
+                                    echo "<tr><td>Não há registros disponíveis.</td></tr>";
+                                }
+                                ?>
+                                </tr>
+                            </table>
 
-
+                            <br/>
+                            <table class='table table-condensed'>
                                 <ul class='list-group'>
-                                    <li class='list-group-item list-group-item-success'>Histórico de finalização da Comissão e envio à SMC</li>
-                                   <?php
-                                        $sql_finalizacao_comissao = "SELECT * FROM `finalizacao_comissao` WHERE idProjeto = '$idProjeto' ORDER BY data DESC";
-                                         $query_finalizacao_comissao = mysqli_query($con,$sql_finalizacao_comissao); 
-                                         $num = mysqli_num_rows($query_finalizacao_comissao);
-
-                                    if($num > 0)
+                                    <li class='list-group-item list-group-item-success'><strong>HISTÓRICO DE PUBLICAÇÃO</strong></li>
+                                </ul>
+                                <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Status</th>
+                                    <th>Data da publicação</th>
+                                    <th>Link da publicação</th>
+                                    <th>Usuário</th>
+                                </tr>
+                                </thead>
+                                <?php
+                                $sql_lista_historico = "SELECT st.status AS h_st, rn.data AS dt, rn.dataPublicacao, rn.linkPublicacao, us.nome AS user
+                                    FROM historico_publicacao AS rn
+                                    INNER JOIN pessoa_fisica AS us ON rn.idUsuario = us.idPf
+                                    INNER JOIN status AS st ON rn.idStatus = st.idStatus
+                                    WHERE rn.idProjeto = '$idProjeto' ORDER BY rn.data,rn.idStatus";
+                                $query_lista_historico = mysqli_query($con,$sql_lista_historico);
+                                $num = mysqli_num_rows($query_lista_historico);
+                                if($num > 0)
+                                {
+                                    while($historico = mysqli_fetch_array($query_lista_historico))
                                     {
-                                    ?>                          
-                                        <table class='table table-condensed'>
-                                            <?php                                   
-                                            while($finalizacaoComissao = mysqli_fetch_array($query_finalizacao_comissao))
-                                            {                                   
-                                            ?>  
-                                                    <tr>
-                                                        <td><?php  echo exibirDataHoraBr($finalizacaoComissao['data']); ?></td>
-                                                    </tr>
-                                            <?php
-                                            }
-                                            ?>
-                                        </table>
-                                    <?php
+                                        echo "<tr>";
+                                        echo "<td>".exibirDataHoraBr($historico['dt'])."</td>";
+                                        echo "<td>".$historico['h_st']."</td>";
+                                        echo "<td>".exibirDataBr($historico['dataPublicacao'])."</td>";
+                                        echo "<td>".$historico['linkPublicacao']."</td>";
+                                        echo "<td>".$historico['user']."</td>";
+                                        echo "</tr>";
                                     }
-                                    else
-                                    {
-                                        echo "<li class='list-group-item'>Não há registros disponíveis.</li>";
-                                    }   
-                                    ?>
-                                    </li>
-                                </ul> 
+                                }
+                                else
+                                {
+                                    echo "<tr><td>Não há registros disponíveis.</td></tr>";
+                                }
+                                ?>
+                                </tr>
+                            </table>
                         </div>
 
                                                 <!-- LABEL PAGAMENTOS -->
