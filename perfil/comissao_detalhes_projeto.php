@@ -216,7 +216,7 @@ if(isset($_POST["enviar"]))
 					if(move_uploaded_file($nome_temporario, $dir.$new_name))
 					{
 						$sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('$tipoPessoa', '$idProjeto', '$y', '$new_name', '$hoje', '1'); ";
-						$sql_status = "UPDATE projeto SET idStatus = '15' ";
+						$sql_status = "UPDATE projeto SET idStatus = '15' WHERE idProjeto = '$idProjeto'";
 						$query = mysqli_query($con,$sql_insere_arquivo);
 						$query = mysqli_query($con,$sql_status);
 						if($query)
@@ -447,9 +447,8 @@ $idStatus = $projeto['idStatus'];
                                         </div>
                                     </div>
                                 </div>
-
-
                             <?php
+                                uploadArquivo($idProjeto,3, "comissao_detalhes_projeto", 37, 9);
                             }
                             ?>
                                 <!-- Confirmação de Exclusão -->
