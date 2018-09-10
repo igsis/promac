@@ -28,7 +28,7 @@ function listaArquivosPessoaComStatus($idPessoa,$tipoPessoa,$pagina)
 			WHERE arq.idPessoa = '$idPessoa'
 			AND arq.idTipo = '$tipoPessoa'
 			AND arq.publicado = '1'
-			AND list.idListaDocumento IN (50)";
+			AND list.idListaDocumento IN (52)";
 	$query = mysqli_query($con,$sql);
 	$linhas = mysqli_num_rows($query);
 
@@ -77,7 +77,7 @@ function listaArquivosPessoaComStatus($idPessoa,$tipoPessoa,$pagina)
 
 if(isset($_POST["enviar"]))
 {
-	$sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '9' AND idListaDocumento IN (50)";
+	$sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '3' AND idListaDocumento IN (52)";
 	$query_arquivos = mysqli_query($con,$sql_arquivos);
 	while($arq = mysqli_fetch_array($query_arquivos))
 	{
@@ -192,7 +192,7 @@ if(isset($_POST['apagar']))
 									<td></td>
 								</tr>
 								<?php
-								  $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '9' AND idListaDocumento IN (50)";
+								  $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '3' AND idListaDocumento IN (52)";
 									$query_arquivos = mysqli_query($con,$sql_arquivos);
 									while($arq = mysqli_fetch_array($query_arquivos))
 									{
@@ -200,7 +200,7 @@ if(isset($_POST['apagar']))
 										<tr>
 											<?php
 											$doc = $arq['documento'];
-											$query = "SELECT idListaDocumento FROM lista_documento WHERE documento='$doc' AND publicado='1' AND idTipoUpload='3' AND idListaDocumento IN (50)";
+											$query = "SELECT idListaDocumento FROM lista_documento WHERE documento='$doc' AND publicado='1' AND idTipoUpload='3' AND idListaDocumento IN (52)";
 											$envio = $con->query($query);
 											$row = $envio->fetch_array(MYSQLI_ASSOC);
 											 ?>
