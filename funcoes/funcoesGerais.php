@@ -1155,6 +1155,67 @@ function listaArquivosPessoaSMC($idPessoa,$tipoPessoa,$pagina)
 	}
 }
 
+function listaAnexosProjeto($idPessoa,$tipoPessoa,$idArquivo,$pagina)
+{
+    $con = bancoMysqli();
+    $sql = "SELECT *
+			FROM lista_documento as list
+			INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
+			WHERE arq.idPessoa = '$idPessoa'
+			AND arq.idTipo = '$tipoPessoa'
+			AND arq.publicado = '1' AND list.idListaDocumento = '$idArquivo' ";
+    $query = mysqli_query($con,$sql);
+    $linhas = mysqli_num_rows($query);
+
+    if ($linhas > 0)
+    {
+        echo "
+		<table class='table table-condensed'>
+			<thead>
+				<tr class='list_menu'>
+					<td>Tipo de arquivo</td>
+					<td>Nome do arquivo</td>
+					<td>Status</td>
+					<td>Observação</td>
+					<td width='15%'></td>
+				</tr>
+			</thead>
+			<tbody>";
+        echo "<form method='POST' action='?perfil=".$pagina."'>";
+        while($arquivo = mysqli_fetch_array($query))
+        {
+            echo "<tr>";
+            echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
+            echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
+            echo "<td class='list_description'>
+								<select name='status' id='statusOpt'>";
+            echo "<option>Selecione</option>";
+            geraOpcao('status_documento', $arquivo['idStatusDocumento']);
+            echo " </select>
+							</td>";
+            echo "<td class='list_description'>
+						<input type='text' name='observacoes' maxlength='100' id='observ' value='".$arquivo['observacoes']."'/>
+						<input type='hidden' name='idArquivo' value='".$arquivo['idUploadArquivo']."' />
+						</td>";
+        }
+        echo "
+							<td class='list_description'>	
+								<input type='hidden' name='idPessoa' value='".$idPessoa."' />
+								<button class='btn btn-theme' type='submit' name='editarAnexoProjeto'>Atualizar
+								</button>
+							</td>";
+        echo "</tr>";
+        echo "</form>";
+        echo "
+		</tbody>
+		</table>";
+    }
+    else
+    {
+        echo "<p>Não há arquivo(s) inserido(s).<p/><br/>";
+    }
+}
+
 function listaSolicitacaoProponente($idPessoa,$tipoPessoa,$pagina)
 {
 	$con = bancoMysqli();
