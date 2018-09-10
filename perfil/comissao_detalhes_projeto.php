@@ -447,10 +447,14 @@ $idStatus = $projeto['idStatus'];
                                         </div>
                                     </div>
                                 </div>
-                            <?php
-                                uploadArquivo($idProjeto,3, "comissao_detalhes_projeto", 37, 9);
+                                <div class="form-group">
+                                    <div class="col-md-offset-1 col-md-10">
+                                        <?php
+                                    uploadArquivo($idProjeto,3, "comissao_detalhes_projeto", 48, 9);
                             }
                             ?>
+                                    </div>
+                                </div>
                                 <!-- Confirmação de Exclusão -->
                                 <div class="modal fade" id="confirmApagar" role="dialog"
                                      aria-labelledby="confirmApagarLabel" aria-hidden="true">
