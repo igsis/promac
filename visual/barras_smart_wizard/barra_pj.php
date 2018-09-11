@@ -127,6 +127,10 @@ for ($i = 0; $i < count($urlPj); $i++) {
                     <a onclick="location.href='index_pj.php?perfil=projeto_pj'" href=""><br /><small>Projetos</small></a>
                 </li>
                 <?php
+                    if ($proj['idStatus'] == 1)
+                    {
+                ?> 
+                <?php
                     if ($idProj == true) {
                 ?>
                 <li class="<?php echo isset($ativa7) ? $ativa7 : 'clickable'; ?>">
@@ -136,7 +140,7 @@ for ($i = 0; $i < count($urlPj); $i++) {
                     }else {
                         break;
                     }
-                ?>
+                ?>       
                 <li class="<?php echo isset($ativa8) ? $ativa8 : 'clickable'; ?>">
                    <a onclick="location.href='index_pj.php?perfil=projeto_3'" href=""><br /><small>Resumo e Currículo</small></a>
                 </li>
@@ -178,7 +182,10 @@ for ($i = 0; $i < count($urlPj); $i++) {
                    <a onclick="location.href='index_pj.php?perfil=finalProjeto'" href=""><br /><small>Concluir Inscrição</small></a>
                 </li>
                 <?php
-                    if ($proj['idStatus'] != 1) {
+                }
+                ?>
+                <?php
+                    /*if ($proj['idStatus'] != 1) {
                 ?>
                 <li class="<?php echo isset($ativa19) ? $ativa19 : 'clickable'; ?>">
                    <a onclick="location.href='index_pj.php?perfil=informacoes_administrativas'" href=""><br /><small>Informações da Inscrição</small></a>
@@ -190,7 +197,7 @@ for ($i = 0; $i < count($urlPj); $i++) {
                    <a><br /><small>Informações da Inscrição</small></a>
                 </li>
                 <?php
-                    }
+                    }*/
                 ?>
             </ul>
         </div>
