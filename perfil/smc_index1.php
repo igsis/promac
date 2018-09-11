@@ -217,7 +217,7 @@ if(isset($_POST['liberacaoPJ']))
         <div class="row">
             <div class="col-md-offset-1 col-md-10">
                 <div class="table-responsive list_info">
-                    <?php
+<?php
             $sql = "SELECT * FROM incentivador_pessoa_juridica WHERE liberado = 1 LIMIT 0,10";
             $query = mysqli_query($con,$sql);
             $num = mysqli_num_rows($query);
@@ -258,18 +258,19 @@ if(isset($_POST['liberacaoPJ']))
                 {
                     echo "Não há resultado no momento.";
                 }
-            ?>
+?>
                 </div>
             </div>
         </div>
 
 
 
-        <?php
-            $array_status = array(2, 3, 10, 13, 20, 23, 25, 29, 31, 14, 15, 11);//status
+<?php
+            $array_status = array(2, 3, 10, 12, 13, 20, 23, 25, 29, 31, 14, 15, 11); //status
             foreach ($array_status as $idStatus)
             {
-                $sql = "SELECT idProjeto, nomeProjeto, protocolo, pf.nome, pf.cpf, razaoSocial, cnpj, areaAtuacao, pfc.nome AS comissao, status, pro.idStatus AS idStatus 
+                $sqlStatus = "SELECT status, ordem FROM status WHERE idStatus = '$idStatus'";
+                $sqlProjeto = "SELECT idProjeto, nomeProjeto, protocolo, pf.nome, pf.cpf, razaoSocial, cnpj, areaAtuacao, pfc.nome AS comissao, status, pro.idStatus AS idStatus 
                     FROM projeto AS pro
                     LEFT JOIN pessoa_fisica AS pf ON pro.idPf = pf.idPf
                     LEFT JOIN pessoa_juridica AS pj ON pro.idPj = pj.idPj
@@ -277,121 +278,76 @@ if(isset($_POST['liberacaoPJ']))
                     LEFT JOIN pessoa_fisica AS pfc ON pro.idComissao = pfc.idPf 
                     INNER JOIN status AS st ON pro.idStatus = st.idStatus
                     WHERE pro.publicado = 1 AND pro.idStatus = '$idStatus' ORDER BY idProjeto DESC";
-                $query = mysqli_query($con,$sql);
-                $num = mysqli_num_rows($query);
-                ?>
-                <div class='form-group'><h5><?=$campo['status'] . "-".  $campo['idStatus']?></h5></div>
-                <div class="row">
-                    <div class="col-md-offset-1 col-md-10">
-                        <div class="table-responsive list_info">
-                            <table class='table table-condensed'>
-                                <thead>
-                                <tr class='list_menu'>
-                                    <td>Protocolo (nº ISP)</td>
-                                    <td>Nome do Projeto</td>
-                                    <td>Proponente</td>
-                                    <td>Documento</td>
-                                    <td>Área de Atuação</td>
-                                    <?= isset($campo['comissao']) ? "<td>Parecerista</td>" : NULL; ?>
-                                    <td width='10%'></td>
-                                </tr>
-                                </thead>
-                            <?php
-                            var_dump($sql);
+                $queryProjeto = mysqli_query($con,$sqlProjeto);
+                $queryStatus = mysqli_query($con,$sqlStatus);
+                $num = mysqli_num_rows($queryProjeto);
 
-                                if($num > 0)
-                                {
-                                    for ($i = 0; $i <= 7; $i++)
+                foreach ($queryStatus as $status)
+                {
+                    $i = 0;
+?>
+                    <div class='form-group'>
+                        <h5>Projetos com Status "<?=$status['status']?>"</h5>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-offset-1 col-md-10">
+                            <div class="table-responsive list_info">
+<?php
+//                                var_dump($sqlProjeto);
+
+                                    if($num > 0)
                                     {
-                                        $campo = mysqli_fetch_array($query);
-                                        echo $idStatus;
-                                        echo "<tr>";
-                                        echo "<td class='list_description'>".$campo['protocolo'] . "</td>";
-                                        echo "<td class='list_description'>".$campo['nomeProjeto'] . "</td>";
-                                        echo "<td class='list_description'>".isset($campo['nome']) ? $campo['nome'] : $campo['razaoSocial']."</td>";
-                                    }
+?>
 
-                                }
-                                ?>
-                            </table>
+                                            <table class='table table-condensed'>
+                                                <thead>
+                                                    <tr class='list_menu'>
+                                                        <td>Protocolo (nº ISP)</td>
+                                                        <td>Nome do Projeto</td>
+                                                        <td>Proponente</td>
+                                                        <td>Documento</td>
+                                                        <td>Área de Atuação</td>
+                                                        <?=($status['ordem'] >= 5) ? "<td>Parecerista</td>" : NULL ?>
+                                                        <td width='10%'></td>
+                                                    </tr>
+                                                </thead>
+<?php
+                                        while ($campo = mysqli_fetch_array($queryProjeto))
+                                        {
+                                            if ($i < 5) {
+?>
+                                                <tr>
+                                                    <td class='list_description'><?= $campo['protocolo'] ?></td>
+                                                    <td class='list_description'><?= $campo['nomeProjeto'] ?></td>
+                                                    <td class='list_description'><?= isset($campo['nome']) ? $campo['nome'] : $campo['razaoSocial'] ?></td>
+                                                    <td class='list_description'><?= isset($campo['cpf']) ? $campo['cpf'] : $campo['cnpj'] ?></td>
+                                                    <td class='list_description'><?= substr($campo['areaAtuacao'], 0,35) ?></td>
+                                                    <?= ($status['ordem'] >= 5) ? "<td class='list_description'>".$campo['comissao']."</td>" : NULL ?>
+                                                    <td class='list_description'>
+                                                        <form method='POST' action='?perfil=smc_detalhes_projeto'>
+                                                            <input type='hidden' name='idProjeto' value='<?= $campo['idProjeto'] ?>' />
+                                                            <input type ='submit' class='btn btn-theme btn-block' value='Visualizar'>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+<?php
+                                                $i++;
+                                            }
+                                        }
+                                   }
+                                   else
+                                   {
+                                       echo "Não há resultado no momento.";
+                                   }
+?>
+                                </table>
+                            </div>
                         </div>
                     </div>
-                </div>
-        <?php
+<?php
+                }
             }
-            ?>
-        <!-- Lista 6 -->
-         <div class="form-group">
-            <h5>Lista de projetos com complemento de informações pendente</h5>
-        </div>
-        <div class="row">
-            <div class="col-md-offset-1 col-md-10">
-                <div class="table-responsive list_info">
-                    <?php
-            $sql = "SELECT * FROM projeto WHERE publicado = 1 AND idStatus = 12 ORDER BY idProjeto DESC LIMIT 0,10";
-            $query = mysqli_query($con,$sql);
-            $num = mysqli_num_rows($query);
-            if($num > 0)
-            {
-                echo "
-                    <table class='table table-condensed'>
-                        <thead>
-                            <tr class='list_menu'>
-                                <td>Protocolo (nº ISP)</td>
-                                <td>Nome do Projeto</td>
-                                <td>Proponente</td>
-                                <td>Documento</td>
-                                <td>Área de Atuação</td>
-                                <td>Parecerista</td>
-                                <td width='10%'></td>
-                            </tr>
-                        </thead>
-                        <tbody>";
-
-                        while($campo = mysqli_fetch_array($query))
-                        {
-                            $area = recuperaDados("area_atuacao","idArea",$campo['idAreaAtuacao']);
-                            $status = recuperaDados("status","idStatus",$campo['idStatus']);
-                            $pf = recuperaDados("pessoa_fisica","idPf",$campo['idPf']);
-                            $pj = recuperaDados("pessoa_juridica","idPj",$campo['idPj']);
-                            $comissao = recuperaDados("pessoa_fisica","idPf",$campo['idComissao']);
-
-                            echo "<tr>";
-                            echo "<td class='list_description'>".$campo['protocolo']."</td>";
-                            echo "<td class='list_description'>".$campo['nomeProjeto']."</td>";
-                            if($campo['tipoPessoa'] == 1)
-                            {
-                                echo "<td class='list_description'>".$pf['nome']."</td>";
-                                echo "<td class='list_description'>".$pf['cpf']."</td>";
-                            }
-                            if($campo['tipoPessoa'] == 2)
-                            {
-                                echo "<td class='list_description'>".$pj['razaoSocial']."</td>";
-                                echo "<td class='list_description'>".$pj['cnpj']."</td>";
-                            }
-                            echo "<td class='list_description'>".$area['areaAtuacao']."</td>";
-                            echo "<td class='list_description'>".explode(' ', $comissao['nome'])[0]."</td>";
-                            echo "
-                                <td class='list_description'>
-                                    <form method='POST' action='?perfil=smc_detalhes_projeto'>
-                                        <input type='hidden' name='idProjeto' value='".$campo['idProjeto']."' />
-                                        <input type ='submit' class='btn btn-theme btn-block' value='Visualizar'>
-                                    </form>
-                                </td>";
-                            }
-                            echo "</tr>";
-                    echo "</tbody>
-                        </table>";
-                }
-                else
-                {
-                    echo "Não há resultado no momento.";
-                }
-            ?>
-                </div>
-            </div>
-        </div>
-
+?>
             </div>
         </div>
     </div>

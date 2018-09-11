@@ -3032,7 +3032,7 @@ function recuperaUsuario($idPf)
 
 function uploadArquivo($idProjeto, $tipoPessoa, $pagina, $idListaDocumento, $idTipoUpload)
 {
-    $server = "http://".$_SERVER['SERVER_NAME']."/promac/";
+    $server = "http://".$_SERVER['SERVER_NAME']."/promac";
     $http = $server."/pdf/";
     $con = bancoMysqli();
 	/* Exibir arquivos */
@@ -3077,14 +3077,14 @@ function uploadArquivo($idProjeto, $tipoPessoa, $pagina, $idListaDocumento, $idT
 									{
                                         echo "<td class='list_description path'>" . $arq['documento'] . "</td>";
                                     }
-									echo "<td class='list_description'><input type='file' name='arquivo[".$arq['sigla']."'></td>";
+									echo "<td class='list_description'><input type='file' name='arquivo[" . $arq['sigla'] . "]'></td>";
 								}
 							echo "</tr>";
 						}
 
 				echo "</table><br>";
-				echo '<input type="hidden" name="idPessoa" value="'.$idProjeto.'"  />';
-				echo '<input type="hidden" name="tipoPessoa" value="'.$tipoPessoa.'"  />';
+				echo "<input type='hidden' name='idPessoa' value='".$idProjeto."' />";
+				echo "<input type='hidden' name='tipoPessoa' value='".$tipoPessoa."'  />";
     			echo '<input type="submit" name="enviar" class="btn btn-theme btn-lg btn-block" value="Enviar">
 			</form>
 		</div>';

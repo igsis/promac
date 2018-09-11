@@ -203,27 +203,17 @@ if(isset($_POST["enviar"]))
 				$dir = '../uploadsdocs/'; //Diretório para uploads
 				$allowedExts = array(".pdf", ".PDF"); //Extensões permitidas
 				$ext = strtolower(substr($nome_arquivo,-4));
-				if(isset($_POST['idStatus']))
-				{
-					$idStatus = $_POST['idStatus'];
-				}
-				else
-				{
-				$idStatus = 0;
-				}
+
 				if(in_array($ext, $allowedExts)) //Pergunta se a extensão do arquivo, está presente no array das extensões permitidas
 				{
 					if(move_uploaded_file($nome_temporario, $dir.$new_name))
 					{
 						$sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('$tipoPessoa', '$idProjeto', '$y', '$new_name', '$hoje', '1'); ";
-						$sql_status = "UPDATE projeto SET idStatus = '15' WHERE idProjeto = '$idProjeto'";
 						$query = mysqli_query($con,$sql_insere_arquivo);
-						$query = mysqli_query($con,$sql_status);
 						if($query)
 						{
 							$mensagem = "<font color='#01DF3A'><strong>Arquivo recebido com sucesso!</strong></font>";
 							gravarLog($sql_insere_arquivo);
-							gravarLog($sql_status);
 						}
 						else
 						{
