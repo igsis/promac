@@ -103,6 +103,7 @@ if(isset($_POST['apagar']))
 													<td>Nome do Projeto</td>
 													<td>Área de Atuação</td>
 													<td width='10%'></td>
+													<td></td>
 												</tr>
 											</thead>
 											<tbody>";
