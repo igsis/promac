@@ -17,6 +17,17 @@ if($alterar == 1 || $alterar == 0)
         $sql_historico = "INSERT INTO `historico_status`(`idProjeto`, `idStatus`, `data`) VALUES ('$idProjeto', 2, '$data')";
         $query_historico = mysqli_query($con, $sql_historico);
     }
+    if($queryInsert)
+		{
+			$mensagem = "Projeto enviado com sucesso! Aguarde que você será redirecionado para a página de informações do projeto";
+			 echo "<script type=\"text/javascript\">
+				  window.setTimeout(\"location.href='?perfil=projeto_visualizacao';\", 4000);
+				</script>";
+		}
+		else
+		{
+			$mensagem = "Erro ao cadastrar. Tente novamente.";
+		}
 }
 
 $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
@@ -60,5 +71,7 @@ $ano = date('Y');
 
 			</div>
 		</div>
+
+
 	</div>
 </section>

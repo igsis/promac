@@ -1,14 +1,13 @@
 <?php
 
 $con = bancoMysqli();
-/*
+
 if(isset($_POST['carregar']))
 {
 	$_SESSION['idProjeto'] = $_POST['carregar'];
 }
 $idProjeto = $_SESSION['idProjeto'];
-*/
-$idProjeto = $_POST['carregar'];
+
 $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 $area = recuperaDados("area_atuacao","idArea",$projeto['idAreaAtuacao']);
 $renuncia = recuperaDados("renuncia_fiscal","idRenuncia",$projeto['idRenunciaFiscal']);
