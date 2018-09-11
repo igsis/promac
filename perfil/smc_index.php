@@ -287,7 +287,7 @@ if(isset($_POST['liberacaoPJ']))
                     $i = 0;
 ?>
                     <div class='form-group'>
-                        <h5>Projetos com Status "<?=$status['status']?>"</h5>
+                        <h5>Projetos com Status "<?=$status['status']?>"</h5> <span class="label label-warning">Total: <?=$num?></span>
                     </div>
                     <div class="row">
                         <div class="col-md-offset-1 col-md-10">
