@@ -69,6 +69,7 @@ if(isset($_POST['gravarAdm']))
     $valorAprovado = dinheiroDeBr($_POST['valorAprovado']);
     $idRenunciaFiscal = $_POST['idRenunciaFiscal'];
     $statusParecerista = $_POST['idStatusParecerista'];
+    $statusProjetoProponente = array(5, 6, 12, 21, 22, 26, 27, 28, 32, 33, 16, 17, 18);
     if($_POST['dataReuniao'] == 0000-00-00)
     {
         $dataReuniao = '';
@@ -100,6 +101,13 @@ if(isset($_POST['gravarAdm']))
             if(mysqli_query($con,$sql_historico_reuniao))
             {
                 $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
+
+                if (in_array($idStatus, $statusProjetoProponente))
+                {
+                    $sqlParecerista = "UPDATE projeto SET idComissao = '0' WHERE idProjeto = '$idP'";
+                    mysqli_query($con, $sqlParecerista);
+                }
+
                 echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
                 gravarLog($sql_historico_reuniao);
             }
@@ -114,6 +122,13 @@ if(isset($_POST['gravarAdm']))
             if(mysqli_query($con,$sql_historico_publicacao))
             {
                 $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
+
+                if (in_array($idStatus, $statusProjetoProponente))
+                {
+                    $sqlParecerista = "UPDATE projeto SET idComissao = '0' WHERE idProjeto = '$idP'";
+                    mysqli_query($con, $sqlParecerista);
+                }
+
                 echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
                 gravarLog($sql_historico_publicacao);
             }

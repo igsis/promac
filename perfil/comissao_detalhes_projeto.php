@@ -164,7 +164,7 @@ if(isset($_POST['finalizaComissao']))
 	$sql_finalizaComissao = "UPDATE projeto SET idStatus = '$idStatus', finalizacaoComissao = '$dateNow' WHERE idProjeto = '$idP' ";
 	if(mysqli_query($con,$sql_finalizaComissao))
 	{
-        $sql_historico = "INSERT INTO historico_status (idProjeto, idStatus, data) VALUES ('$idProjeto', '$statusEnvio', '$dateNow')";
+        $sql_historico = "INSERT INTO historico_status (idProjeto, idStatus, data) VALUES ('$idProjeto', '$idStatus', '$dateNow')";
         $query_historico = mysqli_query($con, $sql_historico);
         $mensagem = "<font color='#01DF3A'><strong>Finalizado com sucesso!</strong></font>";
 		echo "<script>window.location = '?perfil=comissao_index';</script>";
