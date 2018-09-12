@@ -99,29 +99,72 @@ else
 			<div class="row">
 				<div class="col-md-offset-1 col-md-10">
 					<form class="form-horizontal" role="form" action="?perfil=informacoes_iniciais_pj" method="post" id="frmCad">
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-8"><strong>Razão Social *:</strong><br/>
-							<input type="text" class="form-control" name="razaoSocial" placeholder="Razão Social" required value="<?=$pj['razaoSocial']?>">
-						</div>
-					</div>
+					  <div class="form-group">
+					    <div class="col-md-offset-2 col-md-8"><strong>Razão Social *:</strong><br/>
+					      <input type="text" class="form-control" name="razaoSocial" 
+					             placeholder="Razão Social" required 
+					             value="<?php 
+							          if(!empty($_POST['razaoSocial'])):				            
+							            echo $_POST['razaoSocial'];
+							          elseif(!empty($pj['razaoSocial'])):
+							            echo $pj['razaoSocial'];
+							          else:
+							            echo '';
+							          endif
+							        ?>">  
+					   </div>
+					  </div>
+					  <div class="form-group">
+					    <div class="col-md-offset-2 col-md-6"><strong>CNPJ *:</strong><br/>
+					      <input type="text" readonly class="form-control" id="cnpj" 
+					             name="cnpj" placeholder="CNPJ" required 
+					             value="<?php echo $pj['cnpj']; ?>" >
+					    </div>
+					    <div class="col-md-6"><strong>E-mail *:</strong><br/>
+					      <input type="text" class="form-control" name="email" required 
+					             placeholder="E-mail" 
+					             value="<?php 
+							          if(!empty($_POST['email'])):				            
+							            echo $_POST['email'];
+							          elseif(!empty($pj['email'])):
+							            echo $pj['email'];
+							          else:
+							            echo '';
+							          endif
+							        ?>">  
+					    </div>
+					  </div>
 
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-6"><strong>CNPJ *:</strong><br/>
-							<input type="text" readonly class="form-control" id="cnpj" name="cnpj" placeholder="CNPJ" value="<?php echo $pj['cnpj']; ?>" required>
-						</div>
-						<div class="col-md-6"><strong>Email *:</strong><br/>
-							<input type="text" class="form-control" name="email" placeholder="E-mail" maxlength="50" required value="<?=$pj['email'];?>">
-						</div>
-					</div>
-
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-6"><strong>Telefone :</strong><br/>
-							<input type="text" class="form-control" name="telefone" id="telefone" onkeyup="mascara( this, mtel );" maxlength="15" placeholder="Exemplo: (11) 98765-4321" value="<?=$pj['telefone']?>">
-						</div>
-						<div class="col-md-6"><strong>Celular *:</strong><br/>
-							<input required type="text" class="form-control" name="celular" id="telefone" onkeyup="mascara( this, mtel );" maxlength="15" placeholder="Exemplo: (11) 98765-4321" value="<?=$pj['celular']?>">
-						</div>
-					</div>
+					  <div class="form-group">
+					    <div class="col-md-offset-2 col-md-6"><strong>Telefone :</strong><br/>
+					      <input type="text" class="form-control" name="telefone" id="telefone" 
+					             onkeyup="mascara( this, mtel );" maxlength="15" 
+					             placeholder="Exemplo: (11) 98765-4321" 
+					             value="<?php 
+							          if(!empty($_POST['telefone'])):				            
+							            echo $_POST['telefone'];
+							          elseif(!empty($pj['telefone'])):
+							            echo $pj['telefone'];
+							          else:
+							            echo '';
+							          endif
+							        ?>"> 
+					    </div>
+					    <div class="col-md-6"><strong>Celular:</strong><br/>
+					      <input type="text" class="form-control" name="celular" id="telefone" 
+					             onkeyup="mascara( this, mtel );" maxlength="15" 
+					             placeholder="Exemplo: (11) 98765-4321" 
+					             value="<?php 
+							          if(!empty($_POST['celular'])):				            
+							            echo $_POST['celular'];
+							          elseif(!empty($pj['celular'])):
+							            echo $pj['celular'];
+							          else:
+							            echo '';
+							          endif
+							        ?>"> 
+					    </div>
+					  </div>
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><hr/></div>

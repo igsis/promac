@@ -103,36 +103,89 @@ else
 			<div class="row">
 				<div class="col-md-offset-1 col-md-10">
 					<form class="form-horizontal" role="form" action="?perfil=informacoes_iniciais_pf" method="post" id="frmCad">
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-8"><strong>Nome *:</strong><br/>
-							<input type="text" class="form-control" name="nome"	placeholder="Nome" value="<?=$pf['nome']?>" required>
+					    <div class="form-group">
+						  <div class="col-md-offset-2 col-md-8"><strong>Nome *:</strong><br/>
+						    <input type="text" class="form-control" name="nome" 
+						           placeholder="Nome" required
+						           value="<?php 
+							          if(!empty($_POST['nome'])):				            
+							            echo $_POST['nome'];
+							          elseif(!empty($pf['nome'])):
+							            echo $pf['nome'];
+							          else:
+							            echo '';
+							          endif
+							        ?>">  
+						  </div>
 						</div>
-					</div>
 
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-6"><strong>CPF *:</strong><br/>
-							<input type="text" readonly class="form-control" id="cpf" name="cpf" placeholder="CPF" value="<?=$pf['cpf']?>" required>
+						<div class="form-group">
+						  <div class="col-md-offset-2 col-md-6"><strong>CPF *:</strong><br/>
+						    <input type="text" readonly class="form-control" id="cpf" 
+						           name="cpf" placeholder="CPF" 
+						           value="<?php echo $pf['cpf']; ?>" required>
+						  </div>
+						  <div class="col-md-6"><strong>RG ou RNE *:</strong><br/>
+						    <input type="text" class="form-control" name="rg" 
+						           placeholder="Número do Documento" required
+						           value="<?php 
+							          if(!empty($_POST['rg'])):				            
+							            echo $_POST['rg'];
+							          elseif(!empty($pf['rg'])):
+							            echo $pf['rg'];
+							          else:
+							            echo '';
+							          endif
+							        ?>"> 
+						  </div>
 						</div>
-						<div class="col-md-6"><strong>RG ou RNE *:</strong><br/>
-							<input type="text" class="form-control" name="rg" placeholder="Número do Documento"
-							maxlength="14" required value="<?=$pf['rg']?>">
-						</div>
-					</div>
 
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-8"><strong>Email *:</strong><br/>
-							<input type="email" class="form-control" name="email" placeholder="E-mail" maxlength="50" value="<?=$pf['email']?>" required>
+						<div class="form-group">
+						  <div class="col-md-offset-2 col-md-8"><strong>Email *:</strong><br/>
+						    <input type="email" class="form-control" name="email" 
+						           placeholder="E-mail" required 
+						           value="<?php 
+							          if(!empty($_POST['email'])):				            
+							            echo $_POST['email'];
+							          elseif(!empty($pf['email'])):
+							            echo $pf['email'];
+							          else:
+							            echo '';
+							          endif
+							        ?>">  
+						  </div>
 						</div>
-					</div>
 
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-6"><strong>Telefone :</strong><br/>
-							<input type="text" class="form-control" name="telefone" id="telefone" onkeyup="mascara( this, mtel );" maxlength="15" placeholder="Exemplo: (11) 98765-4321" value="<?=$pf['telefone']?>">
+						<div class="form-group">
+						  <div class="col-md-offset-2 col-md-6"><strong>Telefone :</strong><br/>
+						    <input type="text" class="form-control" name="telefone" id="telefone" 
+						           onkeyup="mascara( this, mtel );" maxlength="15" 
+						           placeholder="Exemplo: (11) 98765-4321" 
+						           value="<?php 
+							          if(!empty($_POST['telefone'])):				            
+							            echo $_POST['telefone'];
+							          elseif(!empty($pf['telefone'])):
+							            echo $pf['telefone'];
+							          else:
+							            echo '';
+							          endif
+							        ?>"> 
+						  </div>
+						  <div class="col-md-6"><strong>Celular:</strong><br/>
+						    <input type="text" class="form-control" name="celular" id="telefone" 
+						           onkeyup="mascara( this, mtel );" maxlength="15" 
+						           placeholder="Exemplo: (11) 98765-4321" 
+						           value="<?php 
+							          if(!empty($_POST['celular'])):				            
+							            echo $_POST['celular'];
+							          elseif(!empty($pf['celular'])):
+							            echo $pf['celular'];
+							          else:
+							            echo '';
+							          endif
+							        ?>"> 
+						  </div>
 						</div>
-						<div class="col-md-6"><strong>Celular *:</strong><br/>
-							<input required type="text" class="form-control" name="celular" id="telefone" onkeyup="mascara( this, mtel );" maxlength="15" placeholder="Exemplo: (11) 98765-4321" value="<?=$pf['celular']?>">
-						</div>
-					</div>
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><hr/></div>
