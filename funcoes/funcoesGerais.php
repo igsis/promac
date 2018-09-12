@@ -3045,15 +3045,19 @@ function uploadArquivo($idProjeto, $tipoPessoa, $pagina, $idListaDocumento, $idT
             echo "<tr>";
             echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
             echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
-			echo "
-					<td class='list_description'>
-						<form id='apagarArq' method='POST' action='?perfil=".$pagina."'>
-							<input type='hidden' name='idPessoa' value='".$idProjeto."' />
-							<input type='hidden' name='tipoPessoa' value='".$tipoPessoa."' />
-							<input type='hidden' name='apagar' value='".$arquivo['idUploadArquivo']."' />
-							<input type='submit' class='btn btn-theme btn-md btn-block'  value='apagar' />
-						</form>
-					</td>";
+            $dateNow = date('Y:m:d');
+            $dataenvio = exibirDataMysql($arquivo['dataEnvio']);
+            if($dataenvio == $dateNow) {
+                echo "
+						<td class='list_description'>
+							<form id='apagarArq' method='POST' action='?perfil=" . $pagina . "'>
+								<input type='hidden' name='idPessoa' value='" . $idProjeto . "' />
+								<input type='hidden' name='tipoPessoa' value='" . $tipoPessoa . "' />
+								<input type='hidden' name='apagar' value='" . $arquivo['idUploadArquivo'] . "' />
+								<input type='submit' class='btn btn-theme btn-md btn-block'  value='apagar' />
+							</form>
+						</td>";
+            }
             echo "</tr>";
         }
         echo "
@@ -3079,35 +3083,33 @@ function uploadArquivo($idProjeto, $tipoPessoa, $pagina, $idListaDocumento, $idT
 		$envio = $con->query($query);
 		$row = $envio->fetch_array(MYSQLI_ASSOC);
 
-		if(verificaArquivosExistentesPF($idProjeto,$row['idListaDocumento'])){
-			echo '<div class="alert alert-success">O arquivo ' . $doc . ' já foi enviado.</div>';
+		if($idListaDocumento != 48) {
+            if (verificaArquivosExistentesPF($idProjeto, $row['idListaDocumento'])) {
+                echo '<div class="alert alert-success">O arquivo ' . $doc . ' já foi enviado.</div>';
+            }
 		}
-		else
-		{
-			echo '<form method="POST" action="?perfil='.$pagina.'" enctype="multipart/form-data">
+		 else {
+			echo '<form method="POST" action="?perfil=' . $pagina . '" enctype="multipart/form-data">
 			<table class="table table-condensed">
 				<tr class="list_menu">
 					<td>Tipo de Arquivo</td>
 					<td></td>
 				</tr>';
-				$urlArquivo = $http.$arq['idListaDocumento'];
-				if(arquivosExiste($urlArquivo))
-				{
-					echo '<td class="list_description path">';
-						$path = selecionaArquivoAnexo($http, $arq['idListaDocumento']);
-						echo "<a href='" . $path . "'target='_blank'>" . $arq['documento'] . "</a>
-				  	</td>";
-				}
-				else
-				{
-					echo "<td class='list_description path'>" . $arq['documento'] . "</td>";
-				}
-				echo "<td class='list_description'><input type='file' name='arquivo[" . $arq['sigla'] . "]'></td>";
+			$urlArquivo = $http . $arq['idListaDocumento'];
+			if (arquivosExiste($urlArquivo)) {
+				echo '<td class="list_description path">';
+				$path = selecionaArquivoAnexo($http, $arq['idListaDocumento']);
+				echo "<a href='" . $path . "'target='_blank'>" . $arq['documento'] . "</a>
+					</td>";
+			} else {
+				echo "<td class='list_description path'>" . $arq['documento'] . "</td>";
+			}
+			echo "<td class='list_description'><input type='file' name='arquivo[" . $arq['sigla'] . "]'></td>";
 			echo "</tr>";
 			echo "</table><br>";
-			echo "<input type='hidden' name='idPessoa' value='".$idProjeto."' />";
-			echo "<input type='hidden' name='idTipoUpload' value='".$idTipoUpload."' />";
-			echo "<input type='hidden' name='tipoPessoa' value='".$tipoPessoa."'  />";
+			echo "<input type='hidden' name='idPessoa' value='" . $idProjeto . "' />";
+			echo "<input type='hidden' name='idTipoUpload' value='" . $idTipoUpload . "' />";
+			echo "<input type='hidden' name='tipoPessoa' value='" . $tipoPessoa . "'  />";
 			echo '<input type="submit" name="enviar" class="btn btn-theme btn-lg btn-block" value="Enviar">
 			</form>	';
 		}

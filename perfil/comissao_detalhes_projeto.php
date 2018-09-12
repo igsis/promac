@@ -428,23 +428,23 @@ $idStatus = $projeto['idStatus'];
                             <!-- Exibir arquivos -->
                             <?php
                             switch ($idStatus) {
-                                case 7:
+                                case 7: //Projeto enviado à Comissão
                                     $idArquivo = 0;
                                     $idListaDocumento = 37;
                                     break;
-                                case 19:
+                                case 19: //Complemento enviado à Comissão
                                     $idArquivo = 46;
                                     $idListaDocumento = 49;
                                     break;
-                                case 24:
+                                case 24: //Recurso encaminhado à Comissão
                                     $idArquivo = 52;
                                     $idListaDocumento = 50;
                                     break;
-                                case 30:
-                                    $idArquivo = 53;
+                                case 30: //Complementação de recurso encaminhado à Comissão
+                                $idArquivo = 53;
                                     $idListaDocumento = 51;
                                     break;
-                                case 34:
+                                case 34: //Solicitação de alteração encaminhada à Comissão
                                     $idArquivo = 47;
                                     $idListaDocumento = 48;
                                     break;
