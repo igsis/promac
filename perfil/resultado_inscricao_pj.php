@@ -272,7 +272,7 @@ if(isset($_POST['apagar']))
 				</form>
 				<?php
 				}
-			}
+				?>
 				<?php
 				}
 				else{
