@@ -4,6 +4,9 @@
 	<div class="alert alert-warning">
 		<strong>Atenção!</strong> Confirme atentamente se os dados abaixo estão corretos!
 	</div>
+	<div class="alert alert-info">
+		Após o preenchimento de todos os dados pessoais, conclua a inscrição do proponente e aguarde a análise da sua documentação pela Secretaria Municipal de Cultura.
+	</div>
 	<?php
 		if ($cpo == true)
 		{

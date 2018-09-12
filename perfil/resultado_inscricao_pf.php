@@ -125,9 +125,6 @@ if(isset($_POST['apagar']))
 				{
 					include 'includes/resumo_pf.php';
 				?>
-					<div class="alert alert-info">
-						Após o preenchimento de todos os dados pessoais, conclua a inscrição do proponente e aguarde a análise da sua documentação pela Secretaria Municipal de Cultura.
-					</div>
 			</div>
 			<?php
 				}
@@ -231,9 +228,9 @@ if(isset($_POST['apagar']))
 
 			<div class="form-group">
 			<div class="col-md-offset-2 col-md-8">
-				<?php /*						
+				<?php 						
 				if ($cpo == false)
-				{
+				{/*
 						$idPess = $pf['idPf'];
 						$queryArquivos = 
 						  "SELECT 
@@ -252,19 +249,16 @@ if(isset($_POST['apagar']))
 						<input type="submit" name="liberacao" value="Concluir inscrição do proponente" class="btn btn-theme btn-lg btn-block">
 					</form>
 					<?php
-					/*}
+					}
 					else
 					{
 						echo "<div class='alert alert-warning'>
-						<strong>Erro: </strong> Você deve enviar todos os documentos para prosseguir.
+						<strong>Erro: </strong> Você deve preencher todos os campos obrigatórios para prosseguir.
 						</div>";
 					}
-				}*/?>
+				}?>
 			</div>
 		</div>
-			<?php
-				}
-				?>
 		<!-- Confirmação de Exclusão -->
 			<div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel" aria-hidden="true">
 				<div class="modal-dialog">
