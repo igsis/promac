@@ -234,9 +234,9 @@ if(isset($_POST['apagar']))
 					
 		<div class="form-group">
 			<div class="col-md-offset-2 col-md-8">
-				<?php/*							
+				<?php						
 				if ($cpo == false)
-				{
+				{/*
 					
 					$idPess = $pf['idPf'];
 					$queryArquivos = 
@@ -256,12 +256,13 @@ if(isset($_POST['apagar']))
 					<input type="submit" name="liberacao" value="Concluir inscrição do Incentivador" class="btn btn-theme btn-lg btn-block">
 				</form>
 				<?php
-				/*}
+				}
 				else{
 					echo "<div class='alert alert-warning'>
-					<strong>Erro: </strong> Você deve enviar todos os documentos para prosseguir.
+					<strong>Erro: </strong> Você deve preencher todos os campos obrigatórios para prosseguir.
+
 					</div>";
-				}*/
+				}
 			}?>
 			</div>
 		</div>
