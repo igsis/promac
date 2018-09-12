@@ -428,6 +428,10 @@ $idStatus = $projeto['idStatus'];
                             <!-- Exibir arquivos -->
                             <?php
                             switch ($idStatus) {
+                                case 7:
+                                    $idArquivo = 0;
+                                    $idListaDocumento = 37;
+                                    break;
                                 case 19:
                                     $idArquivo = 46;
                                     $idListaDocumento = 49;
@@ -453,7 +457,7 @@ $idStatus = $projeto['idStatus'];
                                 <div class="form-group">
                                     <div class="col-md-offset-1 col-md-10">
                                         <div class="table-responsive list_info">
-                                            <h6>Solicitações de alteração do projeto</h6>
+                                            <h6>Solicitações do proponente</h6>
                                             <?php listaAnexosProjeto($idProjeto, 3,$idArquivo, "comissao_detalhes_projeto"); ?>
                                         </div>
                                     </div>

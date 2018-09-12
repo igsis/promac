@@ -162,7 +162,7 @@ $dias = floor($diferenca / (60 * 60 * 24));//Calcula a diferença em dias
                                 <div class="form-group">
                                     <div class="col-md-offset-4 col-md-6">
                                         <?php
-                                        if(($idStatus == 6 || $idStatus == 22 || $idStatus == 17) &&  $dias >= -7 && $dias <= 0)
+                                        if(($idStatus == 5 || $idStatus == 6 || $idStatus == 22 || $idStatus == 17) &&  $dias >= -7 && $dias <= 0)
                                         {
                                         ?>
                                             <form class="form-horizontal" role="form" action="?perfil=envio_recursos&idProjeto=<?=$idProjeto?>" method="post">
