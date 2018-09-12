@@ -3045,8 +3045,8 @@ function uploadArquivo($idProjeto, $tipoPessoa, $pagina, $idListaDocumento, $idT
             echo "<tr>";
             echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
             echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
-            $dateNow = date('Y:m:d');
-            $dataenvio = exibirDataMysql($arquivo['dataEnvio']);
+            $dateNow = date('Y-m-d');
+            $dataenvio = date_format(date_create($arquivo['dataEnvio']), 'Y-m-d');
             if($dataenvio == $dateNow) {
                 echo "
 						<td class='list_description'>
