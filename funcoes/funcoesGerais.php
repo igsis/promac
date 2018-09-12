@@ -1175,37 +1175,17 @@ function listaAnexosProjeto($idPessoa,$tipoPessoa,$idArquivo,$pagina)
 				<tr class='list_menu'>
 					<td>Tipo de arquivo</td>
 					<td>Nome do arquivo</td>
-					<td>Status</td>
-					<td>Observação</td>
 					<td width='15%'></td>
 				</tr>
 			</thead>
 			<tbody>";
-        echo "<form method='POST' action='?perfil=".$pagina."'>";
         while($arquivo = mysqli_fetch_array($query))
         {
             echo "<tr>";
             echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
             echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
-            echo "<td class='list_description'>
-								<select name='status' id='statusOpt'>";
-            echo "<option>Selecione</option>";
-            geraOpcao('status_documento', $arquivo['idStatusDocumento']);
-            echo " </select>
-							</td>";
-            echo "<td class='list_description'>
-						<input type='text' name='observacoes' maxlength='100' id='observ' value='".$arquivo['observacoes']."'/>
-						<input type='hidden' name='idArquivo' value='".$arquivo['idUploadArquivo']."' />
-						</td>";
+            echo "</tr>";
         }
-        echo "
-							<td class='list_description'>	
-								<input type='hidden' name='idPessoa' value='".$idPessoa."' />
-								<button class='btn btn-theme' type='submit' name='editarAnexoProjeto'>Atualizar
-								</button>
-							</td>";
-        echo "</tr>";
-        echo "</form>";
         echo "
 		</tbody>
 		</table>";
