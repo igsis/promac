@@ -2,6 +2,7 @@
 $con = bancoMysqli();
 $tipoPessoa = '5';
 $idPj = isset($_POST['liberado']) ? $_POST['liberado'] : null;
+
 if($idPj == null)
 {
 	$idPj = $_GET['idFF'];
@@ -267,4 +268,8 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 	<?php
 	}
 	?>
+
+	<div class="col-md-offset-2 col-md-8">
+		<a href="../include/arquivos_pessoa.php?idPessoa=<?php echo $pj['idPj'] ?>&tipo=<?php echo $tipoPessoa?>" class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos da empresa</a>
+	</div>
 </section>

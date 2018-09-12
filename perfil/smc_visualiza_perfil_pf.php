@@ -1,6 +1,7 @@
 <?php
 $con = bancoMysqli();
 $tipoPessoa = '1';
+
 if(isset($_POST['liberado']))
 {
 	$idPf = $_POST['liberado'];
@@ -265,4 +266,8 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 	<?php
 	}
 	?>
+
+	<div class="col-md-offset-2 col-md-8">
+		<a href="../include/arquivos_pessoa.php?idPessoa=<?php echo $pf['idPf'] ?>&tipo=<?php echo $tipoPessoa?>" class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos da empresa</a>
+	</div>
 </section>
