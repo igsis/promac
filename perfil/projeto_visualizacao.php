@@ -23,6 +23,8 @@ $dataRecurso = date('Y-m-d', strtotime("+7 days",strtotime($dataPublicacaoDoc)))
 $diferenca = strtotime($dateNow) - strtotime($dataRecurso);
 $dias = floor($diferenca / (60 * 60 * 24));//Calcula a diferença em dias
 
+$status_aprovado = array(2, 5, 21, 26, 32, 16, 11);
+$status_reprovado = array(6, 22, 27, 33, 17);
 ?>
 <section id="list_items" class="home-section bg-white">
     <div class="container">
@@ -62,26 +64,73 @@ $dias = floor($diferenca / (60 * 60 * 24));//Calcula a diferença em dias
                                             </li>
                                             <li class='list-group-item'><strong>Etapa do projeto:</strong>
                                                 <?php
-                                                if($idStatus == 7 || $idStatus == 10 || $idStatus == 12 || $idStatus == 19 || $idStatus == 20 || $idStatus == 24 || $idStatus == 25 || $idStatus == 28 || $idStatus == 30 || $idStatus == 31 || $idStatus == 34 || $idStatus == 15)
+                                                if(in_array($idStatus, $status_aprovado) || in_array($idStatus, $status_reprovado))
                                                 {
-                                                    echo "Projeto em análise";
+                                                    echo $status['status'];
                                                 }
                                                 else
                                                 {
-                                                    echo $status['status'];
+                                                    echo "Projeto em análise";
                                                 }
                                                 ?>
                                             </li>
                                             <li class='list-group-item'>
                                                 <strong>Valor Aprovado:</strong>
                                                 <?php
-                                                if($idStatus == 5 || $idStatus == 21 || $idStatus == 26 || $idStatus == 32 || $idStatus == 16 || $idStatus == 11)
+                                                if (in_array($idStatus, $status_aprovado))
                                                 {
                                                     echo "R$ ".dinheiroParaBr($projeto['valorAprovado']);
                                                 }
                                               ?>
                                             </li>
                                         </ul>
+                                    </div>
+                                </div>
+
+                                <!-- Exibir arquivos -->
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-8">
+                                        <div class="table-responsive list_info">
+                                            <h6>Parecer do Projeto</h6>
+                                            <?php
+                                            $sql = "SELECT *
+                                                FROM lista_documento as list
+                                                INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
+                                                WHERE arq.idPessoa = '$idProjeto'
+                                                AND arq.idTipo = 9
+                                                AND arq.publicado = 1";
+                                            $query = mysqli_query($con,$sql);
+                                            $linhas = mysqli_num_rows($query);
+
+                                            if ($linhas > 0)
+                                            {
+                                                echo "
+                                                <table class='table table-condensed'>
+                                                    <thead>
+                                                        <tr class='list_menu'>
+                                                            <td>Tipo de arquivo</td>
+                                                            <td>Nome do arquivo</td>
+                                                            <td width='15%'></td>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>";
+                                                while($arquivo = mysqli_fetch_array($query))
+                                                {
+                                                    echo "<tr>";
+                                                    echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
+                                                    echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
+                                                    echo "</tr>";
+                                                }
+                                                echo "
+                                                    </tbody>
+                                                    </table>";
+                                            }
+                                            else
+                                            {
+                                                echo "<p>Não há arquivo(s) inserido(s).<p/><br/>";
+                                            }
+                                            ?>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -130,7 +179,7 @@ $dias = floor($diferenca / (60 * 60 * 24));//Calcula a diferença em dias
                                 <div class="form-group">
                                     <div class="col-md-offset-4 col-md-6">
                                         <?php
-                                        if($idStatus == 5 || $idStatus == 16 || $idStatus == 21 || $idStatus = 26 || $idStatus == 32 || $idStatus == 11)
+                                        if(in_array($idStatus, $status_aprovado))
                                         {
                                         ?>
                                             <form class="form-horizontal" role="form" action="?perfil=alteracao_projeto&idProjeto=<?=$idProjeto?>" method="post">
@@ -498,7 +547,7 @@ $dias = floor($diferenca / (60 * 60 * 24));//Calcula a diferença em dias
                                     <div class="col-md-offset-2 col-md-8">
                                         <div class="table-responsive list_info">
                                             <h6>Parecer do Projeto</h6>
-                                            <?php listaParecer($idProjeto,9,"comissao_detalhes_projeto"); ?>
+                                            <?php listaAnexosProjeto($idProjeto,9,"comissao_detalhes_projeto"); ?>
                                         </div>
                                     </div>
                                 </div>
