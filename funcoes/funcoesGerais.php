@@ -1203,7 +1203,7 @@ function listaArquivosPessoaSMC($idPessoa,$tipoPessoa,$pagina)
 	}
 }
 
-function listaAnexosProjeto($idPessoa,$tipoPessoa,$idArquivo,$pagina)
+function listaAnexosProjeto($idPessoa,$tipoPessoa,$idArquivo)
 {
     $con = bancoMysqli();
     $sql = "SELECT *

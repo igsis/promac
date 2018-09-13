@@ -458,7 +458,7 @@ $idStatus = $projeto['idStatus'];
                                     <div class="col-md-offset-1 col-md-10">
                                         <div class="table-responsive list_info">
                                             <h6>Solicitações do proponente</h6>
-                                            <?php listaAnexosProjeto($idProjeto, 3,$idArquivo, "comissao_detalhes_projeto"); ?>
+                                            <?php listaAnexosProjeto($idProjeto, 3,$idArquivo); ?>
                                         </div>
                                     </div>
                                 </div>
