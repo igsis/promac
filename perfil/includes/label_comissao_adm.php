@@ -109,10 +109,18 @@
                                     $idArquivo = 47;
                                     $idListaDocumento = 48;
                                     break;
+                               /*
+                                * Default provisório até descobrir qual status não está aparecendo o botão
+                                */
+                                default:
+                                    $idArquivo = 0;
+                                    $idListaDocumento = 37;
+                                    break;
+                                /*
                                 default:
                                     $idArquivo = 0;
                                     $idListaDocumento = 0;
-                                    break;
+                                    break;*/
                             }
                             ?>
                                 <div class="form-group">
