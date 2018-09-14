@@ -7,7 +7,7 @@
         <thead>
     <tr>
         <th>Data</th>
-        <th>Status</th>
+        <th>Etapa do projeto</th>
     </tr>
         </thead>
 
@@ -38,7 +38,7 @@
            <thead>
         <tr>
             <th>Data</th>
-            <th>Status</th>
+            <th>Etapa do projeto</th>
             <th>Data da reunião</th>
             <th>Status de análise</th>
             <th>Parecerista</th>
@@ -78,7 +78,7 @@
     <thead>
         <tr>
             <th>Data</th>
-            <th>Status</th>
+            <th>Etapa do projeto</th>
             <th>Data da publicação</th>
             <th>Link da publicação</th>
             <th>Usuário</th>
