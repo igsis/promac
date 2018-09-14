@@ -40,8 +40,6 @@ function listaArquivosPessoaComStatus($idPessoa,$tipoPessoa,$pagina)
 				<tr class='list_menu'>
 					<td>Tipo de arquivo</td>
 					<td>Nome do arquivo</td>
-					<td>Status</td>
-					<td>Observações</td>
 					<td width='15%'></td>
 				</tr>
 			</thead>

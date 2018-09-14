@@ -19,7 +19,7 @@ function pegaStatus($id)
 	return $row['status'];
 }
 
-function listaArquivosPessoaComStatus($idPessoa,$tipoPessoa,$pagina)
+function listaArquivosPessoaSemApagar($idPessoa,$tipoPessoa,$pagina)
 {
 	$con = bancoMysqli();
 	$sql = "SELECT *
@@ -40,8 +40,6 @@ function listaArquivosPessoaComStatus($idPessoa,$tipoPessoa,$pagina)
 				<tr class='list_menu'>
 					<td>Tipo de arquivo</td>
 					<td>Nome do arquivo</td>
-					<td>Status</td>
-					<td>Observações</td>
 					<td width='15%'></td>
 				</tr>
 			</thead>
@@ -60,9 +58,7 @@ function listaArquivosPessoaComStatus($idPessoa,$tipoPessoa,$pagina)
 							<form id='apagarArq' method='POST' action='?perfil=".$pagina."'>
 								<input type='hidden' name='idPessoa' value='".$idPessoa."' />
 								<input type='hidden' name='tipoPessoa' value='".$tipoPessoa."' />
-								<input type='hidden' name='apagar' value='".$arquivo['idUploadArquivo']."' />
-								<button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Excluir Arquivo?' data-message='Deseja realmente excluir o arquivo ".$arquivo['documento']."?'>Remover
-								</button></td>
+						</td>
 							</form>";
 					echo "</tr>";
 				}
@@ -197,7 +193,7 @@ if(isset($_POST['apagar']))
 				<div class="form-group">
 					<div class="col-md-12">
 						<div class="table-responsive list_info"><h6>Arquivo(s) Anexado(s)</h6>
-							<?php listaArquivosPessoaComStatus($idProjeto,'3',"certificados&idProjeto=$idProjeto"); ?>
+							<?php listaArquivosPessoaSemApagar($idProjeto,'3',"certificados&idProjeto=$idProjeto"); ?>
 						</div>
 					</div>
 				</div>
