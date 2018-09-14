@@ -2321,6 +2321,7 @@ function retornaQtdProjetos($tipoPessoa, $id)
              FROM 
                projeto AS proj  
   			  WHERE proj.publicado = 1
+  			  AND proj.idStatus NOT IN (5,6)
   			  AND   proj.idPf = ".$id;
     
     elseif ($tipoPessoa == 2):
@@ -2334,6 +2335,7 @@ function retornaQtdProjetos($tipoPessoa, $id)
              ON pj.idPj = proj.idPj  
   			 
   			 WHERE proj.publicado = 1
+		     AND proj.idStatus NOT IN (5,6)
   			 AND   pj.cooperativa = 0
   			 AND   proj.idPj = ".$id;
     
