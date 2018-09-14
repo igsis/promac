@@ -38,10 +38,27 @@
                                         <div class="col-md-offset-2 col-md-6" align="right"><br/><label>Finalizar projeto e enviar à SMC?</label><br>
                                             <?php echo exibirDataHoraBr($projeto['finalizacaoComissao']) ?>
                                         </div>
+                                    <div class="col-md-2"><br/>
+                                        <form id='finalizacaoComissao' method='POST' action='?perfil=comissao_detalhes_projeto'>
+                                            <input name='finalizaComissao' type='hidden'>
+                                            <input type='hidden' name='IDP' value='<?=$idProjeto?>'>
+                                            <button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Confirmação de envio' data-message='Deseja realmente finalizar e enviar à SMC?'>SIM
+                                            </button></td>
+                                        </form>
+                                    </div>    
+
+
+
+
+
+
+
+
+                                        <!--
                                         <div class="col-md-2"><br/>
                                             <?php echo "<input type='hidden' name='IDP' value='$idProjeto'>"; ?>
                                             <input type="submit" name="finalizaComissao" class="btn btn-theme btn-md btn-block" value="Sim">
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </form>
 
@@ -146,7 +163,7 @@
                                                 <button type="button" class="close" data-dismiss="modal"
                                                         aria-hidden="true">&times;
                                                 </button>
-                                                <h4 class="modal-title">Excluir Arquivo?</h4>
+                                                <h4 class="modal-title"><p>Confirma?</p></h4>
                                             </div>
                                             <div class="modal-body">
                                                 <p>Confirma?</p>
@@ -155,13 +172,15 @@
                                                 <button type="button" class="btn btn-default" data-dismiss="modal">
                                                     Cancelar
                                                 </button>
-                                                <button type="button" class="btn btn-danger" id="confirm">Remover
+                                                <button type="button" class="btn btn-danger" id="confirm">Confirmar
                                                 </button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <!-- Fim Confirmação de Exclusão -->
+
+                               
 
                                 <div class="form-group">
                                     <div class="col-md-offset-1 col-md-10">
