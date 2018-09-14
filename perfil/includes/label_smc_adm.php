@@ -11,7 +11,7 @@
                 </div>
                 <div class="col-md-1"><br/>
                     <form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
-                        <input type='hidden' name='IDP' value='<?php echo $idProjeto?>'>
+                        <input type='hidden' name='idProjeto' value='<?php echo $idProjeto?>'>
                         <input type="submit" name="envioComissao" class="btn btn-theme btn-lg btn-block" value="Sim">
                     </form>
                 </div>
