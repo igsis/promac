@@ -6,16 +6,15 @@
 
         <form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
             <div class="form-group">
-                <div class="col-md-offset-2 col-md-3" align="right"><br/><label>Enviar projeto para comissão</label><br>
+                <div class="col-md-offset-3 col-md-3" align="right"><br/><label>Enviar projeto para comissão</label><br>
                     <?php echo exibirDataHoraBr($projeto['envioComissao'])?>
                 </div>
-                <div class="col-md-1"><br/>
+                <div class="col-md-2"><br/>
                     <form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
                         <input type='hidden' name='idProjeto' value='<?php echo $idProjeto?>'>
                         <input type="submit" name="envioComissao" class="btn btn-theme btn-lg btn-block" value="Sim">
                     </form>
                 </div>
-
 
                 <!-- Se existir um parecerista -->
                 <?php if($projeto['idComissao'] > 0): ?>
@@ -25,28 +24,6 @@
                         </div>
                     </div>
                 <?php endif ?>
-
-                <div class="form-group">
-                    <div class="col-md-offset-0 col-md-12"><hr/></div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-md-offset-4 col-md-4">
-                        <?php
-                            $id = $projeto['tipoPessoa'];
-                            $idP = $projeto['idProjeto'];
-                            if($id == 1)
-                            {
-                                $idPess = $projeto['idPf'];
-                            }
-                            else if($id == 2)
-                            {
-                                $idPess = $projeto['idPj'];
-                            }
-                        ?>
-                        <a href='<?php echo "../pdf/gera_pdf.php?tipo=$id&projeto=$idP&pessoa=$idPess"; ?>' target='_blank' class="btn btn-theme btn-md btn-block"><strong>Gerar PDF do Projeto</strong></a><br/>
-                    </div>
-                </div>
 
                 <div class="form-group">
                     <div class="col-md-12">
