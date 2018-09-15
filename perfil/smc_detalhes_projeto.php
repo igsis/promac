@@ -148,8 +148,9 @@ if(isset($_POST['envioComissao']))
 {
     $idProjeto = $_POST['idProjeto'];
     $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
+    $idStatus = $projeto['idStatus'];
 
-    switch ($projeto['idStatus']) {
+    switch ($idStatus) {
         case 2:
             $statusEnvio = 7;
             break;
@@ -173,7 +174,7 @@ if(isset($_POST['envioComissao']))
         $sql_historico = "INSERT INTO historico_status (idProjeto, idStatus, data) VALUES ('$idProjeto', '$statusEnvio', '$dateNow')";
         $query_historico = mysqli_query($con, $sql_historico);
         $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
-        echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idProjeto';</script>";
+       // echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idProjeto';</script>";
         gravarLog($sql_historico);
     }
     else

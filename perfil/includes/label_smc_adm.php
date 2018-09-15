@@ -4,34 +4,31 @@
             <?php if(isset($mensagem)){echo $mensagem;}; ?>
         </h5>
 
-        <form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
+
+        <div class="form-group">
+            <div class="col-md-offset-3 col-md-3" align="right"><br/><label>Enviar projeto para comissão</label><br>
+                <?php echo exibirDataHoraBr($projeto['envioComissao'])?>
+            </div>
+            <div class="col-md-3"><br/>
+                <form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
+                    <input type='hidden' name='idProjeto' value='<?php echo $idProjeto?>'>
+                    <input type="submit" name="envioComissao" class="btn btn-theme btn-lg btn-block" value="Sim">
+                </form>
+            </div>
+        </div>
+
+        <!-- Se existir um parecerista -->
+        <?php if($projeto['idComissao'] > 0): ?>
             <div class="form-group">
-                <div class="col-md-offset-3 col-md-3" align="right"><br/><label>Enviar projeto para comissão</label><br>
-                    <?php echo exibirDataHoraBr($projeto['envioComissao'])?>
-                </div>
-                <div class="col-md-2"><br/>
-                    <form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
-                        <input type='hidden' name='idProjeto' value='<?php echo $idProjeto?>'>
-                        <input type="submit" name="envioComissao" class="btn btn-theme btn-lg btn-block" value="Sim">
-                    </form>
-                </div>
-
-                <!-- Se existir um parecerista -->
-                <?php if($projeto['idComissao'] > 0): ?>
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-8" align="left"><br/>
-                            <strong>Parecerista Responsável:</strong> <?php echo isset($comissao['nome']) ? $comissao['nome'] : null ?>
-                        </div>
-                    </div>
-                <?php endif ?>
-
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <hr/>
-                    </div>
+                <div class="col-md-offset-2 col-md-8" align="left"><br/>
+                    <strong>Parecerista Responsável:</strong> <?php echo isset($comissao['nome']) ? $comissao['nome'] : null ?>
                 </div>
             </div>
-        </form>
+        <?php endif ?>
+
+        <div class="form-group">
+            <div class="col-md-12"><hr/></div>
+        </div>
 
         <form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
             <div class="form-group">
