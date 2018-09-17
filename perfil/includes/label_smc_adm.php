@@ -4,18 +4,24 @@
             <?php if(isset($mensagem)){echo $mensagem;}; ?>
         </h5>
 
-
-        <div class="form-group">
-            <div class="col-md-offset-3 col-md-3" align="right"><br/><label>Enviar projeto para comissão</label><br>
-                <?php echo exibirDataHoraBr($projeto['envioComissao'])?>
+        <?php
+        $array_envio_comissao = array(2,10,13,20,14,15,23,25,29,31);
+        if(in_array($projeto['idStatus'], $array_envio_comissao )) {
+        ?>
+            <div class="form-group">
+                <div class="col-md-offset-3 col-md-3" align="right"><br/><label>Enviar projeto para comissão</label><br>
+                    <?php echo exibirDataHoraBr($projeto['envioComissao']) ?>
+                </div>
+                <div class="col-md-3"><br/>
+                    <form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
+                        <input type='hidden' name='idProjeto' value='<?php echo $idProjeto ?>'>
+                        <input type="submit" name="envioComissao" class="btn btn-theme btn-lg btn-block" value="Sim">
+                    </form>
+                </div>
             </div>
-            <div class="col-md-3"><br/>
-                <form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
-                    <input type='hidden' name='idProjeto' value='<?php echo $idProjeto?>'>
-                    <input type="submit" name="envioComissao" class="btn btn-theme btn-lg btn-block" value="Sim">
-                </form>
-            </div>
-        </div>
+        <?php
+        }
+        ?>
 
         <!-- Se existir um parecerista -->
         <?php if($projeto['idComissao'] > 0): ?>

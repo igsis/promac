@@ -154,16 +154,31 @@ if(isset($_POST['envioComissao']))
         case 2:
             $statusEnvio = 7;
             break;
+        case 10:
+            $statusEnvio = 7;
+            break;
         case 13:
+            $statusEnvio = 19;
+            break;
+        case 20:
             $statusEnvio = 19;
             break;
         case 14:
             $statusEnvio = 34;
             break;
+        case 15:
+            $statusEnvio = 34;
+            break;
         case 23:
             $statusEnvio = 24;
             break;
+        case 25:
+            $statusEnvio = 24;
+            break;
         case 29:
+            $statusEnvio = 30;
+            break;
+        case 31:
             $statusEnvio = 30;
             break;
     }
