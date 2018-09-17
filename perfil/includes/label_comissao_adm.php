@@ -35,6 +35,10 @@
 						    ?>
                                 <form method="POST" action="?perfil=comissao_detalhes_projeto" class="form-horizontal" role="form">
                                     <div class="form-group">
+                                        <?php
+                                        if ($projeto['idStatusParecerista'] != '0' AND $projeto['dataReuniao'] != '0000-00-00' )
+                                        {
+                                        ?>    
                                         <div class="col-md-offset-2 col-md-6" align="right"><br/><label>Finalizar projeto e enviar à SMC?</label><br>
                                             <?php echo exibirDataHoraBr($projeto['finalizacaoComissao']) ?>
                                         </div>
@@ -45,20 +49,10 @@
                                             <button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Confirmação de envio' data-message='Deseja realmente finalizar e enviar à SMC?'>SIM
                                             </button></td>
                                         </form>
-                                    </div>    
-
-
-
-
-
-
-
-
-                                        <!--
-                                        <div class="col-md-2"><br/>
-                                            <?php echo "<input type='hidden' name='IDP' value='$idProjeto'>"; ?>
-                                            <input type="submit" name="finalizaComissao" class="btn btn-theme btn-md btn-block" value="Sim">
-                                        </div> -->
+                                    </div> 
+                                    <?php
+                                    }
+                                    ?>   
                                     </div>
                                 </form>
 

@@ -104,7 +104,7 @@ if(isset($_POST['gravarAdm']))
 
                 if (in_array($idStatus, $statusProjetoProponente))
                 {
-                    $sqlParecerista = "UPDATE projeto SET idComissao = '0' WHERE idProjeto = '$idP'";
+                    $sqlParecerista = "UPDATE projeto SET idComissao = '0' AND idStatusParecerista = '0' AND dataReuniao = '0000-00-00' WHERE idProjeto = '$idP'";
                     mysqli_query($con, $sqlParecerista);
                 }
 
@@ -125,7 +125,7 @@ if(isset($_POST['gravarAdm']))
 
                 if (in_array($idStatus, $statusProjetoProponente))
                 {
-                    $sqlParecerista = "UPDATE projeto SET idComissao = '0' WHERE idProjeto = '$idP'";
+                    $sqlParecerista = "UPDATE projeto SET idComissao = '0' AND idStatusParecerista = '0' AND dataReuniao = '0000-00-00' WHERE idProjeto = '$idP'";
                     mysqli_query($con, $sqlParecerista);
                 }
 
