@@ -3090,31 +3090,29 @@ function uploadArquivo($idProjeto, $tipoPessoa, $pagina, $idListaDocumento, $idT
                 echo '<div class="alert alert-success">O arquivo ' . $doc . ' já foi enviado.</div>';
             }
 		}
-		 else {
-			echo '<form method="POST" action="?perfil=' . $pagina . '" enctype="multipart/form-data">
-			<table class="table table-condensed">
-				<tr class="list_menu">
-					<td>Tipo de Arquivo</td>
-					<td></td>
-				</tr>';
-			$urlArquivo = $http . $arq['idListaDocumento'];
-			if (arquivosExiste($urlArquivo)) {
-				echo '<td class="list_description path">';
-				$path = selecionaArquivoAnexo($http, $arq['idListaDocumento']);
-				echo "<a href='" . $path . "'target='_blank'>" . $arq['documento'] . "</a>
-					</td>";
-			} else {
-				echo "<td class='list_description path'>" . $arq['documento'] . "</td>";
-			}
-			echo "<td class='list_description'><input type='file' name='arquivo[" . $arq['sigla'] . "]'></td>";
-			echo "</tr>";
-			echo "</table><br>";
-			echo "<input type='hidden' name='idPessoa' value='" . $idProjeto . "' />";
-			echo "<input type='hidden' name='idTipoUpload' value='" . $idTipoUpload . "' />";
-			echo "<input type='hidden' name='tipoPessoa' value='" . $tipoPessoa . "'  />";
-			echo '<input type="submit" name="enviar" class="btn btn-theme btn-lg btn-block" value="Enviar">
-			</form>	';
+		echo '<form method="POST" action="?perfil=' . $pagina . '" enctype="multipart/form-data">
+		<table class="table table-condensed">
+			<tr class="list_menu">
+				<td>Tipo de Arquivo</td>
+				<td></td>
+			</tr>';
+		$urlArquivo = $http . $arq['idListaDocumento'];
+		if (arquivosExiste($urlArquivo)) {
+			echo '<td class="list_description path">';
+			$path = selecionaArquivoAnexo($http, $arq['idListaDocumento']);
+			echo "<a href='" . $path . "'target='_blank'>" . $arq['documento'] . "</a>
+				</td>";
+		} else {
+			echo "<td class='list_description path'>" . $arq['documento'] . "</td>";
 		}
+		echo "<td class='list_description'><input type='file' name='arquivo[" . $arq['sigla'] . "]'></td>";
+		echo "</tr>";
+		echo "</table><br>";
+		echo "<input type='hidden' name='idPessoa' value='" . $idProjeto . "' />";
+		echo "<input type='hidden' name='idTipoUpload' value='" . $idTipoUpload . "' />";
+		echo "<input type='hidden' name='tipoPessoa' value='" . $tipoPessoa . "'  />";
+		echo '<input type="submit" name="enviar" class="btn btn-theme btn-lg btn-block" value="Enviar">
+		</form>	';
 	}
 
 
