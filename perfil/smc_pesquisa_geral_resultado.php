@@ -1,15 +1,15 @@
 <?php
 $con = bancoMysqli();
 
-$nome = $_POST['nome'];
-$cpf = $_POST['cpf'];
-$razaoSocial = $_POST['razaoSocial'];
-$cnpj = $_POST['cnpj'];
-$nomeProjeto = $_POST['nomeProjeto'];
-$idProjeto = $_POST['idProjeto'];
-$idAreaAtuacao = $_POST['idAreaAtuacao'];
-$idStatus = $_POST['idStatus'];
-$idComissao = $_POST['idComissao'];
+$nome = $_POST['nome'] ?? NULL;
+$cpf = $_POST['cpf'] ?? NULL;
+$razaoSocial = $_POST['razaoSocial'] ?? NULL;
+$cnpj = $_POST['cnpj'] ?? NULL;
+$nomeProjeto = $_POST['nomeProjeto'] ?? NULL;
+$idProjeto = $_POST['idProjeto'] ?? NULL;
+$idAreaAtuacao = $_POST['idAreaAtuacao'] ?? NULL;
+$idStatus = $_POST['idStatus'] ?? NULL;
+$idComissao = $_POST['idComissao'] ?? NULL;
 
 // Inicio Pessoa Física
 if($nome != '' || $cpf != '')
@@ -238,7 +238,7 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 								echo "<td class='list_description'>".$x[$h]['nomeProjeto']."</td>";
 								echo "<td class='list_description'>".$x[$h]['proponente']."</td>";
 								echo "<td class='list_description'>".$x[$h]['documento']."</td>";
-								echo "<td class='list_description'>".$x[$h]['areaAtuacao']."</td>";
+								echo "<td class='list_description'>".mb_strimwidth($x[$h]['areaAtuacao'], 0, 38, "...")."</td>";
 								echo "<td class='list_description'>".strstr($x[$h]['comissao'], ' ', true)."</td>";
 								echo "<td class='list_description'>".$x[$h]['status']."</td>";
 								echo "<td class='list_description'>

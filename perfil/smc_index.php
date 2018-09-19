@@ -269,7 +269,7 @@ if(isset($_POST['liberacaoPJ']))
             $array_status = array(2, 3, 10, 12, 13, 20, 23, 25, 14, 15, 11); //status
             foreach ($array_status as $idStatus)
             {
-                $sqlStatus = "SELECT status, ordem FROM status WHERE idStatus = '$idStatus'";
+                $sqlStatus = "SELECT idStatus, status, ordem FROM status WHERE idStatus = '$idStatus'";
                 $sqlProjeto = "SELECT idProjeto, nomeProjeto, protocolo, pf.nome, pf.cpf, razaoSocial, cnpj, areaAtuacao, pfc.nome AS comissao, status, pro.idStatus AS idStatus 
                     FROM projeto AS pro
                     LEFT JOIN pessoa_fisica AS pf ON pro.idPf = pf.idPf
@@ -287,14 +287,17 @@ if(isset($_POST['liberacaoPJ']))
                     $i = 0;
 ?>
                     <div class='form-group'>
-                        <h5>Projetos com Status "<?=$status['status']?>"</h5> <span class="label label-warning">Total: <?=$num?></span>
+                        <h5>Projetos com Status "<?=$status['status']?>"</h5>
+                        <form method="POST" action="?perfil=smc_pesquisa_geral_resultado" class="form-horizontal" role="form">
+                            <button type="submit" class="label label-warning" name="idStatus" value="<?=$status['idStatus']?>">
+                                <span>Total: <?=$num?></span>
+                            </button>
+                        </form>
                     </div>
                     <div class="row">
                         <div class="col-md-offset-1 col-md-10">
                             <div class="table-responsive list_info">
 <?php
-//                                var_dump($sqlProjeto);
-
                                     if($num > 0)
                                     {
 ?>
