@@ -126,10 +126,10 @@
             <div class="col-md-12">
                 <div class="table-responsive list_info">
                     <h6>Arquivo(s) Anexado(s)</h6>
-                    <?php listaArquivosPessoaSMC($idProjeto,9,"smc_detalhes_projeto"); ?>
+                    <?php listaParecerSMC($idProjeto,9,"smc_detalhes_projeto"); ?>
                 </div>  
-                </div>
-                </div>
+            </div>
+        </div>
                   
 
          <!-- Upload do Arquivo -->
