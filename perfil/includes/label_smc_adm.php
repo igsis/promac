@@ -121,14 +121,32 @@
             ?>
         </ul>
 
-        <!-- Exibir arquivos -->
-        <div class="form-group">
-            <div class="col-md-12">
-                <div class="table-responsive list_info">
-                    <h6>Arquivo(s) Anexado(s)</h6>
-                    <?php listaArquivosPessoaSMC($idProjeto,9,"smc_detalhes_projeto"); ?>
+         <!-- Upload do Arquivo -->
+           <div class="form-group">
+                <div class="col-md-offset-1 col-md-10">
+                    <?php uploadArquivo($idProjeto,9, "smc_detalhes_projeto&idFF=$idProjeto", $idListaDocumento, 9); ?>
+                </div>
+            </div>
+        <!-- Fim Upload do Arquivo -->
+
+        <!-- Confirmação de Exclusão -->
+        <div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Excluir Arquivo?</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Confirma?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-danger" id="confirm">Remover</button>
+                    </div>
                 </div>
             </div>
         </div>
+        <!-- Fim Confirmação de Exclusão -->
     </div>
 </div>
