@@ -266,7 +266,7 @@ if(isset($_POST['liberacaoPJ']))
 
 
 <?php
-            $array_status = array(2, 3, 10, 12, 13, 20, 23, 25, 29, 31, 14, 15, 11); //status
+            $array_status = array(2, 3, 10, 12, 13, 20, 23, 25, 14, 15, 11); //status
             foreach ($array_status as $idStatus)
             {
                 $sqlStatus = "SELECT status, ordem FROM status WHERE idStatus = '$idStatus'";
