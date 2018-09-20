@@ -179,14 +179,14 @@ $status_reprovado = array(6, 22, 27, 33, 17);
                                 <div class="form-group">
                                     <div class="col-md-offset-4 col-md-6">
                                         <?php
-                                        if(in_array($idStatus, $status_aprovado))
-                                        {
+                                        //if(in_array($idStatus, $status_aprovado))
+                                        //{
                                         ?>
                                             <form class="form-horizontal" role="form" action="?perfil=alteracao_projeto&idProjeto=<?=$idProjeto?>" method="post">
                                                 <input type="submit" value="solicitar alteração do projeto" class="btn btn-theme btn-md btn-block">
                                             </form>
                                         <?php
-                                        }
+                                       // }
                                         ?>
                                     </div>
                                 </div>
@@ -195,13 +195,13 @@ $status_reprovado = array(6, 22, 27, 33, 17);
                                 <div class="form-group">
                                     <div class="col-md-offset-4 col-md-6">
                                         <?php
-                                        if(($idStatus== 12 || $idStatus == 13) &&  $dias >= -7 && $dias <= 0)
-                                        {
+                                        //if(($idStatus== 12 || $idStatus == 13) &&  $dias >= -7 && $dias <= 0)
+                                        //{
                                         ?>
                                             <form class="form-horizontal" role="form" action="?perfil=complemento_informacoes&idProjeto=<?=$idProjeto?>" method="post">
                                             <input type="submit" value="anexar complementos" class="btn btn-theme btn-md btn-block">
                                         <?php
-                                        }
+                                       // }
                                         ?>
                                      </form>
                                     </div>
@@ -211,14 +211,14 @@ $status_reprovado = array(6, 22, 27, 33, 17);
                                 <div class="form-group">
                                     <div class="col-md-offset-4 col-md-6">
                                         <?php
-                                        if(($idStatus == 5 || $idStatus == 6 || $idStatus == 22 || $idStatus == 17) &&  $dias >= -7 && $dias <= 0)
-                                        {
+                                        //if(($idStatus == 5 || $idStatus == 6 || $idStatus == 22 || $idStatus == 17) &&  $dias >= -7 && $dias <= 0)
+                                        //{
                                         ?>
                                             <form class="form-horizontal" role="form" action="?perfil=envio_recursos&idProjeto=<?=$idProjeto?>" method="post">
                                                 <input type="submit" value="anexar recurso" class="btn btn-theme btn-md btn-block">
                                             </form>
                                         <?php
-                                        }
+                                       // }
                                         ?>
                                     </div>
                                 </div>
