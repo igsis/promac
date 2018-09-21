@@ -9,10 +9,11 @@ if(isset($_POST['insereFicha']))
 	$cpf = $_POST['cpf'];
 	$funcao = $_POST['funcao'];
 
+
 		$validacao = validaCPF($_POST['cpf']);
 		if($validacao == false)
 		{
-			echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=?perfil=erros&p=erro_login_projeto'>";
+			echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=?perfil=erros&p=erro_representante1'>";
 		}
 		else
 		{
