@@ -1158,10 +1158,10 @@ function listaArquivosPessoaSMC($idPessoa,$tipoPessoa,$pagina)
 function listaParecerSMC($idPessoa,$tipoPessoa,$pagina)
 {
     $con = bancoMysqli();
-    $sql = "SELECT documento, arquivo, arq.idUploadArquivo AS idArquivo, disp.idUploadArquivo, idStatusDocumento,observacoes,disp.data AS dataDisponivel
+    $sql = "SELECT documento, arquivo, arq.idUploadArquivo AS idArquivo, idStatusDocumento,observacoes,data AS dataDisponivel
 			FROM lista_documento as list
 			INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
-			LEFT JOIN disponibilizar_documento AS disp ON arq.idUploadArquivo = disp.idUploadArquivo
+			-- LEFT JOIN disponibilizar_documento AS disp ON arq.idUploadArquivo = disp.idUploadArquivo
 			WHERE arq.idPessoa = '$idPessoa'
 			AND arq.idTipo = '$tipoPessoa'
 			AND arq.publicado = '1'";

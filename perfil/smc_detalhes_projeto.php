@@ -333,12 +333,13 @@ if(isset($_POST['editarParecer'])){
     $idArquivo = $_POST['idArquivo'];
     $dataDisponivel = exibirDataMysql($_POST['dataDisponivel']) ?? null;
 
-    $query = "UPDATE upload_arquivo SET idStatusDocumento = '$status', observacoes = '$observacoes' WHERE idUploadArquivo = '$idArquivo' ";
+    $query = "UPDATE upload_arquivo SET idStatusDocumento = '$status', observacoes = '$observacoes', data = '$dataDisponivel' WHERE idUploadArquivo = '$idArquivo' ";
     $envia = mysqli_query($con, $query);
+    
     if($envia)
     {
-        $sql_data = "UPDATE disponibilizar_documento SET data = '$dataDisponivel' WHERE idUploadArquivo = '$idArquivo'";
-        $query_data = mysqli_query($con,$sql_data);
+       // $sql_data = "UPDATE upload_arquivo SET data = '$dataDisponivel' WHERE idUploadArquivo = '$idArquivo'";
+       // $query_data = mysqli_query($con,$sql_data);
         //echo "<script>window.location.href = 'index_pf.php?perfil=smc_detalhes_projeto&idFF=".$idProjeto."';</script>";
         $mensagem = "<font color='#01DF3A'><strong>Os arquivos foram atualizados com sucesso!</strong></font>";
     }
@@ -402,10 +403,10 @@ if(isset($_POST["enviar"]))
                         $query = mysqli_query($con,$sql_insere_arquivo);
                         if($query)
                         {
-                            $idUploadArquivo = recuperaUltimo("upload_arquivo");
-                            $sql_insere_data = "INSERT INTO disponibilizar_documento (idUploadArquivo) VALUES ($idUploadArquivo)";
-                            $query_insere_data = mysqli_query($con,$sql_insere_data);
-                            echo $sql_insere_data;
+                            $idUploadArquivo = recuperaUltimo('upload_arquivo');
+                            //$sql_insere_data = "INSERT INTO disponibilizar_documento (idUploadArquivo) VALUES ($idUploadArquivo)";
+                            //$query_insere_data = mysqli_query($con,$sql_insere_data);
+                            //echo $sql_insere_data;
                             $mensagem = "<font color='#01DF3A'><strong>Arquivo recebido com sucesso!</strong></font>";
                             gravarLog($sql_insere_arquivo);
                         }
