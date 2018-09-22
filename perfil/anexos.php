@@ -18,7 +18,7 @@ function pegaStatus($id)
 	return $row['status'];
 }
 
-function listaArquivosPessoaComStatus($idPessoa,$tipoPessoa,$pagina)
+function listaArquivosProjetoRemover($idPessoa,$tipoPessoa,$pagina)
 {
 	$con = bancoMysqli();
 	$sql = "SELECT *
@@ -26,6 +26,7 @@ function listaArquivosPessoaComStatus($idPessoa,$tipoPessoa,$pagina)
 			INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
 			WHERE arq.idPessoa = '$idPessoa'
 			AND arq.idTipo = '$tipoPessoa'
+			AND list.idListaDocumento IN (18,19,20,21,22,23,38)
 			AND arq.publicado = '1'";
 	$query = mysqli_query($con,$sql);
 	$linhas = mysqli_num_rows($query);
@@ -38,8 +39,6 @@ function listaArquivosPessoaComStatus($idPessoa,$tipoPessoa,$pagina)
 				<tr class='list_menu'>
 					<td>Tipo de arquivo</td>
 					<td>Nome do arquivo</td>
-					<td>Status</td>
-					<td>Observações</td>
 					<td width='15%'></td>
 				</tr>
 			</thead>
@@ -47,12 +46,8 @@ function listaArquivosPessoaComStatus($idPessoa,$tipoPessoa,$pagina)
 				while($arquivo = mysqli_fetch_array($query))
 				{
 					echo "<tr>";
-					echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
+					echo "<td class='list_description'>".$arquivo['documento']."</td>";
 					echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
-					$status = pegaStatus($arquivo['idStatusDocumento']);
-
-					echo "<td class='list_description'>".$status."</td>";
-					echo "<td class='list_description'>".$arquivo['observacoes']."</td>";
 					echo "
 						<td class='list_description'>
 							<form id='apagarArq' method='POST' action='?perfil=".$pagina."'>
@@ -76,7 +71,7 @@ function listaArquivosPessoaComStatus($idPessoa,$tipoPessoa,$pagina)
 
 if(isset($_POST["enviar"]))
 {
-	$sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '3'";
+	$sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '3' AND idListaDocumento IN (18,19,20,21,22,23,38)";
 	$query_arquivos = mysqli_query($con,$sql_arquivos);
 	while($arq = mysqli_fetch_array($query_arquivos))
 	{
@@ -175,7 +170,7 @@ if(isset($_POST['apagar']))
 				<div class="form-group">
 					<div class="col-md-12">
 						<div class="table-responsive list_info"><h6>Arquivo(s) Anexado(s)</h6>
-							<?php listaArquivosPessoaComStatus($idProjeto,'3',"anexos"); ?>
+							<?php listaArquivosProjetoRemover($idProjeto,'3',"anexos"); ?>
 						</div>
 					</div>
 				</div>
@@ -190,7 +185,7 @@ if(isset($_POST['apagar']))
 									<td></td>
 								</tr>
 								<?php
-								  $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '3'";
+								  $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '3' AND idListaDocumento IN (18,19,20,21,22,23,38)";
 									$query_arquivos = mysqli_query($con,$sql_arquivos);
 									while($arq = mysqli_fetch_array($query_arquivos))
 									{
