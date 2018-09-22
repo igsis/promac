@@ -325,48 +325,24 @@ ORDER BY idEtapa";
         </li>
     </ul>
     <?php
-    /*
-     * GET PROVISÓRIO
-     */
-    $perfil = $_GET['perfil'];
-    if($perfil != "projeto_visualizacao") {
-        ?>
-        <ul class="list-group">
-            <li class="list-group-item list-group-item-success"><b>Arquivos do Projeto</b></li>
-            <li class="list-group-item">
-                <?php exibirArquivos(3, $projeto['idProjeto']); ?>
-            </li>
-        </ul>
-        <table class="table table-bordered">
-            <tr>
-                <td colspan="3"><strong>Pertence às listas de empresas apenadas?</strong>
-                    <?php if ($projeto['empresaApenada'] == 1) {
-                        echo "Sim";
-                    } else {
-                        echo "Não";
-                    } ?>
-                </td>
-            </tr>
-        </table>
-        <ul class="list-group">
-            <li class="list-group-item list-group-item-success"><b>Certificados do Projeto</b></li>
-            <li class="list-group-item">
-                <?php exibirCertificados(3, $projeto['idProjeto']); ?>
-            </li>
-        </ul>
-        <ul class="list-group">
-            <li class="list-group-item list-group-item-success"><b>Complemento de Informações</b></li>
-            <li class="list-group-item">
-                <?php exibirComplemento(3, $projeto['idProjeto']); ?>
-            </li>
-        </ul>
-        <ul class="list-group">
-            <li class="list-group-item list-group-item-success"><b>Solicitação de Alteração</b></li>
-            <li class="list-group-item">
-                <?php exibirSolicitacaoAlteracao(9, $projeto['idProjeto']); ?>
-            </li>
-        </ul>
-        <?php
-    }
+    exibirArquivosProjeto(3,$projeto['idProjeto']);
+    exibirComplemento(3,$projeto['idProjeto']);
+    exibirSolicitacaoAlteracao(3,$projeto['idProjeto']);
+    exibirRecurso(3,$projeto['idProjeto']);
+    ?>
+    <table class="table table-bordered">
+        <tr>
+            <td colspan="3"><strong>Pertence às listas de empresas apenadas?</strong>
+                <?php if ($projeto['empresaApenada'] == 1) {
+                    echo "Sim";
+                } else {
+                    echo "Não";
+                } ?>
+            </td>
+        </tr>
+    </table>
+    <?php
+    exibirCertificados(3,$projeto['idProjeto']);
+    exibirParecerProponente($projeto['idProjeto']);
     ?>
 </div>

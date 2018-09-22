@@ -1161,7 +1161,7 @@ function listaParecerSMC($idPessoa,$tipoPessoa,$pagina)
     $sql = "SELECT documento, arquivo, arq.idUploadArquivo AS idArquivo, idStatusDocumento,observacoes,data AS dataDisponivel
 			FROM lista_documento as list
 			INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
-			-- LEFT JOIN disponibilizar_documento AS disp ON arq.idUploadArquivo = disp.idUploadArquivo
+			LEFT JOIN disponibilizar_documento AS disp ON arq.idUploadArquivo = disp.idUploadArquivo
 			WHERE arq.idPessoa = '$idPessoa'
 			AND arq.idTipo = '$tipoPessoa'
 			AND arq.publicado = '1'";
@@ -1593,115 +1593,220 @@ function exibirArquivos($tipoPessoa,$idPessoa)
 	echo "</table>";
 }
 
+function exibirArquivosProjeto($tipoPessoa,$idProjeto)
+{
+    $con = bancoMysqli();
+	$sql = "SELECT * FROM lista_documento as list
+			INNER JOIN upload_arquivo AS arq 
+			ON arq.idListaDocumento = list.idListaDocumento	  
+			WHERE arq.idPessoa = '$idProjeto'
+			AND arq.idTipo = '$tipoPessoa'
+			AND arq.publicado = '1'
+			AND list.idListaDocumento IN (18,19,20,21,22,23,38)";
+    $query = mysqli_query($con,$sql);
+	$num = mysqli_num_rows($query);
+	if($num > 0){
+		echo "<ul class='list-group'>";
+		echo "<li class='list-group-item list-group-item-success'><b>Arquivos do projeto</b></li>";
+		echo "<li class='list-group-item'>";
+		echo "
+			<table class='table table-bordered'>
+				<tr>
+					<td><strong>Tipo de arquivo</strong></td>
+					<td><strong>Nome do arquivo</strong></td>
+				</tr>
+		";
+		while($arquivo = mysqli_fetch_array($query))
+		{
+			echo "<tr>";
+			echo "<td class='list_description'>".$arquivo['documento']."</td>";
+            echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 0 ,40,"..." )."</a></td>";
+			echo "</tr>";
+		}
+		echo "</table>";
+        echo "</li>";
+        echo "</ul>";
+    }
+}
+
 function exibirCertificados($tipoPessoa,$idPessoa)
 {
 	$con = bancoMysqli();
-	$sql = "
-	   SELECT 
-	     *
-	  FROM 
-	    lista_documento as list
-	  INNER JOIN upload_arquivo AS arq 
-	  ON arq.idListaDocumento = list.idListaDocumento
-	  
-	  WHERE arq.idPessoa = '$idPessoa'
-	  AND arq.idTipo = '$tipoPessoa'
-	  AND arq.publicado = '1'
-	  AND list.idListaDocumento IN (39,40,41,42,43,44)";
-
+    $sql = "SELECT * FROM lista_documento as list
+			INNER JOIN upload_arquivo AS arq 
+			ON arq.idListaDocumento = list.idListaDocumento			
+			WHERE arq.idPessoa = '$idPessoa'
+			AND arq.idTipo = '$tipoPessoa'
+			AND arq.publicado = '1'
+			AND list.idListaDocumento IN (39,40,41,42,43,44)";
 	$query = mysqli_query($con,$sql);
-	echo "
-		<table class='table table-bordered'>
-			<tr>
-				<td><strong>Tipo de arquivo</strong></td>
-				<td><strong>Nome do arquivo</strong></td>
-			</tr>
-	";
-	while($arquivo = mysqli_fetch_array($query))
-	{
-		echo "<tr>";
-		echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
-		echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>".$arquivo['arquivo']."</a></td>";
-		$queryy = "SELECT idStatusDocumento FROM upload_arquivo WHERE idUploadArquivo = '".$arquivo['idUploadArquivo']."'";
-		$send = mysqli_query($con, $queryy);
-		$row = mysqli_fetch_array($send);
-		echo "</tr>";
-	}
-	echo "</table>";
+	$num = mysqli_num_rows($query);
+	if($num > 0){
+		echo "<ul class='list-group'>";
+		echo "<li class='list-group-item list-group-item-success'><b>Certificados do projeto</b></li>";
+		echo "<li class='list-group-item'>";
+		echo "
+			<table class='table table-bordered'>
+				<tr>
+					<td><strong>Tipo de arquivo</strong></td>
+					<td><strong>Nome do arquivo</strong></td>
+				</tr>
+		";
+		while($arquivo = mysqli_fetch_array($query))
+		{
+			echo "<tr>";
+			echo "<td class='list_description'>".$arquivo['documento']."</td>";
+            echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 0 ,40,"..." )."</a></td>";
+			echo "</tr>";
+		}
+		echo "</table>";
+        echo "</li>";
+        echo "</ul>";
+    }
 }
 
 function exibirComplemento($tipoPessoa,$idPessoa)
 {
 	$con = bancoMysqli();
-	$sql = "
-	   SELECT 
-	     *
-	  FROM 
-	    lista_documento as list
-	  INNER JOIN upload_arquivo AS arq 
-	  ON arq.idListaDocumento = list.idListaDocumento
-	  
-	  WHERE arq.idPessoa = '$idPessoa'
-	  AND arq.idTipo = '$tipoPessoa'
-	  AND arq.publicado = '1'
-	  AND list.idListaDocumento IN (46)";
-
+    $sql = "SELECT * FROM lista_documento as list
+			INNER JOIN upload_arquivo AS arq 
+			ON arq.idListaDocumento = list.idListaDocumento	  
+			WHERE arq.idPessoa = '$idPessoa'
+			AND arq.idTipo = '$tipoPessoa'
+			AND arq.publicado = '1'
+			AND list.idListaDocumento IN (46)";
 	$query = mysqli_query($con,$sql);
-	echo "
-		<table class='table table-bordered'>
-			<tr>
-				<td><strong>Tipo de arquivo</strong></td>
-				<td><strong>Nome do arquivo</strong></td>
-			</tr>
-	";
-	while($arquivo = mysqli_fetch_array($query))
-	{
-		echo "<tr>";
-		echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
-		echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>".$arquivo['arquivo']."</a></td>";
-		$queryy = "SELECT idStatusDocumento FROM upload_arquivo WHERE idUploadArquivo = '".$arquivo['idUploadArquivo']."'";
-		$send = mysqli_query($con, $queryy);
-		$row = mysqli_fetch_array($send);
-		echo "</tr>";
-	}
-	echo "</table>";
+	$num = mysqli_num_rows($query);
+	if($num > 0){
+		echo "<ul class='list-group'>";
+		echo "<li class='list-group-item list-group-item-success'><b>Complemento de informação</b></li>";
+		echo "<li class='list-group-item'>";
+		echo "
+			<table class='table table-bordered'>
+				<tr>
+					<td><strong>Tipo de arquivo</strong></td>
+					<td><strong>Nome do arquivo</strong></td>
+				</tr>
+		";
+		while($arquivo = mysqli_fetch_array($query))
+		{
+			echo "<tr>";
+			echo "<td class='list_description'>".$arquivo['documento']."</td>";
+            echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 0 ,40,"..." )."</a></td>";
+			echo "</tr>";
+		}
+		echo "</table>";
+        echo "</li>";
+        echo "</ul>";
+    }
 }
 
 function exibirSolicitacaoAlteracao($tipoPessoa,$idPessoa)
 {
 	$con = bancoMysqli();
-	$sql = "
-	   SELECT 
-	     *
-	  FROM 
-	    lista_documento as list
-	  INNER JOIN upload_arquivo AS arq 
-	  ON arq.idListaDocumento = list.idListaDocumento
-	  
-	  WHERE arq.idPessoa = '$idPessoa'
-	  AND arq.idTipo = '$tipoPessoa'
-	  AND arq.publicado = '1'
-	  AND list.idListaDocumento IN (48)";
-
+    $sql = "SELECT * FROM lista_documento as list
+			INNER JOIN upload_arquivo AS arq 
+			ON arq.idListaDocumento = list.idListaDocumento	  
+			WHERE arq.idPessoa = '$idPessoa'
+			AND arq.idTipo = '$tipoPessoa'
+			AND arq.publicado = '1'
+			AND list.idListaDocumento IN (47)";
 	$query = mysqli_query($con,$sql);
-	echo "
+    $num = mysqli_num_rows($query);
+	if($num > 0){
+		echo "<ul class='list-group'>";
+		echo "<li class='list-group-item list-group-item-success'><b>Solicitação de alteração</b></li>";
+		echo "<li class='list-group-item'>";
+		echo "
+			<table class='table table-bordered'>
+				<tr>
+					<td><strong>Tipo de arquivo</strong></td>
+					<td><strong>Nome do arquivo</strong></td>
+				</tr>
+		";
+		while($arquivo = mysqli_fetch_array($query))
+		{
+			echo "<tr>";
+			echo "<td class='list_description'>".$arquivo['documento']."</td>";
+            echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 0 ,40,"..." )."</a></td>";
+			echo "</tr>";
+		}
+		echo "</table>";
+        echo "</li>";
+        echo "</ul>";
+    }
+}
+
+function exibirRecurso($tipoPessoa,$idProjeto)
+{
+    $con = bancoMysqli();
+    $sql = "SELECT * FROM lista_documento as list
+			INNER JOIN upload_arquivo AS arq 
+			ON arq.idListaDocumento = list.idListaDocumento	  
+			WHERE arq.idPessoa = '$idProjeto'
+			AND arq.idTipo = '$tipoPessoa'
+			AND arq.publicado = '1'
+			AND list.idListaDocumento IN (52)";
+    $query = mysqli_query($con,$sql);
+    $num = mysqli_num_rows($query);
+    if($num > 0){
+    	echo "<ul class='list-group'>";
+    	echo "<li class='list-group-item list-group-item-success'><b>Recurso enviado</b></li>";
+    	echo "<li class='list-group-item'>";
+        echo "
 		<table class='table table-bordered'>
 			<tr>
 				<td><strong>Tipo de arquivo</strong></td>
 				<td><strong>Nome do arquivo</strong></td>
-			</tr>
-	";
-	while($arquivo = mysqli_fetch_array($query))
-	{
-		echo "<tr>";
-		echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
-		echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>".$arquivo['arquivo']."</a></td>";
-		$queryy = "SELECT idStatusDocumento FROM upload_arquivo WHERE idUploadArquivo = '".$arquivo['idUploadArquivo']."'";
-		$send = mysqli_query($con, $queryy);
-		$row = mysqli_fetch_array($send);
-		echo "</tr>";
+			</tr>";
+        while($arquivo = mysqli_fetch_array($query))
+        {
+            echo "<tr>";
+            echo "<td class='list_description'>".$arquivo['documento']."</td>";
+            echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 0 ,40,"..." )."</a></td>";
+            echo "</tr>";
+        }
+        echo "</table>";
+        echo "</li>";
+        echo "</ul>";
 	}
-	echo "</table>";
+}
+
+function exibirParecerProponente($idProjeto)
+{
+    $con = bancoMysqli();
+    $dateNow = date('Y-m-d');
+    $sql = "SELECT * FROM lista_documento as list
+            INNER JOIN upload_arquivo AS arq ON arq.idListaDocumento = list.idListaDocumento
+            LEFT JOIN disponibilizar_documento AS disp ON arq.idUploadArquivo = disp.idUploadArquivo	  
+            WHERE arq.idPessoa = '$idProjeto'
+            AND arq.idTipo = '9'
+            AND arq.publicado = '1'
+            AND arq.idStatusDocumento = '1'
+            AND disp.data <= '$dateNow'";
+    $query = mysqli_query($con,$sql);
+    $num = mysqli_num_rows($query);
+    if($num > 0){
+        echo "<ul class='list-group'>";
+        echo "<li class='list-group-item list-group-item-success'><b>Parecer disponível</b></li>";
+        echo "<li class='list-group-item'>";
+        echo "
+		<table class='table table-bordered'>
+			<tr>
+				<td><strong>Tipo de arquivo</strong></td>
+				<td><strong>Nome do arquivo</strong></td>
+			</tr>";
+        while($arquivo = mysqli_fetch_array($query))
+        {
+            echo "<tr>";
+            echo "<td class='list_description'>".$arquivo['documento']."</td>";
+            echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 0 ,50,"..." )."</a></td>";
+            echo "</tr>";
+        }
+        echo "</table>";
+        echo "</li>";
+        echo "</ul>";
+    }
 }
 
 // Função que valida o CPF
