@@ -56,7 +56,7 @@ $status_analise = array(3,7,10,19,20,24,25,34,15);
                                     <ul class='list-group'>
                                         <li class='list-group-item list-group-item-success'></li>
                                         <li class="list-group-item"><strong>Protocolo (nº ISP):</strong> <?= $projeto['protocolo'] ?></li>
-                                        <li class="list-group-item"><strong>Etapa do projeto></strong>
+                                        <li class="list-group-item"><strong>Etapa do projeto:</strong>
                                             <?php
                                             if (in_array($idStatus, $status_aprovado)) {
                                                 echo "Aprovado";
@@ -112,74 +112,71 @@ $status_analise = array(3,7,10,19,20,24,25,34,15);
                             </div>
 
                             <!-- Botão para anexar certificados -->
-                            <div class="form-group">
-                                <div class="col-md-offset-4 col-md-6">
-                                    <?php
-                                    if (in_array($idStatus, $status_aprovado)){
-                                    ?>
+                            <?php
+                            if (in_array($idStatus, $status_aprovado)){
+                            ?>
+                                <div class="form-group">
+                                    <div class="col-md-offset-4 col-md-6">
                                         <form class="form-horizontal" role="form" action="?perfil=certificados&idProjeto=<?= $idProjeto ?>" method="post">
-                                            <input type="submit" value="anexar certificados" class="btn btn-theme btn-md btn-block">
+                                            <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;">Anexar Certificados</button>
                                         </form>
-                                    <?php
-                                    }
-                                    ?>
+                                    </div>
                                 </div>
-                            </div>
+                            <?php
+                            }
+                            ?>
 
                             <!-- Botão para solicitar alteração do projeto -->
-                            <div class="form-group">
-                                <div class="col-md-offset-4 col-md-6">
-                                    <?php
-                                    if(in_array($idStatus, $status_aprovado))
-                                    {
-                                    ?>
-                                        <form class="form-horizontal" role="form"
-                                              action="?perfil=alteracao_projeto&idProjeto=<?= $idProjeto ?>" method="post">
-                                            <input type="submit" value="solicitar alteração do projeto" class="btn btn-theme btn-md btn-block">
+                            <?php
+                            if(in_array($idStatus, $status_aprovado)){
+                            ?>
+                                <div class="form-group">
+                                    <div class="col-md-offset-4 col-md-6">
+                                        <form class="form-horizontal" role="form" action="?perfil=alteracao_projeto&idProjeto=<?= $idProjeto ?>" method="post">
+                                            <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;">solicitar alteração do projeto</button>
                                         </form>
-                                    <?php
-                                    }
-                                    ?>
+                                    </div>
                                 </div>
-                            </div>
+                            <?php
+                            }
+                            ?>
 
                             <!-- Botão para anexar complemento de informações -->
-                            <div class="form-group">
-                                <div class="col-md-offset-4 col-md-6">
-                                    <?php
-                                    //if(($idStatus== 12 || $idStatus == 13) &&  $dias >= -7 && $dias <= 0)
-                                    //{
-                                    ?>
-                                    <form class="form-horizontal" role="form"
-                                          action="?perfil=complemento_informacoes&idProjeto=<?= $idProjeto ?>"
-                                          method="post">
-                                        <input type="submit" value="anexar complementos"
-                                               class="btn btn-theme btn-md btn-block">
-                                        <?php
-                                        // }
-                                        ?>
-                                    </form>
+                            <?php
+                            if($idStatus== 12 || $idStatus == 13 || $idStatus == 18) {
+                            ?>
+                                <div class="form-group">
+                                    <div class="col-md-offset-4 col-md-6">
+                                        <form class="form-horizontal" role="form" action="?perfil=complemento_informacoes&idProjeto=<?= $idProjeto ?>"
+                                              method="post">
+                                            <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;">anexar complementos</button>
+                                        </form>
+                                    </div>
                                 </div>
-                            </div>
+                            <?php
+                            }
+                            ?>
 
                             <!-- Botão para anexar recurso -->
-                            <div class="form-group">
-                                <div class="col-md-offset-4 col-md-6">
-                                    <?php
-                                    //if(($idStatus == 5 || $idStatus == 6 || $idStatus == 22 || $idStatus == 17) &&  $dias >= -7 && $dias <= 0)
-                                    //{
-                                    ?>
-                                    <form class="form-horizontal" role="form"
-                                          action="?perfil=envio_recursos&idProjeto=<?= $idProjeto ?>" method="post">
-                                        <input type="submit" value="anexar recurso"
-                                               class="btn btn-theme btn-md btn-block">
-                                    </form>
-                                    <?php
-                                    // }
-                                    ?>
+                            <?php
+                            if($idStatus != 26 && $idStatus != 27){
+                                if(in_array($idStatus, $status_aprovado) || in_array($idStatus, $status_reprovado)){
+                            ?>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-4 col-md-6">
+                                            <form class="form-horizontal" role="form"
+                                                  action="?perfil=envio_recursos&idProjeto=<?= $idProjeto ?>" method="post">
+                                                <button type="submit" class="btn btn-success btn-block"
+                                                        style="border-radius: 7px;">anexar recurso
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+                            <?php
+                                }
+                            }
+                        ?>
                         <!-- LABEL PROJETO -->
                         <?php include "includes/label_projeto.php"; ?>
                         <!-- FIM LABEL PROJETO -->
