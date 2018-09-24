@@ -50,17 +50,18 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('W1', 'Estado')
             ->setCellValue('X1', 'CEP')
             ->setCellValue('Y1', 'Status')
-            ->setCellValue('Z1', 'Início da captação')
-            ->setCellValue('AA1', 'Prorrogação Captação')
-            ->setCellValue('AB1', 'Final da captação')
-            ->setCellValue('AC1', 'Início da execução')
-            ->setCellValue('AD1', 'Fim da execução')
-            ->setCellValue('AE1', 'Prorrogação Execução')
-            ->setCellValue('AF1', 'Data para prestar contas');
+            ->setCellValue('Z1', 'Status exibido')
+            ->setCellValue('AA1', 'Início da captação')
+            ->setCellValue('AB1', 'Prorrogação Captação')
+            ->setCellValue('AC1', 'Final da captação')
+            ->setCellValue('AD1', 'Início da execução')
+            ->setCellValue('AE1', 'Fim da execução')
+            ->setCellValue('AF1', 'Prorrogação Execução')
+            ->setCellValue('AG1', 'Data para prestar contas');
 
 //Colorir a primeira fila
-$objPHPExcel->getActiveSheet()->getStyle('A1:AF1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
-$objPHPExcel->getActiveSheet()->getStyle('A1:AF1')->getFill()->getStartColor()->setARGB('#29bb04');
+$objPHPExcel->getActiveSheet()->getStyle('A1:AG1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+$objPHPExcel->getActiveSheet()->getStyle('A1:Ag1')->getFill()->getStartColor()->setARGB('#29bb04');
 // Add some data
 $objPHPExcel->getActiveSheet()->getStyle("A1:AE1")->getFont()->setBold(true);
 $objPHPExcel->getActiveSheet()->getStyle('A1:AE1')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
@@ -105,10 +106,11 @@ $objPHPExcel->getActiveSheet()->getColumnDimension('AC')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('AD')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('AE')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('AF')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('AG')->setAutoSize(true);
 
 
 //Dados Projeto
-$sql = "SELECT idProjeto, areaAtuacao, segmento, protocolo, nomeProjeto, valorProjeto, valorIncentivo, resumoProjeto, publicoAlvo, tipoPessoa, idPj, idPf, status, tipoPessoa, valorAprovado, idRenunciaFiscal
+$sql = "SELECT idProjeto, areaAtuacao, segmento, protocolo, nomeProjeto, valorProjeto, valorIncentivo, resumoProjeto, publicoAlvo, tipoPessoa, idPj, idPf, status, pr.idStatus, tipoPessoa, valorAprovado, idRenunciaFiscal
          FROM projeto AS pr
          INNER JOIN status AS st ON pr.idStatus = st.idStatus
          INNER JOIN area_atuacao AS area ON pr.idAreaAtuacao = area.idArea
@@ -218,6 +220,24 @@ while($row = mysqli_fetch_array($query))
    {
    		$tipo = "Jurídica";
    }
+
+   $status_proponente = $row['idStatus'];
+   if($status_proponente == 5 OR $status_proponente == 21 OR $status_proponente == 26 OR $status_proponente == 16 OR $status_proponente == 11)
+   {
+    $status_exibido = "Aprovado";
+   }
+   elseif($status_proponente == 6 OR $status_proponente == 22 OR $status_proponente == 27 OR $status_proponente == 17) 
+   {
+    $status_exibido = "Reprovado";
+   }
+   elseif($status_proponente == 1 OR $status_proponente == 2 OR $status_proponente == 12 OR $status_proponente == 13 OR $status_proponente == 23 OR $status_proponente == 14 OR $status_proponente == 18)
+   {
+     $status_exibido = $row['status'];
+   }
+   elseif($status_proponente == 3 OR $status_proponente == 7 OR $status_proponente == 10 OR $status_proponente == 19 OR $status_proponente == 20 OR $status_proponente == 24 OR $status_proponente == 25 OR $status_proponente == 34 OR $status_proponente == 15)
+   {
+     $status_exibido = "Em análise";
+   } 
    //$objPHPExcel->getActiveSheet()->getStyle('A'.$i.'')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
 
    $objPHPExcel->getActiveSheet()->getStyle('E'.$i.'')->getNumberFormat()->setFormatCode("#,##0.00");
@@ -228,7 +248,7 @@ while($row = mysqli_fetch_array($query))
                ->setCellValue('A'.$i, $row['protocolo'])
                ->setCellValue('B'.$i, $row['nomeProjeto'])
                ->setCellValue('C'.$i, $row['areaAtuacao'])
-	           ->setCellValue('D'.$i, $row['segmento'])
+	             ->setCellValue('D'.$i, $row['segmento'])
                ->setCellValue('E'.$i, $row['valorProjeto'])
                ->setCellValue('F'.$i, $row['valorIncentivo'])
                ->setCellValue('G'.$i, $row['resumoProjeto'])
@@ -250,14 +270,14 @@ while($row = mysqli_fetch_array($query))
                ->setCellValue('W'.$i, $estado)
                ->setCellValue('X'.$i, $cep)
                ->setCellValue('Y'.$i, $row['status'])
-               ->setCellValue('Z'.$i, $lista_prazos['prazoCaptacao'])
-               ->setCellValue('AA'.$i, $lista_prazos['prorrogacaoCaptacao'])
-               ->setCellValue('AB'.$i, $lista_prazos['finalCaptacao'])
-               ->setCellValue('AC'.$i, $lista_prazos['inicioExecucao'])
-               ->setCellValue('AD'.$i, $lista_prazos['fimExecucao'])
-               ->setCellValue('AE'.$i, $lista_prazos['prorrogacaoExecucao'])
-               ->setCellValue('AF'.$i, $lista_prazos['prestarContas']);
-
+               ->setCellValue('Z'.$i, $status_exibido)
+               ->setCellValue('AA'.$i, $lista_prazos['prazoCaptacao'])
+               ->setCellValue('AB'.$i, $lista_prazos['prorrogacaoCaptacao'])
+               ->setCellValue('AC'.$i, $lista_prazos['finalCaptacao'])
+               ->setCellValue('AD'.$i, $lista_prazos['inicioExecucao'])
+               ->setCellValue('AE'.$i, $lista_prazos['fimExecucao'])
+               ->setCellValue('AF'.$i, $lista_prazos['prorrogacaoExecucao'])
+               ->setCellValue('AG'.$i, $lista_prazos['prestarContas']);
 
    $i++;
 }
