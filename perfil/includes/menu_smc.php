@@ -49,7 +49,7 @@
 			</li>
 			<li><a href="?perfil=smc_area_atuacao">Área atuação</a></li>
 			<li style="color:white;">-------------------------</li>
-			<li><a href="index.php?secao=perfil">Início</a></li>
+			<li><a href="index_pf.php?perfil=smc_index">Início</a></li>
 			<li><a href="?perfil=senha">Alterar senha</a></li>
 			<li><a href="../pdf/manual" target="_blank">Manual (EM BREVE)</a></li>
 			<li><a href="../include/logoff.php">Sair</a></li>

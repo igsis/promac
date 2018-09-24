@@ -13,7 +13,7 @@ $pasta = "?perfil=";
 				</ul>
 			</li>
 			<li style="color:white;">-------------------------</li>
-			<li><a href="index.php?secao=perfil">Início</a></li>
+			<li><a href="index_pf.php?perfil=comissao_index">Início</a></li>
 			<li><a href="<?php echo $pasta ?>senha">Alterar senha</a></li>
 			<li><a href="../manual" target="_blank">Ajuda</a></li>
 			<li><a href="../include/logoff.php">Sair</a></li>
