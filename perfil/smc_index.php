@@ -311,12 +311,22 @@ if(isset($_POST['liberacaoPJ']))
                                                         <td>Documento</td>
                                                         <td>Área de Atuação</td>
                                                         <?=($status['ordem'] >= 5) ? "<td>Parecerista</td>" : NULL ?>
+<?php
+                                                            if ($status['idStatus'] == 23)
+                                                            {
+?>
+                                                                <td>Arquivo</td>
+                                                                <td>Enviado à</td>
+<?php
+                                                            }
+?>
                                                         <td width='10%'></td>
                                                     </tr>
                                                 </thead>
 <?php
                                         while ($campo = mysqli_fetch_array($queryProjeto))
                                         {
+
                                             if ($i < 5) {
 ?>
                                                 <tr>
@@ -326,6 +336,20 @@ if(isset($_POST['liberacaoPJ']))
                                                     <td class='list_description'><?= isset($campo['cpf']) ? $campo['cpf'] : $campo['cnpj'] ?></td>
                                                     <td class='list_description'><?= mb_strimwidth($campo['areaAtuacao'], 0, 38, "...") ?></td>
                                                     <?= ($status['ordem'] >= 5) ? "<td class='list_description'>".$campo['comissao']."</td>" : NULL ?>
+<?php
+                                                    if ($status['idStatus'] == 23)
+                                                    {
+                                                        $sqlRecurso = "SELECT DISTINCT `arquivo`, `dataEnvio` FROM `upload_arquivo` WHERE `idTipo` = '3' AND `idPessoa` = '".$campo['idProjeto']."'  AND `publicado` = '1'";
+                                                        $recurso = mysqli_fetch_array(mysqli_query($con, $sqlRecurso));
+                                                        $dataEnvio = date_create($recurso['dataEnvio']);
+                                                        $dataAtual = date_create(date("Y-m-d"));
+                                                        $dias = date_diff($dataEnvio, $dataAtual);
+
+
+                                                        echo "<td><a href='../uploadsdocs/".$recurso['arquivo']."' target='_blank'>".substr($recurso['arquivo'], 15)."</a></td>";
+                                                        echo "<td>".$dias->format("%a dias")."</td>";
+                                                    }
+?>
                                                     <td class='list_description'>
                                                         <form method='POST' action='?perfil=smc_detalhes_projeto'>
                                                             <input type='hidden' name='idProjeto' value='<?= $campo['idProjeto'] ?>' />
