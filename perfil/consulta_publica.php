@@ -4,7 +4,7 @@
 			<div class="form-group">
 				<div class="col-md-offset-2 col-md-8">
 					<strong>
-						<a href="../include/logoff.php">Voltar a Tela de Início</a>
+						<a href="../include/logoff.php">Voltar à tela de início</a>
 					</strong>
 				</div>
 			</div>
