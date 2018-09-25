@@ -53,7 +53,8 @@ $tipoPessoa = '6';
 								<div class="form-group" style="padding-bottom: 60px;">
 									<div class="col-md-offset-4 col-md-4">
 										<form method="POST" action="analise_projeto.php" class="form-horizontal" role="form">
-										<button class='btn btn-theme btn-md' type='submit' style="border-radius: 30px;">Confira a análise do seu projeto aqui</button>	
+										<button class='btn btn-theme btn-md' type='submit' style="border-radius: 30px;">Confira a análise do seu projeto aqui</button>
+                                        </form>
 									</div>
 								</div>
 						</div>
