@@ -94,6 +94,14 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
+				<div class="form-group">
+					<div class="col-md-12">
+						<div class="table-responsive list_info"><h6>Listas de Projetos Aprovados</h6>
+							<?php listaArquivosAnalise($tipoPessoa,"analise_projeto"); ?>
+						</div>
+					</div>
+				</div>
+
 				<!-- Exibir arquivos -->
 				<div class="form-group">
 					<div class="col-md-12">
@@ -102,7 +110,6 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 						</div>
 					</div>
 				</div>
-
 				<div class="form-group">
 					<div class="col-md-12">
 						<div class="table-responsive list_info"><h6>Upload de Arquivo(s) Somente em PDF</h6>
@@ -160,6 +167,7 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 						</div>
 					</div>
 				</div>
+			</div>
 				<!-- Fim Upload de arquivo -->
 				<!-- Confirmação de Exclusão -->
 					<div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel" aria-hidden="true">
