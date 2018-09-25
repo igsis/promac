@@ -46,15 +46,17 @@ $tipoPessoa = '6';
 
 						<p align="justify">Para saber como participar, clique em <button class='btn btn-theme btn-md' type='button' data-toggle='modal' data-target='#regulamento' style="border-radius: 30px;">Regulamento</button> e se inscreva no link abaixo.</p>
 
+
+						<p>&nbsp;</p>
+
 						<div class="well" style="padding-top: 60px;">
 								<div class="form-group" style="padding-bottom: 60px;">
 									<div class="col-md-offset-4 col-md-4">
-										<button class='btn btn-theme btn-md' type='button' data-toggle='modal' data-target='#analise' style="border-radius: 30px;">Confira a análise do seu projeto aqui</button>	
+										<form method="POST" action="analise_projeto.php" class="form-horizontal" role="form">
+										<button class='btn btn-theme btn-md' type='submit' style="border-radius: 30px;">Confira a análise do seu projeto aqui</button>	
 									</div>
 								</div>
 						</div>
-
-						<p>&nbsp;</p>
 
 						<div class="well">
 							<h6>Faça seu login ou inscreva-se aqui:</h6>
@@ -180,31 +182,6 @@ $tipoPessoa = '6';
 							</div>
 						</div>
 						<!-- Fim Modal Incentivador -->
-						<!-- Inicio Modal Aprovados -->
-						<div class="modal fade" id="analise" role="dialog" aria-labelledby="analiseLabel" aria-hidden="true">
-							<div class="modal-dialog">
-								<div class="modal-content">
-									<div class="modal-header">
-										<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-										<h4 class="modal-title">Análise de Projetos</h4>
-									</div>
-									<div class="col-md-offset-1 col-md-10">
-										<!-- Exibir arquivos -->
-										<div class="form-group">
-											<div class="col-md-12">
-												<div class="table-responsive list_info">
-													<?php listaArquivosAnalise($tipoPessoa,"index"); ?>
-												</div>
-											</div>
-										</div>
-									</div>	
-									<div class="modal-footer">
-										<button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- Fim Modal Proponente -->
 					</div>
 				</div>
 			</div>

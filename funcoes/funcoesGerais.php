@@ -916,7 +916,7 @@ function listaArquivosAnalise($tipoPessoa,$pagina)
 			FROM lista_documento as list
 			INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
 			WHERE arq.idTipo = '$tipoPessoa'
-			AND arq.publicado = '1' ORDER BY arq.idUploadArquivo DESC LIMIT 0,1";
+			AND arq.publicado = '1' ORDER BY arq.idUploadArquivo";
 	$query = mysqli_query($con,$sql);
 	$linhas = mysqli_num_rows($query);
 
@@ -926,8 +926,8 @@ function listaArquivosAnalise($tipoPessoa,$pagina)
 		<table class='table table-condensed'>
 			<thead>
 				<tr class='list_menu'>
-					<td>Tipo de arquivo</td>
 					<td>Nome do arquivo</td>
+					<td>Data</td>
 					<td width='15%'></td>
 				</tr>
 			</thead>
@@ -935,8 +935,8 @@ function listaArquivosAnalise($tipoPessoa,$pagina)
 				while($arquivo = mysqli_fetch_array($query))
 				{
 					echo "<tr>";
-					echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
 					echo "<td class='list_description'><a href='uploadssmc/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
+					echo "<td class='list_description'>(".exibirDataHoraBr($arquivo['dataEnvio']).")</td>";
 					echo "</tr>";
 				}
 				echo "
