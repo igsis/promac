@@ -143,14 +143,15 @@ $status_analise = array(3,7,10,19,20,24,25,34,15);
 
                             <!-- Botão para anexar complemento de informações -->
                             <?php
-                            if($idStatus== 12 || $idStatus == 13 || $idStatus == 18) {
+                            if(($idStatus == 12) || ($idStatus == 13) || ($idStatus == 18)) {
                             ?>
-                                <div class="form-group">
-                                    <div class="col-md-offset-4 col-md-6">
-                                        <form class="form-horizontal" role="form" action="?perfil=complemento_informacoes&idProjeto=<?= $idProjeto ?>"
-                                              method="post">
-                                            <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;">anexar complementos</button>
-                                        </form>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-4 col-md-6">
+                                            <form class="form-horizontal" role="form" action="?perfil=complemento_informacoes&idProjeto=<?= $idProjeto ?>"
+                                                  method="post">
+                                                <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;">anexar complementos</button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             <?php

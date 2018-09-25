@@ -312,7 +312,7 @@ if(isset($_POST['liberacaoPJ']))
                                                         <td>Área de Atuação</td>
                                                         <?=($status['ordem'] >= 5) ? "<td>Parecerista</td>" : NULL ?>
 <?php
-                                                            if ($status['idStatus'] == 23)
+                                                            if (($status['idStatus'] == 23) || ($status['idStatus'] == 13))
                                                             {
 ?>
                                                                 <td>Arquivo</td>
@@ -337,6 +337,7 @@ if(isset($_POST['liberacaoPJ']))
                                                     <td class='list_description'><?= mb_strimwidth($campo['areaAtuacao'], 0, 38, "...") ?></td>
                                                     <?= ($status['ordem'] >= 5) ? "<td class='list_description'>".$campo['comissao']."</td>" : NULL ?>
 <?php
+                                                    /*TODO: Transformar este bloco de if/elseif em função*/
                                                     if ($status['idStatus'] == 23)
                                                     {
                                                         $sqlRecurso = "SELECT DISTINCT `arquivo`, `dataEnvio` FROM `upload_arquivo` WHERE `idTipo` = '3' AND `idPessoa` = '".$campo['idProjeto']."' AND `idListaDocumento` = '52' AND `publicado` = '1'";
@@ -347,6 +348,18 @@ if(isset($_POST['liberacaoPJ']))
 
 
                                                         echo "<td><a href='../uploadsdocs/".$recurso['arquivo']."' target='_blank'>".substr($recurso['arquivo'], 15)."</a></td>";
+                                                        echo "<td>".$dias->format("%a dias")."</td>";
+                                                    }
+                                                    elseif (($status['idStatus'] == 13))
+                                                    {
+                                                        $sqlComplemento = "SELECT DISTINCT `arquivo`, `dataEnvio` FROM `upload_arquivo` WHERE `idTipo` = '3' AND `idPessoa` = '".$campo['idProjeto']."' AND `idListaDocumento` = '46' AND `publicado` = '1'";
+                                                        $complemento = mysqli_fetch_array(mysqli_query($con, $sqlComplemento));
+                                                        $dataEnvio = date_create($complemento['dataEnvio']);
+                                                        $dataAtual = date_create(date("Y-m-d"));
+                                                        $dias = date_diff($dataEnvio, $dataAtual);
+
+
+                                                        echo "<td><a href='../uploadsdocs/".$complemento['arquivo']."' target='_blank'>".substr($complemento['arquivo'], 15)."</a></td>";
                                                         echo "<td>".$dias->format("%a dias")."</td>";
                                                     }
 ?>
