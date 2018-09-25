@@ -339,7 +339,7 @@ if(isset($_POST['liberacaoPJ']))
 <?php
                                                     if ($status['idStatus'] == 23)
                                                     {
-                                                        $sqlRecurso = "SELECT DISTINCT `arquivo`, `dataEnvio` FROM `upload_arquivo` WHERE `idTipo` = '3' AND `idPessoa` = '".$campo['idProjeto']."'  AND `publicado` = '1'";
+                                                        $sqlRecurso = "SELECT DISTINCT `arquivo`, `dataEnvio` FROM `upload_arquivo` WHERE `idTipo` = '3' AND `idPessoa` = '".$campo['idProjeto']."' AND `idListaDocumento` = '52' AND `publicado` = '1'";
                                                         $recurso = mysqli_fetch_array(mysqli_query($con, $sqlRecurso));
                                                         $dataEnvio = date_create($recurso['dataEnvio']);
                                                         $dataAtual = date_create(date("Y-m-d"));
