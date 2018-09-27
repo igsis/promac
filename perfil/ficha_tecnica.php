@@ -17,9 +17,22 @@ if(isset($_POST['insereFicha']))
 		}
 		else
 		{
+			// Verifica se o representante já foi cadastrado ao projeto
+			$pesquisa_ficha = "SELECT * FROM promac.ficha_tecnica 
+			WHERE idProjeto='$idProjeto'
+			AND cpf='$cpf' 
+			AND publicado='1'";
+			
+			$res = mysqli_query($con,$pesquisa_ficha);
+			// ------------------------ //
+
 			$sql_insere_nome = "INSERT INTO `ficha_tecnica`(`idProjeto`, `nome`, `cpf`, `funcao`, `publicado`) VALUES ('$idProjeto', '$nome', '$cpf', '$funcao', 1)";
 
-			if(mysqli_query($con,$sql_insere_nome))
+			if($res->num_rows >= 1)
+			{
+				$mensagem = "<font color='#FF0000'><strong>Erro, Esse Integrante já está cadastrado!</strong></font>";
+			}
+			elseif(mysqli_query($con,$sql_insere_nome))
 			{
 				$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso! Utilize o menu para avançar.</strong></font>";
 				gravarLog($sql_insere_nome);
