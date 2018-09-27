@@ -36,13 +36,7 @@ if(isset($_POST['apagar']))
 			<div class="row">
 				<div class="col-md-offset-1 col-md-10">
 				<?php
-					if ($pf['liberado'] == 2 OR $pf['liberado'] == 4)
-					{
-						echo "<div class='alert alert-warning'>
-				  		<strong></strong>Aguardando Aprovação da Inscrição.
-						</div>";
-					}
-					elseif ($pf['liberado'] == NULL)
+					if ($pf['liberado'] == 2 OR $pf['liberado'] == 4 OR $pf['liberado'] ==  NULL)
 					{
 						echo "<div class='alert alert-warning'>
 				  		<strong></strong>Aguardando preenchimento e envio da Inscrição.
