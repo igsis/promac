@@ -234,10 +234,14 @@ while($row = mysqli_fetch_array($query))
    {
      $status_exibido = $row['status'];
    }
-   elseif($status_proponente == 3 OR $status_proponente == 7 OR $status_proponente == 10 OR $status_proponente == 19 OR $status_proponente == 20 OR $status_proponente == 24 OR $status_proponente == 25 OR $status_proponente == 34 OR $status_proponente == 15)
+   elseif($status_proponente == 3 OR $status_proponente == 25 OR $status_proponente == 15)
    {
      $status_exibido = "Em análise";
-   } 
+   }
+   elseif($status_proponente == 7 OR $status_proponente == 10 OR $status_proponente == 19 OR $status_proponente == 20 OR $status_proponente == 24 OR $status_proponente == 34)
+   {
+     $status_exibido = "Comissão";
+   }
    //$objPHPExcel->getActiveSheet()->getStyle('A'.$i.'')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
 
    $objPHPExcel->getActiveSheet()->getStyle('E'.$i.'')->getNumberFormat()->setFormatCode("#,##0.00");
