@@ -58,7 +58,3 @@
 			}
 		?></p>
 </div>
-
-<div class="table-responsive list_info"><h6>Arquivo(s) de Pessoa Física(s)</h6>
-	<?php listaArquivosPessoa($idPf,$tipoPessoa,"arquivos_pf"); ?>
-</div>
