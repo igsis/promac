@@ -88,16 +88,16 @@ else
 				<form class="form-horizontal" role="form" action="login_cadastro_pj.php" method="post">
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><strong>Razão Social: *</strong><br/>
-							<input type="text" class="form-control" name="razaoSocial" placeholder="Razão Social">
+							<input type="text" class="form-control" name="razaoSocial" placeholder="Razão Social" required>
 						</div>
 					</div>
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-6"><strong>Senha: *</strong>
-							<input type="password" name="senha01" class="form-control" id="inputName" placeholder="">
+							<input type="password" name="senha01" class="form-control" id="inputName" placeholder="" required>
 						</div>
 						<div class=" col-md-6"><strong>Redigite a senha: *</strong>
-							<input type="password" name="senha02" class="form-control" id="inputEmail" placeholder="">
+							<input type="password" name="senha02" class="form-control" id="inputEmail" placeholder="" required>
 						</div>
 					</div>
 
@@ -106,14 +106,14 @@ else
 							<input type="text" readonly class="form-control" name="cnpj" value="<?php echo $busca ?>" placeholder="CNPJ">
 						</div>
 						<div class="col-md-6"><strong>Email: *</strong><br/>
-							<input type="email" class="form-control" name="email" placeholder="Email" maxlength="50">
+							<input type="email" class="form-control" name="email" placeholder="Email" maxlength="50" required>
 						</div>
 					</div>
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><strong>Escolha uma pergunta secreta, para casos de recuperação de senha:</strong><br/>
 							<select class="form-control" name="idFraseSeguranca" id="idFraseSeguranca" required>
-								<option>Selecione...</option>
+								<option value=''>Selecione...</option>
 								<?php geraOpcao("frase_seguranca","");	?>
 							</select>
 						</div>
