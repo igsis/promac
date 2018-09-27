@@ -5,7 +5,7 @@ $tipoPessoa = '2';
 $idPj = $_SESSION['idUser'];
 $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 $rl = recuperaDados("representante_legal","idRepresentanteLegal",$pj['idRepresentanteLegal']);
-$campos = array($pj['razaoSocial'], $pj['cnpj'], $pj['email'], $pj['cep'], $pj['numero']);
+$campos = array($pj['razaoSocial'], $pj['cnpj'], $pj['email'], $pj['cep'], $pj['numero'], $pj['idRepresentanteLegal']);
 $cpo = false;
 
 foreach ($campos as $cpos)

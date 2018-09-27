@@ -9,7 +9,7 @@ if(isset($_POST['apagaRepresentante']))
 {
 	$idPj = $_POST['apagaRepresentante'];
 
-	$sql_apaga_rep1 = "UPDATE pessoa_juridica SET idRepresentanteLegal = '0'
+	$sql_apaga_rep1 = "UPDATE pessoa_juridica SET idRepresentanteLegal = NULL
 	WHERE `idPj` = '$idPj'";
 
 	if(mysqli_query($con,$sql_apaga_rep1))
