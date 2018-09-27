@@ -135,12 +135,28 @@ if(isset($_POST['apagar']))
 									</tbody>
 								</table>";
 						}
-			}else {
-				echo "<div class='alert alert-warning'>
-				  <strong></strong>Aguardando Aprovação da Inscrição.
-				</div>";
-			} 						
+			}
+			elseif($pj['liberado'] == 2 OR $pj['liberado'] == 4)
+					{
+						echo "<div class='alert alert-warning'>
+				  		<strong></strong>Aguardando Aprovação da Inscrição.
+						</div>";
+					}
+					elseif ($pj['liberado'] == NULL)
+					{
+						echo "<div class='alert alert-warning'>
+				  		<strong></strong>Aguardando preenchimento e envio da Inscrição.
+						</div>";
+					}	
+					elseif($pj['liberado'] == 1)// foi solicitado liberação, porém a SMC não analisou ainda.
+					{						
 			?>
+					<div class="alert alert-success">
+						<strong>Sua solicitação de inscrição foi enviada com sucesso à Secretaria Municipal de Cultura. Aguarde a análise da documentação.</strong>
+					</div>
+					<?php
+				}
+				?>
 					</div>
 					</div>
 				<?php
