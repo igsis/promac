@@ -326,13 +326,13 @@ else
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-6"><strong>Zona *:</strong><br/>
 							<select class="form-control" name="idZona" required>
-								<option value="0"></option>
+								<option value=""></option>
 								<?php echo geraOpcao("zona", $pf['idZona']) ?>
 							</select>
 						</div>
 						<div class="col-md-6"><strong>Prefeitura Regional *: <a href="../pdf/lista_distritos.html" target="_blank"><i class="fa fa-info-circle"></i></a></strong><br/>
 							<select class="form-control" name="idSubprefeitura" required>
-								<option value="0"></option>
+								<option value=""></option>
 								<?php echo geraOpcao("subprefeitura",$pf['idSubprefeitura']) ?>
 							</select>
 						</div>
@@ -341,7 +341,7 @@ else
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-6"><strong>Distrito *: <a href="../pdf/lista_distritos.html" target="_blank"><i class="fa fa-info-circle"></i></a></strong><br/>
 							<select class="form-control" name="idDistrito" required>
-								<option value="0"></option>
+								<option value=""></option>
 								<?php echo geraOpcao("distrito",$pf['idDistrito']) ?>
 							</select>
 						</div>
