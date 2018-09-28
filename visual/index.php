@@ -21,8 +21,8 @@ if(isset($_GET['perfil']))
 }
 else
 {
-	/*include "../perfil/consulta_publica.php";*/
-    echo "<script>window.location = '../index.php';</script>";
+	include "../perfil/consulta_publica.php";
+    //echo "<script>window.location = '../index.php';</script>";
 }
 
  //carrega o rodapé
