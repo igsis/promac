@@ -66,7 +66,7 @@ if(isset($_POST['atualizar']))
 		if($envia)
 		{
 			$mensagem = "<font color='#01DF3A'><strong>Os arquivos foram atualizados com sucesso!</strong></font>";
-			echo "<script>window.location.href = 'index_pf.php?perfil=smc_visualiza_perfil_pf&idFF=".$dado['idPessoa'] ."';</script>";
+			echo "<script>window.location.href = 'index_pf.php?perfil=smc_visualiza_perfil_pf&idPf=".$dado['idPessoa'] ."';</script>";
 		}
 		else
 		{
@@ -261,7 +261,7 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 	{
 	?>
 		<div class="form-group">
-			<h5>Proponente não aprovado!<br> Aguardando reenvio da inscrição.</h5>
+			<h5><font color='#FF0000'><strong>Proponente não aprovado!</strong></font><br> Aguardando reenvio da inscrição.</h5>
 		</div>
 	<?php
 	}
