@@ -10,6 +10,8 @@ $protocolo = $_POST['protocolo'];
 $idAreaAtuacao = $_POST['idAreaAtuacao'];
 $valorAprovado = $_POST['valorAprovado'];
 
+$status_aprovado = "AND idStatus IN (5, 21, 26, 16, 11)";
+
 // Inicio Pessoa Física
 if($nome != '' || $cpf != '')
 {
@@ -33,7 +35,8 @@ if($nome != '' || $cpf != '')
 
 	$sql = "SELECT * FROM projeto AS prj
 			INNER JOIN pessoa_fisica AS pf ON prj.idPf = pf.idPf
-			WHERE publicado = 1
+			INNER JOIN area_atuacao AS ar on prj.idAreaAtuacao = ar.idArea
+			WHERE prj.publicado = 1 $status_aprovado
 			$filtro_nome $filtro_cpf";
 	$query = mysqli_query($con,$sql);
 	$num = mysqli_num_rows($query);
@@ -42,15 +45,12 @@ if($nome != '' || $cpf != '')
 		$i = 0;
 		while($lista = mysqli_fetch_array($query))
 		{
-			$area = recuperaDados("area_atuacao","idArea",$lista['idAreaAtuacao']);
-			$status = recuperaDados("status","idStatus",$lista['idStatus']);
 			$x[$i]['idProjeto'] = $lista['idProjeto'];
 			$x[$i]['protocolo'] = $lista['protocolo'];
 			$x[$i]['nomeProjeto'] = $lista['nomeProjeto'];
 			$x[$i]['proponente'] = $lista['nome'];
 			$x[$i]['documento'] = $lista['cpf'];
-			$x[$i]['areaAtuacao'] = $area['areaAtuacao'];
-			$x[$i]['status'] = $status['status'];
+			$x[$i]['areaAtuacao'] = $lista['areaAtuacao'];
 			$i++;
 		}
 		$x['num'] = $i;
@@ -82,7 +82,8 @@ elseif($razaoSocial != '' || $cnpj != '')
 	}
 	$sql = "SELECT * FROM projeto AS prj
 			INNER JOIN pessoa_juridica AS pj ON prj.idPj = pj.idPj
-			WHERE publicado = 1
+			INNER JOIN area_atuacao AS ar on prj.idAreaAtuacao = ar.idArea
+			WHERE prj.publicado = 1 $status_aprovado
 			$filtro_razaoSocial $filtro_cnpj";
 	$query = mysqli_query($con,$sql);
 	$num = mysqli_num_rows($query);
@@ -91,15 +92,12 @@ elseif($razaoSocial != '' || $cnpj != '')
 		$i = 0;
 		while($lista = mysqli_fetch_array($query))
 		{
-			$area = recuperaDados("area_atuacao","idArea",$lista['idAreaAtuacao']);
-			$status = recuperaDados("status","idStatus",$lista['idStatus']);
 			$x[$i]['idProjeto'] = $lista['idProjeto'];
 			$x[$i]['protocolo'] = $lista['protocolo'];
 			$x[$i]['nomeProjeto'] = $lista['nomeProjeto'];
 			$x[$i]['proponente'] = $lista['razaoSocial'];
 			$x[$i]['documento'] = $lista['cnpj'];
-			$x[$i]['areaAtuacao'] = $area['areaAtuacao'];
-			$x[$i]['status'] = $status['status'];
+			$x[$i]['areaAtuacao'] = $lista['areaAtuacao'];
 			$i++;
 		}
 		$x['num'] = $i;
@@ -150,7 +148,8 @@ else
 
 
 	$sql = "SELECT * FROM projeto AS prj
-			WHERE publicado = 1 AND idStatus IN (5, 21, 26, 16, 11)
+			INNER JOIN area_atuacao AS ar on prj.idAreaAtuacao = ar.idArea
+			WHERE prj.publicado = 1 $status_aprovado
 			$filtro_nomeProjeto $filtro_protocolo $filtro_idAreaAtuacao $filtro_valorAprovado";
 	$query = mysqli_query($con,$sql);
 	$num = mysqli_num_rows($query);
@@ -159,8 +158,6 @@ else
 		$i = 0;
 		while($lista = mysqli_fetch_array($query))
 		{
-			$area = recuperaDados("area_atuacao","idArea",$lista['idAreaAtuacao']);
-			$status = recuperaDados("status","idStatus",$lista['idStatus']);
 			$pf = recuperaDados("pessoa_fisica","idPf",$lista['idPf']);
 			$pj = recuperaDados("pessoa_juridica","idPj",$lista['idPj']);
 			$x[$i]['idProjeto'] = $lista['idProjeto'];
@@ -176,8 +173,7 @@ else
 				$x[$i]['proponente'] = $pj['razaoSocial'];
 				$x[$i]['documento'] = $pj['cnpj'];
 			}
-			$x[$i]['areaAtuacao'] = $area['areaAtuacao'];
-			$x[$i]['status'] = $status['status'];
+			$x[$i]['areaAtuacao'] = $lista['areaAtuacao'];
 			$i++;
 		}
 		$x['num'] = $i;
@@ -213,7 +209,6 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 								<td>Proponente</td>
 								<td>Documento</td>
 								<td>Área de Atuação</td>
-								<td>Status</td>
 								<td width='10%'></td>
 							</tr>
 						</thead>
@@ -227,7 +222,6 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 								echo "<td class='list_description'>".$x[$h]['proponente']."</td>";
 								echo "<td class='list_description'>".$x[$h]['documento']."</td>";
 								echo "<td class='list_description'>".$x[$h]['areaAtuacao']."</td>";
-								echo "<td class='list_description'>Aprovado</td>";
 								echo "<td class='list_description'>
 										<form method='POST' action='?perfil=consulta_publica_detalhes'>
 											<input type='hidden' name='consulta' value='1'>
