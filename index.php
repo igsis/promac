@@ -71,7 +71,7 @@ $tipoPessoa = '6';
 							</div>
 						</div>
 
-						<div class="form-group"></div>
+						<!--<div class="form-group"></div>
 							<div class="well" style="padding-top: 60px;">
 								<div class="form-group" style="padding-bottom: 60px;">
 									<div class="col-md-offset-4 col-md-4">
@@ -81,7 +81,7 @@ $tipoPessoa = '6';
 										</form>
 									</div>
 								</div>
-							</div>
+							</div>-->
 						</div>
 
 						
