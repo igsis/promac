@@ -242,7 +242,7 @@ ORDER BY idOrcamento";
             $lista = mysqli_fetch_array($query_etapa);
 
             $etapa = recuperaDados("etapa", "idEtapa", $lista['idEtapa']);
-            echo "<li class='list-group-item'><strong>" . $etapa['etapa'] . ":</strong> R$ " . dinheiroParaBr($lista['tot']) . "</li>";
+            echo  isset($etapa['etapa']) ? "<li class='list-group-item'><strong>" . $etapa['etapa']. ":</strong> R$ " . dinheiroParaBr($lista['tot']) . "</li>" : null;
         }
         $sql_total = "SELECT SUM(valorTotal) AS tot FROM orcamento
 WHERE publicado > 0 AND idProjeto ='$idProjeto'
