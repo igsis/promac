@@ -5,11 +5,46 @@
         </h5>
 
         <?php
+        if($projeto['idStatus'] > 1) {
+        ?>
+            <div class="form-group">
+                <div class="col-md-offset-8 col-md-3">
+                    <button class='btn btn-danger btn-sm' style="border-radius: 10px;" type='button' data-toggle='modal' data-target='#confirmCancelar' data-title='Cancelamento de projeto' data-message='Você realmete deseja cancelar o projeto?'>Cancelar Projeto</button>
+                </div>
+            </div>
+            <!-- Confirmação de Cancelamento -->
+            <div class="modal fade" id="confirmCancelar" role="dialog" aria-labelledby="confirmCancelarLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form method="POST" id='cancelarProjeto' action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title"><p>Cancelamento de projeto</p></h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>Qual o motivo do cancelamento do projeto?</p>
+                                <input type="text" name="observacao" class="form-control" required>
+                            </div>
+                            <div class="modal-footer">
+                                <input type='hidden' name='idProjeto' value='<?php echo $idProjeto ?>'>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                <button type='submit' class='btn btn-danger btn-sm' style="border-radius: 10px;" name="cancelarProjeto">Confirmar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Fim Confirmação de Exclusão -->
+        <?php
+        }
+        ?>
+
+        <?php
         $array_envio_comissao = array(2,10,13,20,14,15,23,25,29,31);
         if(in_array($projeto['idStatus'], $array_envio_comissao )) {
         ?>
             <div class="form-group">
-                <div class="col-md-offset-3 col-md-3" align="right"><br/><label>Enviar projeto para comissão</label><br>
+                <div class="col-md-offset-2 col-md-3"><br/><label>Enviar projeto para comissão</label><br>
                     <?php echo exibirDataHoraBr($projeto['envioComissao']) ?>
                 </div>
                 <div class="col-md-3"><br/>
