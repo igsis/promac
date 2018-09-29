@@ -462,16 +462,6 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td width="50%">
-                                        <strong>CPF:</strong>
-                                        <?= isset($representante['cpf']) ? $representante['cpf'] : ''; ?>
-                                    </td>
-                                    <td>
-                                        <strong>RG:</strong>
-                                        <?= isset($representante['rg']) ? $representante['rg'] : ''; ?>
-                                    </td>
-                                </tr>
-                                <tr>
                                     <td>
                                         <strong>Telefone:</strong>
                                         <?= isset($representante['telefone']) ? $representante['telefone'] : ''; ?>
