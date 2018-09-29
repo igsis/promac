@@ -1,269 +1,96 @@
-<div class="form-group">
-    <h5>Lista de projetos enviados</h5>
-</div>
-<div class="row">
-    <div class="col-md-offset-1 col-md-10">
-        <div class="table-responsive list_info">
-            <?php
-            $direcao = recuperaDados("pessoa_fisica","idPf", $_SESSION['idUser']);
-            if(($direcao['idNivelAcesso'] == 3) || ($direcao['idNivelAcesso'] == 2))
-            {
-                $sql = "SELECT * FROM projeto WHERE publicado = 1 AND idStatus = 7 ORDER BY envioComissao ";
-            }
-            else
-            {
-                $sql = "SELECT * FROM projeto WHERE publicado = 1 AND idComissao = $idPf AND idStatus = 7 ORDER BY envioComissao ";
-            }
-            $query = mysqli_query($con,$sql);
-            $num = mysqli_num_rows($query);
-            if($num > 0)
-            {
-                echo "
-							<table class='table table-condensed'>
-								<thead>
-									<tr class='list_menu'>
-										<td>Protocolo (nº ISP)</td>
-										<td>Nome do Projeto</td>
-										<td>Proponente</td>
-										<td>Documento</td>
-										<td>Área de Atuação</td>
-										<td>Parecerista</td>
-										<td>Etapa do Projeto</td>
-										<td width='10%'></td>
-									</tr>
-								</thead>
-								<tbody>";
+<?php
+$array_status = array(7, 19, 24, 34); //status
+foreach ($array_status as $idStatus)
+{
+    $sqlStatus = "SELECT idStatus, status, ordem FROM status WHERE idStatus = '$idStatus'";
+    if (($pf['idNivelAcesso'] == 2) || ($pf['idNivelAcesso'] == 3))
+    {
+        $parecerista = NULL;
+    }
+    else
+    {
+        $parecerista = " AND idComissao = $idPf";
+    }
+    $sqlProjeto = "SELECT idProjeto, nomeProjeto, protocolo, pf.nome, pf.cpf, razaoSocial, cnpj, areaAtuacao, pfc.nome AS comissao, status, pro.idStatus AS idStatus 
+                    FROM projeto AS pro
+                    LEFT JOIN pessoa_fisica AS pf ON pro.idPf = pf.idPf
+                    LEFT JOIN pessoa_juridica AS pj ON pro.idPj = pj.idPj
+                    INNER JOIN area_atuacao AS ar ON pro.idAreaAtuacao = ar.idArea
+                    LEFT JOIN pessoa_fisica AS pfc ON pro.idComissao = pfc.idPf 
+                    INNER JOIN status AS st ON pro.idStatus = st.idStatus
+                    WHERE pro.publicado = 1 AND pro.idStatus = '$idStatus'".$parecerista." ORDER BY idProjeto DESC";
+    $queryProjeto = mysqli_query($con,$sqlProjeto);
+    $queryStatus = mysqli_query($con,$sqlStatus);
+    $num = mysqli_num_rows($queryProjeto);
 
-                while($campo = mysqli_fetch_array($query))
-                {
-                    $area = recuperaDados("area_atuacao","idArea",$campo['idAreaAtuacao']);
-                    $status = recuperaDados("status","idStatus",$campo['idStatus']);
-                    $pf = recuperaDados("pessoa_fisica","idPf",$campo['idPf']);
-                    $pj = recuperaDados("pessoa_juridica","idPj",$campo['idPj']);
-                    if($campo['idComissao'] != NULL){
-                        $comissao = recuperaDados("pessoa_fisica", "idPf", $campo['idComissao']);
-                    }else{
-                        $comissao['nome'] = " ";
-                    }
-
-
-                    echo "<tr>";
-                    echo "<td class='list_description'>".$campo['protocolo']."</td>";
-                    echo "<td class='list_description'>".$campo['nomeProjeto']."</td>";
-                    if($campo['tipoPessoa'] == 1)
-                    {
-                        echo "<td class='list_description'>".$pf['nome']."</td>";
-                        echo "<td class='list_description'>".$pf['cpf']."</td>";
-                    }
-                    if($campo['tipoPessoa'] == 2)
-                    {
-                        echo "<td class='list_description'>".$pj['razaoSocial']."</td>";
-                        echo "<td class='list_description'>".$pj['cnpj']."</td>";
-                    }
-                    echo "<td class='list_description'>".$area['areaAtuacao']."</td>";
-                    echo "<td class='list_description'>".$comissao['nome']."</td>";
-                    echo "<td class='list_description'>".$status['status']."</td>";
-                    if ($direcao['idNivelAcesso'] != 2)
-                    {
-                        echo "
-                                            <td class='list_description'>
-                                                <form method='POST' action='?perfil=comissao_detalhes_projeto'>
-                                                    <input type='hidden' name='idProjeto' value='" . $campo['idProjeto'] . "' />
-                                                    <input type ='submit' class='btn btn-theme btn-block' value='Visualizar'>
-                                                </form>
-                                            </td>";
-                    }
-                }
-                echo "</tr>";
-                echo "
-							</tbody>
-							</table>";
-            }
-            else
-            {
-                echo "Nada consta.";
-            }
-            ?>
+    foreach ($queryStatus as $status)
+    {
+        $i = 0;
+        ?>
+        <div class='form-group'>
+            <h5>Projetos com Status "<?=$status['status']?>"</h5>
+            <form method="POST" action="<?= ($pf['idNivelAcesso'] == 2) ? "?perfil=smc_pesquisa_geral_resultado" : "?perfil=comissao_pesquisa_resultado"?>" class="form-horizontal" role="form">
+                <button type="submit" class="label label-warning" name="idStatus" value="<?=$status['idStatus']?>">
+                    <span>Total: <?=$num?></span>
+                </button>
+            </form>
         </div>
-    </div>
-</div>
-
-<div class="form-group">
-    <h5>Lista de projetos com complemento enviado à Comissão</h5>
-</div>
-<div class="row">
-    <div class="col-md-offset-1 col-md-10">
-        <div class="table-responsive list_info">
-            <?php
-            $direcao = recuperaDados("pessoa_fisica","idPf", $_SESSION['idUser']);
-            if(($direcao['idNivelAcesso'] == 3) || ($direcao['idNivelAcesso'] == 2))
-            {
-                $sql = "SELECT * FROM projeto WHERE publicado = 1 AND idStatus = 19 ORDER BY envioComissao ";
-            }
-            else
-            {
-                $sql = "SELECT * FROM projeto WHERE publicado = 1 AND idComissao = $idPf AND idStatus = 19 ORDER BY envioComissao ";
-            }
-            $query = mysqli_query($con,$sql);
-            $num = mysqli_num_rows($query);
-            if($num > 0)
-            {
-                echo "
-							<table class='table table-condensed'>
-								<thead>
-									<tr class='list_menu'>
-										<td>Protocolo (nº ISP)</td>
-										<td>Nome do Projeto</td>
-										<td>Proponente</td>
-										<td>Documento</td>
-										<td>Área de Atuação</td>
-										<td>Parecerista</td>
-										<td>Etapa do Projeto</td>
-										<td width='10%'></td>
-									</tr>
-								</thead>
-								<tbody>";
-
-                while($campo = mysqli_fetch_array($query))
-                {
-                    $area = recuperaDados("area_atuacao","idArea",$campo['idAreaAtuacao']);
-                    $status = recuperaDados("status","idStatus",$campo['idStatus']);
-                    $pf = recuperaDados("pessoa_fisica","idPf",$campo['idPf']);
-                    $pj = recuperaDados("pessoa_juridica","idPj",$campo['idPj']);
-                    if($campo['idComissao'] != NULL){
-                        $comissao = recuperaDados("pessoa_fisica", "idPf", $campo['idComissao']);
-                    }else{
-                        $comissao['nome'] = " ";
-                    }
-
-
-                    echo "<tr>";
-                    echo "<td class='list_description'>".$campo['protocolo']."</td>";
-                    echo "<td class='list_description'>".$campo['nomeProjeto']."</td>";
-                    if($campo['tipoPessoa'] == 1)
+        <div class="row">
+            <div class="col-md-offset-1 col-md-10">
+                <div class="table-responsive list_info">
+                    <?php
+                    if($num > 0)
                     {
-                        echo "<td class='list_description'>".$pf['nome']."</td>";
-                        echo "<td class='list_description'>".$pf['cpf']."</td>";
-                    }
-                    if($campo['tipoPessoa'] == 2)
-                    {
-                        echo "<td class='list_description'>".$pj['razaoSocial']."</td>";
-                        echo "<td class='list_description'>".$pj['cnpj']."</td>";
-                    }
-                    echo "<td class='list_description'>".$area['areaAtuacao']."</td>";
-                    echo "<td class='list_description'>".$comissao['nome']."</td>";
-                    echo "<td class='list_description'>".$status['status']."</td>";
-                    if ($direcao['idNivelAcesso'] != 2)
-                    {
-                        echo "
-                                            <td class='list_description'>
-                                                <form method='POST' action='?perfil=comissao_detalhes_projeto'>
-                                                    <input type='hidden' name='idProjeto' value='" . $campo['idProjeto'] . "' />
-                                                    <input type ='submit' class='btn btn-theme btn-block' value='Visualizar'>
-                                                </form>
-                                            </td>";
-                    }
-                }
-                echo "</tr>";
-                echo "
-							</tbody>
-							</table>";
-            }
-            else
-            {
-                echo "Nada consta.";
-            }
-            ?>
+                    ?>
+
+                    <table class='table table-condensed'>
+                        <thead>
+                        <tr class='list_menu'>
+                            <td>Protocolo (nº ISP)</td>
+                            <td>Nome do Projeto</td>
+                            <td>Proponente</td>
+                            <td>Documento</td>
+                            <td>Área de Atuação</td>
+                            <td>Parecerista</td>
+                            <td width='10%'></td>
+                        </tr>
+                        </thead>
+                        <?php
+                        while ($campo = mysqli_fetch_array($queryProjeto))
+                        {
+
+                            if ($i < 15) {
+                                ?>
+                                <tr>
+                                    <td class='list_description'><?= $campo['protocolo'] ?></td>
+                                    <td class='list_description'><?= $campo['nomeProjeto'] ?></td>
+                                    <td class='list_description'><?= isset($campo['nome']) ? $campo['nome'] : $campo['razaoSocial'] ?></td>
+                                    <td class='list_description'><?= isset($campo['cpf']) ? $campo['cpf'] : $campo['cnpj'] ?></td>
+                                    <td class='list_description'><?= mb_strimwidth($campo['areaAtuacao'], 0, 38, "...") ?></td>
+                                    <td class='list_description'><?=$campo['comissao']?></td>
+                                        <td class='list_description'>
+                                            <form method='POST' action='<?= ($pf['idNivelAcesso'] == 2) ? "?perfil=smc_detalhes_projeto" : "?perfil=comissao_detalhes_projeto"?>'>
+                                                <input type='hidden' name='idProjeto'
+                                                       value='<?= $campo['idProjeto'] ?>'/>
+                                                <input type='submit' class='btn btn-theme btn-block' value='Visualizar'>
+                                            </form>
+                                        </td>
+                                </tr>
+                                <?php
+                                $i++;
+                            }
+                        }
+                        }
+                        else
+                        {
+                            echo "Não há resultado no momento.";
+                        }
+                        ?>
+                    </table>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
-
-<div class="form-group">
-    <h5>Lista de projetos com solicitação de alteração encaminhada à Comissão</h5>
-</div>
-<div class="row">
-    <div class="col-md-offset-1 col-md-10">
-        <div class="table-responsive list_info">
-            <?php
-            $direcao = recuperaDados("pessoa_fisica","idPf", $_SESSION['idUser']);
-            if(($direcao['idNivelAcesso'] == 3) || ($direcao['idNivelAcesso'] == 2))
-            {
-                $sql = "SELECT * FROM projeto WHERE publicado = 1 AND idStatus = 34 ORDER BY envioComissao ";
-            }
-            else
-            {
-                $sql = "SELECT * FROM projeto WHERE publicado = 1 AND idComissao = $idPf AND idStatus = 34 ORDER BY envioComissao ";
-            }
-            $query = mysqli_query($con,$sql);
-            $num = mysqli_num_rows($query);
-            if($num > 0)
-            {
-                echo "
-							<table class='table table-condensed'>
-								<thead>
-									<tr class='list_menu'>
-										<td>Protocolo (nº ISP)</td>
-										<td>Nome do Projeto</td>
-										<td>Proponente</td>
-										<td>Documento</td>
-										<td>Área de Atuação</td>
-										<td>Parecerista</td>
-										<td>Etapa do Projeto</td>
-										<td width='10%'></td>
-									</tr>
-								</thead>
-								<tbody>";
-
-                while($campo = mysqli_fetch_array($query))
-                {
-                    $area = recuperaDados("area_atuacao","idArea",$campo['idAreaAtuacao']);
-                    $status = recuperaDados("status","idStatus",$campo['idStatus']);
-                    $pf = recuperaDados("pessoa_fisica","idPf",$campo['idPf']);
-                    $pj = recuperaDados("pessoa_juridica","idPj",$campo['idPj']);
-                    if($campo['idComissao'] != NULL){
-                        $comissao = recuperaDados("pessoa_fisica", "idPf", $campo['idComissao']);
-                    }else{
-                        $comissao['nome'] = " ";
-                    }
-
-
-                    echo "<tr>";
-                    echo "<td class='list_description'>".$campo['protocolo']."</td>";
-                    echo "<td class='list_description'>".$campo['nomeProjeto']."</td>";
-                    if($campo['tipoPessoa'] == 1)
-                    {
-                        echo "<td class='list_description'>".$pf['nome']."</td>";
-                        echo "<td class='list_description'>".$pf['cpf']."</td>";
-                    }
-                    if($campo['tipoPessoa'] == 2)
-                    {
-                        echo "<td class='list_description'>".$pj['razaoSocial']."</td>";
-                        echo "<td class='list_description'>".$pj['cnpj']."</td>";
-                    }
-                    echo "<td class='list_description'>".$area['areaAtuacao']."</td>";
-                    echo "<td class='list_description'>".$comissao['nome']."</td>";
-                    echo "<td class='list_description'>".$status['status']."</td>";
-                    if ($direcao['idNivelAcesso'] != 2)
-                    {
-                        echo "
-                                            <td class='list_description'>
-                                                <form method='POST' action='?perfil=comissao_detalhes_projeto'>
-                                                    <input type='hidden' name='idProjeto' value='".$campo['idProjeto']."' />
-                                                    <input type ='submit' class='btn btn-theme btn-block' value='Visualizar'>
-                                                </form>
-                                            </td>";
-                    }
-                }
-                echo "</tr>";
-                echo "
-							</tbody>
-							</table>";
-            }
-            else
-            {
-                echo "Nada consta.";
-            }
-            ?>
-        </div>
-    </div>
-</div>
+        <?php
+    }
+}
+?>

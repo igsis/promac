@@ -1,14 +1,15 @@
 <?php
 $con = bancoMysqli();
 
-$nome = $_POST['nome'];
-$cpf = $_POST['cpf'];
-$razaoSocial = $_POST['razaoSocial'];
-$cnpj = $_POST['cnpj'];
-$nomeProjeto = $_POST['nomeProjeto'];
-$idProjeto = $_POST['idProjeto'];
-$idAreaAtuacao = $_POST['idAreaAtuacao'];
-$idComissao = $_POST['idComissao'];
+$nome = $_POST['nome'] ?? NULL;
+$cpf = $_POST['cpf'] ?? NULL;
+$razaoSocial = $_POST['razaoSocial'] ?? NULL;
+$cnpj = $_POST['cnpj'] ?? NULL;
+$nomeProjeto = $_POST['nomeProjeto'] ?? NULL;
+$idProjeto = $_POST['idProjeto'] ?? NULL;
+$idAreaAtuacao = $_POST['idAreaAtuacao'] ?? NULL;
+$idStatus = $_POST['idStatus'] ?? NULL;
+$idComissao = $_POST['idComissao'] ?? NULL;
 
 // Inicio Pessoa Física
 if($nome != '' || $cpf != '')
@@ -149,7 +150,7 @@ else
 	}
 
 	$sql = "SELECT * FROM projeto AS prj
-			WHERE publicado = 1 AND idStatus = 7
+			WHERE publicado = 1 AND idStatus = $idStatus
 			$filtro_nomeProjeto $filtro_idProjeto $filtro_idAreaAtuacao $filtro_idComissao";
 	$query = mysqli_query($con,$sql);
 	$num = mysqli_num_rows($query);

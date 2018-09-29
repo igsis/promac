@@ -239,8 +239,14 @@ foreach ($array_status as $idStatus)
         ?>
         <div class='form-group'>
             <h5>Projetos com Status "<?=$status['status']?>"</h5>
-            <form method="POST" action="?perfil=smc_pesquisa_geral_resultado" class="form-horizontal" role="form">
-                <button type="submit" class="label label-warning" name="idStatus" value="<?=$status['idStatus']?>">
+            <?php
+            if ($pf['idNivelAcesso'] == 2)
+            {
+                echo "<form method='POST' action='?perfil=smc_pesquisa_geral_resultado' class='form-horizontal' role='form'>";
+            }
+            ?>
+
+                <button type="button" class="label label-warning" name="idStatus" value="<?=$status['idStatus']?>">
                     <span>Total: <?=$num?></span>
                 </button>
             </form>
@@ -313,13 +319,19 @@ foreach ($array_status as $idStatus)
                                         echo "<td><a href='../uploadsdocs/".$complemento['arquivo']."' target='_blank'>".substr($complemento['arquivo'], 15)."</a></td>";
                                         echo "<td>".$dias->format("%a dias")."</td>";
                                     }
+                                    if ($pf['idNivelAcesso'] == 2)
+                                    {
+                                        ?>
+                                        <td class='list_description'>
+                                            <form method='POST' action='?perfil=smc_detalhes_projeto'>
+                                                <input type='hidden' name='idProjeto'
+                                                       value='<?= $campo['idProjeto'] ?>'/>
+                                                <input type='submit' class='btn btn-theme btn-block' value='Visualizar'>
+                                            </form>
+                                        </td>
+                                        <?php
+                                    }
                                     ?>
-                                    <td class='list_description'>
-                                        <form method='POST' action='?perfil=smc_detalhes_projeto'>
-                                            <input type='hidden' name='idProjeto' value='<?= $campo['idProjeto'] ?>' />
-                                            <input type ='submit' class='btn btn-theme btn-block' value='Visualizar'>
-                                        </form>
-                                    </td>
                                 </tr>
                                 <?php
                                 $i++;
