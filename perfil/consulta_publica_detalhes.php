@@ -372,35 +372,6 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                         <?= isset($pessoaFisica['nome']) ? $pessoaFisica['nome'] : ''; ?>
                                     </td>
                                 </tr>
-
-                                <tr>
-                                    <td width="50%">
-                                        <strong>CPF:</strong>
-                                        <?= isset($pessoaFisica['cpf']) ? $pessoaFisica['cpf'] : ''; ?>
-                                    </td>
-                                    <td>
-                                        <strong>RG:</strong>
-                                        <?= isset($pessoaFisica['rg']) ? $pessoaFisica['rg'] : ''; ?>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">
-                                        <strong>Endereço:</strong>
-                                        <?= isset($pessoaFisica['logradouro']) ? $pessoaFisica['logradouro'] : ''; ?> ,
-                                        <?= isset($pessoaFisica['numero']) ? $pessoaFisica['numero'] : ''; ?>
-
-                                        <b>Bairro</b>:
-                                        <?= isset($pessoaFisica['bairro']) ? $pessoaFisica['bairro'] : ''; ?>
-
-                                        <b>Cep</b>:
-                                        <?= isset($pessoaFisica['cep']) ? $pessoaFisica['cep'] : ''; ?>
-
-                                        <b>Cidade</b>:
-                                        <?= isset($pessoaFisica['cidade']) ? $pessoaFisica['cidade'] : ''; ?>
-                                        <?= isset($pessoaFisica['estado']) ? $pessoaFisica['estado'] : ''; ?>
-                                    </td>
-                                </tr>
-
                                 <tr>
                                     <td>
                                         <strong>Telefone:</strong>
