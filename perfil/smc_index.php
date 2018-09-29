@@ -53,23 +53,18 @@ if(isset($_POST['liberacaoPJ']))
             </h5>
         </div>
 
-        <div role="tabpanel">
-            <!-- LABELS -->
-            <ul class="nav nav-tabs">
-                <li class="nav active"><a href="#smc" data-toggle="tab">Área SMC</a></li>
-                <li class="nav"><a href="#comissao" data-toggle="tab">Área Comissão</a></li>
-            </ul>
+        <ul class="nav nav-tabs">
+            <li class="nav active"><a href="#smc" data-toggle="tab">Área SMC</a></li>
+            <li class="nav"><a href="#comissao" data-toggle="tab">Área Comissão</a></li>
+        </ul>
 
-            <div class="tab-content">
-                <div role="tabpanel" class="tab-pane fade in active" id="smc">
-                    <?php include "includes/smc_area_index.php"; ?>
-                </div>
+        <div class="tab-content">
+            <div class="tab-pane fade in active" id="smc">
+                <?php include "includes/smc_area_index.php"; ?>
             </div>
 
-            <div class="tab-content">
-                <div role="tabpanel" class="tab-pane fade" id="comissao">
-                    <?php include "includes/comissao_area_index.php"; ?>
-                </div>
+            <div class="tab-pane fade" id="comissao">
+                <?php include "includes/comissao_area_index.php"; ?>
             </div>
         </div>
     </div>
