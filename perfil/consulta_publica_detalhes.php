@@ -33,7 +33,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 				</div>
 
 				<div class="col-md-6">
-					<form method="POST" action="index.php" class="form-horizontal" role="form">
+					<form method="POST" action="../index.php" class="form-horizontal" role="form">
 						<input type="hidden" value="1">
 						<button class='btn btn-theme btn-md btn-block' align= "center" type='submit' style="border-radius: 30px;">Voltar a tela de login</button>
 					</form>
