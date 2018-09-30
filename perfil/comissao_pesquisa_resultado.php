@@ -150,7 +150,7 @@ else
 	}
 
 	$sql = "SELECT * FROM projeto AS prj
-			WHERE publicado = 1 AND idStatus = $idStatus
+			WHERE publicado = 1 
 			$filtro_nomeProjeto $filtro_idProjeto $filtro_idAreaAtuacao $filtro_idComissao";
 	$query = mysqli_query($con,$sql);
 	$num = mysqli_num_rows($query);

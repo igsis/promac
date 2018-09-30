@@ -2,6 +2,7 @@
 $con = bancoMysqli();
 
 $idProjeto = isset($_POST['idProjeto']) ? $_POST['idProjeto'] : null;
+
 if($idProjeto == null)
 {
     $idProjeto = isset($_GET['idFF']) ? $_GET['idFF'] : null;
@@ -10,7 +11,6 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 $reserva = recuperaDados("reserva","idReserva",$idProjeto);
 $idListaDocumento = '37';
 $tipoPessoa = '9';
-
 
 if(isset($_POST['gravarPrazos']))
 {
@@ -323,6 +323,7 @@ if($projeto['tipoPessoa'] == 1)
 else
 {
     $pj = recuperaDados("pessoa_juridica","idPj",$projeto['idPj']);
+    $representante = recuperaDados("representante_legal","idRepresentanteLegal",$pj['idRepresentanteLegal']);
 }
 
 if(isset($_POST['editarParecer'])){
@@ -445,9 +446,6 @@ if(isset($_POST['cancelarProjeto'])){
     }
 }
 
-$representante = pegaProjetoRepresentante($idProjeto);
-$pessoaFisica = pegaProjetoPessoaFisica($idProjeto);
-
 $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 $prazos = recuperaDados("prazos_projeto","idProjeto",$idProjeto);
 $area = recuperaDados("area_atuacao","idArea",$projeto['idAreaAtuacao']);
@@ -484,37 +482,33 @@ $comissao = recuperaDados("pessoa_fisica","idPf",$projeto['idComissao']);
                         <li class="nav"><a href="#pagamentos" data-toggle="tab">Pagamentos</a></li>
                         <li class="nav"><a href="#historico" data-toggle="tab">Histórico</a></li>
                     </ul>
-                    <div class="tab-content">
-
+                    <div class="tab-content"><br/>
                         <!-- LABEL ADMINISTRATIVO-->
                         <?php include "includes/label_smc_adm.php"; ?>
-
 
                         <!-- LABEL PROJETO -->
                         <?php include "includes/label_projeto.php"; ?>
 
-
                         <!-- LABEL PESSOA JURÍDICA -->
-                        <?php include "includes/label_smc_pj.php"; ?>
-
+                        <?php include "includes/label_pj.php"; ?>
 
                         <!--LABEL PESSOA FISICA-->
-                        <?php include "includes/label_smc_pf.php"; ?>
-
+                        <?php include "includes/label_pf.php"; ?>
 
                         <!-- LABEL PRAZOS -->
                         <?php include "includes/label_smc_prazo.php"; ?>
 
-
                         <!-- LABEL PAGAMENTOS -->
                         <?php include "includes/label_smc_pagamento.php"; ?>
-
 
                         <!-- LABEL HISTÓRICO -->
                         <?php include "includes/label_historico.php"; ?>
 
-
                         <!-- LABEL FINANCEIRO -->
                         <?php include "includes/label_smc_financeiro.php"; ?>
-
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>

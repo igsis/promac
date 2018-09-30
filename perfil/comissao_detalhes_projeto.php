@@ -260,6 +260,7 @@ if($projeto['tipoPessoa'] == 1)
 else
 {
 	$pj = recuperaDados("pessoa_juridica","idPj",$projeto['idPj']);
+    $representante = recuperaDados("representante_legal","idRepresentanteLegal",$pj['idRepresentanteLegal']);
 }
 
 if(isset($_POST['atualizaResponsavel']))
@@ -299,9 +300,6 @@ if(isset($_POST['editarAnexoProjeto']))
         echo "<script>alert('Erro durante o processamento, entre em contato com os responsáveis pelo sistema para maiores informações.')</script>";
     }
 }
-
-$representante = pegaProjetoRepresentante($idProjeto);
-$pessoaFisica = pegaProjetoPessoaFisica($idProjeto);
 
 $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 $prazos = recuperaDados("prazos_projeto","idProjeto",$idProjeto);
@@ -344,10 +342,10 @@ $idStatus = $projeto['idStatus'];
                             <?php include "includes/label_projeto.php"; ?>
 
                              <!-- LABEL PESSOA JURÍDICA -->
-                       		 <?php include "includes/label_comissao_pj.php"; ?>
+                       		 <?php include "includes/label_pj.php"; ?>
 
                        		 <!--LABEL PESSOA FISICA-->
-                       		 <?php include "includes/label_comissao_pf.php"; ?>
+                       		 <?php include "includes/label_pf.php"; ?>
 
                  	   		 <!-- LABEL HISTÓRICO -->
                             <?php include "includes/label_historico.php"; ?>
