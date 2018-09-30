@@ -3279,7 +3279,7 @@ function uploadArquivo($idProjeto, $tipoPessoa, $pagina, $idListaDocumento, $idT
 		echo "<input type='hidden' name='idPessoa' value='" . $idProjeto . "' />";
 		echo "<input type='hidden' name='idTipoUpload' value='" . $idTipoUpload . "' />";
 		echo "<input type='hidden' name='tipoPessoa' value='" . $tipoPessoa . "'  />";
-		echo '<input type="submit" name="enviar" class="btn btn-theme btn-lg btn-block" value="Enviar">
+		echo '<input type="submit" name="enviar" class="btn btn-theme btn-lg btn-block" value="Fazer Upload">
 		</form>	';
 	}
 
