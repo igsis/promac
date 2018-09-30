@@ -433,7 +433,7 @@ if(isset($_POST['cancelarProjeto'])){
 
     $sql_cancelar = "UPDATE projeto SET publicado = 0 WHERE idProjeto = '$idProjeto'";
     if(mysqli_query($con,$sql_cancelar)){
-        $sql_historico_cancelamento = "INSERT INTO historico_cancelamento (idProjeto, observacao, idUsuario, data) VALUES ('$idProjeto', '$observacao','$idUser','$dateNow')";
+        $sql_historico_cancelamento = "INSERT INTO historico_cancelamento (idProjeto, observacao, idUsuario, data, acao) VALUES ('$idProjeto', '$observacao','$idUser','$dateNow',1)";
        if(mysqli_query($con,$sql_historico_cancelamento)){
            $mensagem = "<span style=\"color: #01DF3A; \"><strong>Projeto cancelado com sucesso!<br/>Aguarde....</strong></span>";
            gravarLog($sql_historico_cancelamento);

@@ -1,0 +1,18 @@
+<section id="list_items" class="home-section bg-white">
+	<div class="container"><?php include 'includes/menu_smc.php'; ?>
+		<div class="form-group">
+			<h5>Área de Atuação.</a></h5>
+			<hr>
+			<h6 class="text-success"><?php echo $mensagem ?? '' ;?></h6>
+		</div>
+
+			<table class="table table-condensed table-hover text-center">
+                <thead>
+                    <tr class='list_menu'>
+                        <th>#</th>
+                        <th width='80%' >Área</th>
+                        <th width='10%'>Tipo Pessoa</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>

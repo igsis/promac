@@ -36,6 +36,7 @@
 						</ul>
 					</li>
 					<li><a href="?perfil=smc_ata_reuniao">Ata Reunião</a></li>
+                    <li><a href="?perfil=smc_historico_cancelamento">Projetos Cancelados</a></li>
 					<li><a href="../perfil/webLog.php" target="_blank">WebLog</a></li>
 				</ul>
 			</li>
