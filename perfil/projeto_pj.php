@@ -27,6 +27,41 @@ if(isset($_POST['apagar']))
 	<div class="container"><?php include '../perfil/includes/menu_interno_pj.php'; ?>
 		<div class="form-group">
 			<h4>Projeto</h4>
+            <!-- Início Lista Projetos Cancelados pela SMC -->
+            <?php
+            $sql_cancelados = "SELECT distinct prj.idProjeto, nomeProjeto, protocolo, acao, observacao, data FROM projeto AS prj 
+                            INNER JOIN historico_cancelamento AS hst ON prj.idProjeto = hst.idProjeto
+                            WHERE idPj = '$idPj' AND publicado = 0 AND acao = 1";
+            $query_cancelados = mysqli_query($con,$sql_cancelados);
+            $num = mysqli_num_rows($query_cancelados);
+            if($num > 0){
+                echo "<div class='well'>";
+                echo "<strong>Há projetos cancelados</strong><br/><br/>";
+                echo "<table class='table table-condensed'>
+                                <thead>
+                                    <tr class='list_menu'>
+                                        <td>Protocolo</td>
+                                        <td>Nome do Projeto</td>
+                                        <td>Observação</td>
+                                        <td>Data</td>
+                                        <td width='10%'></td>
+                                    </tr>
+                                </thead>
+                                <tbody>";
+                while ($cancelados = mysqli_fetch_array($query_cancelados)){
+                    echo "<tr>";
+                    echo "<td class='list_description'>" . $cancelados['protocolo'] . "</td>";
+                    echo "<td class='list_description'>" . $cancelados['nomeProjeto'] . "</td>";
+                    echo "<td class='list_description'>" . $cancelados['observacao'] . "</td>";
+                    echo "<td class='list_description'>" . exibirDataHoraBr($cancelados['data']) . "</td>";
+                    echo "</tr>";
+                }
+                echo "</tbody></table>";
+                echo "<i>Para detalhes, entre em contato com a equipe da SMC.</i>";
+                echo "</div>";
+            }
+            ?>
+            <!-- Fim Lista Projetos Cancelados pela SMC -->
 
 			<?php
 			if($statusProjeto == 1){
