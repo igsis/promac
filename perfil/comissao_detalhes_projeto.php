@@ -166,8 +166,8 @@ if(isset($_POST['finalizaComissao']))
 	{
         $sql_historico = "INSERT INTO historico_status (idProjeto, idStatus, data) VALUES ('$idProjeto', '$idStatus', '$dateNow')";
         $query_historico = mysqli_query($con, $sql_historico);
-        $mensagem = "<font color='#01DF3A'><strong>Finalizado com sucesso!</strong></font>";
-		echo "<script>window.location = '?perfil=comissao_index';</script>";
+        $mensagem = "<font color='#01DF3A'><strong>Enviado à SMC com sucesso!</strong></font>";
+        echo "<meta HTTP-EQUIV='refresh' CONTENT='1.0;URL=?perfil=comissao_index'>";
 		gravarLog($sql_finalizaComissao);
 	}
 	else
@@ -272,7 +272,7 @@ if(isset($_POST['atualizaResponsavel']))
 	$query_atualiza_comissao = mysqli_query($con,$sql_atualiza_comissao);
 	if($query_atualiza_comissao)
 	{
-		$mensagem = "Parecerista responsável pelo projeto atualizado!";
+		$mensagem = "<span style=\"color: #01DF3A; \">Parecerista responsável pelo projeto atualizado!</span>";
 	}
 	else
 	{
