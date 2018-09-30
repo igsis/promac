@@ -146,6 +146,13 @@ $tipoPessoa = '6';
 										<h4 class="modal-title">Proponente</h4>
 									</div>
 									<div class="modal-body">
+                                        <div class="alert-danger">
+                                            <br/>
+                                            <h6><span style="color: darkred; ">ATENÇÃO!</span></h6>
+                                            <p>A utilização de mais de uma aba ou janela do mesmo navegador para inserção ou edição dos dados pode causar perda de informações.</p>
+                                            <br/>
+                                        </div>
+                                        <br/>
 										<form method="POST" action="login_pf.php" class="form-horizontal" role="form">
 											<button type="submit" class="btn btn-theme btn-md btn-block" style="border-radius: 30px;">Pessoa Física</button>
 										</form>
@@ -169,6 +176,13 @@ $tipoPessoa = '6';
 										<h4 class="modal-title">Incentivador</h4>
 									</div>
 									<div class="modal-body">
+                                        <div class="alert-danger">
+                                            <br/>
+                                            <h6><span style="color: darkred; ">ATENÇÃO!</span></h6>
+                                            <p>A utilização de mais de uma aba ou janela do mesmo navegador para inserção ou edição dos dados pode causar perda de informações.</p>
+                                            <br/>
+                                        </div>
+                                        <br/>
 										<form method="POST" action="login_incentivador_pf.php" class="form-horizontal" role="form">
 											<button type="submit" class="btn btn-theme btn-md btn-block" style="border-radius: 30px;">Pessoa Física</button>
 										</form>
