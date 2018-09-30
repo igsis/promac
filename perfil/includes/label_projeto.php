@@ -201,10 +201,10 @@ WHERE publicado = 1 AND idProjeto = '$idProjeto'";
             <table class="table table-bordered">
                 <tr>
                     <td><strong>Início do cronograma:</strong>
-                        <?php echo exibirDataBr($projeto['inicioCronograma']) ?>
+                        <?=$projeto['inicioCronograma'] ?>
                     </td>
                     <td><strong>Fim do cronograma:</strong>
-                        <?php echo exibirDataBr($projeto['fimCronograma']) ?>
+                        <?= $projeto['fimCronograma'] ?>
                     </td>
                 </tr>
                 <tr>
