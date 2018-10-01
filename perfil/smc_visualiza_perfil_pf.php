@@ -66,7 +66,6 @@ if(isset($_POST['atualizar']))
 		if($envia)
 		{
 			$mensagem = "<font color='#01DF3A'><strong>Os arquivos foram atualizados com sucesso!</strong></font>";
-			echo "<script>window.location.href = 'index_pf.php?perfil=smc_visualiza_perfil_pf&idPf=".$dado['idPessoa'] ."';</script>";
 		}
 		else
 		{
@@ -142,7 +141,7 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 
 						echo "<td class='list_description'>
 							<select name='dado[$count][status]' id='statusOpt' value='teste'>";
-							echo "<option>Selecione</option>";
+							echo "<option value=''>Selecione</option>";
 							geraOpcao('status_documento', $row['idStatusDocumento']);
 							echo " </select>
 						</td>";
@@ -165,8 +164,9 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 				echo "
 		</tbody>
 		</table>";
-		echo "<input type='submit' name='atualizar' class='btn btn-theme btn-lg' value='Atualizar'>
-		</form>";
+		echo "<input type='submit' name='atualizar' class='btn btn-theme btn-lg' value='Atualizar'>";
+		echo "<input type='hidden' name='liberado' class='btn btn-theme btn-lg' value='$idPessoa'>";
+		echo "</form>";
 	}
 	else
 	{
