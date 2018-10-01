@@ -43,8 +43,8 @@ $status_analise = array(3,7,10,19,20,24,25,34,15);
                 <div role="tabpanel">
                     <!-- LABELS -->
                     <ul class="nav nav-tabs">
-                        <li class="nav active"><a href="#info" data-toggle="tab">Informações da Inscrição</a></li>
-                        <li class="nav"><a href="#projeto" data-toggle="tab">Projeto</a></li>
+                        <li class="nav active"><a href="#info" data-toggle="tab" onclick="remove_label_projeto()">Informações da Inscrição</a></li>
+                        <li class="nav"><a href="#projeto" data-toggle="tab" onclick="label_projeto()">Projeto</a></li>
                     </ul>
                     <div class="tab-content">
                         <!--
@@ -179,7 +179,9 @@ $status_analise = array(3,7,10,19,20,24,25,34,15);
                             }
                         ?>
                         <!-- LABEL PROJETO -->
+                    <div class="hidden" id="projeto_label">
                         <?php include "includes/label_projeto.php"; ?>
+                    </div>
                         <!-- FIM LABEL PROJETO -->
                     </div>
                 </div>
@@ -196,8 +198,25 @@ $status_analise = array(3,7,10,19,20,24,25,34,15);
                     echo "<form class='form-horizontal' role='form' action='?perfil=projeto_pj' method='post'>";
                 }
                 ?>
-                <input type="submit" value="Voltar" class="btn btn-theme btn-md btn-block"></form>
+                <input type="submit" value="Voltar" class="btn btn-theme btn-md btn-block">
+                        </form>
             </div>
         </div>
     </div>
 </section>
+
+<script>
+    var projeto = document.getElementById('projeto_label');
+
+    function  label_projeto() {
+        if(projeto.classList.contains("hidden")){
+            projeto.classList.remove("hidden");
+        }
+    }
+
+    function remove_label_projeto() {
+        if(!projeto.classList.contains("hidden")){
+            projeto.classList.add("hidden");
+        }
+    }
+</script>

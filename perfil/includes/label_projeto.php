@@ -1,4 +1,4 @@
-<div role="tabpanel" class="tab-pane fade" id="projeto" align="left">
+<div role="tabpanel" class="tab-pane fade" id="projeto">
     <div class="form-group">
         <div class="col-md-offset-4 col-md-4">
             <?php
