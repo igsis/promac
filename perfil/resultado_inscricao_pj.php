@@ -5,7 +5,9 @@ $tipoPessoa = '2';
 $idPj = $_SESSION['idUser'];
 $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 $rl = recuperaDados("representante_legal","idRepresentanteLegal",$pj['idRepresentanteLegal']);
-$campos = array($pj['razaoSocial'], $pj['cnpj'], $pj['email'], $pj['cep'], $pj['numero'], $pj['idRepresentanteLegal']);
+$campos = array($pj['razaoSocial'], $pj['cnpj'], $pj['email'], $pj['cep'], $pj['numero']);
+$representante = array($pj['idRepresentanteLegal']);
+$cporep = false;
 $cpo = false;
 
 foreach ($campos as $cpos)
@@ -15,6 +17,15 @@ foreach ($campos as $cpos)
 		$cpo = true;
 	}
 }
+
+foreach ($representante as $rep)
+{
+	if ($rep == null)
+	{
+		$cporep = true;
+	}
+}
+
 
 /**Arquivos Obrigatórios**/
 if(isset($tipoPessoa)):

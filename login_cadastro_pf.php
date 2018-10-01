@@ -33,7 +33,7 @@ if(isset($_POST['cadastraNovoPf']))
 				$idPessoaFisica = $sql_array['idPf'];
 				if($query_senha)
 				{
-					$mensagem = "<font color='#01DF3A'><strong>Usuário cadastrado com sucesso! Aguarde que você será redirecionado para a página de login.</strong.</font>";
+					$mensagem = "<font color='#01DF3A'><strong>Usuário cadastrado com sucesso! Aguarde que você será redirecionado para a página de login.</strong></font>";
 					gravarLog($sql_senha);
 					 echo "<script type=\"text/javascript\">
 						  window.setTimeout(\"location.href='login_pf.php';\", 4000);
