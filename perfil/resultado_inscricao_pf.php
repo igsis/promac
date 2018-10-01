@@ -34,6 +34,7 @@ if(isset($_POST['liberacao']))
 	if(mysqli_query($con,$sql_liberacao))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Sua inscrição foi enviada à SMC!</strong></font>";
+		$pf['liberado'] = "1";
 		gravarLog($sql_liberacao);
 	}
 	else

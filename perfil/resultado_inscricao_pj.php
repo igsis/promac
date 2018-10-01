@@ -47,6 +47,7 @@ if(isset($_POST['liberacao']))
 	if(mysqli_query($con,$sql_liberacao))
 	{
 		$mensagem = "Sua inscrição foi enviada à SMC!";
+		$pj['liberado'] = "1";
 		gravarLog($sql_liberacao);
 	}
 	else
