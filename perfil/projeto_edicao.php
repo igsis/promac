@@ -114,7 +114,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-offset-2 col-md-8"><label>Nome do projeto</label>
-                                        <input type="text" name="nomeProjeto" class="form-control" value="<?= $projeto['nomeProjeto'] ?>">
+                                        <input type="text" name="nomeProjeto" required class="form-control" value="<?= $projeto['nomeProjeto'] ?>">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -150,7 +150,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
                                 <form method="POST" action="?perfil=projeto_edicao" class="form-horizontal" role="form">
                                     <div class="form-group">
                                         <div class="col-md-offset-2 col-md-8"><label>Nome do projeto</label>
-                                            <input type="text" name="nomeProjeto" class="form-control" value="<?= $projeto['nomeProjeto'] ?>">
+                                            <input type="text" name="nomeProjeto" required class="form-control" value="<?= $projeto['nomeProjeto'] ?>">
                                         </div>
                                     </div>
 

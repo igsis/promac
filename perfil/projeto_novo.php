@@ -98,15 +98,15 @@ if(isset($_POST['insereAtuacao']))
 
                                 <div class="form-group">
                                     <div class="col-md-offset-2 col-md-8"><label>Nome do projeto</label>
-                                        <input type="text" name="nomeProjeto" class="form-control">
+                                        <input type="text" name="nomeProjeto" required class="form-control">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <div class="col-md-offset-2 col-md-8">
                                         <label>Área de atuação *</label>
-                                        <select class="form-control" name="idAreaAtuacao">
-									<option value="0"></option>
+                                        <select class="form-control" name="idAreaAtuacao" required>
+									<option value=""></option>
 									<?php echo geraOpcao("area_atuacao","") ?>
 								</select>
                                     </div>
@@ -128,15 +128,15 @@ if(isset($_POST['insereAtuacao']))
                                 <form method="POST" action="?perfil=projeto_novo" class="form-horizontal" role="form">
                                     <div class="form-group">
                                         <div class="col-md-offset-2 col-md-8"><label>Nome do projeto</label>
-                                            <input type="text" name="nomeProjeto" class="form-control">
+                                            <input type="text" name="nomeProjeto" required class="form-control">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <div class="col-md-offset-2 col-md-8">
                                             <label>Área de atuação *</label><br/>
-                                            <select class="form-control" name="idAreaAtuacao">
-										<option value="0"></option>
+                                            <select class="form-control" name="idAreaAtuacao" required>
+										<option value=""></option>
 										<?php echo geraOpcao("area_atuacao","") ?>
 									</select>
                                         </div>
@@ -159,15 +159,15 @@ if(isset($_POST['insereAtuacao']))
                                     <form method="POST" action="?perfil=projeto_novo" class="form-horizontal" role="form">
                                         <div class="form-group">
                                             <div class="col-md-offset-2 col-md-8"><label>Nome do projeto</label>
-                                                <input type="text" name="nomeProjeto" class="form-control">
+                                                <input type="text" name="nomeProjeto" required class="form-control">
                                             </div>
                                         </div>
 
                                         <div class="form-group">
                                             <div class="col-md-offset-2 col-md-8">
                                                 <label>Área de atuação *</label><br/>
-                                                <select class="form-control" name="idAreaAtuacao">
-										<option value="0"></option>
+                                                <select class="form-control" name="idAreaAtuacao" required>
+										<option value=""></option>
 										<?php echo geraAreaAtuacao("area_atuacao","1","") ?>
 									</select>
                                             </div>
