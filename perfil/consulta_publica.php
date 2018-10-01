@@ -76,7 +76,7 @@
 
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8"><label>Valor Aprovado</label>
-								<input type="text" name="valorAprovado" class="form-control" placeholder="">
+								<input type="number" name="valorAprovado" class="form-control">
 							</div>
 						</div>
 
