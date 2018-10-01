@@ -246,7 +246,7 @@ foreach ($array_status as $idStatus)
             }
             ?>
 
-                <button type="button" class="label label-warning" name="idStatus" value="<?=$status['idStatus']?>">
+                <button type="submit" class="label label-warning" name="idStatus" value="<?=$status['idStatus']?>">
                     <span>Total: <?=$num?></span>
                 </button>
             </form>

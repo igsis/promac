@@ -140,6 +140,15 @@ else
 		$filtro_idAreaAtuacao = "";
 	}
 
+    if($idStatus != 0)
+    {
+        $filtro_idStatus = " AND idStatus = '$idStatus'";
+    }
+    else
+    {
+        $filtro_idStatus = "";
+    }
+
 	if($idComissao !=0)
 	{
 		$filtro_idComissao = "AND idComissao = '$idComissao'";
@@ -151,7 +160,7 @@ else
 
 	$sql = "SELECT * FROM projeto AS prj
 			WHERE publicado = 1 
-			$filtro_nomeProjeto $filtro_idProjeto $filtro_idAreaAtuacao $filtro_idComissao";
+			$filtro_nomeProjeto $filtro_idProjeto $filtro_idAreaAtuacao $filtro_idComissao $filtro_idStatus";
 	$query = mysqli_query($con,$sql);
 	$num = mysqli_num_rows($query);
 	if($num > 0)
