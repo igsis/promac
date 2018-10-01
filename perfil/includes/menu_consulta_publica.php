@@ -10,7 +10,7 @@ $pasta = "?perfil=";
 			</form>
 		</div>
 	</div>
-	<h6>Listar:</h6>
+	<h6>Listar Pessoas Inscritas:</h6>
 	<div class="form-group" style="padding-bottom: 60px;">
 		<div class="col-md-offset-2 col-md-4">
 			<form method="POST" action="<?=$pasta?>consulta_publica_proponente_pf">
