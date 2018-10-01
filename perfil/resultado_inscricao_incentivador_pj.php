@@ -121,15 +121,16 @@ if(isset($_POST['apagar']))
 			<h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
 		</div>
 		<div class="row">
-			<div class="col-md-offset-1 col-md-10">
+			<div class="col-md-12">
 			<?php
 				if($pj['liberado'] == NULL OR $pj['liberado'] == 2 OR $pj['liberado'] == 4) 
 				{
 					include 'includes/resumo_dados_incentivador_pj.php';
-				?>
+				?>	
+					<br>
 					<div class="alert alert-info">
 						Após o preenchimento de todos os dados pessoais, conclua a inscrição do proponente e aguarde a análise da sua documentação pela Secretaria Municipal de Cultura.
-					</div>
+					</div><br>
 
 			</div>
 			<?php
@@ -175,39 +176,53 @@ if(isset($_POST['apagar']))
 					<div class="col-md-12">
 						<div class="table-responsive list_info"><h6>Upload de Arquivo(s) Somente em PDF</h6>
 						<form method="POST" action="?perfil=resultado_inscricao_incentivador_pj" enctype="multipart/form-data">
-							<table class='table table-condensed'>
-								<tr class='list_menu'>
-									<td>Tipo de Arquivo</td>
-									<td></td>
-								</tr>
-								<?php
-									$sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa'";
-									$query_arquivos = mysqli_query($con,$sql_arquivos);
-									while($arq = mysqli_fetch_array($query_arquivos))
-									{
-								?>
-										<tr>
-											<?php
-											$doc = $arq['documento'];
-											$query = "SELECT idListaDocumento FROM lista_documento WHERE documento='$doc' AND publicado='1' AND idTipoUpload='5'";
-											$envio = $con->query($query);
-											$row = $envio->fetch_array(MYSQLI_ASSOC);
+							<?php
+								$documentos = [];
+								$sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa'";
+								$query_arquivos = mysqli_query($con,$sql_arquivos);									
+								while($arq = mysqli_fetch_array($query_arquivos))
+								{
+									$doc = $arq['documento'];
+									$query = "SELECT idListaDocumento FROM lista_documento WHERE documento='$doc' AND publicado='1' AND idTipoUpload='5'";
+									$envio = $con->query($query);
+									$row = $envio->fetch_array(MYSQLI_ASSOC);
 
-											if(verificaArquivosExistentesIncentivador($idPj,$row['idListaDocumento'])){
-												echo '<div class="alert alert-success">O arquivo ' . $doc . ' já foi enviado.</div>';
-											}
-											else{ ?>
-											<td class="list_description"><label><?php echo $arq['documento']?></label></td>
-											<td class="list_description"><input type='file' name='arquivo[<?php echo $arq['sigla']; ?>]'></td>
-											<?php } ?>
-										</tr>
-								<?php
+									if(verificaArquivosExistentesIncentivador($idPj,$row['idListaDocumento'])){
+										echo '<div class="alert alert-success">O arquivo ' . $doc . ' já foi enviado.</div>';
 									}
+									else{ 											
+										$documento = (object) 
+										[
+											'nomeDocumento'	=>	$arq['documento'],
+											'sigla' 		=>	 $arq['sigla']
+										];
+										array_push($documentos, $documento);									
+									}
+								}
+
+								if ($documentos)
+								{							
 								?>
-							</table><br>
-							<input type="hidden" name="idPessoa" value="<?php echo $idPj; ?>"  />
-							<input type="hidden" name="tipoPessoa" value="<?php echo $tipoPessoa; ?>"  />
-							<input type="submit" name="enviar" class="btn btn-theme btn-lg btn-block" value='Enviar'>
+									<table class='table table-condensed'>
+										<tr class='list_menu'>
+											<td>Tipo de Arquivo</td>
+											<td></td>
+										</tr>									
+											<?php 										
+												foreach ($documentos as $documento) {	
+													echo "<tr>";											
+													echo 	"<td class='list_description'><label>$documento->nomeDocumento</label></td>";
+													echo 	"<td class='list_description'><input type='file' name='arquivo[$documento->sigla]'></td>";												
+													echo "<tr>";
+												}
+											?>	
+									</table>
+									<input type="hidden" name="idPessoa" value="<?php echo $idPj; ?>"  />
+									<input type="hidden" name="tipoPessoa" value="<?php echo $tipoPessoa; ?>"  />
+									<input type="submit" name="enviar" class="btn btn-theme btn-lg btn-block" value='Enviar'>
+							<?php
+								}
+							?>	
 						</form>
 						</div>
 					</div>
