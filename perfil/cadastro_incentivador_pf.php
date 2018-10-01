@@ -35,7 +35,16 @@ if(isset($_POST['cadastraNovoPf']) and $_POST['numero'] and empty($endereço)):
   $Estado = $_POST['estado'];
   $CEP = $_POST['cep'];
   $Numero = $_POST['numero'];
-  $Complemento = $_POST['Complemento'];
+	$Complemento = $_POST['Complemento'];
+	
+	$validar = array(
+		$_POST['Endereco'],
+		$_POST['Bairro'],
+		$_POST['cidade'],
+		$_POST['estado'],
+		$_POST['cep'],
+		$_POST['numero']
+	);
 
   $sql_atualiza_pf = "UPDATE incentivador_pessoa_fisica SET
     `nome` = '$nome',
@@ -54,14 +63,19 @@ if(isset($_POST['cadastraNovoPf']) and $_POST['numero'] and empty($endereço)):
   WHERE `idPf` = '$idPf'";
 
 
-  if(mysqli_query($con,$sql_atualiza_pf)):     
-    $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso! Utilize o menu para 
-                 avançar.</strong></font>";
-    gravarLog($sql_atualiza_pf);
-  else:
-    $mensagem = "<font color='#01DF3A'><strong>Erro ao atualizar! Tente novamente.</strong>
-                </font> <br/>".$sql_atualiza_pf;
-  endif;
+  if(mysqli_query($con,$sql_atualiza_pf)){     
+		if(in_array(null, $validar)){
+			$mensagem = "<font color='#ff2100'><strong>Seu cadastro possui campos pendêntes!</strong></font>";
+		}else{
+			$mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso! Utilize o menu para avançar.</strong></font>";
+		}
+
+		gravarLog($sql_atualiza_pf);
+	}
+	else
+	{
+		$mensagem = "<font color='#FF0000'><strong>Erro ao atualizar! Tente novamente.</strong></font>";
+	}
 endif; 
 
 if($pf['liberado'] == 3)
@@ -360,7 +374,7 @@ else
     cep.addEventListener('focusout', function(){
       event.preventDefault();
       form = document.querySelector('#frmCad');    
-      form.submit();        
+      
     });    	
   }
 </script>
