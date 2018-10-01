@@ -4,7 +4,7 @@ $tipoPessoa = '1';
 
 $idPf = $_SESSION['idUser'];
 $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
-$campos = array($pf['nome'], $pf['cpf'], $pf['rg'], $pf['email'], $pf['cep'], $pf['numero']);
+$campos = array($pf['nome'], $pf['cpf'], $pf['rg'], $pf['email'], $pf['cep'], $pf['numero'], $pf['idZona'], $pf['idSubprefeitura'], $pf['idDistrito']);
 $cpo = false;
 
 foreach ($campos as $cpos)
