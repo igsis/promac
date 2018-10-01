@@ -21,7 +21,7 @@ else
 
 if($idPf == null)
 {
-	$idPf = $_GET['idFF'];
+	$idPf = $_GET['idPf'];
 }
 
 $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
