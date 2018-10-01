@@ -43,6 +43,15 @@ if(isset($_POST['atualizarFisica']) and $_POST['numero'] and empty($endereço))
   $idSubprefeitura = $_POST['idSubprefeitura'];
   $idDistrito = $_POST['idDistrito'];  
 
+	$validar = array(
+		$_POST['Endereco'],
+		$_POST['Bairro'],
+		$_POST['cidade'],
+		$_POST['estado'],
+		$_POST['cep'],
+		$_POST['numero']
+	);
+
 
   $sql_atualiza_pf =
     "UPDATE pessoa_fisica SET
@@ -65,15 +74,20 @@ if(isset($_POST['atualizarFisica']) and $_POST['numero'] and empty($endereço))
 	  `alteradoPor` = '$usuarioLogado'
 	WHERE `idPf` = '$idPf'";	
 
-	if(mysqli_query($con,$sql_atualiza_pf)):
-		if($habilitaCampo != true):
-			$mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
-			gravarLog($sql_atualiza_pf);
-		endif;
-	else:
-		$mensagem = "<font color='#01DF3A'><strong>Erro ao atualizar! Tente novamente.
-		</strong></font> <br/>".$sql_atualiza_pf;
-	endif;
+	if(mysqli_query($con,$sql_atualiza_pf)){
+
+		if(in_array(null, $validar)){
+			$mensagem = "<font color='#ff2100'><strong>Seu cadastro possui campos pendêntes!</strong></font>";
+		}else{
+			$mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso! Utilize o menu para avançar.</strong></font>";
+		}
+
+		gravarLog($sql_atualiza_pf);
+	}
+	else
+	{
+		$mensagem = "<font color='#FF0000'><strong>Erro ao atualizar! Tente novamente.</strong></font>";
+	}
 }
 
 if($pf['liberado'] == 3)
@@ -387,7 +401,6 @@ else
 			
 			event.preventDefault();
 			form = document.querySelector('#frmCad');
-			form.submit();
 		});
 	}
 </script>
