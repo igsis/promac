@@ -10,7 +10,7 @@ if(isset($_POST['cadastraNovoPf']))
 	$nome = addslashes($_POST['nome']);
 	if($email == '' OR $nome == '')
 	{
-		$mensagem = "Por favor, preencha todos os campos.";
+		$mensagem = "<font color='#FF0000'><strong>Por favor, preencha todos os campos.</strong></font>";
 	}
 	else
 	{
@@ -32,7 +32,7 @@ if(isset($_POST['cadastraNovoPf']))
 				$idPessoaFisica = $sql_array['idPf'];
 				if($query_senha)
 				{
-					$mensagem = "Usuário cadastrado com sucesso! Aguarde que você será redirecionado para a página de login";
+					$mensagem = "<font color='#01DF3A'><strong>Usuário cadastrado com sucesso! Aguarde que você será redirecionado para a página de login.</strong></font>";
 					gravarLog($sql_senha);
 					 echo "<script type=\"text/javascript\">
 						  window.setTimeout(\"location.href='login_incentivador_pf.php';\", 4000);
@@ -40,18 +40,18 @@ if(isset($_POST['cadastraNovoPf']))
 				}
 				else
 				{
-					$mensagem = "Erro ao cadastrar. Tente novamente.";
+					$mensagem = "<font color='#FF0000'><strong>Erro ao cadastrar. Tente novamente.</strong></font>";
 				}
 			}
 			else
 			{
 				// caso não tenha digitado 2 vezes
-				$mensagem = "As senhas não conferem. Tente novamente.";
+				$mensagem = "<font color='#FF0000'><strong>As senhas não conferem. Tente novamente.</strong></font>";
 			}
 		}
 		else
 		{
-			$mensagem = "A senha não pode estar em branco e deve conter mais de 5 caracteres";
+			$mensagem = "<font color='#FF0000'><strong>A senha não pode estar em branco e deve conter mais de 5 caracteres. </strong></font>";
 		}
 	}
 }

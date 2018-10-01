@@ -67,7 +67,7 @@ if (isset($_POST['alterarPf'])) {
  	$stmt->bindParam(':idPf', $id);
  	$stmt->bindParam(':idNivelAcesso', $idNivelAcesso);
  	if ($stmt->execute()) {
- 		$mensagem = 'Atualizado com sucesso!';
+ 		$mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
 		gravarLog($sql_atualizar);
  	}
 
