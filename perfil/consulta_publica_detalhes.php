@@ -116,8 +116,11 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2"><strong>Área de atuação:</strong>
+                                    <td><strong>Área de atuação:</strong>
                                         <?php echo $area['areaAtuacao'] ?>
+                                    </td>
+                                    <td><strong>Valor aprovado:</strong>
+                                        <?= isset($projeto['valorAprovado']) ? 'R$ '.dinheiroParabr($projeto['valorAprovado']) : null; ?>
                                     </td>
                                     <td><strong>Renúncia Fiscal:</strong>
                                         <?php echo $renuncia['renunciaFiscal'] ?>
