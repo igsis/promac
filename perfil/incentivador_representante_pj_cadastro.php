@@ -156,7 +156,7 @@ else{
 							<input type="text" class="form-control" name="rg" placeholder="RG/RNE/PASSAPORTE" value="<?php echo $representante1['rg']; ?>" required>
 						</div>
 						<div class="col-md-6"><strong>CPF: *</strong><br/>
-							<input type="text" class="form-control" name="cpf" placeholder="CPF" value="<?php echo $representante1['cpf']; ?>" required>
+							<input type="text" class="form-control" name="cpf" placeholder="CPF" value="<?php echo $representante1['cpf']; ?>" required readonly>
 						</div>
 					</div>
 
