@@ -16,11 +16,25 @@
 		}
 		else
 		{
+			echo "";
+		}
+		if ($cporep == true)
+		{
+			echo "<div class='alert alert-danger'>
+					A etapa 'REPRESENTANTE LEGAL' não foi preenchida corretamente.<br/> Revise seu cadastro.
+				</div>";
+		}
+		else
+		{
+			echo "";
+		}
+		if ($cpo == false AND $cporep == false)
+		{
 			echo "<div class='alert alert-success'>
 					Todos os campos obrigatórios foram preenchidos corretamente.<br/>
 					Conclua sua inscrição ao final da página para enviar suas informações à Secretaria Municipal de Cultura.
 				</div>";
-		}
+		}	
 		$zona = recuperaDados("zona","idZona",$pj['idZona']);
         $subprefeitura = recuperaDados("subprefeitura","idSubprefeitura",$pj['idSubprefeitura']);
         $distrito = recuperaDados("distrito","idDistrito",$pj['idDistrito']);
