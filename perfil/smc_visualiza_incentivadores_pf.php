@@ -3,10 +3,28 @@ $con = bancoMysqli();
 $tipoPessoa = '4';
 $idPf = isset($_POST['liberado']) ? $_POST['liberado'] : null;
 
+if(isset($_POST['liberado']))
+{
+	$idPf = $_POST['liberado'];
+}
+else if(isset($_POST['idPessoa']))
+{
+	$idPf = $_POST['idPessoa'];
+}
+else if (isset($_POST['LIBPF']))
+{
+	$idPf = $_POST['LIBPF'];
+}
+else
+{
+	$idPf = null;
+}
+
 if($idPf == null)
 {
-	$idPf = $_GET['idFF'];
+	$idPf = $_GET['idPf'];
 }
+
 
 $pf = recuperaDados("incentivador_pessoa_fisica","idPf",$idPf);
 
@@ -16,8 +34,7 @@ if(isset($_POST['liberar']))
 	$QueryPJ = "UPDATE incentivador_pessoa_fisica SET liberado='3' WHERE idPf = '$id'";
 	$envio = mysqli_query($con, $QueryPJ);
 	if($envio)
-		echo "<script>alert('O usuário foi liberado com sucesso');</script>";
-		echo "<script>window.location = '?perfil=smc_index';</script>";
+		$mensagem = "<font color='#01DF3A'><strong>O usuário ".$pf['nome']." foi aprovado com sucesso!</strong></font>";
 }
 
 if(isset($_POST['negar']))
@@ -26,8 +43,7 @@ if(isset($_POST['negar']))
 	$QueryPJ = "UPDATE incentivador_pessoa_fisica SET liberado='2' WHERE idPf = '$id'";
 	$envio = mysqli_query($con, $QueryPJ);
 	if($envio)
-		echo "<script>alert('O usuário foi negado com sucesso');</script>";
-		echo "<script>window.location = '?perfil=smc_pesquisa_pf';</script>";
+		$mensagem = "<font color='#01DF3A'><strong>O usuario ".$pf['nome']." foi REPROVADO com sucesso!</strong></font>";
 }
 
 if(isset($_POST['desbloquear']))
@@ -36,8 +52,7 @@ if(isset($_POST['desbloquear']))
 	$QueryPJ = "UPDATE incentivador_pessoa_fisica SET liberado='4' WHERE idPf = '$id'";
 	$envio = mysqli_query($con, $QueryPJ);
 	if($envio)
-		echo "<script>alert('O usuário foi desbloqueado com sucesso');</script>";
-		echo "<script>window.location = '?perfil=smc_pesquisa_pf';</script>";
+		$mensagem = "<font color='#01DF3A'><strong>O usuario ".$pf['nome']." foi desbloqueado para edição!</strong></font>";
 }
 
 if(isset($_POST['atualizar']))

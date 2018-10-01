@@ -4,10 +4,28 @@ $tipoPessoa = '2';
 
 $idPj = isset($_POST['liberado']) ? $_POST['liberado'] : null;
 
+if(isset($_POST['liberado']))
+{
+	$idPj = $_POST['liberado'];
+}
+else if(isset($_POST['idPessoa']))
+{
+	$idPj = $_POST['idPessoa'];
+}
+else if (isset($_POST['LIBPF']))
+{
+	$idPj = $_POST['LIBPF'];
+}
+else
+{
+	$idPj = null;
+}
+
 if($idPj == null)
 {
-	$idPj = $_GET['idFF'];
+	$idPj = $_GET['idPj'];
 }
+
 $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 $rl = recuperaDados("representante_legal","idRepresentanteLegal",$pj['idRepresentanteLegal']);
 
@@ -17,8 +35,7 @@ if(isset($_POST['liberar']))
 	$QueryPJ = "UPDATE pessoa_juridica SET liberado='3' WHERE idPj = '$id'";
 	$envio = mysqli_query($con, $QueryPJ);
 	if($envio)
-		echo "<script>alert('O usuário foi liberado com sucesso');</script>";
-		echo "<script>window.location = '?perfil=smc_index';</script>";
+		$mensagem = "<font color='#01DF3A'><strong>O usuário ".$pj['razaoSocial']." foi aprovado com sucesso!</strong></font>";
 }
 
 if(isset($_POST['negar']))
@@ -27,8 +44,7 @@ if(isset($_POST['negar']))
 	$QueryPJ = "UPDATE pessoa_juridica SET liberado='2' WHERE idPj = '$id'";
 	$envio = mysqli_query($con, $QueryPJ);
 	if($envio)
-		echo "<script>alert('O usuário foi negado com sucesso');</script>";
-		echo "<script>window.location = '?perfil=smc_pesquisa_pj';</script>";
+		$mensagem = "<font color='#01DF3A'><strong>O usuario ".$pj['razaoSocial']." foi REPROVADO com sucesso!</strong></font>";
 }
 
 if(isset($_POST['desbloquear']))
@@ -37,8 +53,7 @@ if(isset($_POST['desbloquear']))
 	$QueryPJ = "UPDATE pessoa_juridica SET liberado='4' WHERE idPj = '$id'";
 	$envio = mysqli_query($con, $QueryPJ);
 	if($envio)
-		echo "<script>alert('O usuário foi negado com sucesso');</script>";
-		echo "<script>window.location = '?perfil=smc_pesquisa_pj';</script>";
+		$mensagem = "<font color='#01DF3A'><strong>O usuario ".$pj['razaoSocial']." foi desbloqueado para edição!</strong></font>";
 }
 
 if(isset($_POST['atualizar']))

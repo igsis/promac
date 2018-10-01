@@ -29,7 +29,7 @@ if(isset($_POST['liberacao']))
 	$sql_liberacao = "UPDATE incentivador_pessoa_fisica SET liberado = 1, dataInscricao = '$date' WHERE idPf = '$idPf'";
 	if(mysqli_query($con,$sql_liberacao))
 	{
-		$mensagem = "Sua inscrição foi enviada à SMC!";
+		$mensagem = "<font color='#01DF3A'><strong>Sua inscrição foi enviada à SMC!</strong></font>";
 		$pf['liberado'] = '1';
 		gravarLog($sql_liberacao);
 	}

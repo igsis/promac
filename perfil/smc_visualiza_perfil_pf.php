@@ -32,7 +32,7 @@ if(isset($_POST['liberar']))
 	$QueryPJ = "UPDATE pessoa_fisica SET liberado='3' WHERE idPf = '$id'";
 	$envio = mysqli_query($con, $QueryPJ);
 	if($envio)
-		$mensagem = "<font color='#01DF3A'><strong>O usuario ".$pf['nome']." foi aprovado com sucesso!</strong></font>";
+		$mensagem = "<font color='#01DF3A'><strong>O usuário ".$pf['nome']." foi aprovado com sucesso!</strong></font>";
 }
 
 if(isset($_POST['negar']))

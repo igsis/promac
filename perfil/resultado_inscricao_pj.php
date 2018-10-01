@@ -46,13 +46,13 @@ if(isset($_POST['liberacao']))
 	$sql_liberacao = "UPDATE pessoa_juridica SET liberado = 1, dataInscricao = '$date' WHERE idPj = '$idPj'";
 	if(mysqli_query($con,$sql_liberacao))
 	{
-		$mensagem = "Sua inscrição foi enviada à SMC!";
+		$mensagem = "<font color='#01DF3A'><strong>Sua inscrição foi enviada à SMC!</strong></font>";
 		$pj['liberado'] = "1";
 		gravarLog($sql_liberacao);
 	}
 	else
 	{
-		$mensagem = "<font color='#01DF3A'><strong>Erro ao atualizar! Tente novamente.</strong></font> <br/>";
+		$mensagem = "<font color='#FF0000'><strong>Erro ao atualizar! Tente novamente.</strong></font> <br/>";
 	}
 }
 
