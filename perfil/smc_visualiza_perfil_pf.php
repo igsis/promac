@@ -56,10 +56,10 @@ if(isset($_POST['desbloquear']))
 if(isset($_POST['atualizar']))
 {
 	// array com os inputs
-	$dados = $_POST['dado']; 
+	$dados = $_POST['dado'];
 
 	// atualiza todos os campos
-	foreach ($dados as $dado) 
+	foreach ($dados as $dado)
 	{
 		$query = "UPDATE upload_arquivo SET idStatusDocumento = '".$dado['status']."', observacoes = '".$dado['observ']."' WHERE idUploadArquivo = '".$dado['idArquivo']."' ";
 		$envia = mysqli_query($con, $query);
@@ -92,7 +92,7 @@ if(isset($_POST['atualizar']))
 	 		$count ++;
 		}
 	}
-	# Verifica se tem algum status reprovado ou complemetação 
+	# Verifica se tem algum status reprovado ou complemetação
 	if ((in_array('2',$totStatus)) || in_array('3',$totStatus))
 	{
 		$QueryPJ = "UPDATE pessoa_fisica SET liberado='2' WHERE idPf = '".$dados[0]['idPessoa']."'";
@@ -282,13 +282,13 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 				</form>
 			</div>
 		</div>
-	<?php 
+	<?php
 	}
 	if(($pf['liberado'] == 2) || ($pf['liberado'] == 4))
 	{
 	?>
 		<div class="form-group">
-			<h5><font color='#FF0000'><strong>Proponente não aprovado!</strong></font><br> Aguardando reenvio da inscrição.</h5>
+			<h5><font color='#00FF00'><strong>Proponente habilitado para trocar informações cadastrais.</strong></font><br> Aguardando reenvio da inscrição.</h5>
 		</div>
 	<?php
 	}
