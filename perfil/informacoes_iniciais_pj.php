@@ -287,7 +287,7 @@ else
 						<div class="col-md-offset-2 col-md-6"><strong>Cidade:</strong><br/>
 							<?php 
 							if($habilitaCampo): ?>
-							<select class="form-control" name="cidade" id="cidade">
+							<select class="form-control" name="cidade" id="Cidade">
 								<?php foreach($cidades as $cidade): 
 								$selected = $_POST['cidade'] == $cidade ?
 								"selected='selected'" : ""; ?>			           
@@ -295,7 +295,7 @@ else
 							<?php endforeach ?>  
 						</select>  			 
 							<?php else: ?>  
-								<input type="text" class="form-control" id="cidade" 
+								<input type="text" class="form-control" id="Cidade"
 								name="cidade" required
 								<?=$habilitaCampo ? '' : 'readonly'?> 
 								value="<?php 
@@ -313,7 +313,7 @@ else
 							<div class="col-md-6"><strong>Estado:</strong><br/>
 								<?php 
 								if($habilitaCampo): ?>
-								<select class="form-control" name="estado" id="estado">
+								<select class="form-control" name="estado" id="Estado">
 									<?php foreach($estados as $estado): 
 									$selected = $_POST['estado'] == $estado ?
 									"selected='selected'" : ""; ?>			           
@@ -321,7 +321,7 @@ else
 								<?php endforeach ?>  
 							</select>  			 
 						<?php else: ?>  
-							<input type="text" class="form-control" id="estado"  
+							<input type="text" class="form-control" id="Estado"
 							name="estado"  
 							<?=$habilitaCampo ? '' : 'readonly'?>
 							value="<?php 
