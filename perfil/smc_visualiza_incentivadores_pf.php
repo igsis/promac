@@ -1,7 +1,6 @@
 <?php
 $con = bancoMysqli();
 $tipoPessoa = '4';
-$idPf = isset($_POST['liberado']) ? $_POST['liberado'] : null;
 
 if(isset($_POST['liberado']))
 {
@@ -24,7 +23,6 @@ if($idPf == null)
 {
 	$idPf = $_GET['idPf'];
 }
-
 
 $pf = recuperaDados("incentivador_pessoa_fisica","idPf",$idPf);
 
@@ -68,7 +66,6 @@ if(isset($_POST['atualizar']))
 		if($envia)
 		{
 			$mensagem = "<font color='#01DF3A'><strong>Os arquivos foram atualizados com sucesso!</strong></font>";
-			echo "<script>window.location.href = 'index_pf.php?perfil=smc_visualiza_incentivadores_pf&idFF=".$dado['idPessoa']."';</script>";
 		}
 		else
 		{
@@ -146,8 +143,8 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 					$row = mysqli_fetch_array($send);
 
 						echo "<td class='list_description'>
-							<select name='dado[$count][status]' id='statusOpt' value='teste'>";
-							echo "<option>Selecione</option>";
+							<select name='dado[$count][status]' id='statusOpt' value='teste' required>";
+							echo "<option value=''>Selecione</option>";
 							geraOpcao('status_documento', $row['idStatusDocumento']);
 							echo " </select>
 						</td>";
@@ -170,14 +167,17 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 				echo "
 		</tbody>
 		</table>";
-		echo "<input type ='submit' name='atualizar' class='btn btn-theme btn-lg' value='Atualizar'></td>
-			</form>";
-	}
+        echo "<input type='hidden' name='liberado' class='btn btn-theme btn-lg' value='$idPessoa'>";
+        echo "<input type='submit' name='atualizar' class='btn btn-theme btn-lg' value='Atualizar'>";
+        echo "</form>";
+    }
 	else
 	{
 		echo "<p>Não há arquivo(s) inserido(s).<p/><br/>";
 	}
 }
+
+$pf = recuperaDados("incentivador_pessoa_fisica","idPf",$idPf);
 ?>
 
 <section id="list_items" class="home-section bg-white">
