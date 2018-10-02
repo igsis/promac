@@ -69,32 +69,32 @@ if(isset($_POST['cadastraNovoPf']))
 				<form class="form-horizontal" role="form" action="login_cadastro_incentivador_pf.php" method="post">
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><strong>Nome: *</strong><br/>
-							<input type="text" class="form-control" name="nome" placeholder="Nome completo">
+							<input required type="text" class="form-control" name="nome" placeholder="Nome completo">
 						</div>
 					</div>
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-6"><strong>Senha: *</strong>
-							<input type="password" name="senha01" class="form-control" id="inputName" placeholder="">
+							<input required type="password" name="senha01" class="form-control" id="inputName" placeholder="">
 						</div>
 						<div class=" col-md-6"><strong>Redigite a senha: *</strong>
-							<input type="password" name="senha02" class="form-control" id="inputEmail" placeholder="">
+							<input required type="password" name="senha02" class="form-control" id="inputEmail" placeholder="">
 						</div>
 					</div>
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-6"><strong>CPF: *</strong><br/>
-							<input type="text" readonly class="form-control" name="cpf" value="<?php echo $busca ?>" placeholder="CPF">
+							<input required type="text" readonly class="form-control" name="cpf" value="<?php echo $busca ?>" placeholder="CPF">
 						</div>
 						<div class="col-md-6"><strong>E-mail: *</strong><br/>
-							<input type="text" class="form-control" name="email" placeholder="E-mail">
+							<input required type="text" class="form-control" name="email" placeholder="E-mail">
 						</div>
 					</div>
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><strong>Escolha uma pergunta secreta, para casos de recuperação de senha:</strong><br/>
 							<select class="form-control" name="idFraseSeguranca" id="idFraseSeguranca" required>
-								<option>Selecione...</option>
+								<option disabled selected style="display: none">Selecione...</option>
 								<?php geraOpcao("frase_seguranca","");	?>
 							</select>
 						</div>
@@ -102,7 +102,7 @@ if(isset($_POST['cadastraNovoPf']))
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><strong>Resposta:</strong><br/>
-							<input type="text" class="form-control" id="respostaFrase" maxlength="10" name="respostaFrase" required/>
+							<input required type="text" class="form-control" id="respostaFrase" maxlength="10" name="respostaFrase"/>
 						</div>
 					</div>
 
@@ -110,8 +110,8 @@ if(isset($_POST['cadastraNovoPf']))
 					<!-- Botão para Gravar -->
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
-							<input type="hidden" name="cadastraNovoPf">
-							<input type="submit" value="Enviar" class="btn btn-theme btn-lg btn-block">
+							<input required type="hidden" name="cadastraNovoPf">
+							<input required type="submit" value="Enviar" class="btn btn-theme btn-lg btn-block">
 						</div>
 					</div>
 				</form>
