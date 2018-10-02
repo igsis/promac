@@ -143,7 +143,7 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 					$row = mysqli_fetch_array($send);
 
 						echo "<td class='list_description'>
-							<select name='dado[$count][status]' id='statusOpt' value='teste' required>";
+							<select name='dado[$count][status]' id='statusOpt' value='teste'>";
 							echo "<option value = ''>Selecione</option>";
 							geraOpcao('status_documento', $row['idStatusDocumento']);
 							echo " </select>

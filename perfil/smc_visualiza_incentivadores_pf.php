@@ -143,7 +143,7 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 					$row = mysqli_fetch_array($send);
 
 						echo "<td class='list_description'>
-							<select name='dado[$count][status]' id='statusOpt' value='teste' required>";
+							<select name='dado[$count][status]' id='statusOpt' value='teste'>";
 							echo "<option value=''>Selecione</option>";
 							geraOpcao('status_documento', $row['idStatusDocumento']);
 							echo " </select>
@@ -228,20 +228,23 @@ $pf = recuperaDados("incentivador_pessoa_fisica","idPf",$idPf);
 	<?php
 	if($pf['liberado'] == 1) 
 	{
-        $statusArray = [];
-        $sql = "SELECT idStatusDocumento FROM lista_documento as list
-                    INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
-                    WHERE arq.idPessoa = '".$pf['idPf']."'
-                    AND arq.idTipo = '$tipoPessoa'
-                    AND arq.publicado = '1'";
-        $statusDoc = mysqli_query($con, $sql);
-        while ($status = mysqli_fetch_array($statusDoc))
-        {
-            $statusArray[] = $status['idStatusDocumento'];
-        }
-
-        if (!(in_array(0,$statusArray)))
-        {
+    /**
+     * Bloco comentado abaixo exibe o botão para aprovar somente após a verificação de todos os arquivos
+     */
+//        $statusArray = [];
+//        $sql = "SELECT idStatusDocumento FROM lista_documento as list
+//                    INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
+//                    WHERE arq.idPessoa = '".$pf['idPf']."'
+//                    AND arq.idTipo = '$tipoPessoa'
+//                    AND arq.publicado = '1'";
+//        $statusDoc = mysqli_query($con, $sql);
+//        while ($status = mysqli_fetch_array($statusDoc))
+//        {
+//            $statusArray[] = $status['idStatusDocumento'];
+//        }
+//
+//        if (!(in_array(0,$statusArray)))
+//        {
 ?>
             <div class="form-group">
                 <div class='col-md-offset-4 col-md-2'>
@@ -258,20 +261,20 @@ $pf = recuperaDados("incentivador_pessoa_fisica","idPf",$idPf);
                 </div>
             </div>
 <?php
-        }
-        else
-        {
+//        }
+//        else
+//        {
 ?>
-            <div class="form-group" style="padding: 10px">
+            <!--<div class="form-group" style="padding: 10px">
                 <div class='col-md-offset-2 col-md-8'>
                     <div class='alert-warning' style="padding: 10px">
                         <p>Analise todos os documentos antes de Aprovar ou Reprovar o Proponente</p>
                     </div>
                 </div>
             </div>
-            <br>
+            <br>-->
             <?php
-        }
+//        }
     }
 	if($pf['liberado'] == 3)
 	{
