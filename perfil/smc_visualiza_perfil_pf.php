@@ -41,7 +41,7 @@ if(isset($_POST['negar']))
 	$QueryPJ = "UPDATE pessoa_fisica SET liberado='2' WHERE idPf = '$id'";
 	$envio = mysqli_query($con, $QueryPJ);
 	if($envio)
-		$mensagem = "<font color='#FF0000'><strong>O usuario ".$pf['nome']." foi REPROVADO com sucesso!</strong></font>";
+		$mensagem = "<span style='color: #FF0000'><strong>O usuario " .$pf['nome']. " foi REPROVADO com sucesso!</strong></span>";
 }
 
 if(isset($_POST['desbloquear']))

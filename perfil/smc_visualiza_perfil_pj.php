@@ -42,7 +42,7 @@ if(isset($_POST['negar']))
 	$QueryPJ = "UPDATE pessoa_juridica SET liberado='2' WHERE idPj = '$id'";
 	$envio = mysqli_query($con, $QueryPJ);
 	if($envio)
-		$mensagem = "<font color='#01DF3A'><strong>O usuario ".$pj['razaoSocial']." foi REPROVADO com sucesso!</strong></font>";
+		$mensagem = "<span style='color: #ff0000'><strong>O usuario " .$pj['razaoSocial']. " foi REPROVADO com sucesso!</strong></span>";
 }
 
 if(isset($_POST['desbloquear']))
@@ -176,6 +176,7 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 	}
 }
 
+$pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 ?>
 
 <section id="list_items" class="home-section bg-white">
