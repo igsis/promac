@@ -2,8 +2,6 @@
 $con = bancoMysqli();
 $tipoPessoa = '2';
 
-$idPj = isset($_POST['liberado']) ? $_POST['liberado'] : null;
-
 if(isset($_POST['liberado']))
 {
 	$idPj = $_POST['liberado'];
@@ -69,7 +67,6 @@ if(isset($_POST['atualizar']))
 		if($envia)
 		{
 			$mensagem = "<font color='#01DF3A'><strong>Os arquivos foram atualizados com sucesso!</strong></font>";
-			echo "<script>window.location.href = 'index_pf.php?perfil=smc_visualiza_perfil_pj&idFF=".$dado['idPessoa'] ."';</script>";
 		}
 		else
 		{
@@ -169,8 +166,9 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 				echo "
 		</tbody>
 		</table>";
-		echo "<input type ='submit' name='atualizar' class='btn btn-theme btn-lg' value='Atualizar'><br>
-			</form>";
+        echo "<input type='submit' name='atualizar' class='btn btn-theme btn-lg' value='Atualizar'>";
+        echo "<input type='hidden' name='liberado' class='btn btn-theme btn-lg' value='$idPessoa'>";
+        echo "</form>";
 	}
 	else
 	{

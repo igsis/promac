@@ -228,23 +228,51 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 	<?php
 	if($pf['liberado'] == 1) 
 	{
-	?>
-		<div class="form-group">
-			<div class='col-md-offset-4 col-md-2'>
-				<form class='form-horizontal' role='form' action='?perfil=smc_visualiza_incentivadores_pf' method='post'>
-					<input type='hidden' name='LIBPF' value='<?php echo $pf['idPf'] ?>' />
-					<input type='submit' name='negar' value='Não Aprovar' class='btn btn-theme btn-lg btn-block'>
-				</form>
-			</div>
-			<div class='col-md-2'>
-				<form class='form-horizontal' role='form' action='?perfil=smc_visualiza_incentivadores_pf' method='post'>
-					<input type='hidden' name='LIBPF' value='<?php echo $pf['idPf'] ?>' />
-					<input type='submit' name='liberar' value='Aprovar' class='btn btn-theme btn-lg btn-block'>
-				</form>
-			</div>
-		</div>
-	<?php
-	}
+        $statusArray = [];
+        $sql = "SELECT idStatusDocumento FROM lista_documento as list
+                    INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
+                    WHERE arq.idPessoa = '".$pf['idPf']."'
+                    AND arq.idTipo = '$tipoPessoa'
+                    AND arq.publicado = '1'";
+        $statusDoc = mysqli_query($con, $sql);
+        while ($status = mysqli_fetch_array($statusDoc))
+        {
+            $statusArray[] = $status['idStatusDocumento'];
+        }
+
+        if (!(in_array(0,$statusArray)))
+        {
+?>
+            <div class="form-group">
+                <div class='col-md-offset-4 col-md-2'>
+                    <form class='form-horizontal' role='form' action='?perfil=smc_visualiza_incentivadores_pf' method='post'>
+                        <input type='hidden' name='LIBPF' value='<?php echo $pf['idPf'] ?>' />
+                        <input type='submit' name='negar' value='Não Aprovar' class='btn btn-theme btn-lg btn-block'>
+                    </form>
+                </div>
+                <div class='col-md-2'>
+                    <form class='form-horizontal' role='form' action='?perfil=smc_visualiza_incentivadores_pf' method='post'>
+                        <input type='hidden' name='LIBPF' value='<?php echo $pf['idPf'] ?>' />
+                        <input type='submit' name='liberar' value='Aprovar' class='btn btn-theme btn-lg btn-block'>
+                    </form>
+                </div>
+            </div>
+<?php
+        }
+        else
+        {
+?>
+            <div class="form-group" style="padding: 10px">
+                <div class='col-md-offset-2 col-md-8'>
+                    <div class='alert-warning' style="padding: 10px">
+                        <p>Analise todos os documentos antes de Aprovar ou Reprovar o Proponente</p>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <?php
+        }
+    }
 	if($pf['liberado'] == 3)
 	{
 	?>

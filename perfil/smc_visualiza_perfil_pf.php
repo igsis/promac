@@ -225,8 +225,8 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 <!-- Botão para Prosseguir -->
 	<?php
 	if($pf['liberado'] == 1)
-	{
-	    $statusArray = [];
+    {
+        $statusArray = [];
 	    $sql = "SELECT idStatusDocumento FROM lista_documento as list
                 INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
                 WHERE arq.idPessoa = '".$pf['idPf']."'
