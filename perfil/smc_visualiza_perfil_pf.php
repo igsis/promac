@@ -203,6 +203,19 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 			<p align="justify"><strong>Telefone:</strong> <?php echo isset($pf['telefone']) ? $pf['telefone'] : null; ?></p>
 			<p align="justify"><strong>Celular:</strong> <?php echo isset($pf['celular']) ? $pf['celular'] : null; ?></p>
 			<p align="justify"><strong>Email:</strong> <?php echo isset($pf['email']) ? $pf['email'] : null; ?></p>
+
+			<p align="justify"><strong>Cooperado:</strong>
+				<?php
+					if(isset($pf['cooperado'])){
+						if($pf['cooperado'] == 1){
+							echo "Sim";
+						}else {
+							echo "Não";
+						}
+					}
+				?>
+			</p>
+
 			<p align="justify"><strong>Logradouro:</strong> <?php echo isset($pf['logradouro']) ? $pf['logradouro'] : null; ?></p>
 			<p align="justify"><strong>Número:</strong> <?php echo isset($pf['numero']) ? $pf['numero'] : null; ?></p>
 			<p align="justify"><strong>Complemento:</strong> <?php echo isset($pf['complemento']) ? $pf['complemento'] : null; ?></p>
