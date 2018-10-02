@@ -1,7 +1,6 @@
 <?php
 $con = bancoMysqli();
 $tipoPessoa = '5';
-$idPj = isset($_POST['liberado']) ? $_POST['liberado'] : null;
 
 if(isset($_POST['liberado']))
 {
@@ -144,7 +143,7 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 					$row = mysqli_fetch_array($send);
 
 						echo "<td class='list_description'>
-							<select name='dado[$count][status]' id='statusOpt' value='teste'>";
+							<select name='dado[$count][status]' id='statusOpt' value='teste' required>";
 							echo "<option value = ''>Selecione</option>";
 							geraOpcao('status_documento', $row['idStatusDocumento']);
 							echo " </select>
@@ -177,6 +176,8 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 		echo "<p>Não há arquivo(s) inserido(s).<p/><br/>";
 	}
 }
+
+$pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
 ?>
 
 <section id="list_items" class="home-section bg-white">
