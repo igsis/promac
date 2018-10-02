@@ -21,6 +21,20 @@
 					</div>
 				</form>
 			</div>
+
+			<div class="form-group">
+                <div class="col-md-offset-2 col-md-8"><br></div>
+            </div>
+
+			<div class="form-group">
+				<div class="form-group" style="padding-bottom: 60px;">
+					<div class="col-md-offset-4 col-md-4">
+						<form method="POST" action="login_incentivador_pf.php" class="form-horizontal" role="form">
+						<button class='btn btn-theme btn-md' type='submit' style="border-radius: 30px;">Voltar</button>
+                        </form>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </section>
