@@ -153,6 +153,22 @@ if(isset($_POST['apagar']))
 
 ?>
 
+<!-- Chamamento Alert-->
+<thead>
+	<script src="js/sweetalert.min.js"></script>
+    <link href="css/sweetalert.css" rel="stylesheet" type="text/css"/>
+<script>
+	function alerta()
+	{
+    swal({   title: "Atenção!", 
+	text: "Certifique-se que sua documentação está correta antes do envio. Em caso de substituição, deverá ser solicitado à equipe da SMC.",
+	timer: 10000,   
+	confirmButtonColor:	"#5b6533",
+	showConfirmButton: true });}
+	window.onload = alerta();
+	</script>
+</thead>
+
 <section id="list_items" class="home-section bg-white">
 	<div class="container">
 		<?php
