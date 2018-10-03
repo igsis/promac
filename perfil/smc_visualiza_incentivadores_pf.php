@@ -31,8 +31,10 @@ if(isset($_POST['liberar']))
 	$id = $_POST['LIBPF'];
 	$QueryPJ = "UPDATE incentivador_pessoa_fisica SET liberado='3' WHERE idPf = '$id'";
 	$envio = mysqli_query($con, $QueryPJ);
-	if($envio)
-		$mensagem = "<font color='#01DF3A'><strong>O usuário ".$pf['nome']." foi aprovado com sucesso!</strong></font>";
+	if($envio) {
+        $mensagem = "<font color='#01DF3A'><strong>O usuário " . $pf['nome'] . " foi aprovado com sucesso!</strong></font>";
+        gravarLog($QueryPJ);
+    }
 }
 
 if(isset($_POST['negar']))
@@ -40,8 +42,10 @@ if(isset($_POST['negar']))
 	$id = $_POST['LIBPF'];
 	$QueryPJ = "UPDATE incentivador_pessoa_fisica SET liberado='2' WHERE idPf = '$id'";
 	$envio = mysqli_query($con, $QueryPJ);
-	if($envio)
-		$mensagem = "<font color='#01DF3A'><strong>O usuario ".$pf['nome']." foi REPROVADO com sucesso!</strong></font>";
+	if($envio) {
+        $mensagem = "<font color='#01DF3A'><strong>O usuario " . $pf['nome'] . " foi REPROVADO com sucesso!</strong></font>";
+        gravarLog($QueryPJ);
+    }
 }
 
 if(isset($_POST['desbloquear']))
@@ -49,8 +53,10 @@ if(isset($_POST['desbloquear']))
 	$id = $_POST['LIBPF'];
 	$QueryPJ = "UPDATE incentivador_pessoa_fisica SET liberado='4' WHERE idPf = '$id'";
 	$envio = mysqli_query($con, $QueryPJ);
-	if($envio)
-		$mensagem = "<font color='#01DF3A'><strong>O usuario ".$pf['nome']." foi desbloqueado para edição!</strong></font>";
+	if($envio) {
+        $mensagem = "<font color='#01DF3A'><strong>O usuario " . $pf['nome'] . " foi desbloqueado para edição!</strong></font>";
+        gravarLog($QueryPJ);
+    }
 }
 
 if(isset($_POST['atualizar']))
@@ -66,6 +72,7 @@ if(isset($_POST['atualizar']))
 		if($envia)
 		{
 			$mensagem = "<font color='#01DF3A'><strong>Os arquivos foram atualizados com sucesso!</strong></font>";
+            gravarLog($query);
 		}
 		else
 		{
@@ -98,9 +105,11 @@ if(isset($_POST['atualizar']))
 	{
 		$QueryPJ = "UPDATE incentivador_pessoa_fisica SET liberado='2' WHERE idPf = '".$dados[0]['idPessoa']."'";
 		$envio = mysqli_query($con, $QueryPJ);
+        gravarLog($QueryPJ);
 	}else{
 		$QueryPJ = "UPDATE incentivador_pessoa_fisica SET liberado='1' WHERE idPf = '".$dados[0]['idPessoa']."'";
 		$envio = mysqli_query($con, $QueryPJ);
+        gravarLog($QueryPJ);
 	}
 
 }
