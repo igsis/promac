@@ -38,6 +38,24 @@ if(isset($_POST['reaprovar']))
 	}
 }
 
+if(isset($_POST['negar']))
+{
+	$idPf = $_POST['idPf'];
+	$sql = "UPDATE pessoa_fisica SET liberado = 2 WHERE idPf = '$idPf'";
+	$negar = mysqli_query($con, $sql);
+	if($negar)
+	{
+		$mensagem = "<font color='#01DF3A'>Cadastro reprovado com sucesso!</font>";
+        gravarLog($negar);
+
+	}
+	else
+	{
+		$mensagem = "<font color='#FF0000'>Erro ao reprovar cadastro. Por favor, tente novamente!</font>";
+	}
+}
+
+
 function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 {
 	$con = bancoMysqli();
@@ -207,12 +225,19 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 	{
 	?>
 		<div class="form-group">
-			<div class='col-md-offset-5 col-md-2'>
+                <div class='col-md-offset-4 col-md-2'>
 				<!-- Button para ativar modal -->
-				<button type="button" class='btn btn-theme btn-lg btn-block' data-toggle="modal" data-target="#myModal">
+				<button type="button" class='btn btn-theme btn-lg btn-block' data-toggle="modal" data-target="#myModal2">
+					Não aprovar
+				</button>
+				</div>
+				<div class='col-md-2'>
+				<!-- Button para ativar modal -->
+				<button type="button" class='btn btn-theme btn-lg btn-block' data-toggle="modal" data-target="#myModal1">
 					Aprovar
 				</button>
-			</div>
+				</div>
+
 		</div>
 	<?php
 	}
@@ -221,9 +246,17 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 		echo "<h5><font color='#01DF3A'>".$pf['nome']." está com a inscrição do proponente aprovada.</font></h5>";
 	}
 	?>
+	
+	<div class="form-group">
+		<div class="col-md-offset-2 col-md-8"><hr/></div>
+	</div>
 
-	<!-- Modal de aviso -->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="col-md-offset-2 col-md-8">
+		<a href="../include/arquivos_pessoa.php?idPessoa=<?php echo $pf['idPf'] ?>&tipo=<?php echo $tipoPessoa?>" class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos do proponente</a>
+	</div>
+
+	<!-- Modal de aviso reaprovar -->
+	<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -238,6 +271,28 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 						<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
 						<input type='hidden' name='idPf' value='<?php echo $pf['idPf'] ?>' />
 	 					<button type="submit" name="reaprovar" class="btn btn-success" id="confirm">Aprovar</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal de aviso não aprovar -->
+	<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title text-danger" id="myModalLabel">Atenção</h4>
+				</div>
+				<div class="modal-body">
+					<p>Tem certeza que deseja reprovar esse cadastro?</p>
+				</div>
+				<div class="modal-footer">
+					<form class='form-horizontal' role='form' action='?perfil=smc_reaprova_pf' method='post'>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+						<input type='hidden' name='idPf' value='<?php echo $pf['idPf'] ?>' />
+	 					<button type="submit" name="negar" class="btn btn-success" id="confirm">Não aprovar</button>
 					</form>
 				</div>
 			</div>
