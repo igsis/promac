@@ -176,7 +176,7 @@ if(isset($_POST['apagar']))
 	function alerta()
 	{
     swal({   title: "Atenção!", 
-	text: "Certifique-se que sua documentação está correta antes do envio. Em caso de substituição, deverá ser solicitado à equipe da SMC.",
+	text: "Certifique-se que sua documentação está correta antes do envio. Após o envio não será realizado nenhuma alteração.",
 	timer: 10000,   
 	confirmButtonColor:	"#5b6533",
 	showConfirmButton: true });}
