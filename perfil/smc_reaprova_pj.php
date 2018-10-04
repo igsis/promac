@@ -38,6 +38,23 @@ if(isset($_POST['reaprovar']))
 	}
 }
 
+if(isset($_POST['negar']))
+{
+	$idPj = $_POST['idPj'];
+	$sql = "UPDATE pessoa_juridica SET liberado = 2 WHERE idPj = '$idPj'";
+	$negar = mysqli_query($con, $sql);
+	if($negar)
+	{
+		$mensagem = "<font color='#01DF3A'>Cadastro reprovado com sucesso!</font>";
+        gravarLog($negar);
+
+	}
+	else
+	{
+		$mensagem = "<font color='#FF0000'>Erro ao reprovar cadastro. Por favor, tente novamente!</font>";
+	}
+}
+
 function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 {
 
@@ -224,11 +241,17 @@ $rl = recuperaDados("representante_legal","idRepresentanteLegal",$pj['idRepresen
 	{
 	?>
 		<div class="form-group">
-			<div class='col-md-offset-5 col-md-2'>
-				<!-- Button para ativar modal -->
-				<button type="button" class='btn btn-theme btn-lg btn-block' data-toggle="modal" data-target="#myModal">
-					Aprovar
-				</button>
+            <div class='col-md-offset-4 col-md-2'>
+			<!-- Button para ativar modal -->
+			<button type="button" class='btn btn-theme btn-lg btn-block' data-toggle="modal" data-target="#myModal2">
+				Não aprovar
+			</button>
+			</div>
+			<div class='col-md-2'>
+			<!-- Button para ativar modal -->
+			<button type="button" class='btn btn-theme btn-lg btn-block' data-toggle="modal" data-target="#myModal1">
+				Aprovar
+			</button>
 			</div>
 		</div>
 	<?php
@@ -239,8 +262,16 @@ $rl = recuperaDados("representante_legal","idRepresentanteLegal",$pj['idRepresen
 	}
 	?>
 
-	<!-- Modal de aviso -->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="form-group">
+		<div class="col-md-offset-2 col-md-8"><hr/></div>
+	</div>
+
+	<div class="col-md-offset-2 col-md-8">
+		<a href="../include/arquivos_pessoa.php?idPessoa=<?php echo $pj['idPj'] ?>&tipo=<?php echo $tipoPessoa?>" class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos do proponente</a>
+	</div>
+
+	<!-- Modal de aviso aprovar -->
+	<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -260,4 +291,29 @@ $rl = recuperaDados("representante_legal","idRepresentanteLegal",$pj['idRepresen
 			</div>
 		</div>
 	</div>
+
+	<!-- Modal de aviso não aprovar -->
+	<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title text-danger" id="myModalLabel">Atenção</h4>
+				</div>
+				<div class="modal-body">
+					<p>Tem certeza que deseja reprovar esse cadastro?</p>
+				</div>
+				<div class="modal-footer">
+					<form class='form-horizontal' role='form' action='?perfil=smc_reaprova_pj' method='post'>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+						<input type='hidden' name='idPj' value='<?php echo $pj['idPj'] ?>' />
+	 					<button type="submit" name="negar" class="btn btn-success" id="confirm">Não aprovar</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
 </section>
