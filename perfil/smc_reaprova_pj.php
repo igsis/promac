@@ -21,7 +21,7 @@ else
 
 if($idPj == null)
 {
-	$idPj = $_GET['idPj'];
+	$idPj = $_POST['idPj'];
 }
 
 if(isset($_POST['reaprovar']))

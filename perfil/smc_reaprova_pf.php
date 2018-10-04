@@ -21,7 +21,7 @@ else
 
 if($idPf == null)
 {
-	$idPf = $_GET['idPf'];
+	$idPf = $_POST['idPf'];
 }
 
 if(isset($_POST['reaprovar']))
