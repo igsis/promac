@@ -2,7 +2,27 @@
 $con = bancoMysqli();
 $tipoPessoa = '1';
 
-$idPf = $_POST['idPf'];
+if(isset($_POST['liberado']))
+{
+	$idPf = $_POST['liberado'];
+}
+else if(isset($_POST['idPessoa']))
+{
+	$idPf = $_POST['idPessoa'];
+}
+else if (isset($_POST['LIBPF']))
+{
+	$idPf = $_POST['LIBPF'];
+}
+else
+{
+	$idPf = null;
+}
+
+if($idPf == null)
+{
+	$idPf = $_GET['idPf'];
+}
 
 if(isset($_POST['reaprovar']))
 {
@@ -15,6 +35,130 @@ if(isset($_POST['reaprovar']))
 	else
 	{
 		$mensagem = "<font color='#FF0000'>Erro ao aprovar cadastro. Por favor, tente novamente!</font>";
+	}
+}
+
+function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
+{
+	$con = bancoMysqli();
+	$sql = "SELECT *
+			FROM lista_documento as list
+			INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
+			WHERE arq.idPessoa = '$idPessoa'
+			AND arq.idTipo = '$tipoPessoa'
+			AND arq.publicado = '1'";
+	$query = mysqli_query($con,$sql);
+	$linhas = mysqli_num_rows($query);
+
+	if ($linhas > 0)
+	{
+	echo "
+		<table class='table table-condensed'>
+			<thead>
+				<tr class='list_menu'>
+					<td>Tipo de arquivo</td>
+					<td>Nome do arquivo</td>
+					<td>Status</td>
+					<td>Observações</td>
+				</tr>
+			</thead>
+			<tbody>";
+				echo "<form id='atualizaDoc' method='POST' action='?perfil=smc_reaprova_pf'>";
+				$count = 0;
+				while($arquivo = mysqli_fetch_array($query))
+				{
+					echo "<tr>";
+					echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
+					echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
+					$queryy = "SELECT idStatusDocumento FROM upload_arquivo WHERE idUploadArquivo = '".$arquivo['idUploadArquivo']."'";
+					$send = mysqli_query($con, $queryy);
+					$row = mysqli_fetch_array($send);
+
+						echo "<td class='list_description'>
+							<select name='dado[$count][status]' id='statusOpt' value='teste'>";
+							echo "<option value=''>Selecione</option>";
+							geraOpcao('status_documento', $row['idStatusDocumento']);
+							echo " </select>
+						</td>";
+					$queryOBS = "SELECT observacoes FROM upload_arquivo WHERE idUploadArquivo = '".$arquivo['idUploadArquivo']."'";
+					$send = mysqli_query($con, $queryOBS);
+					$row = mysqli_fetch_array($send);
+					echo "<td class='list_description'>
+					<input type='text' name='dado[$count][observ]' maxlength='100' id='observ' value='".$row['observacoes']."'/>
+					</td>";
+
+
+					echo "
+						<td class='list_description'>
+							<input type='hidden' name='dado[$count][idPessoa]' value='".$idPessoa."' />
+							<input type='hidden' name='dado[$count][idArquivo]' value='".$arquivo['idUploadArquivo']."' />
+							";
+					echo "</tr>";
+					$count ++;
+				}
+				echo "
+		</tbody>
+		</table>";
+		echo "<input type='submit' name='atualizar' class='btn btn-theme btn-lg' value='Atualizar'>";
+		echo "<input type='hidden' name='liberado' class='btn btn-theme btn-lg' value='$idPessoa'>";
+		echo "</form>";
+	}
+	else
+	{
+		echo "<p>Não há arquivo(s) inserido(s).<p/><br/>";
+	}
+}
+
+if(isset($_POST['atualizar']))
+{
+	// array com os inputs
+	$dados = $_POST['dado'];
+
+	// atualiza todos os campos
+	foreach ($dados as $dado)
+	{
+		$query = "UPDATE upload_arquivo SET idStatusDocumento = '".$dado['status']."', observacoes = '".$dado['observ']."' WHERE idUploadArquivo = '".$dado['idArquivo']."' ";
+		$envia = mysqli_query($con, $query);
+		if($envia)
+		{
+			$mensagem = "<font color='#01DF3A'><strong>Os arquivos foram atualizados com sucesso!</strong></font>";
+            gravarLog($query);
+		}
+		else
+		{
+			echo "<script>alert('Erro durante o processamento, entre em contato com os responsáveis pelo sistema para maiores informações.')</script>";
+			echo "<script>window.location.href = 'index_pf.php?perfil=smc_index';</script>";
+		}
+	}
+
+	$sql = "SELECT *
+		FROM lista_documento as list
+		INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
+		WHERE arq.idPessoa = '".$dados[0]['idPessoa']."'
+		AND arq.idTipo = '$tipoPessoa'
+		AND arq.publicado = '1'";
+	$query = mysqli_query($con,$sql);
+	$rows = mysqli_num_rows($query);
+
+	$count = 0;
+	if ($rows > 0) {
+		while($arquivo = mysqli_fetch_array($query))
+		{
+			# Recebe um array com idStatus de todos os docs
+			$totStatus[$count] = $arquivo['idStatusDocumento'];
+	 		$count ++;
+		}
+	}
+	# Verifica se tem algum status reprovado ou complemetação
+	if ((in_array('2',$totStatus)) || in_array('3',$totStatus))
+	{
+		$QueryPJ = "UPDATE pessoa_fisica SET liberado='2' WHERE idPf = '".$dados[0]['idPessoa']."'";
+		$envio = mysqli_query($con, $QueryPJ);
+        gravarLog($QueryPJ);
+	}else {
+		$QueryPJ = "UPDATE pessoa_fisica SET liberado='1' WHERE idPf = '".$dados[0]['idPessoa']."'";
+		$envio = mysqli_query($con, $QueryPJ);
+        gravarLog($QueryPJ);
 	}
 }
 
@@ -47,9 +191,13 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 			<p align="justify"><strong>Estado:</strong> <?php echo isset($pf['estado']) ? $pf['estado'] : null; ?></p>
 			<p align="justify"><strong>CEP:</strong> <?php echo isset($pf['cep']) ? $pf['cep'] : null; ?></p>
 		</div>
-		<div class="table-responsive list_info">
-			<h6>Arquivo(s) de Pessoa Física</h6>
-			<?php exibirArquivos($tipoPessoa,$idPf); ?>
+	 	<div class="table-responsive list_info"><h6>Arquivo(s) de Pessoa Física</h6>
+			<?php
+			$query = "SELECT idProjeto FROM projeto WHERE idPf='$idPf' AND publicado = '1'";
+			$send = mysqli_query($con, $query);
+			$row = mysqli_fetch_array($send);
+			listaArquivosPessoaEditorr($pf['idPf'],$tipoPessoa,"smc_reaprova_pf");
+			$idFisica = $pf['idPf']; ?>
 		</div>
 	</div>
 
