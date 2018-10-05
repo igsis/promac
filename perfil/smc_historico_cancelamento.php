@@ -93,8 +93,11 @@ $total = mysqli_num_rows($query_lista);
                     else{
                         echo "<td>Reativado</td>";
                     }
+                    if($historico['acao'] == 1)
+                    {    
                     echo "<td><button class='btn btn-danger btn-sm' style=\"border-radius: 10px;\" type='button' data-toggle='modal' data-target='#confirmReativar' >Reativar</button></td>";
                     echo "</tr>";
+                    }
                     ?>
                     <!-- Confirmação de Reativação -->
                     <div class="modal fade" id="confirmReativar" role="dialog" aria-labelledby="confirmReativarLabel" aria-hidden="true">
