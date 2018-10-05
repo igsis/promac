@@ -186,6 +186,26 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 	}
 }
 
+if(isset($_POST['gravarNota']))
+{
+	$id = $_POST['LIBPF'];
+    if ($id != 0)
+    {
+        $dateNow = date('Y:m:d h:i:s');
+        $nota = addslashes($_POST['nota']);
+        $sql_nota = "INSERT INTO notas (idPessoa, idTipo, data, nota, interna) VALUES ('$id', '5', '$dateNow', '$nota', '1')";
+        if(mysqli_query($con,$sql_nota))
+        {
+            $mensagem = "<font color='#01DF3A'><strong>Nota inserida com sucesso!</strong></font>";
+            gravarLog($sql_nota);
+        }
+        else
+        {
+            $mensagem = "<font color='#FF0000'><strong>Erro ao inserir nota! Tente novamente.</strong></font>";
+        }
+    }
+}
+
 $pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
 ?>
 
@@ -250,6 +270,41 @@ $pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
 		</div>
 	</div>
 
+
+		<form method="POST" action="?perfil=smc_visualiza_incentivadores_pj" class="form-horizontal" role="form">
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-8"><label>Notas</label><br/>
+                    <textarea name="nota" class="form-control" rows="10" placeholder="Insira neste campo informações de notificações sobre documentações para o incentivador."></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-8">
+                    <input type='hidden' name='LIBPF' value='<?php echo $pj['idPj'] ?>' />
+                    <input type="submit" name="gravarNota" class="btn btn-theme btn-md btn-block" value="Gravar">
+                </div>
+            </div>
+        </form>
+
+        <ul class='list-group'>
+            <li class='list-group-item list-group-item-success'>Notas</li>
+            <?php
+                $sql = "SELECT * FROM notas WHERE idPessoa = '$idPj' AND idTipo = '5' AND interna = '1'";
+                $query = mysqli_query($con,$sql);
+                $num = mysqli_num_rows($query);
+                if($num > 0)
+                {
+                    while($campo = mysqli_fetch_array($query))
+                    {
+                        echo "<li class='list-group-item' align='left'><strong>".exibirDataHoraBr($campo['data'])."</strong><br/>".$campo['nota']."</li>";
+                    }
+                }
+                else
+                {
+                    echo "<li class='list-group-item'>Não há notas disponíveis.</li>";
+                }
+            ?>
+        </ul>
 <!-- Botão para Prosseguir -->
 	<?php
 	if($pj['liberado'] == 1)

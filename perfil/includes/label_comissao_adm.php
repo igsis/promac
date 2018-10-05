@@ -207,7 +207,7 @@
         <div class="col-md-offset-2 col-md-8">
             <li class='list-group-item list-group-item-success'>Notas
                 <?php
-                $sql = "SELECT * FROM notas WHERE idProjeto = '$idProjeto'";
+                $sql = "SELECT * FROM notas WHERE idPessoa = '$idProjeto'";
                 $query = mysqli_query($con,$sql);
                 $num = mysqli_num_rows($query);
                 if($num > 0)

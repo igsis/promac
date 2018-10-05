@@ -139,7 +139,7 @@
         <ul class='list-group'>
             <li class='list-group-item list-group-item-success'>Notas</li>
             <?php
-                $sql = "SELECT * FROM notas WHERE idProjeto = '$idProjeto'";
+                $sql = "SELECT * FROM notas WHERE idPessoa = '$idProjeto'";
                 $query = mysqli_query($con,$sql);
                 $num = mysqli_num_rows($query);
                 if($num > 0)

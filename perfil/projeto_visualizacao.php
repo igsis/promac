@@ -96,7 +96,7 @@ $status_analise = array(3,7,10,19,20,24,25,34,15);
                                         <li class='list-group-item list-group-item-success'>Notas</li>
                                         <?php
                                         $sql = "SELECT * FROM notas
-                                                    WHERE idProjeto = '$idProjeto' AND interna = 0";
+                                                    WHERE idPessoa = '$idProjeto' AND interna = 0";
                                         $query = mysqli_query($con, $sql);
                                         $num = mysqli_num_rows($query);
                                         if ($num > 0) {
