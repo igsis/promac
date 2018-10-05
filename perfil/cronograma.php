@@ -4,21 +4,28 @@ $idProjeto = $_SESSION['idProjeto'];
 
 if(isset($_POST['insere']))
 {
-	$inicioCronograma = $_POST['inicioCronograma'];
+	
+	$inicioCronograma =$_POST['inicioCronograma'];
 	$fimCronograma = $_POST['fimCronograma'];
-
-	$sql_insere = "UPDATE projeto SET
+	
+	if (strtotime($inicioCronograma) <= strtotime($fimCronograma)){
+		$sql_insere = "UPDATE projeto SET
 		inicioCronograma = '$inicioCronograma',
 		fimCronograma = '$fimCronograma'
 		WHERE idProjeto = '$idProjeto'";
-	if(mysqli_query($con,$sql_insere))
-	{
-		$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso! </strong></font>";
-		gravarLog($sql_insere);
+		if(mysqli_query($con,$sql_insere))
+		{
+			$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso! </strong></font>";
+			gravarLog($sql_insere);
+		}
+		else
+		{
+			$mensagem = "<font color='#FF0000'><strong>Erro ao gravar! Tente novamente.</strong></font>";
+		}
 	}
 	else
 	{
-		$mensagem = "<font color='#FF0000'><strong>Erro ao gravar! Tente novamente.</strong></font>";
+		$mensagem = "<font color='#FF0000'><strong>A data final deve ser após a data de início!.</strong></font>";
 	}
 }
 
@@ -39,7 +46,6 @@ if(isset($_POST['insereCronograma']))
 		$ultimoCronograma = mysqli_fetch_array($query_ultimo);
 		$idCronograma = $ultimoCronograma['idCronograma'];
 		$sql_insere_cronograma_evento = "UPDATE projeto SET idCronograma = '$idCronograma' WHERE idProjeto = '$idProjeto'";
-		gravarLog($sql_insere_cronograma);
 		if(mysqli_query($con,$sql_insere_cronograma_evento))
 		{
 			$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso!</strong></font>";
@@ -74,18 +80,18 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
     	?>
 		<div class="form-group">
 			<h4>Cronograma</h4>
-			<h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
+			<h5 id="mensagem"><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
-				<form method="POST" action="?perfil=cronograma" class="form-horizontal" role="form">
+				<form method="POST" id="formCronograma" action="?perfil=cronograma" class="form-horizontal" role="form">
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-3"><label>Data estimada de início do projeto</label>
-							<input type="text" name="inicioCronograma" class="form-control" placeholder = "DD/MM/AA ou MM/AAAA" required value="<?php echo $projeto['inicioCronograma'] ?>">
+							<input type="date" name="inicioCronograma" minlength=10 maxlength="10" class="form-control" placeholder= "DD/MM/AA" required value="<?php echo  date("Y-m-d", strtotime($projeto['inicioCronograma'])) ?>">
 						</div>
 						<div class="col-md-offset-2 col-md-3"><label>Data estimada do final do projeto</label>
-							<input type="text" name="fimCronograma" class="form-control" placeholder ="DD/MM/AA ou MM/AAAA" required value="<?php echo $projeto['fimCronograma'] ?>">
+							<input type="date" name="fimCronograma" minlength=10 maxlength="10" class="form-control" placeholder="DD/MM/AA" required value="<?php echo date("Y-m-d", strtotime($projeto['fimCronograma'])) ?>">
 						</div>
 					</div>
 
