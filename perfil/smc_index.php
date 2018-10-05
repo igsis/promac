@@ -55,7 +55,14 @@ if(isset($_POST['liberacaoPJ']))
         </div>
 
         <ul class="nav nav-tabs">
+            <?php
+            if ($pf['idNivelAcesso'] != 4)
+            {
+            ?>    
             <li class="nav active"><a href="#smc" data-toggle="tab">Área SMC</a></li>
+            <?php
+            }
+            ?>
             <li class="nav"><a href="#comissao" data-toggle="tab">Área Comissão</a></li>
         </ul>
 

@@ -12,7 +12,14 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 
             <ul class="nav nav-tabs">
                 <li class="nav active"><a href="#comissao" data-toggle="tab">Área Comissão</a></li>
+                <?php
+                if ($pf['idNivelAcesso'] != 4) 
+                {
+                ?>
                 <li class="nav"><a href="#smc" data-toggle="tab">Área SMC</a></li>
+                <?php
+                }
+                ?>
             </ul>
 
             <div class="tab-content">
