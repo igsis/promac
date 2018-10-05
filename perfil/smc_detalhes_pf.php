@@ -1,4 +1,5 @@
 ﻿<?php
+//TODO: Confirmar a utilização deste arquivo
 $con = bancoMysqli();
 
 $idPf = $_POST['carregar'];
@@ -10,6 +11,7 @@ if(isset($_POST['liberacao']))
 	$sql_liberacao = "UPDATE pessoa_fisica SET liberado = 1 WHERE idPf = '$idPf'";
 	if(mysqli_query($con,$sql_liberacao))
 	{
+	    gravarLog($sql_liberacao);
 		echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=?perfil=projeto_pf'>";
 	}
 	else

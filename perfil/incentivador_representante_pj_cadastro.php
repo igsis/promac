@@ -98,6 +98,7 @@ if(isset($_POST['editaRepresentante']))
 
 		if(mysqli_query($con,$sql_atualiza_rep1))
 		{
+		    gravarLog($sql_atualiza_rep1);
 			$mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font><br/>";
 			$sql_representante1_empresa = "UPDATE incentivador_pessoa_juridica SET idRepresentanteLegal = '$idrep1' WHERE idPj = '$idPj'";
 			if(mysqli_query($con,$sql_representante1_empresa))

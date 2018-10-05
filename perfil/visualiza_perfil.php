@@ -15,6 +15,7 @@ if(isset($_POST['consulta']))
 		$envia = mysqli_query($con, $query);
 		if($envia)
 		{
+		    gravarLog($query);
 			echo "<script>alert('A senha do usuário foi alterada com sucesso!')</script>";
 			echo "<script>
 			window.location = '/promac/visual/index_pf.php?perfil=resetar_senha';

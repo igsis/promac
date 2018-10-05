@@ -39,6 +39,7 @@ if(isset($_POST['insereCronograma']))
 		$ultimoCronograma = mysqli_fetch_array($query_ultimo);
 		$idCronograma = $ultimoCronograma['idCronograma'];
 		$sql_insere_cronograma_evento = "UPDATE projeto SET idCronograma = '$idCronograma' WHERE idProjeto = '$idProjeto'";
+		gravarLog($sql_insere_cronograma);
 		if(mysqli_query($con,$sql_insere_cronograma_evento))
 		{
 			$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso!</strong></font>";

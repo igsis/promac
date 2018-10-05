@@ -39,6 +39,7 @@ if(isset($_POST['liberacaoPJ']))
 	$QueryPJ = "UPDATE pessoa_juridica SET liberado='3' WHERE idPj='$idJuridico'";
 	$envio = mysqli_query($con, $QueryPJ);
 	if($envio)
+	    gravarLog($QueryPJ);
 		echo "<script>alert('O usuário foi ativo com sucesso');</script>";
 }
 ?>

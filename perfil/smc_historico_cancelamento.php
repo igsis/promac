@@ -9,6 +9,7 @@ if(isset($_POST['reativarProjeto'])){
 
     $sql_cancelar = "UPDATE projeto SET publicado = 1 WHERE idProjeto = '$idProjeto'";
     if(mysqli_query($con,$sql_cancelar)){
+        gravarLog($sql_cancelar);
         $sql_historico_cancelamento = "INSERT INTO historico_cancelamento (idProjeto, observacao, idUsuario, data, acao) VALUES ('$idProjeto', '$observacao','$idUser','$dateNow',2)";
         if(mysqli_query($con,$sql_historico_cancelamento)){
             $mensagem = "<span style=\"color: #01DF3A; \"><strong>Projeto reativado com sucesso!<br/>Aguarde....</strong></span>";

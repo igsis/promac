@@ -1,4 +1,5 @@
 <?php
+//TODO: Confirmar a utilização deste arquivo
 $con = bancoMysqli();
 
 $idFinanceiro = $_POST['idFinanceiro'];
@@ -27,8 +28,8 @@ if(isset($_POST['gravarDeposito']))
     if(mysqli_query($con,$sql_gravarDeposito))
     {
         $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
-        echo "<script>window.location = '?perfil=financeiro&idFF=$idFin';</script>";
         gravarLog($sql_gravarDeposito);
+        echo "<script>window.location = '?perfil=financeiro&idFF=$idFin';</script>";
     }
     else
     {
@@ -47,8 +48,8 @@ if(isset($_POST['gravarReserva']))
     if(mysqli_query($con,$sql_gravarReserva))
     {
         $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
-        echo "<script>window.location = '?perfil=financeiro&idFF=$idFin';</script>";
         gravarLog($sql_gravarReserva);
+        echo "<script>window.location = '?perfil=financeiro&idFF=$idFin';</script>";
     }
     else
     {
@@ -68,8 +69,8 @@ if(isset($_POST['gravarEmpenho']))
     if(mysqli_query($con,$sql_gravarEmpenho))
     {
         $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
-        echo "<script>window.location = '?perfil=financeiro&idFF=$idP';</script>";
         gravarLog($sql_gravarEmpenho);
+        echo "<script>window.location = '?perfil=financeiro&idFF=$idP';</script>";
     }
     else
     {
@@ -89,8 +90,8 @@ if(isset($_POST['gravarLiquidacao']))
     if(mysqli_query($con,$sql_gravarLiquidacao))
     {
         $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
-        echo "<script>window.location = '?perfil=financeiro&idFF=$idP';</script>";
         gravarLog($sql_gravarLiquidacao);
+        echo "<script>window.location = '?perfil=financeiro&idFF=$idP';</script>";
     }
     else
     {

@@ -12,6 +12,7 @@ if (isset($_POST['atualizar']))
 	if($stmt->execute())
 	{
 		$mensagem = "Atualizado com sucesso!";
+		gravarLog($sql_atualiza);
 	}else {
 		$mensagem = "Erro ao atualizar";
 	}
@@ -28,13 +29,14 @@ if (isset($_POST['apagar']))
 	if ($stmt->execute())
 	{
 		$mensagem = "Área removida com sucesso!";
+		gravarLog($sql_deleta);
 	}else {
 		$mensagem = "Erro ao remover!";
 	}
 	
 }
 
-if (isset($_POST['inserir'])) 
+ if (isset($_POST['inserir']))
 {
 	$conn = bancoPDO();
 	$area = $_POST['nomeArea'];
@@ -48,6 +50,7 @@ if (isset($_POST['inserir']))
 	if ($stmt->execute()) 
 	{
 		$mensagem = "Área inserida com sucesso!";
+		gravarLog($sql_insere);
 	}else {
 		$mensagem = "Erro ao inserir!";
 	}
@@ -114,7 +117,7 @@ $sql = "SELECT * FROM area_atuacao WHERE publicado = '1'";
 									<option value='2'>Pessoa Física e Júridica</option>
 								</select>
 								<br><br>
-								<input type='submit' name='atualizar' class='btn btn-theme btn-block' value='Savar'>
+								<input type='submit' name='atualizar' class='btn btn-theme btn-block' value='Salvar'>
 					      	</form>
 					      </div>
 					      <div class='modal-footer'>

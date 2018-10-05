@@ -16,8 +16,8 @@ if(isset($_POST['alteraLiquidacao'])){
     
     if(mysqli_query($con,$sql)){
         $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
-        echo "<script>window.location = '?perfil=liquidacao&idDeposito=$idDeposito';</script>";
         gravarLog($sql);
+        echo "<script>window.location = '?perfil=liquidacao&idDeposito=$idDeposito';</script>";
     }else{
         $mensagem = "<font color='#FF0000'><strong>Erro ao atualizar! Tente novamente.</strong></font>";
     }

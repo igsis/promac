@@ -19,6 +19,7 @@ if($alterar == 1 || $alterar == 0)
     }
     if($queryInsert)
 		{
+		    gravarLog($sql_historico);
 			$mensagem = "Projeto enviado com sucesso! Aguarde que você será redirecionado para a página de informações do projeto";
 			 echo "<script type=\"text/javascript\">
 				  window.setTimeout(\"location.href='?perfil=projeto_visualizacao';\", 4000);

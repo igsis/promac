@@ -15,8 +15,8 @@ if(isset($_POST['alteraEmpenho'])){
     
     if(mysqli_query($con,$sql)){
         $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
-        echo "<script>window.location = '?perfil=empenho&idReserva=$idReserva';</script>";
         gravarLog($sql);
+        echo "<script>window.location = '?perfil=empenho&idReserva=$idReserva';</script>";
     }else{
         $mensagem = "<font color='#FF0000'><strong>Erro ao atualizar! Tente novamente.</strong></font>";
     }

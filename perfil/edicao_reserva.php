@@ -15,8 +15,8 @@ if(isset($_POST['alteraReserva'])){
     
     if(mysqli_query($con,$sql)){
         $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
-        echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
         gravarLog($sql);
+        echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
     }else{
         $mensagem = "<font color='#FF0000'><strong>Erro ao atualizar! Tente novamente.</strong></font>";
     }

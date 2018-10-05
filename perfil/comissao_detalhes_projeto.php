@@ -167,8 +167,9 @@ if(isset($_POST['finalizaComissao']))
         $sql_historico = "INSERT INTO historico_status (idProjeto, idStatus, data) VALUES ('$idProjeto', '$idStatus', '$dateNow')";
         $query_historico = mysqli_query($con, $sql_historico);
         $mensagem = "<font color='#01DF3A'><strong>Enviado à SMC com sucesso!</strong></font>";
+        gravarLog($sql_finalizaComissao);
+        gravarLog($sql_historico);
         echo "<meta HTTP-EQUIV='refresh' CONTENT='1.0;URL=?perfil=comissao_index'>";
-		gravarLog($sql_finalizaComissao);
 	}
 	else
 	{
@@ -219,6 +220,7 @@ if(isset($_POST["enviar"]))
                             $query_insere_data = mysqli_query($con,$sql_insere_data);
 						    $mensagem = "<font color='#01DF3A'><strong>Arquivo recebido com sucesso!</strong></font>";
 							gravarLog($sql_insere_arquivo);
+							gravarLog($sql_insere_data);
 						}
 						else
 						{
@@ -273,6 +275,7 @@ if(isset($_POST['atualizaResponsavel']))
 	if($query_atualiza_comissao)
 	{
 		$mensagem = "<span style=\"color: #01DF3A; \">Parecerista responsável pelo projeto atualizado!</span>";
+		gravarLog($sql_atualiza_comissao);
 	}
 	else
 	{
@@ -280,6 +283,7 @@ if(isset($_POST['atualizaResponsavel']))
 	}
 }
 
+//TODO: Verificar se este bloco está sendo utilizado
 if(isset($_POST['editarAnexoProjeto']))
 {
     $status = $_POST['status'];
@@ -291,8 +295,9 @@ if(isset($_POST['editarAnexoProjeto']))
     $envia = mysqli_query($con, $query);
     if($envia)
     {
-        echo "<script>window.location.href = 'index_pf.php?perfil=comissao_detalhes_projeto&idFF=".$idProjeto."';</script>";
         $mensagem = "<font color='#01DF3A'><strong>Os arquivos foram atualizados com sucesso!</strong></font>";
+        gravarLog($query);
+        echo "<script>window.location.href = 'index_pf.php?perfil=comissao_detalhes_projeto&idFF=".$idProjeto."';</script>";
     }
     else
     {
