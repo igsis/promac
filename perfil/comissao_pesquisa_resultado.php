@@ -149,7 +149,7 @@ else
         $filtro_idStatus = "";
     }
 
-	if($idComissao !=0)
+	if($idComissao != NULL)
 	{
 		$filtro_idComissao = "AND idComissao = '$idComissao'";
 	}

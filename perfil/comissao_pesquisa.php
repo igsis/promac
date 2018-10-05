@@ -59,7 +59,8 @@
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><label>Parecerista da Comissão</label>
 							<select class="form-control" name="idComissao" >
-								<option value="0">Selecione...</option>
+								<option value="">Selecione...</option>
+								<option value="0">*SEM PARECERISTA ATRIBUÍDO*</option>
 								<?php echo geraUsuarioComissao("") ?>
 							</select>
 						</div>
