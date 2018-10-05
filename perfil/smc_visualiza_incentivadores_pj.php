@@ -270,20 +270,26 @@ $pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
 		</div>
 	</div>
 
-
+	<div class="container">
 		<form method="POST" action="?perfil=smc_visualiza_incentivadores_pj" class="form-horizontal" role="form">
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-8"><label>Notas</label><br/>
-                    <textarea name="nota" class="form-control" rows="10" placeholder="Insira neste campo informações de notificações sobre documentações para o incentivador."></textarea>
-                </div>
-            </div>
+			<div class="row">
+				<div class="col-md-offset-1 col-md-10">
+					<div class="form-group">
+						<div class=""><label>Notas</label><br/>
+							<textarea name="nota" class="form-control" rows="10" placeholder="Insira neste campo informações de notificações sobre documentações para o incentivador."></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
 
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-8">
-                    <input type='hidden' name='LIBPF' value='<?php echo $pj['idPj'] ?>' />
-                    <input type="submit" name="gravarNota" class="btn btn-theme btn-md btn-block" value="Gravar">
-                </div>
-            </div>
+			<div class="row">
+				<div class="form-group">
+					<div class="col-md-offset-1 col-md-10">
+						<input type='hidden' name='LIBPF' value='<?php echo $pj['idPj'] ?>' />
+						<input type="submit" name="gravarNota" class="btn btn-theme btn-md btn-block" value="Gravar">
+					</div>
+				</div>
+			</div>
         </form>
 
         <ul class='list-group'>
@@ -305,6 +311,7 @@ $pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
                 }
             ?>
         </ul>
+	</div>
 <!-- Botão para Prosseguir -->
 	<?php
 	if($pj['liberado'] == 1)

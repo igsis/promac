@@ -286,20 +286,24 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 //	    if (!(in_array(0,$statusArray)))
 //        {
 ?>
-
+	<div class="container">
 		<form method="POST" action="?perfil=smc_visualiza_perfil_pf" class="form-horizontal" role="form">
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-8"><label>Notas</label><br/>
-                    <textarea name="nota" class="form-control" rows="10" placeholder="Insira neste campo informações de notificações sobre documentações para o usuário."></textarea>
-                </div>
-            </div>
+			<div class="row">
+				<div class="form-group">
+					<div class="col-md-offset-1 col-md-10"><label>Notas</label><br/>
+						<textarea name="nota" class="form-control" rows="10" placeholder="Insira neste campo informações de notificações sobre documentações para o usuário."></textarea>
+					</div>
+				</div>
+			</div>
 
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-8">
-                    <input type='hidden' name='LIBPF' value='<?php echo $pf['idPf'] ?>' />
-                    <input type="submit" name="gravarNota" class="btn btn-theme btn-md btn-block" value="Gravar">
-                </div>
-            </div>
+			<div class="row">
+				<div class="form-group">
+					<div class="col-md-offset-1 col-md-10">
+						<input type='hidden' name='LIBPF' value='<?php echo $pf['idPf'] ?>' />
+						<input type="submit" name="gravarNota" class="btn btn-theme btn-md btn-block" value="Gravar">
+					</div>
+				</div>
+			</div>
         </form>
 
         <ul class='list-group'>
@@ -322,21 +326,22 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
             ?>
         </ul>
 
-            <div class="form-group">
-                <div class='col-md-offset-4 col-md-2'>
-                    <!-- Button para ativar modal -->
-                    <form class='form-horizontal' role='form' action='?perfil=smc_visualiza_perfil_pf' method='post'>
-                        <input type='hidden' name='LIBPF' value='<?php echo $pf['idPf'] ?>' />
-                        <input type='submit' name='negar' value='Não Aprovar' class='btn btn-theme btn-lg btn-block'>
-                    </form>
-                </div>
-                <div class='col-md-2'>
-                    <form class='form-horizontal' role='form' action='?perfil=smc_visualiza_perfil_pf' method='post'>
-                        <input type='hidden' name='LIBPF' value='<?php echo $pf['idPf'] ?>' />
-                        <input type='submit' name='liberar' value='Aprovar' class='btn btn-theme btn-lg btn-block'>
-                    </form>
-                </div>
-            </div>
+		<div class="form-group">
+			<div class='col-md-offset-4 col-md-2'>
+				<!-- Button para ativar modal -->
+				<form class='form-horizontal' role='form' action='?perfil=smc_visualiza_perfil_pf' method='post'>
+					<input type='hidden' name='LIBPF' value='<?php echo $pf['idPf'] ?>' />
+					<input type='submit' name='negar' value='Não Aprovar' class='btn btn-theme btn-lg btn-block'>
+				</form>
+			</div>
+			<div class='col-md-2'>
+				<form class='form-horizontal' role='form' action='?perfil=smc_visualiza_perfil_pf' method='post'>
+					<input type='hidden' name='LIBPF' value='<?php echo $pf['idPf'] ?>' />
+					<input type='submit' name='liberar' value='Aprovar' class='btn btn-theme btn-lg btn-block'>
+				</form>
+			</div>
+		</div>
+	</div>
 <?php
 //        }
 //        else
