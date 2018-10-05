@@ -446,25 +446,6 @@ if(isset($_POST['cancelarProjeto'])){
     }
 }
 
-if(isset($_POST['cancelarDocumento'])){
-    $idProjeto = $_POST['idProjeto'];
-    $observacao= $_POST['observacao'];
-    $idUser = $_SESSION['idUser'];
-    $dateNow = date('Y-m-d H:i:s');
-
-    $sql_cancelar = "UPDATE projeto SET publicado = 0 WHERE idProjeto = '$idProjeto'";
-    if(mysqli_query($con,$sql_cancelar)){
-        $sql_historico_cancelamento = "INSERT INTO historico_cancelamento (idProjeto, observacao, idUsuario, data, acao) VALUES ('$idProjeto', '$observacao','$idUser','$dateNow',1)";
-        if(mysqli_query($con,$sql_historico_cancelamento)){
-            $mensagem = "<span style=\"color: #01DF3A; \"><strong>Projeto cancelado com sucesso!<br/>Aguarde....</strong></span>";
-            gravarLog($sql_historico_cancelamento);
-            echo "<meta HTTP-EQUIV='refresh' CONTENT='0.5;URL=?perfil=smc_index'>";
-        }
-        else{
-            $mensagem = "<span style=\"color: #FF0000; \"><strong>Erro ao cancelar projeto. Tente novamente!</strong></span>";
-        }
-    }
-}
 
 $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 $prazos = recuperaDados("prazos_projeto","idProjeto",$idProjeto);

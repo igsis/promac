@@ -166,22 +166,14 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-1 col-md-10">
-                <div class="table-responsive list_info">
-                    <h6>Solicitações do proponente</h6>
-                    <?php listaAnexosProjetoSMC($idProjeto, 3, "smc_detalhes_projeto"); ?>
+       <!-- Upload do Arquivo -->
+           <div class="form-group">
+                <div class="col-md-offset-1 col-md-10">
+                    <?php uploadArquivo($idProjeto,9, "smc_detalhes_projeto&idFF=$idProjeto", $idListaDocumento, 9); ?>
                 </div>
-            </div>
-        </div>
+           </div>         
 
-         <!-- Upload do Arquivo -->
-        <div class="form-group">
-            <div class="col-md-offset-1 col-md-10">
-                <?php uploadArquivo($idProjeto,9, "smc_detalhes_projeto&idFF=$idProjeto", $idListaDocumento, 9); ?>
-            </div>
-        </div>
-        <!-- Fim Upload do Arquivo -->
+        
 
         <!-- Confirmação de Exclusão -->
         <div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel" aria-hidden="true">
