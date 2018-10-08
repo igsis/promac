@@ -13,6 +13,8 @@ header("Content-Disposition: attachment;Filename=ata-reuniao-".$_POST['data'].".
 setlocale(LC_TIME, 'portuguese');
 date_default_timezone_set('America/Sao_Paulo');
 
+$status_aprovado = array(5, 21, 26, 16, 11);
+$status_reprovado = array(6, 22, 27, 17);
 
 ?>
 
@@ -69,7 +71,7 @@ date_default_timezone_set('America/Sao_Paulo');
     <?php
     $sql_area = "SELECT DISTINCT idAreaAtuacao, areaAtuacao FROM `projeto`
 					INNER JOIN area_atuacao ON idAreaAtuacao = idArea 
-					WHERE `dataReuniao` = '$data' AND idStatus = 5"; //status aprovado
+					WHERE `dataReuniao` = '$data' AND idStatus = 6"; //status reprovado
     $query_area = mysqli_query($con,$sql_area);
     while($campo = mysqli_fetch_array($query_area))
     {

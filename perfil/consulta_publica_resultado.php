@@ -10,7 +10,7 @@ $protocolo = $_POST['protocolo'];
 $idAreaAtuacao = $_POST['idAreaAtuacao'];
 $valorAprovado = $_POST['valorAprovado'];
 
-$status_aprovado = "AND idStatus IN (5, 21, 26, 16, 11)";
+$status_aprovado = "AND idStatus IN (5, 11, 14, 15, 16, 18, 21, 26, 34)";
 
 // Inicio Pessoa Física
 if($nome != '' || $cpf != '')
