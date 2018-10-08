@@ -6,6 +6,11 @@ $idStatus = 1;
 $idPf = $_SESSION['idUser'];
 $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 
+if (($pf['idNivelAcesso'] == 3) || ($pf['idNivelAcesso'] == 4))
+{
+    echo "<script>window.location = '?perfil=comissao_index';</script>";
+}
+
 
 $situacaoAtual = recuperaDados("statusprojeto", "idStatus", $idStatus);
 

@@ -23,8 +23,8 @@ if(isset($_POST['inserirDeposito'])){
     
     if(mysqli_query($con,$sql)){
         $mensagem = "<font color='#01DF3A'><strong>Liquidação cadastrada com sucesso!</strong></font>";
-        echo "<script>window.location = '?perfil=deposito&idReserva=$idReserva&idProjeto=$idProjeto';</script>";
         gravarLog($sql);
+        echo "<script>window.location = '?perfil=deposito&idReserva=$idReserva&idProjeto=$idProjeto';</script>";
     }else{
         $mensagem = "<font color='#FF0000'><strong>Erro ao cadastrar!
         </strong></font>";

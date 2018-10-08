@@ -3,6 +3,11 @@ $con = bancoMysqli();
 
 $idPf = $_SESSION['idUser'];
 $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
+
+if ($pf['idNivelAcesso'] == 2)
+{
+    echo "<script>window.location = '?perfil=smc_index';</script>";
+}
 ?>
     <section id="list_items" class="home-section bg-white">
         <div class="container">
