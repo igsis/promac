@@ -6,7 +6,7 @@
 					<strong>
 					| <a href="?secao=perfil">Início</a>
 					| <a href="?perfil=senha">Trocar minha senha</a>
-					| <a href="../manual" target="_blank">Ajuda</a>
+                    | <a href="../pdf/manual_utilizacao.pdf" target="_blank">Ajuda</a>
 					| <a href="../include/logoff.php">Sair</a> |<br/>
 					</strong>
 				</li>
