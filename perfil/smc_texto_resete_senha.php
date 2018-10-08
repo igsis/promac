@@ -5,12 +5,30 @@ $id = $_POST['id'];
 $tipoPessoa = $_POST['tipoPessoa'];
 $senha = MD5('promac2018');
 
-if($tipoPessoa == 1)
+switch ($tipoPessoa)
 {
-	$sql = "UPDATE pessoa_fisica SET senha = '$senha' WHERE idPf = '$id'";
+    case 1:
+        $tabela = "pessoa_fisica";
+        break;
+
+    case 2:
+        $tabela = "pessoa_juridica";
+        break;
+
+    case 4:
+        $tabela = "incentivador_pessoa_fisica";
+        break;
+
+    case 5:
+        $tabela = "incentivador_pessoa_juridica";
+}
+
+if(($tipoPessoa == 1) || ($tipoPessoa == 4))
+{
+	$sql = "UPDATE `$tabela` SET senha = '$senha' WHERE `idPf` = '$id'";
 	if(mysqli_query($con,$sql))
 	{
-		$pf = recuperaDados("pessoa_fisica","idPf",$id);
+		$pf = recuperaDados($tabela,"idPf",$id);
 		$mensagem = "
 			<h5>Texto para o envio de email</h5>
 			<p align='justify'><strong>Endereço de e-mail para resposta:</strong> ".$pf['email']."</p>
@@ -35,10 +53,10 @@ if($tipoPessoa == 1)
 }
 else
 {
-	$sql = "UPDATE pessoa_juridica SET senha = '$senha' WHERE idPj = '$id'";
+	$sql = "UPDATE `$tabela` SET senha = '$senha' WHERE `idPj` = '$id'";
 	if(mysqli_query($con,$sql))
 	{
-		$pj = recuperaDados("pessoa_juridica","idPj",$id);
+		$pj = recuperaDados($tabela,"idPj",$id);
 		$mensagem = "
 			<h5>Texto para o envio de email</h5>
 			<p align='justify'><strong>Endereço de e-mail para resposta:</strong> ".$pj['email']."</p>
