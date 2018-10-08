@@ -1158,10 +1158,9 @@ function listaArquivosPessoaSMC($idPessoa,$tipoPessoa,$pagina)
 function listaParecerSMC($idPessoa,$tipoPessoa,$pagina)
 {
     $con = bancoMysqli();
-    $sql = "SELECT documento, arquivo, arq.idUploadArquivo AS  idArquivo, disp.idUploadArquivo, idStatusDocumento,observacoes,disp.data AS dataDisponivel
+    $sql = "SELECT documento, arquivo, arq.idUploadArquivo AS  idArquivo, idStatusDocumento,observacoes
 			FROM lista_documento as list
 			INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
-			LEFT JOIN disponibilizar_documento AS disp ON arq.idUploadArquivo = disp.idUploadArquivo
 			WHERE arq.idPessoa = '$idPessoa'
 			AND arq.idTipo = '$tipoPessoa'
 			AND arq.publicado = '1'";
@@ -1178,7 +1177,6 @@ function listaParecerSMC($idPessoa,$tipoPessoa,$pagina)
 					<td>Nome do arquivo</td>
 					<td>Status</td>
 					<td>Observação</td>
-					<td>Disponibilizar em</td>
 					<td width='15%'></td>
 				</tr>
 			</thead>
@@ -1198,8 +1196,6 @@ function listaParecerSMC($idPessoa,$tipoPessoa,$pagina)
 							</td>";
             echo "<td class='list_description'>
 					<input type='text' name='observacoes' maxlength='100' id='observ' value='".$arquivo['observacoes']."'/></td>";
-            echo "<td class='list_description'>
-					<input type='date' name='dataDisponivel' value='".$arquivo['dataDisponivel']."'/></td>";
             echo "<td class='list_description'>	
 					<input type='hidden' name='idPessoa' value='".$idPessoa."' />
 					<input type='hidden' name='idArquivo' value='".$arquivo['idArquivo']."' />
@@ -1825,13 +1821,11 @@ function exibirParecerProponente($idProjeto)
     $con = bancoMysqli();
     $dateNow = date('Y-m-d');
     $sql = "SELECT * FROM lista_documento as list
-            INNER JOIN upload_arquivo AS arq ON arq.idListaDocumento = list.idListaDocumento
-            LEFT JOIN disponibilizar_documento AS disp ON arq.idUploadArquivo = disp.idUploadArquivo	  
+            INNER JOIN upload_arquivo AS arq ON arq.idListaDocumento = list.idListaDocumento	  
             WHERE arq.idPessoa = '$idProjeto'
             AND arq.idTipo = '9'
             AND arq.publicado = '1'
-            AND arq.idStatusDocumento = '1'
-            AND disp.data <= '$dateNow'";
+            AND arq.idStatusDocumento = '1'";
     $query = mysqli_query($con,$sql);
     $num = mysqli_num_rows($query);
     if($num > 0){
