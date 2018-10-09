@@ -112,10 +112,6 @@ if(isset($_POST["enviar"]))
 				{
 					$idStatus = $_POST['idStatus'];
 				}
-				else
-				{
-				$idStatus = 0;
-				}
 				if(in_array($ext, $allowedExts)) //Pergunta se a extensão do arquivo, está presente no array das extensões permitidas
 				{
 					if(move_uploaded_file($nome_temporario, $dir.$new_name))
