@@ -209,7 +209,9 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 <section id="list_items" class="home-section bg-white">
 	<div class="container"><?php include 'includes/menu_smc.php'; ?>
 		<div class="form-group">
-			<h4>Pesquisar Projetos</h4>
+			<h4>Pesquisar Projetos <?= ($_POST['idComissao'] != NULL) ? "Vinculados a(o) Parecerista" : "" ?><br>
+                <small><?= ($_POST['idComissao'] != NULL) ? "Parecerista: ".$comissao['nome'] : "" ?></small>
+            </h4>
 			<h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
 			<h5><a href="?perfil=smc_pesquisa_geral">Fazer outra busca</a></h5>
 		</div>
@@ -220,7 +222,7 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 						<thead>
 							<tr class='list_menu'>
 								<td>Protocolo</td>
-								<td>Nome Projeto</td>
+								<td>Nome do Projeto</td>
 								<td>Proponente</td>
 								<td>Documento</td>
 								<td>Área de Atuação</td>
@@ -255,5 +257,17 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 				</div>
 			</div>
 		</div>
+
+        <?php
+        if (($_POST['idComissao'] != NULL) || ($_POST['idComissao'] != 0))
+        {
+        ?>
+            <h4>Histórico de Análise do(a) Parecerista <br>
+                <small><?=$comissao['nome']?></small>
+            </h4>
+        <?php
+            include "includes/pesquisa_resultado_parecerista.php";
+        }
+        ?>
 	</div>
 </section>

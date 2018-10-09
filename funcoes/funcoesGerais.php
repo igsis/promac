@@ -436,7 +436,7 @@ function geraAreaAtuacao($tabela,$tipo,$select)
 	}
 }
 
-function geraUsuarioComissao($select)
+function geraUsuarioComissao($select = "")
 {
 	//gera os options de um select
 	$sql = "SELECT * FROM `pessoa_fisica` WHERE `idNivelAcesso` IN (3,4)";

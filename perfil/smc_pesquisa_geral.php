@@ -70,7 +70,7 @@
 							<select class="form-control" name="idComissao" >
 								<option value="">Selecione...</option>
 								<option value="0">*SEM PARECERISTA ATRIBUÍDO*</option>
-								<?php echo geraUsuarioComissao("") ?>
+								<?php geraUsuarioComissao() ?>
 							</select>
 						</div>
 					</div>
