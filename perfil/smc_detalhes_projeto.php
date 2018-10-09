@@ -104,13 +104,6 @@ if(isset($_POST['gravarAdm']))
             {
                 $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
 
-                if (in_array($idStatus, $statusProjetoProponente))
-                {
-                    $sqlParecerista = "UPDATE projeto SET idComissao = '0' AND idStatusParecerista = '0' AND dataReuniao = '0000-00-00' WHERE idProjeto = '$idP'";
-                    mysqli_query($con, $sqlParecerista);
-                    gravarLog($sqlParecerista);
-                }
-
                 gravarLog($sql_historico_reuniao);
                 echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
             }
@@ -125,13 +118,6 @@ if(isset($_POST['gravarAdm']))
             if(mysqli_query($con,$sql_historico_publicacao))
             {
                 $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
-
-                if (in_array($idStatus, $statusProjetoProponente))
-                {
-                    $sqlParecerista = "UPDATE projeto SET idComissao = '0' AND idStatusParecerista = '0' AND dataReuniao = '0000-00-00' WHERE idProjeto = '$idP'";
-                    mysqli_query($con, $sqlParecerista);
-                    gravarLog($sqlParecerista);
-                }
 
                 gravarLog($sql_historico_publicacao);
                 echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
