@@ -24,7 +24,7 @@ $dias = floor($diferenca / (60 * 60 * 24));//Calcula a diferença em dias
 
 $status_aprovado = array(5, 21, 26, 16, 11);
 $status_reprovado = array(6, 22, 27, 17);
-$status_visivel = array(2, 12, 13, 23, 14, 18);
+$status_visivel = array(2, 12, 13, 23, 14);
 $status_analise = array(3,7,10,19,20,24,25,34,15);
 ?>
 <section id="list_items" class="home-section bg-white">
@@ -143,7 +143,7 @@ $status_analise = array(3,7,10,19,20,24,25,34,15);
 
                             <!-- Botão para anexar complemento de informações -->
                             <?php
-                            if(($idStatus == 12) || ($idStatus == 13) || ($idStatus == 18)) {
+                            if(($idStatus == 12) || ($idStatus == 13)) {
                             ?>
                                     <div class="form-group">
                                         <div class="col-md-offset-4 col-md-6">

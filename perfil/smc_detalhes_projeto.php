@@ -71,7 +71,7 @@ if(isset($_POST['gravarAdm']))
     $valorAprovado = dinheiroDeBr($_POST['valorAprovado']);
     $idRenunciaFiscal = $_POST['idRenunciaFiscal'];
     $statusParecerista = $_POST['idStatusParecerista'];
-    $statusProjetoProponente = array(5, 6, 12, 21, 22, 26, 27, 28, 32, 33, 16, 17, 18);
+    $statusProjetoProponente = array(5, 6, 12, 21, 22, 26, 27, 28, 32, 33, 16, 17);
     if($_POST['dataReuniao'] == 0000-00-00)
     {
         $dataReuniao = '';
