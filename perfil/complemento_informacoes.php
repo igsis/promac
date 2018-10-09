@@ -176,7 +176,7 @@ if(isset($_POST['apagar']))
 	function alerta()
 	{
     swal({   title: "Atenção!", 
-	text: "Certifique-se que sua documentação está correta antes do envio. Após o envio não será realizado nenhuma alteração.",
+	text: "Certifique-se que sua documentação está correta antes do envio.",
 	timer: 10000,   
 	confirmButtonColor:	"#5b6533",
 	showConfirmButton: true });}
