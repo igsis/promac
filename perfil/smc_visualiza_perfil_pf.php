@@ -183,24 +183,27 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 	}
 }
 
-if(isset($_POST['gravarNota']))
+if(isset($_POST['nota']))
 {
-	$id = $_POST['LIBPF'];
-    if ($id != 0)
-    {
-        $dateNow = date('Y:m:d h:i:s');
-        $nota = addslashes($_POST['nota']);
-        $sql_nota = "INSERT INTO notas (idPessoa, idTipo, data, nota, interna) VALUES ('$id', '1', '$dateNow', '$nota', '1')";
-        if(mysqli_query($con,$sql_nota))
-        {
-            $mensagem = "<font color='#01DF3A'><strong>Nota inserida com sucesso!</strong></font>";
-            gravarLog($sql_nota);
-        }
-        else
-        {
-            $mensagem = "<font color='#FF0000'><strong>Erro ao inserir nota! Tente novamente.</strong></font>";
-        }
-    }
+     if($_POST['nota'] != "")
+     {
+         $id = $_POST['LIBPF'];
+         if ($id != 0)
+         {
+             $dateNow = date('Y:m:d h:i:s');
+             $nota = addslashes($_POST['nota']);
+             $sql_nota = "INSERT INTO notas (idPessoa, idTipo, data, nota, interna) VALUES ('$id', '1', '$dateNow', '$nota', '1')";
+             if(mysqli_query($con,$sql_nota))
+             {
+                 $mensagem .= "<br><font color='#01DF3A'><strong>Nota inserida com sucesso!</strong></font>";
+                 gravarLog($sql_nota);
+             }
+             else
+             {
+                 $mensagem .= "<br><font color='#FF0000'><strong>Erro ao inserir nota! Tente novamente.</strong></font>";
+             }
+         }
+     }
 }
 
 $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
@@ -266,7 +269,7 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 
 <!-- Botão para Prosseguir -->
 	<?php
-	if($pf['liberado'] == 1)
+	if($pf['liberado'] == 1)//proponente solicitando liberação
     {
         /**
          * Bloco comentado abaixo exibe o botão para aprovar somente após a verificação de todos os arquivos
@@ -287,60 +290,50 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 //        {
 ?>
 	<div class="container">
-		<form method="POST" action="?perfil=smc_visualiza_perfil_pf" class="form-horizontal" role="form">
-			<div class="row">
-				<div class="form-group">
-					<div class="col-md-offset-1 col-md-10"><label>Notas</label><br/>
-						<textarea name="nota" class="form-control" rows="10" placeholder="Insira neste campo informações de notificações sobre documentações para o usuário."></textarea>
-					</div>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="form-group">
-					<div class="col-md-offset-1 col-md-10">
-						<input type='hidden' name='LIBPF' value='<?php echo $pf['idPf'] ?>' />
-						<input type="submit" name="gravarNota" class="btn btn-theme btn-md btn-block" value="Gravar">
-					</div>
-				</div>
-			</div>
-        </form>
-
-        <ul class='list-group'>
-            <li class='list-group-item list-group-item-success'>Notas</li>
-            <?php
-                $sql = "SELECT * FROM notas WHERE idPessoa = '$idPf' AND idTipo = '1' AND interna = '1'";
-                $query = mysqli_query($con,$sql);
-                $num = mysqli_num_rows($query);
-                if($num > 0)
-                {
-                    while($campo = mysqli_fetch_array($query))
+        <div class='col-md-offset-2 col-md-8'>
+            <div class="form-group">
+                <ul class='list-group'>
+                    <li class='list-group-item list-group-item-success'>Notas</li>
+                    <?php
+                    $sql = "SELECT * FROM notas WHERE idPessoa = '$idPf' AND idTipo = '1' AND interna = '1'";
+                    $query = mysqli_query($con,$sql);
+                    $num = mysqli_num_rows($query);
+                    if($num > 0)
                     {
-                        echo "<li class='list-group-item' align='left'><strong>".exibirDataHoraBr($campo['data'])."</strong><br/>".$campo['nota']."</li>";
+                        while($campo = mysqli_fetch_array($query))
+                        {
+                            echo "<li class='list-group-item' align='left'><strong>".exibirDataHoraBr($campo['data'])."</strong><br/>".$campo['nota']."</li>";
+                        }
                     }
-                }
-                else
-                {
-                    echo "<li class='list-group-item'>Não há notas disponíveis.</li>";
-                }
-            ?>
-        </ul>
-		<div class="form-group">
-			<div class='col-md-offset-4 col-md-2'>
-				<!-- Button para ativar modal -->
-				<form class='form-horizontal' role='form' action='?perfil=smc_visualiza_perfil_pf' method='post'>
-					<input type='hidden' name='LIBPF' value='<?php echo $pf['idPf'] ?>' />
-					<input type='submit' name='negar' value='Não Aprovar' class='btn btn-theme btn-lg btn-block'>
-				</form>
+                    else
+                    {
+                        echo "<li class='list-group-item'>Não há notas disponíveis.</li>";
+                    }
+                    ?>
+                </ul>
+            </div>
+        </div>
+        <form method="POST" action="?perfil=smc_visualiza_perfil_pf" class="form-horizontal" role="form">
+			<div class="row">
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-8"><label>Notas</label><br/>
+                        <input type="text" class="form-control" name="nota">
+					</div>
+				</div>
 			</div>
-			<div class='col-md-2'>
-				<form class='form-horizontal' role='form' action='?perfil=smc_visualiza_perfil_pf' method='post'>
-					<input type='hidden' name='LIBPF' value='<?php echo $pf['idPf'] ?>' />
-					<input type='submit' name='liberar' value='Aprovar' class='btn btn-theme btn-lg btn-block'>
-				</form>
-			</div>
-		</div>
-	</div>
+            <div class="form-group">
+                <div class='col-md-offset-4 col-md-2'>
+                    <!-- Button para ativar modal -->
+                    <input type='hidden' name='LIBPF' value='<?php echo $pf['idPf'] ?>' />
+                    <input type='submit' name='negar' value='Não Aprovar' class='btn btn-theme btn-lg btn-block'>
+                </div>
+                <div class='col-md-2'>
+                    <input type='hidden' name='LIBPF' value='<?php echo $pf['idPf'] ?>' />
+                    <input type='submit' name='liberar' value='Aprovar' class='btn btn-theme btn-lg btn-block'>
+                </div>
+            </div>
+        </form>
+    </div>
 <?php
 //        }
 //        else
@@ -357,30 +350,77 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 <?php
 //        }
 	}
-	if($pf['liberado'] == 3)
+	if($pf['liberado'] == 3)//proponente liberado
 	{
 	?>
-		<div class="form-group">
-			<div class='col-md-offset-2 col-md-8'>
-				<form class='form-horizontal' role='form' action='?perfil=smc_visualiza_perfil_pf' method='post'>
-					<input type='hidden' name='LIBPF' value='<?php echo $pf['idPf'] ?>' />
-					<input type='submit' name='desbloquear' value='Desbloquear dados do proponente para edição' class='btn btn-theme btn-lg btn-block'>
-				</form>
-			</div>
-		</div>
+        <div class="container">
+            <div class='col-md-offset-2 col-md-8'>
+                <ul class='list-group'>
+                    <li class='list-group-item list-group-item-success'>Notas</li>
+                    <?php
+                    $sql = "SELECT * FROM notas WHERE idPessoa = '$idPf' AND idTipo = '1' AND interna = '1'";
+                    $query = mysqli_query($con,$sql);
+                    $num = mysqli_num_rows($query);
+                    if($num > 0)
+                    {
+                        while($campo = mysqli_fetch_array($query))
+                        {
+                            echo "<li class='list-group-item' align='left'><strong>".exibirDataHoraBr($campo['data'])."</strong><br/>".$campo['nota']."</li>";
+                        }
+                    }
+                    else
+                    {
+                        echo "<li class='list-group-item'>Não há notas disponíveis.</li>";
+                    }
+                    ?>
+                </ul>
+            </div>
+            <div class="form-group">
+                <div class='col-md-offset-2 col-md-8'>
+                    <form class='form-horizontal' role='form' action='?perfil=smc_visualiza_perfil_pf' method='post'>
+                        <input type='hidden' name='LIBPF' value='<?php echo $pf['idPf'] ?>' />
+                        <input type='submit' name='desbloquear' value='Desbloquear dados do proponente para edição' class='btn btn-theme btn-lg btn-block'>
+                    </form>
+                </div>
+            </div>
+        </div>
 	<?php
 	}
-	if(($pf['liberado'] == 2) || ($pf['liberado'] == 4))
+	if(($pf['liberado'] == 2) || ($pf['liberado'] == 4)) //proponente reprovado
 	{
 	?>
-		<div class="form-group">
-			<h5><font color='#00FF00'><strong>Proponente habilitado para trocar informações cadastrais.</strong></font><br> Aguardando reenvio da inscrição.</h5>
-		</div>
+        <div class="container">
+            <div class='col-md-offset-2 col-md-8'>
+                <ul class='list-group'>
+                    <li class='list-group-item list-group-item-success'>Notas</li>
+                    <?php
+                    $sql = "SELECT * FROM notas WHERE idPessoa = '$idPf' AND idTipo = '1' AND interna = '1'";
+                    $query = mysqli_query($con,$sql);
+                    $num = mysqli_num_rows($query);
+                    if($num > 0)
+                    {
+                        while($campo = mysqli_fetch_array($query))
+                        {
+                            echo "<li class='list-group-item' align='left'><strong>".exibirDataHoraBr($campo['data'])."</strong><br/>".$campo['nota']."</li>";
+                        }
+                    }
+                    else
+                    {
+                        echo "<li class='list-group-item'>Não há notas disponíveis.</li>";
+                    }
+                    ?>
+                </ul>
+            </div>
+            <div class='col-md-offset-2 col-md-8'>
+                <h5><font color='#00FF00'><strong>Proponente habilitado para trocar informações cadastrais.</strong></font><br> Aguardando reenvio da inscrição.</h5>
+            </div>
+        </div>
 	<?php
 	}
 	?>
-
-	<div class="col-md-offset-2 col-md-8">
-		<a href="../include/arquivos_pessoa.php?idPessoa=<?php echo $pf['idPf'] ?>&tipo=<?php echo $tipoPessoa?>" class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos do proponente</a>
-	</div>
+    <div class="container">
+        <div class="col-md-offset-2 col-md-8">
+            <a href="../include/arquivos_pessoa.php?idPessoa=<?php echo $pf['idPf'] ?>&tipo=<?php echo $tipoPessoa?>" class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos do proponente</a>
+        </div>
+    </div>
 </section>
