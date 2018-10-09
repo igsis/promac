@@ -30,7 +30,7 @@ if(isset($_POST['insereFicha']))
 
 			if($res->num_rows >= 1)
 			{
-				$mensagem = "<font color='#FF0000'><strong>Erro, Esse Integrante já está cadastrado!</strong></font>";
+				$mensagem = "<font color='#FF0000'><strong>Esse integrante já foi cadastrado! Por favor informe outro CPF.</strong></font>";
 			}
 			elseif(mysqli_query($con,$sql_insere_nome))
 			{
