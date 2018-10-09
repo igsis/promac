@@ -364,6 +364,13 @@ function diferencaDatas($data_inicial,$data_final)
 	return $dias;
 }
 
+/**
+ * Função grava o IP e ID do usuário junto a query
+ * de inserção ou atualização na tabela "log"
+ * @param string $log <p>
+ * query de inserção ou atualização
+ * </p>
+ */
 function gravarLog($log)
 {
 	//grava na tabela log os inserts e updates
