@@ -315,8 +315,7 @@ foreach ($array_status as $idStatus)
                                         $dataAtual = date_create(date("Y-m-d"));
                                         $dias = date_diff($dataEnvio, $dataAtual);
 
-
-                                        echo "<td><a href='../uploadsdocs/".$complemento['arquivo']."' target='_blank'>".substr($complemento['arquivo'], 15)."</a></td>";
+                                        echo "<td><a href='../uploadsdocs/".$complemento['arquivo']."' target='_blank'>".mb_strimwidth($complemento['arquivo'], 15, 25, "...")."</a></td>";
                                         echo "<td>".$dias->format("%a dias")."</td>";
                                     }
                                     if ($pf['idNivelAcesso'] == 2)
