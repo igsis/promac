@@ -30,6 +30,7 @@ if(isset($_POST['reaprovar']))
 	$sql = "UPDATE pessoa_fisica SET liberado = 3 WHERE idPf = '$idPf'";
 	if(mysqli_query($con,$sql))
 	{
+	    gravarLog($sql);
 		$mensagem = "<font color='#01DF3A'>Cadastro aprovado com sucesso!</font>";
 	}
 	else
@@ -46,7 +47,7 @@ if(isset($_POST['negar']))
 	if($negar)
 	{
 		$mensagem = "<font color='#01DF3A'>Cadastro reprovado com sucesso!</font>";
-        gravarLog($negar);
+        gravarLog($sql);
 
 	}
 	else

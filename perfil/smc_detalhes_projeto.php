@@ -31,8 +31,8 @@ if(isset($_POST['gravarPrazos']))
         if(mysqli_query($con,$sql_insere))
         {
             $mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso! Utilize o menu para avançar.</strong></font>";
-            echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
             gravarLog($sql_insere);
+            echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
         }
         else
         {
@@ -54,8 +54,8 @@ if(isset($_POST['gravarPrazos']))
         if(mysqli_query($con,$sql_edita))
         {
             $mensagem = "<font color='#01DF3A'><strong>Editado com sucesso!</strong></font>";
-            echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
             gravarLog($sql_edita);
+            echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
         }
         else
         {
@@ -95,8 +95,8 @@ if(isset($_POST['gravarAdm']))
     if(mysqli_query($con,$sql_gravarAdm))
     {
         $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
-        echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
         gravarLog($sql_gravarAdm);
+        echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
         if($dataReuniao != '' || $statusParecerista != 0)
         {
             $sql_historico_reuniao = "INSERT INTO historico_reuniao (idProjeto,idStatus,dataReuniao,idStatusParecerista,data,idUsuario) VALUES ('$idP','$idStatus','$dataReuniao','$statusParecerista','$data','$idUsuario')";
@@ -108,10 +108,11 @@ if(isset($_POST['gravarAdm']))
                 {
                     $sqlParecerista = "UPDATE projeto SET idComissao = '0' AND idStatusParecerista = '0' AND dataReuniao = '0000-00-00' WHERE idProjeto = '$idP'";
                     mysqli_query($con, $sqlParecerista);
+                    gravarLog($sqlParecerista);
                 }
 
-                echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
                 gravarLog($sql_historico_reuniao);
+                echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
             }
             else
             {
@@ -129,10 +130,11 @@ if(isset($_POST['gravarAdm']))
                 {
                     $sqlParecerista = "UPDATE projeto SET idComissao = '0' AND idStatusParecerista = '0' AND dataReuniao = '0000-00-00' WHERE idProjeto = '$idP'";
                     mysqli_query($con, $sqlParecerista);
+                    gravarLog($sqlParecerista);
                 }
 
-                echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
                 gravarLog($sql_historico_publicacao);
+                echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
             }
             else
             {
@@ -191,8 +193,8 @@ if(isset($_POST['envioComissao']))
         $sql_historico = "INSERT INTO historico_status (idProjeto, idStatus, data) VALUES ('$idProjeto', '$statusEnvio', '$dateNow')";
         $query_historico = mysqli_query($con, $sql_historico);
         $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
-       // echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idProjeto';</script>";
         gravarLog($sql_historico);
+        gravarLog($sql_envioComissao);
     }
     else
     {
@@ -209,8 +211,9 @@ if(isset($_POST['removerIncentivador'])){
     if(mysqli_query($con, $sql_removeIncentivador))
     {
         $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
-        echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
         gravarLog($sql_gravarFin);
+        gravarLog($sql_removeIncentivador);
+        echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
     }
 
     else
@@ -235,8 +238,8 @@ if(isset($_POST['gravarFin']))
     if(mysqli_query($con,$sql_gravarFin))
     {
         $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
-        echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
         gravarLog($sql_gravarFin);
+        echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
     }
 
     else
@@ -256,8 +259,8 @@ if(isset($_POST['gravarNota']))
         if(mysqli_query($con,$sql_nota))
         {
             $mensagem = "<font color='#01DF3A'><strong>Nota inserida com sucesso!</strong></font>";
-            echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
             gravarLog($sql_nota);
+            echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
         }
         else
         {
@@ -308,8 +311,8 @@ if(isset($_POST['editarReserva'])){
     
     if(mysqli_query($con,$sql)){
         $mensagem = "<font color='#01DF3A'><strong>Reserva cadastrada com sucesso!</strong></font>";
-        echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
         gravarLog($sql);
+        echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
     }else{
         $mensagem = "<font color='#FF0000'><strong>Erro ao cadastrar!
         </strong></font>";
@@ -336,6 +339,7 @@ if(isset($_POST['editarParecer'])){
     if($envia)
     {
         $mensagem = "<span style=\"color: #01DF3A; \"><strong>Os arquivos foram atualizados com sucesso!</strong></span>";
+        gravarLog($query);
     }
     else
     {
@@ -426,6 +430,7 @@ if(isset($_POST['cancelarProjeto'])){
 
     $sql_cancelar = "UPDATE projeto SET publicado = 0 WHERE idProjeto = '$idProjeto'";
     if(mysqli_query($con,$sql_cancelar)){
+        gravarLog($sql_cancelar);
         $sql_historico_cancelamento = "INSERT INTO historico_cancelamento (idProjeto, observacao, idUsuario, data, acao) VALUES ('$idProjeto', '$observacao','$idUser','$dateNow',1)";
        if(mysqli_query($con,$sql_historico_cancelamento)){
            $mensagem = "<span style=\"color: #01DF3A; \"><strong>Projeto cancelado com sucesso!<br/>Aguarde....</strong></span>";
@@ -437,7 +442,6 @@ if(isset($_POST['cancelarProjeto'])){
        }
     }
 }
-
 
 $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 $prazos = recuperaDados("prazos_projeto","idProjeto",$idProjeto);
