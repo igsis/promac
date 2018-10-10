@@ -112,24 +112,12 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 							echo "<td class='list_description'>".$x[$h]['projeto']."</td>";
 							echo "<td class='list_description'>".$x[$h]['statusProjeto']."</td>";
 						}
-						if($x[$h]['liberado'] == 2)
-						{
-							echo "<td class='list_description'>
-								<form method='POST' action='?perfil=smc_reaprova_pf'>
-									<input type='hidden' name='idPf' value='".$x[$h]['idPf']."' />
-									<input type ='submit' class='btn btn-theme btn-block' value='detalhes'>
-								</form>
-							</td>";
-						}
-						else
-						{
-							echo "<td class='list_description'>
-								<form method='POST' action='?perfil=smc_visualiza_perfil_pf'>
-									<input type='hidden' name='liberado' value='".$x[$h]['idPf']."' />
-									<input type ='submit' class='btn btn-theme btn-block' value='detalhes'>
-								</form>
-							</td>";
-						}
+                        echo "<td class='list_description'>
+                            <form method='POST' action='?perfil=smc_visualiza_perfil_pf'>
+                                <input type='hidden' name='liberado' value='".$x[$h]['idPf']."' />
+                                <input type ='submit' class='btn btn-theme btn-block' value='detalhes'>
+                            </form>
+                        </td>";
 						echo "</tr>";
 					}
 					?>
