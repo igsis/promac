@@ -3337,4 +3337,23 @@ function uploadArquivo($idProjeto, $tipoPessoa, $pagina, $idListaDocumento, $idT
 	echo '</div>';
 	/* Fim Upload de arquivo */
 }
+
+function listaNota($idPessoa,$idTipo,$interna)
+{
+    $con = bancoMysqli();
+	$sql = "SELECT * FROM notas WHERE idPessoa = '$idPessoa' AND idTipo = '$idTipo' AND interna = '$interna'";
+    $query = mysqli_query($con,$sql);
+    $num = mysqli_num_rows($query);
+    if($num > 0)
+    {
+        while($campo = mysqli_fetch_array($query))
+        {
+            echo "<li class='list-group-item' align='left'><strong>".exibirDataHoraBr($campo['data'])."</strong><br/>".$campo['nota']."</li>";
+        }
+    }
+    else
+    {
+        echo "<li class='list-group-item'>Não há notas disponíveis.</li>";
+    }
+}
 ?>

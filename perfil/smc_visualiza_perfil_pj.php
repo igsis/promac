@@ -185,22 +185,25 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 	}
 }
 
-if(isset($_POST['gravarNota']))
+if(isset($_POST['nota']))
 {
-	$id = $_POST['LIBPF'];
-    if ($id != 0)
+    if($_POST['nota'] != "")
     {
-        $dateNow = date('Y:m:d h:i:s');
-        $nota = addslashes($_POST['nota']);
-        $sql_nota = "INSERT INTO notas (idPessoa, idTipo, data, nota, interna) VALUES ('$id', '2', '$dateNow', '$nota', '1')";
-        if(mysqli_query($con,$sql_nota))
+        $id = $_POST['LIBPF'];
+        if ($id != 0)
         {
-            $mensagem = "<font color='#01DF3A'><strong>Nota inserida com sucesso!</strong></font>";
-            gravarLog($sql_nota);
-        }
-        else
-        {
-            $mensagem = "<font color='#FF0000'><strong>Erro ao inserir nota! Tente novamente.</strong></font>";
+            $dateNow = date('Y:m:d h:i:s');
+            $nota = addslashes($_POST['nota']);
+            $sql_nota = "INSERT INTO notas (idPessoa, idTipo, data, nota, interna) VALUES ('$id', '2', '$dateNow', '$nota', '1')";
+            if(mysqli_query($con,$sql_nota))
+            {
+                $mensagem .= "<br><font color='#01DF3A'><strong>Nota inserida com sucesso!</strong></font>";
+                gravarLog($sql_nota);
+            }
+            else
+            {
+                $mensagem .= "<br><font color='#FF0000'><strong>Erro ao inserir nota! Tente novamente.</strong></font>";
+            }
         }
     }
 }
@@ -291,58 +294,35 @@ $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 //        {
 ?>
 	<div class="container">
-		<form method="POST" action="?perfil=smc_visualiza_perfil_pj" class="form-horizontal" role="form">
-			<div class="row">
-				<div class="form-group">
-					<div class="col-md-offset-1 col-md-10"><label>Notas</label><br/>
-						<textarea name="nota" class="form-control" rows="10" placeholder="Insira neste campo informações de notificações sobre documentações para o usuário."></textarea>
-					</div>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="form-group">
-					<div class="col-md-offset-1 col-md-10">
-						<input type='hidden' name='LIBPF' value='<?php echo $pj['idPj'] ?>' />
-						<input type="submit" name="gravarNota" class="btn btn-theme btn-md btn-block" value="Gravar">
-					</div>
-				</div>
-			</div>
+        <div class='col-md-offset-2 col-md-8'>
+            <div class="form-group">
+                <ul class='list-group'>
+                    <li class='list-group-item list-group-item-success'>Notas</li>
+                    <?php
+                        listaNota($idPj,2,1)
+                    ?>
+                </ul>
+            </div>
+        </div>
+        <form method="POST" action="?perfil=smc_visualiza_perfil_pj" class="form-horizontal" role="form">
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-8"><label>Notas</label><br/>
+                        <input type="text" class="form-control" name="nota">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class='col-md-offset-4 col-md-2'>
+                    <input type='hidden' name='LIBPF' value='<?php echo $pj['idPj'] ?>' />
+                    <input type='submit' name='negar' value='Não Aprovar' class='btn btn-theme btn-lg btn-block'>
+                </div>
+                <div class='col-md-2'>
+                    <input type='hidden' name='LIBPF' value='<?php echo $pj['idPj'] ?>' />
+                    <input type='submit' name='liberar' value='Aprovar' class='btn btn-theme btn-lg btn-block'>
+                </div>
+            </div>
         </form>
-
-        <ul class='list-group'>
-            <li class='list-group-item list-group-item-success'>Notas</li>
-            <?php
-                $sql = "SELECT * FROM notas WHERE idPessoa = '$idPj' AND idTipo = '2' AND interna = '1'";
-                $query = mysqli_query($con,$sql);
-                $num = mysqli_num_rows($query);
-                if($num > 0)
-                {
-                    while($campo = mysqli_fetch_array($query))
-                    {
-                        echo "<li class='list-group-item' align='left'><strong>".exibirDataHoraBr($campo['data'])."</strong><br/>".$campo['nota']."</li>";
-                    }
-                }
-                else
-                {
-                    echo "<li class='list-group-item'>Não há notas disponíveis.</li>";
-                }
-            ?>
-        </ul>
-		<div class="form-group">
-			<div class='col-md-offset-4 col-md-2'>
-				<form class='form-horizontal' role='form' action='?perfil=smc_visualiza_perfil_pj' method='post'>
-					<input type='hidden' name='LIBPF' value='<?php echo $pj['idPj'] ?>' />
-					<input type='submit' name='negar' value='Não Aprovar' class='btn btn-theme btn-lg btn-block'>
-				</form>
-			</div>
-			<div class='col-md-2'>
-				<form class='form-horizontal' role='form' action='?perfil=smc_visualiza_perfil_pj' method='post'>
-					<input type='hidden' name='LIBPF' value='<?php echo $pj['idPj'] ?>' />
-					<input type='submit' name='liberar' value='Aprovar' class='btn btn-theme btn-lg btn-block'>
-				</form>
-			</div>
-		</div>
 	</div>
 <?php
 //        }
@@ -363,27 +343,48 @@ $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 	if($pj['liberado'] == 3)
 	{
 	?>
-		<div class="form-group">
-			<div class='col-md-offset-2 col-md-8'>
-				<form class='form-horizontal' role='form' action='?perfil=smc_visualiza_perfil_pj' method='post'>
-					<input type='hidden' name='LIBPF' value='<?php echo $pj['idPj'] ?>' />
-					<input type='submit' name='desbloquear' value='Desbloquear dados do proponente para edição' class='btn btn-theme btn-lg btn-block'>
-				</form>
-			</div>
-		</div>
+        <div class="container">
+            <div class='col-md-offset-2 col-md-8'>
+                <ul class='list-group'>
+                    <li class='list-group-item list-group-item-success'>Notas</li>
+                    <?php
+                    listaNota($idPj,2,1)
+                    ?>
+                </ul>
+            </div>
+            <div class="form-group">
+                <div class='col-md-offset-2 col-md-8'>
+                    <form class='form-horizontal' role='form' action='?perfil=smc_visualiza_perfil_pj' method='post'>
+                        <input type='hidden' name='LIBPF' value='<?php echo $pj['idPj'] ?>' />
+                        <input type='submit' name='desbloquear' value='Desbloquear dados do proponente para edição' class='btn btn-theme btn-lg btn-block'>
+                    </form>
+                </div>
+            </div>
+        </div>
 	<?php
 	}
 	if(($pj['liberado'] == 2) || ($pj['liberado'] == 4))
 	{
 	?>
-	<div class="form-group">
-		<h5><font color='#00FF00'><strong>Proponente habilitado para trocar informações cadastrais.</strong></font><br> Aguardando reenvio da inscrição.</h5>
-	</div>
+        <div class="container">
+            <div class='col-md-offset-2 col-md-8'>
+                <ul class='list-group'>
+                    <li class='list-group-item list-group-item-success'>Notas</li>
+                    <?php
+                    listaNota($idPj,2,1)
+                    ?>
+                </ul>
+            </div>
+            <div class='col-md-offset-2 col-md-8'>
+                <h5><font color='#00FF00'><strong>Proponente habilitado para trocar informações cadastrais.</strong></font><br> Aguardando reenvio da inscrição.</h5>
+            </div>
+        </div>
 	<?php
 	}
 	?>
-
-	<div class="col-md-offset-2 col-md-8">
-		<a href="../include/arquivos_pessoa.php?idPessoa=<?php echo $pj['idPj'] ?>&tipo=<?php echo $tipoPessoa?>" class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos da empresa</a>
-	</div>
+    <div class="container">
+        <div class="col-md-offset-2 col-md-8">
+            <a href="../include/arquivos_pessoa.php?idPessoa=<?php echo $pj['idPj'] ?>&tipo=<?php echo $tipoPessoa?>" class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos da empresa</a>
+        </div>
+    </div>
 </section>
