@@ -1,4 +1,58 @@
 <?php
+if(isset($_POST['envioComissao']))
+{
+	$idProjeto = $_POST['idProjeto'];
+	$projeto = recuperaDados("projeto","idProjeto",$idProjeto);
+	$idStatus = $projeto['idStatus'];
+
+	switch ($idStatus) {
+		case 2:
+			$statusEnvio = 7;
+			break;
+		case 10:
+			$statusEnvio = 7;
+			break;
+		case 13:
+			$statusEnvio = 19;
+			break;
+		case 20:
+			$statusEnvio = 19;
+			break;
+		case 14:
+			$statusEnvio = 34;
+			break;
+		case 15:
+			$statusEnvio = 34;
+			break;
+		case 23:
+			$statusEnvio = 24;
+			break;
+		case 25:
+			$statusEnvio = 24;
+			break;
+		case 29:
+			$statusEnvio = 30;
+			break;
+		case 31:
+			$statusEnvio = 30;
+			break;
+	}
+	$dateNow = date('Y:m:d h:i:s');
+	$sql_envioComissao = "UPDATE projeto SET idStatus = '$statusEnvio', envioComissao = '$dateNow' WHERE idProjeto = '$idProjeto' ";
+	if(mysqli_query($con,$sql_envioComissao))
+	{
+		$sql_historico = "INSERT INTO historico_status (idProjeto, idStatus, data) VALUES ('$idProjeto', '$statusEnvio', '$dateNow')";
+		$query_historico = mysqli_query($con, $sql_historico);
+        $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
+		gravarLog($sql_historico);
+		gravarLog($sql_envioComissao);
+	}
+	else
+	{
+		$mensagem = "<font color='#FF0000'><strong>Erro ao atualizar! Tente novamente.</strong></font>";
+	}
+}
+
     if ($pf['idNivelAcesso'] == 2)
     { ?>
         <!-- Lista 1 -->
@@ -276,7 +330,8 @@ foreach ($array_status as $idStatus)
                                 <td>Enviado à</td>
                                 <?php
                             }
-                            ?>
+                            ?>    
+                            <?=($status['idStatus'] == '2' || $status['idStatus'] == '14') ? "<td></td>" : NULL ?>
                             <td width='10%'></td>
                         </tr>
                         </thead>
@@ -328,7 +383,18 @@ foreach ($array_status as $idStatus)
                                                 <input type='submit' class='btn btn-theme btn-block' value='Visualizar'>
                                             </form>
                                         </td>
+                                        <td class='list_description'>
                                         <?php
+                                            if ($status['idStatus'] == '2' || $status['idStatus'] == '14') {
+                                        ?>
+                                                <form method="POST" action=''>
+                                                    <input type='button' data-id="<?= $campo['idProjeto'] ?>"  name='envioComissao' class='btn btn-theme btn-block' value='Enviar para comissão' data-toggle='modal' data-target='#enviarComissao'>
+                                                </form>
+                                        <?php                                                
+                                            }
+                                        ?>
+                                        </td>
+                                        <?php                                        
                                     }
                                     ?>
                                 </tr>
@@ -336,12 +402,12 @@ foreach ($array_status as $idStatus)
                                 $i++;
                             }
                         }
-                        }
-                        else
-                        {
-                            echo "Não há resultado no momento.";
-                        }
-                        ?>
+                    }
+                    else
+                    {
+                        echo "Não há resultado no momento.";
+                    }
+                    ?>
                     </table>
                 </div>
             </div>
@@ -524,3 +590,35 @@ foreach ($array_status as $idStatus)
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="enviarComissao" tabindex="-1" role="dialog" aria-labelledby="enviarComissao">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="enviarComissao">Enviar para comissão?</h4>
+      </div>
+      <div class="modal-body">
+        <p>Para confirmar clique no botão SIM!</p>
+      </div>
+      <div class="modal-footer">
+        <form method='POST' action='' id='formEnviar'>
+            <input type='hidden' name='idProjeto'>           
+            <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
+            <button type="submit" name='envioComissao' class="btn btn-primary">SIM</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+ <script type="text/javascript">
+    // Alimenta o modal com o idProjeto
+    $('#enviarComissao').on('show.bs.modal', function (e)
+    {
+        let idProjeto = $(e.relatedTarget).attr('data-id');
+        $(this).find('#formEnviar input[name="idProjeto"]').attr('value', idProjeto);
+
+    });
+</script>
