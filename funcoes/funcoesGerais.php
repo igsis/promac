@@ -1295,9 +1295,6 @@ function listaAnexosProjetoSMC($idProjeto,$tipoPessoa,$pagina)
 					<form id='apagarArq' method='POST' action='?perfil=".$pagina."'>
 						<input type='hidden' name='idProjeto' value='".$idProjeto."' />
 						<input type='hidden' name='tipoPessoa' value='".$tipoPessoa."' />
-						<input type='hidden' name='apagar' value='".$arquivo['idUploadArquivo']."' />
-						<button class='btn btn-danger  btn-sm btn-block' style='border-radius: 10px;' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Remover Arquivo?' data-message='Deseja realmente excluir o arquivo ".$arquivo['documento']."?'>Remover
-						</button></td>
 					</form>";
             echo "</tr>";
         }

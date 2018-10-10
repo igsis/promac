@@ -156,6 +156,15 @@
             ?>
         </ul>
 
+        <div class="form-group">
+            <div class="col-md-offset-1 col-md-10">
+                <div class="table-responsive list_info">
+                    <h6>Solicitações do proponente</h6>
+                    <?php listaAnexosProjetoSMC($idProjeto, 3, "smc_detalhes_projeto"); ?>
+                </div>
+            </div>
+        </div>    
+
          <!-- Exibir arquivos -->
         <div class="form-group">
             <div class="col-md-12">
