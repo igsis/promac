@@ -132,13 +132,13 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
                             <div class="modal-body" style="text-align: left;">
                                 <div role="tabpanel">
                                     <ul id="modalRenuncia" class="nav nav-tabs">
-                                        <li id="modaltab" class="nav active"><a href="#tabela" data-toggle="tab">Tabela para Consulta</a></li>
+                                        <li id="modaltab" class="nav active"><a href="#tabela1" data-toggle="tab">Tabela para Consulta</a></li>
                                         <li id="modaltab" class="nav"><a href="#artigo" data-toggle="tab">Legislação</a></li>
                                         <li id="modaltab" class="nav"><a href="#informacoes" data-toggle="tab">Informações Importantes</a></li>
                                     </ul>
                                     <div class="tab-content">
                                         <!-- TABELA -->
-                                        <div role="tabpanel" class="tab-pane fade in active" id="tabela">
+                                        <div role="tabpanel" class="tab-pane fade in active" id="tabela1">
                                             <br>
                                             <table class="table table-bordered">
                                                 <thead>
