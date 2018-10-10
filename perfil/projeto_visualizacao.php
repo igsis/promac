@@ -161,7 +161,7 @@ $status_analise = array(3,7,10,19,20,24,25,34,15);
                             <!-- Botão para anexar recurso -->
                             <?php
                             if($idStatus != 26 && $idStatus != 27){
-                                if(in_array($idStatus, $status_aprovado) || in_array($idStatus, $status_reprovado)){
+                                if(in_array($idStatus, $status_reprovado)){
                             ?>
                                     <div class="form-group">
                                         <div class="col-md-offset-4 col-md-6">
@@ -178,12 +178,13 @@ $status_analise = array(3,7,10,19,20,24,25,34,15);
                                 }
                             }
                         ?>
-                        <!-- LABEL PROJETO -->
-                    <div class="hidden" id="projeto_label">
-                        <?php include "includes/label_projeto.php"; ?>
                     </div>
-                        <!-- FIM LABEL PROJETO -->
-                    </div>
+
+                <!-- LABEL PROJETO -->
+
+                <?php include "includes/label_projeto.php"; ?>
+
+                <!-- FIM LABEL PROJETO -->
                 </div>
             </div>
         </div>
