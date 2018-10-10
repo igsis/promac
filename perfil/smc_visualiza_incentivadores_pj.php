@@ -274,8 +274,9 @@ $pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
 	</div>
 
     <?php
-	if($pj['liberado'] == 1) {
-        ?>
+	if($pj['liberado'] !=3)
+	{
+    ?>
         <div class="container">
             <div class='col-md-offset-2 col-md-8'>
                 <div class="form-group">
@@ -328,24 +329,6 @@ $pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
                         <input type='submit' name='desbloquear' value='Desbloquear dados do proponente para edição' class='btn btn-theme btn-lg btn-block'>
                     </form>
                 </div>
-            </div>
-        </div>
-	<?php
-	}
-	if(($pj['liberado'] == 2) || ($pj['liberado'] == 4))
-	{
-	?>
-        <div class="container">
-            <div class='col-md-offset-2 col-md-8'>
-                <ul class='list-group'>
-                    <li class='list-group-item list-group-item-success'>Notas</li>
-                    <?php
-                    listaNota($idPj,5,1)
-                    ?>
-                </ul>
-            </div>
-            <div class='col-md-offset-2 col-md-8'>
-                <h5><font color='#00FF00'>Incentivador não aprovado!<br> Aguardando reenvio da inscrição.</font></h5>
             </div>
         </div>
 	<?php
