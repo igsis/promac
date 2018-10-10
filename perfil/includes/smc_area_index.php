@@ -60,7 +60,7 @@ if(isset($_POST['envioComissao']))
             <h5>Inscrições de pessoa física a liberar</h5>
         </div>
         <div class="row">
-            <div class="col-md-offset-1 col-md-10">
+            <div class="col-md-12">
                 <div class="table-responsive list_info">
                     <?php
                     $sql = "SELECT * FROM pessoa_fisica WHERE liberado = 1 LIMIT 0,10";
@@ -115,7 +115,7 @@ if(isset($_POST['envioComissao']))
             <h5>Inscrições de pessoa jurídica a liberar</h5>
         </div>
         <div class="row">
-            <div class="col-md-offset-1 col-md-10">
+            <div class="col-md-12">
                 <div class="table-responsive list_info">
                     <?php
                     $sql = "SELECT * FROM pessoa_juridica WHERE liberado = 1 LIMIT 0,10";
@@ -168,7 +168,7 @@ if(isset($_POST['envioComissao']))
             <h5>Inscrições de incentivador pessoa física a liberar</h5>
         </div>
         <div class="row">
-            <div class="col-md-offset-1 col-md-10">
+            <div class="col-md-12">
                 <div class="table-responsive list_info">
                     <?php
                     $sql = "SELECT * FROM incentivador_pessoa_fisica WHERE liberado = 1 LIMIT 0,10";
@@ -221,7 +221,7 @@ if(isset($_POST['envioComissao']))
             <h5>Inscrições de incentivador pessoa jurídica a liberar</h5>
         </div>
         <div class="row">
-            <div class="col-md-offset-1 col-md-10">
+            <div class="col-md-12">
                 <div class="table-responsive list_info">
                     <?php
                     $sql = "SELECT * FROM incentivador_pessoa_juridica WHERE liberado = 1 LIMIT 0,10";
@@ -306,7 +306,7 @@ foreach ($array_status as $idStatus)
             </form>
         </div>
         <div class="row">
-            <div class="col-md-offset-1 col-md-10">
+            <div class="col-md-12">
                 <div class="table-responsive list_info">
                     <?php
                     if($num > 0)
@@ -331,7 +331,7 @@ foreach ($array_status as $idStatus)
                                 <?php
                             }
                             ?>    
-                            <?=($status['idStatus'] == '2' || $status['idStatus'] == '14') ? "<td></td>" : NULL ?>
+                            <?=($status['idStatus'] == '2' || $status['idStatus'] == '13' || $status['idStatus'] == '14' || $status['idStatus'] == '23') ? "<td></td>" : NULL ?>
                             <td width='10%'></td>
                         </tr>
                         </thead>
@@ -385,7 +385,7 @@ foreach ($array_status as $idStatus)
                                         </td>
                                         <td class='list_description'>
                                         <?php
-                                            if ($status['idStatus'] == '2' || $status['idStatus'] == '14') {
+                                            if ($status['idStatus'] == '2' || $status['idStatus'] == '13' || $status['idStatus'] == '14' || $status['idStatus'] == '23') {
                                         ?>
                                                 <form method="POST" action=''>
                                                     <input type='button' data-id="<?= $campo['idProjeto'] ?>"  name='envioComissao' class='btn btn-theme btn-block' value='Enviar para comissão' data-toggle='modal' data-target='#enviarComissao'>
@@ -422,7 +422,7 @@ foreach ($array_status as $idStatus)
     <h5>Projetos com data final de captação com tempo menor que 30 dias.</h5>
 </div>
 <div class="row">
-    <div class="col-md-offset-1 col-md-10">
+    <div class="col-md-12">
         <div class="table-responsive list_info">
             <?php
             $sql = "SELECT * FROM prazos_projeto AS prz INNER JOIN projeto AS prj ON prj.idProjeto = prz.idProjeto WHERE prj.publicado = 1 AND finalCaptacao != '0000-00-00' AND finalCaptacao BETWEEN CURRENT_DATE()-30 AND CURRENT_DATE() LIMIT 0,10";
