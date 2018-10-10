@@ -190,7 +190,6 @@ if(isset($_POST['nota']))
 {
     if($_POST['nota'] != "")
     {
-            $mensagem = "<font color='#01DF3A'><strong>Nota inserida com sucesso!</strong></font>";
         $id = $_POST['LIBPF'];
         if ($id != 0)
         {
