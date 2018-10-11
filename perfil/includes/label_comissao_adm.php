@@ -79,13 +79,13 @@
             </div>
         </div>
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-4"><label>Status de Análise*</label><br/>
+            <div class="col-md-offset-2 col-md-4"><label>Análise do Parecerista *</label><br/>
                 <select class="form-control" name="idStatusParecerista" required>
                     <option value="">Selecione...</option>
                     <?php echo geraOpcao("status_parecerista", $projeto['idStatusParecerista']) ?>
                 </select>
             </div>
-            <div class="col-md-4"><label>Data da Reunião</label>
+            <div class="col-md-4"><label>Data da Reunião *</label>
                 <input type="text" name="dataReuniao" id='datepicker08' class="form-control" required
                        value="<?php echo exibirDataBr($projeto['dataReuniao']) ?>">
             </div>
