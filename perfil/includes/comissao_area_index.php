@@ -1,8 +1,8 @@
 <?php
-$array_status = array(7, 19, 24, 34); //status
-foreach ($array_status as $idStatus)
+$array_etapa = array(7, 19, 24, 34); //etapa
+foreach ($array_etapa as $idEtapaProjeto)
 {
-    $sqlStatus = "SELECT idEtapaProjeto, etapaProjeto, ordem FROM etapa_projeto WHERE idEtapaProjeto = '$idStatus'";
+    $sqlEtapaProjeto = "SELECT idEtapaProjeto, etapaProjeto, ordem FROM etapa_projeto WHERE idEtapaProjeto = '$idEtapaProjeto'";
     if (($pf['idNivelAcesso'] == 2) || ($pf['idNivelAcesso'] == 3))
     {
         $parecerista = NULL;
@@ -17,20 +17,20 @@ foreach ($array_status as $idStatus)
                     LEFT JOIN pessoa_juridica AS pj ON pro.idPj = pj.idPj
                     INNER JOIN area_atuacao AS ar ON pro.idAreaAtuacao = ar.idArea
                     LEFT JOIN pessoa_fisica AS pfc ON pro.idComissao = pfc.idPf 
-                    INNER JOIN etapa_projeto AS st ON pro.idEtapaProjeto = st.idEtapaProjeto
-                    WHERE pro.publicado = 1 AND pro.idEtapaProjeto = '$idStatus'" .$parecerista." ORDER BY idProjeto DESC";
+                    INNER JOIN etapa_projeto AS etapa ON pro.idEtapaProjeto = etapa.idEtapaProjeto
+                    WHERE pro.publicado = 1 AND pro.idEtapaProjeto = '$idEtapaProjeto'" .$parecerista." ORDER BY idProjeto DESC";
     $queryProjeto = mysqli_query($con,$sqlProjeto);
-    $queryStatus = mysqli_query($con,$sqlStatus);
+    $queryEtapaProjeto = mysqli_query($con,$sqlEtapaProjeto);
     $num = mysqli_num_rows($queryProjeto);
 
-    foreach ($queryStatus as $status)
+    foreach ($queryEtapaProjeto as $etapa_projeto)
     {
         $i = 0;
         ?>
         <div class='form-group'>
-            <h5>Projetos com Status "<?=$status['status']?>"</h5>
+            <h5>Projetos com Etapa "<?=$etapa_projeto['etapaProjeto']?>"</h5>
             <form method="POST" action="<?= ($pf['idNivelAcesso'] == 2) ? "?perfil=smc_pesquisa_geral_resultado" : "?perfil=comissao_pesquisa_resultado"?>" class="form-horizontal" role="form">
-                <button type="submit" class="label label-warning" name="idEtapaProjeto" value="<?=$status['idEtapaProjeto']?>">
+                <button type="submit" class="label label-warning" name="idEtapaProjeto" value="<?=$etapa_projeto['idEtapaProjeto']?>">
                     <span>Total: <?=$num?></span>
                 </button>
             </form>
