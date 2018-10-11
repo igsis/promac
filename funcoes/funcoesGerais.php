@@ -3262,6 +3262,7 @@ function uploadArquivo($idProjeto, $tipoPessoa, $pagina, $idListaDocumento, $idT
             echo "<tr>";
             echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
             echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
+            if($arquivo['idStatusDocumento'] == 2) {
                 echo "
 						<td class='list_description'>
 							<form id='apagarArq' method='POST' action='?perfil=" . $pagina . "'>
@@ -3271,7 +3272,7 @@ function uploadArquivo($idProjeto, $tipoPessoa, $pagina, $idListaDocumento, $idT
 								<input type='submit' class='btn btn-theme btn-md btn-block'  value='apagar' />
 							</form>
 						</td>";
-            
+            }
             echo "</tr>";
         }
         echo "

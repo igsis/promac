@@ -76,7 +76,7 @@
 
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8"><label>Valor Aprovado</label>
-								<input type="number" name="valorAprovado" class="form-control">
+								<input type="text" pattern="[0-9]+$" title="Permitido somente Números" name="valorAprovado" class="form-control">
 							</div>
 						</div>
 
