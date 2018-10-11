@@ -505,7 +505,22 @@ function recuperaUsuarioCompleto($id)
 	}
 }
 
-function recuperaDados($tabela,$campo,$variavelCampo)
+/**
+ * Esta função retorna um unico registro da tabela passada utilizando
+ * como parametro para a clausula "WHERE", o campo passado.
+ * @param string $tabela <p>
+ * Tabela do banco de dados a ser Consultada
+ * </p>
+ * @param string $campo <p>
+ * Coluna a ser utilizada como parametro "WHERE"
+ * </p>
+ * @param string|int $variavelCampo <p>
+ * Variavel que deve ser comparada no banco de dados
+ * </p>
+ * @return array|null <p>
+ * Retorna um unico registro da tabela consultada
+ */
+function recuperaDados($tabela, $campo, $variavelCampo)
 {
 	//retorna uma array com os dados de qualquer tabela. serve apenas para 1 registro.
 	$con = bancoMysqli();

@@ -28,7 +28,7 @@ foreach ($array_status as $idStatus)
         ?>
         <div class='form-group'>
             <h5>Projetos com Status "<?=$status['status']?>"</h5>
-            <form method="POST" action="<?= ($pf['idNivelAcesso'] == 2) ? "?perfil=smc_pesquisa_geral_resultado" : "?perfil=comissao_pesquisa_resultado"?>" class="form-horizontal" role="form">
+            <form method="POST" action="<?= ($usuario['idNivelAcesso'] == 2) ? "?perfil=smc_pesquisa_geral_resultado" : "?perfil=comissao_pesquisa_resultado"?>" class="form-horizontal" role="form">
                 <button type="submit" class="label label-warning" name="idStatus" value="<?=$status['idStatus']?>">
                     <span>Total: <?=$num?></span>
                 </button>
@@ -65,10 +65,21 @@ foreach ($array_status as $idStatus)
                                     <td class='list_description'><?= $campo['nomeProjeto'] ?></td>
                                     <td class='list_description'><?= $campo['status'] ?></td>
                                     <td class='list_description'><?= $campo['parecerista'] ?></td>
-                                    <td class='list_description'><?= date_create_from_format('d/m/Y', $campo['dataReuniao']) ?></td>
-                                    <td class='list_description'><?= date_create_from_format('d/m/Y', $campo['dataRegistro']) ?></td>
+                                    <td class='list_description'>
+                                        <?php
+                                        if ($campo['dataReuniao'] == "0000-00-00")
+                                        {
+                                            echo "Data não Registrada";
+                                        }
+                                        else
+                                        {
+                                            echo date_format(date_create($campo['dataReuniao']), 'd/m/Y');
+                                        }
+                                        ?>
+                                    </td>
+                                    <td class='list_description'><?= date_format(date_create($campo['dataRegistro']), 'd/m/Y') ?></td>
                                         <td class='list_description'>
-                                            <form method='POST' action='<?= ($pf['idNivelAcesso'] == 2) ? "?perfil=smc_detalhes_projeto" : "?perfil=comissao_detalhes_projeto"?>'>
+                                            <form method='POST' action='<?= ($usuario['idNivelAcesso'] == 2) ? "?perfil=smc_detalhes_projeto" : "?perfil=comissao_detalhes_projeto"?>'>
                                                 <input type='hidden' name='idProjeto'
                                                        value='<?= $campo['idProjeto'] ?>'/>
                                                 <input type='submit' class='btn btn-theme btn-block' value='Visualizar'>

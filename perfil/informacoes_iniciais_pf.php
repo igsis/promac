@@ -54,25 +54,25 @@ if(isset($_POST['atualizarFisica']) and $_POST['numero'] and empty($endereço))
 
 
   $sql_atualiza_pf =
-    "UPDATE pessoa_fisica SET
-      `nome` = '$nome',
-	  `rg` = '$rg',
-	  `telefone` = '$telefone',
-	  `celular` = '$celular',
-	  `email` = '$email',
-	  `logradouro` = '$Endereco',
-	  `bairro` = '$Bairro',
-	  `cidade` = '$Cidade',
-	  `estado` = '$Estado',
-	  `cep` = '$cep',
-	  `numero` = '$Numero',
-	  `complemento` = '$Complemento',
-	  `cooperado` = '$cooperado',
-	  `idZona` = '$idZona',
-	  `idSubprefeitura` = '$idSubprefeitura',
-	  `idDistrito` = '$idDistrito',	  
-	  `alteradoPor` = '$usuarioLogado'
-	WHERE `idPf` = '$idPf'";	
+    "UPDATE pessoa_fisica SET 
+        `nome` = '$nome',
+        `rg` = '$rg',
+        `telefone` = '$telefone',
+        `celular` = '$celular',
+        `email` = '$email',
+        `logradouro` = '$Endereco',
+        `bairro` = '$Bairro',
+        `cidade` = '$Cidade',
+        `estado` = '$Estado',
+        `cep` = '$cep',
+        `numero` = '$Numero',
+        `complemento` = '$Complemento',
+        `cooperado` = '$cooperado',
+        `idZona` = '$idZona',
+        `idSubprefeitura` = '$idSubprefeitura',
+        `idDistrito` = '$idDistrito',
+        `alteradoPor` = '$usuarioLogado'
+    WHERE `idPf` = '$idPf'";
 
 	if(mysqli_query($con,$sql_atualiza_pf)){
 
