@@ -27,7 +27,7 @@
 
 						<div class="alert-success">
 							<p>&nbsp;</p>
-							<p><strong>Nesta área, você pode consultar os projetos já aprovados!</strong></p>
+							<p><strong>Nesta área, você pode consultar os projetos enviados!</strong></p>
 							<p>&nbsp;</p>
 						</div>
 
