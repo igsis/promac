@@ -94,7 +94,7 @@ if(isset($_POST['atualizar']))
 	if ($rows > 0) {
 		while($arquivo = mysqli_fetch_array($query))
 		{
-			# Recebe um array com idStatus de todos os docs
+			# Recebe um array com idEtapaProjeto de todos os docs
 			$totStatus[$count] = $arquivo['idStatusDocumento'];
 	 		$count ++;
 		}

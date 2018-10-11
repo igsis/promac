@@ -5,7 +5,7 @@
         </h5>
 
         <?php
-        if($projeto['idStatus'] > 1) {
+        if($projeto['idEtapaProjeto'] > 1) {
         ?>
             <div class="form-group">
                 <div class="col-md-offset-8 col-md-3">
@@ -41,7 +41,7 @@
 
         <?php
         $array_envio_comissao = array(2,10,13,20,14,15,23,25,29,31);
-        if(in_array($projeto['idStatus'], $array_envio_comissao )) {
+        if(in_array($projeto['idEtapaProjeto'], $array_envio_comissao )) {
         ?>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-3"><br/><label>Enviar projeto para comissão</label><br>
@@ -74,8 +74,8 @@
         <form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-8"><label>Etapa do Projeto</label><br/>
-                    <select class="form-control" name="idStatus">
-                        <?php echo geraOpcao("status",$projeto['idStatus']) ?>
+                    <select class="form-control" name="idEtapaProjeto">
+                        <?php echo geraOpcao("status",$projeto['idEtapaProjeto']) ?>
                     </select>
                 </div>
             </div>

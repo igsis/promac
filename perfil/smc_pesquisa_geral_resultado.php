@@ -8,7 +8,7 @@ $cnpj = $_POST['cnpj'] ?? NULL;
 $nomeProjeto = $_POST['nomeProjeto'] ?? NULL;
 $idProjeto = $_POST['idProjeto'] ?? NULL;
 $idAreaAtuacao = $_POST['idAreaAtuacao'] ?? NULL;
-$idStatus = $_POST['idStatus'] ?? NULL;
+$idStatus = $_POST['idEtapaProjeto'] ?? NULL;
 $idComissao = $_POST['idComissao'] ?? NULL;
 
 // Inicio Pessoa Física
@@ -44,7 +44,7 @@ if($nome != '' || $cpf != '')
 		while($lista = mysqli_fetch_array($query))
 		{
 			$area = recuperaDados("area_atuacao","idArea",$lista['idAreaAtuacao']);
-			$status = recuperaDados("status","idStatus",$lista['idStatus']);
+			$status = recuperaDados("status","idEtapaProjeto",$lista['idEtapaProjeto']);
 			$comissao = recuperaDados("pessoa_fisica","idPf",$lista['idComissao']);
 			$x[$i]['idProjeto'] = $lista['idProjeto'];
 			$x[$i]['protocolo'] = $lista['protocolo'];
@@ -96,7 +96,7 @@ elseif($razaoSocial != '' || $cnpj != '')
 		while($lista = mysqli_fetch_array($query))
 		{
 			$area = recuperaDados("area_atuacao","idArea",$lista['idAreaAtuacao']);
-			$status = recuperaDados("status","idStatus",$lista['idStatus']);
+			$status = recuperaDados("status","idEtapaProjeto",$lista['idEtapaProjeto']);
 			$comissao = recuperaDados("pessoa_fisica","idPf",$lista['idComissao']);
 			$x[$i]['idProjeto'] = $lista['idProjeto'];
 			$x[$i]['protocolo'] = $lista['protocolo'];
@@ -147,7 +147,7 @@ else
 
 	if($idStatus != 0)
 	{
-		$filtro_idStatus = " AND idStatus = '$idStatus'";
+		$filtro_idStatus = " AND idEtapaProjeto = '$idStatus'";
 	}
 	else
 	{
@@ -174,7 +174,7 @@ else
 		while($lista = mysqli_fetch_array($query))
 		{
 			$area = recuperaDados("area_atuacao","idArea",$lista['idAreaAtuacao']);
-			$status = recuperaDados("status","idStatus",$lista['idStatus']);
+			$status = recuperaDados("status","idEtapaProjeto",$lista['idEtapaProjeto']);
 			$pf = recuperaDados("pessoa_fisica","idPf",$lista['idPf']);
 			$pj = recuperaDados("pessoa_juridica","idPj",$lista['idPj']);
 			$comissao = recuperaDados("pessoa_fisica","idPf",$lista['idComissao']);

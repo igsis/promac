@@ -13,7 +13,7 @@ $http = $server."/pdf/";
 function pegaStatus($id)
 {
 	$con = bancoMysqli();
-	$pegaNome = "SELECT status FROM status WHERE idStatus = '$id'";
+	$pegaNome = "SELECT etapaProjeto FROM etapa_projeto WHERE idEtapaProjeto = '$id'";
 	$enviaNome = mysqli_query($con, $pegaNome);
 	$row = mysqli_fetch_array($enviaNome);
 	return $row['status'];
@@ -108,16 +108,16 @@ if(isset($_POST["enviar"]))
 				{
 				$empresaApenada = 0;
 				}
-				if(isset($_POST['idStatus']))
+				if(isset($_POST['idEtapaProjeto']))
 				{
-					$idStatus = $_POST['idStatus'];
+					$idStatus = $_POST['idEtapaProjeto'];
 				}
 				if(in_array($ext, $allowedExts)) //Pergunta se a extensão do arquivo, está presente no array das extensões permitidas
 				{
 					if(move_uploaded_file($nome_temporario, $dir.$new_name))
 					{
 						$sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('3', '$idProjeto', '$y', '$new_name', '$hoje', '1'); ";
-							$sql_check = "UPDATE projeto SET empresaApenada = '$empresaApenada', idStatus = '11' WHERE idProjeto = '$idProjeto'";
+							$sql_check = "UPDATE projeto SET empresaApenada = '$empresaApenada', idEtapaProjeto = '11' WHERE idProjeto = '$idProjeto'";
 						$query = mysqli_query($con,$sql_insere_arquivo);
 						$query = mysqli_query($con,$sql_check);
 						if($query)
@@ -265,7 +265,7 @@ if(isset($_POST['apagar']))
 		                  			 <strong>Declaro não pertecencer às listas de Empresas Apenadas. </strong>&nbsp;&nbsp;&nbsp;<input type="checkbox" name="empresaApenada" value="1" <?php checar($projeto[ 'empresaApenada']) ?>>
            		    		    </div>
               					<div class="col-md-offset-2 col-md-8">
-									<strong>Declaro ter anexado todos os certificados necessários.</strong>&nbsp;&nbsp;&nbsp;<input type="checkbox" name="idStatus" <?php checar($projeto['idStatus']) ?>>
+									<strong>Declaro ter anexado todos os certificados necessários.</strong>&nbsp;&nbsp;&nbsp;<input type="checkbox" name="idEtapaProjeto" <?php checar($projeto['idEtapaProjeto']) ?>>
                		    	    </div>
                		    	<br/>
                		    	<br/>

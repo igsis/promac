@@ -92,7 +92,7 @@
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-8">
-                <input type="hidden" name="idStatus" value="<?= $projeto['idStatus'] ?>">
+                <input type="hidden" name="idEtapaProjeto" value="<?= $projeto['idEtapaProjeto'] ?>">
                 <input type="hidden" name="idProjeto" value="<?php echo $idProjeto ?>">
                 <input type="submit" name="gravarAdm" class="btn btn-theme btn-md btn-block" value="Gravar">
             </div>

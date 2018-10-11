@@ -110,9 +110,9 @@ $objPHPExcel->getActiveSheet()->getColumnDimension('AG')->setAutoSize(true);
 
 
 //Dados Projeto
-$sql = "SELECT idProjeto, areaAtuacao, segmento, protocolo, nomeProjeto, valorProjeto, valorIncentivo, resumoProjeto, publicoAlvo, tipoPessoa, idPj, idPf, status, pr.idStatus, tipoPessoa, valorAprovado, idRenunciaFiscal
+$sql = "SELECT idProjeto, areaAtuacao, segmento, protocolo, nomeProjeto, valorProjeto, valorIncentivo, resumoProjeto, publicoAlvo, tipoPessoa, idPj, idPf, etapaProjeto, pr.idEtapaProjeto, tipoPessoa, valorAprovado, idRenunciaFiscal
          FROM projeto AS pr
-         INNER JOIN status AS st ON pr.idStatus = st.idStatus
+         INNER JOIN etapa_projeto AS st ON pr.idEtapaProjeto = st.idEtapaProjeto
          INNER JOIN area_atuacao AS area ON pr.idAreaAtuacao = area.idArea
          INNER JOIN renuncia_fiscal AS renuncia ON pr.idRenunciaFiscal = renuncia.idRenuncia
          WHERE pr.publicado = '1' ORDER BY protocolo";
@@ -221,7 +221,7 @@ while($row = mysqli_fetch_array($query))
    		$tipo = "Jurídica";
    }
 
-   $status_proponente = $row['idStatus'];
+   $status_proponente = $row['idEtapaProjeto'];
    if($status_proponente == 5 OR $status_proponente == 21 OR $status_proponente == 26 OR $status_proponente == 16 OR $status_proponente == 11)
    {
     $status_exibido = "Aprovado";

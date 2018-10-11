@@ -135,11 +135,11 @@ if (isset($_POST['apagar'])) {
                             echo "<tr>";
                             echo "<td class='list_description'>" . $campo['nomeProjeto'] . "</td>";
                             echo "<td class='list_description'>" . $area['areaAtuacao'] . "</td>";
-                            $idCampo = $campo['idStatus'];
-                            $status = "SELECT status FROM status WHERE idStatus='$idCampo'";
+                            $idCampo = $campo['idEtapaProjeto'];
+                            $status = "SELECT etapaProjeto FROM etapa_projeto WHERE idEtapaProjeto='$idCampo'";
                             $envio = mysqli_query($con, $status);
                             $rowStatus = mysqli_fetch_array($envio);
-                            if ($campo['idStatus'] == 1) {
+                            if ($campo['idEtapaProjeto'] == 1) {
                                 echo "
                                                     <td class='list_description'>
                                                         <form method='POST' action='?perfil=projeto_edicao'>

@@ -711,7 +711,7 @@ CREATE TABLE `projeto` (
   `video2` varchar(50) DEFAULT NULL,
   `video3` varchar(50) DEFAULT NULL,
   `valorAprovado` decimal(9,2) DEFAULT '0.00',
-  `idStatus` int(11) DEFAULT NULL,
+  `idEtapaProjeto` int(11) DEFAULT NULL,
   `publicado` tinyint(1) DEFAULT NULL,
   `envioComissao` datetime DEFAULT NULL,
   `idComissao` int(11) DEFAULT NULL,
@@ -763,7 +763,7 @@ CREATE TRIGGER `tr_log_projeto` AFTER UPDATE ON `projeto` FOR EACH ROW INSERT IN
        '|','VIDEO02:',old.video2,
        '|','VIDEO03:',old.video3,       
        '|','VALOR-AP:',old.valorAprovado,
-       '|','STATUS:',old.idStatus,
+       '|','STATUS:',old.idEtapaProjeto,
        '|','PUBLICADO:',old.publicado,              
        '|','PROTOCOLO:',old.protocolo,       
        '|','TIPOPESSOA:',old.tipoPessoa,
@@ -802,7 +802,7 @@ CREATE TRIGGER `tr_log_projeto` AFTER UPDATE ON `projeto` FOR EACH ROW INSERT IN
         '|','VIDEO02:',new.video2,
         '|','VIDEO03:',new.video3,
         '|','VALOR-AP:',new.valorAprovado,
-        '|','STATUS:',new.idStatus,
+        '|','STATUS:',new.idEtapaProjeto,
         '|','PUBLICADO:',new.publicado,        
         '|','PROTOCOLO:',new.protocolo,
         '|','TIPOPESSOA:',new.tipoPessoa,
@@ -870,7 +870,7 @@ CREATE TABLE `reserva` (
 --
 
 CREATE TABLE `status` (
-  `idStatus` int(11) NOT NULL,
+  `idEtapaProjeto` int(11) NOT NULL,
   `status` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -881,7 +881,7 @@ CREATE TABLE `status` (
 --
 
 CREATE TABLE `statusprojeto` (
-  `idStatus` int(11) NOT NULL,
+  `idEtapaProjeto` int(11) NOT NULL,
   `situacaoAtual` int(11) NOT NULL,
   `descricaoSituacao` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -1145,14 +1145,14 @@ ALTER TABLE `reserva`
 --
 -- Indexes for table `status`
 --
-ALTER TABLE `status`
-  ADD PRIMARY KEY (`idStatus`);
+ALTER TABLE etapa_projeto
+  ADD PRIMARY KEY (`idEtapaProjeto`);
 
 --
 -- Indexes for table `statusprojeto`
 --
 ALTER TABLE `statusprojeto`
-  ADD PRIMARY KEY (`idStatus`);
+  ADD PRIMARY KEY (`idEtapaProjeto`);
 
 --
 -- Indexes for table `status_documento`
@@ -1334,13 +1334,13 @@ ALTER TABLE `reserva`
 --
 -- AUTO_INCREMENT for table `status`
 --
-ALTER TABLE `status`
-  MODIFY `idStatus` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+ALTER TABLE etapa_projeto
+  MODIFY `idEtapaProjeto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `statusprojeto`
 --
 ALTER TABLE `statusprojeto`
-  MODIFY `idStatus` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idEtapaProjeto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `status_documento`
 --

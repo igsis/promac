@@ -3,7 +3,7 @@ if(isset($_POST['envioComissao']))
 {
 	$idProjeto = $_POST['idProjeto'];
 	$projeto = recuperaDados("projeto","idProjeto",$idProjeto);
-	$idStatus = $projeto['idStatus'];
+	$idStatus = $projeto['idEtapaProjeto'];
 
 	switch ($idStatus) {
 		case 2:
@@ -38,10 +38,10 @@ if(isset($_POST['envioComissao']))
 			break;
 	}
 	$dateNow = date('Y:m:d h:i:s');
-	$sql_envioComissao = "UPDATE projeto SET idStatus = '$statusEnvio', envioComissao = '$dateNow' WHERE idProjeto = '$idProjeto' ";
+	$sql_envioComissao = "UPDATE projeto SET idEtapaProjeto = '$statusEnvio', envioComissao = '$dateNow' WHERE idProjeto = '$idProjeto' ";
 	if(mysqli_query($con,$sql_envioComissao))
 	{
-		$sql_historico = "INSERT INTO historico_status (idProjeto, idStatus, data) VALUES ('$idProjeto', '$statusEnvio', '$dateNow')";
+		$sql_historico = "INSERT INTO historico_status (idProjeto, idEtapaProjeto, data) VALUES ('$idProjeto', '$statusEnvio', '$dateNow')";
 		$query_historico = mysqli_query($con, $sql_historico);
         $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
 		gravarLog($sql_historico);
@@ -274,15 +274,15 @@ if(isset($_POST['envioComissao']))
 $array_status = array(2, 3, 10, 12, 13, 20, 23, 25, 14, 15, 11); //status
 foreach ($array_status as $idStatus)
 {
-    $sqlStatus = "SELECT idStatus, status, ordem FROM status WHERE idStatus = '$idStatus'";
-    $sqlProjeto = "SELECT idProjeto, nomeProjeto, protocolo, pf.nome, pf.cpf, razaoSocial, cnpj, areaAtuacao, pfc.nome AS comissao, status, pro.idStatus AS idStatus 
+    $sqlStatus = "SELECT idEtapaProjeto, etapaProjeto, ordem FROM etapa_projeto WHERE idEtapaProjeto = '$idStatus'";
+    $sqlProjeto = "SELECT idProjeto, nomeProjeto, protocolo, pf.nome, pf.cpf, razaoSocial, cnpj, areaAtuacao, pfc.nome AS comissao, etapaProjeto, pro.idEtapaProjeto AS idEtapaProjeto 
                     FROM projeto AS pro
                     LEFT JOIN pessoa_fisica AS pf ON pro.idPf = pf.idPf
                     LEFT JOIN pessoa_juridica AS pj ON pro.idPj = pj.idPj
                     INNER JOIN area_atuacao AS ar ON pro.idAreaAtuacao = ar.idArea
                     LEFT JOIN pessoa_fisica AS pfc ON pro.idComissao = pfc.idPf 
-                    INNER JOIN status AS st ON pro.idStatus = st.idStatus
-                    WHERE pro.publicado = 1 AND pro.idStatus = '$idStatus' ORDER BY idProjeto DESC";
+                    INNER JOIN etapa_projeto AS st ON pro.idEtapaProjeto = st.idEtapaProjeto
+                    WHERE pro.publicado = 1 AND pro.idEtapaProjeto = '$idStatus' ORDER BY idProjeto DESC";
     $queryProjeto = mysqli_query($con,$sqlProjeto);
     $queryStatus = mysqli_query($con,$sqlStatus);
     $num = mysqli_num_rows($queryProjeto);
@@ -292,7 +292,7 @@ foreach ($array_status as $idStatus)
         $i = 0;
         ?>
         <div class='form-group'>
-            <h5>Projetos com Status "<?=$status['status']?>"</h5>
+            <h5>Projetos com Status "<?=$status['etapaProjeto']?>"</h5>
             <?php
             if ($pf['idNivelAcesso'] == 2)
             {
@@ -300,7 +300,7 @@ foreach ($array_status as $idStatus)
             }
             ?>
 
-                <button type="submit" class="label label-warning" name="idStatus" value="<?=$status['idStatus']?>">
+                <button type="submit" class="label label-warning" name="idEtapaProjeto" value="<?=$status['idEtapaProjeto']?>">
                     <span>Total: <?=$num?></span>
                 </button>
             </form>
@@ -323,7 +323,7 @@ foreach ($array_status as $idStatus)
                             <td>Área de Atuação</td>
                             <?=($status['ordem'] >= 5) ? "<td>Parecerista</td>" : NULL ?>
                             <?php
-                            if (($status['idStatus'] == 23) || ($status['idStatus'] == 13))
+                            if (($status['idEtapaProjeto'] == 23) || ($status['idEtapaProjeto'] == 13))
                             {
                                 ?>
                                 <td>Arquivo</td>
@@ -331,7 +331,7 @@ foreach ($array_status as $idStatus)
                                 <?php
                             }
                             ?>    
-                            <?=($status['idStatus'] == '2' || $status['idStatus'] == '13' || $status['idStatus'] == '14' || $status['idStatus'] == '23') ? "<td></td>" : NULL ?>
+                            <?=($status['idEtapaProjeto'] == '2' || $status['idEtapaProjeto'] == '13' || $status['idEtapaProjeto'] == '14' || $status['idEtapaProjeto'] == '23') ? "<td></td>" : NULL ?>
                             <td width='10%'></td>
                         </tr>
                         </thead>
@@ -350,7 +350,7 @@ foreach ($array_status as $idStatus)
                                     <?= ($status['ordem'] >= 5) ? "<td class='list_description'>".$campo['comissao']."</td>" : NULL ?>
                                     <?php
                                     /*TODO: Transformar este bloco de if/elseif em função*/
-                                    if ($status['idStatus'] == 23)
+                                    if ($status['idEtapaProjeto'] == 23)
                                     {
                                         $sqlRecurso = "SELECT DISTINCT `arquivo`, `dataEnvio` FROM `upload_arquivo` WHERE `idTipo` = '3' AND `idPessoa` = '".$campo['idProjeto']."' AND `idListaDocumento` = '52' AND `publicado` = '1'";
                                         $recurso = mysqli_fetch_array(mysqli_query($con, $sqlRecurso));
@@ -362,7 +362,7 @@ foreach ($array_status as $idStatus)
                                         echo "<td><a href='../uploadsdocs/".$recurso['arquivo']."' target='_blank'>".mb_strimwidth($recurso['arquivo'], 15, 38, "...")."</a></td>";
                                         echo "<td>".$dias->format("%a dias")."</td>";
                                     }
-                                    elseif (($status['idStatus'] == 13))
+                                    elseif (($status['idEtapaProjeto'] == 13))
                                     {
                                         $sqlComplemento = "SELECT DISTINCT `arquivo`, `dataEnvio` FROM `upload_arquivo` WHERE `idTipo` = '3' AND `idPessoa` = '".$campo['idProjeto']."' AND `idListaDocumento` = '46' AND `publicado` = '1'";
                                         $complemento = mysqli_fetch_array(mysqli_query($con, $sqlComplemento));
@@ -385,7 +385,7 @@ foreach ($array_status as $idStatus)
                                         </td>
                                         <td class='list_description'>
                                         <?php
-                                            if ($status['idStatus'] == '2' || $status['idStatus'] == '13' || $status['idStatus'] == '14' || $status['idStatus'] == '23') {
+                                            if ($status['idEtapaProjeto'] == '2' || $status['idEtapaProjeto'] == '13' || $status['idEtapaProjeto'] == '14' || $status['idEtapaProjeto'] == '23') {
                                         ?>
                                                 <form method="POST" action=''>
                                                     <input type='button' data-id="<?= $campo['idProjeto'] ?>"  name='envioComissao' class='btn btn-theme btn-block' value='Enviar para comissão' data-toggle='modal' data-target='#enviarComissao'>

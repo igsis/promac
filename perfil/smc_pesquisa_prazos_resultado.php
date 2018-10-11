@@ -69,7 +69,7 @@ if($num > 0)
 	while($lista = mysqli_fetch_array($query))
 	{
 		$area = recuperaDados("area_atuacao","idArea",$lista['idAreaAtuacao']);
-		$status = recuperaDados("status","idStatus",$lista['idStatus']);
+		$status = recuperaDados("status","idEtapaProjeto",$lista['idEtapaProjeto']);
 		$pf = recuperaDados("pessoa_fisica","idPf",$lista['idPf']);
 		$pj = recuperaDados("pessoa_juridica","idPj",$lista['idPj']);
 		$x[$i]['idProjeto'] = $lista['idProjeto'];

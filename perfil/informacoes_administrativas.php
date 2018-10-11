@@ -9,12 +9,12 @@ if($alterar == 1 || $alterar == 0)
     /*
         Caso esteja alterando após indeferimento, muda o status para enviado
     */
-    $queryInsert = "UPDATE projeto SET idStatus='2', protocolo = '$protocolo' WHERE idProjeto='$idProjeto'";
+    $queryInsert = "UPDATE projeto SET idEtapaProjeto='2', protocolo = '$protocolo' WHERE idProjeto='$idProjeto'";
     if(mysqli_query($con, $queryInsert))
     {
         gravarLog($queryInsert);
         $data = date('Y-m-d h:i:s');
-        $sql_historico = "INSERT INTO `historico_status`(`idProjeto`, `idStatus`, `data`) VALUES ('$idProjeto', 2, '$data')";
+        $sql_historico = "INSERT INTO `historico_status`(`idProjeto`, `idEtapaProjeto`, `data`) VALUES ('$idProjeto', 2, '$data')";
         $query_historico = mysqli_query($con, $sql_historico);
     }
     if($queryInsert)
@@ -32,7 +32,7 @@ if($alterar == 1 || $alterar == 0)
 }
 
 $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
-$status = recuperaDados("status","idStatus",$projeto['idStatus']);
+$status = recuperaDados("status","idEtapaProjeto",$projeto['idEtapaProjeto']);
 
 $ano = date('Y');
 ?>

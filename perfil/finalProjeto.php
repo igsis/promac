@@ -23,7 +23,7 @@ else
 $alterar = 0;
 
 
-if($projeto['idStatus'] == 6)
+if($projeto['idEtapaProjeto'] == 6)
 	$alterar = 1;
 
 ?>

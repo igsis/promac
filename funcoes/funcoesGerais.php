@@ -528,7 +528,7 @@ function recuperaDadosProjeto($tabela,$campo,$variavelCampo)
 function recuperaStatus($tabela)
 {
 	$con = bancoMysqli();
-	$sql = "SELECT situacaoAtual FROM $tabela WHERE idStatus = '1'";
+	$sql = "SELECT situacaoAtual FROM $tabela WHERE idEtapaProjeto = '1'";
 	$query = mysqli_query($con,$sql);
 	$campo = mysqli_fetch_array($query);
 	return $campo['situacaoAtual'];
@@ -2536,7 +2536,7 @@ function retornaQtdProjetos($tipoPessoa, $id)
              FROM 
                projeto AS proj  
   			  WHERE proj.publicado = 1
-  			  AND proj.idStatus NOT IN (5,21,26,32,15,11,6,22,27,33,17)
+  			  AND proj.idEtapaProjeto NOT IN (5,21,26,32,15,11,6,22,27,33,17)
   			  AND   proj.idPf = ".$id;
     
     elseif ($tipoPessoa == 2):
@@ -2550,7 +2550,7 @@ function retornaQtdProjetos($tipoPessoa, $id)
              ON pj.idPj = proj.idPj  
   			 
   			 WHERE proj.publicado = 1
-		     AND proj.idStatus NOT IN (5,21,26,32,15,11,6,22,27,33,17)
+		     AND proj.idEtapaProjeto NOT IN (5,21,26,32,15,11,6,22,27,33,17)
   			 AND   pj.cooperativa = 0
   			 AND   proj.idPj = ".$id;
     

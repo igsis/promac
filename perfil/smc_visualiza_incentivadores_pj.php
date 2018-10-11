@@ -95,12 +95,12 @@ if(isset($_POST['atualizar']))
 	if ($rows > 0) {
 		while($arquivo = mysqli_fetch_array($query))
 		{
-			# Recebe um array com idStatus de todos os docs
+			# Recebe um array com idEtapaProjeto de todos os docs
 			$totStatus[$count] = $arquivo['idStatusDocumento'];
 	 		$count ++;
 		}
 	}
-	# Verifica se tem algum status reprovado ou complemetação 
+	# Verifica se tem algum status reprovado ou complemetação
 	if ((in_array('2',$totStatus)) || in_array('3',$totStatus))
 	{
 		$QueryPJ = "UPDATE incentivador_pessoa_juridica SET liberado='2' WHERE idPj = '".$dados[0]['idPessoa']."'";

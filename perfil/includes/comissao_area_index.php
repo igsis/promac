@@ -2,7 +2,7 @@
 $array_status = array(7, 19, 24, 34); //status
 foreach ($array_status as $idStatus)
 {
-    $sqlStatus = "SELECT idStatus, status, ordem FROM status WHERE idStatus = '$idStatus'";
+    $sqlStatus = "SELECT idEtapaProjeto, etapaProjeto, ordem FROM etapa_projeto WHERE idEtapaProjeto = '$idStatus'";
     if (($pf['idNivelAcesso'] == 2) || ($pf['idNivelAcesso'] == 3))
     {
         $parecerista = NULL;
@@ -11,14 +11,14 @@ foreach ($array_status as $idStatus)
     {
         $parecerista = " AND idComissao = $idPf";
     }
-    $sqlProjeto = "SELECT idProjeto, nomeProjeto, protocolo, pf.nome, pf.cpf, razaoSocial, cnpj, areaAtuacao, pfc.nome AS comissao, status, pro.idStatus AS idStatus 
+    $sqlProjeto = "SELECT idProjeto, nomeProjeto, protocolo, pf.nome, pf.cpf, razaoSocial, cnpj, areaAtuacao, pfc.nome AS comissao, etapaProjeto, pro.idEtapaProjeto AS idEtapaProjeto 
                     FROM projeto AS pro
                     LEFT JOIN pessoa_fisica AS pf ON pro.idPf = pf.idPf
                     LEFT JOIN pessoa_juridica AS pj ON pro.idPj = pj.idPj
                     INNER JOIN area_atuacao AS ar ON pro.idAreaAtuacao = ar.idArea
                     LEFT JOIN pessoa_fisica AS pfc ON pro.idComissao = pfc.idPf 
-                    INNER JOIN status AS st ON pro.idStatus = st.idStatus
-                    WHERE pro.publicado = 1 AND pro.idStatus = '$idStatus'".$parecerista." ORDER BY idProjeto DESC";
+                    INNER JOIN etapa_projeto AS st ON pro.idEtapaProjeto = st.idEtapaProjeto
+                    WHERE pro.publicado = 1 AND pro.idEtapaProjeto = '$idStatus'" .$parecerista." ORDER BY idProjeto DESC";
     $queryProjeto = mysqli_query($con,$sqlProjeto);
     $queryStatus = mysqli_query($con,$sqlStatus);
     $num = mysqli_num_rows($queryProjeto);
@@ -30,7 +30,7 @@ foreach ($array_status as $idStatus)
         <div class='form-group'>
             <h5>Projetos com Status "<?=$status['status']?>"</h5>
             <form method="POST" action="<?= ($pf['idNivelAcesso'] == 2) ? "?perfil=smc_pesquisa_geral_resultado" : "?perfil=comissao_pesquisa_resultado"?>" class="form-horizontal" role="form">
-                <button type="submit" class="label label-warning" name="idStatus" value="<?=$status['idStatus']?>">
+                <button type="submit" class="label label-warning" name="idEtapaProjeto" value="<?=$status['idEtapaProjeto']?>">
                     <span>Total: <?=$num?></span>
                 </button>
             </form>
