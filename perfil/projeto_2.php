@@ -58,11 +58,11 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
                                 </div>
                                 <div class="col-md-2">
                                     <label>Valor do Incentivo solicitado no Pro-Mac</label>
-                                    <input type="text" pattern="([0-9]{1,3}\.)?[0-9]{1,3},[0-9]{2}$"  title="Formato desejado: 1.000,99" name="valorIncentivo" class="form-control" id="valorIncentivo" value="<?php echo isset($projeto['valorIncentivo']) ? dinheiroParaBr($projeto['valorIncentivo']) : null ?>" />
+                                    <input type="text" pattern="([0-9]{1,3}\.)?([0-9]{1,3}\.)?[0-9]{1,3},[0-9]{2}$"  title="Formato desejado: 1.000,99" name="valorIncentivo" class="form-control" id="valorIncentivo" value="<?php echo isset($projeto['valorIncentivo']) ? dinheiroParaBr($projeto['valorIncentivo']) : null ?>" />
                                 </div>
                                 <div class="col-md-2">
                                     <label>Valor de outros financiamentos</label>
-                                    <input type="text" pattern="([0-9]{1,3}\.)?[0-9]{1,3},[0-9]{2}$" title="Formato desejado: 1.000,99" name="valorFinanciamento" class="form-control" id="valorFinanciamento" value="<?php echo isset($projeto['valorFinanciamento']) ? dinheiroParaBr($projeto['valorFinanciamento']) : null ?>" />
+                                    <input type="text" pattern="([0-9]{1,3}\.)?([0-9]{1,3}\.)?[0-9]{1,3},[0-9]{2}$" title="Formato desejado: 1.000,99" name="valorFinanciamento" class="form-control" id="valorFinanciamento" value="<?php echo isset($projeto['valorFinanciamento']) ? dinheiroParaBr($projeto['valorFinanciamento']) : null ?>" />
                                 </div>
                             </div>
 
