@@ -13,8 +13,9 @@ $renuncia = recuperaDados("renuncia_fiscal", "idRenuncia", $projeto['idRenunciaF
 $cronograma = recuperaDados("cronograma", "idCronograma", $projeto['idCronograma']);
 $video = recuperaDados("projeto", "idProjeto", $idProjeto);
 $v = array($video['video1'], $video['video2'], $video['video3']);
-$status = recuperaDados("status", "idEtapaProjeto", $projeto['idEtapaProjeto']);
-$idStatus = $projeto['idEtapaProjeto'];
+$etapa = recuperaDados("etapa_projeto", "idEtapaProjeto", $projeto['idEtapaProjeto']);
+$status = recuperaDados("status", "idStatus", $projeto['idStatus']);
+$idEtapa = $projeto['idEtapaProjeto'];
 $dateNow = date('Y-m-d');
 $dataPublicacaoDoc = $projeto['dataPublicacaoDoc'];
 $dataRecurso = date('Y-m-d', strtotime("+7 days", strtotime($dataPublicacaoDoc)));
@@ -22,10 +23,10 @@ $dataRecurso = date('Y-m-d', strtotime("+7 days", strtotime($dataPublicacaoDoc))
 $diferenca = strtotime($dateNow) - strtotime($dataRecurso);
 $dias = floor($diferenca / (60 * 60 * 24));//Calcula a diferença em dias
 
-$status_aprovado = array(5, 21, 26, 16, 11);
-$status_reprovado = array(6, 22, 27, 17);
-$status_visivel = array(2, 12, 13, 23, 14);
-$status_analise = array(3,7,10,19,20,24,25,34,15);
+$etapa_aprovado = array(5, 21, 26, 16, 11);
+$etapa_reprovado = array(6, 22, 27, 17);
+$etapa_visivel = array(2, 12, 13, 23, 14);
+$etapa_analise = array(3,7,10,19,20,24,25,34,15);
 ?>
 <section id="list_items" class="home-section bg-white">
     <div class="container">
@@ -58,16 +59,16 @@ $status_analise = array(3,7,10,19,20,24,25,34,15);
                                         <li class="list-group-item"><strong>Protocolo (nº ISP):</strong> <?= $projeto['protocolo'] ?></li>
                                         <li class="list-group-item"><strong>Etapa do projeto:</strong>
                                             <?php
-                                            if (in_array($idStatus, $status_aprovado)) {
+                                            if (in_array($idEtapa, $etapa_aprovado)) {
                                                 echo "Aprovado";
                                             }
-                                            if (in_array($idStatus, $status_reprovado)) {
+                                            if (in_array($idEtapa, $etapa_reprovado)) {
                                                 echo "Reprovado";
                                             }
-                                            if (in_array($idStatus, $status_visivel)) {
-                                                echo $status['status'];
+                                            if (in_array($idEtapa, $etapa_visivel)) {
+                                                echo $etapa['status'];
                                             }
-                                            if (in_array($idStatus, $status_analise)) {
+                                            if (in_array($idEtapa, $etapa_analise)) {
                                                 echo "Projeto em análise";
                                             }
                                             ?>
@@ -75,7 +76,7 @@ $status_analise = array(3,7,10,19,20,24,25,34,15);
                                         <li class='list-group-item'>
                                             <strong>Valor Aprovado:</strong>
                                             <?php
-                                            if (in_array($idStatus, $status_aprovado)) {
+                                            if (in_array($idEtapa, $etapa_aprovado)) {
                                                 echo "R$ " . dinheiroParaBr($projeto['valorAprovado']);
                                             }
                                             ?>
@@ -113,7 +114,7 @@ $status_analise = array(3,7,10,19,20,24,25,34,15);
 
                             <!-- Botão para anexar certificados -->
                             <?php
-                            if (in_array($idStatus, $status_aprovado)){
+                            if (in_array($idEtapa, $etapa_aprovado)){
                             ?>
                                 <div class="form-group">
                                     <div class="col-md-offset-4 col-md-6">
@@ -128,7 +129,7 @@ $status_analise = array(3,7,10,19,20,24,25,34,15);
 
                             <!-- Botão para solicitar alteração do projeto -->
                             <?php
-                            if(in_array($idStatus, $status_aprovado)){
+                            if(in_array($idEtapa, $etapa_aprovado)){
                             ?>
                                 <div class="form-group">
                                     <div class="col-md-offset-4 col-md-6">
@@ -143,7 +144,7 @@ $status_analise = array(3,7,10,19,20,24,25,34,15);
 
                             <!-- Botão para anexar complemento de informações -->
                             <?php
-                            if(($idStatus == 12) || ($idStatus == 13)) {
+                            if(($idEtapa == 12) || ($idEtapa == 13)) {
                             ?>
                                     <div class="form-group">
                                         <div class="col-md-offset-4 col-md-6">
@@ -160,8 +161,8 @@ $status_analise = array(3,7,10,19,20,24,25,34,15);
 
                             <!-- Botão para anexar recurso -->
                             <?php
-                            if($idStatus != 26 && $idStatus != 27){
-                                if(in_array($idStatus, $status_reprovado)){
+                            if($idEtapa != 26 && $idEtapa != 27){
+                                if(in_array($idEtapa, $etapa_reprovado)){
                             ?>
                                     <div class="form-group">
                                         <div class="col-md-offset-4 col-md-6">

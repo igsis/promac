@@ -9,12 +9,13 @@ if($alterar == 1 || $alterar == 0)
     /*
         Caso esteja alterando após indeferimento, muda o status para enviado
     */
-    $queryInsert = "UPDATE projeto SET idEtapaProjeto='2', protocolo = '$protocolo' WHERE idProjeto='$idProjeto'";
+    $etapa = recuperaDados("etapa_projeto", "idEtapaProjeto", "2");
+    $queryInsert = "UPDATE projeto SET idEtapaProjeto = '".$etapa['idEtapaProjeto']."', idStatus = '".$etapa['idStatus']."', protocolo = '$protocolo' WHERE idProjeto='$idProjeto'";
     if(mysqli_query($con, $queryInsert))
     {
         gravarLog($queryInsert);
         $data = date('Y-m-d h:i:s');
-        $sql_historico = "INSERT INTO `historico_status`(`idProjeto`, `idEtapaProjeto`, `data`) VALUES ('$idProjeto', 2, '$data')";
+        $sql_historico = "INSERT INTO `historico_status`(`idProjeto`, `".$etapa['idStatus']."`, `data`) VALUES ('$idProjeto', 2, '$data')";
         $query_historico = mysqli_query($con, $sql_historico);
     }
     if($queryInsert)
@@ -32,7 +33,7 @@ if($alterar == 1 || $alterar == 0)
 }
 
 $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
-$status = recuperaDados("status","idEtapaProjeto",$projeto['idEtapaProjeto']);
+$status = recuperaDados("etapa_projeto","idEtapaProjeto",$projeto['idEtapaProjeto']);
 
 $ano = date('Y');
 ?>
@@ -52,7 +53,7 @@ $ano = date('Y');
     	?>
 		<div class="form-group">
 			<h4>Informações da Inscrição</h4>
-			<p><strong><font color='#01DF3A'><strong>Caro proponente, o status da sua inscrição é <?php echo $status['status'] ?>!</font></strong></p>
+			<p><strong><font color='#01DF3A'><strong>Caro proponente, o status da sua inscrição é <?php echo $status['etapaProjeto'] ?>!</font></strong></p>
 				<p>Acompanhe através do sistema o resultado da análise da comissão sobre o seu projeto, e em caso de aprovação compareça na Secretaria Municipal de Cultura para assinatura do termo de responsabilidade.</strong></font></strong></p>
 		</div>
 		<div class="row">
