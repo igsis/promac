@@ -91,7 +91,7 @@
             </div>
 
             <div class="form-group">
-                <div class="col-md-offset-2 col-md-6"><label>Status de Análise</label><br/>
+                <div class="col-md-offset-2 col-md-6"><label>Análise do Parecerista</label><br/>
                     <select class="form-control" name="idStatusParecerista">
                         <option value="0"></option>
                         <?php echo geraOpcao("status_parecerista",$projeto['idStatusParecerista']) ?>
