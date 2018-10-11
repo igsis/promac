@@ -292,7 +292,7 @@ foreach ($array_status as $idStatus)
         $i = 0;
         ?>
         <div class='form-group'>
-            <h5>Projetos com Status "<?=$status['etapaProjeto']?>"</h5>
+            <h5>Projetos com Etapa "<?=$status['etapaProjeto']?>"</h5>
             <?php
             if ($pf['idNivelAcesso'] == 2)
             {

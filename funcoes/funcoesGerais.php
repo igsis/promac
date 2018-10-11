@@ -528,7 +528,7 @@ function recuperaDadosProjeto($tabela,$campo,$variavelCampo)
 function recuperaStatus($tabela)
 {
 	$con = bancoMysqli();
-	$sql = "SELECT situacaoAtual FROM $tabela WHERE idEtapaProjeto = '1'";
+	$sql = "SELECT situacaoAtual FROM $tabela WHERE idStatus = '1'";
 	$query = mysqli_query($con,$sql);
 	$campo = mysqli_fetch_array($query);
 	return $campo['situacaoAtual'];
