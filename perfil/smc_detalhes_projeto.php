@@ -67,7 +67,6 @@ if(isset($_POST['gravarPrazos']))
 if(isset($_POST['gravarAdm']))
 {
     $idP = $_POST['IDP'];
-    $idStatus = $_POST['idEtapaProjeto'];
     $valorAprovado = dinheiroDeBr($_POST['valorAprovado']);
     $idRenunciaFiscal = $_POST['idRenunciaFiscal'];
     $statusParecerista = $_POST['idStatusParecerista'];
@@ -91,7 +90,7 @@ if(isset($_POST['gravarAdm']))
     $linkPublicacaoDoc = $_POST['linkPublicacaoDoc'];
     $data = date('Y-m-d h:i:s');
     $idUsuario = $_SESSION['idUser'];
-    $sql_gravarAdm = "UPDATE projeto SET idEtapaProjeto = '$idStatus', valorAprovado = '$valorAprovado', idRenunciaFiscal = '$idRenunciaFiscal', idStatusParecerista = '$statusParecerista', dataReuniao = '$dataReuniao', dataPublicacaoDoc = '$dataPublicacaoDoc', linkPublicacaoDoc = '$linkPublicacaoDoc' WHERE idProjeto = '$idP' ";
+    $sql_gravarAdm = "UPDATE projeto SET valorAprovado = '$valorAprovado', idRenunciaFiscal = '$idRenunciaFiscal', idStatusParecerista = '$statusParecerista', dataReuniao = '$dataReuniao', dataPublicacaoDoc = '$dataPublicacaoDoc', linkPublicacaoDoc = '$linkPublicacaoDoc' WHERE idProjeto = '$idP' ";
     if(mysqli_query($con,$sql_gravarAdm))
     {
         $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";

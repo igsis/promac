@@ -73,13 +73,6 @@
 
         <form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
             <div class="form-group">
-                <div class="col-md-offset-2 col-md-8"><label>Etapa do Projeto</label><br/>
-                    <select class="form-control" name="idEtapaProjeto">
-                        <?php echo geraOpcao("status",$projeto['idEtapaProjeto']) ?>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group">
                 <div class="col-md-offset-2 col-md-4"><label>Valor Aprovado</label><br/>
                     <input type="text" name="valorAprovado" id='valor' class="form-control" value="<?php echo dinheiroParaBr($projeto['valorAprovado']) ?>">
                 </div>
