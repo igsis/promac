@@ -270,18 +270,18 @@ if(isset($_POST['liberacaoPJ']))
             $array_status = array(2, 3, 10, 13, 20, 23, 25, 29, 31, 14, 15, 11);//status
             foreach ($array_status as $idStatus)
             {
-                $sql = "SELECT idProjeto, nomeProjeto, protocolo, pf.nome, pf.cpf, razaoSocial, cnpj, areaAtuacao, pfc.nome AS comissao, etapaProjeto, pro.idStatus AS idStatus 
+                $sql = "SELECT idProjeto, nomeProjeto, protocolo, pf.nome, pf.cpf, razaoSocial, cnpj, areaAtuacao, pfc.nome AS comissao, status, pro.idStatus AS idStatus 
                     FROM projeto AS pro
                     LEFT JOIN pessoa_fisica AS pf ON pro.idPf = pf.idPf
                     LEFT JOIN pessoa_juridica AS pj ON pro.idPj = pj.idPj
                     INNER JOIN area_atuacao AS ar ON pro.idAreaAtuacao = ar.idArea
                     LEFT JOIN pessoa_fisica AS pfc ON pro.idComissao = pfc.idPf 
-                    INNER JOIN etapa_projeto AS st ON pro.idStatus = st.idEtapaProjeto
-                    WHERE pro.publicado = 1 AND pro.idStatus = i$idStatusdStatus ORDER BY idProjeto DESC";
+                    INNER JOIN status AS st ON pro.idStatus = st.idStatus
+                    WHERE pro.publicado = 1 AND pro.idStatus = '$idStatus' ORDER BY idProjeto DESC";
                 $query = mysqli_query($con,$sql);
                 $num = mysqli_num_rows($query);
                 ?>
-                <div class='form-group'><h5><?=$campo['status'] . "-".  $cidStatusStatus']?></h5></div>
+                <div class='form-group'><h5><?=$campo['status'] . "-".  $campo['idStatus']?></h5></div>
                 <div class="row">
                     <div class="col-md-offset-1 col-md-10">
                         <div class="table-responsive list_info">
@@ -329,7 +329,7 @@ if(isset($_POST['liberacaoPJ']))
             <div class="col-md-offset-1 col-md-10">
                 <div class="table-responsive list_info">
                     <?php
-            $sql = "SELECT * FROM projeto WHERE publicado = 1 AND idEtapaProjeto = 12 ORDER BY idProjeto DESC LIMIT 0,10";
+            $sql = "SELECT * FROM projeto WHERE publicado = 1 AND idStatus = 12 ORDER BY idProjeto DESC LIMIT 0,10";
             $query = mysqli_query($con,$sql);
             $num = mysqli_num_rows($query);
             if($num > 0)
@@ -352,7 +352,7 @@ if(isset($_POST['liberacaoPJ']))
                         while($campo = mysqli_fetch_array($query))
                         {
                             $area = recuperaDados("area_atuacao","idArea",$campo['idAreaAtuacao']);
-                            $status = recuperaDados("staidStatusStatus",$cidStatusStatus']);
+                            $status = recuperaDados("status","idStatus",$campo['idStatus']);
                             $pf = recuperaDados("pessoa_fisica","idPf",$campo['idPf']);
                             $pj = recuperaDados("pessoa_juridica","idPj",$campo['idPj']);
                             $comissao = recuperaDados("pessoa_fisica","idPf",$campo['idComissao']);

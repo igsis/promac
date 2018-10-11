@@ -12,7 +12,7 @@ $http = $server."/pdf/";
 function pegaStatus($id)
 {
 	$con = bancoMysqli();
-	$pegaNome = "SELECT etapaProjeto FROM etapa_projeto WHERE idEtapaProjeto = '$id'";
+	$pegaNome = "SELECT status FROM status WHERE idStatus = '$id'";
 	$enviaNome = mysqli_query($con, $pegaNome);
 	$row = mysqli_fetch_array($enviaNome);
 	return $row['status'];

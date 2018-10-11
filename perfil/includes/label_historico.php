@@ -11,7 +11,7 @@
             </tr>
         </thead>
             <?php
-            $sql_lista_historico = "SELECT st.status, hs.data AS data FROM historico_status AS hs INNER JOIN etapa_projeto AS st ON hs.idStatus = st.idStatus WHERE hs.idProjeto = '$idProjeto' ORDER BY hs.data,hs.idStatus";
+            $sql_lista_historico = "SELECT st.status, hs.data AS data FROM historico_status AS hs INNER JOIN status AS st ON hs.idStatus = st.idStatus WHERE hs.idProjeto = '$idProjeto' ORDER BY hs.data,hs.idStatus";
             $query_lista_historico = mysqli_query($con,$sql_lista_historico);
             $num = mysqli_num_rows($query_lista_historico);
             if($num > 0){
@@ -46,7 +46,7 @@
             </thead>
 
         <?php
-        $sql_lista_historico = "SELECT st.status AS h_st, rn.data AS dt, rn.dataReuniao, pr.status AS pr_s, cm.nome, us.nome AS user FROM historico_reuniao AS rn LEFT JOIN pessoa_fisica AS cm ON rn.idComissao = cm.idPf INNER JOIN status_parecerista AS pr ON rn.idStatusParecerista = pr.idStatusParecerista INNER JOIN pessoa_fisica AS us ON rn.idUsuario = us.idPf INNER JOIN etapa_projeto AS st ON rn.idStatus = st.idStatus WHERE rn.idProjeto = '$idProjeto' ORDER BY rn.data,rn.idStatus";
+        $sql_lista_historico = "SELECT st.status AS h_st, rn.data AS dt, rn.dataReuniao, pr.status AS pr_s, cm.nome, us.nome AS user FROM historico_reuniao AS rn LEFT JOIN pessoa_fisica AS cm ON rn.idComissao = cm.idPf INNER JOIN status_parecerista AS pr ON rn.idStatusParecerista = pr.idStatusParecerista INNER JOIN pessoa_fisica AS us ON rn.idUsuario = us.idPf INNER JOIN status AS st ON rn.idStatus = st.idStatus WHERE rn.idProjeto = '$idProjeto' ORDER BY rn.data,rn.idStatus";
         $query_lista_historico = mysqli_query($con,$sql_lista_historico);
         $num = mysqli_num_rows($query_lista_historico);
             if($num > 0)
@@ -86,7 +86,7 @@
     </thead>
 
   <?php
-    $sql_lista_historico = "SELECT st.status AS h_st, rn.data AS dt, rn.dataPublicacao, rn.linkPublicacao, us.nome AS user FROM historico_publicacao AS rn INNER JOIN pessoa_fisica AS us ON rn.idUsuario = us.idPf INNER JOIN etapa_projeto AS st ON rn.idStatus = st.idStatus WHERE rn.idProjeto = '$idProjeto' ORDER BY rn.data,rn.idStatus";
+    $sql_lista_historico = "SELECT st.status AS h_st, rn.data AS dt, rn.dataPublicacao, rn.linkPublicacao, us.nome AS user FROM historico_publicacao AS rn INNER JOIN pessoa_fisica AS us ON rn.idUsuario = us.idPf INNER JOIN status AS st ON rn.idStatus = st.idStatus WHERE rn.idProjeto = '$idProjeto' ORDER BY rn.data,rn.idStatus";
             $query_lista_historico = mysqli_query($con,$sql_lista_historico);
             $num = mysqli_num_rows($query_lista_historico);
                 if($num > 0)

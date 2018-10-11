@@ -91,7 +91,7 @@ if(isset($_POST['gravarAdm']))
     $linkPublicacaoDoc = $_POST['linkPublicacaoDoc'];
     $data = date('Y-m-d h:i:s');
     $idUsuario = $_SESSION['idUser'];
-    $sql_gravarAdm = "UPDATE projeto SET idEtapaProjeto = i$idStatusdStatus, valorAprovado = '$valorAprovado', idRenunciaFiscal = '$idRenunciaFiscal', idStatusParecerista = '$statusParecerista', dataReuniao = '$dataReuniao', dataPublicacaoDoc = '$dataPublicacaoDoc', linkPublicacaoDoc = '$linkPublicacaoDoc' WHERE idProjeto = '$idP' ";
+    $sql_gravarAdm = "UPDATE projeto SET idStatus = '$idStatus', valorAprovado = '$valorAprovado', idRenunciaFiscal = '$idRenunciaFiscal', idStatusParecerista = '$statusParecerista', dataReuniao = '$dataReuniao', dataPublicacaoDoc = '$dataPublicacaoDoc', linkPublicacaoDoc = '$linkPublicacaoDoc' WHERE idProjeto = '$idP' ";
     if(mysqli_query($con,$sql_gravarAdm))
     {
         $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
@@ -99,7 +99,7 @@ if(isset($_POST['gravarAdm']))
         echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
         if($dataReuniao != '' || $statusParecerista != 0)
         {
-            $sql_historico_reuniao = "INSERT INTO historico_reuniao (idProjeto,idStatus,dataReuniao,idStatusParecerista,data,idUsuario) VALUES ('$idP',i$idStatusdStatus,'$dataReuniao','$statusParecerista','$data','$idUsuario')";
+            $sql_historico_reuniao = "INSERT INTO historico_reuniao (idProjeto,idStatus,dataReuniao,idStatusParecerista,data,idUsuario) VALUES ('$idP','$idStatus','$dataReuniao','$statusParecerista','$data','$idUsuario')";
             if(mysqli_query($con,$sql_historico_reuniao))
             {
                 $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
@@ -114,7 +114,7 @@ if(isset($_POST['gravarAdm']))
         }
         if($dataPublicacaoDoc != '' || $linkPublicacaoDoc != '')
         {
-            $sql_historico_publicacao = "INSERT INTO historico_publicacao (idProjeto,idStatus,dataPublicacao,linkPublicacao,data,idUsuario) VALUES ('$idP',i$idStatusdStatus,'$dataPublicacaoDoc','$linkPublicacaoDoc','$data','$idUsuario')";
+            $sql_historico_publicacao = "INSERT INTO historico_publicacao (idProjeto,idStatus,dataPublicacao,linkPublicacao,data,idUsuario) VALUES ('$idP','$idStatus','$dataPublicacaoDoc','$linkPublicacaoDoc','$data','$idUsuario')";
             if(mysqli_query($con,$sql_historico_publicacao))
             {
                 $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
@@ -173,7 +173,7 @@ if(isset($_POST['envioComissao']))
             break;
     }
     $dateNow = date('Y:m:d h:i:s');
-    $sql_envioComissao = "UPDATE projeto SET idEtapaProjeto = '$statusEnvio', envioComissao = '$dateNow' WHERE idProjeto = '$idProjeto' ";
+    $sql_envioComissao = "UPDATE projeto SET idStatus = '$statusEnvio', envioComissao = '$dateNow' WHERE idProjeto = '$idProjeto' ";
     if(mysqli_query($con,$sql_envioComissao))
     {
         $sql_historico = "INSERT INTO historico_status (idProjeto, idStatus, data) VALUES ('$idProjeto', '$statusEnvio', '$dateNow')";
@@ -320,7 +320,7 @@ if(isset($_POST['editarParecer'])){
     $observacoes = $_POST['observacoes'];
     $idProjeto = $_POST['idPessoa'];
     $idArquivo = $_POST['idArquivo'];
-    $query = "UPDATE upload_arquivo SET idStatusDocumento = s$statustatus, observacoes = '$observacoes' WHERE idUploadArquivo = '$idArquivo' ";
+    $query = "UPDATE upload_arquivo SET idStatusDocumento = '$status', observacoes = '$observacoes' WHERE idUploadArquivo = '$idArquivo' ";
     $envia = mysqli_query($con, $query);
     if($envia)
     {

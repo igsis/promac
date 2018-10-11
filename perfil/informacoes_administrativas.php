@@ -9,7 +9,7 @@ if($alterar == 1 || $alterar == 0)
     /*
         Caso esteja alterando após indeferimento, muda o status para enviado
     */
-    $queryInsert = "UPDATE projeto SET idEtapaProjeto='2', protocolo = '$protocolo' WHERE idProjeto='$idProjeto'";
+    $queryInsert = "UPDATE projeto SET idStatus='2', protocolo = '$protocolo' WHERE idProjeto='$idProjeto'";
     if(mysqli_query($con, $queryInsert))
     {
         gravarLog($queryInsert);

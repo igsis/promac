@@ -2537,7 +2537,7 @@ function retornaQtdProjetos($tipoPessoa, $id)
                projeto AS proj  
   			  WHERE proj.publicado = 1
   			  AND proj.idStatus NOT IN (5,21,26,32,15,11,6,22,27,33,17)
-  			  AND   proj.idPf = " .$id;
+  			  AND   proj.idPf = ".$id;
     
     elseif ($tipoPessoa == 2):
   	  
@@ -2552,7 +2552,7 @@ function retornaQtdProjetos($tipoPessoa, $id)
   			 WHERE proj.publicado = 1
 		     AND proj.idStatus NOT IN (5,21,26,32,15,11,6,22,27,33,17)
   			 AND   pj.cooperativa = 0
-  			 AND   proj.idPj = " .$id;
+  			 AND   proj.idPj = ".$id;
     
   endif;	
 

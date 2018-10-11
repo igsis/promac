@@ -29,7 +29,7 @@ $status_reprovado = array(6, 22, 27, 17);
 		<?php
 		$sql_area = "SELECT DISTINCT idAreaAtuacao, areaAtuacao FROM `projeto`
 					INNER JOIN area_atuacao ON idAreaAtuacao = idArea 
-					WHERE `dataReuniao` = '$data' AND idEtapaProjeto = 5"; //status aprovado
+					WHERE `dataReuniao` = '$data' AND idStatus = 5"; //status aprovado
 		$query_area = mysqli_query($con,$sql_area);
 		while($campo = mysqli_fetch_array($query_area))
 		{
@@ -71,7 +71,7 @@ $status_reprovado = array(6, 22, 27, 17);
     <?php
     $sql_area = "SELECT DISTINCT idAreaAtuacao, areaAtuacao FROM `projeto`
 					INNER JOIN area_atuacao ON idAreaAtuacao = idArea 
-					WHERE `dataReuniao` = '$data' AND idEtapaProjeto = 6"; //status reprovado
+					WHERE `dataReuniao` = '$data' AND idStatus = 6"; //status reprovado
     $query_area = mysqli_query($con,$sql_area);
     while($campo = mysqli_fetch_array($query_area))
     {

@@ -13,7 +13,7 @@ $http = $server."/pdf/";
 function pegaStatus($id)
 {
 	$con = bancoMysqli();
-	$pegaNome = "SELECT etapaProjeto FROM etapa_projeto WHERE idEtapaProjeto = '$id'";
+	$pegaNome = "SELECT status FROM status WHERE idStatus = '$id'";
 	$enviaNome = mysqli_query($con, $pegaNome);
 	$row = mysqli_fetch_array($enviaNome);
 	return $row['status'];
@@ -117,7 +117,7 @@ if(isset($_POST["enviar"]))
 					if(move_uploaded_file($nome_temporario, $dir.$new_name))
 					{
 						$sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('3', '$idProjeto', '$y', '$new_name', '$hoje', '1'); ";
-							$sql_check = "UPDATE projeto SET empresaApenada = '$empresaApenada', idEtapaProjeto = '11' WHERE idProjeto = '$idProjeto'";
+							$sql_check = "UPDATE projeto SET empresaApenada = '$empresaApenada', idStatus = '11' WHERE idProjeto = '$idProjeto'";
 						$query = mysqli_query($con,$sql_insere_arquivo);
 						$query = mysqli_query($con,$sql_check);
 						if($query)
