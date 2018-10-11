@@ -349,6 +349,6 @@ $pf = recuperaDados("incentivador_pessoa_fisica","idPf",$idPf);
 	}
 	?>
 	<div class="col-md-offset-2 col-md-8">
-		<a href="../include/arquivos_pessoa.php?idPessoa=<?php echo $pf['idPf'] ?>&tipo=<?php echo $tipoPessoa?>" class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos da empresa</a>
+		<a href="../include/arquivos_pessoa.php?idPessoa=<?php echo $pf['idPf'] ?>&tipo=<?php echo $tipoPessoa?>" class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos da pessoa</a>
 	</div>
 </section>
