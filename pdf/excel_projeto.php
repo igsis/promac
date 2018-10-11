@@ -110,9 +110,9 @@ $objPHPExcel->getActiveSheet()->getColumnDimension('AG')->setAutoSize(true);
 
 
 //Dados Projeto
-$sql = "SELECT idProjeto, areaAtuacao, segmento, protocolo, nomeProjeto, valorProjeto, valorIncentivo, resumoProjeto, publicoAlvo, tipoPessoa, idPj, idPf, status, pr.idStatus, tipoPessoa, valorAprovado, idRenunciaFiscal
+$sql = "SELECT idProjeto, areaAtuacao, segmento, protocolo, nomeProjeto, valorProjeto, valorIncentivo, resumoProjeto, publicoAlvo, tipoPessoa, idPj, idPf, etapaProjeto, pr.idStatus, tipoPessoa, valorAprovado, idRenunciaFiscal
          FROM projeto AS pr
-         INNER JOIN status AS st ON pr.idStatus = st.idStatus
+         INNER JOIN etapa_projeto AS st ON pr.idStatus = st.idEtapaProjeto
          INNER JOIN area_atuacao AS area ON pr.idAreaAtuacao = area.idArea
          INNER JOIN renuncia_fiscal AS renuncia ON pr.idRenunciaFiscal = renuncia.idRenuncia
          WHERE pr.publicado = '1' ORDER BY protocolo";

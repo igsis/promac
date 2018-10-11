@@ -1145,8 +1145,8 @@ ALTER TABLE `reserva`
 --
 -- Indexes for table `status`
 --
-ALTER TABLE `status`
-  ADD PRIMARY KEY (`idStatus`);
+ALTER TABLE etapa_projeto
+  ADD PRIMARY KEY (idEtapaProjeto);
 
 --
 -- Indexes for table `statusprojeto`
@@ -1334,8 +1334,8 @@ ALTER TABLE `reserva`
 --
 -- AUTO_INCREMENT for table `status`
 --
-ALTER TABLE `status`
-  MODIFY `idStatus` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+ALTER TABLE etapa_projeto
+  MODIFY idEtapaProjeto int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `statusprojeto`
 --

@@ -313,7 +313,7 @@ if(isset($_POST['liberacaoPJ']))
 					FROM 
  					  projeto as p 
 					  WHERE publicado = 1 
-					  AND idStatus = 2 		  
+					  AND idEtapaProjeto = 2 		  
 					  ORDER BY idProjeto 
 					  DESC LIMIT 0,10";
 					
@@ -336,7 +336,7 @@ if(isset($_POST['liberacaoPJ']))
                     <div class="col-md-offset-1 col-md-10">
                         <div class="table-responsive list_info">
                             <?php
-					$sql = "SELECT * FROM projeto WHERE publicado = 1 AND idStatus = 12 ORDER BY idProjeto DESC LIMIT 0,10";
+					$sql = "SELECT * FROM projeto WHERE publicado = 1 AND idEtapaProjeto = 12 ORDER BY idProjeto DESC LIMIT 0,10";
 					$query = mysqli_query($con,$sql);
 					$num = mysqli_num_rows($query);
 					if($num > 0)
@@ -409,7 +409,7 @@ if(isset($_POST['liberacaoPJ']))
                     <div class="col-md-offset-1 col-md-10">
                         <div class="table-responsive list_info">
                             <?php
-					$sql = "SELECT * FROM projeto WHERE publicado = 1 AND idStatus = 13 ORDER BY idProjeto DESC LIMIT 0,10";
+					$sql = "SELECT * FROM projeto WHERE publicado = 1 AND idEtapaProjeto = 13 ORDER BY idProjeto DESC LIMIT 0,10";
 					$query = mysqli_query($con,$sql);
 					$num = mysqli_num_rows($query);
 					if($num > 0)
@@ -480,7 +480,7 @@ if(isset($_POST['liberacaoPJ']))
                     <div class="col-md-offset-1 col-md-10">
                         <div class="table-responsive list_info">
                             <?php
-					$sql = "SELECT * FROM projeto WHERE publicado = 1 AND idStatus = 10 ORDER BY idProjeto DESC LIMIT 0,10";
+					$sql = "SELECT * FROM projeto WHERE publicado = 1 AND idEtapaProjeto = 10 ORDER BY idProjeto DESC LIMIT 0,10";
 					$query = mysqli_query($con,$sql);
 					$num = mysqli_num_rows($query);
 					if($num > 0)
@@ -552,7 +552,7 @@ if(isset($_POST['liberacaoPJ']))
                     <div class="col-md-offset-1 col-md-10">
                         <div class="table-responsive list_info">
                             <?php
-					$sql = "SELECT * FROM projeto WHERE publicado = 1 AND idStatus = 11 ORDER BY idProjeto DESC LIMIT 0,10";
+					$sql = "SELECT * FROM projeto WHERE publicado = 1 AND idEtapaProjeto = 11 ORDER BY idProjeto DESC LIMIT 0,10";
 					$query = mysqli_query($con,$sql);
 					$num = mysqli_num_rows($query);
 					if($num > 0)
@@ -624,7 +624,7 @@ if(isset($_POST['liberacaoPJ']))
                     <div class="col-md-offset-1 col-md-10">
                         <div class="table-responsive list_info">
                             <?php
-					$sql = "SELECT * FROM projeto WHERE publicado = 1 AND idStatus = 15 ORDER BY idProjeto DESC LIMIT 0,10";
+					$sql = "SELECT * FROM projeto WHERE publicado = 1 AND idEtapaProjeto = 15 ORDER BY idProjeto DESC LIMIT 0,10";
 					$query = mysqli_query($con,$sql);
 					$num = mysqli_num_rows($query);
 					if($num > 0)

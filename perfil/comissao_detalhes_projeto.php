@@ -100,7 +100,7 @@ if(isset($_POST['gravarAdm']))
 		$mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
 		gravarLog($sql_gravarAdm);
         $idComissao = $projeto['idComissao'];
-        $sql_historico_reuniao = "INSERT INTO historico_reuniao (idProjeto,idStatus,dataReuniao,idStatusParecerista,idComissao,data,idUsuario) VALUES ('$idProjeto','$idStatus','$dataReuniao','$statusParecerista','$idComissao','$data','$idUsuario')";
+        $sql_historico_reuniao = "INSERT INTO historico_reuniao (idProjeto,idStatus,dataReuniao,idStatusParecerista,idComissao,data,idUsuario) VALUES ('$idProjeto',i$idStatusdStatus,'$dataReuniao','$statusParecerista','$idComissao','$data','$idUsuario')";
         if(mysqli_query($con,$sql_historico_reuniao))
         {
             $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
@@ -161,10 +161,10 @@ if(isset($_POST['finalizaComissao']))
             break;
     }
 	$dateNow = date('Y:m:d h:i:s');
-	$sql_finalizaComissao = "UPDATE projeto SET idStatus = '$idStatus', finalizacaoComissao = '$dateNow' WHERE idProjeto = '$idP' ";
+	$sql_finalizaComissao = "UPDATE projeto SET idEtapaProjeto = i$idStatusdStatus, finalizacaoComissao = '$dateNow' WHERE idProjeto = '$idP' ";
 	if(mysqli_query($con,$sql_finalizaComissao))
 	{
-        $sql_historico = "INSERT INTO historico_status (idProjeto, idStatus, data) VALUES ('$idProjeto', '$idStatus', '$dateNow')";
+        $sql_historico = "INSERT INTO historico_status (idProjeto, idStatus, data) VALUES ('$idProjeto', i$idStatusdStatus, '$dateNow')";
         $query_historico = mysqli_query($con, $sql_historico);
         $mensagem = "<font color='#01DF3A'><strong>Enviado à SMC com sucesso!</strong></font>";
         gravarLog($sql_finalizaComissao);
