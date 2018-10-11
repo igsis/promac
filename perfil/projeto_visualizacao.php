@@ -173,7 +173,6 @@ $status_analise = array(3,7,10,19,20,24,25,34,15);
                                             </form>
                                         </div>
                                     </div>
-                                </div>
                             <?php
                                 }
                             }
