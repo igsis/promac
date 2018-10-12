@@ -2528,39 +2528,34 @@ function selecionaArquivoAnexo($http, $idListaDocumento, $extensao = '.php')
 
 function retornaQtdProjetos($tipoPessoa, $id)
 {
-  $conexao = bancoMysqli();
+    $conexao = bancoMysqli();
 
-  if($tipoPessoa == 1):    
-    $query =  "SELECT 
-               count(idProjeto)
-             FROM 
-               projeto AS proj  
-  			  WHERE proj.publicado = 1
-  			  AND proj.idEtapaProjeto NOT IN (5,21,26,32,15,11,6,22,27,33,17)
-  			  AND   proj.idPf = ".$id;
-    
-    elseif ($tipoPessoa == 2):
-  	  
-  	  $query =  "SELECT 
-               count(idProjeto)
-             FROM 
-               projeto AS proj  
-             INNER JOIN 
-               pessoa_juridica AS pj 
-             ON pj.idPj = proj.idPj  
-  			 
-  			 WHERE proj.publicado = 1
-		     AND proj.idEtapaProjeto NOT IN (5,21,26,32,15,11,6,22,27,33,17)
-  			 AND   pj.cooperativa = 0
-  			 AND   proj.idPj = ".$id;
-    
-  endif;	
+    if ($tipoPessoa == 1) {
+        $query = "SELECT 
+                    count(idProjeto)
+                    FROM 
+                    projeto AS proj  
+                    WHERE proj.publicado = 1
+                    AND proj.idStatus != 6
+                    AND   proj.idPf = " . $id;
+    }
+    elseif ($tipoPessoa == 2) {
+        $query = "SELECT 
+                    count(idProjeto)
+                    FROM 
+                    projeto AS proj  
+                    INNER JOIN 
+                    pessoa_juridica AS pj 
+                    ON pj.idPj = proj.idPj 
+                    WHERE proj.publicado = 1
+                    AND proj.idStatus != 6
+                    AND   pj.cooperativa = 0
+                    AND   proj.idPj = " . $id;
+    }
+    $resultado = mysqli_query($conexao, $query);
+    $qtdProjeto = mysqli_fetch_array($resultado);
 
-
-  $resultado = mysqli_query($conexao,$query);
-  $qtdProjeto = mysqli_fetch_array($resultado);
-  
-  return $qtdProjeto;
+    return $qtdProjeto;
 }
 
 function retornaProjeto($tipoPessoa, $id)
