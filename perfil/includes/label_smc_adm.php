@@ -22,6 +22,7 @@
                                 <h4 class="modal-title"><p>Cancelamento de projeto</p></h4>
                             </div>
                             <div class="modal-body">
+                                <p><span style="color: red; "><strong>ATENÇÃO: A ação não poderá ser desfeita!</strong></span></p>
                                 <p>Qual o motivo do cancelamento do projeto?</p>
                                 <input type="text" name="observacao" class="form-control" required>
                             </div>

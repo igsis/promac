@@ -1,27 +1,6 @@
 <?php
 $con = bancoMysqli();
 
-if(isset($_POST['reativarProjeto'])){
-    $idProjeto = $_POST['idProjeto'];
-    $observacao= $_POST['observacao'];
-    $idUser = $_SESSION['idUser'];
-    $dateNow = date('Y-m-d H:i:s');
-
-    $sql_cancelar = "UPDATE projeto SET publicado = 1 WHERE idProjeto = '$idProjeto'";
-    if(mysqli_query($con,$sql_cancelar)){
-        gravarLog($sql_cancelar);
-        $sql_historico_cancelamento = "INSERT INTO historico_cancelamento (idProjeto, observacao, idUsuario, data, acao) VALUES ('$idProjeto', '$observacao','$idUser','$dateNow',2)";
-        if(mysqli_query($con,$sql_historico_cancelamento)){
-            $mensagem = "<span style=\"color: #01DF3A; \"><strong>Projeto reativado com sucesso!<br/>Aguarde....</strong></span>";
-            gravarLog($sql_historico_cancelamento);
-            echo "<meta HTTP-EQUIV='refresh' CONTENT='0.5;URL=?perfil=smc_historico_cancelamento'>";
-        }
-        else{
-            $mensagem = "<span style=\"color: #FF0000; \"><strong>Erro ao reativar projeto. Tente novamente!</strong></span>";
-        }
-    }
-}
-
 //verifica a página atual caso seja informada na URL, senão atribui como 1ª página
 $pagina = (isset($_GET['pagina']))? $_GET['pagina'] : 1;
 $sql_lista = "SELECT protocolo,nomeProjeto,nome,observacao,data,acao 
@@ -57,7 +36,7 @@ $total = mysqli_num_rows($query_lista);
 <section id="list_items" class="home-section bg-white">
 	<div class="container"><?php include 'includes/menu_smc.php'; ?>
         <ul class='list-group'>
-            <li class='list-group-item list-group-item-success'><strong>HISTÓRICO DE PROJETOS CANCELADOS E REATIVADOS</strong></li>
+            <li class='list-group-item list-group-item-success'><strong>HISTÓRICO DE PROJETOS CANCELADOS</strong></li>
         </ul>
         <hr>
         <div class="form-group">
@@ -71,9 +50,6 @@ $total = mysqli_num_rows($query_lista);
                 <th>Usuário responsável</th>
                 <th>Motivo</th>
                 <th>Data</th>
-                <th>Ação</th>
-                <th></th>
-            </tr>
             </thead>
             <?php
             echo "<tbody>";
@@ -87,41 +63,7 @@ $total = mysqli_num_rows($query_lista);
                     echo "<td>".$historico['nome']."</td>";
                     echo "<td>".$historico['observacao']."</td>";
                     echo "<td>".exibirDataHoraBr($historico['data'])."</td>";
-                    if($historico['acao'] == 1){
-                        echo "<td>Cancelado</td>";
-                    }
-                    else{
-                        echo "<td>Reativado</td>";
-                    }
-                    if($historico['acao'] == 1)
-                    {    
-                    echo "<td><button class='btn btn-danger btn-sm' style=\"border-radius: 10px;\" type='button' data-toggle='modal' data-target='#confirmReativar' >Reativar</button></td>";
-                    echo "</tr>";
-                    }
                     ?>
-                    <!-- Confirmação de Reativação -->
-                    <div class="modal fade" id="confirmReativar" role="dialog" aria-labelledby="confirmReativarLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <form method="POST" id='cancelarProjeto' action="?perfil=smc_historico_cancelamento" class="form-horizontal" role="form">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                        <h4 class="modal-title"><p>Reativação de projeto</p></h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>Qual o motivo da reativação do projeto?</p>
-                                        <input type="text" name="observacao" class="form-control" required maxlength="120">
-                                    </div>
-                                    <div class="modal-footer">
-                                        <input type='hidden' name='idProjeto' value='<?= $historico['id'] ?>'>
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                                        <button type='submit' class='btn btn-danger btn-sm' style="border-radius: 10px;" name="reativarProjeto">Confirmar</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Fim Confirmação de Reativação -->
                 <?php
                 }
                 echo "<tr>";
