@@ -38,7 +38,7 @@ if(isset($_POST['envioComissao']))
 			break;
 	}
 	$dateNow = date('Y:m:d h:i:s');
-	$sql_envioComissao = "UPDATE projeto SET idEtapaProjeto = '$statusEnvio', envioComissao = '$dateNow' WHERE idProjeto = '$idProjeto' ";
+	$sql_envioComissao = "UPDATE projeto SET idEtapaProjeto = '$statusEnvio', envioComissao = '$dateNow' WHERE idProjeto = '$idProjeto'";
 	if(mysqli_query($con,$sql_envioComissao))
 	{
 		$sql_historico = "INSERT INTO historico_status (idProjeto, idEtapaProjeto, data) VALUES ('$idProjeto', '$statusEnvio', '$dateNow')";
@@ -282,7 +282,7 @@ foreach ($array_status as $idStatus)
                     INNER JOIN area_atuacao AS ar ON pro.idAreaAtuacao = ar.idArea
                     LEFT JOIN pessoa_fisica AS pfc ON pro.idComissao = pfc.idPf 
                     INNER JOIN etapa_projeto AS st ON pro.idEtapaProjeto = st.idEtapaProjeto
-                    WHERE pro.publicado = 1 AND pro.idEtapaProjeto = '$idStatus' ORDER BY idProjeto DESC";
+                    WHERE pro.publicado = 1 AND pro.idStatus != 6  AND pro.idEtapaProjeto = '$idStatus' ORDER BY idProjeto DESC";
     $queryProjeto = mysqli_query($con,$sqlProjeto);
     $queryStatus = mysqli_query($con,$sqlStatus);
     $num = mysqli_num_rows($queryProjeto);
