@@ -217,6 +217,31 @@ if(isset($_POST['reprovaProjeto']))
     }
 }
 
+if(isset($_POST['complementaProjeto']))
+{
+    $idProjeto = $_POST['idProjeto'];
+    $idEtapaProjeto = $_POST['idEtapaProjeto'];
+
+    $idEtapaNova = 12;
+    $etapa = recuperaDados("etapa_projeto","idEtapaProjeto",$idEtapaNova);
+    $idStatus = $etapa['idStatus'];
+
+    $dateNow = date('Y:m:d h:i:s');
+    $sql_complementa = "UPDATE projeto SET idEtapaProjeto = '$idEtapaNova', idStatus = '$idStatus' WHERE idProjeto = '$idProjeto'";
+    if(mysqli_query($con,$sql_complementa))
+    {
+        $sql_historico = "INSERT INTO historico_etapa (idProjeto, idEtapaProjeto, data) VALUES ('$idProjeto', '$idEtapaNova', '$dateNow')";
+        $query_historico = mysqli_query($con, $sql_historico);
+        $mensagem = "<font color='#01DF3A'><strong>Solicitação de complemento de informação gravada com sucesso!</strong></font>";
+        gravarLog($sql_historico);
+        gravarLog($sql_complementa);
+    }
+    else
+    {
+        $mensagem = "<font color='#FF0000'><strong>Erro ao gravar a solicitação de complemento de informação! Tente novamente.</strong></font>";
+    }
+}
+
 if(isset($_POST['envioComissao']))
 {
     $idProjeto = $_POST['idProjeto'];
