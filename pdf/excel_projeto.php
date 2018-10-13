@@ -49,8 +49,8 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('V1', 'Cidade')
             ->setCellValue('W1', 'Estado')
             ->setCellValue('X1', 'CEP')
-            ->setCellValue('Y1', 'Status')
-            ->setCellValue('Z1', 'Status exibido')
+            ->setCellValue('Y1', 'Etapa')
+            ->setCellValue('Z1', 'Status')
             ->setCellValue('AA1', 'Início da captação')
             ->setCellValue('AB1', 'Prorrogação Captação')
             ->setCellValue('AC1', 'Final da captação')
@@ -110,9 +110,10 @@ $objPHPExcel->getActiveSheet()->getColumnDimension('AG')->setAutoSize(true);
 
 
 //Dados Projeto
-$sql = "SELECT idProjeto, areaAtuacao, segmento, protocolo, nomeProjeto, valorProjeto, valorIncentivo, resumoProjeto, publicoAlvo, tipoPessoa, idPj, idPf, etapaProjeto, pr.idEtapaProjeto, tipoPessoa, valorAprovado, idRenunciaFiscal
+$sql = "SELECT idProjeto, areaAtuacao, segmento, protocolo, nomeProjeto, valorProjeto, valorIncentivo, resumoProjeto, publicoAlvo, tipoPessoa, idPj, idPf, etapaProjeto, pr.idEtapaProjeto, es.status, tipoPessoa, valorAprovado, idRenunciaFiscal
          FROM projeto AS pr
          INNER JOIN etapa_projeto AS st ON pr.idEtapaProjeto = st.idEtapaProjeto
+         INNER JOIN etapa_status AS es ON pr.idStatus = es.idStatus
          INNER JOIN area_atuacao AS area ON pr.idAreaAtuacao = area.idArea
          INNER JOIN renuncia_fiscal AS renuncia ON pr.idRenunciaFiscal = renuncia.idRenuncia
          WHERE pr.publicado = '1' ORDER BY protocolo";
@@ -221,29 +222,7 @@ while($row = mysqli_fetch_array($query))
    		$tipo = "Jurídica";
    }
 
-   $status_proponente = $row['idEtapaProjeto'];
-   if($status_proponente == 5 OR $status_proponente == 21 OR $status_proponente == 26 OR $status_proponente == 16 OR $status_proponente == 11)
-   {
-    $status_exibido = "Aprovado";
-   }
-   elseif($status_proponente == 6 OR $status_proponente == 22 OR $status_proponente == 27 OR $status_proponente == 17) 
-   {
-    $status_exibido = "Reprovado";
-   }
-   elseif($status_proponente == 1 OR $status_proponente == 2 OR $status_proponente == 12 OR $status_proponente == 13 OR $status_proponente == 23 OR $status_proponente == 14 OR $status_proponente == 18)
-   {
-     $status_exibido = $row['status'];
-   }
-   elseif($status_proponente == 3 OR $status_proponente == 25 OR $status_proponente == 15 OR $status_proponente == 10 OR $status_proponente == 20)
-   {
-     $status_exibido = "Em análise";
-   }
-   elseif($status_proponente == 7 OR $status_proponente == 19 OR $status_proponente == 24 OR $status_proponente == 34)
-   {
-     $status_exibido = "Em análise comissão";
-   }
    //$objPHPExcel->getActiveSheet()->getStyle('A'.$i.'')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
-
    $objPHPExcel->getActiveSheet()->getStyle('E'.$i.'')->getNumberFormat()->setFormatCode("#,##0.00");
    $objPHPExcel->getActiveSheet()->getStyle('F'.$i.'')->getNumberFormat()->setFormatCode("#,##0.00");
 
@@ -273,8 +252,8 @@ while($row = mysqli_fetch_array($query))
                ->setCellValue('V'.$i, $cidade)
                ->setCellValue('W'.$i, $estado)
                ->setCellValue('X'.$i, $cep)
-               ->setCellValue('Y'.$i, $row['status'])
-               ->setCellValue('Z'.$i, $status_exibido)
+               ->setCellValue('Y'.$i, $row['etapaProjeto'])
+               ->setCellValue('Z'.$i, $row['status'])
                ->setCellValue('AA'.$i, $lista_prazos['prazoCaptacao'])
                ->setCellValue('AB'.$i, $lista_prazos['prorrogacaoCaptacao'])
                ->setCellValue('AC'.$i, $lista_prazos['finalCaptacao'])
@@ -282,7 +261,6 @@ while($row = mysqli_fetch_array($query))
                ->setCellValue('AE'.$i, $lista_prazos['fimExecucao'])
                ->setCellValue('AF'.$i, $lista_prazos['prorrogacaoExecucao'])
                ->setCellValue('AG'.$i, $lista_prazos['prestarContas']);
-
    $i++;
 }
 
