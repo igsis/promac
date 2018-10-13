@@ -57,10 +57,10 @@
 					</div>
 
 					<div class="form-group">
-						<div class="col-md-offset-2 col-md-8"><label>Status</label>
+						<div class="col-md-offset-2 col-md-8"><label>Etapa</label>
 							<select class="form-control" name="idEtapaProjeto" >
 								<option value="0"></option>
-								<?php echo geraOpcao("status","") ?>
+								<?php echo geraOpcao("etapa_projeto","") ?>
 							</select>
 						</div>
 					</div>
