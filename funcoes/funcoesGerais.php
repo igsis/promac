@@ -3248,6 +3248,7 @@ function uploadArquivo($idProjeto, $tipoPessoa, $pagina, $idListaDocumento, $idT
 				<tr class='list_menu'>
 					<td>Tipo de arquivo</td>
 					<td>Nome do arquivo</td>
+					<td>Observação</td>
 					<td></td>
 				</tr>
 			</thead>
@@ -3255,8 +3256,9 @@ function uploadArquivo($idProjeto, $tipoPessoa, $pagina, $idListaDocumento, $idT
         while($arquivo = mysqli_fetch_array($query))
         {
             echo "<tr>";
-            echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
+            echo "<td class='list_description'>".$arquivo['documento']."</td>";
             echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
+            echo "<td class='list_description'>".$arquivo['observacoes']."</td>";
             if($arquivo['idStatusDocumento'] == 3) {
                 echo "
 						<td class='list_description'>
