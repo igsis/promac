@@ -70,10 +70,13 @@
                 <div class="col-md-3">
                     <form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
                         <input type='hidden' name='idProjeto' value='<?php echo $idProjeto ?>'>
-                        <input type="submit" name="reprovaProjeto" class="btn btn-danger btn-sm btn-block" style="border-radius: 10px;" value="Reprovar Projeto">
+                        <input type='hidden' name='idEtapaProjeto' value='<?= $projeto['idEtapaProjeto'] ?>'>
+                       <input type="submit" name="reprovaProjeto" class="btn btn-danger btn-sm btn-block" style="border-radius: 10px;" value="Reprovar Projeto">
+                        <!-- <button class='btn btn-danger btn-sm btn-block' style='border-radius: 10px;' type='button' data-toggle='modal' data-target='#confirmReprovar' data-title='Confirmação de reprovação' data-message='Deseja realmente reprovar esse projeto?'>Reprovar Projeto</button> -->
                     </form>
                 </div>
             </div>
+
         <?php
         }
         ?>
