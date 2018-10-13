@@ -54,6 +54,7 @@
                 <div class="col-md-12"><hr/></div>
             </div>
             <div class="form-group">
+                <!-- Botão Enviar pra Comissão -->
                 <div class="col-md-offset-1 col-md-4">
                     <form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
                         <input type='hidden' name='idProjeto' value='<?php echo $idProjeto ?>'>
@@ -61,21 +62,62 @@
                     </form>
                     Último envio: <?php echo exibirDataHoraBr($projeto['envioComissao']) ?>
                 </div>
+                <!-- Botão Aprovar -->
                 <div class="col-md-3">
-                    <form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
-                        <input type='hidden' name='idProjeto' value='<?= $idProjeto ?>'>
-                        <input type='hidden' name='idEtapaProjeto' value='<?= $projeto['idEtapaProjeto'] ?>'>
-                        <input type="submit" name="aprovaProjeto" class="btn btn btn-success btn-sm btn-block" style="border-radius: 10px;" value="Aprovar Projeto">
-                    </form>
+                    <button class='btn btn btn-success btn-sm btn-block' style="border-radius: 10px;" type='button' data-toggle='modal' data-target='#confirmAprovar'>Aprovar Projeto</button>
                 </div>
+                <!-- Confirmação de Aprovação -->
+                <div class="modal fade" id="confirmAprovar" role="dialog" aria-labelledby="confirmAprovarLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <form method="POST" id='aprovaProjeto' action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title"><p>Aprovação de projeto</p></h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p><span style="color: red; "><strong>ATENÇÃO: Verifique se o Parecer está Aprovado!</strong></span></p>
+                                    <p>Confirma a aprovação do projeto?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <input type='hidden' name='idProjeto' value='<?php echo $idProjeto ?>'>
+                                    <input type='hidden' name='idEtapaProjeto' value='<?= $projeto['idEtapaProjeto'] ?>'>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                    <button type='submit' class='btn btn-success btn-sm' style="border-radius: 10px;" name="aprovaProjeto">Confirmar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- Fim Confirmação de Aprovação -->
+                <!-- Botão Reprovar -->
                 <div class="col-md-3">
-                    <form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
-                        <input type='hidden' name='idProjeto' value='<?= $idProjeto ?>'>
-                        <input type='hidden' name='idEtapaProjeto' value='<?= $projeto['idEtapaProjeto'] ?>'>
-                       <input type="submit" name="reprovaProjeto" class="btn btn-danger btn-sm btn-block" style="border-radius: 10px;" value="Reprovar Projeto">
-                        <!-- <button class='btn btn-danger btn-sm btn-block' style='border-radius: 10px;' type='button' data-toggle='modal' data-target='#confirmReprovar' data-title='Confirmação de reprovação' data-message='Deseja realmente reprovar esse projeto?'>Reprovar Projeto</button> -->
-                    </form>
+                    <button class='btn btn btn-danger btn-sm btn-block' style="border-radius: 10px;" type='button' data-toggle='modal' data-target='#confirmReprovar'>Reprovar Projeto</button>
                 </div>
+                <!-- Confirmação de Reprovação -->
+                <div class="modal fade" id="confirmReprovar" role="dialog" aria-labelledby="confirmReprovarLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <form method="POST" id='reprovaProjeto' action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title"><p>Reprovação de projeto</p></h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p><span style="color: red; "><strong>ATENÇÃO: Verifique se o Parecer está Aprovado!</strong></span></p>
+                                    <p>Confirma a reprovação do projeto?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <input type='hidden' name='idProjeto' value='<?php echo $idProjeto ?>'>
+                                    <input type='hidden' name='idEtapaProjeto' value='<?= $projeto['idEtapaProjeto'] ?>'>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                    <button type='submit' class='btn btn-success btn-sm' style="border-radius: 10px;" name="reprovaProjeto">Confirmar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- Fim Confirmação de Reprovação -->
             </div>
 
         <?php
