@@ -54,13 +54,23 @@
                 <div class="col-md-12"><hr/></div>
             </div>
             <div class="form-group">
-                <div class="col-md-offset-2 col-md-3"><label>Enviar projeto para comissão</label><br>
-                    <?php echo exibirDataHoraBr($projeto['envioComissao']) ?>
+                <div class="col-md-offset-1 col-md-4">
+                    <form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
+                        <input type='hidden' name='idProjeto' value='<?php echo $idProjeto ?>'>
+                        <input type="submit" name="envioComissao" class="btn btn-theme btn-sm btn-block" value="Enviar projeto pra comissão">
+                    </form>
+                    Último envio: <?php echo exibirDataHoraBr($projeto['envioComissao']) ?>
                 </div>
                 <div class="col-md-3">
                     <form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
                         <input type='hidden' name='idProjeto' value='<?php echo $idProjeto ?>'>
-                        <input type="submit" name="envioComissao" class="btn btn-theme btn-lg btn-block" value="Sim">
+                        <input type="submit" name="aprovaProjeto" class="btn btn btn-success btn-sm btn-block" style="border-radius: 10px;" value="Aprovar Projeto">
+                    </form>
+                </div>
+                <div class="col-md-3">
+                    <form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
+                        <input type='hidden' name='idProjeto' value='<?php echo $idProjeto ?>'>
+                        <input type="submit" name="reprovaProjeto" class="btn btn-danger btn-sm btn-block" style="border-radius: 10px;" value="Reprovar Projeto">
                     </form>
                 </div>
             </div>
@@ -139,25 +149,27 @@
             </div>
         </form>
 
-        <ul class='list-group'>
-            <li class='list-group-item list-group-item-success'>Notas</li>
-            <?php
-                $sql = "SELECT * FROM notas WHERE idPessoa = '$idProjeto'";
-                $query = mysqli_query($con,$sql);
-                $num = mysqli_num_rows($query);
-                if($num > 0)
-                {
-                    while($campo = mysqli_fetch_array($query))
+        <div class="col-md-offset-2 col-md-8">
+            <ul class='list-group'>
+                <li class='list-group-item list-group-item-success'>Notas</li>
+                <?php
+                    $sql = "SELECT * FROM notas WHERE idPessoa = '$idProjeto'";
+                    $query = mysqli_query($con,$sql);
+                    $num = mysqli_num_rows($query);
+                    if($num > 0)
                     {
-                        echo "<li class='list-group-item' align='left'><strong>".exibirDataHoraBr($campo['data'])."</strong><br/>".$campo['nota']."</li>";
+                        while($campo = mysqli_fetch_array($query))
+                        {
+                            echo "<li class='list-group-item' align='left'><strong>".exibirDataHoraBr($campo['data'])."</strong><br/>".$campo['nota']."</li>";
+                        }
                     }
-                }
-                else
-                {
-                    echo "<li class='list-group-item'>Não há notas disponíveis.</li>";
-                }
-            ?>
-        </ul>
+                    else
+                    {
+                        echo "<li class='list-group-item'>Não há notas disponíveis.</li>";
+                    }
+                ?>
+            </ul>
+        </div>
 
         <div class="form-group">
             <div class="col-md-offset-1 col-md-10">
