@@ -422,7 +422,7 @@ if(isset($_POST['editarParecer'])){
     $observacoes = $_POST['observacoes'];
     $idProjeto = $_POST['idPessoa'];
     $idArquivo = $_POST['idArquivo'];
-    $query = "UPDATE upload_arquivo SET idStatusDocumento = s$statustatus, observacoes = '$observacoes' WHERE idUploadArquivo = '$idArquivo' ";
+    $query = "UPDATE upload_arquivo SET idStatusDocumento = $status, observacoes = '$observacoes' WHERE idUploadArquivo = '$idArquivo' ";
     $envia = mysqli_query($con, $query);
     if($envia)
     {
