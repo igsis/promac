@@ -164,26 +164,20 @@ if(isset($_POST['envioComissao']))
         case 25:
             $statusEnvio = 24;
             break;
-        case 29:
-            $statusEnvio = 30;
-            break;
-        case 31:
-            $statusEnvio = 30;
-            break;
     }
     $dateNow = date('Y:m:d h:i:s');
-    $sql_envioComissao = "UPDATE projeto SET idEtapaProjeto = '$statusEnvio', envioComissao = '$dateNow' WHERE idProjeto = '$idProjeto' ";
+    $sql_envioComissao = "UPDATE projeto SET idEtapaProjeto = '$statusEnvio', idStatus = 2, envioComissao = '$dateNow' WHERE idProjeto = '$idProjeto' ";
     if(mysqli_query($con,$sql_envioComissao))
     {
-        $sql_historico = "INSERT INTO historico_status (idProjeto, idEtapaProjeto, data) VALUES ('$idProjeto', '$statusEnvio', '$dateNow')";
+        $sql_historico = "INSERT INTO historico_etapa (idProjeto, idEtapaProjeto, data) VALUES ('$idProjeto', '$statusEnvio', '$dateNow')";
         $query_historico = mysqli_query($con, $sql_historico);
-        $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
+        $mensagem = "<font color='#01DF3A'><strong>Enviado com sucesso!</strong></font>";
         gravarLog($sql_historico);
         gravarLog($sql_envioComissao);
     }
     else
     {
-        $mensagem = "<font color='#FF0000'><strong>Erro ao atualizar! Tente novamente.</strong></font>";
+        $mensagem = "<font color='#FF0000'><strong>Erro ao enviar! Tente novamente.</strong></font>";
     }
 }
 
@@ -436,6 +430,9 @@ $cronograma = recuperaDados("cronograma","idCronograma",$projeto['idCronograma']
 $video = recuperaDados("projeto","idProjeto",$idProjeto);
 $v = array($video['video1'], $video['video2'], $video['video3']);
 $data_reuniao = recuperaDados("data_reuniao", "idProjeto", $idProjeto);
+
+$etapa = recuperaDados("etapa_projeto","idEtapaProjeto",$projeto['idEtapaProjeto']);
+$status = recuperaDados("etapa_status","idStatus",$projeto['idStatus']);
 
 $comissao = recuperaDados("pessoa_fisica","idPf",$projeto['idComissao']);
 ?>

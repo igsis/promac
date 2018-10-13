@@ -8,7 +8,13 @@
         if($projeto['idEtapaProjeto'] > 1) {
         ?>
             <div class="form-group">
-                <div class="col-md-offset-8 col-md-3">
+                <div class="col-md-offset-1 col-md-4">
+                    <label>Etapa:</label> <?= $etapa['etapaProjeto'] ?>
+                </div>
+                <div class="col-md-3">
+                    <label>Status:</label> <?= $status['status'] ?>
+                </div>
+                <div class="col-md-3">
                     <button class='btn btn-danger btn-sm' style="border-radius: 10px;" type='button' data-toggle='modal' data-target='#confirmCancelar' data-title='Cancelamento de projeto' data-message='Você realmete deseja cancelar o projeto?'>Cancelar Projeto</button>
                 </div>
             </div>
@@ -45,10 +51,13 @@
         if(in_array($projeto['idEtapaProjeto'], $array_envio_comissao )) {
         ?>
             <div class="form-group">
-                <div class="col-md-offset-2 col-md-3"><br/><label>Enviar projeto para comissão</label><br>
+                <div class="col-md-12"><hr/></div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-3"><label>Enviar projeto para comissão</label><br>
                     <?php echo exibirDataHoraBr($projeto['envioComissao']) ?>
                 </div>
-                <div class="col-md-3"><br/>
+                <div class="col-md-3">
                     <form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
                         <input type='hidden' name='idProjeto' value='<?php echo $idProjeto ?>'>
                         <input type="submit" name="envioComissao" class="btn btn-theme btn-lg btn-block" value="Sim">
@@ -87,7 +96,7 @@
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-6"><label>Análise do Parecerista</label><br/>
                     <select class="form-control" name="idStatusParecerista">
-                        <option value="0"></option>
+                        <option value="">Selecione..</option>
                         <?php echo geraOpcao("status_parecerista",$projeto['idStatusParecerista']) ?>
                     </select>
                 </div>
@@ -118,7 +127,7 @@
         <form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-8"><label>Notas</label><br/>
-                    <textarea name="nota" class="form-control" rows="10" placeholder="Insira neste campo informações de notificações para o usuário."></textarea>
+                    <textarea name="nota" class="form-control" rows="5" placeholder="Insira neste campo informações de notificações para o usuário."></textarea>
                 </div>
             </div>
 
