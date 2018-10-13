@@ -8,7 +8,7 @@ $cnpj = $_POST['cnpj'] ?? NULL;
 $nomeProjeto = $_POST['nomeProjeto'] ?? NULL;
 $idProjeto = $_POST['idProjeto'] ?? NULL;
 $idAreaAtuacao = $_POST['idAreaAtuacao'] ?? NULL;
-$idStatus = $_POST['idEtapaProjeto'] ?? NULL;
+$idEtapaProjeto = $_POST['idEtapaProjeto'] ?? NULL;
 $idComissao = $_POST['idComissao'] ?? NULL;
 
 // Inicio Pessoa Física
@@ -44,14 +44,14 @@ if($nome != '' || $cpf != '')
 		while($lista = mysqli_fetch_array($query))
 		{
 			$area = recuperaDados("area_atuacao","idArea",$lista['idAreaAtuacao']);
-			$status = recuperaDados("status","idEtapaProjeto",$lista['idEtapaProjeto']);
+			$etapa = recuperaDados("etapa_projeto","idEtapaProjeto",$lista['idEtapaProjeto']);
 			$x[$i]['idProjeto'] = $lista['idProjeto'];
 			$x[$i]['protocolo'] = $lista['protocolo'];
 			$x[$i]['nomeProjeto'] = $lista['nomeProjeto'];
 			$x[$i]['proponente'] = $lista['nome'];
 			$x[$i]['documento'] = $lista['cpf'];
 			$x[$i]['areaAtuacao'] = $area['areaAtuacao'];
-			$x[$i]['status'] = $status['status'];
+			$x[$i]['etapa'] = $etapa['etapaProjeto'];
 			$i++;
 		}
 		$x['num'] = $i;
@@ -64,9 +64,9 @@ if($nome != '' || $cpf != '')
 // Inicio Pessoa Jurídica
 elseif($razaoSocial != '' || $cnpj != '')
 {
-	if($razaSocial != '')
+	if($razaoSocial != '')
 	{
-		$filtro_razaSocial = " AND razaSocial LIKE '%$razaSocial%'";
+		$filtro_razaSocial = " AND razaSocial LIKE '%$razaoSocial%'";
 	}
 	else
 	{
@@ -93,14 +93,14 @@ elseif($razaoSocial != '' || $cnpj != '')
 		while($lista = mysqli_fetch_array($query))
 		{
 			$area = recuperaDados("area_atuacao","idArea",$lista['idAreaAtuacao']);
-			$status = recuperaDados("status","idEtapaProjeto",$lista['idEtapaProjeto']);
+            $etapa = recuperaDados("etapa_projeto","idEtapaProjeto",$lista['idEtapaProjeto']);
 			$x[$i]['idProjeto'] = $lista['idProjeto'];
 			$x[$i]['protocolo'] = $lista['protocolo'];
 			$x[$i]['nomeProjeto'] = $lista['nomeProjeto'];
 			$x[$i]['proponente'] = $lista['razaSocial'];
 			$x[$i]['documento'] = $lista['cnpj'];
 			$x[$i]['areaAtuacao'] = $area['areaAtuacao'];
-			$x[$i]['status'] = $status['status'];
+            $x[$i]['etapa'] = $etapa['etapaProjeto'];
 			$i++;
 		}
 		$x['num'] = $i;
@@ -140,13 +140,13 @@ else
 		$filtro_idAreaAtuacao = "";
 	}
 
-    if($idStatus != 0)
+    if($idEtapaProjeto != 0)
     {
-        $filtro_idStatus = " AND idEtapaProjeto = '$idStatus'";
+        $filtro_idEtapaProjeto = " AND idEtapaProjeto = '$idEtapaProjeto'";
     }
     else
     {
-        $filtro_idStatus = "";
+        $filtro_idEtapaProjeto = "";
     }
 
 	if($idComissao != NULL)
@@ -160,7 +160,7 @@ else
 
 	$sql = "SELECT * FROM projeto AS prj
 			WHERE publicado = 1 
-			$filtro_nomeProjeto $filtro_idProjeto $filtro_idAreaAtuacao $filtro_idComissao $filtro_idStatus";
+			$filtro_nomeProjeto $filtro_idProjeto $filtro_idAreaAtuacao $filtro_idComissao $filtro_idEtapaProjeto";
 	$query = mysqli_query($con,$sql);
 	$num = mysqli_num_rows($query);
 	if($num > 0)
@@ -169,13 +169,14 @@ else
 		while($lista = mysqli_fetch_array($query))
 		{
 			$area = recuperaDados("area_atuacao","idArea",$lista['idAreaAtuacao']);
-			$status = recuperaDados("status","idEtapaProjeto",$lista['idEtapaProjeto']);
+            $etapa = recuperaDados("etapa_projeto","idEtapaProjeto",$lista['idEtapaProjeto']);
 			$pf = recuperaDados("pessoa_fisica","idPf",$lista['idPf']);
 			$pj = recuperaDados("pessoa_juridica","idPj",$lista['idPj']);
-			if($lista['idComissao'] != NULL){                                        								$comissao = recuperaDados("pessoa_fisica", "idPf", $lista['idComissao']);
-	                }else{
-	                    $comissao['nome'] = " ";
-	                }
+			if($lista['idComissao'] != NULL){
+			    $comissao = recuperaDados("pessoa_fisica", "idPf", $lista['idComissao']);
+            }else{
+                $comissao['nome'] = " ";
+            }
 			$x[$i]['idProjeto'] = $lista['idProjeto'];
 			$x[$i]['protocolo'] = $lista['protocolo'];
 			$x[$i]['nomeProjeto'] = $lista['nomeProjeto'];
@@ -190,7 +191,7 @@ else
 				$x[$i]['documento'] = $pj['cnpj'];
 			}
 			$x[$i]['areaAtuacao'] = $area['areaAtuacao'];
-			$x[$i]['status'] = $status['status'];
+            $x[$i]['etapa'] = $etapa['etapaProjeto'];
 			$x[$i]['nome'] = $comissao['nome'];
 			$i++;
 		}
@@ -222,7 +223,7 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 								<td>Proponente</td>
 								<td>Documento</td>
 								<td>Área de Atuação</td>
-								<td>Status</td>
+								<td>Eatapa</td>
 								<td>Parecerista</td>
 								<td width='10%'></td>
 							</tr>
@@ -237,7 +238,7 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 								echo "<td class='list_description'>".$x[$h]['proponente']."</td>";
 								echo "<td class='list_description'>".$x[$h]['documento']."</td>";
 								echo "<td class='list_description'>".$x[$h]['areaAtuacao']."</td>";
-								echo "<td class='list_description'>".$x[$h]['status']."</td>";
+								echo "<td class='list_description'>".$x[$h]['etapa']."</td>";
 								echo "<td class='list_description'>".$x[$h]['nome']."</td>";
 								echo "<td class='list_description'>
 										<form method='POST' action='?perfil=comissao_detalhes_projeto'>
