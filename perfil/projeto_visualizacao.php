@@ -67,6 +67,15 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                             </div>
 
                             <div class="form-group">
+                                <div class="col-md-offset-2 col-md-8">
+                                    <ul class='list-group'>
+                                        <li class='list-group-item list-group-item-success'><strong>Arquivos do proponente</strong></li>
+                                        <li class='list-group-item'><?php listaAnexosProjetoSMC($idProjeto, 3, ""); ?></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <div class="col-md-offset-2 col-md-8" align="left">
                                     <ul class='list-group'>
                                         <li class='list-group-item list-group-item-success'>Notas</li>
