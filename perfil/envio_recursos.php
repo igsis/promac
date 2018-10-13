@@ -108,9 +108,11 @@ if(isset($_POST["enviar"]))
 					if(move_uploaded_file($nome_temporario, $dir.$new_name))
 					{
 						$sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('3', '$idProjeto', '$y', '$new_name', '$hoje', '1'); ";
-							$sql_status = "UPDATE projeto SET idEtapaProjeto = '23' WHERE idProjeto = '$idProjeto'";
+						$sql_status = "UPDATE projeto SET idEtapaProjeto = '23', idStatus = 1 WHERE idProjeto = '$idProjeto'";
+                        $sql_historico = "INSERT INTO historico_etapa (idProjeto, idEtapaProjeto, data) VALUES ('$idProjeto', '23', '$hoje')";
 						$query = mysqli_query($con,$sql_insere_arquivo);
 						$query = mysqli_query($con,$sql_status);
+                        $query = mysqli_query($con,$sql_historico);
 						if($query)
 						{
 							$mensagem = "<font color='#01DF3A'><strong>Arquivo recebido com sucesso!</strong></font>";

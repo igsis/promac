@@ -107,7 +107,7 @@ if(isset($_POST["enviar"]))
 					{
 						$sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('3', '$idProjeto', '$y', '$new_name', '$hoje', '1'); ";
 						$sql_status = "UPDATE projeto SET idEtapaProjeto = '14', idStatus = 1 WHERE idProjeto = '$idProjeto'";
-                        $sql_historico = "INSERT INTO historico_etapa (idProjeto, idEtapaProjeto, data) VALUES ('$idProjeto', '13', '$hoje')";
+                        $sql_historico = "INSERT INTO historico_etapa (idProjeto, idEtapaProjeto, data) VALUES ('$idProjeto', '14', '$hoje')";
 						$query = mysqli_query($con,$sql_insere_arquivo);
 						$query = mysqli_query($con,$sql_status);
                         $query = mysqli_query($con,$sql_historico);
