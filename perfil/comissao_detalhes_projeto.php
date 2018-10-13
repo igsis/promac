@@ -100,7 +100,7 @@ if(isset($_POST['gravarAdm']))
 		$mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
 		gravarLog($sql_gravarAdm);
         $idComissao = $projeto['idComissao'];
-        $sql_historico_reuniao = "INSERT INTO historico_reuniao (idProjeto,idEtapaProjeto,dataReuniao,idStatusParecerista,idComissao,data,idUsuario) VALUES ('$idProjeto','$idStatus','$dataReuniao','$statusParecerista','$idComissao','$data','$idUsuario')";
+        $sql_historico_reuniao = "INSERT INTO historico_reuniao (idProjeto,idStatus,dataReuniao,idStatusParecerista,idComissao,data,idUsuario) VALUES ('$idProjeto','$idStatus','$dataReuniao','$statusParecerista','$idComissao','$data','$idUsuario')";
         if(mysqli_query($con,$sql_historico_reuniao))
         {
             $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
@@ -140,31 +140,27 @@ if(isset($_POST['gravarNota']))
 if(isset($_POST['finalizaComissao']))
 {
 	$idP = $_POST['IDP'];
-
 	$projeto = recuperaDados("projeto","idProjeto",$idP);
 
     switch ($projeto['idEtapaProjeto']) {
         case 7:
-            $idStatus = 10;
+            $idEtapaProjeto = 10;
             break;
         case 19:
-            $idStatus = 20;
+            $idEtapaProjeto = 20;
             break;
         case 24:
-            $idStatus = 25;
-            break;
-        case 30:
-            $idStatus = 31;
+            $idEtapaProjeto = 25;
             break;
         case 34:
-            $idStatus = 15;
+            $idEtapaProjeto = 15;
             break;
     }
 	$dateNow = date('Y:m:d h:i:s');
-	$sql_finalizaComissao = "UPDATE projeto SET idEtapaProjeto = '$idStatus', finalizacaoComissao = '$dateNow' WHERE idProjeto = '$idP' ";
+	$sql_finalizaComissao = "UPDATE projeto SET idEtapaProjeto = '$idEtapaProjeto', finalizacaoComissao = '$dateNow' WHERE idProjeto = '$idP' ";
 	if(mysqli_query($con,$sql_finalizaComissao))
 	{
-        $sql_historico = "INSERT INTO historico_status (idProjeto, idEtapaProjeto, data) VALUES ('$idProjeto', '$idStatus', '$dateNow')";
+        $sql_historico = "INSERT INTO historico_etapa (idProjeto, idEtapaProjeto, data) VALUES ('$idProjeto', '$idEtapaProjeto', '$dateNow')";
         $query_historico = mysqli_query($con, $sql_historico);
         $mensagem = "<font color='#01DF3A'><strong>Enviado à SMC com sucesso!</strong></font>";
         gravarLog($sql_finalizaComissao);
@@ -330,7 +326,6 @@ $idStatus = $projeto['idEtapaProjeto'];
 		                        <?php else: ?>
 		                        <li class="nav"><a href="#F" data-toggle="tab">Pessoa Física</a></li>
 		                        <?php endif ?>
-                            <li class="nav"><a href="#historico" data-toggle="tab">Histórico</a></li>
 
                         </ul>
 
@@ -347,10 +342,6 @@ $idStatus = $projeto['idEtapaProjeto'];
 
                        		 <!--LABEL PESSOA FISICA-->
                        		 <?php include "includes/label_pf.php"; ?>
-
-                 	   		 <!-- LABEL HISTÓRICO -->
-                            <?php include "includes/label_historico.php"; ?>
-                           
 
                         </div>
                         <!-- class="tab-content" -->
