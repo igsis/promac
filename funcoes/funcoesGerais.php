@@ -1846,7 +1846,7 @@ function exibirParecerProponente($idProjeto)
         {
             echo "<tr>";
             echo "<td class='list_description'>".$arquivo['documento']."</td>";
-            echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 0 ,50,"..." )."</a></td>";
+            echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'],15 ,30 ,"..." )."</a></td>";
             echo "</tr>";
         }
         echo "</table>";

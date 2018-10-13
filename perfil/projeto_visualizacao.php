@@ -129,7 +129,6 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                             </form>
                                         </div>
                                     </div>
-                                </div>
                             <?php
                             }
                             ?>
