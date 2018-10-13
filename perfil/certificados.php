@@ -117,7 +117,7 @@ if(isset($_POST["enviar"]))
 					if(move_uploaded_file($nome_temporario, $dir.$new_name))
 					{
 						$sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('3', '$idProjeto', '$y', '$new_name', '$hoje', '1'); ";
-							$sql_check = "UPDATE projeto SET empresaApenada = '$empresaApenada', idEtapaProjeto = '11' WHERE idProjeto = '$idProjeto'";
+						$sql_check = "UPDATE projeto SET empresaApenada = '$empresaApenada' WHERE idProjeto = '$idProjeto'";
 						$query = mysqli_query($con,$sql_insere_arquivo);
 						$query = mysqli_query($con,$sql_check);
 						if($query)
