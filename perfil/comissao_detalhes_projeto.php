@@ -92,7 +92,7 @@ if(isset($_POST['gravarAdm']))
     {
         $dataReuniao = exibirDataMysql($_POST['dataReuniao']);
     }
-    $data = date('Y-m-d h:i:s');
+    $data = date('Y-m-d H:i:s');
     $idUsuario = $_SESSION['idUser'];
 	$sql_gravarAdm = "UPDATE projeto SET valorAprovado = '$valorAprovado', idRenunciaFiscal = '$renunciaFiscal', idStatusParecerista = '$statusParecerista', dataReuniao = '$dataReuniao' WHERE idProjeto = '$idProjeto'";
 	if(mysqli_query($con,$sql_gravarAdm))
@@ -121,7 +121,7 @@ if(isset($_POST['gravarNota']))
 {
 	if ($idProjeto != 0)
 	{
-		$dateNow = date('Y:m:d h:i:s');
+		$dateNow = date('Y-m-d H:i:s');
 		$nota = addslashes($_POST['nota']);
 		$sql_nota = "INSERT INTO notas (idPessoa, idTipo, data, nota, interna) VALUES ('$idProjeto', '3', '$dateNow', '$nota', '2')";
 		if(mysqli_query($con,$sql_nota))
@@ -156,7 +156,7 @@ if(isset($_POST['finalizaComissao']))
             $idEtapaProjeto = 15;
             break;
     }
-	$dateNow = date('Y:m:d h:i:s');
+	$dateNow = date('Y-m-d H:i:s');
 	$sql_finalizaComissao = "UPDATE projeto SET idEtapaProjeto = '$idEtapaProjeto', finalizacaoComissao = '$dateNow' WHERE idProjeto = '$idP' ";
 	if(mysqli_query($con,$sql_finalizaComissao))
 	{

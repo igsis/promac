@@ -88,7 +88,7 @@ if(isset($_POST['gravarAdm']))
         $dataPublicacaoDoc = exibirDataMysql($_POST['dataPublicacaoDoc']);
     }
     $linkPublicacaoDoc = $_POST['linkPublicacaoDoc'];
-    $data = date('Y-m-d h:i:s');
+    $data = date('Y-m-d H:i:s');
     $idUsuario = $_SESSION['idUser'];
     $sql_gravarAdm = "UPDATE projeto SET valorAprovado = '$valorAprovado', idRenunciaFiscal = '$idRenunciaFiscal', idStatusParecerista = '$statusParecerista', dataReuniao = '$dataReuniao', dataPublicacaoDoc = '$dataPublicacaoDoc', linkPublicacaoDoc = '$linkPublicacaoDoc' WHERE idProjeto = '$idP' ";
     if(mysqli_query($con,$sql_gravarAdm))
@@ -159,7 +159,7 @@ if(isset($_POST['aprovaProjeto']))
             $idStatus = $etapa['idStatus'];
             break;
     }
-    $dateNow = date('Y:m:d h:i:s');
+    $dateNow = date('Y-m-d H:i:s');
     $sql_reprova = "UPDATE projeto SET idEtapaProjeto = '$idEtapaNova', idStatus = '$idStatus' WHERE idProjeto = '$idProjeto'";
     if(mysqli_query($con,$sql_reprova))
     {
@@ -201,7 +201,7 @@ if(isset($_POST['reprovaProjeto']))
             $idStatus = $etapa['idStatus'];
             break;
     }
-    $dateNow = date('Y:m:d h:i:s');
+    $dateNow = date('Y-m-d H:i:s');
     $sql_reprova = "UPDATE projeto SET idEtapaProjeto = '$idEtapaNova', idStatus = '$idStatus' WHERE idProjeto = '$idProjeto'";
     if(mysqli_query($con,$sql_reprova))
     {
@@ -226,7 +226,7 @@ if(isset($_POST['complementaProjeto']))
     $etapa = recuperaDados("etapa_projeto","idEtapaProjeto",$idEtapaNova);
     $idStatus = $etapa['idStatus'];
 
-    $dateNow = date('Y:m:d h:i:s');
+    $dateNow = date('Y-m-d H:i:s');
     $sql_complementa = "UPDATE projeto SET idEtapaProjeto = '$idEtapaNova', idStatus = '$idStatus' WHERE idProjeto = '$idProjeto'";
     if(mysqli_query($con,$sql_complementa))
     {
@@ -246,39 +246,40 @@ if(isset($_POST['envioComissao']))
 {
     $idProjeto = $_POST['idProjeto'];
     $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
-    $idStatus = $projeto['idEtapaProjeto'];
+    $idEtapaProjeto = $projeto['idEtapaProjeto'];
 
-    switch ($idStatus) {
+    switch ($idEtapaProjeto) {
         case 2:
-            $statusEnvio = 7;
+            $etapaProjeto = 7;
             break;
         case 10:
-            $statusEnvio = 7;
+            $etapaProjeto = 7;
             break;
         case 13:
-            $statusEnvio = 19;
+            $etapaProjeto = 19;
             break;
         case 20:
-            $statusEnvio = 19;
+            $etapaProjeto = 19;
             break;
         case 14:
-            $statusEnvio = 34;
+            $etapaProjeto = 34;
             break;
         case 15:
-            $statusEnvio = 34;
+            $etapaProjeto = 34;
             break;
         case 23:
-            $statusEnvio = 24;
+            $etapaProjeto = 24;
             break;
         case 25:
-            $statusEnvio = 24;
+            $etapaProjeto = 24;
             break;
     }
-    $dateNow = date('Y:m:d h:i:s');
-    $sql_envioComissao = "UPDATE projeto SET idEtapaProjeto = '$statusEnvio', idStatus = 2, envioComissao = '$dateNow' WHERE idProjeto = '$idProjeto' ";
+
+    $dateNow = date('Y-m-d H:i:s');
+    $sql_envioComissao = "UPDATE projeto SET idEtapaProjeto = '$etapaProjeto', idStatus = 2, envioComissao = '$dateNow' WHERE idProjeto = '$idProjeto' ";
     if(mysqli_query($con,$sql_envioComissao))
     {
-        $sql_historico = "INSERT INTO historico_etapa (idProjeto, idEtapaProjeto, data) VALUES ('$idProjeto', '$statusEnvio', '$dateNow')";
+        $sql_historico = "INSERT INTO historico_etapa (idProjeto, idEtapaProjeto, data) VALUES ('$idProjeto', '$etapaProjeto', '$dateNow')";
         $query_historico = mysqli_query($con, $sql_historico);
         $mensagem = "<font color='#01DF3A'><strong>Enviado com sucesso!</strong></font>";
         gravarLog($sql_historico);
@@ -341,7 +342,7 @@ if(isset($_POST['gravarNota']))
     $idP = $_POST['IDP'];
     if ($idP != 0)
     {
-        $dateNow = date('Y:m:d h:i:s');
+        $dateNow = date('Y-m-d H:i:s');
         $nota = addslashes($_POST['nota']);
         $sql_nota = "INSERT INTO notas (idPessoa, idTipo, data, nota, interna) VALUES ('$idP', '3', '$dateNow', '$nota', '0')";
         if(mysqli_query($con,$sql_nota))

@@ -18,7 +18,7 @@ if(isset($_POST['insereFicha']))
 		else
 		{
 			// Verifica se o representante já foi cadastrado ao projeto
-			$pesquisa_ficha = "SELECT * FROM promac.ficha_tecnica 
+			$pesquisa_ficha = "SELECT * FROM ficha_tecnica 
 			WHERE idProjeto='$idProjeto'
 			AND cpf='$cpf' 
 			AND publicado='1'";

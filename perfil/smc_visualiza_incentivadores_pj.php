@@ -193,7 +193,7 @@ if(isset($_POST['nota']))
         $id = $_POST['LIBPF'];
         if ($id != 0)
         {
-            $dateNow = date('Y:m:d h:i:s');
+            $dateNow = date('Y-m-d H:i:s');
             $nota = addslashes($_POST['nota']);
             $sql_nota = "INSERT INTO notas (idPessoa, idTipo, data, nota, interna) VALUES ('$id', '5', '$dateNow', '$nota', '1')";
             if(mysqli_query($con,$sql_nota))

@@ -51,11 +51,13 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
                     <div class="col-md-offset-1 col-md-10">
                         <form method="POST" action="?perfil=projeto_2" class="form-horizontal" role="form">
 
+                            <!--TODO: Numero com pontuação quebra a regra de soma do valor total-->
                             <div class="form-group">
                                 <div class="col-md-offset-3 col-md-2">
                                     <label>Valor total do <br/>projeto</label>
                                     <input type="text" name="valorProjeto" class="form-control" id="valorProjeto" readOnly value="<?php echo dinheiroParaBr($projeto['valorProjeto']=$projeto['valorIncentivo']+$projeto['valorFinanciamento']) ?>" />
                                 </div>
+
                                 <div class="col-md-2">
                                     <label>Valor do Incentivo solicitado no Pro-Mac</label>
                                     <input type="text" pattern="([0-9]{1,3}\.)?([0-9]{1,3}\.)?[0-9]{1,3},[0-9]{2}$"  title="Formato desejado: 1.000,99" name="valorIncentivo" class="form-control" id="valorIncentivo" value="<?php echo isset($projeto['valorIncentivo']) ? dinheiroParaBr($projeto['valorIncentivo']) : null ?>" />

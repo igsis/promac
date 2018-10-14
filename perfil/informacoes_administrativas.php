@@ -13,7 +13,7 @@ if($alterar == 1 || $alterar == 0)
     if(mysqli_query($con, $sql))
     {
         gravarLog($sql);
-        $data = date('Y-m-d h:i:s');
+        $data = date('Y-m-d H:i:s');
         $sql_historico = "INSERT INTO `historico_etapa`(`idProjeto`, `idEtapaProjeto`, `data`) VALUES ('$idProjeto', 2, '$data')";
         if(mysqli_query($con,$sql_historico))
         {

@@ -31,7 +31,7 @@ if(isset($_POST['envioComissao']))
 			$statusEnvio = 24;
 			break;
 	}
-	$dateNow = date('Y:m:d h:i:s');
+	$dateNow = date('Y-m-d H:i:s');
 	$sql_envioComissao = "UPDATE projeto SET idEtapaProjeto = '$statusEnvio', envioComissao = '$dateNow', idStatus = '2' WHERE idProjeto = '$idProjeto'";
 	if(mysqli_query($con,$sql_envioComissao))
 	{
