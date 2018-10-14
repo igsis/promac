@@ -1,35 +1,35 @@
 <?php
-$array_status = array(7, 10, 15, 19, 20, 24, 25, 34); //status
-foreach ($array_status as $idStatus)
+$array_etapa = array(7, 10, 15, 19, 20, 24, 25, 34); //status
+foreach ($array_etapa as $idEtapa)
 {
-    $sqlStatus = "SELECT idStatus, status, ordem FROM status WHERE idStatus = '$idStatus'";
+    $sqlStatus = "SELECT idEtapaProjeto, etapaProjeto, ordem FROM etapa_projeto WHERE idEtapaProjeto = '$idEtapa'";
     $sqlHistorico = "SELECT
                          hr.idProjeto,
                          p.protocolo,
                          p.nomeProjeto,
                          hr.idStatus,
-                         s.status,
+                         s.etapaProjeto,
                          pf.nome AS 'parecerista',
                          hr.dataReuniao,
                          hr.data AS 'dataRegistro'
                         FROM historico_reuniao AS hr
                          INNER JOIN projeto AS p ON p.idProjeto = hr.idProjeto
-                         INNER JOIN status AS s ON s.idStatus = hr.idStatus
+                         INNER JOIN etapa_projeto AS s ON s.idEtapaProjeto = hr.idStatus
                          INNER JOIN pessoa_fisica AS pf ON pf.idPf = hr.idComissao
                         WHERE hr.idComissao = ".$_POST['idComissao']."
-                        AND hr.idStatus = '$idStatus'";
+                        AND hr.idStatus = '$idEtapa'";
     $queryHistorico = mysqli_query($con,$sqlHistorico);
     $queryStatus = mysqli_query($con,$sqlStatus);
     $num = mysqli_num_rows($queryHistorico);
 
-    foreach ($queryStatus as $status)
+    foreach ($queryStatus as $etapa)
     {
         $i = 0;
         ?>
         <div class='form-group'>
-            <h5>Projetos com Status "<?=$status['status']?>"</h5>
+            <h5>Projetos com Etapa "<?=$etapa['etapaProjeto']?>"</h5>
             <form method="POST" action="<?= ($usuario['idNivelAcesso'] == 2) ? "?perfil=smc_pesquisa_geral_resultado" : "?perfil=comissao_pesquisa_resultado"?>" class="form-horizontal" role="form">
-                <button type="submit" class="label label-warning" name="idStatus" value="<?=$status['idStatus']?>">
+                <button type="submit" class="label label-warning" name="idStatus" value="<?=$etapa['idEtapaProjeto']?>">
                     <span>Total: <?=$num?></span>
                 </button>
             </form>
@@ -63,7 +63,7 @@ foreach ($array_status as $idStatus)
                                 <tr>
                                     <td class='list_description'><?= $campo['protocolo'] ?></td>
                                     <td class='list_description'><?= $campo['nomeProjeto'] ?></td>
-                                    <td class='list_description'><?= $campo['status'] ?></td>
+                                    <td class='list_description'><?= $campo['etapaProjeto'] ?></td>
                                     <td class='list_description'><?= $campo['parecerista'] ?></td>
                                     <td class='list_description'>
                                         <?php
