@@ -27,7 +27,7 @@
 
 						<div class="alert-success">
 							<p>&nbsp;</p>
-							<p><strong>Nesta área, você pode consultar os projetos já aprovados!</strong></p>
+							<p><strong>Nesta área, você pode consultar os projetos enviados!</strong></p>
 							<p>&nbsp;</p>
 						</div>
 
@@ -76,7 +76,7 @@
 
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8"><label>Valor Aprovado</label>
-								<input type="number" name="valorAprovado" class="form-control">
+								<input type="text" pattern="[0-9]+$" title="Permitido somente Números" name="valorAprovado" class="form-control">
 							</div>
 						</div>
 

@@ -8,24 +8,15 @@ if (isset($_POST['carregar'])) {
 $idProjeto = $_SESSION['idProjeto'];
 
 $projeto = recuperaDados("projeto", "idProjeto", $idProjeto);
+$status = recuperaDados("etapa_status", "idStatus", $projeto['idStatus']);
+$idEtapa = $projeto['idEtapaProjeto'];
+
+//para o projeto
 $area = recuperaDados("area_atuacao", "idArea", $projeto['idAreaAtuacao']);
 $renuncia = recuperaDados("renuncia_fiscal", "idRenuncia", $projeto['idRenunciaFiscal']);
 $cronograma = recuperaDados("cronograma", "idCronograma", $projeto['idCronograma']);
 $video = recuperaDados("projeto", "idProjeto", $idProjeto);
 $v = array($video['video1'], $video['video2'], $video['video3']);
-$status = recuperaDados("status", "idStatus", $projeto['idStatus']);
-$idStatus = $projeto['idStatus'];
-$dateNow = date('Y-m-d');
-$dataPublicacaoDoc = $projeto['dataPublicacaoDoc'];
-$dataRecurso = date('Y-m-d', strtotime("+7 days", strtotime($dataPublicacaoDoc)));
-// Calcula a diferença em segundos entre as datas do recurso e publicação
-$diferenca = strtotime($dateNow) - strtotime($dataRecurso);
-$dias = floor($diferenca / (60 * 60 * 24));//Calcula a diferença em dias
-
-$status_aprovado = array(5, 21, 26, 16, 11);
-$status_reprovado = array(6, 22, 27, 17);
-$status_visivel = array(2, 12, 13, 23, 14);
-$status_analise = array(3,7,10,19,20,24,25,34,15);
 ?>
 <section id="list_items" class="home-section bg-white">
     <div class="container">
@@ -56,26 +47,11 @@ $status_analise = array(3,7,10,19,20,24,25,34,15);
                                     <ul class='list-group'>
                                         <li class='list-group-item list-group-item-success'></li>
                                         <li class="list-group-item"><strong>Protocolo (nº ISP):</strong> <?= $projeto['protocolo'] ?></li>
-                                        <li class="list-group-item"><strong>Etapa do projeto:</strong>
-                                            <?php
-                                            if (in_array($idStatus, $status_aprovado)) {
-                                                echo "Aprovado";
-                                            }
-                                            if (in_array($idStatus, $status_reprovado)) {
-                                                echo "Reprovado";
-                                            }
-                                            if (in_array($idStatus, $status_visivel)) {
-                                                echo $status['status'];
-                                            }
-                                            if (in_array($idStatus, $status_analise)) {
-                                                echo "Projeto em análise";
-                                            }
-                                            ?>
-                                        </li>
+                                        <li class="list-group-item"><strong>Status do projeto:</strong>  <?= $status['status'] ?></li>
                                         <li class='list-group-item'>
                                             <strong>Valor Aprovado:</strong>
                                             <?php
-                                            if (in_array($idStatus, $status_aprovado)) {
+                                            if($projeto['idStatus'] == 3){ //caso aprovado
                                                 echo "R$ " . dinheiroParaBr($projeto['valorAprovado']);
                                             }
                                             ?>
@@ -87,6 +63,15 @@ $status_analise = array(3,7,10,19,20,24,25,34,15);
                             <div class="form-group">
                                 <div class="col-md-offset-2 col-md-8">
                                     <?php exibirParecerProponente($idProjeto) ?>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-8">
+                                    <ul class='list-group'>
+                                        <li class='list-group-item list-group-item-success'><strong>Arquivos do proponente</strong></li>
+                                        <li class='list-group-item'><?php listaAnexosProjetoSMC($idProjeto, 3, ""); ?></li>
+                                    </ul>
                                 </div>
                             </div>
 
@@ -113,7 +98,7 @@ $status_analise = array(3,7,10,19,20,24,25,34,15);
 
                             <!-- Botão para anexar certificados -->
                             <?php
-                            if (in_array($idStatus, $status_aprovado)){
+                            if ($projeto['idStatus'] == 3){
                             ?>
                                 <div class="form-group">
                                     <div class="col-md-offset-4 col-md-6">
@@ -128,7 +113,7 @@ $status_analise = array(3,7,10,19,20,24,25,34,15);
 
                             <!-- Botão para solicitar alteração do projeto -->
                             <?php
-                            if(in_array($idStatus, $status_aprovado)){
+                            if($projeto['idStatus'] == 3){
                             ?>
                                 <div class="form-group">
                                     <div class="col-md-offset-4 col-md-6">
@@ -143,7 +128,7 @@ $status_analise = array(3,7,10,19,20,24,25,34,15);
 
                             <!-- Botão para anexar complemento de informações -->
                             <?php
-                            if(($idStatus == 12) || ($idStatus == 13)) {
+                            if($projeto['idStatus'] == 5) {
                             ?>
                                     <div class="form-group">
                                         <div class="col-md-offset-4 col-md-6">
@@ -153,15 +138,14 @@ $status_analise = array(3,7,10,19,20,24,25,34,15);
                                             </form>
                                         </div>
                                     </div>
-                                </div>
                             <?php
                             }
                             ?>
 
                             <!-- Botão para anexar recurso -->
                             <?php
-                            if($idStatus != 26 && $idStatus != 27){
-                                if(in_array($idStatus, $status_aprovado) || in_array($idStatus, $status_reprovado)){
+                            if($idEtapa != 26 && $idEtapa != 27){
+                                if($projeto['idStatus'] == 4){
                             ?>
                                     <div class="form-group">
                                         <div class="col-md-offset-4 col-md-6">
@@ -173,17 +157,17 @@ $status_analise = array(3,7,10,19,20,24,25,34,15);
                                             </form>
                                         </div>
                                     </div>
-                                </div>
                             <?php
                                 }
                             }
                         ?>
-                        <!-- LABEL PROJETO -->
-                    <div class="hidden" id="projeto_label">
-                        <?php include "includes/label_projeto.php"; ?>
                     </div>
-                        <!-- FIM LABEL PROJETO -->
-                    </div>
+
+                <!-- LABEL PROJETO -->
+
+                <?php include "includes/label_projeto.php"; ?>
+
+                <!-- FIM LABEL PROJETO -->
                 </div>
             </div>
         </div>

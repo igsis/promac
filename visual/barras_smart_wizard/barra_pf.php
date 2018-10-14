@@ -116,7 +116,7 @@ for ($i = 0; $i < count($urlPf); $i++) {
                    <a onclick="location.href='index_pf.php?perfil=projeto_pf'" href=""><br /><small>Projeto</small></a>
                 </li>
                 <?php
-                    if ($proj['idStatus'] == 1)
+                    if ($proj['idEtapaProjeto'] == 1)
                     {
                 ?> 
                 <?php
@@ -174,7 +174,7 @@ for ($i = 0; $i < count($urlPf); $i++) {
                 }
                 ?>
                 <?php
-                    /*if ($proj['idStatus'] != 1) {
+                    /*if ($proj['idEtapaProjeto'] != 1) {
                 ?>
                 <li class="<?php echo isset($acionar18) ? $acionar18 : 'clickable'; ?>">
                    <a onclick="location.href='index_pf.php?perfil=informacoes_administrativas'" href=""><br /><small>Informações da Inscrição</small></a>

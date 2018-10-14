@@ -95,7 +95,7 @@ if(isset($_POST['atualizar']))
 	if ($rows > 0) {
 		while($arquivo = mysqli_fetch_array($query))
 		{
-			# Recebe um array com idStatus de todos os docs
+			# Recebe um array com idEtapaProjeto de todos os docs
 			$totStatus[$count] = $arquivo['idStatusDocumento'];
 	 		$count ++;
 		}
@@ -192,7 +192,7 @@ if(isset($_POST['nota']))
         $id = $_POST['LIBPF'];
         if ($id != 0)
         {
-            $dateNow = date('Y:m:d h:i:s');
+            $dateNow = date('Y-m-d H:i:s');
             $nota = addslashes($_POST['nota']);
             $sql_nota = "INSERT INTO notas (idPessoa, idTipo, data, nota, interna) VALUES ('$id', '2', '$dateNow', '$nota', '1')";
             if(mysqli_query($con,$sql_nota))
@@ -273,7 +273,7 @@ $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 
 <!-- Botão para Prosseguir -->
 	<?php
-	if($pj['liberado'] == 1)
+	if($pj['liberado'] != 3)
 	{
     /**
      * Bloco comentado abaixo exibe o botão para aprovar somente após a verificação de todos os arquivos
@@ -293,37 +293,37 @@ $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 //        if (!(in_array(0,$statusArray)))
 //        {
 ?>
-	<div class="container">
-        <div class='col-md-offset-2 col-md-8'>
-            <div class="form-group">
-                <ul class='list-group'>
-                    <li class='list-group-item list-group-item-success'>Notas</li>
-                    <?php
-                        listaNota($idPj,2,1)
-                    ?>
-                </ul>
-            </div>
-        </div>
-        <form method="POST" action="?perfil=smc_visualiza_perfil_pj" class="form-horizontal" role="form">
-            <div class="row">
+        <div class="container">
+            <div class='col-md-offset-2 col-md-8'>
                 <div class="form-group">
-                    <div class="col-md-offset-2 col-md-8"><label>Notas</label><br/>
-                        <input type="text" class="form-control" name="nota">
+                    <ul class='list-group'>
+                        <li class='list-group-item list-group-item-success'>Notas</li>
+                        <?php
+                            listaNota($idPj,2,1)
+                        ?>
+                    </ul>
+                </div>
+            </div>
+            <form method="POST" action="?perfil=smc_visualiza_perfil_pj" class="form-horizontal" role="form">
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-8"><label>Notas</label><br/>
+                            <input type="text" class="form-control" name="nota">
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class='col-md-offset-4 col-md-2'>
-                    <input type='hidden' name='LIBPF' value='<?php echo $pj['idPj'] ?>' />
-                    <input type='submit' name='negar' value='Não Aprovar' class='btn btn-theme btn-lg btn-block'>
+                <div class="form-group">
+                    <div class='col-md-offset-4 col-md-2'>
+                        <input type='hidden' name='LIBPF' value='<?php echo $pj['idPj'] ?>' />
+                        <input type='submit' name='negar' value='Não Aprovar' class='btn btn-theme btn-lg btn-block'>
+                    </div>
+                    <div class='col-md-2'>
+                        <input type='hidden' name='LIBPF' value='<?php echo $pj['idPj'] ?>' />
+                        <input type='submit' name='liberar' value='Aprovar' class='btn btn-theme btn-lg btn-block'>
+                    </div>
                 </div>
-                <div class='col-md-2'>
-                    <input type='hidden' name='LIBPF' value='<?php echo $pj['idPj'] ?>' />
-                    <input type='submit' name='liberar' value='Aprovar' class='btn btn-theme btn-lg btn-block'>
-                </div>
-            </div>
-        </form>
-	</div>
+            </form>
+        </div>
 <?php
 //        }
 //        else
@@ -359,24 +359,6 @@ $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
                         <input type='submit' name='desbloquear' value='Desbloquear dados do proponente para edição' class='btn btn-theme btn-lg btn-block'>
                     </form>
                 </div>
-            </div>
-        </div>
-	<?php
-	}
-	if(($pj['liberado'] == 2) || ($pj['liberado'] == 4))
-	{
-	?>
-        <div class="container">
-            <div class='col-md-offset-2 col-md-8'>
-                <ul class='list-group'>
-                    <li class='list-group-item list-group-item-success'>Notas</li>
-                    <?php
-                    listaNota($idPj,2,1)
-                    ?>
-                </ul>
-            </div>
-            <div class='col-md-offset-2 col-md-8'>
-                <h5><font color='#00FF00'><strong>Proponente habilitado para trocar informações cadastrais.</strong></font><br> Aguardando reenvio da inscrição.</h5>
             </div>
         </div>
 	<?php

@@ -1310,9 +1310,6 @@ function listaAnexosProjetoSMC($idProjeto,$tipoPessoa,$pagina)
 					<form id='apagarArq' method='POST' action='?perfil=".$pagina."'>
 						<input type='hidden' name='idProjeto' value='".$idProjeto."' />
 						<input type='hidden' name='tipoPessoa' value='".$tipoPessoa."' />
-						<input type='hidden' name='apagar' value='".$arquivo['idUploadArquivo']."' />
-						<button class='btn btn-danger  btn-sm btn-block' style='border-radius: 10px;' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Remover Arquivo?' data-message='Deseja realmente excluir o arquivo ".$arquivo['documento']."?'>Remover
-						</button></td>
 					</form>";
             echo "</tr>";
         }
@@ -1864,7 +1861,7 @@ function exibirParecerProponente($idProjeto)
         {
             echo "<tr>";
             echo "<td class='list_description'>".$arquivo['documento']."</td>";
-            echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 0 ,50,"..." )."</a></td>";
+            echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'],15 ,30 ,"..." )."</a></td>";
             echo "</tr>";
         }
         echo "</table>";
@@ -2546,39 +2543,34 @@ function selecionaArquivoAnexo($http, $idListaDocumento, $extensao = '.php')
 
 function retornaQtdProjetos($tipoPessoa, $id)
 {
-  $conexao = bancoMysqli();
+    $conexao = bancoMysqli();
 
-  if($tipoPessoa == 1):    
-    $query =  "SELECT 
-               count(idProjeto)
-             FROM 
-               projeto AS proj  
-  			  WHERE proj.publicado = 1
-  			  AND proj.idStatus NOT IN (5,21,26,32,15,11,6,22,27,33,17)
-  			  AND   proj.idPf = ".$id;
-    
-    elseif ($tipoPessoa == 2):
-  	  
-  	  $query =  "SELECT 
-               count(idProjeto)
-             FROM 
-               projeto AS proj  
-             INNER JOIN 
-               pessoa_juridica AS pj 
-             ON pj.idPj = proj.idPj  
-  			 
-  			 WHERE proj.publicado = 1
-		     AND proj.idStatus NOT IN (5,21,26,32,15,11,6,22,27,33,17)
-  			 AND   pj.cooperativa = 0
-  			 AND   proj.idPj = ".$id;
-    
-  endif;	
+    if ($tipoPessoa == 1) {
+        $query = "SELECT 
+                    count(idProjeto)
+                    FROM 
+                    projeto AS proj  
+                    WHERE proj.publicado = 1
+                    AND proj.idStatus != 6
+                    AND   proj.idPf = " . $id;
+    }
+    elseif ($tipoPessoa == 2) {
+        $query = "SELECT 
+                    count(idProjeto)
+                    FROM 
+                    projeto AS proj  
+                    INNER JOIN 
+                    pessoa_juridica AS pj 
+                    ON pj.idPj = proj.idPj 
+                    WHERE proj.publicado = 1
+                    AND proj.idStatus != 6
+                    AND   pj.cooperativa = 0
+                    AND   proj.idPj = " . $id;
+    }
+    $resultado = mysqli_query($conexao, $query);
+    $qtdProjeto = mysqli_fetch_array($resultado);
 
-
-  $resultado = mysqli_query($conexao,$query);
-  $qtdProjeto = mysqli_fetch_array($resultado);
-  
-  return $qtdProjeto;
+    return $qtdProjeto;
 }
 
 function retornaProjeto($tipoPessoa, $id)
@@ -3271,6 +3263,7 @@ function uploadArquivo($idProjeto, $tipoPessoa, $pagina, $idListaDocumento, $idT
 				<tr class='list_menu'>
 					<td>Tipo de arquivo</td>
 					<td>Nome do arquivo</td>
+					<td>Observação</td>
 					<td></td>
 				</tr>
 			</thead>
@@ -3278,11 +3271,10 @@ function uploadArquivo($idProjeto, $tipoPessoa, $pagina, $idListaDocumento, $idT
         while($arquivo = mysqli_fetch_array($query))
         {
             echo "<tr>";
-            echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
+            echo "<td class='list_description'>".$arquivo['documento']."</td>";
             echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
-            $dateNow = date('Y-m-d');
-            $dataenvio = date_format(date_create($arquivo['dataEnvio']), 'Y-m-d');
-            if($dataenvio == $dateNow) {
+            echo "<td class='list_description'>".$arquivo['observacoes']."</td>";
+            if($arquivo['idStatusDocumento'] == 3) {
                 echo "
 						<td class='list_description'>
 							<form id='apagarArq' method='POST' action='?perfil=" . $pagina . "'>

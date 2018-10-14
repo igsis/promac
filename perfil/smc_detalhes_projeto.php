@@ -67,7 +67,6 @@ if(isset($_POST['gravarPrazos']))
 if(isset($_POST['gravarAdm']))
 {
     $idP = $_POST['IDP'];
-    $idStatus = $_POST['idStatus'];
     $valorAprovado = dinheiroDeBr($_POST['valorAprovado']);
     $idRenunciaFiscal = $_POST['idRenunciaFiscal'];
     $statusParecerista = $_POST['idStatusParecerista'];
@@ -89,9 +88,9 @@ if(isset($_POST['gravarAdm']))
         $dataPublicacaoDoc = exibirDataMysql($_POST['dataPublicacaoDoc']);
     }
     $linkPublicacaoDoc = $_POST['linkPublicacaoDoc'];
-    $data = date('Y-m-d h:i:s');
+    $data = date('Y-m-d H:i:s');
     $idUsuario = $_SESSION['idUser'];
-    $sql_gravarAdm = "UPDATE projeto SET idStatus = '$idStatus', valorAprovado = '$valorAprovado', idRenunciaFiscal = '$idRenunciaFiscal', idStatusParecerista = '$statusParecerista', dataReuniao = '$dataReuniao', dataPublicacaoDoc = '$dataPublicacaoDoc', linkPublicacaoDoc = '$linkPublicacaoDoc' WHERE idProjeto = '$idP' ";
+    $sql_gravarAdm = "UPDATE projeto SET valorAprovado = '$valorAprovado', idRenunciaFiscal = '$idRenunciaFiscal', idStatusParecerista = '$statusParecerista', dataReuniao = '$dataReuniao', dataPublicacaoDoc = '$dataPublicacaoDoc', linkPublicacaoDoc = '$linkPublicacaoDoc' WHERE idProjeto = '$idP' ";
     if(mysqli_query($con,$sql_gravarAdm))
     {
         $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
@@ -99,7 +98,7 @@ if(isset($_POST['gravarAdm']))
         echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
         if($dataReuniao != '' || $statusParecerista != 0)
         {
-            $sql_historico_reuniao = "INSERT INTO historico_reuniao (idProjeto,idStatus,dataReuniao,idStatusParecerista,data,idUsuario) VALUES ('$idP','$idStatus','$dataReuniao','$statusParecerista','$data','$idUsuario')";
+            $sql_historico_reuniao = "INSERT INTO historico_reuniao (idProjeto,idEtapaProjeto,dataReuniao,idStatusParecerista,data,idUsuario) VALUES ('$idP','$idStatus','$dataReuniao','$statusParecerista','$data','$idUsuario')";
             if(mysqli_query($con,$sql_historico_reuniao))
             {
                 $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
@@ -114,7 +113,7 @@ if(isset($_POST['gravarAdm']))
         }
         if($dataPublicacaoDoc != '' || $linkPublicacaoDoc != '')
         {
-            $sql_historico_publicacao = "INSERT INTO historico_publicacao (idProjeto,idStatus,dataPublicacao,linkPublicacao,data,idUsuario) VALUES ('$idP','$idStatus','$dataPublicacaoDoc','$linkPublicacaoDoc','$data','$idUsuario')";
+            $sql_historico_publicacao = "INSERT INTO historico_publicacao (idProjeto,idEtapaProjeto,dataPublicacao,linkPublicacao,data,idUsuario) VALUES ('$idP','$idStatus','$dataPublicacaoDoc','$linkPublicacaoDoc','$data','$idUsuario')";
             if(mysqli_query($con,$sql_historico_publicacao))
             {
                 $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
@@ -134,57 +133,161 @@ if(isset($_POST['gravarAdm']))
     }
 }
 
+if(isset($_POST['aprovaProjeto']))
+{
+    $idProjeto = $_POST['idProjeto'];
+    $idEtapaProjeto = $_POST['idEtapaProjeto'];
+    switch ($idEtapaProjeto){
+        case 10:
+            $idEtapaNova = 5;
+            $etapa = recuperaDados("etapa_projeto","idEtapaProjeto",$idEtapaNova);
+            $idStatus = $etapa['idStatus'];
+            break;
+        case 20:
+            $idEtapaNova = 21;
+            $etapa = recuperaDados("etapa_projeto","idEtapaProjeto",$idEtapaNova);
+            $idStatus = $etapa['idStatus'];
+            break;
+        case 25:
+            $idEtapaNova = 26;
+            $etapa = recuperaDados("etapa_projeto","idEtapaProjeto",$idEtapaNova);
+            $idStatus = $etapa['idStatus'];
+            break;
+        case 15:
+            $idEtapaNova = 16;
+            $etapa = recuperaDados("etapa_projeto","idEtapaProjeto",$idEtapaNova);
+            $idStatus = $etapa['idStatus'];
+            break;
+    }
+    $dateNow = date('Y-m-d H:i:s');
+    $sql_reprova = "UPDATE projeto SET idEtapaProjeto = '$idEtapaNova', idStatus = '$idStatus' WHERE idProjeto = '$idProjeto'";
+    if(mysqli_query($con,$sql_reprova))
+    {
+        $sql_historico = "INSERT INTO historico_etapa (idProjeto, idEtapaProjeto, data) VALUES ('$idProjeto', '$idEtapaNova', '$dateNow')";
+        $query_historico = mysqli_query($con, $sql_historico);
+        $mensagem = "<font color='#01DF3A'><strong>Aprovado com sucesso!</strong></font>";
+        gravarLog($sql_historico);
+        gravarLog($sql_reprova);
+    }
+    else
+    {
+        $mensagem = "<font color='#FF0000'><strong>Erro ao aprovar! Tente novamente.</strong></font>";
+    }
+}
+
+if(isset($_POST['reprovaProjeto']))
+{
+    $idProjeto = $_POST['idProjeto'];
+    $idEtapaProjeto = $_POST['idEtapaProjeto'];
+    switch ($idEtapaProjeto){
+        case 10:
+            $idEtapaNova = 6;
+            $etapa = recuperaDados("etapa_projeto","idEtapaProjeto",$idEtapaNova);
+            $idStatus = $etapa['idStatus'];
+            break;
+        case 20:
+            $idEtapaNova = 22;
+            $etapa = recuperaDados("etapa_projeto","idEtapaProjeto",$idEtapaNova);
+            $idStatus = $etapa['idStatus'];
+            break;
+        case 25:
+            $idEtapaNova = 27;
+            $etapa = recuperaDados("etapa_projeto","idEtapaProjeto",$idEtapaNova);
+            $idStatus = $etapa['idStatus'];
+            break;
+        case 15:
+            $idEtapaNova = 17;
+            $etapa = recuperaDados("etapa_projeto","idEtapaProjeto",$idEtapaNova);
+            $idStatus = $etapa['idStatus'];
+            break;
+    }
+    $dateNow = date('Y-m-d H:i:s');
+    $sql_reprova = "UPDATE projeto SET idEtapaProjeto = '$idEtapaNova', idStatus = '$idStatus' WHERE idProjeto = '$idProjeto'";
+    if(mysqli_query($con,$sql_reprova))
+    {
+        $sql_historico = "INSERT INTO historico_etapa (idProjeto, idEtapaProjeto, data) VALUES ('$idProjeto', '$idEtapaNova', '$dateNow')";
+        $query_historico = mysqli_query($con, $sql_historico);
+        $mensagem = "<font color='#01DF3A'><strong>Reaprovado com sucesso!</strong></font>";
+        gravarLog($sql_historico);
+        gravarLog($sql_reprova);
+    }
+    else
+    {
+        $mensagem = "<font color='#FF0000'><strong>Erro ao reaprovar! Tente novamente.</strong></font>";
+    }
+}
+
+if(isset($_POST['complementaProjeto']))
+{
+    $idProjeto = $_POST['idProjeto'];
+    $idEtapaProjeto = $_POST['idEtapaProjeto'];
+
+    $idEtapaNova = 12;
+    $etapa = recuperaDados("etapa_projeto","idEtapaProjeto",$idEtapaNova);
+    $idStatus = $etapa['idStatus'];
+
+    $dateNow = date('Y-m-d H:i:s');
+    $sql_complementa = "UPDATE projeto SET idEtapaProjeto = '$idEtapaNova', idStatus = '$idStatus' WHERE idProjeto = '$idProjeto'";
+    if(mysqli_query($con,$sql_complementa))
+    {
+        $sql_historico = "INSERT INTO historico_etapa (idProjeto, idEtapaProjeto, data) VALUES ('$idProjeto', '$idEtapaNova', '$dateNow')";
+        $query_historico = mysqli_query($con, $sql_historico);
+        $mensagem = "<font color='#01DF3A'><strong>Solicitação de complemento de informação gravada com sucesso!</strong></font>";
+        gravarLog($sql_historico);
+        gravarLog($sql_complementa);
+    }
+    else
+    {
+        $mensagem = "<font color='#FF0000'><strong>Erro ao gravar a solicitação de complemento de informação! Tente novamente.</strong></font>";
+    }
+}
+
 if(isset($_POST['envioComissao']))
 {
     $idProjeto = $_POST['idProjeto'];
     $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
-    $idStatus = $projeto['idStatus'];
+    $idEtapaProjeto = $projeto['idEtapaProjeto'];
 
-    switch ($idStatus) {
+    switch ($idEtapaProjeto) {
         case 2:
-            $statusEnvio = 7;
+            $etapaProjeto = 7;
             break;
         case 10:
-            $statusEnvio = 7;
+            $etapaProjeto = 7;
             break;
         case 13:
-            $statusEnvio = 19;
+            $etapaProjeto = 19;
             break;
         case 20:
-            $statusEnvio = 19;
+            $etapaProjeto = 19;
             break;
         case 14:
-            $statusEnvio = 34;
+            $etapaProjeto = 34;
             break;
         case 15:
-            $statusEnvio = 34;
+            $etapaProjeto = 34;
             break;
         case 23:
-            $statusEnvio = 24;
+            $etapaProjeto = 24;
             break;
         case 25:
-            $statusEnvio = 24;
-            break;
-        case 29:
-            $statusEnvio = 30;
-            break;
-        case 31:
-            $statusEnvio = 30;
+            $etapaProjeto = 24;
             break;
     }
-    $dateNow = date('Y:m:d h:i:s');
-    $sql_envioComissao = "UPDATE projeto SET idStatus = '$statusEnvio', envioComissao = '$dateNow' WHERE idProjeto = '$idProjeto' ";
+
+    $dateNow = date('Y-m-d H:i:s');
+    $sql_envioComissao = "UPDATE projeto SET idEtapaProjeto = '$etapaProjeto', idStatus = 2, envioComissao = '$dateNow' WHERE idProjeto = '$idProjeto' ";
     if(mysqli_query($con,$sql_envioComissao))
     {
-        $sql_historico = "INSERT INTO historico_status (idProjeto, idStatus, data) VALUES ('$idProjeto', '$statusEnvio', '$dateNow')";
+        $sql_historico = "INSERT INTO historico_etapa (idProjeto, idEtapaProjeto, data) VALUES ('$idProjeto', '$etapaProjeto', '$dateNow')";
         $query_historico = mysqli_query($con, $sql_historico);
-        $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
+        $mensagem = "<font color='#01DF3A'><strong>Enviado com sucesso!</strong></font>";
         gravarLog($sql_historico);
         gravarLog($sql_envioComissao);
     }
     else
     {
-        $mensagem = "<font color='#FF0000'><strong>Erro ao atualizar! Tente novamente.</strong></font>";
+        $mensagem = "<font color='#FF0000'><strong>Erro ao enviar! Tente novamente.</strong></font>";
     }
 }
 
@@ -239,7 +342,7 @@ if(isset($_POST['gravarNota']))
     $idP = $_POST['IDP'];
     if ($idP != 0)
     {
-        $dateNow = date('Y:m:d h:i:s');
+        $dateNow = date('Y-m-d H:i:s');
         $nota = addslashes($_POST['nota']);
         $sql_nota = "INSERT INTO notas (idPessoa, idTipo, data, nota, interna) VALUES ('$idP', '3', '$dateNow', '$nota', '0')";
         if(mysqli_query($con,$sql_nota))
@@ -320,7 +423,7 @@ if(isset($_POST['editarParecer'])){
     $observacoes = $_POST['observacoes'];
     $idProjeto = $_POST['idPessoa'];
     $idArquivo = $_POST['idArquivo'];
-    $query = "UPDATE upload_arquivo SET idStatusDocumento = '$status', observacoes = '$observacoes' WHERE idUploadArquivo = '$idArquivo' ";
+    $query = "UPDATE upload_arquivo SET idStatusDocumento = $status, observacoes = '$observacoes' WHERE idUploadArquivo = '$idArquivo' ";
     $envia = mysqli_query($con, $query);
     if($envia)
     {
@@ -414,7 +517,7 @@ if(isset($_POST['cancelarProjeto'])){
     $idUser = $_SESSION['idUser'];
     $dateNow = date('Y-m-d H:i:s');
 
-    $sql_cancelar = "UPDATE projeto SET publicado = 0 WHERE idProjeto = '$idProjeto'";
+    $sql_cancelar = "UPDATE projeto SET idStatus = 6 WHERE idProjeto = '$idProjeto'";
     if(mysqli_query($con,$sql_cancelar)){
         gravarLog($sql_cancelar);
         $sql_historico_cancelamento = "INSERT INTO historico_cancelamento (idProjeto, observacao, idUsuario, data, acao) VALUES ('$idProjeto', '$observacao','$idUser','$dateNow',1)";
@@ -437,6 +540,9 @@ $cronograma = recuperaDados("cronograma","idCronograma",$projeto['idCronograma']
 $video = recuperaDados("projeto","idProjeto",$idProjeto);
 $v = array($video['video1'], $video['video2'], $video['video3']);
 $data_reuniao = recuperaDados("data_reuniao", "idProjeto", $idProjeto);
+
+$etapa = recuperaDados("etapa_projeto","idEtapaProjeto",$projeto['idEtapaProjeto']);
+$status = recuperaDados("etapa_status","idStatus",$projeto['idStatus']);
 
 $comissao = recuperaDados("pessoa_fisica","idPf",$projeto['idComissao']);
 ?>

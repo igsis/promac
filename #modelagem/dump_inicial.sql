@@ -119,7 +119,7 @@ INSERT INTO `unidade_medida` (`idUnidadeMedida`, `unidadeMedida`) VALUES
 -- Extraindo dados da tabela `status`
 --
 
-INSERT INTO `status`(`idStatus`, `status`) VALUES
+INSERT INTO etapa_projeto (`idEtapaProjeto`, etapaProjeto) VALUES
 (1, 'Em elaboração'),
 (2, 'Enviado'),
 (3, 'Projeto em análise'),
@@ -170,5 +170,5 @@ INSERT INTO `frase_seguranca` (`id`, `frase_seguranca`) VALUES
 (4, 'Qual o nome do seu melhor amigo de infância?');
 
 
-INSERT INTO `statusprojeto` (`idStatus`, `situacaoAtual`, `descricaoSituacao`) VALUES
+INSERT INTO `statusprojeto` (`idEtapaProjeto`, `situacaoAtual`, `descricaoSituacao`) VALUES
 (1, 1, 'liberado');

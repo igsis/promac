@@ -47,7 +47,7 @@
                     <form id='finalizacaoComissao' method='POST' action='?perfil=comissao_detalhes_projeto'>
                         <input name='finalizaComissao' type='hidden'>
                         <input type='hidden' name='IDP' value='<?= $idProjeto ?>'>
-                        <button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Confirmação de envio' data-message='Deseja realmente finalizar e enviar à SMC?'>SIM</button>
+                        <button class='btn btn-theme btn-block' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Confirmação de envio' data-message='Verifique se o Parecer foi anexado! Deseja realmente finalizar e enviar à SMC?'>SIM</button>
                         </td>
                     </form>
                 </div>
@@ -55,7 +55,7 @@
             }
             else{
             ?>
-                <div class="col-md-offset-2 col-md-8"><span style="color: #ff0000; "> <i>Insira todas as informações antes de encaminhar à SMC.</i></span></div>
+                <div class="col-md-offset-2 col-md-8"><span style="color: #ff0000; "><strong><i>Insira todas as informações antes de encaminhar à SMC.</i></strong></span></div>
                 <?php
             }
             ?>
@@ -79,20 +79,20 @@
             </div>
         </div>
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-4"><label>Status de Análise*</label><br/>
+            <div class="col-md-offset-2 col-md-4"><label>Análise do Parecerista *</label><br/>
                 <select class="form-control" name="idStatusParecerista" required>
                     <option value="">Selecione...</option>
                     <?php echo geraOpcao("status_parecerista", $projeto['idStatusParecerista']) ?>
                 </select>
             </div>
-            <div class="col-md-4"><label>Data da Reunião</label>
+            <div class="col-md-4"><label>Data da Reunião *</label>
                 <input type="text" name="dataReuniao" id='datepicker08' class="form-control" required
                        value="<?php echo exibirDataBr($projeto['dataReuniao']) ?>">
             </div>
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-8">
-                <input type="hidden" name="idStatus" value="<?= $projeto['idStatus'] ?>">
+                <input type="hidden" name="idEtapaProjeto" value="<?= $projeto['idEtapaProjeto'] ?>">
                 <input type="hidden" name="idProjeto" value="<?php echo $idProjeto ?>">
                 <input type="submit" name="gravarAdm" class="btn btn-theme btn-md btn-block" value="Gravar">
             </div>
@@ -182,7 +182,6 @@
     </div>
     <!-- Fim Confirmação de Exclusão -->
 
-
     <div class="form-group">
         <div class="col-md-offset-1 col-md-10">
             <hr/>
@@ -192,8 +191,7 @@
     <form method="POST" action="?perfil=comissao_detalhes_projeto" class="form-horizontal" role="form">
         <div class="form-group">
             <div class="col-md-offset-2 col-md-8"><label>Notas</label><br/>
-                <textarea name="nota" class="form-control" rows="10"
-                          placeholder="Insira neste campo informações de notificações para o usuário."></textarea>
+                <textarea name="nota" class="form-control" rows="5" placeholder="Insira neste campo informações de notificações para o usuário."></textarea>
             </div>
         </div>
 

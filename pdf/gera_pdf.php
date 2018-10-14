@@ -66,7 +66,7 @@ while($row = mysqli_fetch_array($enviaP))
     $video2 = $row['video2'];
     $video3 = $row['video3'];
     $valorAProvado = $row['valorAprovado'];
-    $idStatus = $row['idStatus'];
+    $idStatus = $row['idEtapaProjeto'];
 }
 
 /*

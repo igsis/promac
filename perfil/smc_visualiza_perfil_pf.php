@@ -94,7 +94,7 @@ if(isset($_POST['atualizar']))
 	if ($rows > 0) {
 		while($arquivo = mysqli_fetch_array($query))
 		{
-			# Recebe um array com idStatus de todos os docs
+			# Recebe um array com idEtapaProjeto de todos os docs
 			$totStatus[$count] = $arquivo['idStatusDocumento'];
 	 		$count ++;
 		}
@@ -190,7 +190,7 @@ if(isset($_POST['nota']))
          $id = $_POST['LIBPF'];
          if ($id != 0)
          {
-             $dateNow = date('Y:m:d h:i:s');
+             $dateNow = date('Y-m-d H:i:s');
              $nota = addslashes($_POST['nota']);
              $sql_nota = "INSERT INTO notas (idPessoa, idTipo, data, nota, interna) VALUES ('$id', '1', '$dateNow', '$nota', '1')";
              if(mysqli_query($con,$sql_nota))
@@ -269,7 +269,7 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 
 <!-- Botão para Prosseguir -->
 	<?php
-	if($pf['liberado'] == 1)//proponente solicitando liberação
+	if($pf['liberado'] != 3)//proponente solicitando liberação
     {
         /**
          * Bloco comentado abaixo exibe o botão para aprovar somente após a verificação de todos os arquivos
@@ -335,7 +335,7 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
             </div>
             <br>-->
 <?php
-//        }
+      // }
 	}
 	if($pf['liberado'] == 3)//proponente liberado
 	{
@@ -356,24 +356,6 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
                         <input type='submit' name='desbloquear' value='Desbloquear dados do proponente para edição' class='btn btn-theme btn-lg btn-block'>
                     </form>
                 </div>
-            </div>
-        </div>
-	<?php
-	}
-	if(($pf['liberado'] == 2) || ($pf['liberado'] == 4)) //proponente reprovado
-	{
-	?>
-        <div class="container">
-            <div class='col-md-offset-2 col-md-8'>
-                <ul class='list-group'>
-                    <li class='list-group-item list-group-item-success'>Notas</li>
-                    <?php
-                    listaNota($idPf,1,1)
-                    ?>
-                </ul>
-            </div>
-            <div class='col-md-offset-2 col-md-8'>
-                <h5><font color='#00FF00'><strong>Proponente habilitado para trocar informações cadastrais.</strong></font><br> Aguardando reenvio da inscrição.</h5>
             </div>
         </div>
 	<?php

@@ -95,12 +95,12 @@ if(isset($_POST['atualizar']))
 	if ($rows > 0) {
 		while($arquivo = mysqli_fetch_array($query))
 		{
-			# Recebe um array com idStatus de todos os docs
+			# Recebe um array com idEtapaProjeto de todos os docs
 			$totStatus[$count] = $arquivo['idStatusDocumento'];
 	 		$count ++;
 		}
 	}
-	# Verifica se tem algum status reprovado ou complemetação 
+	# Verifica se tem algum status reprovado ou complemetação
 	if ((in_array('2',$totStatus)) || in_array('3',$totStatus))
 	{
 		$QueryPJ = "UPDATE incentivador_pessoa_juridica SET liberado='2' WHERE idPj = '".$dados[0]['idPessoa']."'";
@@ -193,7 +193,7 @@ if(isset($_POST['nota']))
         $id = $_POST['LIBPF'];
         if ($id != 0)
         {
-            $dateNow = date('Y:m:d h:i:s');
+            $dateNow = date('Y-m-d H:i:s');
             $nota = addslashes($_POST['nota']);
             $sql_nota = "INSERT INTO notas (idPessoa, idTipo, data, nota, interna) VALUES ('$id', '5', '$dateNow', '$nota', '1')";
             if(mysqli_query($con,$sql_nota))
@@ -274,8 +274,9 @@ $pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
 	</div>
 
     <?php
-	if($pj['liberado'] == 1) {
-        ?>
+	if($pj['liberado'] !=3)
+	{
+    ?>
         <div class="container">
             <div class='col-md-offset-2 col-md-8'>
                 <div class="form-group">
@@ -328,24 +329,6 @@ $pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
                         <input type='submit' name='desbloquear' value='Desbloquear dados do proponente para edição' class='btn btn-theme btn-lg btn-block'>
                     </form>
                 </div>
-            </div>
-        </div>
-	<?php
-	}
-	if(($pj['liberado'] == 2) || ($pj['liberado'] == 4))
-	{
-	?>
-        <div class="container">
-            <div class='col-md-offset-2 col-md-8'>
-                <ul class='list-group'>
-                    <li class='list-group-item list-group-item-success'>Notas</li>
-                    <?php
-                    listaNota($idPj,5,1)
-                    ?>
-                </ul>
-            </div>
-            <div class='col-md-offset-2 col-md-8'>
-                <h5><font color='#00FF00'>Incentivador não aprovado!<br> Aguardando reenvio da inscrição.</font></h5>
             </div>
         </div>
 	<?php

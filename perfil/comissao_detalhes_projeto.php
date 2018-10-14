@@ -80,7 +80,7 @@ if(isset($_POST['gravarPrazos']))
 
 if(isset($_POST['gravarAdm']))
 {
-    $idStatus = $_POST['idStatus'];
+    $idStatus = $_POST['idEtapaProjeto'];
     $valorAprovado = dinheiroDeBr($_POST['valorAprovado']);
     $renunciaFiscal = $_POST['idRenunciaFiscal'];
     $statusParecerista = $_POST['idStatusParecerista'];
@@ -92,7 +92,7 @@ if(isset($_POST['gravarAdm']))
     {
         $dataReuniao = exibirDataMysql($_POST['dataReuniao']);
     }
-    $data = date('Y-m-d h:i:s');
+    $data = date('Y-m-d H:i:s');
     $idUsuario = $_SESSION['idUser'];
 	$sql_gravarAdm = "UPDATE projeto SET valorAprovado = '$valorAprovado', idRenunciaFiscal = '$renunciaFiscal', idStatusParecerista = '$statusParecerista', dataReuniao = '$dataReuniao' WHERE idProjeto = '$idProjeto'";
 	if(mysqli_query($con,$sql_gravarAdm))
@@ -121,7 +121,7 @@ if(isset($_POST['gravarNota']))
 {
 	if ($idProjeto != 0)
 	{
-		$dateNow = date('Y:m:d h:i:s');
+		$dateNow = date('Y-m-d H:i:s');
 		$nota = addslashes($_POST['nota']);
 		$sql_nota = "INSERT INTO notas (idPessoa, idTipo, data, nota, interna) VALUES ('$idProjeto', '3', '$dateNow', '$nota', '2')";
 		if(mysqli_query($con,$sql_nota))
@@ -140,31 +140,27 @@ if(isset($_POST['gravarNota']))
 if(isset($_POST['finalizaComissao']))
 {
 	$idP = $_POST['IDP'];
-
 	$projeto = recuperaDados("projeto","idProjeto",$idP);
 
-    switch ($projeto['idStatus']) {
+    switch ($projeto['idEtapaProjeto']) {
         case 7:
-            $idStatus = 10;
+            $idEtapaProjeto = 10;
             break;
         case 19:
-            $idStatus = 20;
+            $idEtapaProjeto = 20;
             break;
         case 24:
-            $idStatus = 25;
-            break;
-        case 30:
-            $idStatus = 31;
+            $idEtapaProjeto = 25;
             break;
         case 34:
-            $idStatus = 15;
+            $idEtapaProjeto = 15;
             break;
     }
-	$dateNow = date('Y:m:d h:i:s');
-	$sql_finalizaComissao = "UPDATE projeto SET idStatus = '$idStatus', finalizacaoComissao = '$dateNow' WHERE idProjeto = '$idP' ";
+	$dateNow = date('Y-m-d H:i:s');
+	$sql_finalizaComissao = "UPDATE projeto SET idEtapaProjeto = '$idEtapaProjeto', finalizacaoComissao = '$dateNow' WHERE idProjeto = '$idP' ";
 	if(mysqli_query($con,$sql_finalizaComissao))
 	{
-        $sql_historico = "INSERT INTO historico_status (idProjeto, idStatus, data) VALUES ('$idProjeto', '$idStatus', '$dateNow')";
+        $sql_historico = "INSERT INTO historico_etapa (idProjeto, idEtapaProjeto, data) VALUES ('$idProjeto', '$idEtapaProjeto', '$dateNow')";
         $query_historico = mysqli_query($con, $sql_historico);
         $mensagem = "<font color='#01DF3A'><strong>Enviado à SMC com sucesso!</strong></font>";
         gravarLog($sql_finalizaComissao);
@@ -309,7 +305,7 @@ $renuncia = recuperaDados("renuncia_fiscal","idRenuncia",$projeto['idRenunciaFis
 $cronograma = recuperaDados("cronograma","idCronograma",$projeto['idCronograma']);
 $video = recuperaDados("projeto","idProjeto",$idProjeto);
 $v = array($video['video1'], $video['video2'], $video['video3']);
-$idStatus = $projeto['idStatus'];
+$idStatus = $projeto['idEtapaProjeto'];
 ?>
     <section id="list_items" class="home-section bg-white">
         <div class="container">
@@ -330,7 +326,6 @@ $idStatus = $projeto['idStatus'];
 		                        <?php else: ?>
 		                        <li class="nav"><a href="#F" data-toggle="tab">Pessoa Física</a></li>
 		                        <?php endif ?>
-                            <li class="nav"><a href="#historico" data-toggle="tab">Histórico</a></li>
 
                         </ul>
 
@@ -347,10 +342,6 @@ $idStatus = $projeto['idStatus'];
 
                        		 <!--LABEL PESSOA FISICA-->
                        		 <?php include "includes/label_pf.php"; ?>
-
-                 	   		 <!-- LABEL HISTÓRICO -->
-                            <?php include "includes/label_historico.php"; ?>
-                           
 
                         </div>
                         <!-- class="tab-content" -->

@@ -127,7 +127,7 @@ for ($i = 0; $i < count($urlPj); $i++) {
                     <a onclick="location.href='index_pj.php?perfil=projeto_pj'" href=""><br /><small>Projetos</small></a>
                 </li>
                 <?php
-                    if ($proj['idStatus'] == 1)
+                    if ($proj['idEtapaProjeto'] == 1)
                     {
                 ?> 
                 <?php
@@ -185,7 +185,7 @@ for ($i = 0; $i < count($urlPj); $i++) {
                 }
                 ?>
                 <?php
-                    /*if ($proj['idStatus'] != 1) {
+                    /*if ($proj['idEtapaProjeto'] != 1) {
                 ?>
                 <li class="<?php echo isset($ativa19) ? $ativa19 : 'clickable'; ?>">
                    <a onclick="location.href='index_pj.php?perfil=informacoes_administrativas'" href=""><br /><small>Informações da Inscrição</small></a>

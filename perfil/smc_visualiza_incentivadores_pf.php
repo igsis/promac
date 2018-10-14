@@ -94,13 +94,13 @@ if(isset($_POST['atualizar']))
 	if ($rows > 0) {
 		while($arquivo = mysqli_fetch_array($query))
 		{
-			# Recebe um array com idStatus de todos os docs
+			# Recebe um array com idEtapaProjeto de todos os docs
 			$totStatus[$count] = $arquivo['idStatusDocumento'];
 	 		$count ++;
 		}
 	}
 
-	# Verifica se tem algum status reprovado ou complemetação 
+	# Verifica se tem algum status reprovado ou complemetação
 	if ((in_array('2',$totStatus)) || in_array('3',$totStatus))
 	{
 		$QueryPJ = "UPDATE incentivador_pessoa_fisica SET liberado='2' WHERE idPf = '".$dados[0]['idPessoa']."'";
@@ -193,7 +193,7 @@ if(isset($_POST['nota']))
         $id = $_POST['LIBPF'];
         if ($id != 0)
         {
-            $dateNow = date('Y:m:d h:i:s');
+            $dateNow = date('Y-m-d H:i:s');
             $nota = addslashes($_POST['nota']);
             $sql_nota = "INSERT INTO notas (idPessoa, idTipo, data, nota, interna) VALUES ('$id', '4', '$dateNow', '$nota', '1')";
             if(mysqli_query($con,$sql_nota))
@@ -257,7 +257,7 @@ $pf = recuperaDados("incentivador_pessoa_fisica","idPf",$idPf);
 
 <!-- Botão para Prosseguir -->
 	<?php
-	if($pf['liberado'] == 1) 
+	if($pf['liberado'] != 3)
 	{
     /**
      * Bloco comentado abaixo exibe o botão para aprovar somente após a verificação de todos os arquivos
@@ -345,29 +345,10 @@ $pf = recuperaDados("incentivador_pessoa_fisica","idPf",$idPf);
                 </div>
             </div>
         </div>
-	<?php 
-	} 
-	if(($pf['liberado'] == 2) || ($pf['liberado'] == 4))
-	{
-	?>
-        <div class="container">
-            <div class='col-md-offset-2 col-md-8'>
-                <ul class='list-group'>
-                    <li class='list-group-item list-group-item-success'>Notas</li>
-                    <?php
-                    listaNota($idPf,4,1)
-                    ?>
-                </ul>
-            </div>
-            <div class='col-md-offset-2 col-md-8'>
-                <h5><font color='#00FF00'>Incentivador não aprovado!<br> Aguardando reenvio da inscrição.</font></h5>
-            </div>
-        </div>
 	<?php
 	}
 	?>
-
 	<div class="col-md-offset-2 col-md-8">
-		<a href="../include/arquivos_pessoa.php?idPessoa=<?php echo $pf['idPf'] ?>&tipo=<?php echo $tipoPessoa?>" class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos da empresa</a>
+		<a href="../include/arquivos_pessoa.php?idPessoa=<?php echo $pf['idPf'] ?>&tipo=<?php echo $tipoPessoa?>" class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos da pessoa</a>
 	</div>
 </section>

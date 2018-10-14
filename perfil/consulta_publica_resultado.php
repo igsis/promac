@@ -10,8 +10,6 @@ $protocolo = $_POST['protocolo'];
 $idAreaAtuacao = $_POST['idAreaAtuacao'];
 $valorAprovado = $_POST['valorAprovado'];
 
-$status_aprovado = "AND idStatus IN (5, 11, 14, 15, 16, 21, 26, 34)";
-
 // Inicio Pessoa Física
 if($nome != '' || $cpf != '')
 {
@@ -36,7 +34,8 @@ if($nome != '' || $cpf != '')
 	$sql = "SELECT * FROM projeto AS prj
 			INNER JOIN pessoa_fisica AS pf ON prj.idPf = pf.idPf
 			INNER JOIN area_atuacao AS ar on prj.idAreaAtuacao = ar.idArea
-			WHERE prj.publicado = 1 $status_aprovado
+			INNER JOIN etapa_status AS et ON prj.idStatus = et.idStatus
+			WHERE prj.publicado = 1
 			$filtro_nome $filtro_cpf";
 	$query = mysqli_query($con,$sql);
 	$num = mysqli_num_rows($query);
@@ -51,6 +50,7 @@ if($nome != '' || $cpf != '')
 			$x[$i]['proponente'] = $lista['nome'];
 			$x[$i]['documento'] = $lista['cpf'];
 			$x[$i]['areaAtuacao'] = $lista['areaAtuacao'];
+			$x[$i]['status'] = $lista['status'];
 			$i++;
 		}
 		$x['num'] = $i;
@@ -83,7 +83,8 @@ elseif($razaoSocial != '' || $cnpj != '')
 	$sql = "SELECT * FROM projeto AS prj
 			INNER JOIN pessoa_juridica AS pj ON prj.idPj = pj.idPj
 			INNER JOIN area_atuacao AS ar on prj.idAreaAtuacao = ar.idArea
-			WHERE prj.publicado = 1 $status_aprovado
+			INNER JOIN etapa_status AS et ON prj.idStatus = et.idStatus
+			WHERE prj.publicado = 1
 			$filtro_razaoSocial $filtro_cnpj";
 	$query = mysqli_query($con,$sql);
 	$num = mysqli_num_rows($query);
@@ -98,6 +99,7 @@ elseif($razaoSocial != '' || $cnpj != '')
 			$x[$i]['proponente'] = $lista['razaoSocial'];
 			$x[$i]['documento'] = $lista['cnpj'];
 			$x[$i]['areaAtuacao'] = $lista['areaAtuacao'];
+            $x[$i]['status'] = $lista['status'];
 			$i++;
 		}
 		$x['num'] = $i;
@@ -149,7 +151,8 @@ else
 
 	$sql = "SELECT * FROM projeto AS prj
 			INNER JOIN area_atuacao AS ar on prj.idAreaAtuacao = ar.idArea
-			WHERE prj.publicado = 1 $status_aprovado
+			INNER JOIN etapa_status AS et ON prj.idStatus = et.idStatus
+			WHERE prj.publicado = 1 
 			$filtro_nomeProjeto $filtro_protocolo $filtro_idAreaAtuacao $filtro_valorAprovado";
 	$query = mysqli_query($con,$sql);
 	$num = mysqli_num_rows($query);
@@ -174,6 +177,7 @@ else
 				$x[$i]['documento'] = $pj['cnpj'];
 			}
 			$x[$i]['areaAtuacao'] = $lista['areaAtuacao'];
+            $x[$i]['status'] = $lista['status'];
 			$i++;
 		}
 		$x['num'] = $i;
@@ -209,6 +213,7 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 								<td>Proponente</td>
 								<td>Documento</td>
 								<td>Área de Atuação</td>
+								<td>Status</td>
 								<td width='10%'></td>
 							</tr>
 						</thead>
@@ -222,6 +227,7 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 								echo "<td class='list_description'>".$x[$h]['proponente']."</td>";
 								echo "<td class='list_description'>".$x[$h]['documento']."</td>";
 								echo "<td class='list_description'>".$x[$h]['areaAtuacao']."</td>";
+								echo "<td class='list_description'>".$x[$h]['status']."</td>";
 								echo "<td class='list_description'>
 										<form method='POST' action='?perfil=consulta_publica_detalhes'>
 											<input type='hidden' name='consulta' value='1'>
