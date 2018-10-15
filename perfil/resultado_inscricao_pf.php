@@ -125,146 +125,146 @@ if(isset($_POST['apagar']))
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
-			<?php
-				if($pf['liberado'] == NULL OR $pf['liberado'] == 2 OR $pf['liberado'] == 4) 
-				{
-					include 'includes/resumo_pf.php';
-				?>
-			</div>
-			<?php
-				}
-				elseif($pf['liberado'] == 1)// foi solicitada a liberação, porém a SMC não analisou ainda.
-				{
-			?>
-					<div class="alert alert-success">
-						<strong>Sua solicitação de inscrição foi enviada com sucesso à Secretaria Municipal de Cultura. Aguarde a análise da documentação.</strong>
-					</div>
-			<?php
-				}
-				else// a inscrição foi aceita pela SMC.
-				{
-			?>
+			    <?php
+				    if(($pf['liberado'] == NULL) || ($pf['liberado'] == 2) || ($pf['liberado'] == 4))
+				    {
+					    include 'includes/resumo_pf.php';
+				    }
+                    elseif ($pf['liberado'] == 1) // foi solicitada a liberação, porém a SMC não analisou ainda.
+                    {
+                ?>
+                        <div class="alert alert-success">
+                            <strong>Sua solicitação de inscrição foi enviada com sucesso à Secretaria Municipal de Cultura. Aguarde a análise da documentação.</strong>
+                        </div>
+			    <?php
+                    }
+                    else // a inscrição foi aceita pela SMC.
+                    {
+                ?>
 					<div class="alert alert-success">
 						<strong>Sua inscrição foi aceita pela Secretaria Municipal de Cultura.</strong>
-					</div>		
-			<?php 
-				}
-			?>
-
-					<div>
-				 		<?php listaArquivosPessoaObs($idPf,1) ?>
-				 	</div>
-
-   		<ul class='list-group'>
-            <li class='list-group-item list-group-item-success'>Notas</li>
-            <?php
-                $sql = "SELECT * FROM notas WHERE idPessoa = '$idPf' AND idTipo = '1' AND interna = '1'";
-                $query = mysqli_query($con,$sql);
-                $num = mysqli_num_rows($query);
-                if($num > 0)
-                {
-                    while($campo = mysqli_fetch_array($query))
-                    {
-                        echo "<li class='list-group-item' align='left'><strong>".exibirDataHoraBr($campo['data'])."</strong><br/>".$campo['nota']."</li>";
+					</div>
+                <?php
                     }
-                }
-                else
-                {
-                    echo "<li class='list-group-item'>Não há notas disponíveis.</li>";
-                }
-            ?>
-        </ul>
+                ?>
+                <ul class='list-group'>
+                    <li class='list-group-item list-group-item-success'>Notas</li>
+                    <?php
+                        $sql = "SELECT * FROM notas WHERE idPessoa = '$idPf' AND idTipo = '1' AND interna = '1'";
+                        $query = mysqli_query($con,$sql);
+                        $num = mysqli_num_rows($query);
+                        if($num > 0)
+                        {
+                            while($campo = mysqli_fetch_array($query))
+                            {
+                                echo "<li class='list-group-item' align='left'><strong>".exibirDataHoraBr($campo['data'])."</strong><br/>".$campo['nota']."</li>";
+                            }
+                        }
+                        else
+                        {
+                            echo "<li class='list-group-item'>Não há notas disponíveis.</li>";
+                        }
+                    ?>
+                </ul>
+
+                <div>
+                    <?php listaArquivosPessoaObs($idPf,1) ?>
+                </div>
+            </div>
 
 
 			<?php
-				if($pf['liberado'] == NULL OR $pf['liberado'] == 2 OR $pf['liberado'] == 4)
+				if(($pf['liberado'] == NULL) || ($pf['liberado'] == 2) || ($pf['liberado'] == 4))
 				{
-			?>
+                    if($pf['liberado'] != NULL)
+                    {
+            ?>
+                            <!-- Exibir arquivos -->
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <div class="table-responsive list_info"><h6>Documentos não aprovados</h6>
+                                        <?php listaArquivosPendentePessoa($idPf, $tipoPessoa, "resultado_inscricao_pf"); ?>
+                                    </div>
+                                </div>
+                            </div>
+                    <?php
+                        }
+                    ?>
 
-			 	<!-- Exibir arquivos -->
-				<div class="form-group">
-					<div class="col-md-12">
-						<div class="table-responsive list_info"><h6>Documentos não aprovados</h6>
-							<?php listaArquivosPendentePessoa($idPf,$tipoPessoa,"resultado_inscricao_pf"); ?>
-						</div>
-					</div>
-				</div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <div class="table-responsive list_info"><h6>Upload de Arquivo(s) Somente em PDF</h6>
+                                <form method="POST" action="?perfil=resultado_inscricao_pf" enctype="multipart/form-data">
+                                    <?php
+                                        $documentos = [];
+                                        $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa'";
+                                        $query_arquivos = mysqli_query($con,$sql_arquivos);
+                                        while($arq = mysqli_fetch_array($query_arquivos))
+                                        {
+                                            $doc = $arq['documento'];
+                                            $query = "SELECT idListaDocumento FROM lista_documento WHERE documento='$doc' AND publicado='1' AND idTipoUpload='1'";
+                                            $envio = $con->query($query);
+                                            $row = $envio->fetch_array(MYSQLI_ASSOC);
 
-				<div class="form-group">
-					<div class="col-md-12">
-						<div class="table-responsive list_info"><h6>Upload de Arquivo(s) Somente em PDF</h6>
-							<form method="POST" action="?perfil=resultado_inscricao_pf" enctype="multipart/form-data">
-							<?php
-								$documentos = [];
-								$sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa'";
-								$query_arquivos = mysqli_query($con,$sql_arquivos);
-								while($arq = mysqli_fetch_array($query_arquivos))
-								{									
-									$doc = $arq['documento'];
-									$query = "SELECT idListaDocumento FROM lista_documento WHERE documento='$doc' AND publicado='1' AND idTipoUpload='1'";
-									$envio = $con->query($query);
-									$row = $envio->fetch_array(MYSQLI_ASSOC);
+                                            if(verificaArquivosExistentesPF($idPf,$row['idListaDocumento']))
+                                            {
+                                                echo '<div class="alert alert-success">O arquivo ' . $doc . ' já foi enviado.</div>';
+                                            }
+                                            else
+                                            {
 
-									if(verificaArquivosExistentesPF($idPf,$row['idListaDocumento'])){
-										echo '<div class="alert alert-success">O arquivo ' . $doc . ' já foi enviado.</div>';
-									}
-									else{ 
+                                                $documento = (object)
+                                                [
+                                                    'idListaDocumento' 	=>  $arq['idListaDocumento'] ?? null,
+                                                    'nomeDocumento'		=>	$arq['documento'],
+                                                    'sigla' 			=>	$arq['sigla']
+                                                ];
+                                                array_push($documentos, $documento);
+                                            }
+                                        }
 
-										$documento = (object) 
-										[
-											'idListaDocumento' 	=>  $arq['idListaDocumento'] ?? null,
-											'nomeDocumento'		=>	$arq['documento'],
-											'sigla' 			=>	$arq['sigla']
-										];
-										array_push($documentos, $documento);	
-									} 
-								}
+                                        if ($documentos)
+                                        {
+                                    ?>
+                                            <table class='table table-condensed'>
+                                                <tr class='list_menu'>
+                                                    <td>Tipo de Arquivo</td>
+                                                    <td></td>
+                                                </tr>
 
-								if ($documentos)
-								{							
-								?>
-									<table class='table table-condensed'>
-										<tr class='list_menu'>
-											<td>Tipo de Arquivo</td>
-											<td></td>
-										</tr>
-										
-											<?php 										
-												foreach ($documentos as $documento) {
-
-													$urlArquivo = $http.$documento->idListaDocumento;
-													echo "<tr>";
-													if(arquivosExiste($urlArquivo)){ 
-														echo "<td class='list_description path'>";
-
-															 $path = selecionaArquivoAnexo($http, $documento->idListaDocumento);  
-														
-															echo "<a href='$path' target='_blank'>$documento->nomeDocumento</a>";
-														
-														echo "</td>";
-													
-													}else{
-														echo "<td class='list_description'><label>$documento->nomeDocumento</label></td>";
-													}
-
-													echo 	"<td class='list_description'><input type='file' name='arquivo[$documento->sigla]'></td>";
-													echo "</tr>";
-												}
-											?>
-										</tr>	
-									</table>
-									<input type="hidden" name="idPessoa" value="<?php echo $idPf; ?>"  />
-									<input type="hidden" name="tipoPessoa" value="<?php echo $tipoPessoa; ?>"  />
-									<input type="submit" name="enviar" class="btn btn-theme btn-lg btn-block" value='Enviar'>
-							<?php
-								}
-							?>	
-							</form>
-						</div>
-					</div>
-				</div>
-				<!-- Fim Upload de arquivo -->
-				<!-- Confirmação de Exclusão -->
+                                                <?php
+                                                    foreach ($documentos as $documento)
+                                                    {
+                                                        $urlArquivo = $http.$documento->idListaDocumento;
+                                                        echo "<tr>";
+                                                        if(arquivosExiste($urlArquivo))
+                                                        {
+                                                            echo "<td class='list_description path'>";
+                                                            $path = selecionaArquivoAnexo($http, $documento->idListaDocumento);
+                                                            echo "<a href='$path' target='_blank'>$documento->nomeDocumento</a>";
+                                                            echo "</td>";
+                                                        }
+                                                        else
+                                                        {
+                                                            echo "<td class='list_description'><label>$documento->nomeDocumento</label></td>";
+                                                        }
+                                                        echo "<td class='list_description'><input type='file' name='arquivo[$documento->sigla]'></td>";
+                                                        echo "</tr>";
+                                                    }
+                                                ?>
+                                            </table>
+                                            <input type="hidden" name="idPessoa" value="<?php echo $idPf; ?>"  />
+                                            <input type="hidden" name="tipoPessoa" value="<?php echo $tipoPessoa; ?>"  />
+                                            <input type="submit" name="enviar" class="btn btn-theme btn-lg btn-block" value='Enviar'>
+                                    <?php
+                                        }
+                                    ?>
+							    </form>
+						    </div>
+					    </div>
+				    </div>
+				    <!-- Fim Upload de arquivo -->
+				    <!-- Confirmação de Exclusão -->
 					<div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel" aria-hidden="true">
 						<div class="modal-dialog">
 							<div class="modal-content">
@@ -283,21 +283,21 @@ if(isset($_POST['apagar']))
 						</div>
 					</div>
 
-			<div class="form-group">
-			<div class="col-md-offset-2 col-md-8">
-				<?php 						
+                    <div class="form-group">
+                    <div class="col-md-offset-2 col-md-8">
+				<?php
 				if ($cpo == false)
 				{/*
 						$idPess = $pf['idPf'];
-						$queryArquivos = 
-						  "SELECT 
-						    idUploadArquivo 
-						   FROM 
-						     upload_arquivo 
-						   WHERE 
-						     idPessoa = $idPess 
+						$queryArquivos =
+						  "SELECT
+						    idUploadArquivo
+						   FROM
+						     upload_arquivo
+						   WHERE
+						     idPessoa = $idPess
 						   AND idTipo = '1' AND publicado = '1'";
-						
+
 						$enviaArquivos = mysqli_query($con, $queryArquivos);
 						$numRow = mysqli_num_rows($enviaArquivos);
 						if($numRow == 6)

@@ -1561,8 +1561,13 @@ function listaArquivosPessoaEditor($idPessoa,$tipoPessoa,$pagina)
 	}
 }
 
-//Lista os arquivos da pessoa com o campo de status e observação para visualização
-function listaArquivosPessoaObs($idPessoa,$tipoPessoa)
+
+/**
+ * Lista os arquivos da pessoa com o campo de status e observação para visualização
+ * @param int $idPessoa
+ * @param int $tipoPessoa
+ */
+function listaArquivosPessoaObs($idPessoa, $tipoPessoa)
 {
 	$con = bancoMysqli();
 	$sql = "SELECT *
