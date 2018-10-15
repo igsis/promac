@@ -111,7 +111,8 @@ if(isset($_POST["enviar"]))
 				if(isset($_POST['idEtapaProjeto']))
 				{
 					$idStatus = $_POST['idEtapaProjeto'];
-				}else
+				}
+				else
 				{
 					$idStatus = 0;
 				}
