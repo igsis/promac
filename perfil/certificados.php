@@ -111,6 +111,9 @@ if(isset($_POST["enviar"]))
 				if(isset($_POST['idEtapaProjeto']))
 				{
 					$idStatus = $_POST['idEtapaProjeto'];
+				}else
+				{
+					$idStatus = 0;
 				}
 				if(in_array($ext, $allowedExts)) //Pergunta se a extensão do arquivo, está presente no array das extensões permitidas
 				{
@@ -171,9 +174,9 @@ if(isset($_POST['apagar']))
 <script>
 	function alerta()
 	{
-    swal({   title: "Atenção!", 
+    swal({   title: "Atenção!",
 	text: "Certifique-se que sua documentação está correta antes do envio.",
-	timer: 10000,   
+	timer: 10000,
 	confirmButtonColor:	"#5b6533",
 	showConfirmButton: true });}
 	window.onload = alerta();
@@ -236,23 +239,23 @@ if(isset($_POST['apagar']))
 												echo '<div class="alert alert-success">O arquivo ' . $doc . ' já foi enviado.</div>';
 											}
 											else{ ?>
-											<?php 
+											<?php
 										    $urlArquivo = $http.$arq['idListaDocumento'];
-											if(arquivosExiste($urlArquivo)): ?>	
+											if(arquivosExiste($urlArquivo)): ?>
 											  <td class="list_description path">
                                                 <?php
                                                  $path = selecionaArquivoAnexo(
                                                   $http, $arq['idListaDocumento']); ?>
-                                                  <a href='<?=$path?>'  
+                                                  <a href='<?=$path?>'
                                                   	 target="_blank">
-                                                     <?=$arq['documento'] ?> 	
+                                                     <?=$arq['documento'] ?>
                                                   </a>
-                                              </td>	
+                                              </td>
                                             <?php else: ?>
                                               <td class="list_description path">
-                                                <?=$arq['documento']?>	
-                                              </td>	
-                                            <?php endif ?> 
+                                                <?=$arq['documento']?>
+                                              </td>
+                                            <?php endif ?>
 											<td class="list_description"><input type='file' name='arquivo[<?php echo $arq['sigla']; ?>]'></td>
 											<?php } ?>
 										</tr>
