@@ -88,10 +88,10 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-3"><label>Data estimada de início do projeto</label>
-							<input type="text" name="inicioCronograma" minlength=10 maxlength="10" class="form-control" placeholder= "DD/MM/AA" required value="<?php echo  date("Y-m-d", strtotime($projeto['inicioCronograma'])) ?>">
+							<input type="text" name="inicioCronograma" minlength=10 maxlength="10" class="form-control" placeholder= "DD/MM/AA" required value="<?= ($projeto['inicioCronograma'] != "") ? $projeto['inicioCronograma'] : "" ?>">
 						</div>
 						<div class="col-md-offset-2 col-md-3"><label>Data estimada do final do projeto</label>
-							<input type="text" name="fimCronograma" minlength=10 maxlength="10" class="form-control" placeholder="DD/MM/AA" required value="<?php echo date("Y-m-d", strtotime($projeto['fimCronograma'])) ?>">
+							<input type="text" name="fimCronograma" minlength=10 maxlength="10" class="form-control" placeholder="DD/MM/AA" required value="<?= ($projeto['fimCronograma'] != "") ? $projeto['fimCronograma'] : "" ?>">
 						</div>
 					</div>
 
