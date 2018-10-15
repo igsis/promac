@@ -13,7 +13,7 @@ if(isset($_POST['insereFicha']))
 		$validacao = validaCPF($_POST['cpf']);
 		if($validacao == false)
 		{
-			echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=?perfil=erros&p=erro_representante1'>";
+			echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=?perfil=erros&p=erro_ficha_tecnica'>";
 		}
 		else
 		{

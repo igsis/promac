@@ -198,7 +198,7 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 			<div class="col-md-offset-5 col-md-2">
 				<form method="POST" action="../visual/index.php" class="form-horizontal" role="form">
 					<input type="hidden" name="consulta" value="1">
-					<button class='btn btn-theme btn-md btn-block' align= "center" type='submit' style="border-radius: 30px;">Fazer outra busca</button>
+					<button class='btn btn-theme btn-md btn-block' align="center" type='submit' style="border-radius: 30px;">Fazer outra busca</button>
 				</form>
 			</div>
 		</div>
