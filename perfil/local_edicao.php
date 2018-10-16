@@ -34,7 +34,7 @@ $local = recuperaDados("locais_realizacao", "idLocaisRealizacao", $idLocaisReali
 						</div>
 
 						<div class="col-md-1"><label>Público * Estimado</label><br/>
-							<input type="text" name="estimativaPublico" class="form-control" value="<?php echo $local['estimativaPublico'] ?>" required>
+							<input type="number" name="estimativaPublico" class="form-control" value="<?php echo $local['estimativaPublico'] ?>" required>
 						</div>
 
 						<div class="col-md-2">

@@ -33,7 +33,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 						</div>
 
 						<div class="col-md-1"><label>Público * Estimado</label><br/>
-							<input type="text" name="estimativaPublico" class="form-control" required>
+							<input type="number" name="estimativaPublico" class="form-control" required>
 						</div>
 
 						<div class="col-md-2">
