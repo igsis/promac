@@ -20,33 +20,40 @@ if(isset($_POST['cadastraNovoPj']))
 		{
 			if($_POST['senha01'] == $_POST['senha02'])
 			{
-				$login = $_POST['cnpj'];
-				$senha01 = md5($_POST['senha01']);
-				$idFraseSeguranca = $_POST['idFraseSeguranca'];
-				$respostaFrase = $_POST['respostaFrase'];
-				
-				$sql_senha = "INSERT INTO `pessoa_juridica`(razaoSocial, cnpj, email, senha, idNivelAcesso, idFraseSeguranca, respostaFrase) VALUES ('$razaoSocial', '$login', '$email', '$senha01', '1', '$idFraseSeguranca', '$respostaFrase' )";
-		 
-				
-				$query_senha = mysqli_query($con,$sql_senha);
+			    $sql_email = "SELECT * FROM `pessoa_juridica` WHERE email = '$email'";
+			    $query_email = mysqli_query($con, $sql_email);
+			    $uniqueEmail = mysqli_num_rows($query_email);
+			    if ($uniqueEmail == 0)
+			    {
+                    $login = $_POST['cnpj'];
+                    $senha01 = md5($_POST['senha01']);
+                    $idFraseSeguranca = $_POST['idFraseSeguranca'];
+                    $respostaFrase = $_POST['respostaFrase'];
+
+                    $sql_senha = "INSERT INTO `pessoa_juridica`(razaoSocial, cnpj, email, senha, idNivelAcesso, idFraseSeguranca, respostaFrase) VALUES ('$razaoSocial', '$login', '$email', '$senha01', '1', '$idFraseSeguranca', '$respostaFrase' )";
 
 
-				$sql_select = "SELECT * FROM pessoa_juridica WHERE cnpj = '$login'";
-				$query_select = mysqli_query($con,$sql_select);
-				$sql_array = mysqli_fetch_array($query_select);
-				$idPessoaJuridica = $sql_array['idPj'];
-				if($query_senha)
-				{
-					$mensagem = "<font color='#01DF3A'><strong>Usuário cadastrado com sucesso! Aguarde que você será redirecionado para a página de login.</strong></font>";
-					gravarLog($sql_senha);
-					 echo "<script type=\"text/javascript\">
-						  window.setTimeout(\"location.href='login_pj.php';\", 4000);
-						</script>";
-				}
-				else
-				{
-					$mensagem = "<font color='#FF0000'><strong>Erro ao cadastrar. Tente novamente.</strong></font>";
-				}
+                    $query_senha = mysqli_query($con, $sql_senha);
+
+
+                    $sql_select = "SELECT * FROM pessoa_juridica WHERE cnpj = '$login'";
+                    $query_select = mysqli_query($con, $sql_select);
+                    $sql_array = mysqli_fetch_array($query_select);
+                    $idPessoaJuridica = $sql_array['idPj'];
+                    if ($query_senha) {
+                        $mensagem = "<font color='#01DF3A'><strong>Usuário cadastrado com sucesso! Aguarde que você será redirecionado para a página de login.</strong></font>";
+                        gravarLog($sql_senha);
+                        echo "<script type=\"text/javascript\">
+                              window.setTimeout(\"location.href='login_pj.php';\", 4000);
+                            </script>";
+                    } else {
+                        $mensagem = "<font color='#FF0000'><strong>Erro ao cadastrar. Tente novamente.</strong></font>";
+                    }
+                }
+                else
+                {
+                    $mensagem = "<font color='#FF0000'><strong>Email já cadastrado para outro CNPJ. Utilize um diferente</strong></font>";
+                }
 			}
 			else
 			{
