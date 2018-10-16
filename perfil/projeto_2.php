@@ -252,6 +252,16 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
                 valorProjeto.val(valorTotal.toFixed(2));
             });
 
+            valorIncentivo.blur(function () {
+                valorTotal = parseFloat(valorIncentivo.maskMoney('unmasked')[0]) + parseFloat(valorFinanciamento.maskMoney('unmasked')[0]);
+                valorProjeto.val(valorTotal.toFixed(2));
+            });
+
+            valorFinanciamento.blur(function () {
+                valorTotal = parseFloat(valorIncentivo.maskMoney('unmasked')[0]) + parseFloat(valorFinanciamento.maskMoney('unmasked')[0]);
+                valorProjeto.val(valorTotal.toFixed(2));
+            });
+
         });
 
     </script>
