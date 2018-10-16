@@ -4,7 +4,7 @@ $idProjeto = $_SESSION['idProjeto'];
 
 if(isset($_POST['insere']))
 {
-	$valorProjeto = dinheiroDeBr($_POST['valorProjeto']);
+	$valorProjeto = $_POST['valorProjeto'];
 	$valorIncentivo = dinheiroDeBr($_POST['valorIncentivo']);
 	$valorFinanciamento = dinheiroDeBr($_POST['valorFinanciamento']);
 	$idRenunciaFiscal = $_POST['idRenunciaFiscal'];
@@ -55,16 +55,16 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
                             <div class="form-group">
                                 <div class="col-md-offset-3 col-md-2">
                                     <label>Valor total do <br/>projeto</label>
-                                    <input type="text" name="valorProjeto" class="form-control" id="valorProjeto" readOnly value="<?php echo dinheiroParaBr($projeto['valorProjeto']=$projeto['valorIncentivo']+$projeto['valorFinanciamento']) ?>" />
+                                    <input type="text" name="valorProjeto" class="form-control" id="valorProjeto" readOnly value="<?= $projeto['valorProjeto'] ?>" />
                                 </div>
 
                                 <div class="col-md-2">
                                     <label>Valor do Incentivo solicitado no Pro-Mac</label>
-                                    <input type="text" pattern="([0-9]{1,3}\.)?([0-9]{1,3}\.)?[0-9]{1,3},[0-9]{2}$"  title="Formato desejado: 1.000,99" name="valorIncentivo" class="form-control" id="valorIncentivo" value="<?php echo isset($projeto['valorIncentivo']) ? dinheiroParaBr($projeto['valorIncentivo']) : null ?>" />
+                                    <input type="text" title="Formato desejado: 1.000,99" name="valorIncentivo" class="form-control" id="valorIncentivo" value="<?php echo isset($projeto['valorIncentivo']) ? dinheiroParaBr($projeto['valorIncentivo']) : null ?>" />
                                 </div>
                                 <div class="col-md-2">
                                     <label>Valor de outros financiamentos</label>
-                                    <input type="text" pattern="([0-9]{1,3}\.)?([0-9]{1,3}\.)?[0-9]{1,3},[0-9]{2}$" title="Formato desejado: 1.000,99" name="valorFinanciamento" class="form-control" id="valorFinanciamento" value="<?php echo isset($projeto['valorFinanciamento']) ? dinheiroParaBr($projeto['valorFinanciamento']) : null ?>" />
+                                    <input type="text" title="Formato desejado: 1.000,99" name="valorFinanciamento" class="form-control" id="valorFinanciamento" value="<?php echo isset($projeto['valorFinanciamento']) ? dinheiroParaBr($projeto['valorFinanciamento']) : null ?>" />
                                 </div>
                             </div>
 
@@ -229,20 +229,29 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
     </section>
 
     <script type="text/javascript">
-        var valorIncentivo = document.querySelector('#valorIncentivo');
-        var valorFinanciamento = document.querySelector('#valorFinanciamento');
-        var valorProjeto = document.querySelector('#valorProjeto');
+        $(function() {
+            $('#valorIncentivo, #valorFinanciamento').maskMoney({
+                allowNegative: false,
+                thousands: '.',
+                decimal: ',',
+                affixesStay: false
+            }); // aplicar máscara imediatamente
 
-        valorIncentivo.addEventListener('input', function() {
+            let valorIncentivo = $('#valorIncentivo');
+            let valorFinanciamento = $('#valorFinanciamento');
+            let valorProjeto = $('#valorProjeto');
+            let valorTotal = 0;
 
-            if (parseInt(valorIncentivo.value) && parseInt(valorFinanciamento.value))
-                valorProjeto.value = parseInt(valorIncentivo.value) + parseInt(valorFinanciamento.value);
-        });
+            valorIncentivo.keyup(function () {
+                valorTotal = parseFloat(valorIncentivo.maskMoney('unmasked')[0]) + parseFloat(valorFinanciamento.maskMoney('unmasked')[0]);
+                valorProjeto.val(valorTotal.toFixed(2));
+            });
 
-        valorFinanciamento.addEventListener('input', function() {
+            valorFinanciamento.keyup(function () {
+                valorTotal = parseFloat(valorIncentivo.maskMoney('unmasked')[0]) + parseFloat(valorFinanciamento.maskMoney('unmasked')[0]);
+                valorProjeto.val(valorTotal.toFixed(2));
+            });
 
-            if (parseInt(valorIncentivo.value) && parseInt(valorFinanciamento.value))
-                valorProjeto.value = parseInt(valorIncentivo.value) + parseInt(valorFinanciamento.value);
         });
 
     </script>
