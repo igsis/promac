@@ -210,8 +210,8 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 <section id="list_items" class="home-section bg-white">
 	<div class="container"><?php include 'includes/menu_comissao.php'; ?>
 		<div class="form-group">
-            <h4>Pesquisar Projetos <?= (($_POST['idComissao'] == NULL) || ($_POST['idComissao'] != 0)) ? "Vinculados a(o) Parecerista" : "" ?><br>
-                <small><?= (($_POST['idComissao'] == NULL) || ($_POST['idComissao'] != 0)) ? "Parecerista: ".$comissao['nome'] : "" ?></small>
+            <h4>Pesquisar Projetos <?= (($_POST['idComissao'] != NULL) || ($_POST['idComissao'] != 0)) ? "Vinculados a(o) Parecerista" : "" ?><br>
+                <small><?= (($_POST['idComissao'] != NULL) || ($_POST['idComissao'] != 0)) ? "Parecerista: ".$comissao['nome'] : "" ?></small>
             </h4>
 			<h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
 			<h5><a href="?perfil=comissao_pesquisa">Fazer outra busca</a></h5>
@@ -259,14 +259,17 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 			</div>
 		</div>
         <?php
-        if (($_POST['idComissao'] == NULL) || ($_POST['idComissao'] != 0))
+        if (($_POST['idComissao'] != NULL) || ($_POST['idComissao'] != 0))
         {
-        ?>
-            <h4>Histórico de Análise do(a) Parecerista <br>
-                <small><?=$comissao['nome']?></small>
-            </h4>
-        <?php
-            include "includes/pesquisa_resultado_parecerista.php";
+            if ($_POST['idComissao'] != 0)
+            {
+                ?>
+                <h4>Histórico de Análise do(a) Parecerista <br>
+                    <small><?= $comissao['nome'] ?></small>
+                </h4>
+                <?php
+                include "includes/pesquisa_resultado_parecerista.php";
+            }
         }
         ?>
 	</div>
