@@ -5,8 +5,8 @@ $idPf = $_SESSION['idUser'];
 
 if(isset($_POST['insere']))
 {
-	$resumoProjeto = $_POST['resumoProjeto'];
-	$curriculo = $_POST['curriculo'];
+	$resumoProjeto = addslashes($_POST['resumoProjeto']);
+	$curriculo = addslashes($_POST['curriculo']);
 
 	$sql_insere = "UPDATE projeto SET
 		resumoProjeto = '$resumoProjeto',
