@@ -17,7 +17,7 @@ if(isset($_POST['novoPj'])) //tipoePessoa = 2
       $usuarioLogado = addslashes($usuario['razaoSocial'].' [ID='.$usuario['idPj'].']');
 
 	$idPj = $_SESSION['idUser'];
-	$nomeProjeto = $_POST['nomeProjeto'];
+	$nomeProjeto = addslashes($_POST['nomeProjeto']);
 	$idAreaAtuacao = $_POST['idAreaAtuacao'];
     if(isset($_POST['segmento'])){
         $segmento = $_POST['segmento'];

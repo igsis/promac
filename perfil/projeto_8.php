@@ -4,8 +4,8 @@ $idProjeto = $_SESSION['idProjeto'];
 
 if(isset($_POST['insere']))
 {
-	$publicoAlvo = $_POST['publicoAlvo'];
-	$planoDivulgacao = $_POST['planoDivulgacao'];
+	$publicoAlvo = addslashes($_POST['publicoAlvo']);
+	$planoDivulgacao = addslashes($_POST['planoDivulgacao']);
 
 	$sql_insere = "UPDATE projeto SET
 		publicoAlvo = '$publicoAlvo',

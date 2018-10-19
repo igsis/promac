@@ -5,7 +5,7 @@ $usuarioLogado = pegaUsuarioLogado();
 
 if(isset($_POST['insereOrcamento']) || isset($_POST['editaOrcamento']))
 {
-	$descricao = $_POST['descricao'];
+	$descricao = addslashes($_POST['descricao']);
 	$quantidade = $_POST['quantidade'];
 	$quantidadeUnidade = $_POST['quantidadeUnidade'];
 	$valorUnitario = dinheiroDeBr($_POST['valorUnitario']);
@@ -14,8 +14,8 @@ if(isset($_POST['insereOrcamento']) || isset($_POST['editaOrcamento']))
 
 if(isset($_POST['insereOrcamento']))
 {
-	$observacoes = $_POST['obs'];
-	$observacoesEtapa = $_POST['obsEtapa'];
+	$observacoes = addslashes($_POST['obs']);
+	$observacoesEtapa = addslashes($_POST['obsEtapa']);
 	$idEtapa = $_POST['idEtapa'];
 	$idUnidadeMedida = $_POST['idUnidadeMedida'];
 

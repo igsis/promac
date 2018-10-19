@@ -5,9 +5,9 @@ $usuarioLogado = pegaUsuarioLogado();
 
 if(isset($_POST['insereFicha']))
 {
-	$nome = $_POST['nome'];
+	$nome = addslashes($_POST['nome']);
 	$cpf = $_POST['cpf'];
-	$funcao = $_POST['funcao'];
+	$funcao = addslashes($_POST['funcao']);
 
 
 		$validacao = validaCPF($_POST['cpf']);

@@ -5,7 +5,7 @@ if(isset($_POST['novoPj'])) //tipoePessoa = 2
 {
 	$idPj = $_SESSION['idUser'];
 	$idAreaAtuacao = $_POST['idAreaAtuacao'];
-	$nomeProjeto = $_POST['nomeProjeto'];
+	$nomeProjeto = addslashes($_POST['nomeProjeto']);
 	if(isset($_POST['contratoGestao']))
 	{
 		$contratoGestao = $_POST['contratoGestao'];

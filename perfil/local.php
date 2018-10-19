@@ -7,7 +7,7 @@ $usuarioLogado = pegaUsuarioLogado();
 
 if(isset($_POST['insereLocal']))
 {
-	$local = $_POST['local'];
+	$local = addslashes($_POST['local']);
 	$estimativaPublico = $_POST['estimativaPublico'];
 	$idZona = $_POST['idZona'];
 	$idSubprefeitura = $_POST['idSubprefeitura'];

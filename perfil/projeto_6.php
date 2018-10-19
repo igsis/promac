@@ -4,8 +4,8 @@ $idProjeto = $_SESSION['idProjeto'];
 
 if(isset($_POST['insere']))
 {
-	$metodologia = $_POST['metodologia'];
-	$contrapartida = $_POST['contrapartida'];
+	$metodologia = addslashes($_POST['metodologia']);
+	$contrapartida = addslashes($_POST['contrapartida']);
 
 	$sql_insere = "UPDATE projeto SET
 		metodologia = '$metodologia',

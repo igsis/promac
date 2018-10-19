@@ -4,7 +4,7 @@ $idProjeto = $_SESSION['idProjeto'];
 
 if(isset($_POST['insere']))
 {
-	$descricao = $_POST['descricao'];
+	$descricao = addslashes($_POST['descricao']);
 
 	$sql_insere = "UPDATE projeto SET
 		descricao = '$descricao'
