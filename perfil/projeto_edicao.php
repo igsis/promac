@@ -14,8 +14,7 @@ $idProjeto = $_SESSION['idProjeto'];
 if(isset($_POST['novoPj'])) //tipoePessoa = 2
 {
 	$usuario = recuperaDados("pessoa_juridica","idPj",$idPj);
-      $usuarioLogado = 
-      $usuario['razaoSocial'].' [ID='.$usuario['idPj'].']';
+      $usuarioLogado = addslashes($usuario['razaoSocial'].' [ID='.$usuario['idPj'].']');
 
 	$idPj = $_SESSION['idUser'];
 	$nomeProjeto = $_POST['nomeProjeto'];
@@ -34,13 +33,13 @@ if(isset($_POST['novoPj'])) //tipoePessoa = 2
 	{
 		$contratoGestao = 0;
 	}
-	$sql_insere_projeto = "UPDATE projeto SET
-		contratoGestao = '$contratoGestao',
-		nomeProjeto = '$nomeProjeto',
-		idAreaAtuacao = '$idAreaAtuacao',
-        segmento = '$segmento',
-		alteradoPor   = '$usuarioLogado'
-		WHERE idProjeto = '$idProjeto'";
+	$sql_insere_projeto = "UPDATE `projeto` SET
+		`contratoGestao` = '$contratoGestao',
+		`nomeProjeto` = '$nomeProjeto',
+		`idAreaAtuacao` = '$idAreaAtuacao',
+        `segmento` = '$segmento',
+		`alteradoPor`   = '$usuarioLogado'
+		WHERE `idProjeto` = '$idProjeto'";
 	if(mysqli_query($con,$sql_insere_projeto))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso!</strong></font>";
