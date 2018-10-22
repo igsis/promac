@@ -136,7 +136,7 @@ while($rowFicha = mysqli_fetch_array($enviaFicha))
 /*
   Dados das notas.
 */
-$queryNota = "SELECT * FROM notas WHERE idProjeto = '$idProjeto'";
+$queryNota = "SELECT * FROM notas WHERE idPessoa = '$idProjeto'";
 $enviaNota = mysqli_query($con, $queryNota);
 while($rowNota = mysqli_fetch_array($enviaNota))
 {
