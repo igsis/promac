@@ -53,6 +53,14 @@ $tipoPessoa = '6';
 
 						<p>&nbsp;</p>
 
+                        <div class="alert-danger">
+                            <br/>
+                            <h6><span style="color: red; ">ATENÇÃO!</span></h6>
+                            <p><span style="color: red; ">As  inscrições de projetos se encerram no dia <strong>31 de outubro</strong>, não deixem para última hora.</span></p>
+                            <br/>
+                        </div>
+                        <p>&nbsp;</p>
+
 						<div class="well" style="padding-top: 60px;">
 								<div class="form-group" style="padding-bottom: 60px;">
 									<div class="col-md-offset-4 col-md-4">
