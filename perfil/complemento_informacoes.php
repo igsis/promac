@@ -201,7 +201,8 @@ if(isset($_POST['apagar']))
 		}
     	?>
 		<div class="form-group">
-			<h4>Anexos</h4>
+			<h4>Anexo</h4>
+            <h6>(Neste campo é permitido o envio de apenas 1 documento em pdf, consolide as informações antes de enviar!)</h6>
 			<h5><?php if(isset($mensagem)){echo $mensagem;};?></h5>
 		</div>
 
