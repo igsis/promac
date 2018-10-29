@@ -2557,7 +2557,7 @@ function retornaQtdProjetos($tipoPessoa, $id)
                     projeto AS proj  
                     WHERE proj.publicado = 1
                     AND proj.idStatus != 6
-                    AND   proj.idPf = " . $id;
+                    AND   proj.idPf = '$id'";
     }
     elseif ($tipoPessoa == 2) {
         $query = "SELECT 
@@ -2570,7 +2570,7 @@ function retornaQtdProjetos($tipoPessoa, $id)
                     WHERE proj.publicado = 1
                     AND proj.idStatus != 6
                     AND   pj.cooperativa = 0
-                    AND   proj.idPj = " . $id;
+                    AND   proj.idPj = '$id'";
     }
     $resultado = mysqli_query($conexao, $query);
     $qtdProjeto = mysqli_fetch_array($resultado);
@@ -2589,7 +2589,8 @@ function retornaProjeto($tipoPessoa, $id)
              FROM 
                projeto AS proj  
   			  WHERE proj.publicado = 1
-  			  AND   proj.idPf = ".$id;
+  			  AND proj.idStatus != 6
+  			  AND   proj.idPf = '$id'";
   	
   	$resultado = mysqli_query($conexao,$query);
     $projeto = mysqli_fetch_array($resultado);
@@ -2602,7 +2603,8 @@ function retornaProjeto($tipoPessoa, $id)
              FROM 
                projeto AS proj  
   			  WHERE proj.publicado = 1
-  			  AND   proj.idPj = ".$id;	
+  			  AND proj.idStatus != 6
+  			  AND   proj.idPj = '$id'";
 
     $resultado = mysqli_query($conexao,$query);
 
