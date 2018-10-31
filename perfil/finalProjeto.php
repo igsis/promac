@@ -5,6 +5,7 @@ $idUsuario = $_SESSION['idUser'];
 $idProjeto = $_SESSION['idProjeto'];
 $tipoPessoa = $_SESSION['tipoPessoa'];
 
+$envioProjetos = recuperaDados('statusprojeto', 'idStatus', 1);
 $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 $area = recuperaDados("area_atuacao","idArea",$projeto['idAreaAtuacao']);
 $renuncia = recuperaDados("renuncia_fiscal","idRenuncia",$projeto['idRenunciaFiscal']);
@@ -367,35 +368,60 @@ if($projeto['idEtapaProjeto'] == 6)
 
 			</div>
 			<!--Inicio do termo do contrato-->
-			<?php if(sizeof($erros) == 0 && sizeof($arqPendentes) == 0) : ?>
-				<div class="container">
-					<a href="#">
-						<div class="termoContrato">
-							<input type="hidden" name="termos" id="termo" value="false">
-							<a href="#" data-toggle="modal" data-target="#myModal">Veja o termo de aceite para prosseguir</a>
-						</div>
-					</a>
-					<div class="modal fade" id="myModal" role="dialog">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal">&times;</button>
-									<h4 class="modal-title">Termo de aceite</h4>
-								</div>
+                <?php
+                if ($envioProjetos['situacaoAtual'] == 1)
+                {
+                    if (sizeof($erros) == 0 && sizeof($arqPendentes) == 0)
+                    { ?>
+                        <div class="container">
+                            <a href="#">
+                                <div class="termoContrato">
+                                    <input type="hidden" name="termos" id="termo" value="false">
+                                    <a href="#" data-toggle="modal" data-target="#myModal">Veja o termo de aceite para
+                                        prosseguir</a>
+                                </div>
+                            </a>
+                            <div class="modal fade" id="myModal" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title">Termo de aceite</h4>
+                                        </div>
 
-								<div class="modal-body">
-									<p>Li e aceito as condições para participação no Pro-Mac previstas na Lei nº 15.948/2013, Decreto nº 58.041/2017, bem como demais atos regulamentares.</p>
-								</div>
+                                        <div class="modal-body">
+                                            <p>Li e aceito as condições para participação no Pro-Mac previstas na Lei nº
+                                                15.948/2013,
+                                                Decreto nº 58.041/2017, bem como demais atos regulamentares.</p>
+                                        </div>
 
-								<div class="modal-footer">
-									<button type="button" class="btn btn-danger" data-dismiss="modal" id="btnRejeitar">Rejeitar</button>
-									<button type="button" class="btn btn-success" data-dismiss="modal" id="btnAceitar">Aceitar</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			<?php endif ?>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal"
+                                                    id="btnRejeitar">Rejeitar
+                                            </button>
+                                            <button type="button" class="btn btn-success" data-dismiss="modal"
+                                                    id="btnAceitar">Aceitar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <?php
+                    }
+                }
+                else
+                { ?>
+                    <div class="col-md-offset-2 col-md-8">
+                        <div class="form-group">
+                            <div class="alert alert-warning">
+                                <strong>Atenção!</strong> O envio de projetos está desabilitado pela SMC!
+                            </div>
+                        </div>
+                    </div>
+                <?php
+                }
+                ?>
 			<!--Fim do termo do contrato-->
 		</div>
 		<!-- Botão para Prosseguir -->
