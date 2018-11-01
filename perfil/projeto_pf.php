@@ -84,26 +84,35 @@ if (isset($_POST['apagar'])) {
                 ?>
                 <!--Inicio da validação numero de projetos-->
                 <?php
-                if ($statusProjeto == 1){
                 $qtd = retornaQtdProjetos($tipoPessoa, $idPf);
                 $numProjetos = (int)$qtd[0];
 
                 $projeto = retornaProjeto($tipoPessoa, $idPf);
                 $numProjeto = $projeto[0];
-
-                if ($numProjetos == 0): ?>
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-8">
-                            <form class="form-horizontal" role="form" action="?perfil=projeto_novo" method="post">
-                                <input type="submit" value="Inscrever Projeto" class="btn btn-theme btn-lg btn-block">
-                            </form>
+                if ($statusProjeto == 1) {
+                    if ($numProjetos == 0) { ?>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-8">
+                                <form class="form-horizontal" role="form" action="?perfil=projeto_novo" method="post">
+                                    <input type="submit" value="Inscrever Projeto"
+                                           class="btn btn-theme btn-lg btn-block">
+                                </form>
+                            </div>
                         </div>
+                        <?php
+                    } else { ?>
+                        <div class="alert alert-danger">
+                            <p>Você possui o projeto <b><?= $numProjeto ?></b> em andamento. Este é o seu limite.</p>
+                        </div>
+                        <?php
+                    }
+                } else { ?>
+                    <div class='alert alert-warning'>
+                        <strong>Aviso: </strong>O cadastro de novos projetos está desabilitado temporariamente pela SMC.
                     </div>
-                <?php else: ?>
-                    <div class="alert alert-danger">
-                        <p>Você possui o projeto <b><?= $numProjeto ?></b> em andamento. Este é o seu limite.</p>
-                    </div>
-                <?php endif ?>
+                <?php
+                }
+                ?>
                 <!--Fim da validação numero de projetos-->
             </div>
 
@@ -174,14 +183,6 @@ if (isset($_POST['apagar'])) {
                 </div>
             </div>
             <?php
-            }
-
-            else {
-                echo "<div class='alert alert-warning'>
-				  <strong>Aviso: </strong>O cadastro de novos projetos está desabilitado temporariamente pela SMC.
-				</div>";
-            }
-
             }
             ?>
         </div>
