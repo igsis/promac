@@ -8,12 +8,6 @@ session_start();
 $con = bancoMysqli();
 $tipoPessoa = '6';
 ?>
-<script>
-    alert(" ATENÇÃO!\n" +
-        "\n" +
-        "As  inscrições de projetos se encerram no dia 31 de outubro, não deixem para última hora. ");
-</script>
-
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
