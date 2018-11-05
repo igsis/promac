@@ -64,7 +64,7 @@ if(isset($_POST['apagar']))
             <!-- Fim Lista Projetos Cancelados pela SMC -->
 
 			<?php
-
+			if($statusProjeto == 1){
 			$qtd = retornaQtdProjetos($tipoPessoa,$idPj);
 			$numProjetos = (int) $qtd[0];
 
@@ -72,42 +72,35 @@ if(isset($_POST['apagar']))
 
 			if ($pj['liberado'] == 3)
 			{
-                if($statusProjeto == 1) {
-                    if($numProjetos <= 1)
-                    {
+				if($numProjetos <= 1)
+				{
 
-                    ?>
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-8">
-                                <form class="form-horizontal" role="form"
-                                action="  ?perfil=projeto_novo" method="post">
-                                    <input type="submit" value="Inscrever Projeto" class="btn btn-theme btn-lg btn-block">
-                                </form>
-                            </div>
-                         </div>
-                    <?php
+				?>
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8">
+							<form class="form-horizontal" role="form"
+							action="  ?perfil=projeto_novo" method="post">
+								<input type="submit" value="Inscrever Projeto" class="btn btn-theme btn-lg btn-block">
+							</form>
+						</div>
+					 </div>
+				<?php
 
-                    }else{
-                    ?>
-                    <div class="alert alert-danger">
-                        <p>Você possui dois projetos em andamento:<b>
-                            <?php
-                            foreach($projetos as $key => $value):
-                                echo $value.',';
-                            endforeach;
-                            ?>
-                            </b>este é o seu limite.
-                        </p>
-                    </div>
-                    <?php
-                    }
-                } else { ?>
-                    <div class='alert alert-warning'>
-                        <strong>Aviso: </strong>O cadastro de novos projetos está desabilitado temporariamente pela SMC.
-                    </div>
-                    <?php
-                }
-            ?>
+				}else{
+				?>
+				<div class="alert alert-danger">
+				    <p>Você possui dois projetos em andamento:<b>
+				   	    <?php
+						foreach($projetos as $key => $value):
+							echo $value.',';
+						endforeach;
+				   	    ?>
+				   	    </b>este é o seu limite.
+				   	</p>
+				</div>
+				<?php
+				}
+				?>
 			<!--Fim da validação numero de projetos-->
 			</div>
 
@@ -192,6 +185,18 @@ if(isset($_POST['apagar']))
 					<div class="alert alert-success">
 						<strong>Sua solicitação de inscrição foi enviada com sucesso à Secretaria Municipal de Cultura. Aguarde a análise da documentação.</strong>
 					</div>
+					<?php
+				}
+				?>
+					</div>
+					</div>
+				<?php
+				}else{
+				echo "<div class='alert alert-warning'>
+				  <strong>Aviso: </strong>O cadastro de novos projetos está desabilitado temporariamente pela SMC.
+				</div>";
+				}
+				?>
 		</div>
 		<!-- Confirmação de Exclusão -->
 			<div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel" aria-hidden="true">
