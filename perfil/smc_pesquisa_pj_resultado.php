@@ -44,7 +44,7 @@ if($num > 0)
 	while($lista = mysqli_fetch_array($query))
 	{
 		$projeto = recuperaDadosProjeto("projeto","idPj",$lista['idPj']);
-		$status = recuperaDados("status","idEtapaProjeto",$projeto['idEtapaProjeto']);
+		$status = recuperaDados("etapa_status","idStatus",$projeto['idStatus']);
 		$x[$i]['idPj'] = $lista['idPj'];
 		$x[$i]['razaoSocial'] = $lista['razaoSocial'];
 		$x[$i]['cnpj'] = $lista['cnpj'];
