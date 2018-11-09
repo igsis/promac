@@ -546,7 +546,7 @@ if(isset($_POST['liberacaoPJ']))
 
                 <!-- Lista  -->
                  <div class="form-group">
-                    <h5>Lista de projetos com certificados já anexados</h5>
+                    <h5>Lista de projetos com certidões já anexados</h5>
                 </div>
                 <div class="row">
                     <div class="col-md-offset-1 col-md-10">
