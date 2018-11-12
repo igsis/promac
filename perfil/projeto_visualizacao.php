@@ -17,6 +17,13 @@ $renuncia = recuperaDados("renuncia_fiscal", "idRenuncia", $projeto['idRenunciaF
 $cronograma = recuperaDados("cronograma", "idCronograma", $projeto['idCronograma']);
 $video = recuperaDados("projeto", "idProjeto", $idProjeto);
 $v = array($video['video1'], $video['video2'], $video['video3']);
+
+$dateNow = date('Y-m-d');
+$dataPublicacaoDoc = $projeto['dataPublicacaoDoc'];
+$dataRecurso = date('Y-m-d', strtotime("+5 weekdays", strtotime($dataPublicacaoDoc))); // Calcula a diferença em segundos entre as datas do recurso e publicação
+$diferenca =  strtotime($dataRecurso) - strtotime($dateNow);
+$dias = floor($diferenca / (60 * 60 * 24));//Calcula a diferença em dias
+
 ?>
 <section id="list_items" class="home-section bg-white">
     <div class="container">
@@ -120,7 +127,8 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 
                             <!-- Botão para solicitar alteração do projeto -->
                             <?php
-                            if ($projeto['idStatus'] == 3) {
+
+                            if ($projeto['idStatus'] == 3 && $dias < 0) {
                                 ?>
                                 <div class="form-group">
                                     <div class="col-md-offset-4 col-md-6">
@@ -129,6 +137,27 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                               method="post">
                                             <button type="submit" class="btn btn-success btn-block"
                                                     style="border-radius: 7px;">solicitar alteração do projeto
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <?php
+                            }
+                            ?>
+
+                            <!-- Botão para agendar a entrega -->
+
+                            <?php
+
+                            if ($projeto['idStatus'] == 3 && ($dias >= -7 && $dias <= 7)) {
+                                ?>
+                                <div class="form-group">
+                                    <div class="col-md-offset-4 col-md-6">
+                                        <form class="form-horizontal" role="form"
+                                              action="#"
+                                              method="post">
+                                            <button type="submit" class="btn btn-success btn-block"
+                                                    style="border-radius: 7px;">agendar entrega pessoalmente
                                             </button>
                                         </form>
                                     </div>
@@ -159,13 +188,17 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                             <!-- Botão para anexar recurso -->
                             <?php
                             if ($idEtapa != 26 && $idEtapa != 27) {
-                                $dateNow = date('Y-m-d');
-                                $dataPublicacaoDoc = $projeto['dataPublicacaoDoc'];
-                                $dataRecurso = date('Y-m-d', strtotime("+7 days", strtotime($dataPublicacaoDoc))); // Calcula a diferença em segundos entre as datas do recurso e publicação
-                                $diferenca =  strtotime($dataRecurso) - strtotime($dateNow);
-                                $dias = floor($diferenca / (60 * 60 * 24));//Calcula a diferença em dias
 
-                                echo $dias;
+                                if($dias < 0) {
+                                    ?>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-4 col-md-6">
+                                            <h5 class="alert alert-danger">Data para enviar recurso expirada</h5>
+                                        </div>
+                                    </div>
+                                    <?php
+                                }
+
                                 if (($projeto['dataPublicacaoDoc'] != "0000-00-00" && ($dias <= 7 && $dias >= 0)) && ($projeto['idStatus'] == 4 || $projeto['idStatus'] == 3)) {
                                     ?>
                                     <div class="form-group">
