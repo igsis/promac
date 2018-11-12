@@ -165,7 +165,6 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                 $diferenca =  strtotime($dataRecurso) - strtotime($dateNow);
                                 $dias = floor($diferenca / (60 * 60 * 24));//Calcula a diferença em dias
 
-                                echo $dias;
                                 if (($projeto['dataPublicacaoDoc'] != "0000-00-00" && ($dias <= 7 && $dias >= 0)) && ($projeto['idStatus'] == 4 || $projeto['idStatus'] == 3)) {
                                     ?>
                                     <div class="form-group">
