@@ -145,7 +145,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                             <!-- Botão para anexar recurso -->
                             <?php
                             if($idEtapa != 26 && $idEtapa != 27){
-                                if($projeto['idStatus'] == 4 || $projeto['idStatus'] == 3){
+                                if($projeto['idStatus'] == 4){
                             ?>
                                     <div class="form-group">
                                         <div class="col-md-offset-4 col-md-6">
