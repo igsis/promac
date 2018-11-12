@@ -21,8 +21,13 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 $dateNow = date('Y-m-d');
 $dataPublicacaoDoc = $projeto['dataPublicacaoDoc'];
 $dataRecurso = date('Y-m-d', strtotime("+5 weekdays", strtotime($dataPublicacaoDoc))); // Calcula a diferença em segundos entre as datas do recurso e publicação
+
+$dataFormat = date("d-m-Y", $dataRecurso);
+
 $diferenca =  strtotime($dataRecurso) - strtotime($dateNow);
 $dias = floor($diferenca / (60 * 60 * 24));//Calcula a diferença em dias
+
+
 
 ?>
 <section id="list_items" class="home-section bg-white">
@@ -64,6 +69,7 @@ $dias = floor($diferenca / (60 * 60 * 24));//Calcula a diferença em dias
                                             if ($projeto['idStatus'] == 3) { //caso aprovado
                                                 echo "R$ " . dinheiroParaBr($projeto['valorAprovado']);
                                             }
+                                            
                                             ?>
                                         </li>
                                     </ul>
@@ -182,7 +188,9 @@ $dias = floor($diferenca / (60 * 60 * 24));//Calcula a diferença em dias
                                     </div>
                                 </div>
                                 <?php
+
                             }
+
                             ?>
 
                             <!-- Botão para anexar recurso -->
@@ -215,6 +223,7 @@ $dias = floor($diferenca / (60 * 60 * 24));//Calcula a diferença em dias
                                     <?php
                                 }
                             }
+
                             ?>
                         </div>
 
