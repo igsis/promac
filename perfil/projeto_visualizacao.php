@@ -20,7 +20,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 
 $dateNow = date('Y-m-d');
 $dataPublicacaoDoc = $projeto['dataPublicacaoDoc'];
-$dataRecurso = date('Y-m-d', strtotime("+7 days", strtotime($dataPublicacaoDoc))); // Calcula a diferença em segundos entre as datas do recurso e publicação
+$dataRecurso = date('Y-m-d', strtotime("+5 weekdays", strtotime($dataPublicacaoDoc))); // Calcula a diferença em segundos entre as datas do recurso e publicação
 $diferenca =  strtotime($dataRecurso) - strtotime($dateNow);
 $dias = floor($diferenca / (60 * 60 * 24));//Calcula a diferença em dias
 
