@@ -3370,4 +3370,19 @@ function listaNota($idPessoa,$idTipo,$interna)
         echo "<li class='list-group-item'>Não há notas disponíveis.</li>";
     }
 }
+
+function mensagem($tipo,$texto){
+    return "
+	    <div class=\"col-md-12\">
+                <div class=\"box box-".$tipo." box-solid\">
+                    <div class=\"box-header with-border\">
+                        <h3 class=\"box-title\">".$texto."</h3>                        
+                    </div>
+                </div>
+            </div>
+	    ";
+}
+
+
+
 ?>

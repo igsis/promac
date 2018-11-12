@@ -51,7 +51,7 @@
 			</li>
             <li><a href="#">Agendamento</a>
                 <ul class="dl-submenu">
-                    <li><a href="?perfil=smc_cadastro_agendamento">Formulário de cadastro</a></li>
+                    <li><a href="?perfil=smc_agendamento_cadastro">Formulário de cadastro</a></li>
                 </ul>
             </li>
 			<li><a href="?perfil=smc_area_atuacao">Área atuação</a></li>

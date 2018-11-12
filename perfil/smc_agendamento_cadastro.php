@@ -6,7 +6,7 @@
         </div>
         <div class="row">
             <div class="col-md-offset-1 col-md-10">
-                <form method="POST" action="?perfil=smc_cadastro_agendamento_edita" class="form-group" role="form">
+                <form method="POST" action="?perfil=smc_agendamento_edita" class="form-group" role="form">
 
                     <hr/>
 
