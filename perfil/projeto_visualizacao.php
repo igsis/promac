@@ -145,6 +145,27 @@ $dias = floor($diferenca / (60 * 60 * 24));//Calcula a diferença em dias
                             }
                             ?>
 
+                            <!-- Botão para agendar a entrega -->
+
+                            <?php
+
+                            if ($projeto['idStatus'] == 3 && ($dias >= -7 && $dias <= 7)) {
+                                ?>
+                                <div class="form-group">
+                                    <div class="col-md-offset-4 col-md-6">
+                                        <form class="form-horizontal" role="form"
+                                              action="#"
+                                              method="post">
+                                            <button type="submit" class="btn btn-success btn-block"
+                                                    style="border-radius: 7px;">agendar entrega pessoalmente
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <?php
+                            }
+                            ?>
+
                             <!-- Botão para anexar complemento de informações -->
                             <?php
                             if ($projeto['idStatus'] == 5) {
