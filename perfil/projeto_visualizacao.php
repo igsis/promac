@@ -69,7 +69,7 @@ $dias = floor($diferenca / (60 * 60 * 24));//Calcula a diferença em dias
                                             if ($projeto['idStatus'] == 3) { //caso aprovado
                                                 echo "R$ " . dinheiroParaBr($projeto['valorAprovado']);
                                             }
-                                            
+
                                             ?>
                                         </li>
                                     </ul>
