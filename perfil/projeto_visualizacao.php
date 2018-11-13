@@ -162,8 +162,9 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                     <div class="form-group">
                                         <div class="col-md-offset-4 col-md-6">
                                             <form class="form-horizontal" role="form"
-                                                  action="?perfil=termo_responsabilidade&idProjeto=<?= $idProjeto ?>"
+                                                  action="../pdf/termo_responsabilidade.php"
                                                   method="post">
+                                                <input type="hidden" value="<?= $idProjeto ?>" name="idProjeto">
                                                 <button type="submit" class="btn btn-success btn-block"
                                                         style="border-radius: 7px;">termo de responsabilidade
                                                 </button>
