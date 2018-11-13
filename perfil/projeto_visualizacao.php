@@ -22,10 +22,49 @@ $dateNow = date('Y-m-d');
 $dataPublicacaoDoc = $projeto['dataPublicacaoDoc'];
 $dataRecurso = date('Y-m-d', strtotime("+5 weekdays", strtotime($dataPublicacaoDoc))); // Calcula a diferença em segundos entre as datas do recurso e publicação
 
-$dataFormat = date("d-m-Y", $dataRecurso);
+
+function suaDataNova() {
+
+    $idProjeto = $_SESSION['idProjeto'];
+
+    $projeto = recuperaDados("projeto", "idProjeto", $idProjeto);
+
+    $suaConsulta = $projeto['dataPublicacaoDoc'];
+
+    $dtSuaData = DateTime::createFromFormat("Y-m-d", $suaConsulta); //isso vai fazer um obj datetime da sua data no banco
+
+
+    $contadorUteis = 0; //essa variavel vai contar os dias uteis
+
+   while( $contadorUteis < 5 ){
+        $dtSuaData->setTimestamp(strtotime('+1 day', $dtSuaData->getTimestamp()));
+
+       if(in_array($dtSuaData->format('N'),[6,7])){ //aqui voce verifica se é fds
+           continue;
+       }
+
+        $ano_ = date("Y");
+        foreach(dias_feriados($ano_) as $a)
+        {
+            $a =  date("d/m/Y",$a);
+            $dtSuaData->format("d/m/Y");
+            if ($a == $dtSuaData) {
+                continue;
+            }
+        }
+
+        $contadorUteis++; //aqui vc incrementa como dia util caso não seja feriado nem fds..
+    }
+
+    return $dtSuaData->format('d/m/Y');//retorna sua data modo americano
+}
+
+
 
 $diferenca =  strtotime($dataRecurso) - strtotime($dateNow);
 $dias = floor($diferenca / (60 * 60 * 24));//Calcula a diferença em dias
+
+$dias = date ("d-m-Y");
 
 
 
@@ -69,6 +108,8 @@ $dias = floor($diferenca / (60 * 60 * 24));//Calcula a diferença em dias
                                             if ($projeto['idStatus'] == 3) { //caso aprovado
                                                 echo "R$ " . dinheiroParaBr($projeto['valorAprovado']);
                                             }
+                                            echo "<hr>" . suaDataNova();
+
 
                                             ?>
                                         </li>
