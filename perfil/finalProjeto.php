@@ -369,7 +369,8 @@ if($projeto['idEtapaProjeto'] == 6)
 			</div>
 			<!--Inicio do termo do contrato-->
                 <?php
-                if ($envioProjetos['situacaoAtual'] == 1)
+                $dateNow = date('Y-m-d H:i:s');//para habiitar o botão de envio para uma determinada pessoa
+                if (($envioProjetos['situacaoAtual'] == 1) || (($pj['idPj'] == 156 || $pj['idPj'] == 938) && $dateNow < '2018-11-21 18:01:00'))
                 {
                     if (sizeof($erros) == 0 && sizeof($arqPendentes) == 0)
                     { ?>
