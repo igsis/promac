@@ -7,6 +7,8 @@ $idPj = $_SESSION['idUser'];
 $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 $statusProjeto = recuperaStatus("statusprojeto");
 
+$dateNow = date('Y-m-d H:i:s');
+
 if(isset($_POST['apagar']))
 {
 	$idProjeto = $_POST['apagar'];
@@ -72,7 +74,7 @@ if(isset($_POST['apagar']))
 
 			if ($pj['liberado'] == 3)
 			{
-                if($statusProjeto == 1) {
+                if(($statusProjeto == 1) || (($pj['idPj'] == 156 || $pj['idPj'] == 938) && $dateNow < '2018-11-21 18:01:00')) {
                     if ($numProjetos <= 1) {
 
                         ?>

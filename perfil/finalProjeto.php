@@ -369,8 +369,8 @@ if($projeto['idEtapaProjeto'] == 6)
 			</div>
 			<!--Inicio do termo do contrato-->
                 <?php
-                $dateNow = ('Y=m-d H:i:s');//para habiitar o botão de envio para uma determinada pessoa
-                if ($envioProjetos['situacaoAtual'] == 1)
+                $dateNow = date('Y-m-d H:i:s');//para habiitar o botão de envio para uma determinada pessoa
+                if (($envioProjetos['situacaoAtual'] == 1) || (($pj['idPj'] == 156 || $pj['idPj'] == 938) && $dateNow < '2018-11-21 18:01:00'))
                 {
                     if (sizeof($erros) == 0 && sizeof($arqPendentes) == 0)
                     { ?>
@@ -411,50 +411,6 @@ if($projeto['idEtapaProjeto'] == 6)
                         <?php
                     }
                 }
-                /*
-                 * Bloco para proponentes poderem enviar projeto mesmo fora do prazo
-                 */
-                elseif(($pj['id'] == 156 || $pj['id'] == 938) && $dateNow < '2018-11-21 18:01:00'){
-                    if (sizeof($erros) == 0 && sizeof($arqPendentes) == 0)
-                    { ?>
-                        <div class="container">
-                            <a href="#">
-                                <div class="termoContrato">
-                                    <input type="hidden" name="termos" id="termo" value="false">
-                                    <a href="#" data-toggle="modal" data-target="#myModal">Veja o termo de aceite para
-                                        prosseguir</a>
-                                </div>
-                            </a>
-                            <div class="modal fade" id="myModal" role="dialog">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">Termo de aceite</h4>
-                                        </div>
-
-                                        <div class="modal-body">
-                                            <p>Li e aceito as condições para participação no Pro-Mac previstas na Lei nº Decreto nº 58.041/2017, bem como demais atos regulamentares.</p>
-                                        </div>
-
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-danger" data-dismiss="modal"
-                                                    id="btnRejeitar">Rejeitar
-                                            </button>
-                                            <button type="button" class="btn btn-success" data-dismiss="modal"
-                                                    id="btnAceitar">Aceitar
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <?php
-                    }
-                }
-                /*
-                 * Fim do bloco
-                 */
                 else
                 { ?>
                     <div class="col-md-offset-2 col-md-8">
