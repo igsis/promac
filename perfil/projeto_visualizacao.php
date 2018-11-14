@@ -23,6 +23,11 @@ $dataPublicacaoDoc = $projeto['dataPublicacaoDoc'];
 $dataRecurso = date('Y-m-d', strtotime("+5 weekdays", strtotime($dataPublicacaoDoc))); // Calcula a diferença em segundos entre as datas do recurso e publicação
 
 
+function dataFormat() {
+        return $a = date("d/m/Y");
+}
+
+
 function suaDataNova() {
 
     $idProjeto = $_SESSION['idProjeto'];
@@ -32,7 +37,6 @@ function suaDataNova() {
     $suaConsulta = $projeto['dataPublicacaoDoc'];
 
     $dtSuaData = DateTime::createFromFormat("Y-m-d", $suaConsulta); //isso vai fazer um obj datetime da sua data no banco
-
 
     $contadorUteis = 0; //essa variavel vai contar os dias uteis
 
@@ -46,9 +50,10 @@ function suaDataNova() {
         $ano_ = date("Y");
         foreach(dias_feriados($ano_) as $a)
         {
-            $a =  date("d/m/Y",$a);
+            $b = array_map("dataFormat", $a);
             $dtSuaData->format("d/m/Y");
-            if ($a == $dtSuaData) {
+
+            if (in_array($dtSuaData, $b)) {
                 continue;
             }
         }
