@@ -22,7 +22,7 @@ $dateNow = date('Y-m-d');
 $dataPublicacaoDoc = $projeto['dataPublicacaoDoc'];
 $dataRecurso = date('Y-m-d', strtotime("+5 weekdays", strtotime($dataPublicacaoDoc))); // Calcula a diferença em segundos entre as datas do recurso e publicação
 
-function suaDataNova() {
+function DiasUteis() {
 
     $idProjeto = $_SESSION['idProjeto'];
 
@@ -59,16 +59,8 @@ function suaDataNova() {
     return $dtSuaData->format('d/m/Y');//retorna sua data modo americano
 
 }
-
-
-$diferenca =  strtotime($dataRecurso) - strtotime($dateNow);
-$dias = floor($diferenca / (60 * 60 * 24));//Calcula a diferença em dias
-
-$dias = date ("d-m-Y");
-
-
-
 ?>
+
 <section id="list_items" class="home-section bg-white">
     <div class="container">
         <?php
@@ -80,6 +72,7 @@ $dias = date ("d-m-Y");
             include '../perfil/includes/menu_interno_pj.php';
         }
         ?>
+
         <div class="row">
             <div class="col-md-offset-1 col-md-10">
                 <div role="tabpanel">
@@ -108,8 +101,7 @@ $dias = date ("d-m-Y");
                                             if ($projeto['idStatus'] == 3) { //caso aprovado
                                                 echo "R$ " . dinheiroParaBr($projeto['valorAprovado']);
                                             }
-                                            echo "<hr>" . suaDataNova();
-
+                                            echo "<hr>" . diasUteis();
 
                                             ?>
                                         </li>
@@ -175,7 +167,7 @@ $dias = date ("d-m-Y");
                             <!-- Botão para solicitar alteração do projeto -->
                             <?php
 
-                            if ($projeto['idStatus'] == 3 && $dias < 0) {
+                            if ($projeto['idStatus'] == 3 && DiasUteis() < $dateNow) {
                                 ?>
                                 <div class="form-group">
                                     <div class="col-md-offset-4 col-md-6">
@@ -196,7 +188,7 @@ $dias = date ("d-m-Y");
 
                             <?php
 
-                            if ($projeto['idStatus'] == 3 && ($dias >= -7 && $dias <= 7)) {
+                            if ($projeto['idStatus'] == 3 && (DiasUteis() >= -7 && DiasUteis() <= 7)) {
                                 ?>
                                 <div class="form-group">
                                     <div class="col-md-offset-4 col-md-6">
@@ -238,7 +230,7 @@ $dias = date ("d-m-Y");
                             <?php
                             if ($idEtapa != 26 && $idEtapa != 27) {
 
-                                if($dias < 0) {
+                                if(DiasUteis() < $dateNow) {
                                     ?>
                                     <div class="form-group">
                                         <div class="col-md-offset-4 col-md-6">
@@ -248,7 +240,7 @@ $dias = date ("d-m-Y");
                                     <?php
                                 }
 
-                                if (($projeto['dataPublicacaoDoc'] != "0000-00-00" && ($dias <= 7 && $dias >= 0)) && ($projeto['idStatus'] == 4 || $projeto['idStatus'] == 3)) {
+                                if (($projeto['dataPublicacaoDoc'] != "0000-00-00" && (diasUteis() > $dateNow)) && ($projeto['idStatus'] == 4 || $projeto['idStatus'] == 3)) {
                                     ?>
                                     <div class="form-group">
                                         <div class="col-md-offset-4 col-md-6">
