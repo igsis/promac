@@ -35,30 +35,28 @@ function DiasUteis() {
     $contadorUteis = 0; //essa variavel vai contar os dias uteis
 
    while( $contadorUteis < 5 ){
-        $dtSuaData->setTimestamp(strtotime('+1 weekday', $dtSuaData->getTimestamp()));
 
-      /* if(in_array($dtSuaData->format('N'),[6,7])){ //aqui voce verifica se é fds
-           continue;
-           }*/
+      $dtSuaData->setTimestamp(strtotime('+1 weekday', $dtSuaData->getTimestamp()));
 
       $feriados = [];
 
       $ano_ = date("Y");
-       foreach(dias_feriados($ano_) as $a)
-       {
-           array_push($feriados, date("d/m/Y", $a));
+      foreach(dias_feriados($ano_) as $a)
+      {
+          array_push($feriados, date("d/m/Y", $a));
+      }
+
+       if (in_array(date_format($dtSuaData, "d/m/Y"), $feriados)) {
+           continue;
        }
 
-        if (in_array(date_format($dtSuaData, "d/m/Y"), $feriados)) {
-           continue;
-        }
-
-        $contadorUteis++;  //aqui vc incrementa como dia util caso não seja feriado nem fds..
+       $contadorUteis++;  //aqui vc incrementa como dia util caso não seja feriado nem fds..
     }
 
     return $dtSuaData->format('d/m/Y');//retorna sua data modo americano
 
 }
+
 ?>
 
 <section id="list_items" class="home-section bg-white">
