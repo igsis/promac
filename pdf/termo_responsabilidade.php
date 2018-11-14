@@ -12,7 +12,26 @@ header("Content-Disposition: attachment;Filename=termo-de-responsabilidade.doc")
 setlocale(LC_TIME,'portuguese');
 date_default_timezone_set('America/Sao_Paulo');
 
+function escreverExtenso($valor = 0){
 
+    $valor = number_format($valor,2,",",".");
+    $separado = explode(",",$valor);
+    $inteiro = $separado[0];
+    $centavos = $separado[1];
+
+    //
+    $singular = array("","centavo", "real", "mil", "milhão", "bilhão", "trilhão");
+    $plural = array("centavos", "reais", "mil", "milhões", "bilhões", "trilhões");
+
+    //Casas decimais
+    $centena = array("", "cem", "duzentos", "trezentos", "quatrocentos","quinhentos", "seiscentos", "setecentos", "oitocentos", "novecentos");
+    $dezena = array("", "dez", "vinte", "trinta", "quarenta", "cinquenta","sessenta", "setenta", "oitenta", "noventa");
+    $d10 = array("dez", "onze", "doze", "treze", "quatorze", "quinze","dezesseis", "dezesete", "dezoito", "dezenove");
+    $uidade = array("", "um", "dois", "três", "quatro", "cinco", "seis","sete", "oito", "nove");
+    $zero = 0;
+
+    return $inteiro;
+}
 
 ?>
 
@@ -92,7 +111,7 @@ date_default_timezone_set('America/Sao_Paulo');
 <p>Proponente: <?= $proponente['nome']?> </p>
 <p>Projeto: <?=$proponente['nomeProjeto']?></p>
 <p>CPF/CNPJ nº <?= $proponente['documentacao'] ?></p>
-<p>Valor Aprovado: R$<?= $proponente['valorAprovado']?> (_____________________________________ mil reais)</p>
+<p>Valor Aprovado: R$ <?= str_replace(".",",",$proponente['valorAprovado'])?> (_____________________________________ mil reais)</p>
 <p>Percentual de Renúncia <?= $proponente['renunciaFiscal'] ?></p>
 <p>Data da Aprovação: ___ / ___ / ____</p>
 <br><br>
