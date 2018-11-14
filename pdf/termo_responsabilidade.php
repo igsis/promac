@@ -14,23 +14,49 @@ date_default_timezone_set('America/Sao_Paulo');
 
 function escreverExtenso($valor = 0){
 
-    $valor = number_format($valor,2,",",".");
-    $separado = explode(",",$valor);
-    $inteiro = $separado[0];
-    $centavos = $separado[1];
+    function escreverExtenso($valor = 0){
+        //Vai formatar como no Ex: 1.000.650,99
+        $valor = number_format($valor,2,",",".");
 
-    //
-    $singular = array("","centavo", "real", "mil", "milhão", "bilhão", "trilhão");
-    $plural = array("centavos", "reais", "mil", "milhões", "bilhões", "trilhões");
+        //Separa centavos da parte inteira
+        $separado = explode(",",$valor);
+        $inteiro = $separado[0];
+        $centavos = $separado[1];
 
-    //Casas decimais
-    $centena = array("", "cem", "duzentos", "trezentos", "quatrocentos","quinhentos", "seiscentos", "setecentos", "oitocentos", "novecentos");
-    $dezena = array("", "dez", "vinte", "trinta", "quarenta", "cinquenta","sessenta", "setenta", "oitenta", "noventa");
-    $d10 = array("dez", "onze", "doze", "treze", "quatorze", "quinze","dezesseis", "dezesete", "dezoito", "dezenove");
-    $uidade = array("", "um", "dois", "três", "quatro", "cinco", "seis","sete", "oito", "nove");
-    $zero = 0;
+        //
+        $singular = array("","centavo", "real", "mil", "milhão", "bilhão", "trilhão");
+        $plural = array("centavos", "reais", "mil", "milhões", "bilhões", "trilhões");
 
-    return $inteiro;
+        //Casas decimais
+        $centena = array("", "cem", "duzentos", "trezentos", "quatrocentos","quinhentos", "seiscentos", "setecentos", "oitocentos", "novecentos");
+        $dezena = array("", "dez", "vinte", "trinta", "quarenta", "cinquenta","sessenta", "setenta", "oitenta", "noventa");
+        $d10 = array("dez", "onze", "doze", "treze", "quatorze", "quinze","dezesseis", "dezesete", "dezoito", "dezenove");
+        $uidade = array("", "um", "dois", "três", "quatro", "cinco", "seis","sete", "oito", "nove");
+        $zero = 0;
+
+        $inteiro = explode(".",$inteiro);
+        switch (count($inteiro)) {
+            case 1:
+                
+                break;
+            case 2:
+
+                break;
+            case 3:
+
+                break;
+            case 4:
+
+                break;
+            default:
+                echo "Erro";
+                break;
+        }
+
+        return $inteiro;
+    }
+
+    echo (escreverExtenso(50000000.90));
 }
 
 ?>
