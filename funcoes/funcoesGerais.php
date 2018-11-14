@@ -3409,11 +3409,6 @@ function dias_feriados($ano = null)
 
     return $feriados;
 }
-$ano_=date("Y");
-foreach(dias_feriados($ano_) as $a)
-{
-  //   echo date("d-m-Y",$a).'<br>';
-}
 
 
 ?>

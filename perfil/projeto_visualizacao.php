@@ -22,12 +22,6 @@ $dateNow = date('Y-m-d');
 $dataPublicacaoDoc = $projeto['dataPublicacaoDoc'];
 $dataRecurso = date('Y-m-d', strtotime("+5 weekdays", strtotime($dataPublicacaoDoc))); // Calcula a diferença em segundos entre as datas do recurso e publicação
 
-
-function dataFormat() {
-        return $a = date("d/m/Y");
-}
-
-
 function suaDataNova() {
 
     $idProjeto = $_SESSION['idProjeto'];
@@ -41,29 +35,30 @@ function suaDataNova() {
     $contadorUteis = 0; //essa variavel vai contar os dias uteis
 
    while( $contadorUteis < 5 ){
-        $dtSuaData->setTimestamp(strtotime('+1 day', $dtSuaData->getTimestamp()));
+        $dtSuaData->setTimestamp(strtotime('+1 weekday', $dtSuaData->getTimestamp()));
 
-       if(in_array($dtSuaData->format('N'),[6,7])){ //aqui voce verifica se é fds
+      /* if(in_array($dtSuaData->format('N'),[6,7])){ //aqui voce verifica se é fds
            continue;
+           }*/
+
+      $feriados = [];
+
+      $ano_ = date("Y");
+       foreach(dias_feriados($ano_) as $a)
+       {
+           array_push($feriados, date("d/m/Y", $a));
        }
 
-        $ano_ = date("Y");
-        foreach(dias_feriados($ano_) as $a)
-        {
-            $b = array_map("dataFormat", $a);
-            $dtSuaData->format("d/m/Y");
-
-            if (in_array($dtSuaData, $b)) {
-                continue;
-            }
+        if (in_array(date_format($dtSuaData, "d/m/Y"), $feriados)) {
+           continue;
         }
 
-        $contadorUteis++; //aqui vc incrementa como dia util caso não seja feriado nem fds..
+        $contadorUteis++;  //aqui vc incrementa como dia util caso não seja feriado nem fds..
     }
 
     return $dtSuaData->format('d/m/Y');//retorna sua data modo americano
-}
 
+}
 
 
 $diferenca =  strtotime($dataRecurso) - strtotime($dateNow);
