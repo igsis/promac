@@ -77,7 +77,9 @@ else
 	$busca = $_POST['busca'];
 	include "visual/cabecalho_index.php";
 ?>
-	<section id="contact" class="home-section bg-white">
+    <h5 class="alert alert-danger">Pessoa Física não pode ser servidor da SMC e necessita morar a pelo menos 2 anos no município de São Paulo.</h5>
+
+    <section id="contact" class="home-section bg-white">
 		<div class="container">
 			<div class="form-group">
 				<h4>Cadastro de Pessoa Física</h4>
