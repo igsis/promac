@@ -220,8 +220,7 @@ if (isset($_POST['apagaOrcamento'])) {
 										<td width='30%'>Descrição</td>
 										<td width='10%'>Qtde</td>
 										<td width='10%'>Unid. Med.</td>
-                                        <td>Observações
-                                        <font size=\"-2\"><br>da unidade de medida: </font></strong>
+                                        <td>Observações <font size=\"-2\"><br>da unidade de medida: </font></strong>
                                         </td>
 										<td width='10%'>Qtde Unid.</td>
 										<td width='10%'>Valor Unit.</td>
@@ -255,7 +254,7 @@ if (isset($_POST['apagaOrcamento'])) {
                             echo "<td class='list_description'>" . dinheiroParaBr($campo['valorTotal']) . "</td>";
                             echo "<td class='list_description'>
 												<input type='hidden' name='editaOrcamento' value='" . $campo['idOrcamento'] . "' />
-												<input type ='submit' class='btn btn-theme btn-block' value='Editar'></td>";
+												<input type ='submit' class='btn btn-theme btn-block' value='Gravar'></td>";
                             echo "</form>";
                             echo "<td class='list_description'>
 											<form method='POST' action='?perfil=orcamento'>
