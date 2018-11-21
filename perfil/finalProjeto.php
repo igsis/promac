@@ -374,10 +374,9 @@ if($projeto['idEtapaProjeto'] == 6)
                     { ?>
                         <div class="container">
                             <a href="#">
-                                <div class="termoContrato">
+                                <div class="btn btn-danger">
                                     <input type="hidden" name="termos" id="termo" value="false">
-                                    <a href="#" data-toggle="modal" data-target="#myModal">Veja o termo de aceite para
-                                        prosseguir</a>
+                                    <a href="#" data-toggle="modal" data-target="#myModal"  style="color: #fff;">CLIQUE AQUI PARA PROSSEGUIR</a>
                                 </div>
                             </a>
                             <div class="modal fade" id="myModal" role="dialog">
