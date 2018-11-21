@@ -73,7 +73,6 @@ if($projeto['idEtapaProjeto'] == 6)
 			<p align="justify"><strong>Nome do Projeto:</strong> <?php echo $projeto['nomeProjeto']; ?></p>
 			<p align="justify"><strong>Valor total do projeto:</strong> R$ <?php echo dinheiroParaBr($projeto['valorProjeto']) ?></p>
 			<p align="justify"><strong>Valor do incentivo:</strong> R$ <?php echo dinheiroParaBr($projeto['valorIncentivo']); ?><p>
-				<p align="justify"><strong>Valor do financiamento:</strong> R$ <?php echo dinheiroParaBr($projeto['valorFinanciamento']); ?><p>
 					<p align="justify"><strong>Área de atuação:</strong> <?php echo $area['areaAtuacao'] ?></p>
 					<p align="justify"><strong>Renúncia Fiscal:</strong> <?php echo $renuncia['renunciaFiscal'] ?></p>
 					<p align="justify"><strong>Exposição da Marca:</strong> <?php echo $projeto['exposicaoMarca']; ?></p>

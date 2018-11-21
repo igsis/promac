@@ -142,47 +142,54 @@ if (isset($_POST['apagaOrcamento'])) {
                 <!-- Início Para inserir item de Orçamento -->
                 <form class="form-horizontal" role="form" action="?perfil=orcamento" method="post">
 
-                    <div class="form-group">
-                        <div class="col-md-2 col-md-offset-2">
-                            <br/><label>Etapa *</label>
-                            <select class="form-control" name="idEtapa">
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <br/><strong>Etapa* </strong>
+                                <select class="form-control" name="idEtapa">
 
-                                <option value="0"></option>
-                                <?php echo geraOpcao("etapa", "") ?>
-                            </select>
-                        </div>
-                        <div class="col-md-2"><strong>Observação
-                                <font size="-2"><br>da etapa: </font></strong>
-                            <input type="text" class="form-control" name="obsEtapa">
-                        </div>
-                        <div class="col-md-3"><br/><strong>Descrição: *</strong><br/>
-                            <input type="text" class="form-control" name="descricao" placeholder="Descrição da etapa"
-                                   maxlength="255" required>
-                        </div>
-                        <div class="col-md-1"><br/><strong>Qtde:</strong><br/>
-                            <input type="text" class="form-control" name="quantidade" required>
+                                    <option value="0"></option>
+                                    <?php echo geraOpcao("etapa", "") ?>
+                                </select>
+                            </div>
+
+                            <div class="col-md-2"><strong>Observação
+                                    <font size="-2"><br>da etapa </font></strong>
+                                <input type="text" class="form-control" name="obsEtapa">
+                            </div>
+
+                            <div class="col-md-2"><br/><strong>Descrição *</strong>
+                                <input type="text" class="form-control" name="descricao"
+                                       placeholder="Descrição da etapa"
+                                       maxlength="255" required>
+                            </div>
+
+                            <div class="col-md-1"><br/><strong>Qtde </strong>
+                                <input type="text" class="form-control" name="quantidade" required>
+                            </div>
+
+                            <div class="col-md-1"><strong>Unidade <br>Medida </strong>
+                                <select class="form-control" name="idUnidadeMedida" required>
+                                    <option value="0"></option>
+                                    <?php echo geraOpcao("unidade_medida", "") ?>
+                                </select>
+                            </div>
+
+                            <div class="col-md-2"><strong>Observação
+                                    <font size="-2"><br>da unidade de medida </font></strong>
+                                <input type="text" class="form-control" name="obs">
+                            </div>
+
+                                <div class="col-md-1"><strong>Qtde Unidade </strong>
+                                    <input type="text" class="form-control" name="quantidadeUnidade" required>
+                                </div>
+
+                                <div class="col-md-1"><strong>Valor Unitário </strong>
+                                    <input type="text" class="form-control" id='valor' name="valorUnitario" required>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="col-md-3 col-md-offset-2"><strong>Unidade <br>Medida:</strong><br/>
-                            <select class="form-control" name="idUnidadeMedida" required>
-                                <option value="0"></option>
-                                <?php echo geraOpcao("unidade_medida", "") ?>
-                            </select>
-                        </div>
-                        <div class="col-md-2"><strong>Observação
-                                <font size="-2"><br>da unidade de medida: </font></strong>
-                            <input type="text" class="form-control" name="obs">
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-1"><strong>Qtde Unidade:</strong><br/>
-                                <input type="text" class="form-control" name="quantidadeUnidade" required>
-                            </div>
-                            <div class="col-md-2"><br/><strong>Valor Unitário:</strong><br/>
-                                <input type="text" class="form-control" id='valor' name="valorUnitario" required>
-                            </div>
-                        </div>
-
                         <!-- Botão para Gravar -->
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-8">
@@ -190,7 +197,6 @@ if (isset($_POST['apagaOrcamento'])) {
                                        class="btn btn-theme btn-lg btn-block">
                             </div>
                         </div>
-
                 </form>
                 <!-- Fim Para inserir item de Orçamento -->
 
