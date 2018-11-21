@@ -4,6 +4,13 @@ $idProjeto = $_SESSION['idProjeto'];
 
 $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 ?>
+
+<style>
+.menos, .mais{
+	cursor: pointer;
+}
+</style>
+
 <section id="list_items" class="home-section bg-white">
     <div class="container">
     	<?php
@@ -22,7 +29,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 			<h4>Cronograma</h4>
 		</div>
 		<div class="row">
-			<div class="col-md-offset-1 col-md-10">
+			<div class=" col-md-12">
 				<form method="POST" action="?perfil=cronograma" class="form-horizontal" role="form">
 
 					<div class="form-group">
@@ -39,7 +46,22 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 							<label>Captação de recursos *</label>
 						</div>
 						<div class="col-md-6">
-							<input type="text" name="captacaoRecurso" class="form-control" maxlength="50" placeholder="DD/MM/AA a DD/MM/AA" required>
+							<div class="row">
+								<div class="col-sm-1">
+									<a class="menos"><span class="glyphicon glyphicon-minus"></span></a>
+								</div>
+								<div class="col-sm-8">
+									<div class="progress">
+										<div id="captacaoRecurso" class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:12.5%">0 Mês
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-1">
+									<a class="mais"><span class="glyphicon glyphicon-plus"></span></a>
+								</div>
+							</div>
+														
+							<!-- <input type="text" name="captacaoRecurso" class="form-control" maxlength="50" placeholder="DD/MM/AA a DD/MM/AA" required> -->
 						</div>
 					</div>
 
@@ -48,7 +70,22 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 							<label>Pré-Produção *</label>
 						</div>
 						<div class="col-md-6">
-							<input type="text" name="preProducao" class="form-control" maxlength="50" placeholder="DD/MM/AA a DD/MM/AA" required>
+							<div class="row">
+								<div class="col-sm-1">
+									<a class="menos"><span class="glyphicon glyphicon-minus"></span></a>
+								</div>
+								<div class="col-sm-8">
+									<div class="progress">
+										<div id="preProducao" class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:12.5%">0 Mês
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-1">
+									<a class="mais"><span class="glyphicon glyphicon-plus"></span></a>
+								</div>
+							</div>
+							
+							<!-- <input type="text" name="preProducao" class="form-control" maxlength="50" placeholder="DD/MM/AA a DD/MM/AA" required> -->
 						</div>
 					</div>
 
@@ -57,7 +94,22 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 							<label>Produção *</label>
 						</div>
 						<div class="col-md-6">
-							<input type="text" name="producao" class="form-control" maxlength="50" placeholder="DD/MM/AA a DD/MM/AA" required>
+							<div class="row">
+								<div class="col-sm-1">
+									<a class="menos"><span class="glyphicon glyphicon-minus"></span></a>
+								</div>
+								<div class="col-sm-8">
+									<div class="progress">
+										<div id="producao" class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:12.5%">0 Mês
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-1">
+									<a class="mais"><span class="glyphicon glyphicon-plus"></span></a>
+								</div>
+							</div>
+							
+							<!-- <input type="text" name="producao" class="form-control" maxlength="50" placeholder="DD/MM/AA a DD/MM/AA" required> -->
 						</div>
 					</div>
 
@@ -66,7 +118,22 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 							<label>Pós-Produção *</label>
 						</div>
 						<div class="col-md-6">
-							<input type="text" name="posProducao" class="form-control" maxlength="50" placeholder="DD/MM/AA a DD/MM/AA" required>
+							<div class="row">
+								<div class="col-sm-1">
+									<a class="menos"><span class="glyphicon glyphicon-minus"></span></a>
+								</div>
+								<div class="col-sm-8">
+									<div class="progress">
+										<div id="posProducao" class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:12.5%">0 Mês
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-1">
+									<a class="mais"><span class="glyphicon glyphicon-plus"></span></a>
+								</div>
+							</div>
+							
+							<!-- <input type="text" name="posProducao" class="form-control" maxlength="50" placeholder="DD/MM/AA a DD/MM/AA" required> -->
 						</div>
 					</div>
 
@@ -75,7 +142,22 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 							<label>Prestação de Contas *</label>
 						</div>
 						<div class="col-md-6">
-							<input type="text" name="prestacaoContas" class="form-control" maxlength="50" placeholder="DD/MM/AA a DD/MM/AA" required>
+							<div class="row">
+								<div class="col-sm-1">
+									<a class="menos"><span class="glyphicon glyphicon-minus"></span></a>
+								</div>
+								<div class="col-sm-8">
+									<div class="progress">
+										<div id="prestacaoContas" class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:12.5%">0 Mês
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-1">
+									<a class="mais"><span class="glyphicon glyphicon-plus"></span></a>
+								</div>
+							</div>	
+
+							<!-- <input type="text" name="prestacaoContas" class="form-control" maxlength="50" placeholder="DD/MM/AA a DD/MM/AA" required> -->
 						</div>
 					</div>
 
@@ -90,3 +172,50 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 		</div>
 	</div>
 </section>
+
+<script>
+
+	let captacaoRecurso = document.querySelector('#captacaoRecurso')
+	
+	function menos(barra){
+		let val = barra.style.width.replace('%','')
+
+		if(val > '0'){
+			val = (parseFloat(val) - parseFloat('6.25%'))
+			barra.style.width = `${val}%`
+		}
+		// console.log(barra.style.width);
+	}
+
+	function mais(barra){
+		let val = barra.style.width.replace('%','')
+		if(val < parseFloat('100')){
+			val = (parseFloat(val) + parseFloat('6.25%'))
+			barra.style.width = `${val}%`
+		}
+		console.log(barra.style.width);
+	}
+	
+	let btnsMenos = document.querySelectorAll('.menos')
+
+	for(let btn of btnsMenos){
+
+		btn.addEventListener('click', () => {
+			console.log(btn.parentNode);
+			menos(captacaoRecurso)
+		})
+
+	}
+	
+
+
+	document.querySelector('.mais').addEventListener('click', () => {
+		mais(captacaoRecurso)
+	})
+
+
+
+	// captacaoRecurso.innerHTML = captacaoRecurso.style.width
+
+
+</script>
