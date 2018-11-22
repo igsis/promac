@@ -179,6 +179,19 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 	let btnsMais = document.querySelectorAll('.mais') // pega todos os buttons .mais
 	let captacaoRecurso = document.querySelector('#captacaoRecurso')
 	var totalMes = 0
+
+	const quantidadeMes = (val) => {
+	
+		if((val / 6.25) == 1){ // meio
+			return `Metade de um mês`
+		}else if((val / 6.25) == 2){ // um 
+			return `${(val / 12.5)} Mês`
+		}else if((val / 6.25) % 2 == 0){ // par meses
+			return `${(val / 12.5)} Meses`
+		}else{ 								// meses e meio
+			return `${parseInt(val / 12.5)} Meses e meio`
+		}
+	}
 	
 	function menos(barra){
 		let val = barra.style.width.replace('%','')
@@ -186,8 +199,8 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 		if(val > '0' && totalMes > 0){
 			val = (parseFloat(val) - parseFloat('6.25%'))
 			barra.style.width = `${val}%`
+			barra.innerHTML = quantidadeMes(val)
 			totalMes = (parseFloat(totalMes) - parseFloat('.5'))
-			console.log(totalMes);
 		}
 	}
 
@@ -197,8 +210,8 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 		if(val < parseFloat('100') && totalMes < 8){
 			val = (parseFloat(val) + parseFloat('6.25%'))
 			barra.style.width = `${val}%`
+			barra.innerHTML = quantidadeMes(val)
 			totalMes = (parseFloat(totalMes) + parseFloat('.5'))
-			console.log(totalMes);
 		}
 	}
 	
@@ -220,6 +233,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 			mais(barra)
 		})
 	}
+
 
 
 	// captacaoRecurso.innerHTML = captacaoRecurso.style.width
