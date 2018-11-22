@@ -186,10 +186,12 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 			return `Metade de um mês`
 		}else if((val / 6.25) == 2){ // um 
 			return `${(val / 12.5)} Mês`
+		}else if((val / 6.25) == 3){ // um e meio
+			return `${parseInt(val / 12.5)} Mês e Meio`
 		}else if((val / 6.25) % 2 == 0){ // par meses
 			return `${(val / 12.5)} Meses`
 		}else{ 								// meses e meio
-			return `${parseInt(val / 12.5)} Meses e meio`
+			return `${parseInt(val / 12.5)} Meses e Meio`
 		}
 	}
 	
