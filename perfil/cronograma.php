@@ -64,6 +64,13 @@ if(isset($_POST['insereCronograma']))
 
 $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 ?>
+
+<style>
+.menos, .mais{
+	cursor: pointer;
+}
+</style>
+
 <section id="list_items" class="home-section bg-white">
 	<div class="container">
 		<?php
@@ -111,12 +118,227 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 				{
 				?>
 					<div class="form-group">
-						<div class="col-md-offset-2 col-md-8">
-							<form class="form-horizontal" role="form" action="?perfil=cronograma_novo" method="post">
-								<input type="submit" value="Inserir detalhes do cronograma" class="btn btn-theme btn-lg btn-block">
+						<h4>Cronograma</h4>
+					</div>
+					<div class="row">
+						<div class=" col-md-12">
+							<form method="POST" action="?perfil=cronograma" class="form-horizontal" role="form">
+
+								<div class="form-group">
+									<div class="col-md-offset-2 col-md-6">
+										<label>ETAPA</label>
+									</div>
+									<div class="col-md-6">
+										<label>MÊS (Período)</label>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-md-offset-2 col-md-6">
+										<label>Captação de recursos *</label>
+									</div>
+									<div class="col-md-6">
+										<div class="row">
+											<div class="col-sm-1">
+												<a class="menos"><span class="glyphicon glyphicon-minus"></span></a>
+											</div>
+											<div class="col-sm-8">
+												<div class="progress">
+													<div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:0%">0 Mês
+													</div>
+													<input type="hidden" name="captacaoRecurso" class="form-control" maxlength="50" placeholder="DD/MM/AA a DD/MM/AA" required>
+												</div>
+											</div>
+											<div class="col-sm-1">
+												<a class="mais"><span class="glyphicon glyphicon-plus"></span></a>
+											</div>
+										</div>
+																	
+										
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-md-offset-2 col-md-6">
+										<label>Pré-Produção *</label>
+									</div>
+									<div class="col-md-6">
+										<div class="row">
+											<div class="col-sm-1">
+												<a class="menos"><span class="glyphicon glyphicon-minus"></span></a>
+											</div>
+											<div class="col-sm-8">
+												<div class="progress">
+													<div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:0%">0 Mês
+													</div>
+													<input type="hidden" name="preProducao" class="form-control" maxlength="50" placeholder="DD/MM/AA a DD/MM/AA" required>
+												</div>
+											</div>
+											<div class="col-sm-1">
+												<a class="mais"><span class="glyphicon glyphicon-plus"></span></a>
+											</div>
+										</div>
+										
+										
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-md-offset-2 col-md-6">
+										<label>Produção *</label>
+									</div>
+									<div class="col-md-6">
+										<div class="row">
+											<div class="col-sm-1">
+												<a class="menos"><span class="glyphicon glyphicon-minus"></span></a>
+											</div>
+											<div class="col-sm-8">
+												<div class="progress">
+													<div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:0%">0 Mês
+													</div>
+													<input type="hidden" name="producao" class="form-control" maxlength="50" placeholder="DD/MM/AA a DD/MM/AA" required>
+												</div>
+											</div>
+											<div class="col-sm-1">
+												<a class="mais"><span class="glyphicon glyphicon-plus"></span></a>
+											</div>
+										</div>
+										
+										
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-md-offset-2 col-md-6">
+										<label>Pós-Produção *</label>
+									</div>
+									<div class="col-md-6">
+										<div class="row">
+											<div class="col-sm-1">
+												<a class="menos"><span class="glyphicon glyphicon-minus"></span></a>
+											</div>
+											<div class="col-sm-8">
+												<div class="progress">
+													<div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:0%">0 Mês
+													</div>
+													<input type="hidden" name="posProducao" class="form-control" maxlength="50" placeholder="DD/MM/AA a DD/MM/AA" required>
+												</div>
+											</div>
+											<div class="col-sm-1">
+												<a class="mais"><span class="glyphicon glyphicon-plus"></span></a>
+											</div>
+										</div>
+										
+										
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-md-offset-2 col-md-6">
+										<label>Prestação de Contas *</label>
+									</div>
+									<div class="col-md-6">
+										<div class="row">
+											<div class="col-sm-1">
+												<a class="menos"><span class="glyphicon glyphicon-minus"></span></a>
+											</div>
+											<div class="col-sm-8">
+												<div class="progress">
+													<div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:0%">0 Mês
+													</div>
+													<input type="hidden" name="prestacaoContas" class="form-control" maxlength="50" placeholder="DD/MM/AA a DD/MM/AA" required>
+												</div>
+											</div>
+											<div class="col-sm-1">
+												<a class="mais"><span class="glyphicon glyphicon-plus"></span></a>
+											</div>
+										</div>	
+
+										
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-md-offset-2 col-md-8">
+										<input type="submit" name="insereCronograma" class="btn btn-theme btn-lg btn-block" value="Inserir">
+									</div>
+								</div>
 							</form>
+
 						</div>
 					</div>
+					<!-- Inserir script aqui  -->
+					<script>
+
+						let btnsMenos = document.querySelectorAll('.menos') // pega todos os buttons .menos
+						let btnsMais = document.querySelectorAll('.mais') // pega todos os buttons .mais
+						let captacaoRecurso = document.querySelector('#captacaoRecurso')
+						var totalMes = 0 // if
+
+						const quantidadeMes = (val) => {
+						
+							if((val / 6.25) == 1) // meio
+							{ 
+								return `Metade de um mês`
+							}
+							else if((val / 6.25) == 2) // um 
+							{ 
+								return `${(val / 12.5)} Mês`
+							}
+							else if((val / 6.25) == 3) 	// um e meio
+							{ 
+								return `${parseInt(val / 12.5)} Mês e Meio`
+							}
+							else if((val / 6.25) % 2 == 0) 	// par meses
+							{ 
+								return `${(val / 12.5)} Meses`
+							}
+							else{ 							// meses e meio
+								return `${parseInt(val / 12.5)} Meses e Meio`
+							}
+						}
+						
+						function menos(barra){
+							let val = barra.style.width.replace('%','')
+
+							if(val > '0' && totalMes > 0){
+								val = (parseFloat(val) - parseFloat('6.25%'))
+								barra.style.width = `${val}%`
+								barra.innerHTML = quantidadeMes(val)
+								barra.parentNode.children[1].value = (val / 12.50) // insere no value do input
+								totalMes = (parseFloat(totalMes) - parseFloat('.5'))
+							}
+						}
+
+						function mais(barra){
+							let val = barra.style.width.replace('%','')
+
+							if(val < parseFloat('100') && totalMes < 8){
+								val = (parseFloat(val) + parseFloat('6.25%'))
+								barra.style.width = `${val}%`
+								barra.innerHTML = quantidadeMes(val)
+								barra.parentNode.children[1].value = (val / 12.50) // insere no value do input
+								totalMes = (parseFloat(totalMes) + parseFloat('.5'))
+							}
+						}				
+
+						for(let btn of btnsMenos){
+
+							btn.addEventListener('click', () => {
+								let barra = btn.parentNode.parentNode.children[1].querySelector('.progress .progress-bar')			
+								menos(barra)
+							})
+
+						}
+						
+						for(let btn of btnsMais){
+							btn.addEventListener('click', () => {			
+								let barra = btn.parentNode.parentNode.children[1].querySelector('.progress .progress-bar')			
+								mais(barra)
+							})
+						}
+
+					</script>
 				<?php
 				}
 				if($projeto['idCronograma'] > 0)
