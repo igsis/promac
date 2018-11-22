@@ -52,7 +52,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 								</div>
 								<div class="col-sm-8">
 									<div class="progress">
-										<div id="captacaoRecurso" class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:12.5%">0 Mês
+										<div id="captacaoRecurso" class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:0%">0 Mês
 										</div>
 									</div>
 								</div>
@@ -76,7 +76,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 								</div>
 								<div class="col-sm-8">
 									<div class="progress">
-										<div id="preProducao" class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:12.5%">0 Mês
+										<div id="preProducao" class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:0%">0 Mês
 										</div>
 									</div>
 								</div>
@@ -100,7 +100,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 								</div>
 								<div class="col-sm-8">
 									<div class="progress">
-										<div id="producao" class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:12.5%">0 Mês
+										<div id="producao" class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:0%">0 Mês
 										</div>
 									</div>
 								</div>
@@ -124,7 +124,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 								</div>
 								<div class="col-sm-8">
 									<div class="progress">
-										<div id="posProducao" class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:12.5%">0 Mês
+										<div id="posProducao" class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:0%">0 Mês
 										</div>
 									</div>
 								</div>
@@ -148,7 +148,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 								</div>
 								<div class="col-sm-8">
 									<div class="progress">
-										<div id="prestacaoContas" class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:12.5%">0 Mês
+										<div id="prestacaoContas" class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:0%">0 Mês
 										</div>
 									</div>
 								</div>
@@ -175,44 +175,51 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 
 <script>
 
+	let btnsMenos = document.querySelectorAll('.menos') // pega todos os buttons .menos
+	let btnsMais = document.querySelectorAll('.mais') // pega todos os buttons .mais
 	let captacaoRecurso = document.querySelector('#captacaoRecurso')
+	var totalMes = 0
 	
 	function menos(barra){
 		let val = barra.style.width.replace('%','')
 
-		if(val > '0'){
+		if(val > '0' && totalMes > 0){
 			val = (parseFloat(val) - parseFloat('6.25%'))
 			barra.style.width = `${val}%`
+			totalMes = (parseFloat(totalMes) - parseFloat('.5'))
+			console.log(totalMes);
 		}
-		// console.log(barra.style.width);
 	}
 
 	function mais(barra){
 		let val = barra.style.width.replace('%','')
-		if(val < parseFloat('100')){
+
+		if(val < parseFloat('100') && totalMes < 8){
 			val = (parseFloat(val) + parseFloat('6.25%'))
 			barra.style.width = `${val}%`
+			totalMes = (parseFloat(totalMes) + parseFloat('.5'))
+			console.log(totalMes);
 		}
-		console.log(barra.style.width);
 	}
 	
-	let btnsMenos = document.querySelectorAll('.menos')
+
 
 	for(let btn of btnsMenos){
 
 		btn.addEventListener('click', () => {
-			console.log(btn.parentNode);
-			menos(captacaoRecurso)
+			let barra = btn.parentNode.parentNode.children[1].querySelector('.progress .progress-bar')			
+			menos(barra)
 		})
 
 	}
 	
 
-
-	document.querySelector('.mais').addEventListener('click', () => {
-		mais(captacaoRecurso)
-	})
-
+	for(let btn of btnsMais){
+		btn.addEventListener('click', () => {			
+			let barra = btn.parentNode.parentNode.children[1].querySelector('.progress .progress-bar')			
+			mais(barra)
+		})
+	}
 
 
 	// captacaoRecurso.innerHTML = captacaoRecurso.style.width
