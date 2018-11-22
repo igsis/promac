@@ -231,43 +231,6 @@
             <br/>
         </form>
 
-        <form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-8"><label>Notas</label><br/>
-                    <textarea name="nota" class="form-control" rows="5" placeholder="Insira neste campo informações de notificações para o usuário."></textarea>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-8">
-                    <?php echo "<input type='hidden' name='IDP' value='$idProjeto'>"; ?>
-                    <input type="submit" name="gravarNota" class="btn btn-theme btn-md btn-block" value="Gravar">
-                </div>
-            </div>
-        </form>
-
-        <div class="col-md-offset-2 col-md-8">
-            <ul class='list-group'>
-                <li class='list-group-item list-group-item-success'>Notas</li>
-                <?php
-                    $sql = "SELECT * FROM notas WHERE idPessoa = '$idProjeto'";
-                    $query = mysqli_query($con,$sql);
-                    $num = mysqli_num_rows($query);
-                    if($num > 0)
-                    {
-                        while($campo = mysqli_fetch_array($query))
-                        {
-                            echo "<li class='list-group-item' align='left'><strong>".exibirDataHoraBr($campo['data'])."</strong><br/>".$campo['nota']."</li>";
-                        }
-                    }
-                    else
-                    {
-                        echo "<li class='list-group-item'>Não há notas disponíveis.</li>";
-                    }
-                ?>
-            </ul>
-        </div>
-
         <div class="form-group">
             <div class="col-md-offset-1 col-md-10">
                 <div class="table-responsive list_info">
