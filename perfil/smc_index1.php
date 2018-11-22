@@ -55,7 +55,7 @@ if(isset($_POST['liberacaoPJ']))
         </div>
         <!-- Lista 1 -->
         <div class="form-group">
-            <h5>Inscrições de pessoa física a liberar</h5>
+            <h5>Inscrições de proponente pessoa física a liberar</h5>
         </div>
         <div class="row">
             <div class="col-md-offset-1 col-md-10">
@@ -109,7 +109,7 @@ if(isset($_POST['liberacaoPJ']))
         </div>
         <!-- Lista 2 -->
         <div class="form-group">
-            <h5>Inscrições de pessoa jurídica a liberar</h5>
+            <h5>Inscrições de proponente pessoa jurídica a liberar</h5>
         </div>
         <div class="row">
             <div class="col-md-offset-1 col-md-10">
