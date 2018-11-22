@@ -52,7 +52,7 @@ if(isset($_POST['envioComissao']))
         <!-- Lista 1 -->
         <div class="form-group">
             <h5><strong><?php if(isset($mensagem)){echo $mensagem;} ?></strong></h5>
-            <h5>Inscrições de pessoa física a liberar</h5>
+            <h5>Inscrições de proponente pessoa física a liberar</h5>
         </div>
         <div class="row">
             <div class="col-md-12">
@@ -107,7 +107,7 @@ if(isset($_POST['envioComissao']))
 
         <!-- Lista 2 -->
         <div class="form-group">
-            <h5>Inscrições de pessoa jurídica a liberar</h5>
+            <h5>Inscrições de proponente pessoa jurídica a liberar</h5>
         </div>
         <div class="row">
             <div class="col-md-12">
