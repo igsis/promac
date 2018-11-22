@@ -312,6 +312,14 @@ foreach ($array_status as $idStatus)
                         <thead>
                         <tr class='list_menu'>
                             <td>Protocolo (nº ISP)</td>
+                            <?php
+                            if (($status['idEtapaProjeto'] == 2) || ($status['idEtapaProjeto'] == 13) || ($status['idEtapaProjeto'] == 23) || ($status['idEtapaProjeto'] == 14))
+                                {
+                                    ?>
+                                <td>Data do envio</td>
+                                <?php
+                                }
+                                ?>
                             <td>Nome do Projeto</td>
                             <td>Proponente</td>
                             <td>Documento</td>
@@ -338,6 +346,28 @@ foreach ($array_status as $idStatus)
                                 ?>
                                 <tr>
                                     <td class='list_description'><?= $campo['protocolo'] ?></td>
+                                  <?php
+                                    if (($status['idEtapaProjeto'] == 2) || ($status['idEtapaProjeto'] == 13) || ($status['idEtapaProjeto'] == 23) || ($status['idEtapaProjeto'] == 14)) {
+                                        ?>
+                                        <td class='list_description'><?= $dateNow = date("d/m/Y H:i:s") ?></td>
+                                        <?php
+                                  }
+                                   ?>
+
+                                 <!--   <?php
+/*                                        if ($status['idEtapaProjeto'] == 2) {
+                                            $consulta = "SELECT `data` FROM `historico_etapa` WHERE `idEtapaProjeto` = 2";
+                                            $dataEtapa = mysqli_query($con, $consulta);
+
+                                            echo "<td class='list_description'> $con = date('d/m/Y H:i:s')</td>";
+
+                                        }
+
+                                    */?>
+
+
+
+
                                     <td class='list_description'><?= $campo['nomeProjeto'] ?></td>
                                     <td class='list_description'><?= isset($campo['nome']) ? $campo['nome'] : $campo['razaoSocial'] ?></td>
                                     <td class='list_description'><?= isset($campo['cpf']) ? $campo['cpf'] : $campo['cnpj'] ?></td>
