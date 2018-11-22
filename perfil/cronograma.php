@@ -152,9 +152,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 											<div class="col-sm-1">
 												<a class="mais"><span class="glyphicon glyphicon-plus"></span></a>
 											</div>
-										</div>
-																	
-										
+										</div>																											
 									</div>
 								</div>
 
@@ -177,9 +175,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 											<div class="col-sm-1">
 												<a class="mais"><span class="glyphicon glyphicon-plus"></span></a>
 											</div>
-										</div>
-										
-										
+										</div>																				
 									</div>
 								</div>
 
@@ -202,9 +198,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 											<div class="col-sm-1">
 												<a class="mais"><span class="glyphicon glyphicon-plus"></span></a>
 											</div>
-										</div>
-										
-										
+										</div>																			
 									</div>
 								</div>
 
@@ -227,9 +221,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 											<div class="col-sm-1">
 												<a class="mais"><span class="glyphicon glyphicon-plus"></span></a>
 											</div>
-										</div>
-										
-										
+										</div>																				
 									</div>
 								</div>
 
@@ -252,9 +244,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 											<div class="col-sm-1">
 												<a class="mais"><span class="glyphicon glyphicon-plus"></span></a>
 											</div>
-										</div>	
-
-										
+										</div>											
 									</div>
 								</div>
 
