@@ -49,6 +49,11 @@
 					<li><a href="?perfil=smc_gerenciar_projeto&id=2">Bloquear</a></li>
 				</ul>
 			</li>
+            <li><a href="#">Agendamento</a>
+                <ul class="dl-submenu">
+                    <li><a href="?perfil=smc_agendamento_cadastro">Formulário de cadastro</a></li>
+                </ul>
+            </li>
 			<li><a href="?perfil=smc_area_atuacao">Área atuação</a></li>
 			<li style="color:white;">-------------------------</li>
 			<li><a href="index_pf.php?perfil=smc_index">Início</a></li>

@@ -3371,6 +3371,18 @@ function listaNota($idPessoa,$idTipo,$interna)
     }
 }
 
+function mensagem($tipo,$texto){
+    return "
+	    <div class=\"col-md-12\">
+                <div class=\"box box-".$tipo." box-solid\">
+                    <div class=\"box-header with-border\">
+                        <h3 class=\"box-title\">".$texto."</h3>                        
+                    </div>
+                </div>
+            </div>
+	    ";
+}
+
 function dias_feriados($ano = null)
 {
     if ($ano === null)
@@ -3409,6 +3421,5 @@ function dias_feriados($ano = null)
 
     return $feriados;
 }
-
 
 ?>
