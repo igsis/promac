@@ -173,7 +173,7 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 				echo "
 		</tbody>
 		</table>";
-		echo "<input type='submit' name='atualizar' class='btn btn-theme btn-lg' value='Atualizar'>";
+		echo "<input type='submit' name='atualizar' class='btn btn-theme btn-lg' value='GRAVAR INFORMAÇÕES'>";
 		echo "<input type='hidden' name='liberado' class='btn btn-theme btn-lg' value='$idPessoa'>";
 		echo "</form>";
 	}
