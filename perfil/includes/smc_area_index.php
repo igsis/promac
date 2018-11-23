@@ -348,7 +348,6 @@ foreach ($array_status as $idStatus)
                                 ?>
                                 <tr>
                                     <td class='list_description maskProtocolo' data-mask = "0000.00.00/0000000"><?= $campo['protocolo'] ?></td>
-                                    <td class='list_description'><?= $campo['protocolo'] ?></td>
                                     <?php
                                         if ($status['idEtapaProjeto'] == 2) {
 
@@ -374,7 +373,6 @@ foreach ($array_status as $idStatus)
                                             echo "<td class='list_description'>" . date_format($dataEtapa, "d/m/Y H:i:s") . "</td>";
                                         }
                                     ?>
-
 
 
                                     <td class='list_description'><?= $campo['nomeProjeto'] ?></td>
