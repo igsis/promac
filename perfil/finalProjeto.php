@@ -73,7 +73,6 @@ if($projeto['idEtapaProjeto'] == 6)
 			<p align="justify"><strong>Nome do Projeto:</strong> <?php echo $projeto['nomeProjeto']; ?></p>
 			<p align="justify"><strong>Valor total do projeto:</strong> R$ <?php echo dinheiroParaBr($projeto['valorProjeto']) ?></p>
 			<p align="justify"><strong>Valor do incentivo:</strong> R$ <?php echo dinheiroParaBr($projeto['valorIncentivo']); ?><p>
-				<p align="justify"><strong>Valor do financiamento:</strong> R$ <?php echo dinheiroParaBr($projeto['valorFinanciamento']); ?><p>
 					<p align="justify"><strong>Área de atuação:</strong> <?php echo $area['areaAtuacao'] ?></p>
 					<p align="justify"><strong>Renúncia Fiscal:</strong> <?php echo $renuncia['renunciaFiscal'] ?></p>
 					<p align="justify"><strong>Exposição da Marca:</strong> <?php echo $projeto['exposicaoMarca']; ?></p>
@@ -376,10 +375,9 @@ if($projeto['idEtapaProjeto'] == 6)
                     { ?>
                         <div class="container">
                             <a href="#">
-                                <div class="termoContrato">
+                                <div class="btn btn-danger">
                                     <input type="hidden" name="termos" id="termo" value="false">
-                                    <a href="#" data-toggle="modal" data-target="#myModal">Veja o termo de aceite para
-                                        prosseguir</a>
+                                    <a href="#" data-toggle="modal" data-target="#myModal"  style="color: #fff;">CLIQUE AQUI PARA PROSSEGUIR</a>
                                 </div>
                             </a>
                             <div class="modal fade" id="myModal" role="dialog">

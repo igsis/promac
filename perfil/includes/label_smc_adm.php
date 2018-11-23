@@ -34,7 +34,7 @@
                             </div>
                             <div class="modal-footer">
                                 <input type='hidden' name='idProjeto' value='<?php echo $idProjeto ?>'>
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Voltar</button>
                                 <button type='submit' class='btn btn-danger btn-sm' style="border-radius: 10px;" name="cancelarProjeto">Confirmar</button>
                             </div>
                         </form>

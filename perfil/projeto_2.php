@@ -6,14 +6,12 @@ if(isset($_POST['insere']))
 {
 	$valorProjeto = $_POST['valorProjeto'];
 	$valorIncentivo = dinheiroDeBr($_POST['valorIncentivo']);
-	$valorFinanciamento = dinheiroDeBr($_POST['valorFinanciamento']);
 	$idRenunciaFiscal = $_POST['idRenunciaFiscal'];
 	$exposicaoMarca = $_POST['exposicaoMarca'];
 
 	$sql_insere = "UPDATE projeto SET
 		valorProjeto = '$valorProjeto',
 		valorIncentivo = '$valorIncentivo',
-		valorFinanciamento = '$valorFinanciamento',
 		idRenunciaFiscal = '$idRenunciaFiscal',
 		exposicaoMarca = '$exposicaoMarca'
 		WHERE idProjeto = '$idProjeto'";
@@ -53,18 +51,14 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 
                             <!--TODO: Numero com pontuação quebra a regra de soma do valor total-->
                             <div class="form-group">
-                                <div class="col-md-offset-3 col-md-2">
+                                <div class="col-md-offset-3 col-md-3">
                                     <label>Valor total do <br/>projeto</label>
-                                    <input type="text" name="valorProjeto" class="form-control" id="valorProjeto" readOnly value="<?= $projeto['valorProjeto'] ?>" />
+                                    <input type="text" name="valorProjeto" class="form-control" id="valorProjeto" value="<?php echo isset($projeto['valorProjeto']) ? dinheiroParaBr($projeto['valorProjeto']) : null ?>" />
                                 </div>
 
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <label>Valor do Incentivo solicitado no Pro-Mac</label>
                                     <input type="text" title="Formato desejado: 1.000,99" name="valorIncentivo" class="form-control" id="valorIncentivo" value="<?php echo isset($projeto['valorIncentivo']) ? dinheiroParaBr($projeto['valorIncentivo']) : null ?>" />
-                                </div>
-                                <div class="col-md-2">
-                                    <label>Valor de outros financiamentos</label>
-                                    <input type="text" title="Formato desejado: 1.000,99" name="valorFinanciamento" class="form-control" id="valorFinanciamento" value="<?php echo isset($projeto['valorFinanciamento']) ? dinheiroParaBr($projeto['valorFinanciamento']) : null ?>" />
                                 </div>
                             </div>
 
@@ -227,41 +221,3 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
                 <!-- Fim Modal Informações Renuncia fiscal -->
         </div>
     </section>
-
-    <script type="text/javascript">
-        $(function() {
-            $('#valorIncentivo, #valorFinanciamento').maskMoney({
-                allowNegative: false,
-                thousands: '.',
-                decimal: ',',
-                affixesStay: false
-            }); // aplicar máscara imediatamente
-
-            let valorIncentivo = $('#valorIncentivo');
-            let valorFinanciamento = $('#valorFinanciamento');
-            let valorProjeto = $('#valorProjeto');
-            let valorTotal = 0;
-
-            valorIncentivo.keyup(function () {
-                valorTotal = parseFloat(valorIncentivo.maskMoney('unmasked')[0]) + parseFloat(valorFinanciamento.maskMoney('unmasked')[0]);
-                valorProjeto.val(valorTotal.toFixed(2));
-            });
-
-            valorFinanciamento.keyup(function () {
-                valorTotal = parseFloat(valorIncentivo.maskMoney('unmasked')[0]) + parseFloat(valorFinanciamento.maskMoney('unmasked')[0]);
-                valorProjeto.val(valorTotal.toFixed(2));
-            });
-
-            valorIncentivo.blur(function () {
-                valorTotal = parseFloat(valorIncentivo.maskMoney('unmasked')[0]) + parseFloat(valorFinanciamento.maskMoney('unmasked')[0]);
-                valorProjeto.val(valorTotal.toFixed(2));
-            });
-
-            valorFinanciamento.blur(function () {
-                valorTotal = parseFloat(valorIncentivo.maskMoney('unmasked')[0]) + parseFloat(valorFinanciamento.maskMoney('unmasked')[0]);
-                valorProjeto.val(valorTotal.toFixed(2));
-            });
-
-        });
-
-    </script>
