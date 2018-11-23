@@ -33,6 +33,9 @@ else
 		<link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
 		<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 		<link rel="stylesheet" href="css/font-awesome.min.css">
+        <!-- JQUEY Mask -->
+        <script src="dist/js/jquery-1.12.4.min.js"></script>
+        <script src="dist/js/jquery.mask.js"></script>
 		<?php include "../include/script.php"; ?>
     </head>
 	<body>

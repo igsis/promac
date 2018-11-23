@@ -337,7 +337,7 @@ foreach ($array_status as $idStatus)
                             if ($i < 5) {
                                 ?>
                                 <tr>
-                                    <td class='list_description'><?= $campo['protocolo'] ?></td>
+                                    <td class='list_description maskProtocolo' data-mask = "0000.00.00/0000000"><?= $campo['protocolo'] ?></td>
                                     <td class='list_description'><?= $campo['nomeProjeto'] ?></td>
                                     <td class='list_description'><?= isset($campo['nome']) ? $campo['nome'] : $campo['razaoSocial'] ?></td>
                                     <td class='list_description'><?= isset($campo['cpf']) ? $campo['cpf'] : $campo['cnpj'] ?></td>
