@@ -21,10 +21,44 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 $dateNow = date('Y-m-d');
 $dataPublicacaoDoc = $projeto['dataPublicacaoDoc'];
 $dataRecurso = date('Y-m-d', strtotime("+5 weekdays", strtotime($dataPublicacaoDoc))); // Calcula a diferença em segundos entre as datas do recurso e publicação
-$diferenca =  strtotime($dataRecurso) - strtotime($dateNow);
-$dias = floor($diferenca / (60 * 60 * 24));//Calcula a diferença em dias
+
+function DiasUteis() {
+
+    $idProjeto = $_SESSION['idProjeto'];
+
+    $projeto = recuperaDados("projeto", "idProjeto", $idProjeto);
+
+    $suaConsulta = $projeto['dataPublicacaoDoc'];
+
+    $dtSuaData = DateTime::createFromFormat("Y-m-d", $suaConsulta); //isso vai fazer um obj datetime da sua data no banco
+
+    $contadorUteis = 0; //essa variavel vai contar os dias uteis
+
+   while( $contadorUteis < 5 ){
+
+      $dtSuaData->setTimestamp(strtotime('+1 weekday', $dtSuaData->getTimestamp()));
+
+      $feriados = [];
+
+      $ano_ = date("Y");
+      foreach(dias_feriados($ano_) as $a)
+      {
+          array_push($feriados, date("d/m/Y", $a));
+      }
+
+       if (in_array(date_format($dtSuaData, "d/m/Y"), $feriados)) {
+           continue;
+       }
+
+       $contadorUteis++;  //aqui vc incrementa como dia util caso não seja feriado nem fds..
+    }
+
+    return $dtSuaData->format('d/m/Y');//retorna sua data modo americano
+
+}
 
 ?>
+
 <section id="list_items" class="home-section bg-white">
     <div class="container">
         <?php
@@ -36,6 +70,7 @@ $dias = floor($diferenca / (60 * 60 * 24));//Calcula a diferença em dias
             include '../perfil/includes/menu_interno_pj.php';
         }
         ?>
+
         <div class="row">
             <div class="col-md-offset-1 col-md-10">
                 <div role="tabpanel">
@@ -64,6 +99,8 @@ $dias = floor($diferenca / (60 * 60 * 24));//Calcula a diferença em dias
                                             if ($projeto['idStatus'] == 3) { //caso aprovado
                                                 echo "R$ " . dinheiroParaBr($projeto['valorAprovado']);
                                             }
+                                            echo "<hr>" . diasUteis();
+
                                             ?>
                                         </li>
                                     </ul>
@@ -128,7 +165,7 @@ $dias = floor($diferenca / (60 * 60 * 24));//Calcula a diferença em dias
                             <!-- Botão para solicitar alteração do projeto -->
                             <?php
 
-                            if ($projeto['idStatus'] == 3 && $dias < 0) {
+                            if ($projeto['idStatus'] == 3 && DiasUteis() < $dateNow) {
                                 ?>
                                 <div class="form-group">
                                     <div class="col-md-offset-4 col-md-6">
@@ -149,7 +186,7 @@ $dias = floor($diferenca / (60 * 60 * 24));//Calcula a diferença em dias
 
                             <?php
 
-                            if ($projeto['idStatus'] == 3 && ($dias >= -7 && $dias <= 7)) {
+                            if ($projeto['idStatus'] == 3 && (DiasUteis() >= -7 && DiasUteis() <= 7)) {
                                 ?>
                                 <div class="form-group">
                                     <div class="col-md-offset-4 col-md-6">
@@ -182,14 +219,16 @@ $dias = floor($diferenca / (60 * 60 * 24));//Calcula a diferença em dias
                                     </div>
                                 </div>
                                 <?php
+
                             }
+
                             ?>
 
                             <!-- Botão para anexar recurso -->
                             <?php
                             if ($idEtapa != 26 && $idEtapa != 27) {
 
-                                if($dias < 0) {
+                                if(DiasUteis() < $dateNow) {
                                     ?>
                                     <div class="form-group">
                                         <div class="col-md-offset-4 col-md-6">
@@ -199,7 +238,7 @@ $dias = floor($diferenca / (60 * 60 * 24));//Calcula a diferença em dias
                                     <?php
                                 }
 
-                                if (($projeto['dataPublicacaoDoc'] != "0000-00-00" && ($dias <= 7 && $dias >= 0)) && ($projeto['idStatus'] == 4 || $projeto['idStatus'] == 3)) {
+                                if (($projeto['dataPublicacaoDoc'] != "0000-00-00" && (diasUteis() > $dateNow)) && ($projeto['idStatus'] == 4 || $projeto['idStatus'] == 3)) {
                                     ?>
                                     <div class="form-group">
                                         <div class="col-md-offset-4 col-md-6">
@@ -215,6 +254,7 @@ $dias = floor($diferenca / (60 * 60 * 24));//Calcula a diferença em dias
                                     <?php
                                 }
                             }
+
                             ?>
                         </div>
 
