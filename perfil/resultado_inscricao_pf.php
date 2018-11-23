@@ -8,7 +8,7 @@ $http = $server."/pdf/";
 
 $idPf = $_SESSION['idUser'];
 $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
-$campos = array($pf['nome'], $pf['cpf'], $pf['rg'], $pf['email'], $pf['cep'], $pf['numero'], $pf['idZona'], $pf['idSubprefeitura'], $pf['idDistrito']);
+$campos = array($pf['nome'], $pf['cpf'], $pf['rg'], $pf['email'], $pf['cep'], $pf['numero']);
 $cpo = false;
 
 foreach ($campos as $cpos)
