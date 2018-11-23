@@ -270,14 +270,16 @@ $array_status = array(2, 3, 10, 12, 13, 20, 23, 25, 14, 15, 11); //status
 foreach ($array_status as $idStatus)
 {
     $sqlStatus = "SELECT idEtapaProjeto, etapaProjeto, ordem FROM etapa_projeto WHERE idEtapaProjeto = '$idStatus'";
-    $sqlProjeto = "SELECT idProjeto, nomeProjeto, protocolo, pf.nome, pf.cpf, razaoSocial, cnpj, areaAtuacao, pfc.nome AS comissao, etapaProjeto, pro.idEtapaProjeto AS idEtapaProjeto 
+
+    $sqlProjeto = "SELECT he.data, pro.idProjeto, nomeProjeto, protocolo, pf.nome, pf.cpf, razaoSocial, cnpj, areaAtuacao, pfc.nome AS comissao, etapaProjeto, pro.idEtapaProjeto AS idEtapaProjeto 
                     FROM projeto AS pro
                     LEFT JOIN pessoa_fisica AS pf ON pro.idPf = pf.idPf
                     LEFT JOIN pessoa_juridica AS pj ON pro.idPj = pj.idPj
                     INNER JOIN area_atuacao AS ar ON pro.idAreaAtuacao = ar.idArea
-                    LEFT JOIN pessoa_fisica AS pfc ON pro.idComissao = pfc.idPf 
+                    LEFT JOIN pessoa_fisica AS pfc ON pro.idComissao = pfc.idPf
                     INNER JOIN etapa_projeto AS st ON pro.idEtapaProjeto = st.idEtapaProjeto
-                    WHERE pro.publicado = 1 AND pro.idStatus != 6  AND pro.idEtapaProjeto = '$idStatus' ORDER BY idProjeto DESC";
+                    LEFT JOIN historico_etapa as he ON pro.idProjeto = he.idProjeto
+                    WHERE pro.publicado = 1 AND pro.idStatus != 6  AND pro.idEtapaProjeto = '$idStatus' ORDER BY he.data";
     $queryProjeto = mysqli_query($con,$sqlProjeto);
     $queryStatus = mysqli_query($con,$sqlStatus);
     $num = mysqli_num_rows($queryProjeto);
@@ -312,6 +314,14 @@ foreach ($array_status as $idStatus)
                         <thead>
                         <tr class='list_menu'>
                             <td>Protocolo (nº ISP)</td>
+                            <?php
+                            if (($status['idEtapaProjeto'] == 2) || ($status['idEtapaProjeto'] == 13) || ($status['idEtapaProjeto'] == 23) || ($status['idEtapaProjeto'] == 14))
+                                {
+                                    ?>
+                                <td>Data do envio</td>
+                                <?php
+                                }
+                                ?>
                             <td>Nome do Projeto</td>
                             <td>Proponente</td>
                             <td>Documento</td>
@@ -338,6 +348,35 @@ foreach ($array_status as $idStatus)
                                 ?>
                                 <tr>
                                     <td class='list_description maskProtocolo' data-mask = "0000.00.00/0000000"><?= $campo['protocolo'] ?></td>
+                                    <td class='list_description'><?= $campo['protocolo'] ?></td>
+                                    <?php
+                                        if ($status['idEtapaProjeto'] == 2) {
+
+                                            $dataEtapa = new DateTime ($campo['data']);
+
+                                              echo "<td class='list_description'>" . date_format($dataEtapa, "d/m/Y H:i:s") . "</td>";
+
+                                        } elseif ($status['idEtapaProjeto'] == 13){
+
+                                            $dataEtapa = new DateTime ($campo['data']);
+
+                                            echo "<td class='list_description'>" . date_format($dataEtapa, "d/m/Y H:i:s") . "</td>";
+
+                                        } elseif ($status['idEtapaProjeto'] == 14) {
+                                            $dataEtapa = new DateTime ($campo['data']);
+
+                                            echo "<td class='list_description'>" . date_format($dataEtapa, "d/m/Y H:i:s") . "</td>";
+
+                                        } elseif($status['idEtapaProjeto'] == 23) {
+
+                                            $dataEtapa = new DateTime ($campo['data']);
+
+                                            echo "<td class='list_description'>" . date_format($dataEtapa, "d/m/Y H:i:s") . "</td>";
+                                        }
+                                    ?>
+
+
+
                                     <td class='list_description'><?= $campo['nomeProjeto'] ?></td>
                                     <td class='list_description'><?= isset($campo['nome']) ? $campo['nome'] : $campo['razaoSocial'] ?></td>
                                     <td class='list_description'><?= isset($campo['cpf']) ? $campo['cpf'] : $campo['cnpj'] ?></td>
