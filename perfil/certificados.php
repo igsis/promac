@@ -76,6 +76,8 @@ if(isset($_POST["enviar"]))
 {
 	$sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '3' AND idListaDocumento IN (39,40,41,42,43,44)";
 	$query_arquivos = mysqli_query($con,$sql_arquivos);
+	$new_status = "UPDATE `promac`.`projeto` SET `idEtapaProjeto`='11' WHERE `idProjeto`= '$idProjeto'";
+	$query_status = mysqli_query($con, $new_status);
 	while($arq = mysqli_fetch_array($query_arquivos))
 	{
 		$y = $arq['idListaDocumento'];
