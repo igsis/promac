@@ -149,7 +149,7 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 					$row = mysqli_fetch_array($send);
 
 						echo "<td class='list_description'>
-							<select name='dado[$count][status]' id='statusOpt' value='teste'>";
+							<select class='colorindo' name='dado[$count][status]' id='statusOpt' value='teste'>";
 							echo "<option value=''>Selecione</option>";
 							geraOpcao('status_documento', $row['idStatusDocumento']);
 							echo " </select>
@@ -367,3 +367,32 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
         </div>
     </div>
 </section>
+
+<script>
+
+    let statusAll = document.querySelectorAll(".colorindo")
+
+    for (let status of statusAll) {
+
+        if (status.options[status.selectedIndex].value == "") {
+            status.style.backgroundColor = "yellow"
+        }
+    }
+
+    for (let status of statusAll) {
+
+        status.addEventListener("change", () => {
+            if (status.options[status.selectedIndex].value == "") {
+                status.style.backgroundColor = "yellow"
+            } else {
+                status.style.backgroundColor = "#F0F0E9"
+            }
+        })
+    }
+
+
+
+</script>
+
+
+
