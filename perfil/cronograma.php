@@ -238,7 +238,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 												<div class="progress">
 													<div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:0%">0 Mês
 													</div>
-													<input type="hidden" name="prestacaoContas" class="form-control" maxlength="50" placeholder="DD/MM/AA a DD/MM/AA" required>
+													<input type="hidden" name="prestacaoContas" class="form-control" maxlength="50" placeholder="DD/MM/AA a DD/MM/AA" required value='2'>
 												</div>
 											</div>
 											<div class="col-sm-1">
@@ -263,7 +263,15 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 						let btnsMenos = document.querySelectorAll('.menos') // pega todos os buttons .menos
 						let btnsMais = document.querySelectorAll('.mais') // pega todos os buttons .mais
 						let captacaoRecurso = document.querySelector('#captacaoRecurso')
-						var totalMes = 0 // if
+						var totalMes = 0 
+						let etapas = document.querySelectorAll('.progress input')
+
+						for(let etapa of etapas){
+							
+							if (!isNaN(etapa.value)) {
+								console.log(etapa.value);
+							}							
+						}
 
 						const quantidadeMes = (val) => {
 						
