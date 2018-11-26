@@ -375,7 +375,7 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
     for (let status of statusAll) {
 
         if (status.options[status.selectedIndex].value == "") {
-            status.style.backgroundColor = "yellow"
+            status.style.backgroundColor = "#fdff72"
         }
     }
 
@@ -383,14 +383,12 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 
         status.addEventListener("change", () => {
             if (status.options[status.selectedIndex].value == "") {
-                status.style.backgroundColor = "yellow"
+                status.style.backgroundColor = "#fdff72"
             } else {
                 status.style.backgroundColor = "#F0F0E9"
             }
         })
     }
-
-
 
 </script>
 
