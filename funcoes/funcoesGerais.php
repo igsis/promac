@@ -1860,13 +1860,12 @@ function exibirParecerProponente($idProjeto)
 		<table class='table table-bordered'>
 			<tr>
 				<td><strong>Tipo de arquivo</strong></td>
-				<td><strong>Nome do arquivo</strong></td>
+				
 			</tr>";
         while($arquivo = mysqli_fetch_array($query))
         {
             echo "<tr>";
-            echo "<td class='list_description'>".$arquivo['documento']."</td>";
-            echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'],15 ,30 ,"..." )."</a></td>";
+            echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['documento'],0 ,190 ,"" )."</a></td>";
             echo "</tr>";
         }
         echo "</table>";
