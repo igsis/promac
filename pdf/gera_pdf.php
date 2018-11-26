@@ -560,21 +560,26 @@ foreach ($enviaFicha as $fic)
     $pdf->Ln();
 }
 
+$largura = 40;
+
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 12);
-$pdf->Cell(170,$l,utf8_decode("Cronograma"),'B',1,'L');
+$pdf->Cell(170,$l,utf8_decode("Cronograma"),'1',1,'C');
+/*$pdf->Cell($largura, $l, "Data estimada de início do projeto", 1, 0, "L");
+$pdf->Cell($largura, $l, "Data estimada do final do projeto", 1, 0, "L");*/
+
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 11);
-$pdf->Cell(67,$l,utf8_decode("Data estimada de início do projeto:"),0,0,'L');
+$pdf->Cell(100,$l,utf8_decode("Data estimada de início do projeto:"),'L B',0,'L');
 $pdf->SetFont('Arial','', 11);
-$pdf->Cell(69,$l,utf8_decode($inicioCronograma),0,1,'L');
+$pdf->Cell(70,$l,utf8_decode($inicioCronograma),'R B' ,1,'L');
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 11);
-$pdf->Cell(65,$l,utf8_decode("Data estimada do final do projeto:"),0,0,'L');
+$pdf->Cell(100,$l,utf8_decode("Data estimada do final do projeto:"),'L B',0,'L');
 $pdf->SetFont('Arial','', 11);
-$pdf->Cell(80,$l,utf8_decode($fimCronograma),0,1,'L');
+$pdf->Cell(70,$l,utf8_decode($fimCronograma),'R B',1,'L');
 
 $pdf->Ln();
 
