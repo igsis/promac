@@ -19,6 +19,18 @@ if (isset($_POST['apagar'])) {
     }
 }
 
+if (isset($_POST['cancelar'])){
+    $idProjeto = $_POST['projeto'];
+
+    $query = "UPDATE `projeto` SET projeto.publicado = '0' WHERE idProjeto = '$idProjeto'";
+    if (mysqli_query($con,$query)){
+        $mensagem = "<font color='#01DF3A'><strong>Projeto apagado com sucesso!</strong></font>";
+    }else{
+        $mensagem = "<font color='#FF0000'><strong>Erro ao apagar projeto! Tente novamente.</strong></font>";
+    }
+
+}
+
 ?>
 <section id="list_items" class="home-section bg-white">
     <div class="container"><?php include '../perfil/includes/menu_interno_pf.php'; ?>
