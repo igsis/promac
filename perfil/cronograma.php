@@ -9,7 +9,7 @@ if(isset($_POST['insere']))
 	$inicioCronograma =$_POST['inicioCronograma'];
 	$fimCronograma = $_POST['fimCronograma'];
 	
-	// if (strtotime($inicioCronograma) <= strtotime($fimCronograma)){
+	if (strtotime($inicioCronograma) <= strtotime($fimCronograma)){
 		$sql_insere = "UPDATE projeto SET
 		inicioCronograma = '$inicioCronograma',
 		fimCronograma = '$fimCronograma'
@@ -23,11 +23,11 @@ if(isset($_POST['insere']))
 		{
 			$mensagem = "<font color='#FF0000'><strong>Erro ao gravar! Tente novamente.</strong></font>";
 		}
-	// }
-	// else
-	// {
-	// 	$mensagem = "<font color='#FF0000'><strong>A data final deve ser após a data de início!.</strong></font>";
-	// }
+	}
+	else
+	{
+		$mensagem = "<font color='#FF0000'><strong>A data final deve ser após a data de início!.</strong></font>";
+	}
 }
 
 if(isset($_POST['insereCronograma']))
@@ -137,10 +137,10 @@ if(isset($_POST['editaCronograma']))
 				<form method="POST" id="formCronograma" action="?perfil=cronograma" class="form-horizontal" role="form">
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-3"><label>Data estimada de início do projeto</label>
-							<input type="text" name="inicioCronograma" minlength=10 maxlength="10" class="form-control" placeholder= "DD/MM/AA" required value="<?= ($projeto['inicioCronograma'] != "") ? $projeto['inicioCronograma'] : "" ?>">
+							<input type="date" name="inicioCronograma" minlength=10 maxlength="10" class="form-control" placeholder= "DD/MM/AA" required value="<?= ($projeto['inicioCronograma'] != "") ? $projeto['inicioCronograma'] : "" ?>">
 						</div>
 						<div class="col-md-offset-2 col-md-3"><label>Data estimada do final do projeto</label>
-							<input type="text" name="fimCronograma" minlength=10 maxlength="10" class="form-control" placeholder="DD/MM/AA" required value="<?= ($projeto['fimCronograma'] != "") ? $projeto['fimCronograma'] : "" ?>">
+							<input type="date" name="fimCronograma" minlength=10 maxlength="10" class="form-control" placeholder="DD/MM/AA" required value="<?= ($projeto['fimCronograma'] != "") ? $projeto['fimCronograma'] : "" ?>">
 						</div>
 					</div>
 
