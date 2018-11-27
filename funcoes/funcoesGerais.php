@@ -3260,49 +3260,49 @@ function uploadArquivo($idProjeto, $tipoPessoa, $pagina, $idListaDocumento, $idT
 			AND arq.publicado = '1' AND list.idListaDocumento = '$idListaDocumento'";
     $query = mysqli_query($con,$sql);
     $linhas = mysqli_num_rows($query);
-    echo '<div class="table-responsive list_info">
-				<h6>Parecer Anexado</h6>';
-    if ($linhas > 0)
-    {
-        echo "
-		<table class='table table-condensed'>
-			<thead>
-				<tr class='list_menu'>
-					<td>Tipo de arquivo</td>
-					<td>Nome do arquivo</td>
-					<td>Observação</td>
-					<td></td>
-				</tr>
-			</thead>
-			<tbody>";
-        while($arquivo = mysqli_fetch_array($query))
-        {
-            echo "<tr>";
-            echo "<td class='list_description'>".$arquivo['documento']."</td>";
-            echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
-            echo "<td class='list_description'>".$arquivo['observacoes']."</td>";
-            if($arquivo['idStatusDocumento'] == 3) {
-                echo "
-						<td class='list_description'>
-							<form id='apagarArq' method='POST' action='?perfil=" . $pagina . "'>
-								<input type='hidden' name='idPessoa' value='" . $idProjeto . "' />
-								<input type='hidden' name='tipoPessoa' value='" . $tipoPessoa . "' />
-								<input type='hidden' name='apagar' value='" . $arquivo['idUploadArquivo'] . "' />
-								<input type='submit' class='btn btn-theme btn-md btn-block'  value='apagar' />
-							</form>
-						</td>";
-            }
-            echo "</tr>";
-        }
-        echo "
-		</tbody>
-		</table>";
-    }
-    else
-    {
-        echo "<p>Não há arquivo(s) inserido(s).</p><br/>";
-    }
-    echo "</div>";
+//    echo '<div class="table-responsive list_info">
+//				<h6>Parecer Anexado</h6>';
+//    if ($linhas > 0)
+//    {
+//        echo "
+//		<table class='table table-condensed'>
+//			<thead>
+//				<tr class='list_menu'>
+//					<td>Tipo de arquivo</td>
+//					<td>Nome do arquivo</td>
+//					<td>Observação</td>
+//					<td></td>
+//				</tr>
+//			</thead>
+//			<tbody>";
+//        while($arquivo = mysqli_fetch_array($query))
+//        {
+//            echo "<tr>";
+//            echo "<td class='list_description'>".$arquivo['documento']."</td>";
+//            echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
+//            echo "<td class='list_description'>".$arquivo['observacoes']."</td>";
+//            if($arquivo['idStatusDocumento'] == 3) {
+//                echo "
+//						<td class='list_description'>
+//							<form id='apagarArq' method='POST' action='?perfil=" . $pagina . "'>
+//								<input type='hidden' name='idPessoa' value='" . $idProjeto . "' />
+//								<input type='hidden' name='tipoPessoa' value='" . $tipoPessoa . "' />
+//								<input type='hidden' name='apagar' value='" . $arquivo['idUploadArquivo'] . "' />
+//								<input type='submit' class='btn btn-theme btn-md btn-block'  value='apagar' />
+//							</form>
+//						</td>";
+//            }
+//            echo "</tr>";
+//        }
+//        echo "
+//		</tbody>
+//		</table>";
+//    }
+//    else
+//    {
+//        echo "<p>Não há arquivo(s) inserido(s).</p><br/>";
+//    }
+//    echo "</div>";
     /*
      * Início da área de upload
      */
