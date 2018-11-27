@@ -94,7 +94,6 @@ if(isset($_POST['editaCronograma']))
 		{
 			$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso! Utilize o menu para avançar.</strong></font>";
 			gravarLog($sql_edita_cronograma);
-			echo "<meta HTTP-EQUIV='refresh' CONTENT='0.9;URL=?perfil=cronograma'>";
 		}
 		else
 		{
