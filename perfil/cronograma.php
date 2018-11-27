@@ -81,7 +81,7 @@ if(isset($_POST['editaCronograma']))
 	$posProducao = $_POST['posProducao'];
 	$prestacaoContas = $_POST['prestacaoContas'];
 
-	if($captacaoRecurso != null  && $preProducao != null &&  $producao != null && $posProducao != null && $prestacaoContas != null){
+	if($captacaoRecurso != '0'  && $preProducao != '0' &&  $producao != '0' && $posProducao != '0' && $prestacaoContas != '0'){
 		$sql_edita_cronograma = "UPDATE `cronograma` SET
 		captacaoRecurso = '$captacaoRecurso',
 		preProducao = '$preProducao',
