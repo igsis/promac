@@ -601,19 +601,19 @@ $pdf->MultiCell(28,24,utf8_decode($fimCronograma),1,'C');
 
 $pdf->SetXY($x + 58, $y);
 $pdf->SetFont('Arial','', 8);
-$pdf->MultiCell(30,12,utf8_decode($captacaoRecurso),1,'C');
+$pdf->MultiCell(30,12,str_replace('a', '', utf8_decode($captacaoRecurso)),1,'C');
 
 $pdf->SetXY($x + 88, $y);
 $pdf->SetFont('Arial','', 8);
-$pdf->MultiCell(20,12,utf8_decode($preProducao),1,'C');
+$pdf->MultiCell(20,12,str_replace('a', '', utf8_decode($preProducao)),1,'C');
 
 $pdf->SetXY($x + 108, $y);
 $pdf->SetFont('Arial','', 8);
-$pdf->MultiCell(18,12,utf8_decode($producao),1,'C');
+$pdf->MultiCell(18,12,str_replace('a', '', utf8_decode($producao)),1,'C');
 
 $pdf->SetXY($x + 126, $y);
 $pdf->SetFont('Arial','', 8);
-$pdf->MultiCell(20,12,utf8_decode($posProducao),1,'C');
+$pdf->MultiCell(20,12,str_replace('a', '', utf8_decode($posProducao)),1,'C');
 
 $pdf->SetXY($x + 146, $y);
 $pdf->SetFont('Arial','', 8);

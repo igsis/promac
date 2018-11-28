@@ -10,7 +10,7 @@
                 $idPess = $projeto['idPj'];
             }
             ?>
-            <a href='<?php echo "../pdf/gera_pdf.php?tipo=$id&projeto=$idP&pessoa=$idPess"; ?>' target='_blank'
+            <a href='<?php echo "../pdf/pdf_teste.php?tipo=$id&projeto=$idP&pessoa=$idPess"; ?>' target='_blank'
                class="btn btn-theme btn-md btn-block"><strong>Gerar PDF do Projeto</strong></a><br/>
         </div>
     </div>
