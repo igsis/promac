@@ -267,7 +267,7 @@ if(isset($_POST['apagar']))
 		                  			 <strong>Declaro não pertecencer às listas de Empresas Apenadas. </strong>&nbsp;&nbsp;&nbsp;<input type="checkbox" name="empresaApenada" value="1" <?php checar($projeto[ 'empresaApenada']) ?>>
            		    		    </div>
               					<div class="col-md-offset-2 col-md-8">
-									<strong>Declaro ter anexado todos os certificados necessários.</strong>&nbsp;&nbsp;&nbsp;<input type="checkbox" name="idEtapaProjeto" <?php checar($projeto['idEtapaProjeto']) ?>>
+									<strong>Declaro ter anexado todos os certidões necessários.</strong>&nbsp;&nbsp;&nbsp;<input type="checkbox" name="idEtapaProjeto" <?php checar($projeto['idEtapaProjeto']) ?>>
                		    	    </div>
                		    	<br/>
                		    	<br/>
