@@ -35,6 +35,7 @@
 					Conclua sua inscrição ao final da página para enviar suas informações à Secretaria Municipal de Cultura.
 				</div>";
 		}
+
 	?>
 </div>
 <div class="page-header">
@@ -99,4 +100,3 @@
 	</div>
 <br>
 </div>
-

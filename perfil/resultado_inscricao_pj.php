@@ -10,7 +10,7 @@ $http = $server."/pdf/";
 $idPj = $_SESSION['idUser'];
 $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 $rl = recuperaDados("representante_legal","idRepresentanteLegal",$pj['idRepresentanteLegal']);
-$campos = array($pj['razaoSocial'], $pj['cnpj'], $pj['email'], $pj['cep'], $pj['numero'], $pj['idZona'], $pj['idSubprefeitura'], $pj['idDistrito']);;
+$campos = array($pj['razaoSocial'], $pj['cnpj'], $pj['email'], $pj['cep'], $pj['numero']);
 $representante = array($pj['idRepresentanteLegal']);
 $cporep = false;
 $cpo = false;
@@ -169,8 +169,11 @@ if(isset($_POST['apagar']))
 				 		<?php listaArquivosPessoaObs($idPj,2) ?>
 				 	</div>
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> tornar-documentacao-proponente-pessoa-juridica#216
 
 			<?php
 				if($pj['liberado'] == NULL OR $pj['liberado'] == 2 OR $pj['liberado'] == 4)
@@ -317,14 +320,23 @@ if(isset($_POST['apagar']))
 				<?php
 				if ($pj['liberado'] != 1)
 				{
-				?>		
-				<form class="form-horizontal" role="form" action="?perfil=resultado_inscricao_pj" method="post">
-					<input type="submit" name="liberacao" value="Concluir inscrição do proponente" class="btn btn-theme btn-lg btn-block">
-				</form>
-				<?php
+				    $consultaArquivos = "SELECT * FROM `upload_arquivo` 
+                                         WHERE idPessoa = '$idPj'";
+				    if ($resultado = mysqli_query($con,$consultaArquivos)){
+				        $resultado_num = mysqli_num_rows($resultado);
+				        if ($resultado_num == 11){
+				            ?>
+                            <form class="form-horizontal" role="form" action="?perfil=resultado_inscricao_pj" method="post">
+                                <input type="submit" name="liberacao" value="Concluir inscrição do proponente" class="btn btn-theme btn-lg btn-block">
+                            </form>
+                            <?php
+                        }else{
+                            echo "<div class='alert alert-warning'>
+                            <strong>Erro: </strong> Você deve enviar todos os arquivos solicitados.
+                            </div>";
+                        }
+                    }
 				}
-				?>
-				<?php
 				}
 				else{
 					echo "<div class='alert alert-warning'>
