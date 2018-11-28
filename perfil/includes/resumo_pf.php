@@ -41,9 +41,6 @@
     <p align="justify"><strong>Bairro:</strong> <?php echo $pf['bairro']; ?></p>
     <p align="justify"><strong>Cidade:</strong> <?php echo $pf['cidade']; ?></p>
     <p align="justify"><strong>Estado:</strong> <?php echo $pf['estado']; ?></p>
-    <p align="justify"><strong>Zona:</strong> <?php echo $zona['zona']; ?></p>
-    <p align="justify"><strong>Prefeitura Regional:</strong> <?php echo $subprefeitura['subprefeitura']; ?></p>
-    <p align="justify"><strong>Distrito:</strong> <?php echo $distrito['distrito']; ?></p>
     <p align="justify"><strong>É Cooperado?:</strong>
         <?php
         if ($pf['cooperado'] == 0) {
