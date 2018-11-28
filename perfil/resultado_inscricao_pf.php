@@ -282,10 +282,31 @@ if(isset($_POST['apagar']))
 						$enviaArquivos = mysqli_query($con, $queryArquivos);
 						$numRow = mysqli_num_rows($enviaArquivos);
 						if($numRow == 6)
-						{ */?>
-					<form class="form-horizontal" role="form" action="?perfil=resultado_inscricao_pf" method="post">
-						<input type="submit" name="liberacao" value="Concluir inscrição do proponente" class="btn btn-theme btn-lg btn-block">
-					</form>
+						{ */
+                 $query_valida = "SELECT *
+                                  FROM upload_arquivo 
+                                  WHERE idPessoa = '$idPf' && publicado = 1";
+                 if ($resuldato = mysqli_query($con,$query_valida)){
+                     $num_linhas = mysqli_num_rows($resuldato);
+                     if ($num_linhas == 6){
+                         ?>
+                         <form class="form-horizontal" role="form" action="?perfil=resultado_inscricao_pf" method="post">
+                             <input type="submit" name="liberacao" value="Concluir inscrição do proponente" class="btn btn-theme btn-lg btn-block">
+                         </form>
+                         <?php
+                     }else{
+                         echo "<div class='alert alert-warning'>
+						<strong>Erro: </strong> Você deve enviar toda a documentação necessaria para prosseguir.
+						</div>";
+                     }
+                 }else{
+                     echo "<div class='alert alert-danger'>
+						<strong>Erro: </strong> Na validação dos arquivos tente novamente... ".die(mysqli_error($con))."
+						</div>";
+                 }
+
+                ?>
+
 					<?php
 					}
 					else

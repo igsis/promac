@@ -39,7 +39,6 @@
     <p align="justify"><strong>Bairro:</strong> <?php echo $pf['bairro']; ?></p>
     <p align="justify"><strong>Cidade:</strong> <?php echo $pf['cidade']; ?></p>
     <p align="justify"><strong>Estado:</strong> <?php echo $pf['estado']; ?></p>
-
     <p align="justify"><strong>É Cooperado?:</strong>
         <?php
         if ($pf['cooperado'] == 0) {
