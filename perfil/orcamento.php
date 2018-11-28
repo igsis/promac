@@ -240,28 +240,16 @@ if (isset($_POST['apagaOrcamento'])) {
                             $etapa = recuperaDados("etapa", "idEtapa", $campo['idEtapa']);
                             $medida = recuperaDados("unidade_medida", "idUnidadeMedida", $campo['idUnidadeMedida']);
                             echo "<tr>";
-                            echo "<form method='POST' action='?perfil=orcamento'>";
-                            echo "<td class='list_description'>
-										<select class='form-control' name='idEtapa'>";
-                            echo geraOpcao('etapa', $etapa['idEtapa'])
-                                . "</select></td>";
-                            echo "<td class='list_description'><input type='text' class='form-control' name='observacoesEtapa' maxlength='255' value='" . $campo['observacoesEtapa'] . "'></td>";
+                            echo "<td class='list_description'>" . $etapa['etapa']. "</td>";
+                            echo "<td class='list_description'>" . $campo['observacoesEtapa'] . "</td>";
 
-                            echo "<td class='list_description'><input type='text' class='form-control' name='descricao' maxlength='255' value='" . $campo['descricao'] . "'></td>";
-                            echo "<td class='list_description'><input type='text' class='form-control' name='quantidade' value=" . $campo['quantidade'] . "></td>";
-
-                            echo "<td class='list_description'>
-									<select class='form-control' name='idUnidadeMedida' required>";
-                            echo geraOpcao('unidade_medida', $medida['idUnidadeMedida']) . "
-									</select></td>";
-                            echo "<td class='list_description'><input type='text' class='form-control' name='observacoes' value='" . $campo['observacoes'] . "'></td>";
-                            echo "<td class='list_description'><input type='text' class='form-control' name='quantidadeUnidade' value=" . $campo['quantidadeUnidade'] . "></td>";
-                            echo "<td class='list_description'><input type='text' class='form-control' name='valorUnitario' id='valor' value=" . dinheiroParaBr($campo['valorUnitario']) . "></td>";
+                            echo "<td class='list_description'>" . $campo['descricao'] . "</td>";
+                            echo "<td class='list_description'>" . $campo['quantidade'] . "</td>";
+                            echo "<td class='list_description'>" . $medida['unidadeMedida'] . "</td>";
+                            echo "<td class='list_description'>" . $campo['observacoes'] . "</td>";
+                            echo "<td class='list_description'>" . $campo['quantidadeUnidade'] . "</td>";
+                            echo "<td class='list_description'>" . dinheiroParaBr($campo['valorUnitario']) . "</td>";
                             echo "<td class='list_description'>" . dinheiroParaBr($campo['valorTotal']) . "</td>";
-                            echo "<td class='list_description'>
-												<input type='hidden' name='editaOrcamento' value='" . $campo['idOrcamento'] . "' />
-												<input type ='submit' class='btn btn-theme btn-block' value='Gravar'></td>";
-                            echo "</form>";
                             echo "<td class='list_description'>
 											<form method='POST' action='?perfil=orcamento'>
 												<input type='hidden' name='apagaOrcamento' value='" . $campo['idOrcamento'] . "' />
