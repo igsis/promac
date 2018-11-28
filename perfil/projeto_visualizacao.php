@@ -201,6 +201,10 @@ function DiasUteis() {
                             ?>
 
                             <?php
+                                $query ="SELECT * FROM lista_documento as lista
+                                         INNER JOIN upload_arquivo as arq ON 
+                                         arq.idListaDocumento = lista.idListaDocumento
+                                         WHERE arq.idPessoa = '$id'";
                                 if($projeto['idStatus'] == 3){
                             ?>
                                     <div class="form-group">
