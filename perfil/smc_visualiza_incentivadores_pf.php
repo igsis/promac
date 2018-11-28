@@ -151,11 +151,11 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 					$send = mysqli_query($con, $queryy);
 					$row = mysqli_fetch_array($send);
 
-						echo "<td class='list_description'>
+                    echo "<td class='list_description'>
 							<select class='colorindo' name='dado[$count][status]' id='statusOpt' value='teste'>";
-							echo "<option value=''>Selecione</option>";
-							geraOpcao('status_documento', $row['idStatusDocumento']);
-							echo " </select>
+                    echo "<option value=''>Selecione</option>";
+                    geraOpcao('status_documento', $row['idStatusDocumento']);
+                    echo " </select>
 						</td>";
 					$queryOBS = "SELECT observacoes FROM upload_arquivo WHERE idUploadArquivo = '".$arquivo['idUploadArquivo']."'";
 					$send = mysqli_query($con, $queryOBS);
