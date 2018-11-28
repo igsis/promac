@@ -244,7 +244,7 @@
         <div class="form-group">
             <div class="col-md-12">
                 <div class="table-responsive list_info">
-                    <h6>Arquivo(s) Anexado(s)</h6>
+                    <h6>Parecer(s) Anexado(s)</h6>
                     <?php listaParecerSMC($idProjeto,9,"smc_detalhes_projeto"); ?>
                 </div>  
             </div>
