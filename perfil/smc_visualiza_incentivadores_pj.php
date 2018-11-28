@@ -151,11 +151,11 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 					$send = mysqli_query($con, $queryy);
 					$row = mysqli_fetch_array($send);
 
-						echo "<td class='list_description'>
-							<select name='dado[$count][status]' id='statusOpt' value='teste'>";
-							echo "<option value = ''>Selecione</option>";
-							geraOpcao('status_documento', $row['idStatusDocumento']);
-							echo " </select>
+                    echo "<td class='list_description'>
+							<select class='colorindo' name='dado[$count][status]' id='statusOpt' value='teste'>";
+                    echo "<option value=''>Selecione</option>";
+                    geraOpcao('status_documento', $row['idStatusDocumento']);
+                    echo " </select>
 						</td>";
 					$queryOBS = "SELECT observacoes FROM upload_arquivo WHERE idUploadArquivo = '".$arquivo['idUploadArquivo']."'";
 					$send = mysqli_query($con, $queryOBS);
@@ -295,3 +295,29 @@ $pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
 		<a href="../include/arquivos_pessoa.php?idPessoa=<?php echo $pj['idPj'] ?>&tipo=<?php echo $tipoPessoa?>" class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos da empresa</a>
 	</div>
 </section>
+
+<script>
+
+    let statusAll = document.querySelectorAll(".colorindo")
+
+    for (let status of statusAll) {
+
+        if (status.options[status.selectedIndex].value == "") {
+            status.style.backgroundColor = "yellow"
+        }
+    }
+
+    for (let status of statusAll) {
+
+        status.addEventListener("change", () => {
+            if (status.options[status.selectedIndex].value == "") {
+                status.style.backgroundColor = "yellow"
+            } else {
+                status.style.backgroundColor = "#F0F0E9"
+            }
+        })
+    }
+
+
+
+</script>
