@@ -124,17 +124,14 @@ function DiasUteis() {
                             </div>
 
 
-                            <!-- Botão para anexar certificados -->
+                            <!-- Botão para anexar certidões -->
                             <?php
                             if ($projeto['idStatus'] == 3) {
                                 ?>
                                 <div class="form-group">
                                     <div class="col-md-offset-4 col-md-6">
-                                        <form class="form-horizontal" role="form"
-                                              action="?perfil=certificados&idProjeto=<?= $idProjeto ?>" method="post">
-                                            <button type="submit" class="btn btn-success btn-block"
-                                                    style="border-radius: 7px;">Anexar Certidões
-                                            </button>
+                                        <form class="form-horizontal" role="form" action="?perfil=certificados&idProjeto=<?= $idProjeto ?>" method="post">
+                                            <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;">Anexar Certidões</button>
                                         </form>
                                     </div>
                                 </div>
