@@ -123,26 +123,6 @@ function DiasUteis() {
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <div class="col-md-offset-2 col-md-8" align="left">
-                                    <ul class='list-group'>
-                                        <li class='list-group-item list-group-item-success'>Notas</li>
-                                        <?php
-                                        $sql = "SELECT * FROM notas
-                                                    WHERE idPessoa = '$idProjeto' AND interna = 0";
-                                        $query = mysqli_query($con, $sql);
-                                        $num = mysqli_num_rows($query);
-                                        if ($num > 0) {
-                                            while ($campo = mysqli_fetch_array($query)) {
-                                                echo "<li class='list-group-item'><strong>" . exibirDataHoraBr($campo['data']) . "</strong><br/>" . $campo['nota'] . "</li>";
-                                            }
-                                        } else {
-                                            echo "<li class='list-group-item'>Não há notas disponíveis.</li>";
-                                        }
-                                        ?>
-                                    </ul>
-                                </div>
-                            </div>
 
                             <!-- Botão para anexar certificados -->
                             <?php

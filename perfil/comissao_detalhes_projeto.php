@@ -117,24 +117,7 @@ if(isset($_POST['gravarAdm']))
 	}
 }
 
-if(isset($_POST['gravarNota']))
-{
-	if ($idProjeto != 0)
-	{
-		$dateNow = date('Y-m-d H:i:s');
-		$nota = addslashes($_POST['nota']);
-		$sql_nota = "INSERT INTO notas (idPessoa, idTipo, data, nota, interna) VALUES ('$idProjeto', '3', '$dateNow', '$nota', '2')";
-		if(mysqli_query($con,$sql_nota))
-		{
-			$mensagem = "<font color='#01DF3A'><strong>Nota inserida com sucesso!</strong></font>";
-			gravarLog($sql_nota);
-		}
-		else
-		{
-			$mensagem = "<font color='#FF0000'><strong>Erro ao inserir nota! Tente novamente.</strong></font>";
-		}
-	}
-}
+
 
 
 if(isset($_POST['finalizaComissao']))

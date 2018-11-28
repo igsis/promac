@@ -8,7 +8,7 @@ $http = $server."/pdf/";
 
 $idPf = $_SESSION['idUser'];
 $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
-$campos = array($pf['nome'], $pf['cpf'], $pf['rg'], $pf['email'], $pf['cep'], $pf['numero'], $pf['idZona'], $pf['idSubprefeitura'], $pf['idDistrito']);
+$campos = array($pf['nome'], $pf['cpf'], $pf['rg'], $pf['email'], $pf['cep'], $pf['numero']);
 $cpo = false;
 
 foreach ($campos as $cpos)
@@ -147,25 +147,6 @@ if(isset($_POST['apagar']))
                 <?php
                     }
                 ?>
-                <ul class='list-group'>
-                    <li class='list-group-item list-group-item-success'>Notas</li>
-                    <?php
-                        $sql = "SELECT * FROM notas WHERE idPessoa = '$idPf' AND idTipo = '1' AND interna = '1'";
-                        $query = mysqli_query($con,$sql);
-                        $num = mysqli_num_rows($query);
-                        if($num > 0)
-                        {
-                            while($campo = mysqli_fetch_array($query))
-                            {
-                                echo "<li class='list-group-item' align='left'><strong>".exibirDataHoraBr($campo['data'])."</strong><br/>".$campo['nota']."</li>";
-                            }
-                        }
-                        else
-                        {
-                            echo "<li class='list-group-item'>Não há notas disponíveis.</li>";
-                        }
-                    ?>
-                </ul>
 
                 <div>
                     <?php listaArquivosPessoaObs($idPf,1) ?>
