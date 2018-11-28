@@ -71,7 +71,7 @@ if(isset($_POST['insereCronograma']))
 
 $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 $idCronograma = $projeto['idCronograma'];
-$cronograma = recuperaDados("cronograma","idCronograma",$idCronograma);
+
 
 if(isset($_POST['editaCronograma']))
 {
@@ -103,7 +103,7 @@ if(isset($_POST['editaCronograma']))
 		$mensagem = "<font color='#FF0000'><strong>Necessário preencher todos as etapas!</strong></font>";
 	}
 }
-
+$cronograma = recuperaDados("cronograma","idCronograma",$idCronograma);
 ?>
 
 <style>
