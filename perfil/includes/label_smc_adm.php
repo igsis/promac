@@ -213,15 +213,6 @@
             </div>
 
             <div class="form-group">
-                <div class="col-md-offset-2 col-md-3"><label>Data Publicação DOC</label>
-                    <input type="text" name="dataPublicacaoDoc" id='datepicker09' class="form-control" value="<?php echo exibirDataBr($projeto['dataPublicacaoDoc']) ?>">
-                </div>
-                <div class="col-md-5"><label>Link Publicação DOC</label>
-                    <input type="text" name="linkPublicacaoDoc" class="form-control" value="<?php echo $projeto['linkPublicacaoDoc'] ?>">
-                </div>
-            </div>
-
-            <div class="form-group">
                 <div class="col-md-offset-2 col-md-8">
                     <?php echo "<input type='hidden' name='IDP' value='$idProjeto'>"; ?>
                     <input type="submit" name="gravarAdm" class="btn btn-theme btn-md btn-block" value="Gravar">
