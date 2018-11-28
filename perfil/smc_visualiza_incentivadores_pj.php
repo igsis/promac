@@ -151,11 +151,11 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 					$send = mysqli_query($con, $queryy);
 					$row = mysqli_fetch_array($send);
 
-						echo "<td class='list_description'>
-							<select name='dado[$count][status]' id='statusOpt' value='teste'>";
-							echo "<option value = ''>Selecione</option>";
-							geraOpcao('status_documento', $row['idStatusDocumento']);
-							echo " </select>
+                    echo "<td class='list_description'>
+							<select class='colorindo' name='dado[$count][status]' id='statusOpt' value='teste'>";
+                    echo "<option value=''>Selecione</option>";
+                    geraOpcao('status_documento', $row['idStatusDocumento']);
+                    echo " </select>
 						</td>";
 					$queryOBS = "SELECT observacoes FROM upload_arquivo WHERE idUploadArquivo = '".$arquivo['idUploadArquivo']."'";
 					$send = mysqli_query($con, $queryOBS);
@@ -186,28 +186,6 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 	}
 }
 
-if(isset($_POST['nota']))
-{
-    if($_POST['nota'] != "")
-    {
-        $id = $_POST['LIBPF'];
-        if ($id != 0)
-        {
-            $dateNow = date('Y-m-d H:i:s');
-            $nota = addslashes($_POST['nota']);
-            $sql_nota = "INSERT INTO notas (idPessoa, idTipo, data, nota, interna) VALUES ('$id', '5', '$dateNow', '$nota', '1')";
-            if(mysqli_query($con,$sql_nota))
-            {
-                $mensagem .= "<br><font color='#01DF3A'><strong>Nota inserida com sucesso!</strong></font>";
-                gravarLog($sql_nota);
-            }
-            else
-            {
-                $mensagem .= "<br><font color='#FF0000'><strong>Erro ao inserir nota! Tente novamente.</strong></font>";
-            }
-        }
-    }
-}
 
 $pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
 ?>
@@ -278,24 +256,9 @@ $pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
 	{
     ?>
         <div class="container">
-            <div class='col-md-offset-2 col-md-8'>
-                <div class="form-group">
-                    <ul class='list-group'>
-                        <li class='list-group-item list-group-item-success'>Notas</li>
-                        <?php
-                        listaNota($idPj, 5, 1)
-                        ?>
-                    </ul>
-                </div>
-            </div>
+
             <form method="POST" action="?perfil=smc_visualiza_incentivadores_pj" class="form-horizontal" role="form">
-                <div class="row">
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-8"><label>Notas</label><br/>
-                            <input type="text" class="form-control" name="nota">
-                        </div>
-                    </div>
-                </div>
+
                 <div class="form-group">
                     <div class='col-md-offset-4 col-md-2'>
                         <input type='hidden' name='LIBPF' value='<?php echo $pj['idPj'] ?>'/>
@@ -314,14 +277,7 @@ $pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
 	{
 	?>
         <div class="container">
-            <div class='col-md-offset-2 col-md-8'>
-                <ul class='list-group'>
-                    <li class='list-group-item list-group-item-success'>Notas</li>
-                    <?php
-                    listaNota($idPj,5,1)
-                    ?>
-                </ul>
-            </div>
+
             <div class="form-group">
                 <div class='col-md-offset-2 col-md-8'>
                     <form class='form-horizontal' role='form' action='?perfil=smc_visualiza_incentivadores_pj' method='post'>
@@ -339,3 +295,29 @@ $pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
 		<a href="../include/arquivos_pessoa.php?idPessoa=<?php echo $pj['idPj'] ?>&tipo=<?php echo $tipoPessoa?>" class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos da empresa</a>
 	</div>
 </section>
+
+<script>
+
+    let statusAll = document.querySelectorAll(".colorindo")
+
+    for (let status of statusAll) {
+
+        if (status.options[status.selectedIndex].value == "") {
+            status.style.backgroundColor = "yellow"
+        }
+    }
+
+    for (let status of statusAll) {
+
+        status.addEventListener("change", () => {
+            if (status.options[status.selectedIndex].value == "") {
+                status.style.backgroundColor = "yellow"
+            } else {
+                status.style.backgroundColor = "#F0F0E9"
+            }
+        })
+    }
+
+
+
+</script>

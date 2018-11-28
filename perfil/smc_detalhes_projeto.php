@@ -87,10 +87,9 @@ if(isset($_POST['gravarAdm']))
     {
         $dataPublicacaoDoc = exibirDataMysql($_POST['dataPublicacaoDoc']);
     }
-    $linkPublicacaoDoc = $_POST['linkPublicacaoDoc'];
     $data = date('Y-m-d H:i:s');
     $idUsuario = $_SESSION['idUser'];
-    $sql_gravarAdm = "UPDATE projeto SET valorAprovado = '$valorAprovado', idRenunciaFiscal = '$idRenunciaFiscal', idStatusParecerista = '$statusParecerista', dataReuniao = '$dataReuniao', dataPublicacaoDoc = '$dataPublicacaoDoc', linkPublicacaoDoc = '$linkPublicacaoDoc' WHERE idProjeto = '$idP' ";
+    $sql_gravarAdm = "UPDATE projeto SET valorAprovado = '$valorAprovado', idRenunciaFiscal = '$idRenunciaFiscal', idStatusParecerista = '$statusParecerista', dataReuniao = '$dataReuniao' WHERE idProjeto = '$idP' ";
     if(mysqli_query($con,$sql_gravarAdm))
     {
         $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
@@ -111,21 +110,21 @@ if(isset($_POST['gravarAdm']))
                 $mensagem = "<font color='#FF0000'><strong>Erro ao atualizar! Tente novamente.</strong></font>";
             }
         }
-        if($dataPublicacaoDoc != '' || $linkPublicacaoDoc != '')
-        {
-            $sql_historico_publicacao = "INSERT INTO historico_publicacao (idProjeto,idEtapaProjeto,dataPublicacao,linkPublicacao,data,idUsuario) VALUES ('$idP','$idStatus','$dataPublicacaoDoc','$linkPublicacaoDoc','$data','$idUsuario')";
-            if(mysqli_query($con,$sql_historico_publicacao))
-            {
-                $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
-
-                gravarLog($sql_historico_publicacao);
-                echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
-            }
-            else
-            {
-                $mensagem = "<font color='#FF0000'><strong>Erro ao atualizar! Tente novamente.</strong></font>";
-            }
-        }
+//        if($dataPublicacaoDoc != '' || $linkPublicacaoDoc != '')
+//        {
+//            $sql_historico_publicacao = "INSERT INTO historico_publicacao (idProjeto,idEtapaProjeto,dataPublicacao,linkPublicacao,data,idUsuario) VALUES ('$idP','$idStatus','$dataPublicacaoDoc','$linkPublicacaoDoc','$data','$idUsuario')";
+//            if(mysqli_query($con,$sql_historico_publicacao))
+//            {
+//                $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
+//
+//                gravarLog($sql_historico_publicacao);
+//                echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
+//            }
+//            else
+//            {
+//                $mensagem = "<font color='#FF0000'><strong>Erro ao atualizar! Tente novamente.</strong></font>";
+//            }
+//        }
     }
     else
     {
@@ -337,26 +336,7 @@ if(isset($_POST['gravarFin']))
     }
 }
 
-if(isset($_POST['gravarNota']))
-{
-    $idP = $_POST['IDP'];
-    if ($idP != 0)
-    {
-        $dateNow = date('Y-m-d H:i:s');
-        $nota = addslashes($_POST['nota']);
-        $sql_nota = "INSERT INTO notas (idPessoa, idTipo, data, nota, interna) VALUES ('$idP', '3', '$dateNow', '$nota', '0')";
-        if(mysqli_query($con,$sql_nota))
-        {
-            $mensagem = "<font color='#01DF3A'><strong>Nota inserida com sucesso!</strong></font>";
-            gravarLog($sql_nota);
-            echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
-        }
-        else
-        {
-            $mensagem = "<font color='#FF0000'><strong>Erro ao inserir nota! Tente novamente.</strong></font>";
-        }
-    }
-}
+
 
 if(isset($_POST['apagaIncentivador']))
 {

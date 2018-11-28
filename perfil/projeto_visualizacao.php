@@ -123,38 +123,15 @@ function DiasUteis() {
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <div class="col-md-offset-2 col-md-8" align="left">
-                                    <ul class='list-group'>
-                                        <li class='list-group-item list-group-item-success'>Notas</li>
-                                        <?php
-                                        $sql = "SELECT * FROM notas
-                                                    WHERE idPessoa = '$idProjeto' AND interna = 0";
-                                        $query = mysqli_query($con, $sql);
-                                        $num = mysqli_num_rows($query);
-                                        if ($num > 0) {
-                                            while ($campo = mysqli_fetch_array($query)) {
-                                                echo "<li class='list-group-item'><strong>" . exibirDataHoraBr($campo['data']) . "</strong><br/>" . $campo['nota'] . "</li>";
-                                            }
-                                        } else {
-                                            echo "<li class='list-group-item'>Não há notas disponíveis.</li>";
-                                        }
-                                        ?>
-                                    </ul>
-                                </div>
-                            </div>
 
-                            <!-- Botão para anexar certificados -->
+                            <!-- Botão para anexar certidões -->
                             <?php
                             if ($projeto['idStatus'] == 3) {
                                 ?>
                                 <div class="form-group">
                                     <div class="col-md-offset-4 col-md-6">
-                                        <form class="form-horizontal" role="form"
-                                              action="?perfil=certificados&idProjeto=<?= $idProjeto ?>" method="post">
-                                            <button type="submit" class="btn btn-success btn-block"
-                                                    style="border-radius: 7px;">Anexar Certificados
-                                            </button>
+                                        <form class="form-horizontal" role="form" action="?perfil=certificados&idProjeto=<?= $idProjeto ?>" method="post">
+                                            <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;">Anexar Certidões</button>
                                         </form>
                                     </div>
                                 </div>
@@ -221,24 +198,40 @@ function DiasUteis() {
                                 <?php
 
                             }
-
                             ?>
+
+                            <?php
+                                if($projeto['idStatus'] == 3){
+                            ?>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-4 col-md-6">
+                                            <form class="form-horizontal" role="form"
+                                                  action="../pdf/termo_responsabilidade.php"
+                                                  method="post">
+                                                <input type="hidden" value="<?= $idProjeto ?>" name="idProjeto">
+                                                <button type="submit" class="btn btn-success btn-block"
+                                                        style="border-radius: 7px;">termo de responsabilidade
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                            <?php
+                                }
+                            ?>
+
+
 
                             <!-- Botão para anexar recurso -->
                             <?php
                             if ($idEtapa != 26 && $idEtapa != 27) {
+                                $dateNow = date('Y-m-d');
+                                $dataPublicacaoDoc = $projeto['dataPublicacaoDoc'];
+                                $dataRecurso = date('Y-m-d', strtotime("+7 days", strtotime($dataPublicacaoDoc))); // Calcula a diferença em segundos entre as datas do recurso e publicação
+                                $diferenca =  strtotime($dataRecurso) - strtotime($dateNow);
+                                $dias = floor($diferenca / (60 * 60 * 24));//Calcula a diferença em dias
 
-                                if(DiasUteis() < $dateNow) {
-                                    ?>
-                                    <div class="form-group">
-                                        <div class="col-md-offset-4 col-md-6">
-                                            <h5 class="alert alert-danger">Data para enviar recurso expirada</h5>
-                                        </div>
-                                    </div>
-                                    <?php
-                                }
 
-                                if (($projeto['dataPublicacaoDoc'] != "0000-00-00" && (diasUteis() > $dateNow)) && ($projeto['idStatus'] == 4 || $projeto['idStatus'] == 3)) {
+                                if (($projeto['dataPublicacaoDoc'] != "0000-00-00" && ($dias <= 7 && $dias >= 0)) && ($projeto['idStatus'] == 4 || $projeto['idStatus'] == 3)) {
                                     ?>
                                     <div class="form-group">
                                         <div class="col-md-offset-4 col-md-6">

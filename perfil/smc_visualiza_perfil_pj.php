@@ -185,28 +185,7 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 	}
 }
 
-if(isset($_POST['nota']))
-{
-    if($_POST['nota'] != "")
-    {
-        $id = $_POST['LIBPF'];
-        if ($id != 0)
-        {
-            $dateNow = date('Y-m-d H:i:s');
-            $nota = addslashes($_POST['nota']);
-            $sql_nota = "INSERT INTO notas (idPessoa, idTipo, data, nota, interna) VALUES ('$id', '2', '$dateNow', '$nota', '1')";
-            if(mysqli_query($con,$sql_nota))
-            {
-                $mensagem .= "<br><font color='#01DF3A'><strong>Nota inserida com sucesso!</strong></font>";
-                gravarLog($sql_nota);
-            }
-            else
-            {
-                $mensagem .= "<br><font color='#FF0000'><strong>Erro ao inserir nota! Tente novamente.</strong></font>";
-            }
-        }
-    }
-}
+
 
 $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 ?>
@@ -294,24 +273,9 @@ $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 //        {
 ?>
         <div class="container">
-            <div class='col-md-offset-2 col-md-8'>
-                <div class="form-group">
-                    <ul class='list-group'>
-                        <li class='list-group-item list-group-item-success'>Notas</li>
-                        <?php
-                            listaNota($idPj,2,1)
-                        ?>
-                    </ul>
-                </div>
-            </div>
+
             <form method="POST" action="?perfil=smc_visualiza_perfil_pj" class="form-horizontal" role="form">
-                <div class="row">
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-8"><label>Notas</label><br/>
-                            <input type="text" class="form-control" name="nota">
-                        </div>
-                    </div>
-                </div>
+
                 <div class="form-group">
                     <div class='col-md-offset-4 col-md-2'>
                         <input type='hidden' name='LIBPF' value='<?php echo $pj['idPj'] ?>' />
@@ -344,14 +308,7 @@ $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 	{
 	?>
         <div class="container">
-            <div class='col-md-offset-2 col-md-8'>
-                <ul class='list-group'>
-                    <li class='list-group-item list-group-item-success'>Notas</li>
-                    <?php
-                    listaNota($idPj,2,1)
-                    ?>
-                </ul>
-            </div>
+
             <div class="form-group">
                 <div class='col-md-offset-2 col-md-8'>
                     <form class='form-horizontal' role='form' action='?perfil=smc_visualiza_perfil_pj' method='post'>
