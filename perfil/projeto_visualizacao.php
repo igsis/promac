@@ -201,14 +201,15 @@ function DiasUteis() {
                             ?>
 
                             <?php
-                                $query ="SELECT * FROM lista_documento as lista
-                                         INNER JOIN upload_arquivo as arq ON 
-                                         arq.idListaDocumento = lista.idListaDocumento
-                                         WHERE arq.idPessoa = '$id'
-                                         AND lista.idListaDocumento IN (39,40,41,42,43,44)
-                                         AND arq.publicado = 1
-                                         AND arq.idTipo = 3";
-                                if($projeto['idStatus'] == 3){
+                            $sql = "SELECT *
+                                        FROM lista_documento as list
+                                        INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
+                                        WHERE arq.idPessoa = '$idProjeto'
+                                        AND arq.idTipo = 3
+                                        AND arq.publicado = '1' AND list.idListaDocumento IN (39,40,41,42,43,44,46,47,52,53) ";
+                            $query = mysqli_query($con,$sql);
+                            $linhas = mysqli_num_rows($query);
+                                if($projeto['idStatus'] == 3 && $linhas == 6){
                             ?>
                                     <div class="form-group">
                                         <div class="col-md-offset-4 col-md-6">
