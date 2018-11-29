@@ -1,4 +1,5 @@
-<html>
+<html xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
+      xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
 <head>
     <title>SMC / Pro-Mac - Programa Municipal de Apoio a Projetos Culturais</title>
     <meta charset="utf-8" />
@@ -14,10 +15,13 @@
     </script>
     <!-- CSS -->
     <style>
-        body{
+
+        body {
             font-size: 15px;
             font-family: Arial;
+            margin-left: 23px;
         }
+
     </style>
 </head>
 <body>
@@ -128,10 +132,6 @@ $enviaOrca = mysqli_query($con, $queryOrca);
 
 $countTabela = mysqli_num_rows($enviaOrca);
 
-echo $countTabela;
-
-
-
 /*
   Ficha técnica
 */
@@ -181,9 +181,9 @@ if($tipoPessoa == 1)
     <section id='list_items' class='home-section bg-white'>
         <div class='container' style='height: 800px;'>
 
-            <br><h3 style="text-transform: uppercase;"><b>Projeto: <?= $nomeProjeto ?> </b></h3><br>
+            <br><h1 style="text-transform: uppercase;"><b>Projeto: <?= $nomeProjeto ?> </b></h1><br>
 
-            <h4><b><center>Dados de pessoa física</center></b></h4>
+            <h3><b><center>Dados de pessoa física</center></b></h3>
 
             <p><b>Nome: </b> <?= $NomePF ?> </p>
             <p><b>RG: </b> <?= $RGPF ?> </p>
@@ -192,7 +192,7 @@ if($tipoPessoa == 1)
             <p><b>Telefones: </b> <?= $telefonePF . " | " . $celularPF  ?> </p>
             <p><b>E-mail: </b><?= $emailPF ?></p>
 
-            <br><br><h4><b><center>Dados do projeto</center></b></h4>
+            <br><br><h3><b><center>Dados do projeto</center></b></h3>
 
             <p><b>Protocolo: </b> <?= $protocoloP ?></p>
             <p><b>Área de atuação: </b> <?= $areaAtuacao ?></p>
@@ -329,7 +329,7 @@ if($tipoPessoa == 1)
                     echo "<td class='list_description'>" . dinheiroParaBr($rowOrca['valorTotal']) . "</td>";
                     echo "</tr>";
 
-                   if ($count == 15) {
+                   if ($count == 14) {
                        echo "<table  border='1' style='page-break-before: always; border-collapse: collapse;'>
                             <tr>    
                 <th colspan=\"7\" bgcolor=\"red\" style= \"font-size: 18px;\"><b>CONTINUAÇÃO</b></th>
@@ -409,9 +409,9 @@ else if($tipoPessoa == 2) {
 
     <div class='container' style='height: 800px;'>
 
-        <br><h3 style="text-transform: uppercase;"><b>Projeto: <?= $nomeProjeto ?> </b></h3><br>
+        <br><h2 style="text-transform: uppercase;"><b>Projeto: <?= $nomeProjeto ?> </b></h2><br>
 
-        <h4><b><center>Dados de pessoa jurídica</center></b></h4>
+        <h3><b><center>Dados de pessoa jurídica</center></b></h3>
 
         <p><b>Razão social: </b> <?= $razaoSocial ?> </p>
         <p><b>CNPJ: </b> <?= $cnpj ?> </p>
@@ -419,7 +419,7 @@ else if($tipoPessoa == 2) {
         <p><b>Telefones: </b> <?= $telefonePJ . " | " . $celularPJ  ?> </p>
         <p><b>E-mail: </b><?= $emailPJ ?></p><br>
 
-        <h4><b><center>Dados do representante legal</center></b></h4>
+        <h3><b><center>Dados do representante legal</center></b></h3>
 
         <p><b>Nome: </b> <?= $nomeRep ?> </p>
         <p><b>RG: </b> <?= $rgRep ?> </p>
@@ -429,7 +429,7 @@ else if($tipoPessoa == 2) {
         <p><b>E-mail: </b><?= $emailRep ?></p>
 
 
-        <br><br><h4><b><center>Dados do projeto</center></b></h4>
+        <br><br><h3><b><center>Dados do projeto</center></b></h3>
 
         <p><b>Protocolo: </b> <?= $protocoloP ?></p>
         <p><b>Área de atuação: </b> <?= $areaAtuacao ?></p>
@@ -565,7 +565,7 @@ else if($tipoPessoa == 2) {
                 echo "<td class='list_description'>" . dinheiroParaBr($rowOrca['valorTotal']) . "</td>";
                 echo "</tr>";
 
-                if ($count == 14) {
+                if ($count == 13) {
                     echo "<table  border='1' style='page-break-before: always; border-collapse: collapse;'>
                                 <tr>
                                     <td width='25%' align='center'><b>Etapa</b></td>
