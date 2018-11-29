@@ -8,13 +8,15 @@
     <script type="text/javascript" src="../visual/js/jquery.js"></script>
     <script type="text/javascript">
         $(function(){
-            print();
+            window.print();
+            window.close();
         });
     </script>
     <!-- CSS -->
     <style>
         body{
-            font-size: 17px;
+            font-size: 15px;
+            font-family: Arial;
         }
     </style>
 </head>
@@ -124,6 +126,10 @@ $queryOrca = "SELECT * FROM orcamento AS ORC
               WHERE idProjeto = '$idProjeto' AND publicado = 1 ORDER BY idOrcamento ASC";
 $enviaOrca = mysqli_query($con, $queryOrca);
 
+$countTabela = mysqli_num_rows($enviaOrca);
+
+echo $countTabela;
+
 
 
 /*
@@ -175,11 +181,9 @@ if($tipoPessoa == 1)
     <section id='list_items' class='home-section bg-white'>
         <div class='container' style='height: 800px;'>
 
-            <title><center>PDF DO PROJETO</center></title><br>
+            <br><h3 style="text-transform: uppercase;"><b>Projeto: <?= $nomeProjeto ?> </b></h3><br>
 
-            <h1><b>Projeto: <?= $nomeProjeto ?> </b></h1>
-
-            <h2><b><center>Dados de pessoa física</center></b></h2>
+            <h4><b><center>Dados de pessoa física</center></b></h4>
 
             <p><b>Nome: </b> <?= $NomePF ?> </p>
             <p><b>RG: </b> <?= $RGPF ?> </p>
@@ -188,7 +192,7 @@ if($tipoPessoa == 1)
             <p><b>Telefones: </b> <?= $telefonePF . " | " . $celularPF  ?> </p>
             <p><b>E-mail: </b><?= $emailPF ?></p>
 
-            <h2><b><center>Dados do projeto</center></b></h2>
+            <br><br><h4><b><center>Dados do projeto</center></b></h4>
 
             <p><b>Protocolo: </b> <?= $protocoloP ?></p>
             <p><b>Área de atuação: </b> <?= $areaAtuacao ?></p>
@@ -199,35 +203,35 @@ if($tipoPessoa == 1)
             <p><b>Descrição da exposição da marca e indicação do valor do ingresso: </b><?= $exposicaoMarca ?></p>
 
             <br><br>
-            <b style="font-size: 22px;">Resumo do projeto: </b>
+            <div style="margin-top: 20px;" ><b style="font-size: 16px;">Resumo do projeto: </b>
             <hr/>
-            <?= $resumoProjeto ?> <br><br><br>
+            <?= $resumoProjeto ?> </div> <br><br>
 
-            <b style="font-size: 22px;">Curriculo: </b>
+            <div><b style="font-size: 16px;">Curriculo: </b>
             <hr/>
-            <?= $curriculo ?> <br><br><br>
+            <?= $curriculo ?> </div> <br><br>
 
-            <b style="font-size: 22px;">Descrição do objeto e atividades:  </b>
+            <div><b style="font-size: 16px;">Descrição do objeto e atividades:  </b>
             <hr/>
-            <?= $descricao ?> <br><br><br>
+            <?= $descricao ?> </div> <br><br>
 
-            <b style="font-size: 22px;">Justificativa do projeto:  </b>
+            <div><b style="font-size: 16px;">Justificativa do projeto:  </b>
             <hr/>
-            <?= $justificativa?> <br><br><br>
+            <?= $justificativa?> </div> <br><br>
 
-            <b style="font-size: 22px;">Objetivos e metas: </b>
+            <div style="margin-top: 20px;"><b style="font-size: 16px;">Objetivos e metas: </b>
             <hr/>
-            <?= $objetivo ?> <br><br><br>
+            <?= $objetivo ?> </div> <br><br>
 
-            <b style="font-size: 22px;">Metodologia e parâmetros a serem utilizados para aferição do cumprimento de metas:  </b>
+            <div><b style="font-size: 16px;">Metodologia e parâmetros a serem utilizados para aferição do cumprimento de metas:  </b>
             <hr/>
-            <?= $metodologia ?> <br><br><br>
+            <?= $metodologia ?> </div> <br><br>
 
-            <b style="font-size: 22px;">Descrição da contrapartida:  </b>
+            <div><b style="font-size: 16px;">Descrição da contrapartida:  </b>
             <hr/>
-            <?= $contrapartida ?> <br><br><br>
+            <?= $contrapartida ?> </div> <br><br>
 
-            <b style="font-size: 22px;">Locais: </b>
+            <div style="page-break-before: always; margin-top: 30px;"><b style="font-size: 16px;">Locais: </b>
             <hr/>
             <?php
             while ($rowLocal = mysqli_fetch_array($enviaLocal)) {
@@ -238,16 +242,18 @@ if($tipoPessoa == 1)
                 echo "<p><b>Distrito:  </b>" . $rowLocal['distrito'] . "</p><br>";
             }
             ?>
+            </div>
 
-            <b style="font-size: 22px;">Público alvo: </b>
+
+            <div> <b style="font-size: 16px;">Público alvo: </b>
             <hr/>
-            <?= $publicoAlvo ?> <br><br><br>
+            <?= $publicoAlvo ?> </div> <br><br>
 
-            <b style="font-size: 22px;">Plano de divulgação: </b>
+            <div><b style="font-size: 16px;">Plano de divulgação: </b>
             <hr/>
-            <?= $planoDivulgacao?> <br><br>
+            <?= $planoDivulgacao?></div> <br><br>
 
-            <b style="font-size: 22px;">Ficha técnica: </b>
+            <div><b style="font-size: 16px;">Ficha técnica: </b>
             <hr/>
 
             <?php
@@ -259,44 +265,103 @@ if($tipoPessoa == 1)
 
                 echo "<p><b>Nome: </b>" . $nomeFicha . "</p>";
                 echo "<p><b>CPF: </b>" . $cpfFicha . "</p>";
-                echo "<p><b>Função: </b>" . $funcaoFicha . "</p><br>";
+                echo "<p><b>Função: </b>" . $funcaoFicha . "</p>";
             }
 
             ?>
-                    <table border="1" style="border-collapse: collapse">
-                        <tr>
-                            <th colspan="7" bgcolor="red" style= "font-size: 22px;"><b>ORÇAMENTO</b></th>
-                        </tr>
+            </div>
+            <table border="1" style="border-collapse: collapse; margin-top: 20px;  page-break-before:always;">
+                <tr>
+                    <th colspan="7" bgcolor="red" style= "font-size: 18px; align-items: center;"><b>CRONOGRAMA</b></th>
+                </tr>
 
-                        <tr>
-                            <td width='25%'><b>Etapa</b></td>
-                            <td><b>Descrição</b></td>
-                            <td width='5%'><b>Qtde</b></td>
-                            <td width='5%'><b>Unid. Med.</b></td>
-                            <td width='5%'><b>Qtde Unid.</b></td>
-                            <td><b>Valor Unit.</b></td>
-                            <td><b>Valor Total</b></td>
-                        </tr>
-                        <?php
+                <tr>
+                    <td align='center'><b>Início do cronograma</b></td>
+                    <td align='center'><b>Fim do cronograma</b></td>
+                    <td align='center'><b>Captação de recursos</b></td>
+                    <td align='center'><b>Pré-Produção</b></td>
+                    <td align='center'><b>Produção</b></td>
+                    <td align='center'><b>Pós-Produção</b></td>
+                    <td align='center'><b>Prestação de contas</b></td>
+                </tr>
+                <tr>
+                    <td class='list_description'> <?=$inicioCronograma?> </td>
+                    <td class='list_description'> <?=$fimCronograma?> </td>
+                    <td class='list_description'> <?= str_replace('a', '', $captacaoRecurso)?> </td>
+                    <td class='list_description'> <?= str_replace('a', '', $preProducao ) ?> </td>
+                    <td class='list_description'> <?= str_replace('a', '', $producao)?> </td>
+                    <td class='list_description'> <?=str_replace('a','', $posProducao)?> </td>
+                    <td class='list_description'> <?=str_replace('a', '', $prestacaoContas)?> </td>
+                </tr>
+            </table>
+            <br><hr/><br>
+            <table border="1" style="border-collapse: collapse;">
+                <tr>
+                    <th colspan="7" bgcolor="red" style= "font-size: 18px; align-content: center;"><b>ORÇAMENTO</b></th>
+                </tr>
+                <tr>
+                    <td width='25%' align='center'><b>Etapa</b></td>
+                    <td align='center'><b>Descrição</b></td>
+                    <td width='5%' align='center'><b>Qtde</b></td>
+                    <td width='5%' align='center'><b>Unid. Med.</b></td>
+                    <td width='5%' align='center'><b>Qtde Unid.</b></td>
+                    <td align='center'><b>Valor Unit.</b></td>
+                    <td align='center'><b>Valor Total</b></td>
+                </tr>
+
+                <?php
+
+                $count = 0;
+
+               // for ($i=0; $i < $countTabela; $i++) {}
+
+                while ($rowOrca = mysqli_fetch_array($enviaOrca)) {
+
+                    $count++;
+
+                    echo "<tr>";
+                    echo "<td class='list_description'>" . $rowOrca['etapa'] . "</td>";
+                    echo "<td class='list_description'>" . $rowOrca['descricao'] . "</td>";
+                    echo "<td class='list_description'>" . $rowOrca['quantidade'] . "</td>";
+                    echo "<td class='list_description'>" . $rowOrca['unidadeMedida'] . "</td>";
+                    echo "<td class='list_description'>" . $rowOrca['quantidadeUnidade'] . "</td>";
+                    echo "<td class='list_description'>" . dinheiroParaBr($rowOrca['valorUnitario']) . "</td>";
+                    echo "<td class='list_description'>" . dinheiroParaBr($rowOrca['valorTotal']) . "</td>";
+                    echo "</tr>";
+
+                   if ($count == 15) {
+                       echo "<table  border='1' style='page-break-before: always; border-collapse: collapse;'>
+                            <tr>    
+                <th colspan=\"7\" bgcolor=\"red\" style= \"font-size: 18px;\"><b>CONTINUAÇÃO</b></th>
+            </tr>
+                                <tr>
+                                    <td width='25%' align='center'><b>Etapa</b></td>
+                                    <td align='center'><b>Descrição</b></td>
+                                    <td width='5%' align='center'><b>Qtde</b></td>
+                                    <td width='5%' align='center'><b>Unid. Med.</b></td>
+                                    <td width='5%' align='center'><b>Qtde Unid.</b></td>
+                                    <td align='center'><b>Valor Unit.</b></td>
+                                    <td align='center'><b>Valor Total</b></td>
+                                </tr>";
+
+
                         while ($rowOrca = mysqli_fetch_array($enviaOrca)) {
-                            echo "<tr>";
-                            echo "<td class='list_description'>" . $rowOrca['etapa'] . "</td>";
-                            echo "<td class='list_description'>" . $rowOrca['descricao'] . "</td>";
-                            echo "<td class='list_description'>" . $rowOrca['quantidade'] . "</td>";
-                            echo "<td class='list_description'>" . $rowOrca['unidadeMedida'] . "</td>";
-                            echo "<td class='list_description'>" . $rowOrca['quantidadeUnidade'] . "</td>";
-                            echo "<td class='list_description'>" . dinheiroParaBr($rowOrca['valorUnitario']) . "</td>";
-                            echo "<td class='list_description'>" . dinheiroParaBr($rowOrca['valorTotal']) . "</td>";
-                            echo "</tr>";
-                        }
-                        ?>
-                    </table>
+                           echo "<tr>";
+                           echo "<td class='list_description'>" . $rowOrca['etapa'] . "</td>";
+                           echo "<td class='list_description'>" . $rowOrca['descricao'] . "</td>";
+                           echo "<td class='list_description'>" . $rowOrca['quantidade'] . "</td>";
+                           echo "<td class='list_description'>" . $rowOrca['unidadeMedida'] . "</td>";
+                           echo "<td class='list_description'>" . $rowOrca['quantidadeUnidade'] . "</td>";
+                           echo "<td class='list_description'>" . dinheiroParaBr($rowOrca['valorUnitario']) . "</td>";
+                           echo "<td class='list_description'>" . dinheiroParaBr($rowOrca['valorTotal']) . "</td>";
+                           echo "</tr>";
+                       }
+                       echo "</table>";
+                   }
+                }
+                echo "</table>";
+                ?>
         </div>
-    </section>
-
-
-
-
 
 <?php
 
@@ -340,7 +405,206 @@ else if($tipoPessoa == 2) {
         $telefoneRep = $rowRep['telefone'];
         $celularRep = $rowRep['celular'];
         $emailRep = $rowRep['email'];
-    }
+    }  ?>
+
+    <div class='container' style='height: 800px;'>
+
+        <br><h3 style="text-transform: uppercase;"><b>Projeto: <?= $nomeProjeto ?> </b></h3><br>
+
+        <h4><b><center>Dados de pessoa jurídica</center></b></h4>
+
+        <p><b>Razão social: </b> <?= $razaoSocial ?> </p>
+        <p><b>CNPJ: </b> <?= $cnpj ?> </p>
+        <p><b>Endereço: </b> <?=  $logradouroPJ . ", " . $numeroPJ . " " . $complementoPJ . " - " . $cidadePJ  . " - " . $estadoPJ ?> </p>
+        <p><b>Telefones: </b> <?= $telefonePJ . " | " . $celularPJ  ?> </p>
+        <p><b>E-mail: </b><?= $emailPJ ?></p><br>
+
+        <h4><b><center>Dados do representante legal</center></b></h4>
+
+        <p><b>Nome: </b> <?= $nomeRep ?> </p>
+        <p><b>RG: </b> <?= $rgRep ?> </p>
+        <p><b>CPF: </b> <?= $cpfRep ?></p>
+        <p><b>Endereço: </b> <?=  $logradouroRep . ", " . $numeroRep . " " . $complementoRep . " - " . $cidadeRep  . " - " . $estadoRep ?> </p>
+        <p><b>Telefones: </b> <?= $telefoneRep . " | " . $celularRep  ?> </p>
+        <p><b>E-mail: </b><?= $emailRep ?></p>
+
+
+        <br><br><h4><b><center>Dados do projeto</center></b></h4>
+
+        <p><b>Protocolo: </b> <?= $protocoloP ?></p>
+        <p><b>Área de atuação: </b> <?= $areaAtuacao ?></p>
+        <p><b>Valor total do projeto: </b> <?= $vProjeto ?></p>
+        <p><b>Valor do Incentivo solicitado no Pro-Mac: </b> <?= $vIncentivo ?></p>
+        <p><b>Valor de outros finaciamentos: </b> <?= $vFinanciamento ?></p>
+        <p><b>Enquadramento da renúncia fiscal: </b><?= $renunciaFiscal ?></p>
+        <p><b>Descrição da exposição da marca e indicação do valor do ingresso: </b><?= $exposicaoMarca ?></p>
+
+        <br><br>
+        <div style="page-break-before: always;  margin-top: 20px;" ><b style="font-size: 16px;">Resumo do projeto: </b>
+            <hr/>
+            <?= $resumoProjeto ?> </div> <br><br>
+
+        <div><b style="font-size: 16px;">Curriculo: </b>
+            <hr/>
+            <?= $curriculo ?> </div> <br><br>
+
+        <div><b style="font-size: 16px;">Descrição do objeto e atividades:  </b>
+            <hr/>
+            <?= $descricao ?> </div> <br><br>
+
+        <div><b style="font-size: 16px;">Justificativa do projeto:  </b>
+            <hr/>
+            <?= $justificativa?> </div> <br><br>
+
+        <div style="margin-top: 30px;"><b style="font-size: 16px;">Objetivos e metas: </b>
+            <hr/>
+            <?= $objetivo ?> </div> <br><br>
+
+        <div><b style="font-size: 16px;">Metodologia e parâmetros a serem utilizados para aferição do cumprimento de metas:  </b>
+            <hr/>
+            <?= $metodologia ?> </div> <br><br>
+
+        <div><b style="font-size: 16px;">Descrição da contrapartida:  </b>
+            <hr/>
+            <?= $contrapartida ?> </div> <br><br>
+
+        <div style="page-break-inside: avoid; "><b style="font-size: 16px;">Locais: </b>
+            <hr/>
+            <?php
+            while ($rowLocal = mysqli_fetch_array($enviaLocal)) {
+                echo "<p><b>Local: </b>" . $rowLocal['local']. "</p>";
+                echo "<p><b>Público estimado: </b>" . $rowLocal['estimativaPublico'] . "</p>";
+                echo "<p><b>Zona: </b>" .$rowLocal['zona'] ."</p>";
+                echo "<p><b>Prefeitura Regional:  </b>" . $rowLocal['subprefeitura'] . "</p>";
+                echo "<p><b>Distrito:  </b>" . $rowLocal['distrito'] . "</p><br>";
+            }
+            ?>
+        </div>
+
+
+        <div> <b style="font-size: 16px;">Público alvo: </b>
+            <hr/>
+            <?= $publicoAlvo ?> </div> <br><br>
+
+        <div><b style="font-size: 16px;">Plano de divulgação: </b>
+            <hr/>
+            <?= $planoDivulgacao?></div> <br><br>
+
+        <div><b style="font-size: 16px;">Ficha técnica: </b>
+            <hr/>
+
+            <?php
+            while($rowFicha = mysqli_fetch_array($enviaFicha))
+            {
+                $nomeFicha = $rowFicha['nome'];
+                $cpfFicha = $rowFicha['cpf'];
+                $funcaoFicha = $rowFicha['funcao'];
+
+                echo "<p><b>Nome: </b>" . $nomeFicha . "</p>";
+                echo "<p><b>CPF: </b>" . $cpfFicha . "</p>";
+                echo "<p><b>Função: </b>" . $funcaoFicha . "</p>";
+            }
+
+            ?>
+        </div>
+        <table border="1" style="border-collapse: collapse; page-break-before:always; margin-top: 20px;">
+            <tr>
+                <th colspan="7" bgcolor="red" style= "font-size: 18px;"><b>CRONOGRAMA</b></th>
+            </tr>
+
+            <tr>
+                <td align='center'><b>Início do cronograma</b></td>
+                <td align='center'><b>Fim do cronograma</b></td>
+                <td align='center'><b>Captação de recursos</b></td>
+                <td align='center'><b>Pré-Produção</b></td>
+                <td align='center'><b>Produção</b></td>
+                <td align='center'><b>Pós-Produção</b></td>
+                <td align='center'><b>Prestação de contas</b></td>
+            </tr>
+
+            <tr>
+            <td class='list_description'> <?= $inicioCronograma ?></td>
+            <td class='list_description'> <?= $fimCronograma ?></td>
+            <td class='list_description'> <?= str_replace('a', '', $captacaoRecurso) ?> </td>
+            <td class='list_description'> <?= str_replace('a', '', $preProducao )?> </td>
+            <td class='list_description'> <?= str_replace('a', '', $producao) ?> </td>
+            <td class='list_description'> <?= str_replace('a','', $posProducao) ?> </td>
+            <td class='list_description'> <?= str_replace('a', '', $prestacaoContas) ?> </td>
+            </tr>
+        </table>
+        <br><hr/><br>
+        <table border="1" style="border-collapse: collapse;">
+            <tr>
+                <th colspan="7" bgcolor="red" style= "font-size: 18px;"><b>ORÇAMENTO</b></th>
+            </tr>
+
+            <tr>
+                <td width='25%' align='center'><b>Etapa</b></td>
+                <td align='center'><b>Descrição</b></td>
+                <td width='5%' align='center'><b>Qtde</b></td>
+                <td width='5%' align='center'><b>Unid. Med.</b></td>
+                <td width='5%' align='center'><b>Qtde Unid.</b></td>
+                <td align='center'><b>Valor Unit.</b></td>
+                <td align='center'><b>Valor Total</b></td>
+            </tr>
+            <?php
+
+            $count = 0;
+
+            while ($rowOrca = mysqli_fetch_array($enviaOrca)) {
+
+                $count++;
+
+                echo "<tr>";
+                echo "<td class='list_description'>" . $rowOrca['etapa'] . "</td>";
+                echo "<td class='list_description'>" . $rowOrca['descricao'] . "</td>";
+                echo "<td class='list_description'>" . $rowOrca['quantidade'] . "</td>";
+                echo "<td class='list_description'>" . $rowOrca['unidadeMedida'] . "</td>";
+                echo "<td class='list_description'>" . $rowOrca['quantidadeUnidade'] . "</td>";
+                echo "<td class='list_description'>" . dinheiroParaBr($rowOrca['valorUnitario']) . "</td>";
+                echo "<td class='list_description'>" . dinheiroParaBr($rowOrca['valorTotal']) . "</td>";
+                echo "</tr>";
+
+                if ($count == 14) {
+                    echo "<table  border='1' style='page-break-before: always; border-collapse: collapse;'>
+                                <tr>
+                                    <td width='25%' align='center'><b>Etapa</b></td>
+                                    <td align='center'><b>Descrição</b></td>
+                                    <td width='5%' align='center'><b>Qtde</b></td>
+                                    <td width='5%' align='center'><b>Unid. Med.</b></td>
+                                    <td width='5%' align='center'><b>Qtde Unid.</b></td>
+                                    <td align='center'><b>Valor Unit.</b></td>
+                                    <td align='center'><b>Valor Total</b></td>
+                                </tr>";
+
+
+                    while ($rowOrca = mysqli_fetch_array($enviaOrca)) {
+                        echo "<tr>";
+                        echo "<td class='list_description'>" . $rowOrca['etapa'] . "</td>";
+                        echo "<td class='list_description'>" . $rowOrca['descricao'] . "</td>";
+                        echo "<td class='list_description'>" . $rowOrca['quantidade'] . "</td>";
+                        echo "<td class='list_description'>" . $rowOrca['unidadeMedida'] . "</td>";
+                        echo "<td class='list_description'>" . $rowOrca['quantidadeUnidade'] . "</td>";
+                        echo "<td class='list_description'>" . dinheiroParaBr($rowOrca['valorUnitario']) . "</td>";
+                        echo "<td class='list_description'>" . dinheiroParaBr($rowOrca['valorTotal']) . "</td>";
+                        echo "</tr>";
+                    }
+                    echo "</table>";
+                }
+
+
+            }
+            ?>
+        </table>
+        </div>
+
+
+
+
+
+
+
+   <?php
 }
 
 ?>
