@@ -153,7 +153,7 @@ if(isset($_POST['apagar']))
 			?>
 
 					<div>
-				 		<?php listaArquivosPessoaObs($idPf,4) ?>
+				 		<?php //listaArquivosPessoaObs($idPf,4) ?>
 				 	</div>
 
 
@@ -266,11 +266,24 @@ if(isset($_POST['apagar']))
 					$enviaArquivos = mysqli_query($con, $queryArquivos);
 					$numRow = mysqli_num_rows($enviaArquivos);
 					if($numRow == 5)
-					{*/?>
-				<form class="form-horizontal" role="form" action="?perfil=resultado_inscricao_incentivador_pf" method="post">
-					<input type="submit" name="liberacao" value="Concluir inscrição do Incentivador" class="btn btn-theme btn-lg btn-block">
-				</form>
-				<?php
+					{*/
+                    $sql_validar = "SELECT * FROM upload_arquivo
+                                    WHERE idPessoa = '$idPf' && publicado = 1&& idTipo = '$tipoPessoa'";
+                    $resultado = mysqli_query($con,$sql_validar);
+                    $num_linhas = mysqli_num_rows($resultado);
+                    if ($num_linhas == 5) {
+                        ?>
+                        <form class="form-horizontal" role="form" action="?perfil=resultado_inscricao_incentivador_pf"
+                              method="post">
+                            <input type="submit" name="liberacao" value="Concluir inscrição do Incentivador"
+                                   class="btn btn-theme btn-lg btn-block">
+                        </form>
+                        <?php
+                    }else{
+                        echo "<div class='alert alert-warning'>
+						<strong>Erro: </strong> Você deve enviar toda a documentação necessaria para prosseguir.
+						</div>";
+                    }
 				}
 				else{
 					echo "<div class='alert alert-warning'>
