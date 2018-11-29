@@ -3,24 +3,22 @@
     <title>SMC / Pro-Mac - Programa Municipal de Apoio a Projetos Culturais</title>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <!-- css -->
-    <link href="../visual/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="../visual/css/style.css" rel="stylesheet" media="screen">
-    <link href="../visual/color/default.css" rel="stylesheet" media="screen">
-    <link rel="icon" type="image/png" sizes="16x16" href="../visual/images/favicon.png">
+    <!-- JQuery -->
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-    <link rel="stylesheet" href="../visual/css/font-awesome.min.css">
-    <?php include "../include/script.php"; ?>
     <script type="text/javascript" src="../visual/js/jquery.js"></script>
     <script type="text/javascript">
         $(function(){
             print();
         });
     </script>
+    <!-- CSS -->
+    <style>
+        body{
+            font-size: 17px;
+        }
+    </style>
 </head>
-
-
-
+<body>
 
 <?php
 require_once("../funcoes/funcoesConecta.php");
@@ -179,77 +177,77 @@ if($tipoPessoa == 1)
 
             <title><center>PDF DO PROJETO</center></title><br>
 
-            <h1><strong>Projeto: <?= $nomeProjeto ?> </strong></h1>
+            <h1><b>Projeto: <?= $nomeProjeto ?> </b></h1>
 
-            <h2><strong><center>Dados de pessoa física</center></strong></h2>
+            <h2><b><center>Dados de pessoa física</center></b></h2>
 
-            <p><strong>Nome: </strong> <?= $NomePF ?> </p>
-            <p><strong>RG: </strong> <?= $RGPF ?> </p>
-            <p><strong>CPF: </strong> <?= $CPF ?></p>
-            <p><strong>Endereço: </strong> <?=  $EnderecoPF . ", " . $NumeroPF . " " . $complementoPF . " - " . $CidadePF  . " - " . $estadoPF ?> </p>
-            <p><strong>Telefones: </strong> <?= $telefonePF . " | " . $celularPF  ?> </p>
-            <p><strong>E-mail: </strong><?= $emailPF ?></p>
+            <p><b>Nome: </b> <?= $NomePF ?> </p>
+            <p><b>RG: </b> <?= $RGPF ?> </p>
+            <p><b>CPF: </b> <?= $CPF ?></p>
+            <p><b>Endereço: </b> <?=  $EnderecoPF . ", " . $NumeroPF . " " . $complementoPF . " - " . $CidadePF  . " - " . $estadoPF ?> </p>
+            <p><b>Telefones: </b> <?= $telefonePF . " | " . $celularPF  ?> </p>
+            <p><b>E-mail: </b><?= $emailPF ?></p>
 
-            <h2><strong><center>Dados do projeto</center></strong></h2>
+            <h2><b><center>Dados do projeto</center></b></h2>
 
-            <p><strong>Protocolo: </strong> <?= $protocoloP ?></p>
-            <p><strong>Área de atuação: </strong> <?= $areaAtuacao ?></p>
-            <p><strong>Valor total do projeto: </strong> <?= $vProjeto ?></p>
-            <p><strong>Valor do Incentivo solicitado no Pro-Mac: </strong> <?= $vIncentivo ?></p>
-            <p><strong>Valor de outros finaciamentos: </strong> <?= $vFinanciamento ?></p>
-            <p><strong>Enquadramento da renúncia fiscal: </strong><?= $renunciaFiscal ?></p>
-            <p><strong>Descrição da exposição da marca e indicação do valor do ingresso: </strong><?= $exposicaoMarca ?></p>
+            <p><b>Protocolo: </b> <?= $protocoloP ?></p>
+            <p><b>Área de atuação: </b> <?= $areaAtuacao ?></p>
+            <p><b>Valor total do projeto: </b> <?= $vProjeto ?></p>
+            <p><b>Valor do Incentivo solicitado no Pro-Mac: </b> <?= $vIncentivo ?></p>
+            <p><b>Valor de outros finaciamentos: </b> <?= $vFinanciamento ?></p>
+            <p><b>Enquadramento da renúncia fiscal: </b><?= $renunciaFiscal ?></p>
+            <p><b>Descrição da exposição da marca e indicação do valor do ingresso: </b><?= $exposicaoMarca ?></p>
 
             <br><br>
-            <strong style="font-size: 18px">Resumo do projeto: </strong>
+            <b style="font-size: 22px;">Resumo do projeto: </b>
             <hr/>
             <?= $resumoProjeto ?> <br><br><br>
 
-            <strong style="font-size: 18px">Curriculo: </strong>
+            <b style="font-size: 22px;">Curriculo: </b>
             <hr/>
             <?= $curriculo ?> <br><br><br>
 
-            <strong style="font-size: 18px">Descrição do objeto e atividades:  </strong>
+            <b style="font-size: 22px;">Descrição do objeto e atividades:  </b>
             <hr/>
             <?= $descricao ?> <br><br><br>
 
-            <strong style="font-size: 18px">Justificativa do projeto:  </strong>
+            <b style="font-size: 22px;">Justificativa do projeto:  </b>
             <hr/>
             <?= $justificativa?> <br><br><br>
 
-            <strong style="font-size: 18px">Objetivos e metas: </strong>
+            <b style="font-size: 22px;">Objetivos e metas: </b>
             <hr/>
             <?= $objetivo ?> <br><br><br>
 
-            <strong style="font-size: 18px">Metodologia e parâmetros a serem utilizados para aferição do cumprimento de metas:  </strong>
+            <b style="font-size: 22px;">Metodologia e parâmetros a serem utilizados para aferição do cumprimento de metas:  </b>
             <hr/>
             <?= $metodologia ?> <br><br><br>
 
-            <strong style="font-size: 18px">Descrição da contrapartida:  </strong>
+            <b style="font-size: 22px;">Descrição da contrapartida:  </b>
             <hr/>
             <?= $contrapartida ?> <br><br><br>
 
-            <strong style="font-size: 18px">Locais: </strong>
+            <b style="font-size: 22px;">Locais: </b>
             <hr/>
             <?php
             while ($rowLocal = mysqli_fetch_array($enviaLocal)) {
-                echo "<p><strong>Local: </strong>" . $rowLocal['local']. "</p>";
-                echo "<p><strong>Público estimado: </strong>" . $rowLocal['estimativaPublico'] . "</p>";
-                echo "<p><strong>Zona: </strong>" .$rowLocal['zona'] ."</p>";
-                echo "<p><strong>Prefeitura Regional:  </strong>" . $rowLocal['subprefeitura'] . "</p>";
-                echo "<p><strong>Distrito:  </strong>" . $rowLocal['distrito'] . "</p><br>";
+                echo "<p><b>Local: </b>" . $rowLocal['local']. "</p>";
+                echo "<p><b>Público estimado: </b>" . $rowLocal['estimativaPublico'] . "</p>";
+                echo "<p><b>Zona: </b>" .$rowLocal['zona'] ."</p>";
+                echo "<p><b>Prefeitura Regional:  </b>" . $rowLocal['subprefeitura'] . "</p>";
+                echo "<p><b>Distrito:  </b>" . $rowLocal['distrito'] . "</p><br>";
             }
             ?>
 
-            <strong style="font-size: 18px">Público alvo: </strong>
+            <b style="font-size: 22px;">Público alvo: </b>
             <hr/>
             <?= $publicoAlvo ?> <br><br><br>
 
-            <strong style="font-size: 18px">Plano de divulgação: </strong>
+            <b style="font-size: 22px;">Plano de divulgação: </b>
             <hr/>
             <?= $planoDivulgacao?> <br><br>
 
-            <strong style="font-size: 18px">Ficha técnica: </strong>
+            <b style="font-size: 22px;">Ficha técnica: </b>
             <hr/>
 
             <?php
@@ -259,25 +257,25 @@ if($tipoPessoa == 1)
                 $cpfFicha = $rowFicha['cpf'];
                 $funcaoFicha = $rowFicha['funcao'];
 
-                echo "<p><strong>Nome: </strong>" . $nomeFicha . "</p>";
-                echo "<p><strong>CPF: </strong>" . $cpfFicha . "</p>";
-                echo "<p><strong>Função: </strong>" . $funcaoFicha . "</p><br>";
+                echo "<p><b>Nome: </b>" . $nomeFicha . "</p>";
+                echo "<p><b>CPF: </b>" . $cpfFicha . "</p>";
+                echo "<p><b>Função: </b>" . $funcaoFicha . "</p><br>";
             }
 
             ?>
                     <table border="1" style="border-collapse: collapse">
                         <tr>
-                            <th colspan="7" bgcolor="red" style= "font-size: 18px"><b>ORÇAMENTO</b></th>
+                            <th colspan="7" bgcolor="red" style= "font-size: 22px;"><b>ORÇAMENTO</b></th>
                         </tr>
 
                         <tr>
-                            <td width='25%'><strong>Etapa</strong></td>
-                            <td><strong>Descrição</strong></td>
-                            <td width='5%'><strong>Qtde</strong></td>
-                            <td width='5%'><strong>Unid. Med.</strong></td>
-                            <td width='5%'><strong>Qtde Unid.</strong></td>
-                            <td><strong>Valor Unit.</strong></td>
-                            <td><strong>Valor Total</strong></td>
+                            <td width='25%'><b>Etapa</b></td>
+                            <td><b>Descrição</b></td>
+                            <td width='5%'><b>Qtde</b></td>
+                            <td width='5%'><b>Unid. Med.</b></td>
+                            <td width='5%'><b>Qtde Unid.</b></td>
+                            <td><b>Valor Unit.</b></td>
+                            <td><b>Valor Total</b></td>
                         </tr>
                         <?php
                         while ($rowOrca = mysqli_fetch_array($enviaOrca)) {
@@ -346,5 +344,7 @@ else if($tipoPessoa == 2) {
 }
 
 ?>
+
+</body>
 
 </html>
