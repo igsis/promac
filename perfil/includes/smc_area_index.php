@@ -31,7 +31,21 @@ if(isset($_POST['envioComissao']))
 			$statusEnvio = 24;
 			break;
 	}
-	$dateNow = date('Y-m-d H:i:s');
+
+$idComissao = $projeto['idComissao'];
+
+if ($idComissao != 0) {
+    $sqlData = "UPDATE projeto SET dataParecerista = current_date";
+    $dataParecerista = mysqli_query($con, $sqlData);
+    $limiteDiasParado = ($dataParecerista. '+ 30 days');
+
+} else {
+    $sqlData = "UPDATE projeto SET dataParecerista = NULL";
+    $dataParecerista = mysqli_query($con, $sqlData);
+
+}
+
+    $dateNow = date('Y-m-d H:i:s');
 	$sql_envioComissao = "UPDATE projeto SET idEtapaProjeto = '$statusEnvio', envioComissao = '$dateNow', idStatus = '2' WHERE idProjeto = '$idProjeto'";
 	if(mysqli_query($con,$sql_envioComissao))
 	{
@@ -340,12 +354,21 @@ foreach ($array_status as $idStatus)
                             <td width='10%'></td>
                         </tr>
                         </thead>
+
                         <?php
                         while ($campo = mysqli_fetch_array($queryProjeto))
                         {
-
                             if ($i < 5) {
+
+                                if ($dataParecerista > $limiteDiasParado) {
+                                    echo "<tr bgcolor='red'>";
+
+
+                        }
                                 ?>
+
+
+
                                 <tr>
                                     <td class='list_description maskProtocolo' data-mask = "0000.00.00/0000000"><?= $campo['protocolo'] ?></td>
                                     <?php
