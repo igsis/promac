@@ -223,6 +223,7 @@ function DiasUteis() {
                                     <form class="form-horizontal" role="form"
                                           action="?perfil=projeto_pf" method="post">
                                         <input type="hidden" name="projeto" value="<?= $idProjeto ?>">
+
                                         <button type="submit" class="btn btn-danger btn-block"
                                                 style="border-radius: 7px;" name="cancelar">Cancelar projeto
                                         </button>
