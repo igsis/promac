@@ -19,9 +19,16 @@
         body {
             font-size: 15px;
             font-family: Arial;
-            margin-left: 23px;
+            margin-top: 30px;
         }
 
+        @page {
+            margin: 0mm;
+            margin-left: 70px;
+            margin-right: 70px;
+            page-break-inside: avoid;
+            size: A4;
+        }
     </style>
 </head>
 <body>
@@ -31,6 +38,7 @@ require_once("../funcoes/funcoesConecta.php");
 require_once("../funcoes/funcoesGerais.php");
 
 //CONEXÃO COM BANCO DE DADOS
+
 $con = bancoMysqli();
 
 $tipoPessoa = $_GET['tipo'];
@@ -181,7 +189,7 @@ if($tipoPessoa == 1)
     <section id='list_items' class='home-section bg-white'>
         <div class='container' style='height: 800px;'>
 
-            <br><h1 style="text-transform: uppercase;"><b>Projeto: <?= $nomeProjeto ?> </b></h1><br>
+            <br><h2 style="text-transform: uppercase;"><b>Projeto: <?= $nomeProjeto ?> </b></h2><br>
 
             <h3><b><center>Dados de pessoa física</center></b></h3>
 
@@ -231,7 +239,7 @@ if($tipoPessoa == 1)
             <hr/>
             <?= $contrapartida ?> </div> <br><br>
 
-            <div style="page-break-before: always; margin-top: 30px;"><b style="font-size: 16px;">Locais: </b>
+            <div style="margin-top: 30px;"><b style="font-size: 16px;">Locais: </b>
             <hr/>
             <?php
             while ($rowLocal = mysqli_fetch_array($enviaLocal)) {
@@ -270,7 +278,7 @@ if($tipoPessoa == 1)
 
             ?>
             </div>
-            <table border="1" style="border-collapse: collapse; margin-top: 20px;  page-break-before:always;">
+            <table border="1" style="border-collapse: collapse; margin-top: 20px;">
                 <tr>
                     <th colspan="7" bgcolor="red" style= "font-size: 18px; align-items: center;"><b>CRONOGRAMA</b></th>
                 </tr>
@@ -361,6 +369,24 @@ if($tipoPessoa == 1)
                 }
                 echo "</table>";
                 ?>
+        </div> <br><br>
+
+        <div><b style="font-size: 16px;">Totais: </b>
+            <hr/>
+            <p><b>Pré-Produção: </b><?= $totalPreProducao ?> </p>
+            <p><b>Produção: </b><?= $totalProducao ?> </p>
+            <p><b>Assessoria de Imprensa, Divulgação e Mídia: </b><?= $totalImprensa ?> </p>
+            <p><b>Custos Administrativos:  </b><?= $totalAdministrativos ?></p>
+            <p><b>Impostos, taxas, tarifas bancárias, contribuições e seguros:  </b><?= $totalImpostos ?></p>
+            <p><b>Elaboração e Agenciamento:  </b><?= $totalAgenciamento ?> </p>
+            <p><b>Outros Financiamentos:  </b><?= $totalOutrosFinanciamentos ?> </p>
+        </div> <br><br>
+
+        <div><b style="font-size: 16px;">Link do Youtube: </b>
+            <hr/>
+            <p><b>Link 1: </b><?= $video1 ?> </p>
+            <p><b>Link 2: </b><?= $video2 ?> </p>
+            <p><b>Link 3: </b><?= $video3 ?> </p>
         </div>
 
 <?php
@@ -440,7 +466,7 @@ else if($tipoPessoa == 2) {
         <p><b>Descrição da exposição da marca e indicação do valor do ingresso: </b><?= $exposicaoMarca ?></p>
 
         <br><br>
-        <div style="page-break-before: always;  margin-top: 20px;" ><b style="font-size: 16px;">Resumo do projeto: </b>
+        <div style="page-break-inside: avoid; margin-top: 20px;" ><b style="font-size: 16px;">Resumo do projeto: </b>
             <hr/>
             <?= $resumoProjeto ?> </div> <br><br>
 
@@ -468,7 +494,7 @@ else if($tipoPessoa == 2) {
             <hr/>
             <?= $contrapartida ?> </div> <br><br>
 
-        <div style="page-break-inside: avoid; "><b style="font-size: 16px;">Locais: </b>
+        <div><b style="font-size: 16px;">Locais: </b>
             <hr/>
             <?php
             while ($rowLocal = mysqli_fetch_array($enviaLocal)) {
@@ -507,7 +533,7 @@ else if($tipoPessoa == 2) {
 
             ?>
         </div>
-        <table border="1" style="border-collapse: collapse; page-break-before:always; margin-top: 20px;">
+        <table border="1" style="border-collapse: collapse; margin-top: 20px;">
             <tr>
                 <th colspan="7" bgcolor="red" style= "font-size: 18px;"><b>CRONOGRAMA</b></th>
             </tr>
@@ -528,7 +554,7 @@ else if($tipoPessoa == 2) {
             <td class='list_description'> <?= str_replace('a', '', $captacaoRecurso) ?> </td>
             <td class='list_description'> <?= str_replace('a', '', $preProducao )?> </td>
             <td class='list_description'> <?= str_replace('a', '', $producao) ?> </td>
-            <td class='list_description'> <?= str_replace('a','', $posProducao) ?> </td>
+            <td class='list_description'> <?= str_replace('a', '',  $posProducao) ?> </td>
             <td class='list_description'> <?= str_replace('a', '', $prestacaoContas) ?> </td>
             </tr>
         </table>
@@ -595,14 +621,25 @@ else if($tipoPessoa == 2) {
 
             }
             ?>
-        </table>
+        </table> <br><br>
+
+        <div><b style="font-size: 16px;">Totais: </b>
+            <hr/>
+            <p><b>Pré-Produção: </b><?= $totalPreProducao ?> </p>
+            <p><b>Produção: </b><?= $totalProducao ?> </p>
+            <p><b>Assessoria de Imprensa, Divulgação e Mídia: </b><?= $totalImprensa ?> </p>
+            <p><b>Custos Administrativos:  </b><?= $totalAdministrativos ?></p>
+            <p><b>Impostos, taxas, tarifas bancárias, contribuições e seguros:  </b><?= $totalImpostos ?></p>
+            <p><b>Elaboração e Agenciamento:  </b><?= $totalAgenciamento ?> </p>
+            <p><b>Outros Financiamentos:  </b><?= $totalOutrosFinanciamentos ?> </p>
+        </div> <br><br>
+
+        <div><b style="font-size: 16px;">Link do Youtube: </b>
+            <hr/>
+            <p><b>Link 1: </b><?= $video1 ?> </p>
+            <p><b>Link 2: </b><?= $video2 ?> </p>
+            <p><b>Link 3: </b><?= $video3 ?> </p>
         </div>
-
-
-
-
-
-
 
    <?php
 }
