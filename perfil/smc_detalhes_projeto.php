@@ -79,14 +79,14 @@ if(isset($_POST['gravarAdm']))
     {
         $dataReuniao = exibirDataMysql($_POST['dataReuniao']);
     }
-    if($_POST['dataPublicacaoDoc'] == 0000-00-00)
-    {
-        $dataPublicacaoDoc = '';
-    }
-    else
-    {
-        $dataPublicacaoDoc = exibirDataMysql($_POST['dataPublicacaoDoc']);
-    }
+//    if($_POST['dataPublicacaoDoc'] == 0000-00-00)
+//    {
+//        $dataPublicacaoDoc = '';
+//    }
+//    else
+//    {
+//        $dataPublicacaoDoc = exibirDataMysql($_POST['dataPublicacaoDoc']);
+//    }
     $data = date('Y-m-d H:i:s');
     $idUsuario = $_SESSION['idUser'];
     $sql_gravarAdm = "UPDATE projeto SET valorAprovado = '$valorAprovado', idRenunciaFiscal = '$idRenunciaFiscal', idStatusParecerista = '$statusParecerista', dataReuniao = '$dataReuniao' WHERE idProjeto = '$idP' ";
