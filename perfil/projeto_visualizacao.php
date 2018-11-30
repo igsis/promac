@@ -218,7 +218,17 @@ function DiasUteis() {
                             <?php
                                 }
                             ?>
-
+                            <div class="form-group">
+                                <div class="col-md-offset-4 col-md-6">
+                                    <form class="form-horizontal" role="form"
+                                          action="?perfil=projeto_pf" method="post">
+                                        <input type="hidden" name="projeto" value="<?= $idProjeto ?>">
+                                        <button type="submit" class="btn btn-danger btn-block"
+                                                style="border-radius: 7px;" name="cancelar">Cancelar projeto
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
 
 
                             <!-- Botão para anexar recurso -->
