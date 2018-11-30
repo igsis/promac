@@ -1194,7 +1194,6 @@ function listaParecerSMC($idPessoa,$tipoPessoa,$pagina)
 			<thead>
 				<tr class='list_menu'>
 					<td>Tipo de arquivo</td>
-					<td>Nome do arquivo</td>
 					<td>Status</td>
 					<td>Observação</td>
 					<td width='15%'></td>
@@ -1206,8 +1205,7 @@ function listaParecerSMC($idPessoa,$tipoPessoa,$pagina)
         {
             echo "<form method='POST' action='?perfil=$pagina'>";
         	echo "<tr>";
-            echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
-            echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
+            echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['documento'], 0 ,50,"..." )."</a></td>";
             echo "<td class='list_description'>
 								<select name='status' id='statusOpt'>";
             echo "<option value=''>Selecione</option>";
@@ -1292,7 +1290,6 @@ function listaAnexosProjetoSMC($idProjeto,$tipoPessoa,$pagina)
 			<thead>
 				<tr class='list_menu'>
 					<td>Tipo de arquivo</td>
-					<td>Nome do arquivo</td>
 					<td width='15%'></td>
 				</tr>
 			</thead>
@@ -1300,8 +1297,7 @@ function listaAnexosProjetoSMC($idProjeto,$tipoPessoa,$pagina)
         while($arquivo = mysqli_fetch_array($query))
         {
             echo "<tr>";
-            echo "<td class='list_description'>".$arquivo['documento']."</td>";
-            echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
+            echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['documento'], 0 ,100,"..." )."</a></td>";
             echo "<td class='list_description'>
 					<form id='apagarArq' method='POST' action='?perfil=".$pagina."'>
 						<input type='hidden' name='idProjeto' value='".$idProjeto."' />
@@ -1399,7 +1395,6 @@ function listaArquivosPessoaVisualizacao($idPessoa,$tipoPessoa,$pagina)
 			<thead>
 				<tr class='list_menu'>
 					<td>Tipo de arquivo</td>
-					<td>Nome do arquivo</td>
 					<td width='15%'></td>
 				</tr>
 			</thead>
@@ -1407,8 +1402,7 @@ function listaArquivosPessoaVisualizacao($idPessoa,$tipoPessoa,$pagina)
 				while($arquivo = mysqli_fetch_array($query))
 				{
 					echo "<tr>";
-					echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
-					echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
+					echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['documento'], 0 ,25,"..." )."</a></td>";
 				}
 				echo "
 		</tbody>
@@ -3264,7 +3258,6 @@ function uploadArquivo($idProjeto, $tipoPessoa, $pagina, $idListaDocumento, $idT
 			<thead>
 				<tr class='list_menu'>
 					<td>Tipo de arquivo</td>
-					<td>Nome do arquivo</td>
 					<td>Observação</td>
 					<td></td>
 				</tr>
@@ -3273,8 +3266,7 @@ function uploadArquivo($idProjeto, $tipoPessoa, $pagina, $idListaDocumento, $idT
         while($arquivo = mysqli_fetch_array($query))
         {
             echo "<tr>";
-            echo "<td class='list_description'>".$arquivo['documento']."</td>";
-            echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
+            echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['documento'], 0 ,60,"..." )."</a></td>";
             echo "<td class='list_description'>".$arquivo['observacoes']."</td>";
             if($arquivo['idStatusDocumento'] == 3) {
                 echo "
