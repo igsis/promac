@@ -1255,7 +1255,6 @@ function listaAnexosProjeto($idPessoa,$tipoPessoa,$idArquivo)
 			<thead>
 				<tr class='list_menu'>
 					<td>Tipo de arquivo</td>
-					<td>Nome do arquivo</td>
 					<td width='15%'></td>
 				</tr>
 			</thead>
@@ -1263,8 +1262,7 @@ function listaAnexosProjeto($idPessoa,$tipoPessoa,$idArquivo)
         while($arquivo = mysqli_fetch_array($query))
         {
             echo "<tr>";
-            echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
-            echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
+            echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['documento'], 15 ,25,"..." )."</a></td>";
             echo "</tr>";
         }
         echo "
