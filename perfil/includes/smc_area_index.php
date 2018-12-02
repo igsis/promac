@@ -32,7 +32,7 @@ if(isset($_POST['envioComissao']))
 			break;
 	}
 
-$idComissao = $projeto['idComissao'];
+/*$idComissao = $projeto['idComissao'];
 
 if ($idComissao != 0) {
     $sqlData = "UPDATE projeto SET dataParecerista = current_date";
@@ -43,7 +43,7 @@ if ($idComissao != 0) {
     $sqlData = "UPDATE projeto SET dataParecerista = NULL";
     $dataParecerista = mysqli_query($con, $sqlData);
 
-}
+}*/
 
     $dateNow = date('Y-m-d H:i:s');
 	$sql_envioComissao = "UPDATE projeto SET idEtapaProjeto = '$statusEnvio', envioComissao = '$dateNow', idStatus = '2' WHERE idProjeto = '$idProjeto'";
@@ -360,15 +360,7 @@ foreach ($array_status as $idStatus)
                         {
                             if ($i < 5) {
 
-                                if ($dataParecerista > $limiteDiasParado) {
-                                    echo "<tr bgcolor='red'>";
-
-
-                        }
                                 ?>
-
-
-
                                 <tr>
                                     <td class='list_description maskProtocolo' data-mask = "0000.00.00/0000000"><?= $campo['protocolo'] ?></td>
                                     <?php
@@ -445,11 +437,11 @@ foreach ($array_status as $idStatus)
                                                 <form method="POST" action=''>
                                                     <input type='button' data-id="<?= $campo['idProjeto'] ?>"  name='envioComissao' class='btn btn-theme btn-block' value='Enviar para comissão' data-toggle='modal' data-target='#enviarComissao'>
                                                 </form>
-                                        <?php                                                
+                                        <?php
                                             }
                                         ?>
                                         </td>
-                                        <?php                                        
+                                        <?php
                                     }
                                     ?>
                                 </tr>
