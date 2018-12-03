@@ -300,24 +300,28 @@ foreach ($array_status as $idStatus)
     if ($idComissao != 0) {
 
             $dataParecerista = $projeto['dataParecerista'];
-            $dataLimite = date("Y-m-d", strtotime($dataParecerista. '- 30 days'));
+            $dataLimite = date("Y-m-d", strtotime($dataParecerista. '+ 30 days'));
 
         if (strtotime($dataParecerista) > strtotime($dataLimite)) {
+
             $limite = 1;
-        }else {
+
+            echo $dataParecerista . "  " . $dataLimite;
+
+        } else {
+
             $limite = 0;
+
+            echo $dataParecerista . "  " . $dataLimite . " ";
 
         }
 
         echo $limite;
 
-        }elseif ($idComissao == 0) {
+        } elseif ($idComissao == 0) {
             $sql_data = "UPDATE projeto SET dataParecerista = '0000-00-00' WHERE idProjeto = '$idProjeto'";
             $query_data = mysqli_query($con, $sql_data);
         }
-
-
-
 
     foreach ($queryStatus as $status)
     {
@@ -383,7 +387,7 @@ foreach ($array_status as $idStatus)
                             if ($i < 5) {
 
                                 ?>
-                                <tr style="<?= $limite == 1 ? "red" : "white" ?>">
+                                <tr style="background: <?= $limite == 1 ? "red" : "white" ?>">
                                     <td class='list_description maskProtocolo' data-mask = "0000.00.00/0000000"><?= $campo['protocolo'] ?></td>
                                     <?php
                                         if ($status['idEtapaProjeto'] == 2) {
