@@ -11,14 +11,14 @@ foreach ($array_etapa as $idEtapaProjeto)
     {
         $parecerista = " AND idComissao = $idPf";
     }
-    $sqlProjeto = "SELECT idProjeto, nomeProjeto, protocolo, pf.nome, pf.cpf, razaoSocial, cnpj, areaAtuacao, pfc.nome AS comissao, etapaProjeto, pro.idEtapaProjeto AS idEtapaProjeto 
+    $sqlProjeto = "SELECT idProjeto, nomeProjeto, protocolo, pf.nome, pf.cpf, razaoSocial, cnpj, areaAtuacao, pro.publicado, pfc.nome AS comissao, etapaProjeto, pro.idEtapaProjeto AS idEtapaProjeto 
                     FROM projeto AS pro
                     LEFT JOIN pessoa_fisica AS pf ON pro.idPf = pf.idPf
                     LEFT JOIN pessoa_juridica AS pj ON pro.idPj = pj.idPj
                     INNER JOIN area_atuacao AS ar ON pro.idAreaAtuacao = ar.idArea
                     LEFT JOIN pessoa_fisica AS pfc ON pro.idComissao = pfc.idPf 
                     INNER JOIN etapa_projeto AS etapa ON pro.idEtapaProjeto = etapa.idEtapaProjeto
-                    WHERE pro.publicado = 1 AND pro.idEtapaProjeto = '$idEtapaProjeto'" .$parecerista." ORDER BY idProjeto DESC";
+                    WHERE pro.idEtapaProjeto = '$idEtapaProjeto'" .$parecerista." ORDER BY idProjeto DESC";
     $queryProjeto = mysqli_query($con,$sqlProjeto);
     $queryEtapaProjeto = mysqli_query($con,$sqlEtapaProjeto);
     $num = mysqli_num_rows($queryProjeto);
@@ -61,20 +61,29 @@ foreach ($array_etapa as $idEtapaProjeto)
 
                             if ($i < 15) {
                                 ?>
-                                <tr>
+                                <tr style="background: <?= ($campo['publicado'] == 0? $cinza: "white") ?>">
                                     <td class='list_description'><?= $campo['protocolo'] ?></td>
                                     <td class='list_description'><?= $campo['nomeProjeto'] ?></td>
                                     <td class='list_description'><?= isset($campo['nome']) ? $campo['nome'] : $campo['razaoSocial'] ?></td>
                                     <td class='list_description'><?= isset($campo['cpf']) ? $campo['cpf'] : $campo['cnpj'] ?></td>
                                     <td class='list_description'><?= mb_strimwidth($campo['areaAtuacao'], 0, 38, "...") ?></td>
                                     <td class='list_description'><?=$campo['comissao']?></td>
+                                    <?php
+                                    if ($campo['publicado'] == 1) {
+                                        ?>
                                         <td class='list_description'>
-                                            <form method='POST' action='<?= ($pf['idNivelAcesso'] == 2) ? "?perfil=smc_detalhes_projeto" : "?perfil=comissao_detalhes_projeto"?>'>
+                                            <form method='POST'
+                                                  action='<?= ($pf['idNivelAcesso'] == 2) ? "?perfil=smc_detalhes_projeto" : "?perfil=comissao_detalhes_projeto" ?>'>
                                                 <input type='hidden' name='idProjeto'
                                                        value='<?= $campo['idProjeto'] ?>'/>
                                                 <input type='submit' class='btn btn-theme btn-block' value='Visualizar'>
                                             </form>
                                         </td>
+                                        <?php
+                                    }else{
+                                        echo "<td></td>";
+                                    }
+                                    ?>
                                 </tr>
                                 <?php
                                 $i++;
