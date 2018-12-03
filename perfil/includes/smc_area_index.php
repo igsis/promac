@@ -1,4 +1,7 @@
 <?php
+
+$red = "#ff0000";
+
 if(isset($_POST['envioComissao']))
 {
 	$idProjeto = $_POST['idProjeto'];
@@ -296,24 +299,25 @@ foreach ($array_status as $idStatus)
 
     if ($idComissao != 0) {
 
-        $dataInsert = "UPDATE projeto SET dataParecerista = date WHERE idProjeto = '$idProjeto'";
-        $queryData = mysqli_query($con, $dataInsert);
-
             $dataParecerista = $projeto['dataParecerista'];
-            $dataLimite = date_create($dataParecerista. '+ 30 days');
+            $dataLimite = date("Y-m-d", strtotime($dataParecerista. '- 30 days'));
 
-            return $dataLimite->format("d/m/Y");
+        if (strtotime($dataParecerista) > strtotime($dataLimite)) {
+            $limite = 1;
+        }else {
+            $limite = 0;
 
-          // echo date("d/m/Y") . $dataParecerista . $dataLimite;
+        }
 
-            $diferenca = date_diff($dataParecerista, $dataLimite);
-
-            echo $diferenca;
+        echo $limite;
 
         }elseif ($idComissao == 0) {
             $sql_data = "UPDATE projeto SET dataParecerista = '0000-00-00' WHERE idProjeto = '$idProjeto'";
             $query_data = mysqli_query($con, $sql_data);
         }
+
+
+
 
     foreach ($queryStatus as $status)
     {
@@ -344,7 +348,7 @@ foreach ($array_status as $idStatus)
 
                     <table class='table table-condensed'>
                         <thead>
-                        <tr class='list_menu' style="<?= ($diferenca > 30) ? $red : "white"?>">
+                        <tr class='list_menu'>
                             <td>Protocolo (nº ISP)</td>
                             <?php
                             if (($status['idEtapaProjeto'] == 2) || ($status['idEtapaProjeto'] == 13) || ($status['idEtapaProjeto'] == 23) || ($status['idEtapaProjeto'] == 14))
@@ -379,7 +383,7 @@ foreach ($array_status as $idStatus)
                             if ($i < 5) {
 
                                 ?>
-                                <tr>
+                                <tr style="<?= $limite == 1 ? "red" : "white" ?>">
                                     <td class='list_description maskProtocolo' data-mask = "0000.00.00/0000000"><?= $campo['protocolo'] ?></td>
                                     <?php
                                         if ($status['idEtapaProjeto'] == 2) {
@@ -569,7 +573,7 @@ foreach ($array_status as $idStatus)
                     while($campo = mysqli_fetch_array($query))
                     {
                     ?>
-                    <tr>
+                    <tr style="<?= $limite == 1 ? "background: red" : "background: white" ?>">
                         <td class='list_description'><?=$campo['protocolo']?></td>
                         <td class='list_description'><?=exibirDataBr($campo['prazoCaptacao'])?></td>
                         <td class='list_description'><?=exibirDataBr($campo['inicioExecucao'])?></td>

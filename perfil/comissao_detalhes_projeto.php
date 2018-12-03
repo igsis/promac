@@ -245,13 +245,16 @@ if(isset($_POST['atualizaResponsavel']))
 	$con = bancoMysqli();
 	$idComissao = $_POST['idComissao'];
 	$idProjeto = $_POST['idProjeto'];
-	$sql_atualiza_comissao = "UPDATE projeto SET idComissao = '$idComissao' WHERE idProjeto = '$idProjeto'";
+	$sql_atualiza_comissao = "UPDATE projeto SET idComissao = '$idComissao', dataParecerista = '$dateNow' WHERE idProjeto = '$idProjeto'";
 	$query_atualiza_comissao = mysqli_query($con,$sql_atualiza_comissao);
 	if($query_atualiza_comissao)
 	{
 		$mensagem = "<span style=\"color: #01DF3A; \">Parecerista responsável pelo projeto atualizado!</span>";
 		gravarLog($sql_atualiza_comissao);
-	}
+	}elseif ($idComissao != 0){
+        $sql_atualiza_comissao = "UPDATE projeto SET dataParecerista = '$dateNow' WHERE idProjeto = '$idProjeto'";
+        $query_atualiza_comissao = mysqli_query($con,$sql_atualiza_comissao);
+    }
 	else
 	{
 		$mensagem = "Erro o atribuir! Tente novamente.";

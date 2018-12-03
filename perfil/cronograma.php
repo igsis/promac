@@ -6,7 +6,7 @@ $usuarioLogado = pegaUsuarioLogado();
 if(isset($_POST['insere']))
 {
 	
-	$inicioCronograma =$_POST['inicioCronograma'];
+	$inicioCronograma = $_POST['inicioCronograma'];
 	$fimCronograma = $_POST['fimCronograma'];
 	
 	if (strtotime($inicioCronograma) <= strtotime($fimCronograma)){
