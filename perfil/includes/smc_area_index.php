@@ -299,26 +299,25 @@ foreach ($array_status as $idStatus)
         $dataInsert = "UPDATE projeto SET dataParecerista = date WHERE idProjeto = '$idProjeto'";
         $queryData = mysqli_query($con, $dataInsert);
 
-        if ($queryData){
-
             $dataParecerista = $projeto['dataParecerista'];
-            $dataLimite = date_create($dataParecerista. '+ 30 days') ;
+            $dataLimite = date_create($dataParecerista. '+ 30 days');
 
-            echo $dataParecerista . $dataLimite;
+            return $dataLimite->format("d/m/Y");
+
+          // echo date("d/m/Y") . $dataParecerista . $dataLimite;
 
             $diferenca = date_diff($dataParecerista, $dataLimite);
 
-
+            echo $diferenca;
 
         }elseif ($idComissao == 0) {
             $sql_data = "UPDATE projeto SET dataParecerista = '0000-00-00' WHERE idProjeto = '$idProjeto'";
             $query_data = mysqli_query($con, $sql_data);
         }
-    }
 
     foreach ($queryStatus as $status)
     {
-        $red = "<style> background: red; </style>";
+
         $i = 0;
         ?>
         <div class='form-group'>
@@ -345,7 +344,7 @@ foreach ($array_status as $idStatus)
 
                     <table class='table table-condensed'>
                         <thead>
-                        <tr class='list_menu' style="<?= $diferenca > 30 ? $red : "white"?>">
+                        <tr class='list_menu' style="<?= ($diferenca > 30) ? $red : "white"?>">
                             <td>Protocolo (nº ISP)</td>
                             <?php
                             if (($status['idEtapaProjeto'] == 2) || ($status['idEtapaProjeto'] == 13) || ($status['idEtapaProjeto'] == 23) || ($status['idEtapaProjeto'] == 14))
