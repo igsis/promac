@@ -32,18 +32,6 @@ if(isset($_POST['envioComissao']))
 			break;
 	}
 
-/*$idComissao = $projeto['idComissao'];
-
-if ($idComissao != 0) {
-    $sqlData = "UPDATE projeto SET dataParecerista = current_date";
-    $dataParecerista = mysqli_query($con, $sqlData);
-    $limiteDiasParado = ($dataParecerista. '+ 30 days');
-
-} else {
-    $sqlData = "UPDATE projeto SET dataParecerista = NULL";
-    $dataParecerista = mysqli_query($con, $sqlData);
-
-}*/
 
     $dateNow = date('Y-m-d H:i:s');
 	$sql_envioComissao = "UPDATE projeto SET idEtapaProjeto = '$statusEnvio', envioComissao = '$dateNow', idStatus = '2' WHERE idProjeto = '$idProjeto'";
@@ -279,7 +267,7 @@ if ($idComissao != 0) {
         </div>
 <?php
     }
-    
+
 $array_status = array(2, 3, 10, 12, 13, 20, 23, 25, 14, 15, 11); //status
 foreach ($array_status as $idStatus)
 {
@@ -298,8 +286,39 @@ foreach ($array_status as $idStatus)
     $queryStatus = mysqli_query($con,$sqlStatus);
     $num = mysqli_num_rows($queryProjeto);
 
+    $array_projeto = mysqli_fetch_array($queryProjeto);
+
+        $idProjeto = $array_projeto['idProjeto'];
+
+        $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
+
+        $idComissao = $projeto['idComissao'];
+
+    if ($idComissao != 0) {
+
+        $dataInsert = "UPDATE projeto SET dataParecerista = date WHERE idProjeto = '$idProjeto'";
+        $queryData = mysqli_query($con, $dataInsert);
+
+        if ($queryData){
+
+            $dataParecerista = $projeto['dataParecerista'];
+            $dataLimite = date_create($dataParecerista. '+ 30 days') ;
+
+            echo $dataParecerista . $dataLimite;
+
+            $diferenca = date_diff($dataParecerista, $dataLimite);
+
+
+
+        }elseif ($idComissao == 0) {
+            $sql_data = "UPDATE projeto SET dataParecerista = '0000-00-00' WHERE idProjeto = '$idProjeto'";
+            $query_data = mysqli_query($con, $sql_data);
+        }
+    }
+
     foreach ($queryStatus as $status)
     {
+        $red = "<style> background: red; </style>";
         $i = 0;
         ?>
         <div class='form-group'>
@@ -326,7 +345,7 @@ foreach ($array_status as $idStatus)
 
                     <table class='table table-condensed'>
                         <thead>
-                        <tr class='list_menu'>
+                        <tr class='list_menu' style="<?= $diferenca > 30 ? $red : "white"?>">
                             <td>Protocolo (nº ISP)</td>
                             <?php
                             if (($status['idEtapaProjeto'] == 2) || ($status['idEtapaProjeto'] == 13) || ($status['idEtapaProjeto'] == 23) || ($status['idEtapaProjeto'] == 14))
