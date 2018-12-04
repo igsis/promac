@@ -131,7 +131,7 @@ function DiasUteis() {
                                 <div class="form-group">
                                     <div class="col-md-offset-4 col-md-6">
                                         <form class="form-horizontal" role="form" action="?perfil=certificados&idProjeto=<?= $idProjeto ?>" method="post">
-                                            <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;">Anexar Certidões</button>
+                                            <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;">Anexar Certidões Fiscais</button>
                                         </form>
                                     </div>
                                 </div>
