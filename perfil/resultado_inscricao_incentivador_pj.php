@@ -287,11 +287,23 @@ if(isset($_POST['apagar']))
 					$enviaArquivos = mysqli_query($con, $queryArquivos);
 					$numRow = mysqli_num_rows($enviaArquivos);
 					if($numRow == 8)
-					{*/?>
-				<form class="form-horizontal" role="form" action="?perfil=resultado_inscricao_incentivador_pj" method="post">
-					<input type="submit" name="liberacao" value="Concluir inscrição do Incentivador" class="btn btn-theme btn-lg btn-block">
-				</form>
-				<?php
+					{*/$query_valida = "SELECT *
+                                      FROM upload_arquivo 
+                                      WHERE idPessoa = '$idPj' && publicado = 1 AND idTipo = 5";
+                    if ($resuldato = mysqli_query($con,$query_valida)){
+                        $num_linhas = mysqli_num_rows($resuldato);
+                        if ($num_linhas == 8) {
+                            ?>
+                            <form class="form-horizontal" role="form"
+                                  action="?perfil=resultado_inscricao_incentivador_pj" method="post">
+                                <input type="submit" name="liberacao" value="Concluir inscrição do Incentivador"
+                                       class="btn btn-theme btn-lg btn-block">
+                            </form>
+                            <?php
+                        }else{
+
+                        }
+                    }
 				}
 				else{
 					echo "<div class='alert alert-warning'>
