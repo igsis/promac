@@ -509,7 +509,7 @@ foreach ($array_status as $idStatus)
                     while($campo = mysqli_fetch_array($query))
                     {
                     ?>
-                    <tr style="background: <?= $limite == 1 ? "red" : "white" ?>">
+                    <tr style="background: <?= $limite == 1 ? "#ff4c4c" : "white" ?>">
                         <td class='list_description'><?=$campo['protocolo']?></td>
                         <td class='list_description'><?=exibirDataBr($campo['prazoCaptacao'])?></td>
                         <td class='list_description'><?=exibirDataBr($campo['inicioExecucao'])?></td>
@@ -567,7 +567,7 @@ foreach ($array_status as $idStatus)
                     while($campo = mysqli_fetch_array($query))
                     {
                     ?>
-                    <tr style="background: <?= $limite == 1 ? "red" : "white" ?>">
+                    <tr style="background: <?= $limite == 1 ? "#ff4c4c" : "white" ?>">
                         <td class='list_description'><?=$campo['protocolo']?></td>
                         <td class='list_description'><?=exibirDataBr($campo['prazoCaptacao'])?></td>
                         <td class='list_description'><?=exibirDataBr($campo['inicioExecucao'])?></td>
@@ -625,7 +625,7 @@ foreach ($array_status as $idStatus)
                     while($campo = mysqli_fetch_array($query))
                     {
                     ?>
-                    <tr style="background: <?= $limite == 1 ? "red" : "white" ?>">
+                    <tr style="background: <?= $limite == 1 ? "#ff4c4c" : "white" ?>">
                         <td class='list_description'><?=$campo['protocolo']?></td>
                         <td class='list_description'><?=exibirDataBr($campo['prazoCaptacao'])?></td>
                         <td class='list_description'><?=exibirDataBr($campo['inicioExecucao'])?></td>
