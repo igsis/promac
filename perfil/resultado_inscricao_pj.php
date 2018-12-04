@@ -316,7 +316,7 @@ if(isset($_POST['apagar']))
 				if ($pj['liberado'] != 1)
 				{
 				    $consultaArquivos = "SELECT * FROM `upload_arquivo` 
-                                         WHERE idPessoa = '$idPj'";
+                                         WHERE idPessoa = '$idPj' AND idTipo = 2 AND publicado = 1";
 				    if ($resultado = mysqli_query($con,$consultaArquivos)){
 				        $resultado_num = mysqli_num_rows($resultado);
 				        if ($resultado_num == 11){

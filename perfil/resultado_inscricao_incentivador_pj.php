@@ -289,7 +289,7 @@ if(isset($_POST['apagar']))
 					if($numRow == 8)
 					{*/$query_valida = "SELECT *
                                       FROM upload_arquivo 
-                                      WHERE idPessoa = '$idPj' && publicado = 1 AND idTipo = 5";
+                                      WHERE idPessoa = '$idPj' AND publicado = 1 AND idTipo = 5";
                     if ($resuldato = mysqli_query($con,$query_valida)){
                         $num_linhas = mysqli_num_rows($resuldato);
                         if ($num_linhas == 8) {
@@ -301,7 +301,9 @@ if(isset($_POST['apagar']))
                             </form>
                             <?php
                         }else{
-
+                            echo "<div class='alert alert-warning'>
+                            <strong>Erro: </strong> Você deve enviar toda a documentação necessaria para prosseguir.
+                            </div>";
                         }
                     }
 				}
