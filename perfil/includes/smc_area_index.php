@@ -269,7 +269,7 @@ if(isset($_POST['envioComissao']))
 <?php
     }
     
-$array_status = array(2, 3, 10, 12, 13, 20, 23, 25, 14, 15, 11); //status
+$array_status = array(2, 3, 10, 12, 13, 20, 23, 25, 14, 15, 11,35); //status
 foreach ($array_status as $idStatus)
 {
     $sqlStatus = "SELECT idEtapaProjeto, etapaProjeto, ordem FROM etapa_projeto WHERE idEtapaProjeto = '$idStatus'";
