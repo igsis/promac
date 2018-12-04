@@ -335,11 +335,22 @@ if(isset($_POST['apagar']))
 				<?php
 				if ($pj['liberado'] != 1)
 				{
-				?>
-				<form class="form-horizontal" role="form" action="?perfil=resultado_inscricao_pj" method="post">
-					<input type="submit" name="liberacao" value="Concluir inscrição do proponente" class="btn btn-theme btn-lg btn-block">
-				</form>
-				<?php
+				    $consultaArquivos = "SELECT * FROM `upload_arquivo`
+                                         WHERE idPessoa = '$idPj' AND idTipo = 2 AND publicado = 1";
+				    if ($resultado = mysqli_query($con,$consultaArquivos)){
+				        $resultado_num = mysqli_num_rows($resultado);
+				        if ($resultado_num == 11){
+				            ?>
+                            <form class="form-horizontal" role="form" action="?perfil=resultado_inscricao_pj" method="post">
+                                <input type="submit" name="liberacao" value="Concluir inscrição do proponente" class="btn btn-theme btn-lg btn-block">
+                            </form>
+                            <?php
+                        }else{
+                            echo "<div class='alert alert-warning'>
+                            <strong>Erro: </strong> Você deve enviar todos os arquivos solicitados.
+                            </div>";
+                        }
+                    }
 				}
 				?>
 				<?php
