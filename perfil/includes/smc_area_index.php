@@ -333,6 +333,7 @@ foreach ($array_status as $idStatus)
                             <td>Documento</td>
                             <td>Área de Atuação</td>
                             <?=($status['ordem'] >= 5) ? "<td>Parecerista</td>" : NULL ?>
+                            <?=($status['ordem'] >= 5) ? "<td>Parecerista atribuido à</td>" : "<td></td>" ?>
                             <?php
                             if (($status['idEtapaProjeto'] == 23) || ($status['idEtapaProjeto'] == 13))
                             {
@@ -352,14 +353,13 @@ foreach ($array_status as $idStatus)
                         {
                             $idComissao = $campo ['idComissao'];
                             $idProjeto = $campo['idProjeto'];
-                            $dataParecerista = $campo['dataParecerista'];
-                            $dateNow = date("Y-m-d");
-
-                            $dataLimite = date("Y-m-d", strtotime($dataParecerista. '+ 30 days'));
+                            $dataParecerista = new DateTime($campo['dataParecerista']);
+                            $dateNow = new DateTime(date("Y-m-d"));
+                            $diff = $dataParecerista->diff($dateNow);
 
                             if ($idComissao != 0) {
 
-                                if ($dateNow > $dataLimite) {
+                                if ($diff->format("%a") > 30){
 
                                     $limite = 1;
 
@@ -411,6 +411,7 @@ foreach ($array_status as $idStatus)
                                     <td class='list_description'><?= isset($campo['cpf']) ? $campo['cpf'] : $campo['cnpj'] ?></td>
                                     <td class='list_description'><?= mb_strimwidth($campo['areaAtuacao'], 0, 38, "...") ?></td>
                                     <?= ($status['ordem'] >= 5) ? "<td class='list_description'>".$campo['comissao']."</td>" : NULL ?>
+                                    <?= ($idComissao != 0) ? "<td class='list_description'>".$diff->format("%a dias")."</td>" : "<td class='list_description'></td>" ?>
                                     <?php
                                     /*TODO: Transformar este bloco de if/elseif em função*/
                                     if ($status['idEtapaProjeto'] == 23)
