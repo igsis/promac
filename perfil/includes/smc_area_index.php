@@ -357,7 +357,10 @@ foreach ($array_status as $idStatus)
                             $dateNow = new DateTime(date("Y-m-d"));
                             $diff = $dataParecerista->diff($dateNow);
 
-                            if ($idComissao != 0) {
+                            if ($idComissao != 0 && $dataParecerista == NULL) {
+
+                                $sqlData = "INSERT INTO projeto (dataParecerista) VALUES ('$dateNow') WHERE idProjeto = '$idProjeto'";
+                                $queryData = mysqli_query($con, $sqlData);
 
                                 if ($diff->format("%a") >= 30){
 
@@ -370,7 +373,6 @@ foreach ($array_status as $idStatus)
                                 }
 
                             }elseif ($idComissao == 0) {
-
                                 $sqlData = "UPDATE projeto SET dataParecerista = '0000-00-00' WHERE idProjeto = '$idProjeto'";
                                 $queryData = mysqli_query($con, $sqlData);
                             }
