@@ -1,6 +1,6 @@
 <?php
 
-$red = "#ff0000";
+set_time_limit(1200);
 
 if(isset($_POST['envioComissao']))
 {
@@ -276,7 +276,7 @@ foreach ($array_status as $idStatus)
 {
     $sqlStatus = "SELECT idEtapaProjeto, etapaProjeto, ordem FROM etapa_projeto WHERE idEtapaProjeto = '$idStatus'";
 
-    $sqlProjeto = "SELECT he.data, pro.idProjeto, nomeProjeto, protocolo, idComissao, dataParecerista, pf.nome, pf.cpf, razaoSocial, cnpj, areaAtuacao, pfc.nome AS comissao, etapaProjeto, pro.idEtapaProjeto AS idEtapaProjeto 
+    $sqlProjeto = "SELECT he.data, pro.idProjeto, nomeProjeto, protocolo, idComissao, pro.dataParecerista, pf.nome, pf.cpf, razaoSocial, cnpj, areaAtuacao, pfc.nome AS comissao, etapaProjeto, pro.idEtapaProjeto AS idEtapaProjeto 
                     FROM projeto AS pro
                     LEFT JOIN pessoa_fisica AS pf ON pro.idPf = pf.idPf
                     LEFT JOIN pessoa_juridica AS pj ON pro.idPj = pj.idPj
@@ -353,26 +353,29 @@ foreach ($array_status as $idStatus)
                         {
                             $idComissao = $campo ['idComissao'];
                             $idProjeto = $campo['idProjeto'];
-                            $dataParecerista = new DateTime($campo['dataParecerista']);
-                            $dateNow = new DateTime(date("Y-m-d"));
-                            $diff = $dataParecerista->diff($dateNow);
 
-                            if ($idComissao != 0 && $dataParecerista == NULL) {
+                            if ($idComissao != 0) {
 
-                                $sqlData = "INSERT INTO projeto (dataParecerista) VALUES ('$dateNow') WHERE idProjeto = '$idProjeto'";
-                                $queryData = mysqli_query($con, $sqlData);
+                                $dataParecerista = new DateTime($campo['dataParecerista']);
+                                $dateNow = new DateTime();
+                                $diff = $dataParecerista->diff($dateNow);
 
-                                if ($diff->format("%a") >= 30){
+                                if ($diff->days >= 30){
 
                                     $limite = 1;
+
+                                    // echo $dataParecerista->format("Y-m-d") . "  " . $diff->days;
 
                                 } else {
 
                                     $limite = 0;
 
+                                    // echo $dataParecerista->format("Y-m-d") . "  " . $diff->days;
+
                                 }
 
-                            }elseif ($idComissao == 0) {
+                            } elseif ($idComissao == 0) {
+
                                 $sqlData = "UPDATE projeto SET dataParecerista = '0000-00-00' WHERE idProjeto = '$idProjeto'";
                                 $queryData = mysqli_query($con, $sqlData);
                             }
@@ -413,8 +416,8 @@ foreach ($array_status as $idStatus)
                                     <td class='list_description'><?= isset($campo['nome']) ? $campo['nome'] : $campo['razaoSocial'] ?></td>
                                     <td class='list_description'><?= isset($campo['cpf']) ? $campo['cpf'] : $campo['cnpj'] ?></td>
                                     <td class='list_description'><?= mb_strimwidth($campo['areaAtuacao'], 0, 38, "...") ?></td>
-                                    <?= ($status['ordem'] >= 5) ? "<td class='list_description'>".$campo['comissao']."</td>" : NULL ?>
-                                    <?= ($idComissao != 0) ? "<td class='list_description'>".$diff->format("%a dias")."</td>" : "<td class='list_description'></td>" ?>
+                                    <?php echo ($status['ordem'] >= 5) ? "<td class='list_description'>".$campo['comissao']."</td>" : NULL ?>
+                                    <?php echo ($campo['dataParecerista'] != 0) ? "<td class='list_description'>".$diff->format("%a dias")."</td>" : "<td class='list_description'></td>" ?>
                                     <?php
                                     /*TODO: Transformar este bloco de if/elseif em função*/
                                     if ($status['idEtapaProjeto'] == 23)

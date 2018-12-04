@@ -56,6 +56,9 @@ if($nome != '' || $cpf != '')
 			$x[$i]['areaAtuacao'] = $area['areaAtuacao'];
 			$x[$i]['comissao'] = $comissao['nome'];
 			$x[$i]['etapa'] = $etapa['etapaProjeto'];
+			$x[$i]['dataParecerista'] = $lista['dataParecerista'];
+			$idComissao = $lista['idComissao'];
+			$idEtapaProjeto = $lista['idEtapaProjeto'];
 			$i++;
 		}
 		$x['num'] = $i;
@@ -108,9 +111,12 @@ elseif($razaoSocial != '' || $cnpj != '')
 			$x[$i]['areaAtuacao'] = $area['areaAtuacao'];
 			$x[$i]['comissao'] = $comissao['nome'];
 			$x[$i]['etapa'] = $etapa['etapaProjeto'];
+            $idComissao = $lista['idComissao'];
+            $idEtapaProjeto = $lista['idEtapaProjeto'];
 			$i++;
 		}
 		$x['num'] = $i;
+
 	}
 	else
 	{
@@ -183,6 +189,8 @@ else
 			$x[$i]['idProjeto'] = $lista['idProjeto'];
 			$x[$i]['protocolo'] = $lista['protocolo'];
 			$x[$i]['nomeProjeto'] = $lista['nomeProjeto'];
+            $x[$i]['dataParecerista'] = $lista['dataParecerista'];
+            $idEtapaProjeto = $lista['idEtapaProjeto'];
 			if($lista['tipoPessoa'] == 1)
 			{
 				$x[$i]['proponente'] = $pf['nome'];
@@ -211,8 +219,8 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 <section id="list_items" class="home-section bg-white">
 	<div class="container"><?php include 'includes/menu_smc.php'; ?>
 		<div class="form-group">
-			<h4>Pesquisar Projetos <?= (($_POST['idComissao'] != NULL) || ($_POST['idComissao'] != 0)) ? "Vinculados a(o) Parecerista" : "" ?><br>
-                <small><?= (($_POST['idComissao'] != NULL) || ($_POST['idComissao'] != 0)) ? "Parecerista: ".$comissao['nome'] : "" ?></small>
+			<h4>Pesquisar Projetos <?/*= (($_POST['idComissao'] != NULL) || ($_POST['idComissao'] != 0)) ? "Vinculados a(o) Parecerista" : "" */?><!--<br>
+                <small><?/*= (($_POST['idComissao'] != NULL) || ($_POST['idComissao'] != 0)) ? "Parecerista: ".$comissao['nome'] : "" */?></small>-->
             </h4>
 			<h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
 			<h5><a href="?perfil=smc_pesquisa_geral">Fazer outra busca</a></h5>
@@ -229,6 +237,7 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 								<td>Documento</td>
 								<td>Área de Atuação</td>
 								<td>Parecerista</td>
+                                <td><?= $idEtapaProjeto ?></td>
 								<td>Etapa</td>
 								<td width='10%'></td>
 							</tr>
@@ -237,13 +246,39 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 							<?php
 							for($h = 0; $h < $x['num']; $h++)
 							{
-								echo "<tr>";
+                                $dataParecerista = new DateTime($x[$h]['dataParecerista']);
+
+
+                                if ($idComissao != 0) {
+
+                                    $dateNow = new DateTime();
+
+                                    $diff = $dataParecerista->diff($dateNow);
+
+                                    if ($diff->days >= 30){
+
+                                        $limite = 1;
+
+                                        // echo $dataParecerista->format("Y-m-d") . "  " . $diff->days;
+
+                                    }
+
+                                } elseif ($idComissao == 0) {
+
+                                    $sqlData = "UPDATE projeto SET dataParecerista = '0000-00-00' WHERE idProjeto = '$idProjeto'";
+                                    $queryData = mysqli_query($con, $sqlData);
+                                }
+
+
+
+                                echo (isset($limite)) ? "<tr style='background: #ff4c4c'>" : "<tr style='background: white'></tr>";
 								echo "<td class='list_description'>".$x[$h]['protocolo']."</td>";
 								echo "<td class='list_description'>".$x[$h]['nomeProjeto']."</td>";
 								echo "<td class='list_description'>".$x[$h]['proponente']."</td>";
 								echo "<td class='list_description'>".$x[$h]['documento']."</td>";
 								echo "<td class='list_description'>".mb_strimwidth($x[$h]['areaAtuacao'], 0, 38, "...")."</td>";
 								echo "<td class='list_description'>".strstr($x[$h]['comissao'], ' ', true)."</td>";
+								echo ($idComissao != 0) ? "<td class='list_description'>" . $diff->format("%a dias") . "</td>"  : "<td class='list_description'></td>";
 								echo "<td class='list_description'>".$x[$h]['etapa']."</td>";
 								echo "<td class='list_description'>
 										<form method='POST' action='?perfil=smc_detalhes_projeto'>
