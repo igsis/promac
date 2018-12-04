@@ -5,7 +5,7 @@
 <div class="page-header">
  	<h5>Dados do Incentivador</h5>
 </div>
-<div class="container">
+<div class="">
 		<div class="well">
 		<p align="justify"><strong>Nome:</strong> <?php echo $pf['nome']; ?></p>
 		<p align="justify"><strong>CPF:</strong> <?php echo $pf['cpf']; ?><p>
