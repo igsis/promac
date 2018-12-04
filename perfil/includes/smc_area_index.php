@@ -276,7 +276,7 @@ foreach ($array_status as $idStatus)
 {
     $sqlStatus = "SELECT idEtapaProjeto, etapaProjeto, ordem FROM etapa_projeto WHERE idEtapaProjeto = '$idStatus'";
 
-    $sqlProjeto = "SELECT he.data, pro.idProjeto, nomeProjeto, protocolo, pf.nome, pf.cpf, razaoSocial, cnpj, areaAtuacao, pfc.nome AS comissao, etapaProjeto, pro.idEtapaProjeto AS idEtapaProjeto 
+    $sqlProjeto = "SELECT he.data, pro.idProjeto, nomeProjeto, protocolo, idComissao, dataParecerista, pf.nome, pf.cpf, razaoSocial, cnpj, areaAtuacao, pfc.nome AS comissao, etapaProjeto, pro.idEtapaProjeto AS idEtapaProjeto 
                     FROM projeto AS pro
                     LEFT JOIN pessoa_fisica AS pf ON pro.idPf = pf.idPf
                     LEFT JOIN pessoa_juridica AS pj ON pro.idPj = pj.idPj
@@ -288,40 +288,6 @@ foreach ($array_status as $idStatus)
     $queryProjeto = mysqli_query($con,$sqlProjeto);
     $queryStatus = mysqli_query($con,$sqlStatus);
     $num = mysqli_num_rows($queryProjeto);
-
-    $array_projeto = mysqli_fetch_array($queryProjeto);
-
-        $idProjeto = $array_projeto['idProjeto'];
-
-        $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
-
-        $idComissao = $projeto['idComissao'];
-
-    if ($idComissao != 0) {
-
-            $dataParecerista = $projeto['dataParecerista'];
-            $dataLimite = date("Y-m-d", strtotime($dataParecerista. '+ 30 days'));
-
-        if (strtotime($dataParecerista) > strtotime($dataLimite)) {
-
-            $limite = 1;
-
-            echo $dataParecerista . "  " . $dataLimite;
-
-        } else {
-
-            $limite = 0;
-
-            echo $dataParecerista . "  " . $dataLimite . " ";
-
-        }
-
-        echo $limite;
-
-        } elseif ($idComissao == 0) {
-            $sql_data = "UPDATE projeto SET dataParecerista = '0000-00-00' WHERE idProjeto = '$idProjeto'";
-            $query_data = mysqli_query($con, $sql_data);
-        }
 
     foreach ($queryStatus as $status)
     {
@@ -384,10 +350,34 @@ foreach ($array_status as $idStatus)
                         <?php
                         while ($campo = mysqli_fetch_array($queryProjeto))
                         {
+                            $idComissao = $campo ['idComissao'];
+                            $idProjeto = $campo['idProjeto'];
+                            $dataParecerista = $campo['dataParecerista'];
+                            $dateNow = date("Y-m-d");
+
+                            $dataLimite = date("Y-m-d", strtotime($dataParecerista. '+ 30 days'));
+
+                            if ($idComissao != 0) {
+
+                                if ($dateNow > $dataLimite) {
+
+                                    $limite = 1;
+
+                                } else {
+
+                                    $limite = 0;
+
+                                }
+
+                            }elseif ($idComissao == 0) {
+                                $sqlData = "UPDATE projeto SET dataParecerista = '0000-00-00' WHERE idProjeto = '$idProjeto'";
+                                $queryData = mysqli_query($con, $sqlData);
+                            }
+
                             if ($i < 5) {
 
                                 ?>
-                                <tr style="background: <?= $limite == 1 ? "red" : "white" ?>">
+                                <tr style="background: <?= $limite == 1 ? "#ff4c4c" : "white" ?>">
                                     <td class='list_description maskProtocolo' data-mask = "0000.00.00/0000000"><?= $campo['protocolo'] ?></td>
                                     <?php
                                         if ($status['idEtapaProjeto'] == 2) {
@@ -519,7 +509,7 @@ foreach ($array_status as $idStatus)
                     while($campo = mysqli_fetch_array($query))
                     {
                     ?>
-                    <tr>
+                    <tr style="background: <?= $limite == 1 ? "red" : "white" ?>">
                         <td class='list_description'><?=$campo['protocolo']?></td>
                         <td class='list_description'><?=exibirDataBr($campo['prazoCaptacao'])?></td>
                         <td class='list_description'><?=exibirDataBr($campo['inicioExecucao'])?></td>
@@ -577,7 +567,7 @@ foreach ($array_status as $idStatus)
                     while($campo = mysqli_fetch_array($query))
                     {
                     ?>
-                    <tr style="<?= $limite == 1 ? "background: red" : "background: white" ?>">
+                    <tr style="background: <?= $limite == 1 ? "red" : "white" ?>">
                         <td class='list_description'><?=$campo['protocolo']?></td>
                         <td class='list_description'><?=exibirDataBr($campo['prazoCaptacao'])?></td>
                         <td class='list_description'><?=exibirDataBr($campo['inicioExecucao'])?></td>
@@ -635,7 +625,7 @@ foreach ($array_status as $idStatus)
                     while($campo = mysqli_fetch_array($query))
                     {
                     ?>
-                    <tr>
+                    <tr style="background: <?= $limite == 1 ? "red" : "white" ?>">
                         <td class='list_description'><?=$campo['protocolo']?></td>
                         <td class='list_description'><?=exibirDataBr($campo['prazoCaptacao'])?></td>
                         <td class='list_description'><?=exibirDataBr($campo['inicioExecucao'])?></td>
