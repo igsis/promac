@@ -558,123 +558,150 @@ foreach ($enviaFicha as $fic)
     $pdf->Cell(153,$l,utf8_decode($fic['funcao']),0,1,'L');
 
     $pdf->Ln();
+    $pdf->Ln();
 }
 
+$largura = 40;
+
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 12);
-$pdf->Cell(170,$l,utf8_decode("Cronograma"),'B',1,'L');
+$pdf->Cell(175,8,utf8_decode("Cronograma"),'1',1,'C');
 
 $pdf->SetX($x);
-$pdf->SetFont('Arial','B', 11);
-$pdf->Cell(67,$l,utf8_decode("Data estimada de início do projeto:"),0,0,'L');
-$pdf->SetFont('Arial','', 11);
-$pdf->Cell(69,$l,utf8_decode($inicioCronograma),0,1,'L');
+$pdf->SetFont('Arial','B', 8);
+$pdf->Cell(30,$l,utf8_decode("Início do cronograma"),1,0,'C');
 
-$pdf->SetX($x);
-$pdf->SetFont('Arial','B', 11);
-$pdf->Cell(65,$l,utf8_decode("Data estimada do final do projeto:"),0,0,'L');
-$pdf->SetFont('Arial','', 11);
-$pdf->Cell(80,$l,utf8_decode($fimCronograma),0,1,'L');
+$pdf->SetFont('Arial','B', 8);
+$pdf->Cell(28,$l,utf8_decode("Fim do cronograma"),1,0,'C');
+
+$pdf->SetFont('Arial','B', 8);
+$pdf->Cell(30,$l,utf8_decode("Captação de recursos"),1,0,'C');
+
+$pdf->SetFont('Arial','B', 8);
+$pdf->Cell(20,$l,utf8_decode("Pré produção"),1,0,'C');
+
+$pdf->SetFont('Arial','B', 8);
+$pdf->Cell(18,$l,utf8_decode("Produção"),1,0,'C');
+
+$pdf->SetFont('Arial','B', 8);
+$pdf->Cell(20,$l,utf8_decode("Pós produção"),1,0,'C');
+
+$pdf->SetFont('Arial','B', 8);
+$pdf->Cell(29,$l,utf8_decode("Prestação de contas"),1,1,'C');
+
+$y = $pdf->GetY();
+
+$pdf->SetXY($x, $y);
+$pdf->SetFont('Arial','', 8);
+$pdf->MultiCell(30,24,utf8_decode($inicioCronograma),1 ,'C');
+
+$pdf->SetXY($x + 30, $y);
+$pdf->SetFont('Arial','', 8);
+$pdf->MultiCell(28,24,utf8_decode($fimCronograma),1,'C');
+
+$pdf->SetXY($x + 58, $y);
+$pdf->SetFont('Arial','', 8);
+$pdf->MultiCell(30,12,str_replace('a', '', utf8_decode($captacaoRecurso)),1,'C');
+
+$pdf->SetXY($x + 88, $y);
+$pdf->SetFont('Arial','', 8);
+$pdf->MultiCell(20,12,str_replace('a', '', utf8_decode($preProducao)),1,'C');
+
+$pdf->SetXY($x + 108, $y);
+$pdf->SetFont('Arial','', 8);
+$pdf->MultiCell(18,12,str_replace('a', '', utf8_decode($producao)),1,'C');
+
+$pdf->SetXY($x + 126, $y);
+$pdf->SetFont('Arial','', 8);
+$pdf->MultiCell(20,12,str_replace('a', '', utf8_decode($posProducao)),1,'C');
+
+$pdf->SetXY($x + 146, $y);
+$pdf->SetFont('Arial','', 8);
+$pdf->MultiCell(29,24,str_replace('a', '', utf8_decode($prestacaoContas)),1,'C');
 
 $pdf->Ln();
 
-$pdf->SetX($x);
-$pdf->SetFont('Arial','B', 12);
-$pdf->Cell(170,$l,utf8_decode("Etapas do cronograma"),'B',1,'L');
+$y = $pdf->GetY();
 
-$pdf->SetX($x);
+$pdf->SetXY($x, $y);
 $pdf->SetFont('Arial','B', 11);
-$pdf->Cell(43,$l,utf8_decode("Captação de recursos:"),0,0,'L');
-$pdf->SetFont('Arial','', 11);
-$pdf->Cell(127,$l,utf8_decode($captacaoRecurso),0,1,'L');
+$pdf->Cell(175,8,utf8_decode("Orçamento"),1,1,'C');
 
-$pdf->SetX($x);
-$pdf->SetFont('Arial','B', 11);
-$pdf->Cell(28,$l,utf8_decode("Pré produção:"),0,0,'L');
-$pdf->SetFont('Arial','', 11);
-$pdf->Cell(142,$l,utf8_decode($preProducao),0,1,'L');
-
-$pdf->SetX($x);
-$pdf->SetFont('Arial','B', 11);
-$pdf->Cell(20,$l,utf8_decode("Produção:"),0,0,'L');
-$pdf->SetFont('Arial','', 11);
-$pdf->Cell(150,$l,utf8_decode($producao),0,1,'L');
-
-$pdf->SetX($x);
-$pdf->SetFont('Arial','B', 11);
-$pdf->Cell(29,$l,utf8_decode("Pós produção:"),0,0,'L');
-$pdf->SetFont('Arial','', 11);
-$pdf->Cell(141,$l,utf8_decode($posProducao),0,1,'L');
-
-$pdf->SetX($x);
-$pdf->SetFont('Arial','B', 11);
-$pdf->Cell(41,$l,utf8_decode("Prestação de contas:"),0,0,'L');
-$pdf->SetFont('Arial','', 11);
-$pdf->Cell(129,$l,utf8_decode($prestacaoContas),0,1,'L');
-
-$pdf->Ln();
-
-$pdf->SetX($x);
-$pdf->SetFont('Arial','B', 12);
-$pdf->Cell(180,$l,utf8_decode("Orçamento"),'B',1,'L');
 
 foreach ($enviaOrca as $orc)
 {
-    $pdf->SetX($x);
-    $pdf->SetFont('Arial','B', 11);
-    $pdf->Cell(14,$l,utf8_decode("Etapa:"),0,0,'L');
-    $pdf->SetFont('Arial','', 11);
-    $pdf->Cell(80,$l,utf8_decode($orc['etapa']),0,1,'L');
 
-    $pdf->SetX($x);
-    $pdf->SetFont('Arial','B', 11);
-    $pdf->Cell(23,$l,utf8_decode("Obs. etapa:"),0,0,'L');
-    $pdf->SetFont('Arial','', 11);
-    $pdf->MultiCell(147,$l,utf8_decode($orc['observacoesEtapa']));
+    $y = $pdf->GetY();
 
-    $pdf->SetX($x);
-    $pdf->SetFont('Arial','B', 11);
-    $pdf->Cell(22,$l,utf8_decode("Descrição:"),0,0,'L');
-    $pdf->SetFont('Arial','', 11);
-    $pdf->Cell(80,$l,utf8_decode($orc['descricao']),0,1,'L');
+    $pdf->SetX($x, $y);
+    $pdf->SetFont('Arial','B', 8);
+    $pdf->Cell(20,$l,utf8_decode("Etapa"),1,0,'C');
 
-    $pdf->SetX($x);
-    $pdf->SetFont('Arial','B', 11);
-    $pdf->Cell(24,$l,utf8_decode("Quantidade:"),0,0,'L');
-    $pdf->SetFont('Arial','', 11);
-    $pdf->Cell(80,$l,utf8_decode($orc['quantidade']),0,1,'L');
+    $pdf->SetFont('Arial','B', 8);
+    $pdf->Cell(17,$l,utf8_decode("Obs. etapa:"),1,0,'C');
 
-    $pdf->SetX($x);
-    $pdf->SetFont('Arial','B', 11);
-    $pdf->Cell(38,$l,utf8_decode("Unidade de medida:"),0,0,'L');
-    $pdf->SetFont('Arial','', 11);
-    $pdf->Cell(80,$l,utf8_decode($orc['unidadeMedida']),0,1,'L');
+    $pdf->SetFont('Arial','B', 8);
+    $pdf->Cell(15,$l,utf8_decode("Descrição"),1,0,'C');
 
-    $pdf->SetX($x);
-    $pdf->SetFont('Arial','B', 11);
-    $pdf->Cell(32,$l,utf8_decode("Obs. unid. med.:"),0,0,'L');
-    $pdf->SetFont('Arial','', 11);
-    $pdf->Cell(80,$l,utf8_decode($orc['observacoes']),0,1,'L');
+    $pdf->SetFont('Arial','B', 8);
+    $pdf->Cell(18,$l,utf8_decode("Quantidade"),1,0,'C');
 
-    $pdf->SetX($x);
-    $pdf->SetFont('Arial','B', 11);
-    $pdf->Cell(41,$l,utf8_decode("Quantidade Unidade:"),0,0,'L');
-    $pdf->SetFont('Arial','', 11);
-    $pdf->Cell(80,$l,utf8_decode($orc['quantidadeUnidade']),0,1,'L');
+    $pdf->SetFont('Arial','B', 8);
+    $pdf->Cell(25,$l,utf8_decode("Unid. de medida"),1,0,'C');
 
-    $pdf->SetX($x);
-    $pdf->SetFont('Arial','B', 11);
-    $pdf->Cell(28,$l,utf8_decode("Valor unitário:"),0,0,'L');
-    $pdf->SetFont('Arial','', 11);
-    $pdf->Cell(80,$l,utf8_decode("R$ ".dinheiroParaBr($orc['valorUnitario'])),0,1,'L');
+    $pdf->SetFont('Arial','B', 8);
+    $pdf->Cell(25,$l,utf8_decode("Obs. unid. med.:"),1,0,'C');
 
-    $pdf->SetX($x);
-    $pdf->SetFont('Arial','B', 11);
-    $pdf->Cell(22,$l,utf8_decode("Valor total:"),0,0,'L');
-    $pdf->SetFont('Arial','', 11);
-    $pdf->Cell(80,$l,utf8_decode("R$ ".dinheiroParaBr($orc['valorTotal'])),0,1,'L');
+    $pdf->SetFont('Arial','B', 8);
+    $pdf->Cell(15,$l,utf8_decode("Qtde Unid."),1,0,'C');
 
-    $pdf->Ln();
+    $pdf->SetFont('Arial','B', 8);
+    $pdf->Cell(20,$l,utf8_decode("Valor Unit."),1,0,'C');
+
+    $pdf->SetFont('Arial','B', 8);
+    $pdf->Cell(20,$l,utf8_decode("Valor total"),1,1,'C');
+
+    $y = $pdf->GetY();
+
+    $pdf->SetXY($x, $y);
+    $pdf->SetFont('Arial','', 8);
+    $pdf->MultiCell(20,24,utf8_decode($orc['etapa']),1,'C');
+
+    $pdf->SetXY($x + 20, $y);
+    $pdf->SetFont('Arial','', 8);
+    $pdf->MultiCell(17,24,utf8_decode($orc['observacoesEtapa']), 1,  'C');
+
+    $pdf->SetXY($x + 37, $y);
+    $pdf->SetFont('Arial','', 8);
+    $pdf->MultiCell(15,24,utf8_decode($orc['descricao']),1,'C');
+
+    $pdf->SetXY($x + 52, $y);
+    $pdf->SetFont('Arial','', 8);
+    $pdf->MultiCell(18,24,utf8_decode($orc['quantidade']),1,'C');
+
+    $pdf->SetXY($x + 70, $y);
+    $pdf->SetFont('Arial','', 8);
+    $pdf->MultiCell(25,24,utf8_decode($orc['unidadeMedida']),1,'C');
+
+    $pdf->SetXY($x + 95, $y);
+    $pdf->SetFont('Arial','', 8);
+    $pdf->MultiCell(25,24,utf8_decode($orc['observacoes']),1,'C');
+
+    $pdf->SetXY($x + 120, $y);
+    $pdf->SetFont('Arial','', 8);
+    $pdf->MultiCell(15,24,utf8_decode($orc['quantidadeUnidade']),1,'C');
+
+    $pdf->SetXY($x + 135, $y);
+    $pdf->SetFont('Arial','', 8);
+    $pdf->MultiCell(20,24,utf8_decode("R$ ".dinheiroParaBr($orc['valorUnitario'])),1,'C');
+
+    $pdf->SetXY($x + 155, $y);
+    $pdf->SetFont('Arial','', 8);
+    $pdf->MultiCell(20,24,utf8_decode("R$ ".dinheiroParaBr($orc['valorTotal'])),1,'C');
+
+
+    $pdf->Ln(5);
+
 }
 
 $pdf->SetX($x);

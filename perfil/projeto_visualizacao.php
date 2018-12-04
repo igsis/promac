@@ -127,7 +127,11 @@ function DiasUteis() {
                                 <div class="form-group">
                                     <div class="col-md-offset-4 col-md-6">
                                         <form class="form-horizontal" role="form" action="?perfil=certificados&idProjeto=<?= $idProjeto ?>" method="post">
+<<<<<<< HEAD
                                             <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;">Anexar Certidões Fiscais</button>
+=======
+                                            <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;">Anexar Certificados</button>
+>>>>>>> pdf-com-tabela#255
                                         </form>
                                     </div>
                                 </div>
@@ -137,9 +141,12 @@ function DiasUteis() {
 
                             <!-- Botão para solicitar alteração do projeto -->
                             <?php
+<<<<<<< HEAD
 
                             if ($projeto['idStatus'] == 3 && DiasUteis() < $dateNow) {
                                 ?>
+=======
+>>>>>>> pdf-com-tabela#255
                             if($projeto['idStatus'] == 3){
                             ?>
                                 <div class="form-group">
@@ -156,6 +163,7 @@ function DiasUteis() {
                             <!-- Botão para agendar a entrega -->
 
                             <?php
+<<<<<<< HEAD
 
                             if ($projeto['idStatus'] == 3 && (DiasUteis() >= -7 && DiasUteis() <= 7)) {
                                 ?>
@@ -168,9 +176,19 @@ function DiasUteis() {
                                                     style="border-radius: 7px;">agendar entrega pessoalmente
                                             </button>
                                         </form>
+=======
+                            if($projeto['idStatus'] == 5) {
+                            ?>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-4 col-md-6">
+                                            <form class="form-horizontal" role="form" action="?perfil=complemento_informacoes&idProjeto=<?= $idProjeto ?>"
+                                                  method="post">
+                                                <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;">anexar complementos</button>
+                                            </form>
+                                        </div>
+>>>>>>> pdf-com-tabela#255
                                     </div>
-                                </div>
-                                <?php
+                            <?php
                             }
                             ?>
 
@@ -234,6 +252,7 @@ function DiasUteis() {
 
                             <!-- Botão para anexar recurso -->
                             <?php
+<<<<<<< HEAD
                             if ($idEtapa != 26 && $idEtapa != 27) {
                                 $dateNow = date('Y-m-d');
                                 $dataPublicacaoDoc = $projeto['dataPublicacaoDoc'];
@@ -244,6 +263,11 @@ function DiasUteis() {
 
                                 if (($projeto['dataPublicacaoDoc'] != "0000-00-00" && ($dias <= 7 && $dias >= 0)) && ($projeto['idStatus'] == 4 || $projeto['idStatus'] == 3)) {
                                     ?>
+=======
+                            if($idEtapa != 26 && $idEtapa != 27){
+                                if($projeto['idStatus'] == 4){
+                            ?>
+>>>>>>> pdf-com-tabela#255
                                     <div class="form-group">
                                         <div class="col-md-offset-4 col-md-6">
                                             <form class="form-horizontal" role="form"
@@ -257,9 +281,14 @@ function DiasUteis() {
                             <?php
                                 }
                             }
+<<<<<<< HEAD
 
                             ?>
                         </div>
+=======
+                        ?>
+                    </div>
+>>>>>>> pdf-com-tabela#255
 
                 <!-- LABEL PROJETO -->
 
