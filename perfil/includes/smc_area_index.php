@@ -359,7 +359,7 @@ foreach ($array_status as $idStatus)
 
                             if ($idComissao != 0) {
 
-                                if ($diff->format("%a") > 30){
+                                if ($diff->format("%a") >= 30){
 
                                     $limite = 1;
 
@@ -370,6 +370,7 @@ foreach ($array_status as $idStatus)
                                 }
 
                             }elseif ($idComissao == 0) {
+
                                 $sqlData = "UPDATE projeto SET dataParecerista = '0000-00-00' WHERE idProjeto = '$idProjeto'";
                                 $queryData = mysqli_query($con, $sqlData);
                             }
