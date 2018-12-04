@@ -285,7 +285,7 @@ if(isset($_POST['apagar']))
 						{ */
                  $query_valida = "SELECT *
                                   FROM upload_arquivo 
-                                  WHERE idPessoa = '$idPf' && publicado = 1";
+                                  WHERE idPessoa = '$idPf' AND publicado = 1 AND idTipo= 1";
                  if ($resuldato = mysqli_query($con,$query_valida)){
                      $num_linhas = mysqli_num_rows($resuldato);
                      if ($num_linhas == 6){
