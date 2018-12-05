@@ -124,7 +124,7 @@ $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 11);
 $pdf->Cell(32,$l,utf8_decode("Data aprovação:"),0,0,'L');
 $pdf->SetFont('Arial','', 11);
-$pdf->Cell(170,$l,utf8_decode("AA"),0,1,'L');
+$pdf->Cell(170,$l,utf8_decode(""),0,1,'L');
 
 $pdf->Ln();
 

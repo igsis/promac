@@ -560,6 +560,7 @@ $comissao = recuperaDados("pessoa_fisica","idPf",$projeto['idComissao']);
                     <!-- LABELS -->
                     <ul class="nav nav-tabs">
                         <li class="nav active"><a href="#adm" data-toggle="tab">Administrativo</a></li>
+                        <li class="nav"><a href="#impressoes" data-toggle="tab">Impressões</a></li>
                         <li class="nav"><a href="#projeto" data-toggle="tab">Projeto</a></li>
                         <?php if(isset($representante)):?>
                         <li class="nav"><a href="#J" data-toggle="tab">Pessoa Jurídica</a></li>
@@ -574,6 +575,9 @@ $comissao = recuperaDados("pessoa_fisica","idPf",$projeto['idComissao']);
                     <div class="tab-content"><br/>
                         <!-- LABEL ADMINISTRATIVO-->
                         <?php include "includes/label_smc_adm.php"; ?>
+
+                        <!-- LABEL IMPRESSÕES-->
+                        <?php include "includes/label_impressoes.php"; ?>
 
                         <!-- LABEL PROJETO -->
                         <?php include "includes/label_projeto.php"; ?>
