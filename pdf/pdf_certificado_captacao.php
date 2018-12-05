@@ -25,8 +25,7 @@ class PDF extends FPDF
 setlocale(LC_TIME, 'portuguese');
 date_default_timezone_set('America/Sao_Paulo');
 
-$idProjeto = 108;
-//$idProjeto = $_POST['idProjeto'];
+$idProjeto = $_POST['idProjeto'];
 
 $dateNow = date('d/m/Y');
 $cabecalho = strftime('%d de %B de %Y', strtotime($dateNow));

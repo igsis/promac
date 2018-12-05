@@ -14,7 +14,7 @@ class PDF extends FPDF
 {
 
 }
-$idProjeto = 110;
+$idProjeto = $_POST['idProjeto'];
 
 $dateNow = date('d/m/Y');
 

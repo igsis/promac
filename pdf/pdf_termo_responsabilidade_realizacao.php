@@ -37,7 +37,7 @@ class PDF extends FPDF
         $this->Ln(10);
     }
 }
-$idProjeto = $_POST['idProheto'];
+$idProjeto = $_POST['idProjeto'];
 
 $dateNow = date('d/m/Y');
 $rodape = strftime('%d de %B de %Y', strtotime($dateNow));
