@@ -1,6 +1,10 @@
 <?php
 
+<<<<<<< HEAD
 $cinza = "#EBEBEB";
+=======
+set_time_limit(1200);
+>>>>>>> 30-dias-parado-na-caixa-parecerista#224
 
 if(isset($_POST['envioComissao']))
 {
@@ -34,7 +38,9 @@ if(isset($_POST['envioComissao']))
 			$statusEnvio = 24;
 			break;
 	}
-	$dateNow = date('Y-m-d H:i:s');
+
+
+    $dateNow = date('Y-m-d H:i:s');
 	$sql_envioComissao = "UPDATE projeto SET idEtapaProjeto = '$statusEnvio', envioComissao = '$dateNow', idStatus = '2' WHERE idProjeto = '$idProjeto'";
 	if(mysqli_query($con,$sql_envioComissao))
 	{
@@ -268,13 +274,22 @@ if(isset($_POST['envioComissao']))
         </div>
 <?php
     }
+<<<<<<< HEAD
     
 $array_status = array(2, 3, 10, 12, 13, 20, 23, 25, 14, 15, 11,35); //status
+=======
+
+$array_status = array(2, 3, 10, 12, 13, 20, 23, 25, 14, 15, 11); //status
+>>>>>>> 30-dias-parado-na-caixa-parecerista#224
 foreach ($array_status as $idStatus)
 {
     $sqlStatus = "SELECT idEtapaProjeto, etapaProjeto, ordem FROM etapa_projeto WHERE idEtapaProjeto = '$idStatus'";
 
+<<<<<<< HEAD
     $sqlProjeto = "SELECT he.data, pro.idProjeto, nomeProjeto, protocolo, pf.nome, pf.cpf, razaoSocial, cnpj, areaAtuacao, pfc.nome AS comissao, etapaProjeto, pro.idEtapaProjeto AS idEtapaProjeto, pro.publicado
+=======
+    $sqlProjeto = "SELECT he.data, pro.idProjeto, nomeProjeto, protocolo, idComissao, pro.dataParecerista, pf.nome, pf.cpf, razaoSocial, cnpj, areaAtuacao, pfc.nome AS comissao, etapaProjeto, pro.idEtapaProjeto AS idEtapaProjeto 
+>>>>>>> 30-dias-parado-na-caixa-parecerista#224
                     FROM projeto AS pro
                     LEFT JOIN pessoa_fisica AS pf ON pro.idPf = pf.idPf
                     LEFT JOIN pessoa_juridica AS pj ON pro.idPj = pj.idPj
@@ -289,6 +304,7 @@ foreach ($array_status as $idStatus)
 
     foreach ($queryStatus as $status)
     {
+
         $i = 0;
         ?>
         <div class='form-group'>
@@ -330,6 +346,7 @@ foreach ($array_status as $idStatus)
                             <td>Documento</td>
                             <td>Área de Atuação</td>
                             <?=($status['ordem'] >= 5) ? "<td>Parecerista</td>" : NULL ?>
+                            <?=($status['ordem'] >= 5) ? "<td>Parecerista atribuido à</td>" : "<td></td>" ?>
                             <?php
                             if (($status['idEtapaProjeto'] == 23) || ($status['idEtapaProjeto'] == 13))
                             {
@@ -343,13 +360,47 @@ foreach ($array_status as $idStatus)
                             <td width='10%'></td>
                         </tr>
                         </thead>
+
                         <?php
                         while ($campo = mysqli_fetch_array($queryProjeto))
                         {
+                            $idComissao = $campo ['idComissao'];
+                            $idProjeto = $campo['idProjeto'];
+
+                            if ($idComissao != 0) {
+
+                                $dataParecerista = new DateTime($campo['dataParecerista']);
+                                $dateNow = new DateTime();
+                                $diff = $dataParecerista->diff($dateNow);
+
+                                if ($diff->days >= 30){
+
+                                    $limite = 1;
+
+                                    // echo $dataParecerista->format("Y-m-d") . "  " . $diff->days;
+
+                                } else {
+
+                                    $limite = 0;
+
+                                    // echo $dataParecerista->format("Y-m-d") . "  " . $diff->days;
+
+                                }
+
+                            } elseif ($idComissao == 0) {
+
+                                $sqlData = "UPDATE projeto SET dataParecerista = '0000-00-00' WHERE idProjeto = '$idProjeto'";
+                                $queryData = mysqli_query($con, $sqlData);
+                            }
 
                             if ($i < 5) {
+
                                 ?>
+<<<<<<< HEAD
                                 <tr style="background: <?= ($campo['publicado'] == 0? $cinza: "white") ?>">
+=======
+                                <tr style="background: <?= $limite == 1 ? "#ff4c4c" : "white" ?>">
+>>>>>>> 30-dias-parado-na-caixa-parecerista#224
                                     <td class='list_description maskProtocolo' data-mask = "0000.00.00/0000000"><?= $campo['protocolo'] ?></td>
                                     <?php
                                         if ($status['idEtapaProjeto'] == 2) {
@@ -382,7 +433,8 @@ foreach ($array_status as $idStatus)
                                     <td class='list_description'><?= isset($campo['nome']) ? $campo['nome'] : $campo['razaoSocial'] ?></td>
                                     <td class='list_description'><?= isset($campo['cpf']) ? $campo['cpf'] : $campo['cnpj'] ?></td>
                                     <td class='list_description'><?= mb_strimwidth($campo['areaAtuacao'], 0, 38, "...") ?></td>
-                                    <?= ($status['ordem'] >= 5) ? "<td class='list_description'>".$campo['comissao']."</td>" : NULL ?>
+                                    <?php echo ($status['ordem'] >= 5) ? "<td class='list_description'>".$campo['comissao']."</td>" : NULL ?>
+                                    <?php echo ($campo['dataParecerista'] != 0) ? "<td class='list_description'>".$diff->format("%a dias")."</td>" : "<td class='list_description'></td>" ?>
                                     <?php
                                     /*TODO: Transformar este bloco de if/elseif em função*/
                                     if ($status['idEtapaProjeto'] == 23)
@@ -430,14 +482,18 @@ foreach ($array_status as $idStatus)
                                                            value='Enviar para comissão' data-toggle='modal'
                                                            data-target='#enviarComissao'>
                                                 </form>
+<<<<<<< HEAD
                                                 <?php
+=======
+                                        <?php
+>>>>>>> 30-dias-parado-na-caixa-parecerista#224
                                             }
                                         }else{
                                             echo "<td colspan='2' style='color: #942a25;text-align: center;font-weight: bold'>Cancelado </td>";
                                         }
                                         ?>
                                         </td>
-                                        <?php                                        
+                                        <?php
                                     }
                                     ?>
                                 </tr>
@@ -489,7 +545,11 @@ foreach ($array_status as $idStatus)
                     while($campo = mysqli_fetch_array($query))
                     {
                     ?>
+<<<<<<< HEAD
                     <tr style="<?= ($campo['publicado'] == 0 ? $cinza : "white")?>">
+=======
+                    <tr style="background: <?= $limite == 1 ? "#ff4c4c" : "white" ?>">
+>>>>>>> 30-dias-parado-na-caixa-parecerista#224
                         <td class='list_description'><?=$campo['protocolo']?></td>
                         <td class='list_description'><?=exibirDataBr($campo['prazoCaptacao'])?></td>
                         <td class='list_description'><?=exibirDataBr($campo['inicioExecucao'])?></td>
@@ -553,7 +613,11 @@ foreach ($array_status as $idStatus)
                     while($campo = mysqli_fetch_array($query))
                     {
                     ?>
+<<<<<<< HEAD
                     <tr style="<?= ($campo['publicado'] == 0 ? $cinza : "white")?>">
+=======
+                    <tr style="background: <?= $limite == 1 ? "#ff4c4c" : "white" ?>">
+>>>>>>> 30-dias-parado-na-caixa-parecerista#224
                         <td class='list_description'><?=$campo['protocolo']?></td>
                         <td class='list_description'><?=exibirDataBr($campo['prazoCaptacao'])?></td>
                         <td class='list_description'><?=exibirDataBr($campo['inicioExecucao'])?></td>
@@ -617,7 +681,11 @@ foreach ($array_status as $idStatus)
                     while($campo = mysqli_fetch_array($query))
                     {
                     ?>
+<<<<<<< HEAD
                     <tr style="<?= ($campo['publicado'] == 0 ? $cinza : "white")?>">
+=======
+                    <tr style="background: <?= $limite == 1 ? "#ff4c4c" : "white" ?>">
+>>>>>>> 30-dias-parado-na-caixa-parecerista#224
                         <td class='list_description'><?=$campo['protocolo']?></td>
                         <td class='list_description'><?=exibirDataBr($campo['prazoCaptacao'])?></td>
                         <td class='list_description'><?=exibirDataBr($campo['inicioExecucao'])?></td>
