@@ -367,13 +367,9 @@ foreach ($array_status as $idStatus)
 
                                     $limite = 1;
 
-                                    // echo $dataParecerista->format("Y-m-d") . "  " . $diff->days;
-
                                 } else {
 
                                     $limite = 0;
-
-                                    // echo $dataParecerista->format("Y-m-d") . "  " . $diff->days;
 
                                 }
 
@@ -389,7 +385,7 @@ foreach ($array_status as $idStatus)
 
                                         echo "<tr style='background: $cinza'>";
 
-                                    } elseif($limite == 1) {
+                                    } elseif(isset($limite) && $limite == 1) {
 
                                         echo "<tr style='background: #ff4c4c'>";
 
