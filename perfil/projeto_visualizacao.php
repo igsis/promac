@@ -227,8 +227,8 @@ function DiasUteis() {
                                     <form class="form-horizontal" role="form"
                                           action="?perfil=projeto_pf" method="post">
                                         <input type="hidden" name="projeto" value="<?= $idProjeto ?>">
-                                        <button type="submit" class="btn btn-danger btn-block"
-                                                style="border-radius: 7px;" name="cancelar">Cancelar projeto
+                                        <button type="button" class="btn btn-danger btn-block"
+                                                style="border-radius: 7px;" data-toggle="modal" data-target="#cancelarProjeto" name="cancelar" data-title="Deseja cancelar esse projeto mesmo?" data-message="Você está cancelando um projeto">Cancelar projeto
                                         </button>
                                     </form>
                                 </div>
@@ -291,7 +291,24 @@ function DiasUteis() {
             </div>
         </div>
 </section>
-
+<div class="modal fade" id="cancelarProjeto" role="dialog" aria-labelledby="confirmApagarLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Cancelar projeto</h4>
+            </div>
+            <div class="modal-body">
+                <p>Deseja cancelar esse projeto mesmo?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Voltar</button>
+                <button type="button" class="btn btn-danger" id="confirm">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
     var projeto = document.getElementById('projeto_label');
 
