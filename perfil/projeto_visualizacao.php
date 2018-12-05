@@ -127,11 +127,7 @@ function DiasUteis() {
                                 <div class="form-group">
                                     <div class="col-md-offset-4 col-md-6">
                                         <form class="form-horizontal" role="form" action="?perfil=certificados&idProjeto=<?= $idProjeto ?>" method="post">
-<<<<<<< HEAD
-                                            <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;">Anexar Certidões Fiscais</button>
-=======
                                             <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;">Anexar Certificados</button>
->>>>>>> pdf-com-tabela#255
                                         </form>
                                     </div>
                                 </div>
@@ -141,12 +137,9 @@ function DiasUteis() {
 
                             <!-- Botão para solicitar alteração do projeto -->
                             <?php
-<<<<<<< HEAD
 
                             if ($projeto['idStatus'] == 3 && DiasUteis() < $dateNow) {
                                 ?>
-=======
->>>>>>> pdf-com-tabela#255
                             if($projeto['idStatus'] == 3){
                             ?>
                                 <div class="form-group">
@@ -163,20 +156,6 @@ function DiasUteis() {
                             <!-- Botão para agendar a entrega -->
 
                             <?php
-<<<<<<< HEAD
-
-                            if ($projeto['idStatus'] == 3 && (DiasUteis() >= -7 && DiasUteis() <= 7)) {
-                                ?>
-                                <div class="form-group">
-                                    <div class="col-md-offset-4 col-md-6">
-                                        <form class="form-horizontal" role="form"
-                                              action="#"
-                                              method="post">
-                                            <button type="submit" class="btn btn-success btn-block"
-                                                    style="border-radius: 7px;">agendar entrega pessoalmente
-                                            </button>
-                                        </form>
-=======
                             if($projeto['idStatus'] == 5) {
                             ?>
                                     <div class="form-group">
@@ -186,7 +165,6 @@ function DiasUteis() {
                                                 <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;">anexar complementos</button>
                                             </form>
                                         </div>
->>>>>>> pdf-com-tabela#255
                                     </div>
                             <?php
                             }
@@ -238,36 +216,16 @@ function DiasUteis() {
                             ?>
                             <div class="form-group">
                                 <div class="col-md-offset-4 col-md-6">
-                                    <form class="form-horizontal" role="form"
-                                          action="?perfil=projeto_pf" method="post">
-                                        <input type="hidden" name="projeto" value="<?= $idProjeto ?>">
-
-                                        <button type="submit" class="btn btn-danger btn-block"
-                                                style="border-radius: 7px;" name="cancelar">Cancelar projeto
-                                        </button>
-                                    </form>
+                                    <button class="btn btn-danger btn-block" type='button' data-toggle='modal' data-target='#cancelarProjeto' data-title="Cancelar projeto" data-message="Você está cancelando um projeto">Cancelar projeto</button>
                                 </div>
                             </div>
 
 
                             <!-- Botão para anexar recurso -->
                             <?php
-<<<<<<< HEAD
-                            if ($idEtapa != 26 && $idEtapa != 27) {
-                                $dateNow = date('Y-m-d');
-                                $dataPublicacaoDoc = $projeto['dataPublicacaoDoc'];
-                                $dataRecurso = date('Y-m-d', strtotime("+7 days", strtotime($dataPublicacaoDoc))); // Calcula a diferença em segundos entre as datas do recurso e publicação
-                                $diferenca =  strtotime($dataRecurso) - strtotime($dateNow);
-                                $dias = floor($diferenca / (60 * 60 * 24));//Calcula a diferença em dias
-
-
-                                if (($projeto['dataPublicacaoDoc'] != "0000-00-00" && ($dias <= 7 && $dias >= 0)) && ($projeto['idStatus'] == 4 || $projeto['idStatus'] == 3)) {
-                                    ?>
-=======
                             if($idEtapa != 26 && $idEtapa != 27){
                                 if($projeto['idStatus'] == 4){
                             ?>
->>>>>>> pdf-com-tabela#255
                                     <div class="form-group">
                                         <div class="col-md-offset-4 col-md-6">
                                             <form class="form-horizontal" role="form"
@@ -281,14 +239,8 @@ function DiasUteis() {
                             <?php
                                 }
                             }
-<<<<<<< HEAD
-
-                            ?>
-                        </div>
-=======
                         ?>
                     </div>
->>>>>>> pdf-com-tabela#255
 
                 <!-- LABEL PROJETO -->
 
@@ -315,7 +267,29 @@ function DiasUteis() {
         </div>
     </div>
 </section>
+<div class="modal fade" id="cancelarProjeto" role="dialog" aria-labelledby="confirmApagarLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Cancelar projeto</h4>
+            </div>
+            <div class="modal-body">
+                <p>Deseja cancelar esse projeto mesmo?</p>
+            </div>
+            <form class="form-horizontal" role="form"
+                  action="?perfil=projeto_pf" method="post">
+                <input type="hidden" name="projeto" value="<?= $idProjeto ?>">
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Voltar</button>
+                    <button type="submit" class="btn btn-danger" name="cancelar" id="confirm">Cancelar</button>
+                </div>
+            </form>
 
+        </div>
+    </div>
+</div>
 <script>
     var projeto = document.getElementById('projeto_label');
 
