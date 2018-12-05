@@ -1,10 +1,8 @@
 <?php
 
-<<<<<<< HEAD
-$cinza = "#EBEBEB";
-=======
 set_time_limit(1200);
->>>>>>> 30-dias-parado-na-caixa-parecerista#224
+
+$cinza = "#EBEBEB";
 
 if(isset($_POST['envioComissao']))
 {
@@ -274,22 +272,14 @@ if(isset($_POST['envioComissao']))
         </div>
 <?php
     }
-<<<<<<< HEAD
+
     
 $array_status = array(2, 3, 10, 12, 13, 20, 23, 25, 14, 15, 11,35); //status
-=======
 
-$array_status = array(2, 3, 10, 12, 13, 20, 23, 25, 14, 15, 11); //status
->>>>>>> 30-dias-parado-na-caixa-parecerista#224
 foreach ($array_status as $idStatus)
 {
     $sqlStatus = "SELECT idEtapaProjeto, etapaProjeto, ordem FROM etapa_projeto WHERE idEtapaProjeto = '$idStatus'";
-
-<<<<<<< HEAD
-    $sqlProjeto = "SELECT he.data, pro.idProjeto, nomeProjeto, protocolo, pf.nome, pf.cpf, razaoSocial, cnpj, areaAtuacao, pfc.nome AS comissao, etapaProjeto, pro.idEtapaProjeto AS idEtapaProjeto, pro.publicado
-=======
-    $sqlProjeto = "SELECT he.data, pro.idProjeto, nomeProjeto, protocolo, idComissao, pro.dataParecerista, pf.nome, pf.cpf, razaoSocial, cnpj, areaAtuacao, pfc.nome AS comissao, etapaProjeto, pro.idEtapaProjeto AS idEtapaProjeto 
->>>>>>> 30-dias-parado-na-caixa-parecerista#224
+    $sqlProjeto = "SELECT he.data, pro.idProjeto, nomeProjeto, protocolo, idComissao, pro.dataParecerista, pf.nome, pf.cpf, razaoSocial, cnpj, areaAtuacao, pfc.nome AS comissao, etapaProjeto, pro.idEtapaProjeto AS idEtapaProjeto, pro.publicado  
                     FROM projeto AS pro
                     LEFT JOIN pessoa_fisica AS pf ON pro.idPf = pf.idPf
                     LEFT JOIN pessoa_juridica AS pj ON pro.idPj = pj.idPj
@@ -395,12 +385,21 @@ foreach ($array_status as $idStatus)
 
                             if ($i < 5) {
 
+                                    if ($campo['publicado'] == 0) {
+
+                                        echo "<tr style='background: $cinza'>";
+
+                                    } elseif($limite == 1) {
+
+                                        echo "<tr style='background: #ff4c4c'>";
+
+                                    } else {
+
+                                        echo "<tr style='background: white'>";
+
+                                    }
+
                                 ?>
-<<<<<<< HEAD
-                                <tr style="background: <?= ($campo['publicado'] == 0? $cinza: "white") ?>">
-=======
-                                <tr style="background: <?= $limite == 1 ? "#ff4c4c" : "white" ?>">
->>>>>>> 30-dias-parado-na-caixa-parecerista#224
                                     <td class='list_description maskProtocolo' data-mask = "0000.00.00/0000000"><?= $campo['protocolo'] ?></td>
                                     <?php
                                         if ($status['idEtapaProjeto'] == 2) {
@@ -482,11 +481,7 @@ foreach ($array_status as $idStatus)
                                                            value='Enviar para comissão' data-toggle='modal'
                                                            data-target='#enviarComissao'>
                                                 </form>
-<<<<<<< HEAD
-                                                <?php
-=======
                                         <?php
->>>>>>> 30-dias-parado-na-caixa-parecerista#224
                                             }
                                         }else{
                                             echo "<td colspan='2' style='color: #942a25;text-align: center;font-weight: bold'>Cancelado </td>";
@@ -545,11 +540,9 @@ foreach ($array_status as $idStatus)
                     while($campo = mysqli_fetch_array($query))
                     {
                     ?>
-<<<<<<< HEAD
-                    <tr style="<?= ($campo['publicado'] == 0 ? $cinza : "white")?>">
-=======
+
+                    <tr style="background: <?= ($campo['publicado'] == 0 ? $cinza : "white")?>">
                     <tr style="background: <?= $limite == 1 ? "#ff4c4c" : "white" ?>">
->>>>>>> 30-dias-parado-na-caixa-parecerista#224
                         <td class='list_description'><?=$campo['protocolo']?></td>
                         <td class='list_description'><?=exibirDataBr($campo['prazoCaptacao'])?></td>
                         <td class='list_description'><?=exibirDataBr($campo['inicioExecucao'])?></td>
@@ -612,12 +605,23 @@ foreach ($array_status as $idStatus)
                     <?php
                     while($campo = mysqli_fetch_array($query))
                     {
+
+
+                    if ($campo['publicado'] == 0) {
+
+                        echo "<tr style='background: $cinza'>";
+
+                    } elseif($limite == 1) {
+
+                        echo "<tr style='background: #ff4c4c'>";
+
+                    } else {
+
+                        echo "<tr style='background: white'>";
+
+                    }
+
                     ?>
-<<<<<<< HEAD
-                    <tr style="<?= ($campo['publicado'] == 0 ? $cinza : "white")?>">
-=======
-                    <tr style="background: <?= $limite == 1 ? "#ff4c4c" : "white" ?>">
->>>>>>> 30-dias-parado-na-caixa-parecerista#224
                         <td class='list_description'><?=$campo['protocolo']?></td>
                         <td class='list_description'><?=exibirDataBr($campo['prazoCaptacao'])?></td>
                         <td class='list_description'><?=exibirDataBr($campo['inicioExecucao'])?></td>
@@ -680,12 +684,22 @@ foreach ($array_status as $idStatus)
                     <?php
                     while($campo = mysqli_fetch_array($query))
                     {
+
+                    if ($campo['publicado'] == 0) {
+
+                        echo "<tr style='background: $cinza'>";
+
+                    } elseif($limite == 1) {
+
+                        echo "<tr style='background: #ff4c4c'>";
+
+                    } else {
+
+                        echo "<tr style='background: white'>";
+
+                    }
+
                     ?>
-<<<<<<< HEAD
-                    <tr style="<?= ($campo['publicado'] == 0 ? $cinza : "white")?>">
-=======
-                    <tr style="background: <?= $limite == 1 ? "#ff4c4c" : "white" ?>">
->>>>>>> 30-dias-parado-na-caixa-parecerista#224
                         <td class='list_description'><?=$campo['protocolo']?></td>
                         <td class='list_description'><?=exibirDataBr($campo['prazoCaptacao'])?></td>
                         <td class='list_description'><?=exibirDataBr($campo['inicioExecucao'])?></td>
