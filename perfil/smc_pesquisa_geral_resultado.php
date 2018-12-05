@@ -1,4 +1,7 @@
 <?php
+
+set_time_limit(1200);
+
 $con = bancoMysqli();
 
 $nome = $_POST['nome'] ?? NULL;
