@@ -224,13 +224,7 @@ function DiasUteis() {
                             ?>
                             <div class="form-group">
                                 <div class="col-md-offset-4 col-md-6">
-                                    <form class="form-horizontal" role="form"
-                                          action="?perfil=projeto_pf" method="post">
-                                        <input type="hidden" name="projeto" value="<?= $idProjeto ?>">
-                                        <button type="button" class="btn btn-danger btn-block"
-                                                style="border-radius: 7px;" data-toggle="modal" data-target="#cancelarProjeto" name="cancelar" data-title="Deseja cancelar esse projeto mesmo?" data-message="Você está cancelando um projeto">Cancelar projeto
-                                        </button>
-                                    </form>
+                                    <button class="btn btn-danger btn-block" type='button' data-toggle='modal' data-target='#cancelarProjeto' data-title="Cancelar projeto" data-message="Você está cancelando um projeto">Cancelar projeto</button>
                                 </div>
                             </div>
                             <!-- Botão para anexar recurso -->
@@ -302,10 +296,15 @@ function DiasUteis() {
             <div class="modal-body">
                 <p>Deseja cancelar esse projeto mesmo?</p>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Voltar</button>
-                <button type="button" class="btn btn-danger" id="confirm">Cancelar</button>
-            </div>
+            <form class="form-horizontal" role="form"
+                  action="?perfil=projeto_pf" method="post">
+                <input type="hidden" name="projeto" value="<?= $idProjeto ?>">
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Voltar</button>
+                    <button type="submit" class="btn btn-danger" name="cancelar" id="confirm">Cancelar</button>
+                </div>
+            </form>
+
         </div>
     </div>
 </div>
