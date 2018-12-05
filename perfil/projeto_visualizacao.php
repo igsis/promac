@@ -96,7 +96,6 @@ function DiasUteis() {
                                             if($projeto['idStatus'] == 3){ //caso aprovado
                                                 echo "R$ " . dinheiroParaBr($projeto['valorAprovado']);
                                             }
-                                            echo "<hr>" . diasUteis();
 
                                             ?>
                                         </li>
@@ -140,8 +139,6 @@ function DiasUteis() {
 
                             if ($projeto['idStatus'] == 3 && DiasUteis() < $dateNow) {
                                 ?>
-                            if($projeto['idStatus'] == 3){
-                            ?>
                                 <div class="form-group">
                                     <div class="col-md-offset-4 col-md-6">
                                         <form class="form-horizontal" role="form" action="?perfil=alteracao_projeto&idProjeto=<?= $idProjeto ?>" method="post">
