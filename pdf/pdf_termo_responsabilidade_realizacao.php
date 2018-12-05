@@ -42,7 +42,7 @@ $idProjeto = $_POST['idProjeto'];
 $dateNow = date('d/m/Y');
 $rodape = strftime('%d de %B de %Y', strtotime($dateNow));
 
-$queryProjeto = "SELECT nomeProjeto, tipoPessoa,idPf,idPj, valorAprovado, idRenunciaFiscal FROM projeto WHERE idProjeto = '$idProjeto' AND publicado = 1";
+$queryProjeto = "SELECT nomeProjeto, tipoPessoa,idPf,idPj, valorAprovado, idRenunciaFiscal, dataPublicacaoDoc FROM projeto WHERE idProjeto = '$idProjeto' AND publicado = 1";
 $enviaP = mysqli_query($con, $queryProjeto);
 $row = mysqli_fetch_array($enviaP);
 $nomeProjeto = $row['nomeProjeto'];
@@ -51,6 +51,7 @@ $idPf  = $row['idPf'];
 $idPj  = $row['idPj'];
 $valorAprovado  = $row['valorAprovado'];
 $idRenunciaFiscal = $row['idRenunciaFiscal'];
+$dataPublicacaoDoc = $row['dataPublicacaoDoc'];
 
 
 if($tipoPessoa == 1) {
@@ -124,7 +125,7 @@ $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 11);
 $pdf->Cell(32,$l,utf8_decode("Data aprovação:"),0,0,'L');
 $pdf->SetFont('Arial','', 11);
-$pdf->Cell(170,$l,utf8_decode(""),0,1,'L');
+$pdf->Cell(170,$l,exibirDataBr($dataPublicacaoDoc),0,1,'L');
 
 $pdf->Ln();
 
