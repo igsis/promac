@@ -53,6 +53,10 @@ $l=7; //DEFINE A ALTURA DA LINHA
 $pdf->SetXY( $x , 15 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
 
 $pdf->SetX($x);
+$pdf->SetFont('Arial','B', 11);
+$pdf->Image('../visual/images/brasao.jpg',$x,15,15);
+
+$pdf->SetX($x);
 $pdf->SetFont('Arial','B', 16);
 $pdf->Cell(170,9,utf8_decode("PREFEITURA DO MUNICÍCIO DE SÃO PAULO"),0,1,'C');
 $pdf->SetX($x);
@@ -96,6 +100,9 @@ $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 11);
 $pdf->Cell(170,$l,utf8_decode("Em São Paulo, $dateNow."),0,0,'C');
 
+$pdf->SetX($x);
+$pdf->SetFont('Arial','B', 11);
+$pdf->Image('../visual/images/assinatura_tati.jpg',60,230,90);
 
 $pdf->Ln();
 $pdf->Ln();
