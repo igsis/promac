@@ -16,7 +16,7 @@ class PDF extends FPDF
 }
 $idProjeto = $_POST['idProjeto'];
 
-$dateNow = date('d/m/Y');
+$dateNow = date('Y-m-d');
 
 $queryProjeto = "SELECT nomeProjeto, tipoPessoa,idPf,idPj FROM projeto WHERE idProjeto = '$idProjeto' AND publicado = 1";
 $enviaP = mysqli_query($con, $queryProjeto);

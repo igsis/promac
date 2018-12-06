@@ -39,7 +39,7 @@ class PDF extends FPDF
 }
 $idProjeto = $_POST['idProjeto'];
 
-$dateNow = date('d/m/Y');
+$dateNow = date('Y-m-d');
 $rodape = strftime('%d de %B de %Y', strtotime($dateNow));
 
 $queryProjeto = "SELECT nomeProjeto, tipoPessoa,idPf,idPj, valorAprovado, idRenunciaFiscal, dataPublicacaoDoc FROM projeto WHERE idProjeto = '$idProjeto' AND publicado = 1";

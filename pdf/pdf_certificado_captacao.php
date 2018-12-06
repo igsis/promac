@@ -27,7 +27,7 @@ date_default_timezone_set('America/Sao_Paulo');
 
 $idProjeto = $_POST['idProjeto'];
 
-$dateNow = date('d/m/Y');
+$dateNow = date('Y-m-d');
 $cabecalho = strftime('%d de %B de %Y', strtotime($dateNow));
 
 $queryProjeto = "SELECT protocolo, nomeProjeto, tipoPessoa,idPf,idPj, idAreaAtuacao, valorAprovado FROM projeto WHERE idProjeto = '$idProjeto' AND publicado = 1";
