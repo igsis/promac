@@ -135,10 +135,10 @@ function DiasUteis() {
                                             <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;">Link do agendamento Google Forms</button>
                                         </form>
                                         <form class="form-horizontal" role="form" action="../pdf/CARTA_DE_INTENCAO_DE_INCENTIVO.docx" method="post">
-                                            <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;">Download do modelo de carta de intenção</button>
+                                            <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;">Download modelo da carta de incentivo</button>
                                         </form>
                                         <form class="form-horizontal" role="form" action="?perfil=carta_incentivo&idProjeto=<?= $idProjeto ?>" method="post">
-                                            <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;">Inserir carta de intenção de incentivo</button>
+                                            <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;">Inserir carta de incentivo</button>
                                         </form>
                                     </div>
                                 </div>
@@ -270,7 +270,7 @@ function DiasUteis() {
                     echo "<form class='form-horizontal' role='form' action='?perfil=projeto_pj' method='post'>";
                 }
                 ?>
-                <input type="submit" value="Voltar" class="btn btn-theme btn-md btn-block">
+                <br><input type="submit" value="Voltar" class="btn btn-theme btn-md btn-block">
                         </form>
             </div>
         </div>

@@ -3,6 +3,10 @@ $con = bancoMysqli();
 
 $idProjeto = $_GET['idProjeto'];
 
+// Gerar documentos
+$server = "http://".$_SERVER['SERVER_NAME']."/promac";
+$http = $server."/pdf/";
+
 if ($_SESSION['tipoPessoa'] == 1) {
     $idPf = $_SESSION['idUser'];
     include '../perfil/includes/menu_interno_pf.php';
@@ -11,22 +15,29 @@ if ($_SESSION['tipoPessoa'] == 1) {
     include '../perfil/includes/menu_interno_pj.php';
 }
 
-if(isset($_POST['enviar']) || ($_POST['edita'])) {
-
-    $carta = $_POST['carta_incentivo'];
-}
 
 if(isset($_POST['enviar'])) {
 
-    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '3' AND idListaDocumento IN (18)";
+    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '3' AND idListaDocumento = 18";
     $query_arquivos = mysqli_query($con, $sql_arquivos);
+
+   // echo $sql_arquivos;
+
     $new_status = "UPDATE `promac`.`projeto` SET `idEtapaProjeto` = '35' WHERE `idProjeto`= '$idProjeto'";
     $query_status = mysqli_query($con, $new_status);
-    while ($arq = mysqli_fetch_array($query_arquivos)) {
+
+    print_r($_FILES);
+
+
+    foreach($query_arquivos as $arq) {
+
         $y = $arq['idListaDocumento'];
         $x = $arq['sigla'];
-        $nome_arquivo = isset($_FILES['arquivo']['name'][$x]) ? $_FILES['arquivo']['name'][$x] : null;
-        $f_size = isset($_FILES['arquivo']['size'][$x]) ? $_FILES['arquivo']['size'][$x] : null;
+        $nome_arquivo = $_FILES['carta_incentivo']['name'] ?? null;
+        $f_size = $_FILES['carta_incentivo']['size'] ??  null;
+
+
+        echo $y . "<br>" . $x . "<br>" . $nome_arquivo . "<br>" . $f_size . "<br>";
 
         //Extensões permitidas
         $ext = array("PDF", "pdf");
@@ -36,25 +47,26 @@ if(isset($_POST['enviar'])) {
             $mensagem = "<font color='#FF0000'><strong>Erro! Tamanho de arquivo excedido! Tamanho máximo permitido: 05 MB.</strong></font>";
         } else {
             if ($nome_arquivo != "") {
-                $nome_temporario = $_FILES['arquivo']['tmp_name'][$x];
+                $nome_temporario = $_FILES['carta_incentivo']['tmp_name'];
                 $new_name = date("YmdHis") . "_" . semAcento($nome_arquivo); //Definindo um novo nome para o arquivo
                 $hoje = date("Y-m-d H:i:s");
                 $dir = '../uploadsdocs/'; //Diretório para uploads
                 $allowedExts = array(".pdf", ".PDF"); //Extensões permitidas
                 $ext = strtolower(substr($nome_arquivo, -4));
-                if (isset($_POST['idEtapaProjeto'])) {
-                    $idStatus = $_POST['idEtapaProjeto'];
-                }
+
                 if (in_array($ext, $allowedExts)) //Pergunta se a extensão do arquivo, está presente no array das extensões permitidas
                 {
                     if (move_uploaded_file($nome_temporario, $dir . $new_name)) {
                         $sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('3', '$idProjeto', '$y', '$new_name', '$hoje', '1'); ";
+
+                        echo $sql_insere_arquivo;
                         $query = mysqli_query($con, $sql_insere_arquivo);
 
                         if ($query) {
 
                             $mensagem = "<font color='#01DF3A'><strong>Arquivo recebido com sucesso!</strong></font>";
-                           // gravarLog($sql_insere_arquivo);
+                            // gravarLog($sql_insere_arquivo);
+
                         } else {
                             $mensagem = "<font color='#FF0000'><strong>Erro ao gravar no banco.</strong></font>";
                         }

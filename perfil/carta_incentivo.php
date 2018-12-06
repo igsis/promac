@@ -33,7 +33,7 @@
         </div>
         <div class="row">
             <div class="col-md-offset-1 col-md-10">
-                <form method="POST" action="?perfil=carta_incentivo_edita&idProjeto=<?= $idProjeto ?>" class="form-group" role="form">
+                <form method="POST" enctype="multipart/form-data" action="?perfil=carta_incentivo_edita&idProjeto=<?= $idProjeto ?>" class="form-group" role="form">
 
                     <hr/>
 
