@@ -81,44 +81,6 @@ if(isset($_POST['enviar'])) {
     }
 }
 
-
-
-/*    if(mysqli_query($con, $sql)) {
-
-        $idCarta = recuperaUltimo("upload_arquivo");
-
-        $mensagem = mensagem("success","Carta enviada com sucesso!");
-        //gravarLog($sql);
-    }else{
-        $mensagem = mensagem("danger","Erro ao gravar! Tente novamente.");
-        //gravarLog($sql);
-    }
-}*/
-
-
-/*if(isset($_POST['edita'])) {
-    $idCarta = recuperaUltimo("up");
-    $sql = "UPDATE agendamento SET 
-                               linkAgendamento = '$link',
-                               data = now() 
-                               WHERE id = '$idAgendamento'";
-
-    if(mysqli_query($con, $sql)) {
-
-        $idAgendamento = recuperaUltimo("agendamento");
-        $mensagem = mensagem("success","Editado com sucesso!");
-        //gravarLog($sql);
-    }else{
-        $mensagem = mensagem("danger","Erro ao gravar! Tente novamente.");
-        //gravarLog($sql);
-    }
-
-
-}*/
-
-// $agendamento = recuperaDados("agendamento", "id", $idAgendamento);
-
-
 ?>
 
 <section id="list_items" class="home-section bg-white">

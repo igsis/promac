@@ -336,7 +336,7 @@ foreach ($array_status as $idStatus)
                             <td>Documento</td>
                             <td>Área de Atuação</td>
                             <?=($status['ordem'] >= 5) ? "<td>Parecerista</td>" : NULL ?>
-                            <?=($status['ordem'] >= 5) ? "<td>Parecerista atribuido à</td>" : "<td></td>" ?>
+                            <?=($status['idEtapaProjeto'] == 7 || $status['idEtapaProjeto'] == 19 || $status['idEtapaProjeto'] == 24 || $status['idEtapaProjeto'] == 34) ? "<td>Parecerista atribuido à</td>" : "<td></td>" ?>
                             <?php
                             if (($status['idEtapaProjeto'] == 23) || ($status['idEtapaProjeto'] == 13))
                             {
