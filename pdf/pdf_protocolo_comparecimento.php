@@ -73,7 +73,7 @@ $pdf->Cell(170,8,utf8_decode("SECRETARIA MUNICIPAL DE CULTURA"),0,1,'C');
 $pdf->SetX($x);
 $pdf->Cell(170,8,utf8_decode("Coordenadoria de Incetivo à Cultura - Pro-Mac"),0,1,'C');
 
-$pdf->Ln(20);
+$pdf->Ln(10);
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 14);
@@ -158,7 +158,7 @@ $pdf->SetFont('Arial','', 11);
 $pdf->Cell(5,5,utf8_decode(""),'TBLR',0,'L');
 $pdf->Cell(165,$l,utf8_decode(" Termo de Responsabilidade de Realização de Projeto Cultural, uma via."),0,1,'L');
 
-$pdf->Ln(25);
+$pdf->Ln(20);
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','', 11);
