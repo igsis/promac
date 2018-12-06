@@ -126,7 +126,19 @@ function DiasUteis() {
                                 <div class="form-group">
                                     <div class="col-md-offset-4 col-md-6">
                                         <form class="form-horizontal" role="form" action="?perfil=certificados&idProjeto=<?= $idProjeto ?>" method="post">
-                                            <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;">Anexar Certificados</button>
+                                            <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;">Anexar Certidões Fiscais</button>
+                                        </form>
+                                        <form class="form-horizontal" role="form" action="../pdf/TERMO_DE_RESPONSABILIDADE_FINAL.docx" method="post">
+                                            <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;">Imprimir termo de responsabilidade</button>
+                                        </form>
+                                        <form class="form-horizontal" role="form" action="https://docs.google.com/forms/<?= $idProjeto ?>" target="_blank" method="post">
+                                            <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;">Link do agendamento Google Forms</button>
+                                        </form>
+                                        <form class="form-horizontal" role="form" action="../pdf/CARTA_DE_INTENCAO_DE_INCENTIVO.docx" method="post">
+                                            <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;">Download modelo da carta de incentivo</button>
+                                        </form>
+                                        <form class="form-horizontal" role="form" action="?perfil=carta_incentivo&idProjeto=<?= $idProjeto ?>" method="post">
+                                            <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;">Inserir carta de incentivo</button>
                                         </form>
                                     </div>
                                 </div>
@@ -258,7 +270,7 @@ function DiasUteis() {
                     echo "<form class='form-horizontal' role='form' action='?perfil=projeto_pj' method='post'>";
                 }
                 ?>
-                <input type="submit" value="Voltar" class="btn btn-theme btn-md btn-block">
+                <br><input type="submit" value="Voltar" class="btn btn-theme btn-md btn-block">
                         </form>
             </div>
         </div>
