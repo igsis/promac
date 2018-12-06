@@ -11,7 +11,7 @@ foreach ($array_etapa as $idEtapaProjeto)
     {
         $parecerista = " AND idComissao = $idPf";
     }
-    $sqlProjeto = "SELECT idProjeto, nomeProjeto, protocolo, pf.nome, pf.cpf, razaoSocial, cnpj, areaAtuacao, pro.publicado, pfc.nome AS comissao, etapaProjeto, pro.idEtapaProjeto AS idEtapaProjeto 
+    $sqlProjeto = "SELECT idProjeto, nomeProjeto, protocolo,  idComissao, pro.dataParecerista, pf.nome, pf.cpf, razaoSocial, cnpj, areaAtuacao, pro.publicado, pfc.nome AS comissao, etapaProjeto, pro.idEtapaProjeto AS idEtapaProjeto 
                     FROM projeto AS pro
                     LEFT JOIN pessoa_fisica AS pf ON pro.idPf = pf.idPf
                     LEFT JOIN pessoa_juridica AS pj ON pro.idPj = pj.idPj
@@ -52,22 +52,63 @@ foreach ($array_etapa as $idEtapaProjeto)
                             <td>Documento</td>
                             <td>Área de Atuação</td>
                             <td>Parecerista</td>
+                            <?=($etapa_projeto['idEtapaProjeto'] == 7 || $etapa_projeto['idEtapaProjeto'] == 19 || $etapa_projeto['idEtapaProjeto'] == 24 || $etapa_projeto['idEtapaProjeto'] == 34) ? "<td>Parecerista atribuido à</td>" : "<td></td>" ?>
                             <td width='10%'></td>
                         </tr>
                         </thead>
                         <?php
                         while ($campo = mysqli_fetch_array($queryProjeto))
                         {
+                            $idComissao = $campo ['idComissao'];
+                            $idProjeto = $campo['idProjeto'];
+
+                            if ($idComissao != 0) {
+
+                                $dataParecerista = new DateTime($campo['dataParecerista']);
+                                $dateNow = new DateTime();
+                                $diff = $dataParecerista->diff($dateNow);
+
+                                if ($diff->days >= 30){
+
+                                    $limite = 1;
+
+                                } else {
+
+                                    $limite = 0;
+
+                                }
+
+                            } elseif ($idComissao == 0) {
+
+                                $sqlData = "UPDATE projeto SET dataParecerista = '0000-00-00' WHERE idProjeto = '$idProjeto'";
+                                $queryData = mysqli_query($con, $sqlData);
+                            }
 
                             if ($i < 15) {
+
+                                if ($campo['publicado'] == 0) {
+
+                                    echo "<tr style='background: $cinza'>";
+
+                                } elseif(isset($limite) && $limite == 1) {
+
+                                    echo "<tr style='background: #ff4c4c'>";
+
+                                } else {
+
+                                    echo "<tr style='background: white'>";
+
+                                }
+
                                 ?>
-                                <tr style="background: <?= ($campo['publicado'] == 0? $cinza: "white") ?>">
+
                                     <td class='list_description'><?= $campo['protocolo'] ?></td>
                                     <td class='list_description'><?= $campo['nomeProjeto'] ?></td>
                                     <td class='list_description'><?= isset($campo['nome']) ? $campo['nome'] : $campo['razaoSocial'] ?></td>
                                     <td class='list_description'><?= isset($campo['cpf']) ? $campo['cpf'] : $campo['cnpj'] ?></td>
                                     <td class='list_description'><?= mb_strimwidth($campo['areaAtuacao'], 0, 38, "...") ?></td>
                                     <td class='list_description'><?=$campo['comissao']?></td>
+                                    <?= ($campo['dataParecerista'] != 0) ? "<td class='list_description'>".$diff->format("%a dias")."</td>" : "<td class='list_description'></td>" ?>
                                     <?php
                                     if ($campo['publicado'] == 1) {
                                         ?>

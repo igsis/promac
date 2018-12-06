@@ -336,7 +336,6 @@ foreach ($array_status as $idStatus)
                             <td>Documento</td>
                             <td>Área de Atuação</td>
                             <?=($status['ordem'] >= 5) ? "<td>Parecerista</td>" : NULL ?>
-                            <?=($status['idEtapaProjeto'] == 7 || $status['idEtapaProjeto'] == 19 || $status['idEtapaProjeto'] == 24 || $status['idEtapaProjeto'] == 34) ? "<td>Parecerista atribuido à</td>" : "<td></td>" ?>
                             <?php
                             if (($status['idEtapaProjeto'] == 23) || ($status['idEtapaProjeto'] == 13))
                             {
@@ -354,48 +353,12 @@ foreach ($array_status as $idStatus)
                         <?php
                         while ($campo = mysqli_fetch_array($queryProjeto))
                         {
-                            $idComissao = $campo ['idComissao'];
-                            $idProjeto = $campo['idProjeto'];
-
-                            if ($idComissao != 0) {
-
-                                $dataParecerista = new DateTime($campo['dataParecerista']);
-                                $dateNow = new DateTime();
-                                $diff = $dataParecerista->diff($dateNow);
-
-                                if ($diff->days >= 30){
-
-                                    $limite = 1;
-
-                                } else {
-
-                                    $limite = 0;
-
-                                }
-
-                            } elseif ($idComissao == 0) {
-
-                                $sqlData = "UPDATE projeto SET dataParecerista = '0000-00-00' WHERE idProjeto = '$idProjeto'";
-                                $queryData = mysqli_query($con, $sqlData);
-                            }
-
                             if ($i < 5) {
 
-                                    if ($campo['publicado'] == 0) {
 
-                                        echo "<tr style='background: $cinza'>";
-
-                                    } elseif(isset($limite) && $limite == 1) {
-
-                                        echo "<tr style='background: #ff4c4c'>";
-
-                                    } else {
-
-                                        echo "<tr style='background: white'>";
-
-                                    }
 
                                 ?>
+                                <tr style="background: <?= ($campo['publicado'] == 0? $cinza: "white") ?>">
                                     <td class='list_description maskProtocolo' data-mask = "0000.00.00/0000000"><?= $campo['protocolo'] ?></td>
                                     <?php
                                         if ($status['idEtapaProjeto'] == 2) {
@@ -429,7 +392,6 @@ foreach ($array_status as $idStatus)
                                     <td class='list_description'><?= isset($campo['cpf']) ? $campo['cpf'] : $campo['cnpj'] ?></td>
                                     <td class='list_description'><?= mb_strimwidth($campo['areaAtuacao'], 0, 38, "...") ?></td>
                                     <?php echo ($status['ordem'] >= 5) ? "<td class='list_description'>".$campo['comissao']."</td>" : NULL ?>
-                                    <?php echo ($campo['dataParecerista'] != 0) ? "<td class='list_description'>".$diff->format("%a dias")."</td>" : "<td class='list_description'></td>" ?>
                                     <?php
                                     /*TODO: Transformar este bloco de if/elseif em função*/
                                     if ($status['idEtapaProjeto'] == 23)

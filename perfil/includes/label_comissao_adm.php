@@ -26,7 +26,7 @@
                     </select>
                 </div>
                 <div class="col-md-3"><br/>
-                    <input type="hidden" name="idProjeto" value="<?php echo $idProjeto; ?>"/>
+                    <input type="hidden" name="idProjeto" value="<?= $idProjeto; ?>"/>
                     <input type="submit" class="btn btn-theme  btn-block" value="Atualizar responsável"
                            name="atualizaResponsavel">
                 </div>

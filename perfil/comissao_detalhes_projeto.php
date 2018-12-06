@@ -1,5 +1,6 @@
 <?php
 $con = bancoMysqli();
+$conn = bancoPDO();
 
 if(isset($_POST['idProjeto']))
 {
@@ -246,7 +247,15 @@ if(isset($_POST['atualizaResponsavel']))
 	$idComissao = $_POST['idComissao'];
 	$idProjeto = $_POST['idProjeto'];
 
-    if ($idComissao == 0) {
+
+	$stmt = $conn->prepare("SELECT dataParecerista FROM projeto WHERE idProjeto = :idProjeto");
+    $stmt->bindValue(':idProjeto',$idProjeto);
+    $stmt->execute();
+    $result = $stmt->fetch();
+
+    $dataParecerista = $result['dataParecerista'];
+
+    if ($idComissao == 0 || $dataParecerista == 0) {
         $sql_atualiza_comissao = "UPDATE projeto SET idComissao = '$idComissao', dataParecerista = current_date WHERE idProjeto = '$idProjeto'";
         $query_atualiza_comissao = mysqli_query($con, $sql_atualiza_comissao);
 
