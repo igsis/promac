@@ -91,7 +91,7 @@ $pdf->Ln();
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','', 11);
-$pdf->MultiCell(170,$l,utf8_decode("A SECRETARIA MUNICIPAL DE CULTURA representada pela Sr.ª Coordenadora Tatiana Solimeo, nos termos da Portaria nº 69/2018-SMC-G e do Decreto, nº 58.041 de 20 de Dezembro de 2017 DECLARA o projeto especificado abaixo APROVADO, estando seu proponente apto a pleitear o incentivo fiscal, previsto na Lei nº 15.948 de 26 de Dezembro de 2013, no valor de R$ $valorAprovado tendo este certificado validade para o período restante do exercício fiscal deste ano, podendo ser prorrogável por 1 (um) ano, conforme o art.º 45 do Decreto nº 58.041/2017."));
+$pdf->MultiCell(170,$l,utf8_decode("A SECRETARIA MUNICIPAL DE CULTURA representada pela Sr.ª Coordenadora Tatiana Solimeo, nos termos da Portaria nº 69/2018-SMC-G e do Decreto, nº 58.041 de 20 de Dezembro de 2017 DECLARA o projeto especificado abaixo APROVADO, no valor de R$ $valorAprovado estando seu proponente apto a pleitear o incentivo fiscal, previsto na Lei nº 15.948 de 26 de Dezembro de 2013, até o limite final do benefício fiscal concedido, sendo prorrogado conforme solicitação motivada pelo proponente, com validade até 31 de dezembro de 2019, não sendo passível de nova prorrogação."));
 
 $pdf->ln();
 

@@ -7,6 +7,8 @@ require_once("../funcoes/funcoesGerais.php");
 //CONEXÃO COM BANCO DE DADOS
 $con = bancoMysqli();
 
+setlocale(LC_TIME, 'portuguese');
+date_default_timezone_set('America/Sao_Paulo');
 
 session_start();
 
@@ -16,7 +18,8 @@ class PDF extends FPDF
 }
 $idProjeto = $_POST['idProjeto'];
 
-$dateNow = date('d/m/Y');
+$dateNow = date('Y-m-d');
+$cabecalho = strftime('%d de %B de %Y', strtotime($dateNow));
 
 $queryProjeto = "SELECT nomeProjeto, tipoPessoa,idPf,idPj FROM projeto WHERE idProjeto = '$idProjeto' AND publicado = 1";
 $enviaP = mysqli_query($con, $queryProjeto);
@@ -98,7 +101,7 @@ $pdf->Ln();
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 11);
-$pdf->Cell(170,$l,utf8_decode("Em São Paulo, $dateNow."),0,0,'C');
+$pdf->Cell(170,$l,utf8_decode("Em São Paulo, ".$cabecalho),0,0,'C');
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 11);
