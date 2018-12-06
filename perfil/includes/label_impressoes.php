@@ -16,7 +16,7 @@
             </tr>
             <tr>
                 <td>
-                    <strong>Certificado de Capacitação</strong>
+                    <strong>Certificado de Captação</strong>
                 </td>
                 <td>
                     <form method="POST" target="_blank" action="../pdf/pdf_certificado_captacao.php" class="form-horizontal" role="form">
