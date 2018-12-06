@@ -802,7 +802,6 @@ function listaArquivosEvento($idPessoa, $tipoPessoa, $pagina)
 			<thead>
 			<tr class='list_menu'>
 			<td>Tipo de arquivo</td>
-			<td>Nome do arquivo</td>
 			<td width='15%'></td>
 			</tr>
 			</thead>
@@ -810,8 +809,7 @@ function listaArquivosEvento($idPessoa, $tipoPessoa, $pagina)
 			while($arquivo = mysqli_fetch_array($query))
 			{
 				echo "<tr>";
-				echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
-				echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." ) ."</a></td>";
+				echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['documento'], 15 ,25,"..." ) ."</a></td>";
 				echo "
 				<td class='list_description'>
 				<form id='apagarArq' method='POST' action='?perfil=projeto_3'>
@@ -1196,7 +1194,6 @@ function listaParecerSMC($idPessoa,$tipoPessoa,$pagina)
 			<thead>
 				<tr class='list_menu'>
 					<td>Tipo de arquivo</td>
-					<td>Nome do arquivo</td>
 					<td>Status</td>
 					<td>Observação</td>
 					<td width='15%'></td>
@@ -1208,8 +1205,7 @@ function listaParecerSMC($idPessoa,$tipoPessoa,$pagina)
         {
             echo "<form method='POST' action='?perfil=$pagina'>";
         	echo "<tr>";
-            echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
-            echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
+            echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['documento'], 0 ,50,"..." )."</a></td>";
             echo "<td class='list_description'>
 								<select name='status' id='statusOpt'>";
             echo "<option value=''>Selecione</option>";
@@ -1255,7 +1251,6 @@ function listaAnexosProjeto($idPessoa,$tipoPessoa,$idArquivo)
 			<thead>
 				<tr class='list_menu'>
 					<td>Tipo de arquivo</td>
-					<td>Nome do arquivo</td>
 					<td width='15%'></td>
 				</tr>
 			</thead>
@@ -1263,8 +1258,7 @@ function listaAnexosProjeto($idPessoa,$tipoPessoa,$idArquivo)
         while($arquivo = mysqli_fetch_array($query))
         {
             echo "<tr>";
-            echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
-            echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
+            echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['documento'], 15 ,25,"..." )."</a></td>";
             echo "</tr>";
         }
         echo "
@@ -1296,7 +1290,6 @@ function listaAnexosProjetoSMC($idProjeto,$tipoPessoa,$pagina)
 			<thead>
 				<tr class='list_menu'>
 					<td>Tipo de arquivo</td>
-					<td>Nome do arquivo</td>
 					<td width='15%'></td>
 				</tr>
 			</thead>
@@ -1304,8 +1297,7 @@ function listaAnexosProjetoSMC($idProjeto,$tipoPessoa,$pagina)
         while($arquivo = mysqli_fetch_array($query))
         {
             echo "<tr>";
-            echo "<td class='list_description'>".$arquivo['documento']."</td>";
-            echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
+            echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['documento'], 0 ,100,"..." )."</a></td>";
             echo "<td class='list_description'>
 					<form id='apagarArq' method='POST' action='?perfil=".$pagina."'>
 						<input type='hidden' name='idProjeto' value='".$idProjeto."' />
@@ -1403,7 +1395,6 @@ function listaArquivosPessoaVisualizacao($idPessoa,$tipoPessoa,$pagina)
 			<thead>
 				<tr class='list_menu'>
 					<td>Tipo de arquivo</td>
-					<td>Nome do arquivo</td>
 					<td width='15%'></td>
 				</tr>
 			</thead>
@@ -1411,8 +1402,7 @@ function listaArquivosPessoaVisualizacao($idPessoa,$tipoPessoa,$pagina)
 				while($arquivo = mysqli_fetch_array($query))
 				{
 					echo "<tr>";
-					echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
-					echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
+					echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['documento'], 0 ,25,"..." )."</a></td>";
 				}
 				echo "
 		</tbody>
@@ -1860,13 +1850,12 @@ function exibirParecerProponente($idProjeto)
 		<table class='table table-bordered'>
 			<tr>
 				<td><strong>Tipo de arquivo</strong></td>
-				<td><strong>Nome do arquivo</strong></td>
+				
 			</tr>";
         while($arquivo = mysqli_fetch_array($query))
         {
             echo "<tr>";
-            echo "<td class='list_description'>".$arquivo['documento']."</td>";
-            echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'],15 ,30 ,"..." )."</a></td>";
+            echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['documento'],0 ,190 ,"" )."</a></td>";
             echo "</tr>";
         }
         echo "</table>";
@@ -3260,6 +3249,7 @@ function uploadArquivo($idProjeto, $tipoPessoa, $pagina, $idListaDocumento, $idT
 			AND arq.publicado = '1' AND list.idListaDocumento = '$idListaDocumento'";
     $query = mysqli_query($con,$sql);
     $linhas = mysqli_num_rows($query);
+<<<<<<< HEAD
 //    echo '<div class="table-responsive list_info">
 //				<h6>Parecer Anexado</h6>';
 //    if ($linhas > 0)
@@ -3303,6 +3293,49 @@ function uploadArquivo($idProjeto, $tipoPessoa, $pagina, $idListaDocumento, $idT
 //        echo "<p>Não há arquivo(s) inserido(s).</p><br/>";
 //    }
 //    echo "</div>";
+=======
+    echo '<div class="table-responsive list_info">
+				<h6>Parecer Anexado</h6>';
+    if ($linhas > 0)
+    {
+        echo "
+		<table class='table table-condensed'>
+			<thead>
+				<tr class='list_menu'>
+					<td>Tipo de arquivo</td>
+					<td>Observação</td>
+					<td></td>
+				</tr>
+			</thead>
+			<tbody>";
+        while($arquivo = mysqli_fetch_array($query))
+        {
+            echo "<tr>";
+            echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['documento'], 0 ,60,"..." )."</a></td>";
+            echo "<td class='list_description'>".$arquivo['observacoes']."</td>";
+            if($arquivo['idStatusDocumento'] == 3) {
+                echo "
+						<td class='list_description'>
+							<form id='apagarArq' method='POST' action='?perfil=" . $pagina . "'>
+								<input type='hidden' name='idPessoa' value='" . $idProjeto . "' />
+								<input type='hidden' name='tipoPessoa' value='" . $tipoPessoa . "' />
+								<input type='hidden' name='apagar' value='" . $arquivo['idUploadArquivo'] . "' />
+								<input type='submit' class='btn btn-theme btn-md btn-block'  value='apagar' />
+							</form>
+						</td>";
+            }
+            echo "</tr>";
+        }
+        echo "
+		</tbody>
+		</table>";
+    }
+    else
+    {
+        echo "<p>Não há arquivo(s) inserido(s).</p><br/>";
+    }
+    echo "</div>";
+>>>>>>> excluir-nome-do-arquivo#241
     /*
      * Início da área de upload
      */
