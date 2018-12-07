@@ -3259,7 +3259,7 @@ function uploadArquivo($idProjeto, $tipoPessoa, $pagina, $idListaDocumento, $idT
 			<thead>
 				<tr class='list_menu'>
 					<td>Tipo de arquivo</td>
-					<td>Observação</td>
+					<td>Data de Envio</td>
 					<td></td>
 				</tr>
 			</thead>
@@ -3268,7 +3268,8 @@ function uploadArquivo($idProjeto, $tipoPessoa, $pagina, $idListaDocumento, $idT
         {
             echo "<tr>";
             echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['documento'], 0 ,60,"..." )."</a></td>";
-            echo "<td class='list_description'>".$arquivo['observacoes']."</td>";
+            $data = date_create($arquivo["dataEnvio"]);
+            echo "<td class='list_description'>".date_format($data,'d/m/Y')."</td>";
             if($arquivo['idStatusDocumento'] == 3) {
                 echo "
 						<td class='list_description'>
