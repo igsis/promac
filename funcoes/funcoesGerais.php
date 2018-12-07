@@ -3233,7 +3233,7 @@ function recuperaUsuario($idPf)
 	}	
 }
 
-function uploadArquivo($idProjeto, $tipoPessoa, $pagina, $idListaDocumento, $idTipoUpload)
+function uploadArquivo($idProjeto, $tipoPessoa, $pagina, $idListaDocumento, $idTipoUpload,$comissao = true)
 {
     $server = "http://".$_SERVER['SERVER_NAME']."/promac";
     $http = $server."/pdf/";
@@ -3250,11 +3250,11 @@ function uploadArquivo($idProjeto, $tipoPessoa, $pagina, $idListaDocumento, $idT
     $query = mysqli_query($con,$sql);
     $linhas = mysqli_num_rows($query);
 
-    echo '<div class="table-responsive list_info">
+    if ($comissao) {
+        echo '<div class="table-responsive list_info">
 				<h6>Parecer Anexado</h6>';
-    if ($linhas > 0)
-    {
-        echo "
+        if ($linhas > 0) {
+            echo "
 		<table class='table table-condensed'>
 			<thead>
 				<tr class='list_menu'>
@@ -3264,14 +3264,13 @@ function uploadArquivo($idProjeto, $tipoPessoa, $pagina, $idListaDocumento, $idT
 				</tr>
 			</thead>
 			<tbody>";
-        while($arquivo = mysqli_fetch_array($query))
-        {
-            echo "<tr>";
-            echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['documento'], 0 ,60,"..." )."</a></td>";
-            $data = date_create($arquivo["dataEnvio"]);
-            echo "<td class='list_description'>".date_format($data,'d/m/Y')."</td>";
-            if($arquivo['idStatusDocumento'] == 3) {
-                echo "
+            while ($arquivo = mysqli_fetch_array($query)) {
+                echo "<tr>";
+                echo "<td class='list_description'><a href='../uploadsdocs/" . $arquivo['arquivo'] . "' target='_blank'>" . mb_strimwidth($arquivo['documento'], 0, 60, "...") . "</a></td>";
+                $data = date_create($arquivo["dataEnvio"]);
+                echo "<td class='list_description'>" . date_format($data, 'd/m/Y') . "</td>";
+                if ($arquivo['idStatusDocumento'] == 3) {
+                    echo "
 						<td class='list_description'>
 							<form id='apagarArq' method='POST' action='?perfil=" . $pagina . "'>
 								<input type='hidden' name='idPessoa' value='" . $idProjeto . "' />
@@ -3280,19 +3279,20 @@ function uploadArquivo($idProjeto, $tipoPessoa, $pagina, $idListaDocumento, $idT
 								<input type='submit' class='btn btn-theme btn-md btn-block'  value='apagar' />
 							</form>
 						</td>";
+                }
+                echo "</tr>";
             }
-            echo "</tr>";
-        }
-        echo "
+            echo "
 		</tbody>
 		</table>";
+        } else {
+            echo "<p>Não há arquivo(s) inserido(s).</p><br/>";
+        }
+
+        echo "</div>";
     }
-    else
-    {
-        echo "<p>Não há arquivo(s) inserido(s).</p><br/>";
-    }
-    echo "</div>";
-	echo '<div class="table-responsive list_info"><h6>Upload de Parecer (somente em PDF)</h6>';
+        echo '<div class="table-responsive list_info"><h6>Upload de Parecer (somente em PDF)</h6>';
+
     $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$idTipoUpload' AND idListaDocumento = '$idListaDocumento'";
     $query_arquivos = mysqli_query($con,$sql_arquivos);
 	while($arq = mysqli_fetch_array($query_arquivos))

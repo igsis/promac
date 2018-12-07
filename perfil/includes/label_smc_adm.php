@@ -244,7 +244,7 @@
        <!-- Upload do Arquivo -->
            <div class="form-group">
                 <div class="col-md-offset-1 col-md-10">
-                    <?php uploadArquivo($idProjeto,9, "smc_detalhes_projeto&idFF=$idProjeto", $idListaDocumento, 9); ?>
+                    <?php uploadArquivo($idProjeto,9, "smc_detalhes_projeto&idFF=$idProjeto", $idListaDocumento, 9,false); ?>
                 </div>
            </div>         
 
