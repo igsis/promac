@@ -251,38 +251,14 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 
 							for($h = 0; $h < $x['num']; $h++)
 							{
-                                $dataParecerista = new DateTime($x[$h]['dataParecerista']);
 
-                                $dateNow = new DateTime();
-
-                                $diff = $dataParecerista->diff($dateNow);
-
-                                if ($idComissao != 0) {
-
-                                    if ($diff->days >= 30){
-
-                                        $limite = 1;
-
-                                    }else {
-
-                                        $limite = 0;
-
-                                    }
-
-                                } elseif ($idComissao == 0) {
-
-                                    $sqlData = "UPDATE projeto SET dataParecerista = '0000-00-00' WHERE idProjeto = '$idProjeto'";
-                                    $queryData = mysqli_query($con, $sqlData);
-                                }
-
-                                echo ($limite == 1) ? "<tr style='background: #ff4c4c'>" : "<tr style='background: white'></tr>";
+                                echo "<tr style='background: white'></tr>";
 								echo "<td class='list_description maskProtocolo' data-mask = \"0000.00.00/0000000\">".$x[$h]['protocolo']."</td>";
 								echo "<td class='list_description'>".$x[$h]['nomeProjeto']."</td>";
 								echo "<td class='list_description'>".$x[$h]['proponente']."</td>";
 								echo "<td class='list_description'>".$x[$h]['documento']."</td>";
 								echo "<td class='list_description'>".mb_strimwidth($x[$h]['areaAtuacao'], 0, 38, "...")."</td>";
 								echo "<td class='list_description'>".strstr($x[$h]['comissao'], ' ', true)."</td>";
-								echo ($idComissao != 0) ? "<td class='list_description'>" . $diff->format("%a dias") . "</td>"  : "<td class='list_description'></td>";
 								echo "<td class='list_description'>".$x[$h]['etapa']."</td>";
 								echo "<td class='list_description'>
 										<form method='POST' action='?perfil=smc_detalhes_projeto'>
