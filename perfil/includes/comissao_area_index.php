@@ -1,4 +1,7 @@
 <?php
+
+$cinza = "#EBEBEB";
+
 $array_etapa = array(7, 19, 24, 34); //etapa
 foreach ($array_etapa as $idEtapaProjeto)
 {
@@ -18,7 +21,7 @@ foreach ($array_etapa as $idEtapaProjeto)
                     INNER JOIN area_atuacao AS ar ON pro.idAreaAtuacao = ar.idArea
                     LEFT JOIN pessoa_fisica AS pfc ON pro.idComissao = pfc.idPf 
                     INNER JOIN etapa_projeto AS etapa ON pro.idEtapaProjeto = etapa.idEtapaProjeto
-                    WHERE pro.idEtapaProjeto = '$idEtapaProjeto'" .$parecerista." ORDER BY idProjeto DESC";
+                    WHERE pro.idEtapaProjeto = '$idEtapaProjeto'" .$parecerista." ORDER BY protocolo";
     $queryProjeto = mysqli_query($con,$sqlProjeto);
     $queryEtapaProjeto = mysqli_query($con,$sqlEtapaProjeto);
     $num = mysqli_num_rows($queryProjeto);
@@ -102,7 +105,7 @@ foreach ($array_etapa as $idEtapaProjeto)
 
                                 ?>
 
-                                    <td class='list_description'><?= $campo['protocolo'] ?></td>
+                                    <td class='list_description maskProtocolo' data-mask = "0000.00.00/0000000"><?= $campo['protocolo'] ?></td>
                                     <td class='list_description'><?= $campo['nomeProjeto'] ?></td>
                                     <td class='list_description'><?= isset($campo['nome']) ? $campo['nome'] : $campo['razaoSocial'] ?></td>
                                     <td class='list_description'><?= isset($campo['cpf']) ? $campo['cpf'] : $campo['cnpj'] ?></td>

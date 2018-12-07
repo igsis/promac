@@ -287,7 +287,7 @@ foreach ($array_status as $idStatus)
                     LEFT JOIN pessoa_fisica AS pfc ON pro.idComissao = pfc.idPf
                     INNER JOIN etapa_projeto AS st ON pro.idEtapaProjeto = st.idEtapaProjeto
                     LEFT JOIN historico_etapa as he ON pro.idProjeto = he.idProjeto
-                    WHERE pro.idStatus != 6  AND pro.idEtapaProjeto = '$idStatus' ORDER BY he.data";
+                    WHERE pro.idStatus != 6  AND pro.idEtapaProjeto = '$idStatus' ORDER BY protocolo, he.data";
     $queryProjeto = mysqli_query($con,$sqlProjeto);
     $queryStatus = mysqli_query($con,$sqlStatus);
     $num = mysqli_num_rows($queryProjeto);
