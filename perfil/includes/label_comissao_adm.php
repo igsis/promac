@@ -4,6 +4,20 @@
     </div>
     <!-- Diretor da Comissão -->
     <?php
+
+    $sql = "SELECT * FROM upload_arquivo WHERE idPessoa = '$idProjeto'";
+    $query = mysqli_query($con, $sql);
+
+    while($array = mysqli_fetch_array($query)){
+        if ($array['idTipo'] == 9){
+            $parecer = 1;
+
+        } else {
+
+            $parecer = 0;
+        }
+    }
+
     $direcao = recuperaDados("pessoa_fisica", "idPf", $_SESSION['idUser']);
     if ($direcao['idNivelAcesso'] == 3) {
         ?>
@@ -38,7 +52,7 @@
     <form method="POST" action="?perfil=comissao_detalhes_projeto" class="form-horizontal" role="form">
         <div class="form-group">
             <?php
-            if ($projeto['idStatusParecerista'] != '0' AND $projeto['dataReuniao'] != '0000-00-00') {
+            if ($projeto['idStatusParecerista'] != '0' AND $projeto['dataReuniao'] != '0000-00-00' AND $parecer == 1) {
                 ?>
                 <div class="col-md-offset-2 col-md-6" align="right"><br/><label>Finalizar projeto e enviar à SMC?</label><br>
                     <?php echo exibirDataHoraBr($projeto['finalizacaoComissao']) ?>
@@ -152,7 +166,9 @@
     </div>
     <div class="form-group">
         <div class="col-md-offset-1 col-md-10">
-            <?php uploadArquivo($idProjeto, 9, "comissao_detalhes_projeto", $idListaDocumento, 9); ?>
+            <?php uploadArquivo($idProjeto, 9, "comissao_detalhes_projeto", $idListaDocumento, 9);
+            ?>
+
         </div>
     </div>
 
@@ -188,3 +204,4 @@
         </div>
     </div>
 </div>
+

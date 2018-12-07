@@ -3286,7 +3286,8 @@ function uploadArquivo($idProjeto, $tipoPessoa, $pagina, $idListaDocumento, $idT
 		</tbody>
 		</table>";
         } else {
-            echo "<p>Não há arquivo(s) inserido(s).</p><br/>";
+            echo "<p id='ofilhoeseu'>Não há arquivo(s) inserido(s).</p><br/>";
+            echo "<span style='color: #ff0000'><strong><i>Obrigatório anexar parecer antes de encaminhar à SMC.</i></strong></span>";
         }
 
         echo "</div>";
@@ -3323,7 +3324,7 @@ function uploadArquivo($idProjeto, $tipoPessoa, $pagina, $idListaDocumento, $idT
 		} else {
 			echo "<td class='list_description path'>" . $arq['documento'] . "</td>";
 		}
-		echo "<td class='list_description'><input type='file' name='arquivo[" . $arq['sigla'] . "]'></td>";
+		echo "<td class='list_description'><input type='file' required name='arquivo[" . $arq['sigla'] . "]'></td>";
 		echo "</tr>";
 		echo "</table><br>";
 		echo "<input type='hidden' name='idPessoa' value='" . $idProjeto . "' />";
