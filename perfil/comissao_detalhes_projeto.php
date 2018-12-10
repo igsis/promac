@@ -139,6 +139,9 @@ if(isset($_POST['finalizaComissao']))
         case 34:
             $idEtapaProjeto = 15;
             break;
+        default:
+            $idEtapaProjeto = $idEtapaProjeto;
+            break;
     }
 	$dateNow = date('Y-m-d H:i:s');
 	$sql_finalizaComissao = "UPDATE projeto SET idEtapaProjeto = '$idEtapaProjeto', finalizacaoComissao = '$dateNow' WHERE idProjeto = '$idP' ";
