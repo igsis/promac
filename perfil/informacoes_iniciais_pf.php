@@ -338,7 +338,7 @@ else
                                 <?php
                                 $tipos = ['Não', 'Sim'];
                                 foreach($tipos as $chave => $tipo):
-                                    $selected = $_POST['cooperado'] == $chave ?
+                                    $selected = $pf['cooperado'] == $chave ?
                                         "selected='selected'" : "";
                                     ?>
                                     <option value="<?=$chave?>" <?=$selected?>>	<?=$tipo?> </option>
