@@ -26,18 +26,12 @@ if(isset($_POST['enviar'])) {
     $new_status = "UPDATE `promac`.`projeto` SET `idEtapaProjeto` = '35' WHERE `idProjeto`= '$idProjeto'";
     $query_status = mysqli_query($con, $new_status);
 
-    print_r($_FILES);
-
-
     foreach($query_arquivos as $arq) {
 
         $y = $arq['idListaDocumento'];
         $x = $arq['sigla'];
         $nome_arquivo = $_FILES['carta_incentivo']['name'] ?? null;
         $f_size = $_FILES['carta_incentivo']['size'] ??  null;
-
-
-        echo $y . "<br>" . $x . "<br>" . $nome_arquivo . "<br>" . $f_size . "<br>";
 
         //Extensões permitidas
         $ext = array("PDF", "pdf");
@@ -59,7 +53,6 @@ if(isset($_POST['enviar'])) {
                     if (move_uploaded_file($nome_temporario, $dir . $new_name)) {
                         $sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('3', '$idProjeto', '$y', '$new_name', '$hoje', '1'); ";
 
-                        echo $sql_insere_arquivo;
                         $query = mysqli_query($con, $sql_insere_arquivo);
 
                         if ($query) {
@@ -99,6 +92,17 @@ if(isset($_POST['enviar'])) {
                     <?php if(isset($mensagem)){echo $mensagem;};
 
                     ?>
+
+                    <hr/>
+
+                    <label for="carta_incentivo">Upload da carta de incentivo</label><br><br>
+                    <center><input type="file" name="carta_incentivo" id="carta_incentivo" size="75"></center>
+
+                    <hr/>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-8">
+                            <input type="submit" name="enviar" class="btn btn-theme btn-lg btn-block" value="Enviar">
 
                     <hr/>
 
