@@ -13,9 +13,9 @@
         ?>
 
         <div class="form-group">
-            <h4>Carta de intenção de incentivo</h4>
+            <h4>Anexos</h4>
+            <h5><?php if(isset($mensagem)){echo $mensagem;};?></h5>
         </div>
-
         <?php
 
         $idProjeto = $_GET['idProjeto'];
@@ -68,10 +68,6 @@
             window.onload = alerta();
         </script>
         </thead>
-        <div class="form-group">
-            <h4>Anexos</h4>
-            <h5><?php if(isset($mensagem)){echo $mensagem;};?></h5>
-        </div>
 
         <div class="row">
             <div class="col-md-offset-1 col-md-10">
