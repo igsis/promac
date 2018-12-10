@@ -140,7 +140,7 @@ if(isset($_POST['finalizaComissao']))
             $idEtapaProjeto = 15;
             break;
         default:
-            $idEtapaProjeto = $idEtapaProjeto;
+            $idEtapaProjeto = $projeto['idEtapaProjeto'];
             break;
     }
 	$dateNow = date('Y-m-d H:i:s');
