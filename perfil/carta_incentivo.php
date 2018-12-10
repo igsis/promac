@@ -68,6 +68,11 @@
             window.onload = alerta();
         </script>
         </thead>
+        <div class="form-group">
+            <h4>Anexos</h4>
+            <h5><?php if(isset($mensagem)){echo $mensagem;};?></h5>
+        </div>
+
         <div class="row">
             <div class="col-md-offset-1 col-md-10">
                 <div class="list_info"><h6>Upload da carta de incentivo</h6>

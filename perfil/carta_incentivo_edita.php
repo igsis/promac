@@ -79,40 +79,42 @@ if(isset($_POST['enviar'])) {
 <section id="list_items" class="home-section bg-white">
     <div class="container">
         <div class="form-group">
-            <h4>Carta de incentivo</h4>
-            <h5></h5>
+            <h4>Anexos</h4>
+            <h5><?php if(isset($mensagem)){echo $mensagem;};?></h5>
         </div>
         <div class="row">
             <div class="col-md-offset-1 col-md-10">
-                <form method="POST" action="?perfil=projeto_visualizacao" class="form-group" role="form">
+                <div class="list_info"><h6>Upload da carta de incentivo</h6>
+                    <form method="POST" enctype="multipart/form-data" action="?perfil=carta_incentivo_edita&idProjeto=<?= $idProjeto ?>" class="form-group" role="form">
+                        <table class="table table-condensed">
 
-                    <hr/>
-
-                    <label for="carta_incentivo">Upload da carta de incentivo</label><br><br>
-                    <?php if(isset($mensagem)){echo $mensagem;};
-
-                    ?>
-
-                    <hr/>
-
-                    <label for="carta_incentivo">Upload da carta de incentivo</label><br><br>
-                    <center><input type="file" name="carta_incentivo" id="carta_incentivo" size="75"></center>
-
-                    <hr/>
-
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-8">
-                            <input type="submit" name="enviar" class="btn btn-theme btn-lg btn-block" value="Enviar">
-
-                    <hr/>
-
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-8">
-                            <input type="submit" name="voltar" class="btn btn-theme btn-lg btn-block" value="Voltar">
+                            <thead>
+                            <tr class="list_menu">
+                                <td width="50%">Tipo de arquivo</td>
+                                <td></td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td class="list_description">Carta de incentivo</td>
+                                <td class="list_description"><input type="file" name="carta_incentivo" id="carta_incentivo" size="75"></center></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-8">
+                                <br><input type="submit" name="enviar" class="btn btn-theme btn-lg btn-block" value="Fazer Upload">
+                            </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
+                <div class="col-md-offset-4 col-md-6">
+                    <form method="post" action="?perfil=projeto_visualizacao" class="form-group" role="form">
+                        <br><input type="submit" value="Voltar" class="btn btn-theme btn-md btn-block">
+                    </form>
+                </div>
             </div>
+
         </div>
     </div>
 </section>
