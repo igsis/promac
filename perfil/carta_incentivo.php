@@ -1,6 +1,5 @@
 <?php
 $con = bancoMysqli();
-
 $idProjeto = $_GET['idProjeto'];
 
 // Gerar documentos
@@ -9,8 +8,6 @@ $http = $server."/pdf/";
 
 function listaCartasIncentivo ($idProjeto) {
     $con = bancoMysqli();
-    $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
-
     $sqlCarta = "SELECT * FROM upload_arquivo WHERE idPessoa = '$idProjeto' AND idListaDocumento = 18 ORDER BY dataEnvio";
     $queryCarta = mysqli_query($con, $sqlCarta);
     $linhas = mysqli_num_rows($queryCarta);
