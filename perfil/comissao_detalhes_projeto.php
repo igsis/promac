@@ -101,7 +101,7 @@ if(isset($_POST['gravarAdm']))
 		$mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
 		gravarLog($sql_gravarAdm);
         $idComissao = $projeto['idComissao'];
-        $sql_historico_reuniao = "INSERT INTO historico_reuniao (idProjeto,idStatus,dataReuniao,idStatusParecerista,idComissao,data,idUsuario) VALUES ('$idProjeto','$idStatus','$dataReuniao','$statusParecerista','$idComissao','$data','$idUsuario')";
+        $sql_historico_reuniao = "INSERT INTO historico_reuniao (idProjeto,idEtapaProjeto,dataReuniao,idStatusParecerista,idComissao,data,idUsuario) VALUES ('$idProjeto','$idStatus','$dataReuniao','$statusParecerista','$idComissao','$data','$idUsuario')";
         if(mysqli_query($con,$sql_historico_reuniao))
         {
             $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
