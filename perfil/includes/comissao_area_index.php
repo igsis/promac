@@ -89,7 +89,7 @@ foreach ($array_etapa as $idEtapaProjeto)
 
                             if ($i < 15) {
 
-                                if ($campo['publicado'] == 0) {
+                                if ($campo['etapaProjeto'] == 6) {
 
                                     echo "<tr style='background: $cinza'>";
 
