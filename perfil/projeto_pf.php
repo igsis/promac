@@ -143,7 +143,7 @@ if (isset($_POST['cancelar'])){
                 <div class="table-responsive list_info">
                     <?php
                     $sql = "SELECT * FROM projeto
-										WHERE publicado > 0 AND idPf ='$idPf' AND tipoPessoa = 1
+										WHERE publicado > 0 AND idPf ='$idPf' AND tipoPessoa = 1 
 										ORDER BY idProjeto DESC";
                     $query = mysqli_query($con, $sql);
                     $num = mysqli_num_rows($query);
@@ -167,7 +167,10 @@ if (isset($_POST['cancelar'])){
                             $status = "SELECT etapaProjeto FROM etapa_projeto WHERE idEtapaProjeto='$idCampo'";
                             $envio = mysqli_query($con, $status);
                             $rowStatus = mysqli_fetch_array($envio);
-                            if ($campo['idEtapaProjeto'] == 1) {
+                            if($campo['idStatus'] == 6){
+                                echo "<td colspan='2' style='color: #942a25;text-align: center;font-weight: bold'>Cancelado </td>";
+                            }
+                            else if ($campo['idEtapaProjeto'] == 1) {
                                 echo "
                                                     <td class='list_description'>
                                                         <form method='POST' action='?perfil=projeto_edicao'>
