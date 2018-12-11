@@ -120,7 +120,7 @@ $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
                                 if ($res[0] == 1){
                                     $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND idListaDocumento IN (7,9,16,8,11,12,13,14,15,17,10)";
                                 }else{
-                                    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND idListaDocumento IN (7,9,16,10,8,11,12,13,14,15)";
+                                    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND idListaDocumento IN (7,9,16,8,11,12,13,14,15)";
                                 }
 								$query_arquivos = mysqli_query($con,$sql_arquivos);
 								while($arq = mysqli_fetch_array($query_arquivos))
