@@ -362,10 +362,10 @@ if(isset($_POST['apagar']))
                                 </div>";
                             }
                         }else{
-                            $sql_arquivos = "SELECT * FROM upload_arquivo WHERE idTipo = '$tipoPessoa' AND idListaDocumento IN (7,9,8,11,12,13,14,15,17) AND idPessoa = '$idPj' AND publicado = 1";
+                            $sql_arquivos = "SELECT * FROM upload_arquivo WHERE idTipo = '$tipoPessoa' AND idListaDocumento IN (7,9,8,11,12,13,14,15) AND idPessoa = '$idPj' AND publicado = 1";
                             $query_arquivos = mysqli_query($con,$sql_arquivos);
                             $resultado_num = mysqli_num_rows($query_arquivos);
-                            if ($resultado_num == 9) {
+                            if ($resultado_num == 8) {
                                 ?>
                                 <form class="form-horizontal" role="form" action="?perfil=resultado_inscricao_pj"
                                       method="post">
