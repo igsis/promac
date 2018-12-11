@@ -169,25 +169,25 @@ if(isset($_POST['apagar']))
 				 		<?php listaArquivosPessoaObs($idPj,2) ?>
 				 	</div>
 
-	 	<ul class='list-group'>
-            <li class='list-group-item list-group-item-success'>Notas</li>
-            <?php
-                $sql = "SELECT * FROM notas WHERE idPessoa = '$idPj' AND idTipo = '2' AND interna = '1'";
-                $query = mysqli_query($con,$sql);
-                $num = mysqli_num_rows($query);
-                if($num > 0)
-                {
-                    while($campo = mysqli_fetch_array($query))
-                    {
-                        echo "<li class='list-group-item' align='left'><strong>".exibirDataHoraBr($campo['data'])."</strong><br/>".$campo['nota']."</li>";
-                    }
-                }
-                else
-                {
-                    echo "<li class='list-group-item'>Não há notas disponíveis.</li>";
-                }
-            ?>
-        </ul>
+<!--	 	<ul class='list-group'>-->
+<!--            <li class='list-group-item list-group-item-success'>Notas</li>-->
+<!--            --><?php
+//                $sql = "SELECT * FROM notas WHERE idPessoa = '$idPj' AND idTipo = '2' AND interna = '1'";
+//                $query = mysqli_query($con,$sql);
+//                $num = mysqli_num_rows($query);
+//                if($num > 0)
+//                {
+//                    while($campo = mysqli_fetch_array($query))
+//                    {
+//                        echo "<li class='list-group-item' align='left'><strong>".exibirDataHoraBr($campo['data'])."</strong><br/>".$campo['nota']."</li>";
+//                    }
+//                }
+//                else
+//                {
+//                    echo "<li class='list-group-item'>Não há notas disponíveis.</li>";
+//                }
+//            ?>
+<!--        </ul>-->
 
 
 			<?php
@@ -210,7 +210,15 @@ if(isset($_POST['apagar']))
 						<form method="POST" action="?perfil=resultado_inscricao_pj" enctype="multipart/form-data">
 						<?php
 								$documentos = [];
-								$sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa'";
+                                $cooperativ = "SELECT cooperativa FROM pessoa_juridica WHERE idPj = '$idPj'";
+                                $resultado = mysqli_query($con,$cooperativ);
+                                $res = mysqli_fetch_array($resultado);
+
+                                if ($res[0] == 1){
+                                    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND idListaDocumento IN (7,9,16,8,11,12,13,14,15,17,10)";
+                                }else{
+                                    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND idListaDocumento IN (7,9,16,10,8,11,12,13,14,15)";
+                                }
 								$query_arquivos = mysqli_query($con,$sql_arquivos);
 								while($arq = mysqli_fetch_array($query_arquivos))
 								{
@@ -333,22 +341,43 @@ if(isset($_POST['apagar']))
 					if($numRow == $qtdArquivos)
 					{*/?>
 				<?php
-				if ($pj['liberado'] != 1)
-				{
-				    $consultaArquivos = "SELECT * FROM `upload_arquivo`
+				if ($pj['liberado'] != 1) {
+                    $consultaArquivos = "SELECT * FROM `upload_arquivo`
                                          WHERE idPessoa = '$idPj' AND idTipo = 2 AND publicado = 1";
-				    if ($resultado = mysqli_query($con,$consultaArquivos)){
-				        $resultado_num = mysqli_num_rows($resultado);
-				        if ($resultado_num == 11){
-				            ?>
-                            <form class="form-horizontal" role="form" action="?perfil=resultado_inscricao_pj" method="post">
-                                <input type="submit" name="liberacao" value="Concluir inscrição do proponente" class="btn btn-theme btn-lg btn-block">
-                            </form>
-                            <?php
+                    if($res[0] == 1){
+                        $sql_arquivos = "SELECT * FROM upload_arquivo WHERE idTipo = '$tipoPessoa' AND idListaDocumento IN (7,9,8,11,12,13,14,15,17) AND idPessoa = '$idPj' AND publicado = 1";
+                        $query_arquivos = mysqli_query($con,$sql_arquivos);
+                        $resultado_num = mysqli_num_rows($query_arquivos);
+                            if ($resultado_num == 9) {
+                                ?>
+                                <form class="form-horizontal" role="form" action="?perfil=resultado_inscricao_pj"
+                                      method="post">
+                                    <input type="submit" name="liberacao" value="Concluir inscrição do proponente"
+                                           class="btn btn-theme btn-lg btn-block">
+                                </form>
+                                <?php
+                            } else {
+                                echo "<div class='alert alert-warning'>
+                                <strong>Erro: </strong> Você deve enviar todos os arquivos  obrigatórios solicitados.
+                                </div>";
+                            }
                         }else{
-                            echo "<div class='alert alert-warning'>
-                            <strong>Erro: </strong> Você deve enviar todos os arquivos solicitados.
-                            </div>";
+                            $sql_arquivos = "SELECT * FROM upload_arquivo WHERE idTipo = '$tipoPessoa' AND idListaDocumento IN (7,9,8,11,12,13,14,15,17) AND idPessoa = '$idPj' AND publicado = 1";
+                            $query_arquivos = mysqli_query($con,$sql_arquivos);
+                            $resultado_num = mysqli_num_rows($query_arquivos);
+                            if ($resultado_num == 9) {
+                                ?>
+                                <form class="form-horizontal" role="form" action="?perfil=resultado_inscricao_pj"
+                                      method="post">
+                                    <input type="submit" name="liberacao" value="Concluir inscrição do proponente"
+                                           class="btn btn-theme btn-lg btn-block">
+                                </form>
+                                <?php
+                            } else {
+                                echo "<div class='alert alert-warning'>
+                                    <strong>Erro: </strong> Você deve enviar todos os arquivos  obrigatórios solicitados.
+                                    </div>";
+                            }
                         }
                     }
 				}
@@ -359,7 +388,7 @@ if(isset($_POST['apagar']))
 					echo "<div class='alert alert-warning'>
 					<strong>Erro: </strong> Você deve preencher todos os campos obrigatórios para prosseguir.
 					</div>";
-				}
+
 			}?>
 			</div>
 		</div>

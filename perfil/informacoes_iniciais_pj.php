@@ -332,7 +332,7 @@ else
 						</div>
 					</div>
 					<div class="form-group">
-						<div class="col-md-offset-2 col-md-6"><strong>É cooperativa? *:</strong><br/>
+						<div class="col-md-offset-2 col-md-8"><strong>É cooperativa? *:</strong><br/>
                             <select class="form-control" name="cooperativa">
                                 <?php
                                 $tipos = ['Não', 'Sim'];
