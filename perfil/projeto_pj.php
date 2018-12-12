@@ -27,7 +27,7 @@ if (isset($_POST['cancelar'])){
     $idProjeto = $_POST['projeto'];
     $dateNow = date('Y-m-d H:i:s');
 
-    $query = "UPDATE `projeto` SET projeto.idEtapaProjeto = '6' WHERE idProjeto = '$idProjeto'";
+    $query = "UPDATE `projeto` SET projeto.idStatus = '6' WHERE idProjeto = '$idProjeto'";
     $historico = "INSERT INTO historico_cancelamento (idProjeto, idUsuario, data, acao) VALUES ('$idProjeto','$idPj','$dateNow',1)";
     if (mysqli_query($con,$query)){
         if (mysqli_query($con,$historico)){
@@ -138,7 +138,7 @@ if (isset($_POST['cancelar'])){
 					<div class="table-responsive list_info">
 					<?php
 						$sql = "SELECT * FROM projeto
-								WHERE idEtapaProjeto != 6 AND idPj ='$idPj' AND tipoPessoa = 2
+								WHERE publicado > 0 AND idPj ='$idPj' AND tipoPessoa = 2
 								ORDER BY idProjeto DESC";
 						$query = mysqli_query($con,$sql);
 						$num = mysqli_num_rows($query);
