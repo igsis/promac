@@ -34,8 +34,9 @@ if (isset($_POST['editaOrcamento'])) {
     $observacoes = $_POST['observacoes'];
     $idOrcamento = $_POST['editaOrcamento'];
     $quantidadeUnidade = $_POST['quantidadeUnidade'];
+
     $sql_edita = "UPDATE orcamento SET
-	idEtapa = $etapas,
+	idEtapa = '$etapas',
 	observacoesEtapa = '$obs_etapa',
 	descricao = '$descricao',
 	quantidade = '$quantidade',
@@ -65,6 +66,24 @@ if (isset($_POST['apagaOrcamento'])) {
     }
 }
 
+if(isset($_POST['insereOrcamento']) || isset($_POST['editaOrcamento'])) {
+    $sql_total = "SELECT SUM(valorTotal) AS tot FROM orcamento
+                WHERE publicado > 0 AND idProjeto ='$idProjeto'
+                ORDER BY idOrcamento";
+    $query_total = mysqli_query($con, $sql_total);
+    $total = mysqli_fetch_array($query_total);
+    $valorIncentivo = $total['tot'];
+
+    $sql_incentivo = "UPDATE projeto SET valorIncentivo = '$valorIncentivo'";
+    $query_incentivo = mysqli_query($con, $sql_incentivo);
+    if (mysqli_query($con, $sql_incentivo)) {
+        $mensagem .= "<br/><font color='#01DF3A'><strong>Valor total do incentivo atualizado!</strong></font>";
+        gravarLog($sql_incentivo);
+    } else {
+        $mensagem .= "<br/><font color='#FF0000'><strong>Erro ao atualizar o valor total do incentivo! Tente novamente.</strong></font>";
+    }
+}
+
 ?>
 <section id="list_items" class="home-section bg-white">
     <div class="container">
@@ -85,6 +104,12 @@ if (isset($_POST['apagaOrcamento'])) {
             <h5><?php if (isset($mensagem)) {
                     echo $mensagem;
                 }; ?></h5>
+        </div>
+        <div class="table-responsive list_info">
+            <h8><strong>Observação:</strong> Caso o projeto comtemple outras fontes de recurso, poderá enviar uma
+                planilha orçamentária completa em formato PDF na etapa ANEXOS (campo de upload <strong>Planilha
+                    Orçamentária Complementar</strong>).
+            </h8>
         </div>
         <div class="row">
             <div class="col-md-12">
@@ -268,11 +293,7 @@ if (isset($_POST['apagaOrcamento'])) {
             </div>
         </div>
 
-        <div class="table-responsive list_info">
-            <h8><strong>Observação:</strong> Caso o projeto comtemple outras fontes de recurso, poderá enviar uma
-                planilha orçamentária completa em formato PDF na etapa ANEXOS (campo de upload <strong>Planilha
-                    Orçamentária Complementar</strong>).
-            </h8>
+
 
 
             <!-- Confirmação de Exclusão -->
