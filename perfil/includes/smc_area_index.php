@@ -454,8 +454,13 @@ foreach ($array_status as $idStatus)
                                             </td>
                                         <?php
                                         }else{
-                                            echo "<td style='color: #942a25;text-align: center;font-weight: bold'>Cancelado</td>";
-                                            echo "<td style='text-align: center;'><button style='background-color:#FF2E25;color:#fff' data-id='".$campo['idProjeto']."' name='arquivar' data-toggle='modal' data-target='#arquivar'>Arquivar</button></td>";
+                                            if ($status['idEtapaProjeto'] == '2' || $status['idEtapaProjeto'] == '13' || $status['idEtapaProjeto'] == '14' || $status['idEtapaProjeto'] == '23'){
+                                                echo "<td style='color: #942a25;text-align: center;font-weight: bold'>Cancelado</td>";
+                                                echo "<td style='text-align: center;'><button style='background-color:#FF2E25;color:#fff' data-id='".$campo['idProjeto']."' name='arquivar' data-toggle='modal' data-target='#arquivar'>Arquivar</button></td>";
+                                            }
+                                            else{
+                                                echo "<td colspan='2' style='color: #942a25;text-align: center;font-weight: bold'>Cancelado <button style='background-color:#FF2E25;color:#fff' data-id='".$campo['idProjeto']."' name='arquivar' data-toggle='modal' data-target='#arquivar'>Arquivar</button></td>";
+                                            }
                                         }
                                         ?>
                                         <?php
@@ -739,7 +744,7 @@ foreach ($array_status as $idStatus)
                 <p>Para confirmar clique no botão SIM!</p>
             </div>
             <div class="modal-footer">
-                <form method='POST' action=''>
+                <form method='POST' action='?perfil=smc_index'>
                     <input type='hidden' name='idProjeto' value="<?= $campo['idProjeto'] ?>">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
                     <button type="submit" name='arquivar' class="btn btn-danger">SIM</button>
