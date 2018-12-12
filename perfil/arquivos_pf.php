@@ -156,7 +156,7 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 
 															 $path = selecionaArquivoAnexo($http, $documento->idListaDocumento);  
 														
-															echo "<a href='$path' target='_blank'>$documento->nomeDocumento</a>";
+															echo "<a href='$path' target='_blank'>$documento->nomeDocumento </a>";
 														
 														echo "</td>";
 													
