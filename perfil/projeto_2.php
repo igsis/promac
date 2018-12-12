@@ -7,13 +7,15 @@ if(isset($_POST['insere']))
 	$valorProjeto = $_POST['valorProjeto'];
 	$valorIncentivo = dinheiroDeBr($_POST['valorIncentivo']);
 	$idRenunciaFiscal = $_POST['idRenunciaFiscal'];
-	$exposicaoMarca = $_POST['exposicaoMarca'];
+	$idExposicaoMarca = $_POST['idExposicaoMarca'];
+	$indicacaoIngresso = $_POST['indicacaoIngresso'];
 
 	$sql_insere = "UPDATE projeto SET
 		valorProjeto = '$valorProjeto',
 		valorIncentivo = '$valorIncentivo',
 		idRenunciaFiscal = '$idRenunciaFiscal',
-		exposicaoMarca = '$exposicaoMarca'
+		idExposicaoMarca = '$idExposicaoMarca',
+		indicacaoIngresso = '$indicacaoIngresso'
 		WHERE idProjeto = '$idProjeto'";
 	if(mysqli_query($con,$sql_insere))
 	{
@@ -45,8 +47,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
                     <h4>Cadastro de Projeto</h4>
                     <ul class="list-group">
                         <li class="list-group-item list-group-item-warning">
-                            <strong>O valor do incentivo é igual ao valor do orçamento preenchido na tela de orçamento.<br/>
-                                O valor total do projeto pode ser igual ao valor solicitado ao Pro-Mac ou maior, incluindo recursos oriundos de outras fontes.</strong><br/>
+                            <strong>O valor do incentivo é igual ao valor do orçamento preenchido na tela de orçamento.<br/>O valor total do projeto pode ser igual ao valor solicitado ao Pro-Mac ou maior, incluindo recursos oriundos de outras fontes.</strong><br/>
                         </li>
                     </ul>
                     <p><strong><?php if(isset($mensagem)){echo $mensagem;} ?></strong></p>
@@ -69,19 +70,26 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
                             </div>
 
                             <div class="form-group">
-                                <div class="col-md-offset-2 col-md-8">
+                                <div class="col-md-offset-2 col-md-6">
                                     <label>Enquadramento da renúncia fiscal *</label> <button class='btn btn-default' type='button' data-toggle='modal' data-target='#infoRenunciaFiscal' style="border-radius: 30px;"><i class="fa fa-question-circle"></i></button>
                                     <select required class="form-control" name="idRenunciaFiscal">
-								<option value="0"></option>
-								<?php echo geraOpcao("renuncia_fiscal",$projeto['idRenunciaFiscal']) ?>
-							</select>
+                                        <option value="">Selecione</option>
+                                        <?php echo geraOpcao("renuncia_fiscal",$projeto['idRenunciaFiscal']) ?>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Descrição da exposição da marca  *</label>
+                                    <select required class="form-control" name="idExposicaoMarca">
+                                        <option value="">Selecione</option>
+                                        <?php echo geraOpcao("exposicao_marca",$projeto['idExposicaoMarca']) ?>
+                                    </select>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <div class="col-md-offset-2 col-md-8">
-                                    <label>Descrição da exposição da marca e indicação do valor do ingresso*</label><button class='btn btn-default' type='button' data-toggle='modal' data-target='#infoExposicaoMarca' style="border-radius: 30px;"><i class="fa fa-question-circle"></i></button>
-                                    <textarea name="exposicaoMarca" class="form-control" rows="10" maxlength="5000" required><?php echo isset($projeto['exposicaoMarca']) ? $projeto['exposicaoMarca'] : null ?></textarea>
+                                    <label>Indicação do valor do ingresso*</label><button class='btn btn-default' type='button' data-toggle='modal' data-target='#infoExposicaoMarca' style="border-radius: 30px;"><i class="fa fa-question-circle"></i></button>
+                                    <textarea name="indicacaoIngresso" class="form-control" rows="10" maxlength="5000" required><?php echo isset($projeto['indicacaoIngresso']) ? $projeto['indicacaoIngresso'] : null ?></textarea>
                                 </div>
                             </div>
 
