@@ -454,8 +454,13 @@ foreach ($array_status as $idStatus)
                                             </td>
                                         <?php
                                         }else{
-                                            echo "<td style='color: #942a25;text-align: center;font-weight: bold'>Cancelado</td>";
-                                            echo "<td style='text-align: center;'><button style='background-color:#FF2E25;color:#fff' data-id='".$campo['idProjeto']."' name='arquivar' data-toggle='modal' data-target='#arquivar'>Arquivar</button></td>";
+                                            if ($status['idEtapaProjeto'] == '2' || $status['idEtapaProjeto'] == '13' || $status['idEtapaProjeto'] == '14' || $status['idEtapaProjeto'] == '23'){
+                                                echo "<td style='color: #942a25;text-align: center;font-weight: bold'>Cancelado</td>";
+                                                echo "<td style='text-align: center;'><button style='background-color:#FF2E25;color:#fff' data-id='".$campo['idProjeto']."' name='arquivar' data-toggle='modal' data-target='#arquivar'>Arquivar</button></td>";
+                                            }
+                                            else{
+                                                echo "<td colspan='2' style='color: #942a25;text-align: center;font-weight: bold'>Cancelado <button style='background-color:#FF2E25;color:#fff' data-id='".$campo['idProjeto']."' name='arquivar' data-toggle='modal' data-target='#arquivar'>Arquivar</button></td>";
+                                            }
                                         }
                                         ?>
                                         <?php
