@@ -88,7 +88,10 @@ function DiasUteis() {
                                 <div class="col-md-offset-2 col-md-8" align="left">
                                     <ul class='list-group'>
                                         <li class='list-group-item list-group-item-success'></li>
-                                        <li class="list-group-item"><strong>Protocolo (nº ISP):</strong> <?= $projeto['protocolo'] ?></li>
+                                        <li class="list-group-item">
+                                            <strong>Protocolo (nº ISP):</strong>
+                                            <span data-mask = "0000.00.00/0000000"><?= $projeto['protocolo'] ?></span>
+                                        </li>
                                         <li class="list-group-item"><strong>Status do projeto:</strong>  <?= $status['status'] ?></li>
                                         <li class='list-group-item'>
                                             <strong>Valor Aprovado:</strong>
