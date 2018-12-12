@@ -10,3 +10,7 @@ CREATE TABLE IF NOT EXISTS `promac`.`agendamento` (
 );
 
 ALTER TABLE `historico_reuniao` CHANGE `idStatus` `idEtapaProjeto` INT(11) NOT NULL;
+
+UPDATE lista_documento SET documento = 'Declaração de inscrição [modelo para download]' WHERE lista_documento.idListaDocumento = 6;
+
+UPDATE lista_documento SET documento = 'Declaração de inscrição [modelo para download]' WHERE lista_documento.idListaDocumento = 15;
