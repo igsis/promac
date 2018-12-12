@@ -53,6 +53,15 @@ if(isset($_POST['envioComissao']))
 		$mensagem = "<font color='#FF0000'><strong>Erro ao enviar! Tente novamente.</strong></font>";
 	}
 }
+if (isset($_POST['arquivar'])){
+    $idProjeto = $_POST['idProjeto'];
+     $query = "UPDATE projeto SET idEtapaProjeto = 6, publicado = 0 WHERE idProjeto = '$idProjeto' ";
+     if (mysqli_query($con,$query)){
+         $mensagem = "Projeto arquivado com sucesso";
+     }else{
+         $mensagem = "Erro ao arquivar o projeto";
+     }
+}
 
     if ($pf['idNivelAcesso'] == 2)
     { ?>
@@ -446,13 +455,14 @@ foreach ($array_status as $idStatus)
                                         <?php
                                         }else{
                                             echo "<td style='color: #942a25;text-align: center;font-weight: bold'>Cancelado</td>";
-                                            echo "<td style='text-align: center;'><button style='background-color:#FF2E25;color:#fff'>Arquivar</button></td>";
+                                            echo "<td style='text-align: center;'><button style='background-color:#FF2E25;color:#fff' data-id='".$campo['idProjeto']."' name='arquivar' data-toggle='modal' data-target='#arquivar'>Arquivar</button></td>";
                                         }
                                         ?>
                                         <?php
                                     }
                                     ?>
                                 </tr>
+
                                 <?php
                                 $i++;
                             }
@@ -717,6 +727,27 @@ foreach ($array_status as $idStatus)
   </div>
 </div>
 
+<!-- Modal para arquivar projeto -->
+<div class="modal fade" id="arquivar" tabindex="-1" role="dialog" aria-labelledby="arquivar">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="enviarComissao">Deseja arquivar esse projeto?</h4>
+            </div>
+            <div class="modal-body">
+                <p>Para confirmar clique no botão SIM!</p>
+            </div>
+            <div class="modal-footer">
+                <form method='POST' action=''>
+                    <input type='hidden' name='idProjeto' value="<?= $campo['idProjeto'] ?>">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
+                    <button type="submit" name='arquivar' class="btn btn-danger">SIM</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
  <script type="text/javascript">
     // Alimenta o modal com o idProjeto
     $('#enviarComissao').on('show.bs.modal', function (e)
