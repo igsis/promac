@@ -1,7 +1,5 @@
 <?php
 
-$cinza = "#EBEBEB";
-
 $array_etapa = array(7, 19, 24, 34); //etapa
 foreach ($array_etapa as $idEtapaProjeto)
 {
@@ -14,7 +12,7 @@ foreach ($array_etapa as $idEtapaProjeto)
     {
         $parecerista = " AND idComissao = $idPf";
     }
-    $sqlProjeto = "SELECT idProjeto, nomeProjeto, protocolo,  idComissao, pro.dataParecerista, pf.nome, pf.cpf, razaoSocial, cnpj, areaAtuacao, pro.publicado, pfc.nome AS comissao, etapaProjeto, pro.idEtapaProjeto AS idEtapaProjeto 
+    $sqlProjeto = "SELECT idProjeto, nomeProjeto, protocolo,  idComissao, pro.dataParecerista,pro.idStatus, pf.nome, pf.cpf, razaoSocial, cnpj, areaAtuacao, pro.publicado, pfc.nome AS comissao, etapaProjeto, pro.idEtapaProjeto AS idEtapaProjeto 
                     FROM projeto AS pro
                     LEFT JOIN pessoa_fisica AS pf ON pro.idPf = pf.idPf
                     LEFT JOIN pessoa_juridica AS pj ON pro.idPj = pj.idPj
@@ -89,9 +87,9 @@ foreach ($array_etapa as $idEtapaProjeto)
 
                             if ($i < 15) {
 
-                                if ($campo['etapaProjeto'] == 6) {
+                                if ($campo['idStatus'] == 6) {
 
-                                    echo "<tr style='background: $cinza'>";
+                                    echo "<tr style='background: #ebebeb'>";
 
                                 } elseif(isset($limite) && $limite == 1) {
 
@@ -113,7 +111,7 @@ foreach ($array_etapa as $idEtapaProjeto)
                                     <td class='list_description'><?=$campo['comissao']?></td>
                                     <?= ($campo['dataParecerista'] != 0) ? "<td class='list_description'>".$diff->format("%a dias")."</td>" : "<td class='list_description'></td>" ?>
                                     <?php
-                                    if ($campo['publicado'] == 1) {
+                                    if ($campo['idStatus'] != 6) {
                                         ?>
                                         <td class='list_description'>
                                             <form method='POST'
@@ -125,7 +123,7 @@ foreach ($array_etapa as $idEtapaProjeto)
                                         </td>
                                         <?php
                                     }else{
-                                        echo "<td></td>";
+                                        echo "<td colspan='2' style='color: #942a25;text-align: center;font-weight: bold'>Cancelado </td>";
                                     }
                                     ?>
                                 </tr>

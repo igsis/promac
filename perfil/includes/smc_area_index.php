@@ -441,11 +441,14 @@ foreach ($array_status as $idStatus)
                                                 </form>
                                         <?php
                                             }
+                                        ?>
+                                            </td>
+                                        <?php
                                         }else{
-                                            echo "<td colspan='2' style='color: #942a25;text-align: center;font-weight: bold'>Cancelado </td>";
+                                            echo "<td style='color: #942a25;text-align: center;font-weight: bold'>Cancelado</td>";
+                                            echo "<td style='text-align: center;'><button style='background-color:#FF2E25;color:#fff'>Arquivar</button></td>";
                                         }
                                         ?>
-                                        </td>
                                         <?php
                                     }
                                     ?>
@@ -507,7 +510,7 @@ foreach ($array_status as $idStatus)
                         <td class='list_description'><?=exibirDataBr($campo['fimExecucao'])?></td>
                         <?$idProjetos = $campo['idProjeto']?>
                         <?php
-                        if ($campo['publicado'] == 1) {
+                        if ($campo['idStatus'] != 6 && $campo['publicado'] != 0) {
                             ?>
                             <td class='list_description'>
                                 <form method='POST' action='?perfil=smc_detalhes_projeto'>
@@ -519,8 +522,8 @@ foreach ($array_status as $idStatus)
                         }else{
                             echo "<td colspan='2' style='color: #942a25;text-align: center;font-weight: bold'>Cancelado </td>";
                         }
-                        }
-                        ?>
+                    }
+                    ?>
                     </tr>
                     </tbody>
                 </table>
