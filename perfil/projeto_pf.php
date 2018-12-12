@@ -51,7 +51,7 @@ if (isset($_POST['cancelar'])){
         <?php
         $sql_cancelados = "SELECT distinct prj.idProjeto, nomeProjeto, protocolo, acao, observacao, data FROM projeto AS prj 
                             INNER JOIN historico_cancelamento AS hst ON prj.idProjeto = hst.idProjeto
-                            WHERE idPf = '$idPf' AND publicado = 0 AND acao = 1";
+                            WHERE idPf = '$idPf' AND publicado = 6 AND acao = 1";
         $query_cancelados = mysqli_query($con,$sql_cancelados);
         $num = mysqli_num_rows($query_cancelados);
         if($num > 0){
@@ -143,7 +143,7 @@ if (isset($_POST['cancelar'])){
                 <div class="table-responsive list_info">
                     <?php
                     $sql = "SELECT * FROM projeto
-										WHERE publicado > 0 AND idPf ='$idPf' AND tipoPessoa = 1 
+										WHERE idEtapaProjeto != 6 AND idPf ='$idPf' AND tipoPessoa = 1 
 										ORDER BY idProjeto DESC";
                     $query = mysqli_query($con, $sql);
                     $num = mysqli_num_rows($query);

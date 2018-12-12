@@ -2542,7 +2542,7 @@ function retornaQtdProjetos($tipoPessoa, $id)
                     count(idProjeto)
                     FROM 
                     projeto AS proj  
-                    WHERE proj.publicado = 1
+                    WHERE proj.idEtapaProjeto != 6
                     AND proj.idStatus != 6
                     AND   proj.idPf = '$id'";
     }
@@ -2554,7 +2554,7 @@ function retornaQtdProjetos($tipoPessoa, $id)
                     INNER JOIN 
                     pessoa_juridica AS pj 
                     ON pj.idPj = proj.idPj 
-                    WHERE proj.publicado = 1
+                    WHERE proj.idEtapaProjeto != 6
                     AND proj.idStatus != 6
                     AND   pj.cooperativa = 0
                     AND   proj.idPj = '$id'";

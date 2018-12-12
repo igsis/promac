@@ -23,6 +23,24 @@ if(isset($_POST['apagar']))
 		$mensagem = "<font color='#FF0000'><strong>Erro ao apagar projeto! Tente novamente.</strong></font>";
 	}
 }
+if (isset($_POST['cancelar'])){
+    $idProjeto = $_POST['projeto'];
+    $dateNow = date('Y-m-d H:i:s');
+
+    $query = "UPDATE `projeto` SET projeto.idEtapaProjeto = '6' WHERE idProjeto = '$idProjeto'";
+    $historico = "INSERT INTO historico_cancelamento (idProjeto, idUsuario, data, acao) VALUES ('$idProjeto','$idPj','$dateNow',1)";
+    if (mysqli_query($con,$query)){
+        if (mysqli_query($con,$historico)){
+            $mensagem = "<font color='#01DF3A'><strong>Projeto apagado com sucesso!</strong></font>";
+        }
+        else{
+            $mensagem = "<font color='#FF0000'><strong>Erro ao apagar projeto! Tente novamente.</strong></font>";
+        }
+    }else{
+        $mensagem = "<font color='#FF0000'><strong>Erro ao apagar projeto! Tente novamente.</strong></font>";
+    }
+
+}
 
 ?>
 <section id="list_items" class="home-section bg-white">
@@ -120,7 +138,7 @@ if(isset($_POST['apagar']))
 					<div class="table-responsive list_info">
 					<?php
 						$sql = "SELECT * FROM projeto
-								WHERE publicado > 0 AND idPj ='$idPj' AND tipoPessoa = 2
+								WHERE idEtapaProjeto != 6 AND idPj ='$idPj' AND tipoPessoa = 2
 								ORDER BY idProjeto DESC";
 						$query = mysqli_query($con,$sql);
 						$num = mysqli_num_rows($query);
