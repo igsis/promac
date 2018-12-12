@@ -243,13 +243,16 @@ if(isset($_POST['complementaProjeto']))
 
 if(isset($_POST['envioComissao']))
 {
+    $dateNow = date('Y-m-d H:i:s');
     $idProjeto = $_POST['idProjeto'];
     $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
     $idEtapaProjeto = $projeto['idEtapaProjeto'];
+    $dataParecerista = $dateNow;
 
     switch ($idEtapaProjeto) {
         case 2:
             $etapaProjeto = 7;
+            $dataParecerista = "0000-00-00";
             break;
         case 10:
             $etapaProjeto = 7;
@@ -274,8 +277,7 @@ if(isset($_POST['envioComissao']))
             break;
     }
 
-    $dateNow = date('Y-m-d H:i:s');
-    $sql_envioComissao = "UPDATE projeto SET idEtapaProjeto = '$etapaProjeto', idStatus = 2, envioComissao = '$dateNow' WHERE idProjeto = '$idProjeto' ";
+    $sql_envioComissao = "UPDATE projeto SET idEtapaProjeto = '$etapaProjeto', idStatus = 2, dataParecerista = '$dataParecerista', envioComissao = '$dateNow' WHERE idProjeto = '$idProjeto' ";
     if(mysqli_query($con,$sql_envioComissao))
     {
         $sql_historico = "INSERT INTO historico_etapa (idProjeto, idEtapaProjeto, data) VALUES ('$idProjeto', '$etapaProjeto', '$dateNow')";

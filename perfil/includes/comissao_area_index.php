@@ -63,7 +63,7 @@ foreach ($array_etapa as $idEtapaProjeto)
                             $idComissao = $campo ['idComissao'];
                             $idProjeto = $campo['idProjeto'];
 
-                            if ($idComissao != 0) {
+                            if (($idComissao != 0) && ($campo['dataParecerista'] != "0000-00-00")) {
 
                                 $dataParecerista = new DateTime($campo['dataParecerista']);
                                 $dateNow = new DateTime();
@@ -79,25 +79,25 @@ foreach ($array_etapa as $idEtapaProjeto)
 
                                 }
 
-                            } elseif ($idComissao == 0) {
-
-                                $sqlData = "UPDATE projeto SET dataParecerista = '0000-00-00' WHERE idProjeto = '$idProjeto'";
-                                $queryData = mysqli_query($con, $sqlData);
+                            }
+                            else
+                            {
+                                $limite = 0;
                             }
 
                             if ($i < 15) {
 
                                 if ($campo['idStatus'] == 6) {
 
-                                    echo "<tr style='background: #ebebeb'>";
+                                    echo "<tr style='background: #c3c3c3'>";
 
                                 } elseif(isset($limite) && $limite == 1) {
 
-                                    echo "<tr style='background: #ff4c4c'>";
+                                    echo "<tr class='danger'>";
 
                                 } else {
 
-                                    echo "<tr style='background: white'>";
+                                    echo "<tr>";
 
                                 }
 
