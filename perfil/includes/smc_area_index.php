@@ -739,7 +739,7 @@ foreach ($array_status as $idStatus)
                 <p>Para confirmar clique no botão SIM!</p>
             </div>
             <div class="modal-footer">
-                <form method='POST' action=''>
+                <form method='POST' action='?perfil=smc_index'>
                     <input type='hidden' name='idProjeto' value="<?= $campo['idProjeto'] ?>">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
                     <button type="submit" name='arquivar' class="btn btn-danger">SIM</button>
