@@ -128,15 +128,18 @@ function DiasUteis() {
                             ?>
                                 <div class="form-group">
                                     <div class="col-md-offset-4 col-md-6">
+                                        <button class='btn btn-default' type='button' data-toggle='modal' data-target='#certidaoFiscal' style="border-radius: 30px;"><i class="fa fa-question-circle"></i></button>
                                         <form class="form-horizontal" role="form" action="?perfil=certificados&idProjeto=<?= $idProjeto ?>" method="post">
                                             <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;">Anexar Certidões Fiscais</button>
                                         </form>
+                                        <button class='btn btn-default' type='button' data-toggle='modal' data-target='#termoResponsabilidade' style="border-radius: 30px;"><i class="fa fa-question-circle"></i></button>
                                         <form class="form-horizontal" role="form" action="../pdf/TERMO_DE_RESPONSABILIDADE_FINAL.docx" method="post">
                                             <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;">Imprimir termo de responsabilidade</button>
                                         </form>
                                         <form class="form-horizontal" role="form" action="https://docs.google.com/forms/<?= $idProjeto ?>" target="_blank" method="post">
                                             <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;">Link do agendamento Google Forms</button>
                                         </form>
+                                        <button class='btn btn-default' type='button' data-toggle='modal' data-target='#cartaIntencaoIncentivo' style="border-radius: 30px;"><i class="fa fa-question-circle"></i></button>
                                         <form class="form-horizontal" role="form" action="../pdf/CARTA_DE_INTENCAO_DE_INCENTIVO.docx" method="post">
                                             <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;">Download modelo da carta de incentivo</button>
                                         </form>
@@ -299,6 +302,86 @@ function DiasUteis() {
                 </div>
             </form>
 
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="termoResponsabilidade" role="dialog" aria-labelledby="termoResponsabilidade" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Termo de Responsabilidade</h4>
+            </div>
+            <div class="modal-body" style="text-align: left;">
+                <div role="tabpanel">
+                    <div class="tab-content">
+                        <!-- TABELA -->
+                        <div role="tabpanel" class="tab-pane fade in active" id="tabela">
+                            <br>
+                            <div class="well">
+                                O documento deve ser entregue na SMC pelo proponente ou por um representante com a devida procuração simples original;<br/>Em caso de Cooperativa, a Cooperativa deve assinar e o Proponente como anuente.<br/>No momento da entrega do termo será expedido o ofício da abertura de conta e a autorização de captação.
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="certidaoFiscal" role="dialog" aria-labelledby="certidaoFiscal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Certidões Fiscais</h4>
+            </div>
+            <div class="modal-body" style="text-align: left;">
+                <div role="tabpanel">
+                    <div class="tab-content">
+                        <!-- TABELA -->
+                        <div role="tabpanel" class="tab-pane fade in active" id="tabela">
+                            <br>
+                            <div class="well">
+                                Não será aceito nenhum protocolo de pagamento ou correlado. Somente são válidas certidões negativas ou positivas com efeito de negativa.
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="cartaIntencaoIncentivo" role="dialog" aria-labelledby="cartaIntencaoIncentivo" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Carta de Intenção de Incentivo</h4>
+            </div>
+            <div class="modal-body" style="text-align: left;">
+                <div role="tabpanel">
+                    <div class="tab-content">
+                        <!-- TABELA -->
+                        <div role="tabpanel" class="tab-pane fade in active" id="tabela">
+                            <br>
+                            <div class="well">
+                                Quando houver um incentivador, favor preencher a carta de incentivo, conforme modelo em anexo e entregar pessoalmente na SMC nos casos de incentivo iguais ou acima de R$ 80 mil.                                                        </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+            </div>
         </div>
     </div>
 </div>
