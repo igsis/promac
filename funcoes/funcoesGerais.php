@@ -950,7 +950,7 @@ function listaArquivosSMC($tipoPessoa,$pagina)
                   <td class='list_description'>
 							<form id='apagarArq' method='POST' action='?perfil=".$pagina."'>
 								<input type='hidden' name='tipoPessoa' value='".$tipoPessoa."' />
-								<input type='hidden' name='apagar' value='".$arquivo['arquivo']."' />
+								<input type='hidden' name='apagar' value='".$arquivo['idUploadArquivo']."' />
 								<button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Remover Arquivo?' data-message='Deseja realmente excluir o arquivo ".$arquivo['arquivo']."?'>Remover
 								</button></td>
 							</form>";
