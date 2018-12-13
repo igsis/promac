@@ -1,5 +1,9 @@
 <?php
 
+$array_etapa = array(7, 19, 24, 34); //etapa
+foreach ($array_etapa as $idEtapaProjeto)
+{
+    $sqlEtapaProjeto = "SELECT idEtapaProjeto, etapaProjeto, ordem FROM etapa_projeto WHERE idEtapaProjeto = '$idEtapaProjeto'";
     if (($pf['idNivelAcesso'] == 2) || ($pf['idNivelAcesso'] == 3))
     {
         $parecerista = NULL;
@@ -15,13 +19,25 @@
                     INNER JOIN area_atuacao AS ar ON pro.idAreaAtuacao = ar.idArea
                     LEFT JOIN pessoa_fisica AS pfc ON pro.idComissao = pfc.idPf 
                     INNER JOIN etapa_projeto AS etapa ON pro.idEtapaProjeto = etapa.idEtapaProjeto
-                    WHERE pro.idEtapaProjeto IN (7, 19, 24, 34) $parecerista ORDER BY idEtapaProjeto 
-                    LIMIT 0,1";
+                    WHERE pro.idEtapaProjeto = '$idEtapaProjeto'" .$parecerista." ORDER BY protocolo";
     $queryProjeto = mysqli_query($con,$sqlProjeto);
+    $queryEtapaProjeto = mysqli_query($con,$sqlEtapaProjeto);
     $num = mysqli_num_rows($queryProjeto);
-?>
+
+    foreach ($queryEtapaProjeto as $etapa_projeto)
+    {
+        $i = 0;
+        ?>
+        <div class='form-group'>
+            <h5>Projetos com Etapa "<?=$etapa_projeto['etapaProjeto']?>"</h5>
+            <form method="POST" action="<?= ($pf['idNivelAcesso'] == 2) ? "?perfil=smc_pesquisa_geral_resultado" : "?perfil=comissao_pesquisa_resultado"?>" class="form-horizontal" role="form">
+                <button type="submit" class="label label-warning" name="idEtapaProjeto" value="<?=$etapa_projeto['idEtapaProjeto']?>">
+                    <span>Total: <?=$num?></span>
+                </button>
+            </form>
+        </div>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-offset-1 col-md-10">
                 <div class="table-responsive list_info">
                     <?php
                     if($num > 0)
@@ -37,9 +53,8 @@
                             <td>Documento</td>
                             <td>Área de Atuação</td>
                             <td>Parecerista</td>
-                            <td>Dias atribuidos</td>
-                            <td>Projetos com Etapa</td>
-                            <td>Ação</td>
+                            <?=($etapa_projeto['idEtapaProjeto'] == 7 || $etapa_projeto['idEtapaProjeto'] == 19 || $etapa_projeto['idEtapaProjeto'] == 24 || $etapa_projeto['idEtapaProjeto'] == 34) ? "<td>Parecerista atribuido à</td>" : "<td></td>" ?>
+                            <td width='10%'></td>
                         </tr>
                         </thead>
                         <?php
@@ -88,42 +103,32 @@
 
                                 ?>
 
-                                <td class='list_description maskProtocolo' data-mask = "0000.00.00/0000000"><?= $campo['protocolo'] ?></td>
-                                <td class='list_description'><?= $campo['nomeProjeto'] ?></td>
-                                <td class='list_description'><?= isset($campo['nome']) ? $campo['nome'] : $campo['razaoSocial'] ?></td>
-                                <td class='list_description'><?= isset($campo['cpf']) ? $campo['cpf'] : $campo['cnpj'] ?></td>
-                                <td class='list_description'><?= mb_strimwidth($campo['areaAtuacao'], 0, 38, "...") ?></td>
-                                <td class='list_description'><?=$campo['comissao']?></td>
-                                <?= ($campo['dataParecerista'] != 0) ? "<td class='list_description'>".$diff->format("%a dias")."</td>" : "<td class='list_description'></td>" ?>
-
-                                <td>
+                                    <td class='list_description maskProtocolo' data-mask = "0000.00.00/0000000"><?= $campo['protocolo'] ?></td>
+                                    <td class='list_description'><?= $campo['nomeProjeto'] ?></td>
+                                    <td class='list_description'><?= isset($campo['nome']) ? $campo['nome'] : $campo['razaoSocial'] ?></td>
+                                    <td class='list_description'><?= isset($campo['cpf']) ? $campo['cpf'] : $campo['cnpj'] ?></td>
+                                    <td class='list_description'><?= mb_strimwidth($campo['areaAtuacao'], 0, 38, "...") ?></td>
+                                    <td class='list_description'><?=$campo['comissao']?></td>
+                                    <?= ($campo['dataParecerista'] != 0) ? "<td class='list_description'>".$diff->format("%a dias")."</td>" : "<td class='list_description'></td>" ?>
                                     <?php
-                                        $etapa = recuperaDados('etapa_projeto', 'idEtapaProjeto', $campo['idEtapaProjeto']);
-
-                                        echo $etapa['etapaProjeto'];
+                                    if ($campo['idStatus'] != 6) {
+                                        ?>
+                                        <td class='list_description'>
+                                            <form method='POST'
+                                                  action='<?= ($pf['idNivelAcesso'] == 2) ? "?perfil=smc_detalhes_projeto" : "?perfil=comissao_detalhes_projeto" ?>'>
+                                                <input type='hidden' name='idProjeto'
+                                                       value='<?= $campo['idProjeto'] ?>'/>
+                                                <input type='submit' class='btn btn-theme btn-block' value='Visualizar'>
+                                            </form>
+                                        </td>
+                                        <?php
+                                    }else{
+                                        echo "<td colspan='2' style='color: #942a25;text-align: center;font-weight: bold'>Cancelado </td>";
+                                    }
                                     ?>
-                                </td>
-
+                                </tr>
                                 <?php
-                                if ($campo['idStatus'] != 6) {
-                                    ?>
-
-
-                                    <td class='list_description'>
-                                        <form method='POST'
-                                              action='<?= ($pf['idNivelAcesso'] == 2) ? "?perfil=smc_detalhes_projeto" : "?perfil=comissao_detalhes_projeto" ?>'>
-                                            <input type='hidden' name='idProjeto'
-                                                   value='<?= $campo['idProjeto'] ?>'/>
-                                            <input type='submit' class='btn btn-theme btn-block' value='Visualizar'>
-                                        </form>
-                                    </td>
-
-                                    <?php
-                                }else{
-                                    echo "<td colspan='2' style='color: #942a25;text-align: center;font-weight: bold'>Cancelado </td>";
-                                }
-                                ?>
-                                <?php
+                                $i++;
                             }
                         }
                         }
@@ -136,3 +141,7 @@
                 </div>
             </div>
         </div>
+        <?php
+    }
+}
+?>

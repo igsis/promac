@@ -76,7 +76,7 @@ if(isset($_POST['liberacaoPJ']))
             </div>
 
             <div class="tab-pane fade" id="comissao">
-                <?php include "includes/comissao_area_index.php"; ?>
+                <?php include "includes/comissao_index_smc.php"; ?>
             </div>
         </div>
     </div>
