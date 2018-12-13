@@ -5,7 +5,7 @@
 
   function ImpressaoMsgErros($arqPendentes)
   {
-    if(sizeof($arqPendentes) == 0): 
+    if(sizeof($arqPendentes) != 0):
       foreach($arqPendentes as $nomeArquivo): ?>
         <div class="alert alert-danger container page-header">
           <p>O arquivo <b><?=$nomeArquivo?></b> está pendente</b> </p>  
