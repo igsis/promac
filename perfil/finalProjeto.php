@@ -75,7 +75,8 @@ if($projeto['idEtapaProjeto'] == 6)
 			<p align="justify"><strong>Valor do incentivo:</strong> R$ <?php echo dinheiroParaBr($projeto['valorIncentivo']); ?><p>
 					<p align="justify"><strong>Área de atuação:</strong> <?php echo $area['areaAtuacao'] ?></p>
 					<p align="justify"><strong>Renúncia Fiscal:</strong> <?php echo $renuncia['renunciaFiscal'] ?></p>
-					<p align="justify"><strong>Exposição da Marca:</strong> <?php echo $projeto['exposicaoMarca']; ?></p>
+					<p align="justify"><strong>Exposição da Marca:</strong> <?php echo $projeto['indicacaoIngresso']; ?></p>
+                    <p align="justify"><strong>Exposição da Marca:</strong> <?php echo $projeto['exposicaoMarca']; ?></p>
 					<p align="justify"><strong>Resumo do projeto:</strong> <?php echo isset($projeto['resumoProjeto']) ? $projeto['resumoProjeto'] : null; ?></p>
 					<p align="justify"><strong>Currículo:</strong> <?php echo isset($projeto['curriculo']) ? $projeto['curriculo'] : null; ?></p>
 					<p align="justify"><strong>Descrição:</strong> <?php echo isset($projeto['descricao']) ? $projeto['descricao'] : null; ?></p>
@@ -368,8 +369,8 @@ if($projeto['idEtapaProjeto'] == 6)
 			</div>
 			<!--Inicio do termo do contrato-->
                 <?php
-                $dateNow = date('Y-m-d H:i:s');//para habiitar o botão de envio para uma determinada pessoa
-                if (($envioProjetos['situacaoAtual'] == 1) || (($pj['idPj'] == 156 || $pj['idPj'] == 938) && $dateNow < '2018-11-21 18:01:00'))
+                $statusProjeto = recuperaStatus();
+                if ($statusProjeto == 1)
                 {
                     if (sizeof($erros) == 0 && sizeof($arqPendentes) == 0)
                     { ?>
