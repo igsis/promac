@@ -39,12 +39,7 @@
                 <ul class="dl-submenu">
                     <li><a href="?perfil=smc_area_atuacao">Área atuação</a></li>
                     <li><a href="?perfil=smc_agendamento_cadastro">Cadastro Link Agendamento</a></li>
-                    <li><a href="#">Liberar/Bloquear projetos</a>
-                        <ul class="dl-submenu">
-                            <li><a href="?perfil=smc_gerenciar_projeto&id=1">Liberar</a></li>
-                            <li><a href="?perfil=smc_gerenciar_projeto&id=2">Bloquear</a></li>
-                        </ul>
-                    </li>
+                    <li><a href="?perfil=smc_gerenciar_projeto">Liberar/Bloquear projetos</a></li>
                     <li><a href="?perfil=informacoes_iniciais_pf">Módulo Proponente (provisório)</a></li>
                     <li><a href="?perfil=smc_arquivos">Uploads</a></li>
                     <li><a href="#">Usuários</a>
