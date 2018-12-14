@@ -1198,7 +1198,7 @@ function listaParecerSMC($idPessoa,$tipoPessoa,$pagina)
 					<td>Nome do arquivo</td>
 					<td>Status</td>
 					<td>Observação</td>
-					<td>Disponibilizar em</td>
+					<td>Data da Publicação</td>
 					<td width='15%'></td>
 				</tr>
 			</thead>
