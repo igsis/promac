@@ -405,16 +405,23 @@ if(isset($_POST['editarParecer'])){
     $observacoes = $_POST['observacoes'];
     $idProjeto = $_POST['idPessoa'];
     $idArquivo = $_POST['idArquivo'];
-    $query = "UPDATE upload_arquivo SET idStatusDocumento = $status, observacoes = '$observacoes' WHERE idUploadArquivo = '$idArquivo' ";
+    $idDisponibilizar = $_POST['idDisponib'];
+    $dataDisponivel = exibirDataMysql($_POST['dataDisponivel']) ?? null;
+    $query = "UPDATE upload_arquivo SET idStatusDocumento = '$status', observacoes = '$observacoes' WHERE idUploadArquivo = '$idArquivo' ";
     $envia = mysqli_query($con, $query);
     if($envia)
     {
-        $mensagem = "<span style=\"color: #01DF3A; \"><strong>Os arquivos foram atualizados com sucesso!</strong></span>";
-        gravarLog($query);
+
+        echo "<br><br><br>'$query'";
+        $sql_data = "UPDATE disponibilizar_documento SET data = '$dataDisponivel' WHERE idUploadArquivo = '$idArquivo' AND id ='$idDisponibilizar' ";
+        echo "<br><br><br>'$sql_data'";
+        $query_data = mysqli_query($con,$sql_data);
+        //echo "<script>window.location.href = 'index_pf.php?perfil=smc_detalhes_projeto&idFF=".$idProjeto."';</script>";
+        $mensagem = "<font color='#01DF3A'><strong>Os arquivos foram atualizados com sucesso!</strong></font>";
     }
     else
     {
-       // echo "<script>window.location.href = 'index_pf.php?perfil=smc_detalhes_projeto&idFF=".$idProjeto."';</script>";
+        echo "<script>window.location.href = 'index_pf.php?perfil=smc_detalhes_projeto&idFF=".$idProjeto."';</script>";
         echo "<script>alert('Erro durante o processamento, entre em contato com os responsáveis pelo sistema para maiores informações.')</script>";
     }
 }
@@ -471,6 +478,10 @@ if(isset($_POST["enviar"]))
                         $query = mysqli_query($con,$sql_insere_arquivo);
                         if($query)
                         {
+                            $idUploadArquivo = recuperaUltimo("upload_arquivo");
+                            $sql_insere_data = "INSERT INTO disponibilizar_documento (idUploadArquivo) VALUES ($idUploadArquivo)";
+                            $query_insere_data = mysqli_query($con,$sql_insere_data);
+                            echo $sql_insere_data;
                             $mensagem = "<font color='#01DF3A'><strong>Arquivo recebido com sucesso!</strong></font>";
                             gravarLog($sql_insere_arquivo);
                         }
