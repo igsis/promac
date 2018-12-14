@@ -1203,7 +1203,7 @@ function listaParecerSMC($idPessoa,$tipoPessoa,$pagina)
 				</tr>
 			</thead>
 			<tbody>";
-        echo var_dump(mysqli_fetch_array($query));
+        $x = 1;
         while($arquivo = mysqli_fetch_array($query))
         {
             echo "<form method='POST' action='?perfil=".$pagina."'>";
@@ -1219,16 +1219,17 @@ function listaParecerSMC($idPessoa,$tipoPessoa,$pagina)
             echo "<td class='list_description'>
 					<input type='text' name='observacoes' maxlength='100' id='observ' value='".$arquivo['observacoes']."'/></td>";
             echo "<td class='list_description'>
-					<input type='text' name='dataDisponivel' id='datepicker01' class='form-control' value='".exibirDataBr($arquivo['dataDisponivel'])."'/></td>";
+					<input type='text' name='dataDisponivel' id='datepicker0".$x."' class='form-control' value='".exibirDataBr($arquivo['dataDisponivel'])."'/></td>";
             echo "<td class='list_description'>	
 					<input type='hidden' name='idPessoa' value='".$idPessoa."' />
 					<input type='hidden' name='idArquivo' value='".$arquivo['idArquivo']."' />
-					<input type='hidden' name='idDisponib' value='".$arquivo['disponibilizar']."'>
+					<input type='hidden' name='idDisponib' value='".$arquivo['disponibilizar']."'/>
 					<button class='btn btn-theme' type='submit' name='editarParecer'>Atualizar
 					</button>
 				</td>";
             echo "</tr>";
             echo "</form>";
+            $x++;
         }
         echo "
 		</tbody>

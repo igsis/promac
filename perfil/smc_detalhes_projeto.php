@@ -406,15 +406,12 @@ if(isset($_POST['editarParecer'])){
     $idProjeto = $_POST['idPessoa'];
     $idArquivo = $_POST['idArquivo'];
     $idDisponibilizar = $_POST['idDisponib'];
-    $dataDisponivel = exibirDataMysql($_POST['dataDisponivel']) ?? null;
+    $dataDisponivel = exibirDataMysql($_POST['dataDisponivel']) ?? NULL;
     $query = "UPDATE upload_arquivo SET idStatusDocumento = '$status', observacoes = '$observacoes' WHERE idUploadArquivo = '$idArquivo' ";
     $envia = mysqli_query($con, $query);
     if($envia)
     {
-
-        echo "<br><br><br>'$query'";
         $sql_data = "UPDATE disponibilizar_documento SET data = '$dataDisponivel' WHERE idUploadArquivo = '$idArquivo' AND id ='$idDisponibilizar' ";
-        echo "<br><br><br>'$sql_data'";
         $query_data = mysqli_query($con,$sql_data);
         //echo "<script>window.location.href = 'index_pf.php?perfil=smc_detalhes_projeto&idFF=".$idProjeto."';</script>";
         $mensagem = "<font color='#01DF3A'><strong>Os arquivos foram atualizados com sucesso!</strong></font>";
