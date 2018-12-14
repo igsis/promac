@@ -42,29 +42,30 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('O1', 'Pessoa')
             ->setCellValue('P1', 'Proponente')
             ->setCellValue('Q1', 'Documento')
-            ->setCellValue('R1', 'Logradouro')
-            ->setCellValue('S1', 'Número')
-            ->setCellValue('T1', 'Complemento')
-            ->setCellValue('U1', 'Bairro')
-            ->setCellValue('V1', 'Cidade')
-            ->setCellValue('W1', 'Estado')
-            ->setCellValue('X1', 'CEP')
-            ->setCellValue('Y1', 'Etapa')
-            ->setCellValue('Z1', 'Status')
-            ->setCellValue('AA1', 'Início da captação')
-            ->setCellValue('AB1', 'Prorrogação Captação')
-            ->setCellValue('AC1', 'Final da captação')
-            ->setCellValue('AD1', 'Início da execução')
-            ->setCellValue('AE1', 'Fim da execução')
-            ->setCellValue('AF1', 'Prorrogação Execução')
-            ->setCellValue('AG1', 'Data para prestar contas');
+            ->setCellValue('R1', 'Email')
+            ->setCellValue('S1', 'Logradouro')
+            ->setCellValue('T1', 'Número')
+            ->setCellValue('U1', 'Complemento')
+            ->setCellValue('V1', 'Bairro')
+            ->setCellValue('W1', 'Cidade')
+            ->setCellValue('X1', 'Estado')
+            ->setCellValue('Y1', 'CEP')
+            ->setCellValue('Z1', 'Etapa')
+            ->setCellValue('AA1', 'Status')
+            ->setCellValue('AB1', 'Início da captação')
+            ->setCellValue('AC1', 'Prorrogação Captação')
+            ->setCellValue('AD1', 'Final da captação')
+            ->setCellValue('AE1', 'Início da execução')
+            ->setCellValue('AF1', 'Fim da execução')
+            ->setCellValue('AG1', 'Prorrogação Execução')
+            ->setCellValue('AH1', 'Data para prestar contas');
 
 //Colorir a primeira fila
-$objPHPExcel->getActiveSheet()->getStyle('A1:AG1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
-$objPHPExcel->getActiveSheet()->getStyle('A1:Ag1')->getFill()->getStartColor()->setARGB('#29bb04');
+$objPHPExcel->getActiveSheet()->getStyle('A1:AH1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+$objPHPExcel->getActiveSheet()->getStyle('A1:AH1')->getFill()->getStartColor()->setARGB('#29bb04');
 // Add some data
-$objPHPExcel->getActiveSheet()->getStyle("A1:AE1")->getFont()->setBold(true);
-$objPHPExcel->getActiveSheet()->getStyle('A1:AE1')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+$objPHPExcel->getActiveSheet()->getStyle("A1:AH1")->getFont()->setBold(true);
+$objPHPExcel->getActiveSheet()->getStyle('A1:AH1')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
 $styleArray = array(
       'borders' => array(
           'allborders' => array(
@@ -107,6 +108,7 @@ $objPHPExcel->getActiveSheet()->getColumnDimension('AD')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('AE')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('AF')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('AG')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('AH')->setAutoSize(true);
 
 
 //Dados Projeto
@@ -186,6 +188,7 @@ while($row = mysqli_fetch_array($query))
       $pj = recuperaDados("pessoa_juridica","idPj",$row['idPj']);
       $proponente = $pj['razaoSocial'];
       $documento = $pj['cnpj'];
+      $email = $pj['email'];
       $logradouro = $pj['logradouro'];
       $numero = $pj['numero'];
       $complemento = $pj['complemento'];
@@ -199,6 +202,7 @@ while($row = mysqli_fetch_array($query))
       $pf = recuperaDados("pessoa_fisica","idPf",$row['idPf']);
       $proponente = $pf['nome'];
       $documento = $pf['cpf'];
+      $email = $pf['email'];
       $logradouro = $pf['logradouro'];
       $numero = $pf['numero'];
       $complemento = $pf['complemento'];
@@ -245,22 +249,23 @@ while($row = mysqli_fetch_array($query))
                ->setCellValue('O'.$i, $tipo)
                ->setCellValue('P'.$i, $proponente)
                ->setCellValue('Q'.$i, $documento)
-               ->setCellValue('R'.$i, $logradouro)
-               ->setCellValue('S'.$i, $numero)
-               ->setCellValue('T'.$i, $complemento)
-               ->setCellValue('U'.$i, $bairro)
-               ->setCellValue('V'.$i, $cidade)
-               ->setCellValue('W'.$i, $estado)
-               ->setCellValue('X'.$i, $cep)
-               ->setCellValue('Y'.$i, $row['etapaProjeto'])
-               ->setCellValue('Z'.$i, $row['status'])
-               ->setCellValue('AA'.$i, $lista_prazos['prazoCaptacao'])
-               ->setCellValue('AB'.$i, $lista_prazos['prorrogacaoCaptacao'])
-               ->setCellValue('AC'.$i, $lista_prazos['finalCaptacao'])
-               ->setCellValue('AD'.$i, $lista_prazos['inicioExecucao'])
-               ->setCellValue('AE'.$i, $lista_prazos['fimExecucao'])
-               ->setCellValue('AF'.$i, $lista_prazos['prorrogacaoExecucao'])
-               ->setCellValue('AG'.$i, $lista_prazos['prestarContas']);
+               ->setCellValue('R'.$i, $email)
+               ->setCellValue('S'.$i, $logradouro)
+               ->setCellValue('T'.$i, $numero)
+               ->setCellValue('U'.$i, $complemento)
+               ->setCellValue('V'.$i, $bairro)
+               ->setCellValue('W'.$i, $cidade)
+               ->setCellValue('X'.$i, $estado)
+               ->setCellValue('Y'.$i, $cep)
+               ->setCellValue('Z'.$i, $row['etapaProjeto'])
+               ->setCellValue('AA'.$i, $row['status'])
+               ->setCellValue('AB'.$i, $lista_prazos['prazoCaptacao'])
+               ->setCellValue('AC'.$i, $lista_prazos['prorrogacaoCaptacao'])
+               ->setCellValue('AD'.$i, $lista_prazos['finalCaptacao'])
+               ->setCellValue('AE'.$i, $lista_prazos['inicioExecucao'])
+               ->setCellValue('AF'.$i, $lista_prazos['fimExecucao'])
+               ->setCellValue('AG'.$i, $lista_prazos['prorrogacaoExecucao'])
+               ->setCellValue('AH'.$i, $lista_prazos['prestarContas']);
    $i++;
 }
 
