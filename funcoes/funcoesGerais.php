@@ -2181,7 +2181,8 @@ function retornaCamposObrigatoriosPf($idProjeto)
 	             proj.idAreaAtuacao AS areaAtuacaoProjeto, 	             
 	             proj.nomeProjeto AS nomeProjeto, 	             	             
 	             proj.idRenunciaFiscal AS ValoresEnquadramentoRenunciaFiscal, 
-	             proj.exposicaoMarca AS ValoresEnquadramentoExposicaoMarca, 	  
+	             proj.idExposicaoMarca AS exposicaoMarca, 	  
+	             proj.indicacaoIngresso AS indicacaoIngresso, 	  
 	             proj.resumoProjeto AS resumoCurriculoProjeto, 
 	             proj.curriculo AS resumoCurriculoCvProponente, 	             
 	             proj.descricao AS ObjetoDescricao,
@@ -2214,6 +2215,9 @@ function retornaCamposObrigatoriosPf($idProjeto)
 			     projeto as proj
 			   INNER JOIN 
                  pessoa_fisica AS pf ON pf.idPf = proj.idPf
+                 
+               INNER JOIN
+                 exposicao_marca as exp ON proj.idExposicaoMarca = exp.id
   			   
   			   INNER JOIN 
                   locais_realizacao AS loc_rea 
