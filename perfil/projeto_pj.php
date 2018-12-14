@@ -5,7 +5,7 @@ $tipoPessoa = '2';
 
 $idPj = $_SESSION['idUser'];
 $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
-$statusProjeto = recuperaStatus("statusprojeto");
+$statusProjeto = recuperaStatus();
 
 $dateNow = date('Y-m-d H:i:s');
 

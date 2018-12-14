@@ -5,7 +5,7 @@ $tipoPessoa = '1';
 
 $idPf = $_SESSION['idUser'];
 $pf = recuperaDados("pessoa_fisica", "idPf", $idPf);
-$statusProjeto = recuperaStatus("statusprojeto");
+$statusProjeto = recuperaStatus();
 
 
 if (isset($_POST['apagar'])) {

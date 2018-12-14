@@ -540,13 +540,29 @@ function recuperaDadosProjeto($tabela,$campo,$variavelCampo)
 	return $campo;
 }
 
-function recuperaStatus($tabela)
+function recuperaStatus()
 {
-	$con = bancoMysqli();
-	$sql = "SELECT situacaoAtual FROM $tabela WHERE idStatus = '1'";
-	$query = mysqli_query($con,$sql);
-	$campo = mysqli_fetch_array($query);
-	return $campo['situacaoAtual'];
+    $con = bancoMysqli();
+    $dateNow = date('Y-m-d');
+    $sql = "SELECT situacaoAtual, data FROM liberacao_projeto WHERE idStatus = '1'";
+    $query = mysqli_query($con,$sql);
+    $campo = mysqli_fetch_array($query);
+    if($campo['situacaoAtual'] == 1){
+        if($campo['data'] <= $dateNow){
+            return "1";
+        }
+        else{
+            return "2";
+        }
+    }
+    else{
+        if($campo['data'] <= $dateNow){
+            return "2";
+        }
+        else{
+            return "1";
+        }
+    }
 }
 
 function verificaExiste($idTabela,$idCampo,$idDado,$st)
