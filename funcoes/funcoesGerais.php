@@ -1114,7 +1114,9 @@ function exibirArquivoParecer($tipoPessoa,$idPessoa)
 
 function listaArquivosPessoaSMC($idPessoa,$tipoPessoa,$pagina)
 {
+
 	$con = bancoMysqli();
+
 	$sql = "SELECT *
 			FROM lista_documento as list
 			INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
@@ -1139,7 +1141,7 @@ function listaArquivosPessoaSMC($idPessoa,$tipoPessoa,$pagina)
 			</thead>
 			<tbody>";
 				echo "<form method='POST' action='?perfil=".$pagina."'>";
-					while($arquivo = mysqli_fetch_array($query))
+                        while($arquivo = mysqli_fetch_array($query))
 					{
 						echo "<tr>";
 						echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
@@ -1176,9 +1178,10 @@ function listaArquivosPessoaSMC($idPessoa,$tipoPessoa,$pagina)
 function listaParecerSMC($idPessoa,$tipoPessoa,$pagina)
 {
     $con = bancoMysqli();
-    $sql = "SELECT documento, arquivo, arq.idUploadArquivo AS  idArquivo, idStatusDocumento,observacoes
+    $sql = "SELECT documento, arquivo, arq.idUploadArquivo AS idArquivo, disp.idUploadArquivo,disp.id 'disponibilizar', idStatusDocumento,observacoes,disp.data AS dataDisponivel
 			FROM lista_documento as list
 			INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
+			LEFT JOIN disponibilizar_documento AS disp ON arq.idUploadArquivo = disp.idUploadArquivo
 			WHERE arq.idPessoa = '$idPessoa'
 			AND arq.idTipo = '$tipoPessoa'
 			AND arq.publicado = '1'";
@@ -1192,33 +1195,41 @@ function listaParecerSMC($idPessoa,$tipoPessoa,$pagina)
 			<thead>
 				<tr class='list_menu'>
 					<td>Tipo de arquivo</td>
+					<td>Nome do arquivo</td>
 					<td>Status</td>
 					<td>Observação</td>
+					<td>Disponibilizar em</td>
 					<td width='15%'></td>
 				</tr>
 			</thead>
 			<tbody>";
-
+        $x = 1;
         while($arquivo = mysqli_fetch_array($query))
         {
-            echo "<form method='POST' action='?perfil=$pagina'>";
-        	echo "<tr>";
-            echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['documento'], 0 ,50,"..." )."</a></td>";
+            echo "<form method='POST' action='?perfil=".$pagina."'>";
+            echo "<tr>";
+            echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
+            echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
             echo "<td class='list_description'>
 								<select name='status' id='statusOpt'>";
-            echo "<option value=''>Selecione</option>";
+            echo "<option>Selecione</option>";
             geraOpcao('status_documento', $arquivo['idStatusDocumento']);
             echo " </select>
 							</td>";
             echo "<td class='list_description'>
 					<input type='text' name='observacoes' maxlength='100' id='observ' value='".$arquivo['observacoes']."'/></td>";
+            echo "<td class='list_description'>
+					<input type='text' name='dataDisponivel' id='datepicker0".$x."' class='form-control' value='".exibirDataBr($arquivo['dataDisponivel'])."'/></td>";
             echo "<td class='list_description'>	
 					<input type='hidden' name='idPessoa' value='".$idPessoa."' />
 					<input type='hidden' name='idArquivo' value='".$arquivo['idArquivo']."' />
-					<input type='submit' class='btn btn-theme btn-md btn-block' name='editarParecer' value='Atualizar'>
+					<input type='hidden' name='idDisponib' value='".$arquivo['disponibilizar']."'/>
+					<button class='btn btn-theme' type='submit' name='editarParecer'>Atualizar
+					</button>
 				</td>";
             echo "</tr>";
             echo "</form>";
+            $x++;
         }
         echo "
 		</tbody>
