@@ -5,12 +5,13 @@ $idUsuario = $_SESSION['idUser'];
 $idProjeto = $_SESSION['idProjeto'];
 $tipoPessoa = $_SESSION['tipoPessoa'];
 
-$envioProjetos = recuperaDados('statusprojeto', 'idStatus', 1);
+//$envioProjetos = recuperaDados('statusprojeto', 'idStatus', 1);
 $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 $area = recuperaDados("area_atuacao","idArea",$projeto['idAreaAtuacao']);
 $renuncia = recuperaDados("renuncia_fiscal","idRenuncia",$projeto['idRenunciaFiscal']);
 $cronograma = recuperaDados("cronograma","idCronograma",$projeto['idCronograma']);
 $video = recuperaDados("projeto","idProjeto",$idProjeto);
+$marca = recuperaDados("exposicao_marca","id",$projeto['idExposicaoMarca']);
 $v = array($video['video1'], $video['video2'], $video['video3']);
 
 if ($tipoPessoa == "1")
@@ -75,8 +76,8 @@ if($projeto['idEtapaProjeto'] == 6)
 			<p align="justify"><strong>Valor do incentivo:</strong> R$ <?php echo dinheiroParaBr($projeto['valorIncentivo']); ?><p>
 					<p align="justify"><strong>Área de atuação:</strong> <?php echo $area['areaAtuacao'] ?></p>
 					<p align="justify"><strong>Renúncia Fiscal:</strong> <?php echo $renuncia['renunciaFiscal'] ?></p>
-					<p align="justify"><strong>Exposição da Marca:</strong> <?php echo $projeto['indicacaoIngresso']; ?></p>
-                    <p align="justify"><strong>Exposição da Marca:</strong> <?php echo $projeto['exposicaoMarca']; ?></p>
+                    <p align="justify"><strong>Descrição da exposição da Marca:</strong> <?php echo $marca['exposicao_marca']; ?></p>
+                    <p align="justify"><strong>Indicação do valor do ingresso:</strong> <?php echo $projeto['indicacaoIngresso']; ?></p>
 					<p align="justify"><strong>Resumo do projeto:</strong> <?php echo isset($projeto['resumoProjeto']) ? $projeto['resumoProjeto'] : null; ?></p>
 					<p align="justify"><strong>Currículo:</strong> <?php echo isset($projeto['curriculo']) ? $projeto['curriculo'] : null; ?></p>
 					<p align="justify"><strong>Descrição:</strong> <?php echo isset($projeto['descricao']) ? $projeto['descricao'] : null; ?></p>
