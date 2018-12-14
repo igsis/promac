@@ -26,9 +26,10 @@ if(isset($_POST['apagar']))
 if (isset($_POST['cancelar'])){
     $idProjeto = $_POST['projeto'];
     $dateNow = date('Y-m-d H:i:s');
+    $observacao = $_POST['observacao'];
 
     $query = "UPDATE `projeto` SET projeto.idStatus = '6' WHERE idProjeto = '$idProjeto'";
-    $historico = "INSERT INTO historico_cancelamento (idProjeto, idUsuario, data, acao) VALUES ('$idProjeto','$idPj','$dateNow',1)";
+    $historico = "INSERT INTO historico_cancelamento (idProjeto,observacao, idUsuario, data, acao) VALUES ('$idProjeto','$observacao','$idPj','$dateNow',1)";
     if (mysqli_query($con,$query)){
         if (mysqli_query($con,$historico)){
             $mensagem = "<font color='#01DF3A'><strong>Projeto apagado com sucesso!</strong></font>";

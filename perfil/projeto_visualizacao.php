@@ -288,11 +288,11 @@ function DiasUteis() {
                             <?php
                                 }
                             ?>
-                            <div class="form-group">
-                                <div class="col-md-offset-4 col-md-6">
-                                    <button class="btn btn-danger btn-block" type='button' data-toggle='modal' data-target='#cancelarProjeto' data-title="Cancelar projeto" data-message="Você está cancelando um projeto">Cancelar projeto</button>
-                                </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-4 col-md-6">
+                                <button class='btn btn-danger btn-block' type='button' data-toggle='modal' data-target='#confirmCancelar' data-title='Cancelamento de projeto' data-message='Você realmete deseja cancelar o projeto?'>Cancelar Projeto</button>
                             </div>
+                        </div>
                     </div>
 
                 <!-- LABEL PROJETO -->
@@ -320,26 +320,32 @@ function DiasUteis() {
         </div>
     </div>
 </section>
-<div class="modal fade" id="cancelarProjeto" role="dialog" aria-labelledby="confirmApagarLabel"
-     aria-hidden="true">
+<div class="modal fade" id="confirmCancelar" role="dialog" aria-labelledby="confirmCancelarLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
+            <?php
+            if ($projeto['tipoPessoa'] == 1){
+                echo "<form method='POST' id='cancelarProjeto' action='?perfil=projeto_pf' class='form-horizontal' role='form'>";
+            }
+            else{
+                echo "<form method='POST' id='cancelarProjeto' action='?perfil=projeto_pj' class='form-horizontal' role='form'>";
+            }
+            ?>
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Cancelar projeto</h4>
+                <h4 class="modal-title"><p>Cancelamento de projeto</p></h4>
             </div>
             <div class="modal-body">
-                <p>Deseja cancelar esse projeto mesmo?</p>
+                <p><span style="color: red; "><strong>ATENÇÃO: A ação não poderá ser desfeita!</strong></span></p>
+                <p>Qual o motivo do cancelamento do projeto?</p>
+                <input type="text" name="observacao" class="form-control" required>
             </div>
-            <form class="form-horizontal" role="form"
-                  action="?perfil=projeto_pf" method="post">
-                <input type="hidden" name="projeto" value="<?= $idProjeto ?>">
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Voltar</button>
-                    <button type="submit" class="btn btn-danger" name="cancelar" id="confirm">Cancelar</button>
-                </div>
+            <div class="modal-footer">
+                <input type='hidden' name='idProjeto' value='<?php echo $idProjeto ?>'>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Voltar</button>
+                <button type='submit' class='btn btn-danger btn-sm' name="cancelar">Confirmar</button>
+            </div>
             </form>
-
         </div>
     </div>
 </div>
