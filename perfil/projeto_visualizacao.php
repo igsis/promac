@@ -18,10 +18,14 @@ $cronograma = recuperaDados("cronograma", "idCronograma", $projeto['idCronograma
 $video = recuperaDados("projeto", "idProjeto", $idProjeto);
 $v = array($video['video1'], $video['video2'], $video['video3']);
 
-$dateNow = date('Y-m-d');
+$dateNow = new DateTime('now');
 $dataPublicacaoDoc = $projeto['dataPublicacaoDoc'];
 $dataRecurso = date('Y-m-d', strtotime("+5 weekdays", strtotime($dataPublicacaoDoc))); // Calcula a diferença em segundos entre as datas do recurso e publicação
 
+/**
+ * Função consulta a coluna "dataPublicacaoDoc" e conta 5 dias úteis a frente
+ * @return string Data após 5 dias úteis
+ */
 function DiasUteis() {
 
     $idProjeto = $_SESSION['idProjeto'];
@@ -53,7 +57,7 @@ function DiasUteis() {
        $contadorUteis++;  //aqui vc incrementa como dia util caso não seja feriado nem fds..
     }
 
-    return $dtSuaData->format('d/m/Y');//retorna sua data modo americano
+    return $dtSuaData;//retorna sua data modo americano
 
 }
 
@@ -127,44 +131,99 @@ function DiasUteis() {
                             if ($projeto['idStatus'] == 3){
                             ?>
                                 <div class="form-group">
-                                    <div class="col-md-offset-4 col-md-6">
-                                        <button class='btn btn-default' type='button' data-toggle='modal' data-target='#certidaoFiscal' style="border-radius: 30px;"><i class="fa fa-question-circle"></i></button>
-                                        <form class="form-horizontal" role="form" action="?perfil=certificados&idProjeto=<?= $idProjeto ?>" method="post">
-                                            <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;">Anexar Certidões Fiscais</button>
-                                        </form>
-                                        <button class='btn btn-default' type='button' data-toggle='modal' data-target='#termoResponsabilidade' style="border-radius: 30px;"><i class="fa fa-question-circle"></i></button>
-                                        <form class="form-horizontal" role="form" action="../pdf/TERMO_DE_RESPONSABILIDADE_FINAL.docx" method="post">
-                                            <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;">Imprimir termo de responsabilidade</button>
-                                        </form>
-                                        <form class="form-horizontal" role="form" action="https://docs.google.com/forms/<?= $idProjeto ?>" target="_blank" method="post">
-                                            <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;">Link do agendamento Google Forms</button>
-                                        </form>
-                                        <button class='btn btn-default' type='button' data-toggle='modal' data-target='#cartaIntencaoIncentivo' style="border-radius: 30px;"><i class="fa fa-question-circle"></i></button>
-                                        <form class="form-horizontal" role="form" action="../pdf/CARTA_DE_INTENCAO_DE_INCENTIVO.docx" method="post">
-                                            <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;">Download modelo da carta de incentivo</button>
-                                        </form>
-                                        <form class="form-horizontal" role="form" action="?perfil=carta_incentivo&idProjeto=<?= $idProjeto ?>" method="post">
-                                            <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;">Inserir carta de incentivo</button>
-                                        </form>
+                                    <div class="col-md-offset-2 col-md-8">
+
+                                        <div class="row">
+                                            <form class="form-horizontal col-md-11" role="form" action="?perfil=certificados&idProjeto=<?= $idProjeto ?>" method="post">
+                                                <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;">
+                                                    Anexar Certidões Fiscais
+                                                </button>
+                                            </form>
+                                            <button class='btn btn-default' type='button' data-toggle='modal' data-target='#certidaoFiscal' style="border-radius: 30px;">
+                                                <i class="fa fa-question-circle"></i>
+                                            </button>
+                                        </div>
+
+                                        <div class="row">
+                                            <form class="form-horizontal col-md-11" role="form"
+                                                  action="../pdf/TERMO_DE_RESPONSABILIDADE_FINAL.docx" method="post">
+                                                <button type="submit" class="btn btn-success btn-block"
+                                                        style="border-radius: 7px;">Imprimir termo de responsabilidade
+                                                </button>
+                                            </form>
+                                            <button class='btn btn-default' type='button' data-toggle='modal'
+                                                    data-target='#termoResponsabilidade' style="border-radius: 30px;">
+                                                <i class="fa fa-question-circle"></i>
+                                            </button>
+                                        </div>
+
+                                        <div class="row">
+                                            <form class="form-horizontal col-md-11" role="form"
+                                                  action="https://docs.google.com/forms/<?= $idProjeto ?>"
+                                                  target="_blank" method="post">
+                                                <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;">
+                                                    Link do agendamento Google Forms
+                                                </button>
+                                            </form>
+                                        </div>
+
+                                        <div class="row">
+                                            <form class="form-horizontal col-md-11" role="form"
+                                                  action="../pdf/CARTA_DE_INTENCAO_DE_INCENTIVO.docx" method="post">
+                                                <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;">
+                                                    Download modelo da carta de incentivo
+                                                </button>
+                                            </form>
+                                            <button class='btn btn-default' type='button' data-toggle='modal'
+                                                    data-target='#cartaIntencaoIncentivo' style="border-radius: 30px;">
+                                                <i class="fa fa-question-circle"></i></button>
+                                        </div>
+
+                                        <div class="row">
+                                            <form class="form-horizontal col-md-11" role="form"
+                                                  action="?perfil=carta_incentivo&idProjeto=<?= $idProjeto ?>"
+                                                  method="post">
+                                                <button type="submit" class="btn btn-success btn-block"
+                                                        style="border-radius: 7px;">Inserir carta de incentivo
+                                                </button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             <?php
                             }
-                            ?>
 
-                            <!-- Botão para solicitar alteração do projeto -->
-                            <?php
-
-                            if ($projeto['idStatus'] == 3 && DiasUteis() < $dateNow) {
-                                ?>
-                                <div class="form-group">
-                                    <div class="col-md-offset-4 col-md-6">
-                                        <form class="form-horizontal" role="form" action="?perfil=alteracao_projeto&idProjeto=<?= $idProjeto ?>" method="post">
-                                            <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;">solicitar alteração do projeto</button>
-                                        </form>
+                            /*Exibir botão de recurso ou de solicitação de alteração*/
+                            if (($projeto['idStatus'] == 3) || ($projeto['idStatus'] == 4)) {
+                                if (($dateNow < DiasUteis()) && (($idEtapa != 26) && ($idEtapa != 27))){ ?>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-8">
+                                            <div class="row">
+                                                <form class="form-horizontal col-md-11" role="form"
+                                                      action="?perfil=envio_recursos&idProjeto=<?= $idProjeto ?>" method="post">
+                                                    <button type="submit" class="btn btn-success btn-block"
+                                                            style="border-radius: 7px;">anexar recurso
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            <?php
+                                <?php
+                                }
+                                else {
+                                    if ($projeto['idStatus'] != 4) {?>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-8">
+                                            <div class="row">
+                                                <form class="form-horizontal col-md-11" role="form" action="?perfil=alteracao_projeto&idProjeto=<?= $idProjeto ?>" method="post">
+                                                    <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;">solicitar alteração do projeto</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <?php
+                                    }
+                                }
                             }
                             ?>
 
@@ -234,27 +293,6 @@ function DiasUteis() {
                                     <button class="btn btn-danger btn-block" type='button' data-toggle='modal' data-target='#cancelarProjeto' data-title="Cancelar projeto" data-message="Você está cancelando um projeto">Cancelar projeto</button>
                                 </div>
                             </div>
-
-
-                            <!-- Botão para anexar recurso -->
-                            <?php
-                            if($idEtapa != 26 && $idEtapa != 27){
-                                if($projeto['idStatus'] == 4){
-                            ?>
-                                    <div class="form-group">
-                                        <div class="col-md-offset-4 col-md-6">
-                                            <form class="form-horizontal" role="form"
-                                                  action="?perfil=envio_recursos&idProjeto=<?= $idProjeto ?>" method="post">
-                                                <button type="submit" class="btn btn-success btn-block"
-                                                        style="border-radius: 7px;">anexar recurso
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </div>
-                            <?php
-                                }
-                            }
-                        ?>
                     </div>
 
                 <!-- LABEL PROJETO -->
