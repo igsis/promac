@@ -123,3 +123,9 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `pr_atualizaCampos`() NOT DETERMINIS
  WHERE contratoGestao is null;
 
 END
+/*
+final procedure
+ */
+
+ ALTER TABLE promac.statusprojeto
+ ADD COLUMN data DATE NOT NULL AFTER descricaoSituacao, RENAME TO promac.liberacao_projeto
