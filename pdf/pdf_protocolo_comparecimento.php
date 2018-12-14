@@ -139,7 +139,7 @@ $pdf->Ln(12);
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','', 11);
-$pdf->MultiCell(170,$l,utf8_decode("Compareceu na Secretaria Municipal de Cultural no dia 09/11/2018, recebendo os seguintes documentos:"));
+$pdf->MultiCell(170,$l,utf8_decode("Compareceu na Secretaria Municipal de Cultural no dia ".date('d/m/Y').", recebendo os seguintes documentos:"));
 
 $pdf->Ln(5);
 
