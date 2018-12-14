@@ -146,7 +146,8 @@ function DiasUteis() {
 
                                         <div class="row">
                                             <form class="form-horizontal col-md-11" role="form"
-                                                  action="../pdf/TERMO_DE_RESPONSABILIDADE_FINAL.docx" method="post">
+                                                  action=" action="../pdf/termo_responsabilidade.php" method="post">
+                                                <input type="hidden" value="<?= $idProjeto ?>" name="idProjeto">
                                                 <button type="submit" class="btn btn-success btn-block"
                                                         style="border-radius: 7px;">Imprimir termo de responsabilidade
                                                 </button>
@@ -263,30 +264,30 @@ function DiasUteis() {
                             ?>
 
                             <?php
-                            $sql = "SELECT *
-                                        FROM lista_documento as list
-                                        INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
-                                        WHERE arq.idPessoa = '$idProjeto'
-                                        AND arq.idTipo = 3
-                                        AND arq.publicado = '1' AND list.idListaDocumento IN (39,40,41,42,43,44,46,47,52,53) ";
-                            $query = mysqli_query($con,$sql);
-                            $linhas = mysqli_num_rows($query);
-                                if($projeto['idStatus'] == 3 && $linhas == 6){
+//                            $sql = "SELECT *
+//                                        FROM lista_documento as list
+//                                        INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
+//                                        WHERE arq.idPessoa = '$idProjeto'
+//                                        AND arq.idTipo = 3
+//                                        AND arq.publicado = '1' AND list.idListaDocumento IN (39,40,41,42,43,44,46,47,52,53) ";
+////                            $query = mysqli_query($con,$sql);
+//                            $linhas = mysqli_num_rows($query);
+//                                if($projeto['idStatus'] == 3 && $linhas == 6){
                             ?>
-                                    <div class="form-group">
-                                        <div class="col-md-offset-4 col-md-6">
-                                            <form class="form-horizontal" role="form"
-                                                  action="../pdf/termo_responsabilidade.php"
-                                                  method="post">
-                                                <input type="hidden" value="<?= $idProjeto ?>" name="idProjeto">
-                                                <button type="submit" class="btn btn-success btn-block"
-                                                        style="border-radius: 7px;">termo de responsabilidade
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </div>
+<!--                                    <div class="form-group">-->
+<!--                                        <div class="col-md-offset-4 col-md-6">-->
+<!--                                            <form class="form-horizontal" role="form"-->
+<!--                                                  action="../pdf/termo_responsabilidade.php"-->
+<!--                                                  method="post">-->
+<!--                                                <input type="hidden" value="--><?//= $idProjeto ?><!--" name="idProjeto">-->
+<!--                                                <button type="submit" class="btn btn-success btn-block"-->
+<!--                                                        style="border-radius: 7px;">Imprimir termo de responsabilidade-->
+<!--                                                </button>-->
+<!--                                            </form>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
                             <?php
-                                }
+//                                }
                             ?>
                         <div class="form-group">
                             <div class="col-md-offset-4 col-md-6">
