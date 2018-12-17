@@ -1,6 +1,7 @@
 <?php
 
 $con = bancoMysqli();
+$conn = bancoPDO();
 
 if (isset($_POST['carregar'])) {
     $_SESSION['idProjeto'] = $_POST['carregar'];
@@ -60,6 +61,10 @@ function DiasUteis() {
     return $dtSuaData;//retorna sua data modo americano
 
 }
+
+// Consulta link do google form no banco que é cadastrado pela SMC
+$consulta = $conn->query("SELECT * FROM agendamento");
+$link = $consulta->fetch()['linkAgendamento'];
 
 ?>
 
@@ -144,7 +149,7 @@ function DiasUteis() {
 
                                         <div class="row">
                                             <form class="form-horizontal col-md-11" role="form"
-                                                  action=../pdf/termo_responsabilidade.php" method="post">
+                                                  action="../pdf/termo_responsabilidade.php" method="post">
                                                 <input type="hidden" value="<?= $idProjeto ?>" name="idProjeto">
                                                 <button type="submit" class="btn btn-default btn-block"
                                                         style="border-radius: 7px;">Imprimir termo de responsabilidade
@@ -158,7 +163,7 @@ function DiasUteis() {
 
                                         <div class="row">
                                             <div class="form-horizontal col-md-11">                                             
-                                                <a class="btn btn-default btn-block" target="_blank" style="border-radius: 7px;" href="https://docs.google.com/forms/<?= $idProjeto ?>">Link do agendamento Google Forms</a>                
+                                                <a class="btn btn-default btn-block" target="_blank" style="border-radius: 7px;" href="<?= $link ?><?= $idProjeto ?>">Link do agendamento Google Forms</a>                
                                             </div>
                                         </div><br>
 
