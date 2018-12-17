@@ -144,7 +144,7 @@ function DiasUteis() {
 
                                         <div class="row">
                                             <form class="form-horizontal col-md-11" role="form"
-                                                  action=" action="../pdf/termo_responsabilidade.php" method="post">
+                                                  action=../pdf/termo_responsabilidade.php" method="post">
                                                 <input type="hidden" value="<?= $idProjeto ?>" name="idProjeto">
                                                 <button type="submit" class="btn btn-default btn-block"
                                                         style="border-radius: 7px;">Imprimir termo de responsabilidade
