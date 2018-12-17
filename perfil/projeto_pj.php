@@ -32,10 +32,10 @@ if (isset($_POST['cancelar'])){
     $historico = "INSERT INTO historico_cancelamento (idProjeto,observacao, idUsuario, data, acao) VALUES ('$idProjeto','$observacao','$idPj','$dateNow',1)";
     if (mysqli_query($con,$query)){
         if (mysqli_query($con,$historico)){
-            $mensagem = "<font color='#01DF3A'><strong>Projeto apagado com sucesso!</strong></font>";
+            $mensagem = "<font color='#01DF3A'><strong>Projeto cancelado com sucesso!</strong></font>";
         }
         else{
-            $mensagem = "<font color='#FF0000'><strong>Erro ao apagar projeto! Tente novamente.</strong></font>";
+            $mensagem = "<font color='#FF0000'><strong>Erro ao cancelar projeto! Tente novamente.</strong></font>";
         }
     }else{
         $mensagem = "<font color='#FF0000'><strong>Erro ao apagar projeto! Tente novamente.</strong></font>";
