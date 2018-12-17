@@ -134,21 +134,19 @@ function DiasUteis() {
                                     <div class="col-md-offset-2 col-md-8">
 
                                         <div class="row">
-                                            <form class="form-horizontal col-md-11" role="form" action="?perfil=certificados&idProjeto=<?= $idProjeto ?>" method="post">
-                                                <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;">
-                                                    Anexar Certidões Fiscais
-                                                </button>
-                                            </form>
+                                            <div class="form-horizontal col-md-11">
+                                                <a class="btn btn-default btn-block" style="border-radius: 7px;" href="?perfil=certificados&idProjeto=<?= $idProjeto ?>">Anexar Certidões Fiscais</a>                
+                                            </div>                                                                                   
                                             <button class='btn btn-default' type='button' data-toggle='modal' data-target='#certidaoFiscal' style="border-radius: 30px;">
                                                 <i class="fa fa-question-circle"></i>
                                             </button>
-                                        </div>
+                                        </div><br>
 
                                         <div class="row">
                                             <form class="form-horizontal col-md-11" role="form"
                                                   action=" action="../pdf/termo_responsabilidade.php" method="post">
                                                 <input type="hidden" value="<?= $idProjeto ?>" name="idProjeto">
-                                                <button type="submit" class="btn btn-success btn-block"
+                                                <button type="submit" class="btn btn-default btn-block"
                                                         style="border-radius: 7px;">Imprimir termo de responsabilidade
                                                 </button>
                                             </form>
@@ -159,36 +157,25 @@ function DiasUteis() {
                                         </div>
 
                                         <div class="row">
-                                            <form class="form-horizontal col-md-11" role="form"
-                                                  action="https://docs.google.com/forms/<?= $idProjeto ?>"
-                                                  target="_blank" method="post">
-                                                <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;">
-                                                    Link do agendamento Google Forms
-                                                </button>
-                                            </form>
-                                        </div>
+                                            <div class="form-horizontal col-md-11">                                             
+                                                <a class="btn btn-default btn-block" target="_blank" style="border-radius: 7px;" href="https://docs.google.com/forms/<?= $idProjeto ?>">Link do agendamento Google Forms</a>                
+                                            </div>
+                                        </div><br>
 
                                         <div class="row">
-                                            <form class="form-horizontal col-md-11" role="form"
-                                                  action="../pdf/CARTA_DE_INTENCAO_DE_INCENTIVO.docx" method="post">
-                                                <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;">
-                                                    Download modelo da carta de incentivo
-                                                </button>
-                                            </form>
+                                            <div class="form-horizontal col-md-11" >                                                                                               
+                                                <a style="border-radius: 7px;" class="btn btn-default btn-block" href="../pdf/CARTA_DE_INTENCAO_DE_INCENTIVO.docx">Download modelo da carta de incentivo</a>
+                                            </div>
                                             <button class='btn btn-default' type='button' data-toggle='modal'
                                                     data-target='#cartaIntencaoIncentivo' style="border-radius: 30px;">
                                                 <i class="fa fa-question-circle"></i></button>
-                                        </div>
+                                        </div><br>
 
                                         <div class="row">
-                                            <form class="form-horizontal col-md-11" role="form"
-                                                  action="?perfil=carta_incentivo&idProjeto=<?= $idProjeto ?>"
-                                                  method="post">
-                                                <button type="submit" class="btn btn-success btn-block"
-                                                        style="border-radius: 7px;">Inserir carta de incentivo
-                                                </button>
-                                            </form>
-                                        </div>
+                                            <div class="form-horizontal col-md-11">                                                                                                
+                                                <a  style="border-radius: 7px;" class="btn btn-default btn-block" href="?perfil=carta_incentivo&idProjeto=<?= $idProjeto ?>">Inserir carta de incentivo</a>                                      
+                                            </div>
+                                        </div><br>
                                     </div>
                                 </div>
                             <?php
@@ -203,7 +190,7 @@ function DiasUteis() {
                                                 <form class="form-horizontal col-md-11" role="form"
                                                       action="?perfil=envio_recursos&idProjeto=<?= $idProjeto ?>" method="post">
                                                     <button type="submit" class="btn btn-success btn-block"
-                                                            style="border-radius: 7px;">anexar recurso
+                                                            style="border-radius: 7px;">anexar certi
                                                     </button>
                                                 </form>
                                             </div>
@@ -216,10 +203,10 @@ function DiasUteis() {
                                     <div class="form-group">
                                         <div class="col-md-offset-2 col-md-8">
                                             <div class="row">
-                                                <form class="form-horizontal col-md-11" role="form" action="?perfil=alteracao_projeto&idProjeto=<?= $idProjeto ?>" method="post">
-                                                    <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;">solicitar alteração do projeto</button>
-                                                </form>
-                                            </div>
+                                                <div class="form-horizontal col-md-11">
+                                                    <a href="?perfil=alteracao_projeto&idProjeto=<?= $idProjeto ?>" class="btn btn-default btn-block" style="border-radius: 7px;">solicitar alteração do projeto</a>
+                                                </div>
+                                            </div><br>
                                         </div>
                                     </div>
                                     <?php
