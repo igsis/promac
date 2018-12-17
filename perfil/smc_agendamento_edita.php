@@ -1,7 +1,7 @@
 <?php
 $con = bancoMysqli();
 
-if(isset($_POST['cadastrar']) || ($_POST['edita'])) {
+if(isset($_POST['cadastrar']) || isset($_POST['edita'])) {
 
     $link = $_POST ['link_agendamento'];
 }
@@ -44,7 +44,7 @@ if(isset($_POST['edita'])) {
 
 
 }
-
+$idAgendamento = recuperaUltimo("agendamento");
 $agendamento = recuperaDados("agendamento", "id", $idAgendamento);
 
 
@@ -63,7 +63,7 @@ $agendamento = recuperaDados("agendamento", "id", $idAgendamento);
                     <hr/>
 
                     <label for="link_agendamento">Informe o link</label><br>
-                    <input type="url" name="link_agendamento" id="link_agendamento" size="75" value="<?= $agendamento['linkAgendamento'] ?>">
+                    <input type="url" name="link_agendamento" id="link_agendamento" size="75" value="<?= $agendamento['linkAgendamento'] ?>" required>
 
                     <hr/>
 

@@ -1,3 +1,18 @@
+<?php
+
+$conn = bancoPDO();
+
+// Consulta link 
+$consulta = $conn->query("SELECT * FROM agendamento");
+$link = $consulta->fetch()['linkAgendamento'];
+
+// Se tiver cadastrado vai para o edita
+if ($link){
+    echo "<script> window.location.href = '?perfil=smc_agendamento_edita'; </script>";
+}
+
+?>
+
 <section id="list_items" class="home-section bg-white">
     <div class="container"><?php include 'includes/menu_smc.php'; ?>
         <div class="form-group">
