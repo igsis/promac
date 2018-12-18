@@ -55,7 +55,7 @@ if(isset($_POST['envioComissao']))
 }
 if (isset($_POST['arquivar'])){
     $idProjeto = $_POST['idProjeto'];
-     $query = "UPDATE projeto SET idEtapaProjeto = 6, publicado = 0 WHERE idProjeto = '$idProjeto' ";
+     $query = "UPDATE projeto SET publicado = 0 WHERE idProjeto = '$idProjeto' ";
      if (mysqli_query($con,$query)){
          $mensagem = "Projeto arquivado com sucesso";
      }else{
@@ -288,7 +288,7 @@ $array_status = array(2, 3, 10, 12, 13, 20, 23, 25, 14, 15, 11,35); //status
 foreach ($array_status as $idStatus)
 {
     $sqlStatus = "SELECT idEtapaProjeto, etapaProjeto, ordem FROM etapa_projeto WHERE idEtapaProjeto = '$idStatus'";
-    $sqlProjeto = "SELECT he.data, pro.idProjeto, nomeProjeto, protocolo, idComissao, pro.dataParecerista, pf.nome, pf.cpf, razaoSocial, cnpj, areaAtuacao, pfc.nome AS comissao, etapaProjeto, pro.idEtapaProjeto AS idEtapaProjeto, pro.publicado  
+    $sqlProjeto = "SELECT he.data, pro.idProjeto, nomeProjeto, protocolo, idComissao, pro.dataParecerista, pf.nome, pf.cpf, razaoSocial, cnpj, areaAtuacao, pfc.nome AS comissao, etapaProjeto, pro.idEtapaProjeto AS idEtapaProjeto, pro.publicado, pro.idStatus 
                     FROM projeto AS pro
                     LEFT JOIN pessoa_fisica AS pf ON pro.idPf = pf.idPf
                     LEFT JOIN pessoa_juridica AS pj ON pro.idPj = pj.idPj
@@ -296,7 +296,7 @@ foreach ($array_status as $idStatus)
                     LEFT JOIN pessoa_fisica AS pfc ON pro.idComissao = pfc.idPf
                     INNER JOIN etapa_projeto AS st ON pro.idEtapaProjeto = st.idEtapaProjeto
                     LEFT JOIN historico_etapa as he ON pro.idProjeto = he.idProjeto
-                    WHERE pro.idStatus != 6  AND pro.idEtapaProjeto = '$idStatus' ORDER BY  he.data, protocolo";
+                    WHERE pro.idEtapaProjeto = '$idStatus' ORDER BY  he.data, protocolo";
     $queryProjeto = mysqli_query($con,$sqlProjeto);
     $queryStatus = mysqli_query($con,$sqlStatus);
     $num = mysqli_num_rows($queryProjeto);
@@ -367,7 +367,7 @@ foreach ($array_status as $idStatus)
 
 
                                 ?>
-                                <tr style="background: <?= ($campo['publicado'] == 0? $cinza: "white") ?>">
+                                <tr style="background: <?= ($campo['idStatus'] == 6 && $campo['publicado'] == 1? $cinza: "white") ?>">
                                     <td class='list_description maskProtocolo' data-mask = "0000.00.00/0000000"><?= $campo['protocolo'] ?></td>
                                     <?php
                                         if ($status['idEtapaProjeto'] == 2) {
@@ -428,7 +428,7 @@ foreach ($array_status as $idStatus)
                                     }
                                     if ($pf['idNivelAcesso'] == 2 )
                                     {
-                                        if ($campo['publicado'] == 1) {
+                                        if ($campo['publicado'] != 0 && $campo['idStatus'] != 6) {
                                             ?>
                                             <td class='list_description'>
                                                 <form method='POST' action='?perfil=smc_detalhes_projeto'>
@@ -453,13 +453,13 @@ foreach ($array_status as $idStatus)
                                         ?>
                                             </td>
                                         <?php
-                                        }else{
+                                        }elseif ($campo['publicado'] != 0 && $campo['idStatus'] == 6){
                                             if ($status['idEtapaProjeto'] == '2' || $status['idEtapaProjeto'] == '13' || $status['idEtapaProjeto'] == '14' || $status['idEtapaProjeto'] == '23'){
                                                 echo "<td style='color: #942a25;text-align: center;font-weight: bold'>Cancelado</td>";
                                                 echo "<td style='text-align: center;'><button style='background-color:#FF2E25;color:#fff' data-id='".$campo['idProjeto']."' name='arquivar' data-toggle='modal' data-target='#arquivar'>Arquivar</button></td>";
                                             }
                                             else{
-                                                echo "<td colspan='2' style='color: #942a25;text-align: center;font-weight: bold'>Cancelado <button style='background-color:#FF2E25;color:#fff' data-id='".$campo['idProjeto']."' name='arquivar' data-toggle='modal' data-target='#arquivar'>Arquivar</button></td>";
+                                                echo "<td colspan='2' style='color: #942a25;text-align: center;font-weight: bold'>Cancelado <button style='background-color:#FF2E25;color:#fff' data-id='".$campo['idProjeto']."' name='arquivar' data-toggle='modal' data-target='#arquivar'>Arquivar</button>".$campo['idProjeto']."</td>";
                                             }
                                         }
                                         ?>
@@ -467,7 +467,27 @@ foreach ($array_status as $idStatus)
                                     }
                                     ?>
                                 </tr>
-
+                                <!-- Modal para arquivar projeto -->
+                                <div class="modal fade" id="arquivar" tabindex="-1" role="dialog" aria-labelledby="arquivar">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="enviarComissao">Deseja arquivar esse projeto?</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Para confirmar clique no botão SIM!</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <form method='POST' action='?perfil=smc_index'>
+                                                    <input type='hidden' name='idProjeto' value="<?= $campo['idProjeto'] ?>">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
+                                                    <button type="submit" name='arquivar' class="btn btn-danger">SIM</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <?php
                                 $i++;
                             }
@@ -730,28 +750,6 @@ foreach ($array_status as $idStatus)
       </div>
     </div>
   </div>
-</div>
-
-<!-- Modal para arquivar projeto -->
-<div class="modal fade" id="arquivar" tabindex="-1" role="dialog" aria-labelledby="arquivar">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="enviarComissao">Deseja arquivar esse projeto?</h4>
-            </div>
-            <div class="modal-body">
-                <p>Para confirmar clique no botão SIM!</p>
-            </div>
-            <div class="modal-footer">
-                <form method='POST' action='?perfil=smc_index'>
-                    <input type='hidden' name='idProjeto' value="<?= $campo['idProjeto'] ?>">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
-                    <button type="submit" name='arquivar' class="btn btn-danger">SIM</button>
-                </form>
-            </div>
-        </div>
-    </div>
 </div>
  <script type="text/javascript">
     // Alimenta o modal com o idProjeto
