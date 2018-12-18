@@ -34,6 +34,7 @@
 					<li><a href="../perfil/webLog.php" target="_blank">WebLog</a></li>
 				</ul>
 			</li>
+			<li><a href="?perfil=smc_projeto_agendamento_pesquisa">Agendamento</a></li>
 			<li><a href="?perfil=fazenda">Fazenda</a></li>
             <li><a href="#">Gerenciamento do sistema</a>
                 <ul class="dl-submenu">
