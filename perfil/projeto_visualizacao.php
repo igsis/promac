@@ -131,8 +131,8 @@ $link = $consulta->fetch()['linkAgendamento'];
                             </div>
 
 
-                            <!-- Botão para anexar certidões -->
                             <?php
+                            // CASO APROVADO
                             if ($projeto['idStatus'] == 3){
                             ?>
                                 <div class="form-group">
@@ -147,28 +147,31 @@ $link = $consulta->fetch()['linkAgendamento'];
                                             </button>
                                         </div><br>
 
+                                        <?php
+                                        $sql = "SELECT * FROM upload_arquivo WHERE idPessoa = '$idProjeto' AND idTipo = 3 AND idListaDocumento IN (39,40,41,42) LIMIT 0,1";
+                                        $query = mysqli_query($con,$sql);
+                                        $certidoes = mysqli_fetch_array($query);
+
+                                        ?>
                                         <div class="row">
                                             <form class="form-horizontal col-md-11" role="form"
                                                   action="../pdf/termo_responsabilidade.php" method="post">
                                                 <input type="hidden" value="<?= $idProjeto ?>" name="idProjeto">
-                                                <button type="submit" class="btn btn-default btn-block"
-                                                        style="border-radius: 7px;">Imprimir termo de responsabilidade
+                                                <button  <?php if($certidoes == NULL) { echo 'disabled';} ?> type="submit" class="btn btn-default btn-block" style="border-radius: 7px;">Imprimir termo de responsabilidade
                                                 </button>
                                             </form>
-                                            <button class='btn btn-default' type='button' data-toggle='modal'
-                                                    data-target='#termoResponsabilidade' style="border-radius: 30px;">
-                                                <i class="fa fa-question-circle"></i>
+                                            <button class='btn btn-default' type='button' data-toggle='modal' data-target='#termoResponsabilidade' style="border-radius: 30px;"><i class="fa fa-question-circle"></i>
                                             </button>
                                         </div>
 
                                         <div class="row">
-                                            <div class="form-horizontal col-md-11">                                             
-                                                <a class="btn btn-default btn-block" target="_blank" style="border-radius: 7px;" href="<?= $link ?><?= $idProjeto ?>">Link do agendamento Google Forms</a>                
+                                            <div class="form-horizontal col-md-11">
+                                                <a  <?php if($certidoes == NULL) { echo 'disabled';} ?> class="btn btn-default btn-block" target="_blank" style="border-radius: 7px;" href="<?= $link ?><?= $idProjeto ?>">Link do agendamento Google Forms</a>
                                             </div>
                                         </div><br>
 
                                         <div class="row">
-                                            <div class="form-horizontal col-md-11" >                                                                                               
+                                            <div class="form-horizontal col-md-11" >
                                                 <a style="border-radius: 7px;" class="btn btn-default btn-block" href="../pdf/CARTA_DE_INTENCAO_DE_INCENTIVO.docx">Download modelo da carta de incentivo</a>
                                             </div>
                                             <button class='btn btn-default' type='button' data-toggle='modal'
@@ -176,26 +179,42 @@ $link = $consulta->fetch()['linkAgendamento'];
                                                 <i class="fa fa-question-circle"></i></button>
                                         </div><br>
 
-                                        <div class="row">
-                                            <div class="form-horizontal col-md-11">                                                                                                
-                                                <a  style="border-radius: 7px;" class="btn btn-default btn-block" href="?perfil=carta_incentivo&idProjeto=<?= $idProjeto ?>">Inserir carta de incentivo</a>                                      
+                                        <div class="form-group">
+                                            <div class="col-md-offset-2 col-md-8">
+                                                <div class="row">
+                                                    <div class="form-horizontal col-md-11">
+                                                        <a  style="border-radius: 7px;" class="btn btn-default btn-block" href="?perfil=carta_incentivo&idProjeto=<?= $idProjeto ?>">Inserir carta de incentivo</a>   </div>
+                                                </div><br>
+                                            </div>
+                                        </div><br><br/>
+
+                                        <div class="form-group">
+                                            <div class="col-md-offset-2 col-md-8">
+                                                <div class="row">
+                                                    <div class="form-horizontal col-md-11">
+                                                        <a href="?perfil=alteracao_projeto&idProjeto=<?= $idProjeto ?>" class="btn btn-default btn-block" style="border-radius: 7px;">solicitar alteração do projeto</a>
+                                                    </div>
+                                                </div><br>
                                             </div>
                                         </div><br>
+
                                     </div>
                                 </div>
                             <?php
                             }
+                            // ./CASO APROVADO
 
                             /*Exibir botão de recurso ou de solicitação de alteração*/
                             if (($projeto['idStatus'] == 3) || ($projeto['idStatus'] == 4)) {
-                                if (($dateNow < DiasUteis()) && (($idEtapa != 26) && ($idEtapa != 27))){ ?>
+                                if (($dateNow < DiasUteis()) && (($idEtapa != 26) && ($idEtapa != 27))){
+                            ?>
                                     <div class="form-group">
                                         <div class="col-md-offset-2 col-md-8">
                                             <div class="row">
                                                 <form class="form-horizontal col-md-11" role="form"
                                                       action="?perfil=envio_recursos&idProjeto=<?= $idProjeto ?>" method="post">
                                                     <button type="submit" class="btn btn-success btn-block"
-                                                            style="border-radius: 7px;">anexar certi
+                                                            style="border-radius: 7px;">Anexar Recurso
                                                     </button>
                                                 </form>
                                             </div>
@@ -203,25 +222,10 @@ $link = $consulta->fetch()['linkAgendamento'];
                                     </div>
                                 <?php
                                 }
-                                else {
-                                    if ($projeto['idStatus'] != 4) {?>
-                                    <div class="form-group">
-                                        <div class="col-md-offset-2 col-md-8">
-                                            <div class="row">
-                                                <div class="form-horizontal col-md-11">
-                                                    <a href="?perfil=alteracao_projeto&idProjeto=<?= $idProjeto ?>" class="btn btn-default btn-block" style="border-radius: 7px;">solicitar alteração do projeto</a>
-                                                </div>
-                                            </div><br>
-                                        </div>
-                                    </div>
-                                    <?php
-                                    }
-                                }
                             }
                             ?>
 
-                            <!-- Botão para agendar a entrega -->
-
+                            <!-- Botão para anexar complemento de informações -->
                             <?php
                             if($projeto['idStatus'] == 5) {
                             ?>
@@ -237,7 +241,7 @@ $link = $consulta->fetch()['linkAgendamento'];
                             }
                             ?>
 
-                            <!-- Botão para anexar complemento de informações -->
+
                             <?php
                             if($projeto['idStatus'] == 5) {
                             ?>
@@ -266,18 +270,18 @@ $link = $consulta->fetch()['linkAgendamento'];
 //                            $linhas = mysqli_num_rows($query);
 //                                if($projeto['idStatus'] == 3 && $linhas == 6){
                             ?>
-<!--                                    <div class="form-group">-->
-<!--                                        <div class="col-md-offset-4 col-md-6">-->
-<!--                                            <form class="form-horizontal" role="form"-->
-<!--                                                  action="../pdf/termo_responsabilidade.php"-->
-<!--                                                  method="post">-->
-<!--                                                <input type="hidden" value="--><?//= $idProjeto ?><!--" name="idProjeto">-->
-<!--                                                <button type="submit" class="btn btn-success btn-block"-->
-<!--                                                        style="border-radius: 7px;">Imprimir termo de responsabilidade-->
-<!--                                                </button>-->
-<!--                                            </form>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
+                                    <!--<div class="form-group">
+                                        <div class="col-md-offset-4 col-md-6">
+                                            <form class="form-horizontal" role="form"
+                                                  action="../pdf/termo_responsabilidade.php"
+                                                  method="post">
+                                                <input type="hidden" value="<?= $idProjeto ?>" name="idProjeto">
+                                                <button type="submit" class="btn btn-success btn-block"
+                                                        style="border-radius: 7px;">Imprimir termo de responsabilidade
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>-->
                             <?php
 //                                }
                             ?>
@@ -313,6 +317,8 @@ $link = $consulta->fetch()['linkAgendamento'];
         </div>
     </div>
 </section>
+
+<!--Modal-->
 <div class="modal fade" id="confirmCancelar" role="dialog" aria-labelledby="confirmCancelarLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
