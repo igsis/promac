@@ -172,7 +172,7 @@ $link = $consulta->fetch()['linkAgendamento'];
 
                                         <div class="row">
                                             <div class="form-horizontal col-md-11" >
-                                                <a style="border-radius: 7px;" class="btn btn-default btn-block" href="../pdf/CARTA_DE_INTENCAO_DE_INCENTIVO.docx">Download modelo da carta de incentivo</a>
+                                                <a style="border-radius: 7px;" class="btn btn-default btn-block" href="../pdf/CARTA_DE_INTENCAO_DE_INCENTIVO.zip">Download modelo da carta de incentivo</a>
                                             </div>
                                             <button class='btn btn-default' type='button' data-toggle='modal'
                                                     data-target='#cartaIntencaoIncentivo' style="border-radius: 30px;">
