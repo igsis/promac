@@ -11,64 +11,6 @@ header("Content-type: application/vnd.ms-word");
 header("Content-Disposition: attachment;Filename=termo-de-responsabilidade.doc");
 setlocale(LC_TIME,'portuguese');
 date_default_timezone_set('America/Sao_Paulo');
-
-
-function valor_por_extenso( $v ){
-
-    //$v = filter_var($v, FILTER_SANITIZE_NUMBER_INT);
-
-    $sin = array("centavo", "real", "mil", "milhão", "bilhão", "trilhão", "quatrilhão");
-    $plu = array("centavos", "reais", "mil", "milhões", "bilhões", "trilhões","quatrilhões");
-
-    $c = array("", "cem", "duzentos", "trezentos", "quatrocentos","quinhentos", "seiscentos", "setecentos", "oitocentos", "novecentos");
-    $d = array("", "dez", "vinte", "trinta", "quarenta", "cinquenta","sessenta", "setenta", "oitenta", "noventa");
-    $d10 = array("dez", "onze", "doze", "treze", "quatorze", "quinze","dezesseis", "dezesete", "dezoito", "dezenove");
-    $u = array("", "um", "dois", "três", "quatro", "cinco", "seis","sete", "oito", "nove");
-
-    $z = 0;
-
-    $v = number_format( $v, 2, ".", "." );
-    $int = explode( ".", $v );
-
-    for ( $i = 0; $i < count( $int ); $i++ )
-    {
-        for ( $ii = mb_strlen( $int[$i] ); $ii < 3; $ii++ )
-        {
-            $int[$i] = "0" . $int[$i];
-        }
-    }
-
-    $rt = null;
-    $fim = count( $int ) - ($int[count( $int ) - 1] > 0 ? 1 : 2);
-    for ( $i = 0; $i < count( $int ); $i++ )
-    {
-        $v = $int[$i];
-        $rc = (($v > 100) && ($v < 200)) ? "cento" : $c[$v[0]];
-        $rd = ($v[1] < 2) ? "" : $d[$v[1]];
-        $ru = ($v > 0) ? (($v[1] == 1) ? $d10[$v[2]] : $u[$v[2]]) : "";
-
-        $r = $rc . (($rc && ($rd || $ru)) ? " e " : "") . $rd . (($rd && $ru) ? " e " : "") . $ru;
-        $t = count( $int ) - 1 - $i;
-        $r .= $r ? " " . ($v > 1 ? $plu[$t] : $sin[$t]) : "";
-        if ( $v == "000")
-            $z++;
-        elseif ( $z > 0 )
-            $z--;
-
-        if ( ($t == 1) && ($z > 0) && ($int[0] > 0) )
-            $r .= ( ($z > 1) ? " de " : "") . $plu[$t];
-
-        if ( $r )
-            $rt = $rt . ((($i > 0) && ($i <= $fim) && ($int[0] > 0) && ($z < 1)) ? ( ($i < $fim) ? ", " : " e ") : " ") . $r;
-    }
-
-    $rt = mb_substr( $rt, 1 );
-
-    return($rt ? trim( $rt ) : "zero");
-
-}
-
-
 ?>
 
 <!doctype html>
@@ -143,15 +85,12 @@ function valor_por_extenso( $v ){
 
 
 ?>
-
-
-
-<p>Proponente: <?= $proponente['nome']?> </p>
-<p>Projeto: <?=$proponente['nomeProjeto']?></p>
-<p>CPF/CNPJ nº <?= $proponente['documentacao'] ?></p>
-<p>Valor Aprovado: R$ <?= str_replace(".",",",$proponente['valorAprovado'])?> (<?= valor_por_extenso($proponente['valorAprovado'])?>)</p>
-<p>Percentual de Renúncia  <?= $proponente['renunciaFiscal'] ?></p>
-<p>Data da Aprovação: ___ / ___ / ____</p>
+<p><strong>Proponente:</strong> <?= $proponente['nome']?> <br/>
+<strong>Projeto:</strong> <?=$proponente['nomeProjeto']?><br/>
+<strong>CPF/CNPJ nº:</strong> <?= $proponente['documentacao'] ?><br/>
+<strong>Valor Aprovado:</strong><br/>
+<strong>Percentual de Renúncia:</strong><br/>
+<strong>Data da Aprovação:</strong> ___ / ___ / ____</p>
 <br><br>
 
 <h2 style="font-family: calibri;">CABERÁ AO PROPONENTE:</h2>
@@ -176,8 +115,7 @@ function valor_por_extenso( $v ){
 <p class="paragrafo">s)	Manter todos os dados cadastrais devidamente atualizados no Sistema Pro-Mac;</p>
 <p class="paragrafo">t)	Estar ciente que sua responsabilidade sobre o projeto é indelegável;</p>
 <p class="paragrafo">u)	Ter ciência que a notificação por correspondência eletrônica é um meio de correspondência oficial.</p>
-<br>
-<p style="text-align: center">São Paulo, ______ de __________________, 2018.</p><br>
+<p style="text-align: center">São Paulo, ______ de __________________ de <?= date('Y') ?>.</p><br>
 <br><br><br>
 <span class="centro"><p>____________________________________ <br>
           (Nome completo) <br>
