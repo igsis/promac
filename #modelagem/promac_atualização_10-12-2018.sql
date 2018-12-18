@@ -52,6 +52,17 @@ ALTER TABLE `agendamento`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 
+CREATE TABLE `projeto_agendamento` (
+  `id` int(11) NOT NULL,
+  `idProjeto` int(11) NOT NULL,
+  `data` date NOT NULL,
+  `hora` time NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+ALTER TABLE `projeto_agendamento`
+  ADD PRIMARY KEY (`id`);
+ALTER TABLE `projeto_agendamento`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 
 /*
 PROCEDURE
