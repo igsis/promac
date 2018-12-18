@@ -296,7 +296,7 @@ foreach ($array_status as $idStatus)
                     LEFT JOIN pessoa_fisica AS pfc ON pro.idComissao = pfc.idPf
                     INNER JOIN etapa_projeto AS st ON pro.idEtapaProjeto = st.idEtapaProjeto
                     LEFT JOIN historico_etapa as he ON pro.idProjeto = he.idProjeto
-                    WHERE pro.idEtapaProjeto = '$idStatus' ORDER BY  he.data, protocolo";
+                    WHERE pro.publicado != 0 AND pro.idEtapaProjeto = '$idStatus' ORDER BY  he.data, protocolo";
     $queryProjeto = mysqli_query($con,$sqlProjeto);
     $queryStatus = mysqli_query($con,$sqlStatus);
     $num = mysqli_num_rows($queryProjeto);
@@ -428,7 +428,7 @@ foreach ($array_status as $idStatus)
                                     }
                                     if ($pf['idNivelAcesso'] == 2 )
                                     {
-                                        if ($campo['publicado'] != 0 && $campo['idStatus'] != 6) {
+                                        if ($campo['idStatus'] != 6) {
                                             ?>
                                             <td class='list_description'>
                                                 <form method='POST' action='?perfil=smc_detalhes_projeto'>
@@ -453,13 +453,13 @@ foreach ($array_status as $idStatus)
                                         ?>
                                             </td>
                                         <?php
-                                        }elseif ($campo['publicado'] != 0 && $campo['idStatus'] == 6){
+                                        }elseif ($campo['idStatus'] == 6){
                                             if ($status['idEtapaProjeto'] == '2' || $status['idEtapaProjeto'] == '13' || $status['idEtapaProjeto'] == '14' || $status['idEtapaProjeto'] == '23'){
                                                 echo "<td style='color: #942a25;text-align: center;font-weight: bold'>Cancelado</td>";
                                                 echo "<td style='text-align: center;'><button style='background-color:#FF2E25;color:#fff' data-id='".$campo['idProjeto']."' name='arquivar' data-toggle='modal' data-target='#arquivar'>Arquivar</button></td>";
                                             }
                                             else{
-                                                echo "<td colspan='2' style='color: #942a25;text-align: center;font-weight: bold'>Cancelado <button style='background-color:#FF2E25;color:#fff' data-id='".$campo['idProjeto']."' name='arquivar' data-toggle='modal' data-target='#arquivar'>Arquivar</button>".$campo['idProjeto']."</td>";
+                                                echo "<td colspan='2' style='color: #942a25;text-align: center;font-weight: bold'>Cancelado <button style='background-color:#FF2E25;color:#fff' data-id='".$campo['idProjeto']."' name='arquivar' data-toggle='modal' data-target='#arquivar'>Arquivar</button></td>";
                                             }
                                         }
                                         ?>
