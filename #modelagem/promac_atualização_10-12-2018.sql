@@ -40,6 +40,19 @@ ALTER TABLE `projeto` ADD `idExposicaoMarca` TINYINT(1) NOT NULL AFTER `indicaca
 
 
 
+CREATE TABLE IF NOT EXISTS `agendamento` (
+  `id` int(11) NOT NULL,
+  `linkAgendamento` varchar(150) NOT NULL,
+  `data` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER TABLE `agendamento`
+  ADD PRIMARY KEY (`id`);
+ALTER TABLE `agendamento`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+
+
 /*
 PROCEDURE
  */
