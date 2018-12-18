@@ -179,14 +179,10 @@ $link = $consulta->fetch()['linkAgendamento'];
                                                 <i class="fa fa-question-circle"></i></button>
                                         </div><br>
 
-                                        <div class="form-group">
-                                            <div class="col-md-offset-2 col-md-8">
-                                                <div class="row">
-                                                    <div class="form-horizontal col-md-11">
-                                                        <a  style="border-radius: 7px;" class="btn btn-default btn-block" href="?perfil=carta_incentivo&idProjeto=<?= $idProjeto ?>">Inserir carta de incentivo</a>   </div>
-                                                </div><br>
-                                            </div>
-                                        </div><br><br/>
+                                        <div class="row">
+                                            <div class="form-horizontal col-md-11" >
+                                                <a  style="border-radius: 7px;" class="btn btn-default btn-block" href="?perfil=carta_incentivo&idProjeto=<?= $idProjeto ?>">Inserir carta de incentivo</a>   </div>
+                                        </div><br>
 
                                         <div class="form-group">
                                             <div class="col-md-offset-2 col-md-8">
