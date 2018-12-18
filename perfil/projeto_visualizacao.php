@@ -187,8 +187,8 @@ $link = $consulta->fetch()['linkAgendamento'];
                                         <div class="form-group">
                                             <div class="col-md-offset-2 col-md-8">
                                                 <div class="row">
-                                                    <div class="form-horizontal col-md-11">
-                                                        <a href="?perfil=alteracao_projeto&idProjeto=<?= $idProjeto ?>" class="btn btn-default btn-block" style="border-radius: 7px;">solicitar alteração do projeto</a>
+                                                    <div class="form-horizontal col-md-12">
+                                                        <a href="?perfil=alteracao_projeto&idProjeto=<?= $idProjeto ?>" class="btn btn-warning btn-block" style="border-radius: 7px;">solicitar alteração do projeto</a>
                                                     </div>
                                                 </div><br>
                                             </div>
