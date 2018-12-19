@@ -148,10 +148,9 @@ $link = $consulta->fetch()['linkAgendamento'];
                                         </div><br>
 
                                         <?php
-                                        $sql = "SELECT * FROM upload_arquivo WHERE idPessoa = '$idProjeto' AND idTipo = 3 AND idListaDocumento IN (39,40,41,42) LIMIT 0,1";
-                                        $query = mysqli_query($con,$sql);
-                                        $certidoes = mysqli_fetch_array($query);
-
+                                        $sql_certidoes = "SELECT * FROM upload_arquivo WHERE idPessoa = '$idProjeto' AND idTipo = 3 AND idListaDocumento IN (39,40,41,42) LIMIT 0,1";
+                                        $query_certidoes = mysqli_query($con,$sql_certidoes);
+                                        $certidoes = mysqli_fetch_array($query_certidoes);
                                         ?>
                                         <div class="row">
                                             <form class="form-horizontal col-md-11" role="form"
@@ -170,9 +169,14 @@ $link = $consulta->fetch()['linkAgendamento'];
                                             </div>
                                         </div><br>
 
+                                        <?php
+                                        $sql_agendamento = "SELECT * FROM projeto_agendamento WHERE idProjeto = '$idProjeto'";
+                                        $query_agendamento = mysqli_query($con,$sql_agendamento);
+                                        $agendamento = mysqli_fetch_array($query_agendamento);
+                                        ?>
                                         <div class="row">
                                             <div class="form-horizontal col-md-11" >
-                                                <a style="border-radius: 7px;" class="btn btn-default btn-block" href="../pdf/CARTA_DE_INTENCAO_DE_INCENTIVO.zip">Download modelo da carta de incentivo</a>
+                                                <a <?php if($agendamento == NULL) { echo 'disabled';} ?> style="border-radius: 7px;" class="btn btn-default btn-block" href="../pdf/CARTA_DE_INTENCAO_DE_INCENTIVO.zip">Download modelo da carta de incentivo</a>
                                             </div>
                                             <button class='btn btn-default' type='button' data-toggle='modal'
                                                     data-target='#cartaIntencaoIncentivo' style="border-radius: 30px;">
@@ -181,7 +185,7 @@ $link = $consulta->fetch()['linkAgendamento'];
 
                                         <div class="row">
                                             <div class="form-horizontal col-md-11" >
-                                                <a  style="border-radius: 7px;" class="btn btn-default btn-block" href="?perfil=carta_incentivo&idProjeto=<?= $idProjeto ?>">Inserir carta de incentivo</a>   </div>
+                                                <a <?php if($agendamento == NULL) { echo 'disabled';} ?> style="border-radius: 7px;" class="btn btn-default btn-block" href="?perfil=carta_incentivo&idProjeto=<?= $idProjeto ?>">Inserir carta de incentivo</a></div>
                                         </div><br>
 
                                         <div class="form-group">

@@ -1860,11 +1860,13 @@ function exibirParecerProponente($idProjeto)
     $con = bancoMysqli();
     $dateNow = date('Y-m-d');
     $sql = "SELECT * FROM lista_documento as list
-            INNER JOIN upload_arquivo AS arq ON arq.idListaDocumento = list.idListaDocumento	  
+            INNER JOIN upload_arquivo AS arq ON arq.idListaDocumento = list.idListaDocumento
+            LEFT JOIN disponibilizar_documento AS disp ON arq.idUploadArquivo = disp.idUploadArquivo	  
             WHERE arq.idPessoa = '$idProjeto'
             AND arq.idTipo = '9'
             AND arq.publicado = '1'
-            AND arq.idStatusDocumento = '1'";
+            AND arq.idStatusDocumento = '1'
+            AND disp.data <= '$dateNow'";
     $query = mysqli_query($con,$sql);
     $num = mysqli_num_rows($query);
     if($num > 0){
