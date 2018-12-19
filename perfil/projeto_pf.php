@@ -52,7 +52,7 @@ if (isset($_POST['cancelar'])){
         <?php
         $sql_cancelados = "SELECT distinct prj.idProjeto, nomeProjeto, protocolo, acao, observacao, data FROM projeto AS prj 
                             INNER JOIN historico_cancelamento AS hst ON prj.idProjeto = hst.idProjeto
-                            WHERE idPf = '$idPf' AND publicado = 0 AND acao = 1";
+                            WHERE idPf = '$idPf' AND publicado = 0 AND idStatus = 6";
         $query_cancelados = mysqli_query($con,$sql_cancelados);
         $num = mysqli_num_rows($query_cancelados);
         if($num > 0){
