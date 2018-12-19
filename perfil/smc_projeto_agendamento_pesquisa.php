@@ -81,8 +81,8 @@ if(isset($_POST['pesquisar'])){
 					</div>
 
 					<div class="form-group">
-						<div class="col-md-offset-2 col-md-8"><label>Protocolo</label>
-							<input type="text" name="protocolo" class="form-control" placeholder="">
+                        <div class="col-md-offset-2 col-md-8"><label>Protocolo</label> (somente números)
+							<input type="number" name="protocolo" class="form-control" placeholder="">
 						</div>
 					</div>
 
