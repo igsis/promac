@@ -288,15 +288,17 @@ $array_status = array(2, 3, 10, 12, 13, 20, 23, 25, 14, 15, 11,35); //status
 foreach ($array_status as $idStatus)
 {
     $sqlStatus = "SELECT idEtapaProjeto, etapaProjeto, ordem FROM etapa_projeto WHERE idEtapaProjeto = '$idStatus'";
-    $sqlProjeto = "SELECT he.data, pro.idProjeto, nomeProjeto, protocolo, idComissao, pro.dataParecerista, pf.nome, pf.cpf, razaoSocial, cnpj, areaAtuacao, pfc.nome AS comissao, etapaProjeto, pro.idEtapaProjeto AS idEtapaProjeto, pro.publicado, pro.idStatus 
+    $sqlProjeto = "SELECT he.data, pro.idProjeto, nomeProjeto, protocolo, idComissao, pro.dataParecerista, pf.nome, pf.cpf, razaoSocial, cnpj, areaAtuacao, pfc.nome AS comissao, etapaProjeto, pro.idEtapaProjeto AS idEtapaProjeto, pro.publicado, pro.idStatus
                     FROM projeto AS pro
-                    LEFT JOIN pessoa_fisica AS pf ON pro.idPf = pf.idPf
-                    LEFT JOIN pessoa_juridica AS pj ON pro.idPj = pj.idPj
-                    INNER JOIN area_atuacao AS ar ON pro.idAreaAtuacao = ar.idArea
-                    LEFT JOIN pessoa_fisica AS pfc ON pro.idComissao = pfc.idPf
-                    INNER JOIN etapa_projeto AS st ON pro.idEtapaProjeto = st.idEtapaProjeto
-                    LEFT JOIN historico_etapa as he ON pro.idProjeto = he.idProjeto
-                    WHERE pro.publicado != 0 AND pro.idEtapaProjeto = '$idStatus' ORDER BY  he.data, protocolo";
+                           LEFT JOIN pessoa_fisica AS pf ON pro.idPf = pf.idPf
+                           LEFT JOIN pessoa_juridica AS pj ON pro.idPj = pj.idPj
+                           INNER JOIN area_atuacao AS ar ON pro.idAreaAtuacao = ar.idArea
+                           LEFT JOIN pessoa_fisica AS pfc ON pro.idComissao = pfc.idPf
+                           INNER JOIN etapa_projeto AS st ON pro.idEtapaProjeto = st.idEtapaProjeto
+                           LEFT JOIN (
+                             SELECT MAX(data) AS data, idProjeto FROM historico_etapa GROUP BY idProjeto
+                          ) AS he ON pro.idProjeto = he.idProjeto
+                    WHERE pro.publicado = 1 AND pro.idEtapaProjeto = '$idStatus' ORDER BY he.data, protocolo";
     $queryProjeto = mysqli_query($con,$sqlProjeto);
     $queryStatus = mysqli_query($con,$sqlStatus);
     $num = mysqli_num_rows($queryProjeto);

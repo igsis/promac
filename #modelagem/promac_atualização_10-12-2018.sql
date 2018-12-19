@@ -38,19 +38,12 @@ ALTER TABLE `projeto` CHANGE `exposicaoMarca` `indicacaoIngresso` LONGTEXT CHARA
 
 ALTER TABLE `projeto` ADD `idExposicaoMarca` TINYINT(1) NOT NULL AFTER `indicacaoIngresso`;
 
-
-
 CREATE TABLE IF NOT EXISTS `agendamento` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `linkAgendamento` varchar(150) NOT NULL,
-  `data` date DEFAULT NULL
+  `data` date DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-ALTER TABLE `agendamento`
-  ADD PRIMARY KEY (`id`);
-ALTER TABLE `agendamento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
 
 CREATE TABLE `projeto_agendamento` (
   `id` int(11) NOT NULL,
