@@ -144,7 +144,7 @@ if(isset($_POST['finalizaComissao']))
             break;
     }
 	$dateNow = date('Y-m-d H:i:s');
-	$sql_finalizaComissao = "UPDATE projeto SET idEtapaProjeto = '$idEtapaProjeto', finalizacaoComissao = '$dateNow', dataParecerista = '0000-00-00' WHERE idProjeto = '$idP' ";
+	$sql_finalizaComissao = "UPDATE projeto SET idEtapaProjeto = '$idEtapaProjeto', finalizacaoComissao = '$dateNow', dataParecerista = '0000-00-00', verificadoComissao = '0' WHERE idProjeto = '$idP' ";
 	if(mysqli_query($con,$sql_finalizaComissao))
 	{
         $sql_historico = "INSERT INTO historico_etapa (idProjeto, idEtapaProjeto, data) VALUES ('$idProjeto', '$idEtapaProjeto', '$dateNow')";
@@ -259,22 +259,49 @@ if(isset($_POST['atualizaResponsavel']))
     $dataParecerista = $result['dataParecerista'];
 
     if ($idComissao == 0 || $dataParecerista == 0) {
-        $sql_atualiza_comissao = "UPDATE projeto SET idComissao = '$idComissao', dataParecerista = current_date WHERE idProjeto = '$idProjeto'";
+        $sql_atualiza_comissao = "UPDATE projeto SET idComissao = '$idComissao', dataParecerista = current_date, verificadoComissao = '1' WHERE idProjeto = '$idProjeto'";
         $query_atualiza_comissao = mysqli_query($con, $sql_atualiza_comissao);
 
     } else {
-        $sql_atualiza_comissao = "UPDATE projeto SET idComissao = '$idComissao' WHERE idProjeto = '$idProjeto'";
+        $sql_atualiza_comissao = "UPDATE projeto SET idComissao = '$idComissao', verificadoComissao = '1' WHERE idProjeto = '$idProjeto'";
         $query_atualiza_comissao = mysqli_query($con,$sql_atualiza_comissao);
     }
 
 	if($query_atualiza_comissao) {
-        $mensagem = "<span style=\"color: #01DF3A; \">Parecerista responsável pelo projeto atualizado!</span>";
+        $mensagem = "<span style='color: #01DF3A; '>
+                        Responsável pelo projeto atualizado! <br>
+                        Encaminhado ao Parecerista!
+                    </span>";
         gravarLog($sql_atualiza_comissao);
+        echo "<meta HTTP-EQUIV='refresh' CONTENT='1.0;URL=?perfil=comissao_index'>";
     }else
 	{
 		$mensagem = "Erro o atribuir! Tente novamente.";
 	}
 }
+
+if(isset($_POST['verificadoComissao']))
+{
+    $con = bancoMysqli();
+    $idProjeto = $_POST['idProjeto'];
+
+    $sql_verificado = "UPDATE projeto SET verificadoComissao = '1' WHERE idProjeto = '$idProjeto'";
+
+    $query_verificado = $con->query($sql_verificado);
+
+    if($query_verificado) {
+        $mensagem = "<span style='color: #01DF3A; '>
+                        Encaminhado ao Parecerista! <br>
+                        Voltando a página inicial.
+                    </span>";
+        gravarLog($sql_verificado);
+        echo "<meta HTTP-EQUIV='refresh' CONTENT='1.0;URL=?perfil=comissao_index'>";
+    }else
+    {
+        $mensagem = "Erro ao encaminhar projeto! Tente novamente.";
+    }
+}
+
 
 //TODO: Verificar se este bloco está sendo utilizado
 if(isset($_POST['editarAnexoProjeto']))

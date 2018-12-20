@@ -15,7 +15,7 @@
                     INNER JOIN area_atuacao AS ar ON pro.idAreaAtuacao = ar.idArea
                     LEFT JOIN pessoa_fisica AS pfc ON pro.idComissao = pfc.idPf 
                     INNER JOIN etapa_projeto AS etapa ON pro.idEtapaProjeto = etapa.idEtapaProjeto
-                    WHERE pro.idEtapaProjeto IN (7, 19, 24, 34) $parecerista ORDER BY idEtapaProjeto 
+                    WHERE pro.idEtapaProjeto IN (7, 19, 24, 34) $parecerista AND pro.verificadoComissao = '0' ORDER BY idEtapaProjeto 
                     LIMIT 0,1";
     $queryProjeto = mysqli_query($con,$sqlProjeto);
     $num = mysqli_num_rows($queryProjeto);

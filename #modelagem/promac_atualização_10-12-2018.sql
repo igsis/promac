@@ -176,3 +176,64 @@ VALUES('projeto', 'UPDATE', new.idProjeto, now(),
               '|','COMISSAO:',new.envioComissao
 
          ));
+
+CREATE TABLE `contagem_comissao` (
+  `semana` INT(2) NOT NULL,
+  `projetos` INT(2) NOT NULL COMMENT 'Numero de projetos enviados',
+  PRIMARY KEY (`semana`)
+);
+
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('1', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('2', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('3', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('4', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('5', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('6', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('7', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('8', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('9', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('10', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('11', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('12', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('13', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('14', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('15', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('16', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('17', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('18', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('19', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('20', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('21', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('22', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('23', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('24', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('25', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('26', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('27', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('28', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('29', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('30', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('31', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('32', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('33', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('34', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('35', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('36', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('37', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('38', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('39', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('40', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('41', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('42', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('43', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('44', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('45', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('46', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('47', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('48', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('49', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('50', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('51', '0');
+INSERT INTO `contagem_comissao` (`semana`, `projetos`) VALUES ('52', '0');
+
+ALTER TABLE `projeto` ADD COLUMN `verificadoComissao` TINYINT NOT NULL DEFAULT '0' AFTER `idStatus`;

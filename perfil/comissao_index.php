@@ -32,16 +32,16 @@ if ($pf['idNivelAcesso'] == 2) {
             </div>
 
     </div>
-    <?php
-    } else if ($pf['idNivelAcesso'] == 4) {
-        ?>
-        <div class="tab-content">
-            <div class="tab-pane fade in active" id="comissao">
-                <?php include "includes/comissao_index_smc.php"; ?>
-            </div>
-        </div>
-        <?php
-    }
+            <?php
+            } else if ($pf['idNivelAcesso'] == 4) {
+                ?>
+                <div class="tab-content">
+                    <div class="tab-pane fade in active" id="comissao">
+                        <?php include "includes/comissao_index_smc.php"; ?>
+                    </div>
+                </div>
+                <?php
+            }
     ?>
     </ul>
 

@@ -4,7 +4,8 @@
     </div>
     <!-- Diretor da Comissão -->
     <?php
-
+    $idUsuario = $_SESSION['idUser'];
+    $usuario = recuperaDados('pessoa_fisica', 'idPf', $idUsuario);
     $sql = "SELECT * FROM upload_arquivo WHERE idPessoa = '$idProjeto'";
     $query = mysqli_query($con, $sql);
 
@@ -23,7 +24,7 @@
         ?>
         <form class="form-horizontal" role="form" action="?perfil=comissao_detalhes_projeto" method="post">
             <div class="form-group">
-                <div class="col-md-offset-2 col-md-5"><strong>Parecerista responsável no Setor de
+                <div class="col-md-offset-1 col-md-5"><strong>Parecerista responsável no Setor de
                         Comissão:</strong><br/>
                     <select class="form-control" name="idComissao" id="">
                         <?php
@@ -44,6 +45,13 @@
                     <input type="submit" class="btn btn-theme  btn-block" value="Atualizar responsável"
                            name="atualizaResponsavel">
                 </div>
+                <?php if ($usuario['idNivelAcesso'] == 3) { ?>
+                    <div class="col-md-3"><br/>
+                        <input type="hidden" name="idProjeto" value="<?= $idProjeto; ?>"/>
+                        <input type="submit" class="btn btn-theme  btn-block" value="Marcar como Verificado"
+                               name="verificadoComissao">
+                    </div>
+                <?php } ?>
             </div>
         </form>
         <?php
