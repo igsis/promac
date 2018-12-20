@@ -248,6 +248,14 @@ if(isset($_POST['envioComissao']))
     $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
     $idEtapaProjeto = $projeto['idEtapaProjeto'];
     $dataParecerista = $dateNow;
+    $semanaAtual = date('W');
+    $semana = recuperaDados('contagem_comissao', 'semana', $semanaAtual);
+    $projetos = $semana['projetos'];
+
+    if ($projetos == 0)
+    {
+        $con->query("UPDATE contagem_comissao SET projetos = '0' WHERE semana != $semanaAtual");
+    }
 
     switch ($idEtapaProjeto) {
         case 2:
@@ -275,11 +283,16 @@ if(isset($_POST['envioComissao']))
         case 25:
             $etapaProjeto = 24;
             break;
+        default:
+            $idEtapaProjeto = $projeto['idEtapaProjeto'];
+            break;
     }
 
     $sql_envioComissao = "UPDATE projeto SET idEtapaProjeto = '$etapaProjeto', idStatus = 2, dataParecerista = '$dataParecerista', envioComissao = '$dateNow' WHERE idProjeto = '$idProjeto' ";
     if(mysqli_query($con,$sql_envioComissao))
     {
+        $sql_contagem_comissao = "UPDATE `contagem_comissao` SET `projetos` = '".($projetos+1)."' WHERE `semana` = '$semanaAtual'";
+        $con->query($sql_contagem_comissao);
         $sql_historico = "INSERT INTO historico_etapa (idProjeto, idEtapaProjeto, data) VALUES ('$idProjeto', '$etapaProjeto', '$dateNow')";
         $query_historico = mysqli_query($con, $sql_historico);
         $mensagem = "<font color='#01DF3A'><strong>Enviado com sucesso!</strong></font>";

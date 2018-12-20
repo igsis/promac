@@ -9,6 +9,14 @@ if(isset($_POST['envioComissao']))
 	$idProjeto = $_POST['idProjeto'];
 	$projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 	$idEtapa = $projeto['idEtapaProjeto'];
+	$semanaAtual = date('W');
+    $semana = recuperaDados('contagem_comissao', 'semana', $semanaAtual);
+    $projetos = $semana['projetos'];
+
+    if ($projetos == 0)
+    {
+        $con->query("UPDATE contagem_comissao SET projetos = '0' WHERE semana != $semanaAtual");
+    }
 
 	switch ($idEtapa) {
 		case 2:
@@ -42,24 +50,26 @@ if(isset($_POST['envioComissao']))
 	$sql_envioComissao = "UPDATE projeto SET idEtapaProjeto = '$statusEnvio', envioComissao = '$dateNow', idStatus = '2' WHERE idProjeto = '$idProjeto'";
 	if(mysqli_query($con,$sql_envioComissao))
 	{
-		$sql_historico = "INSERT INTO historico_etapa (idProjeto, idEtapaProjeto, data) VALUES ('$idProjeto', '$statusEnvio', '$dateNow')";
-		$query_historico = mysqli_query($con, $sql_historico);
-        $mensagem = "<font color='#01DF3A'><strong>Enviado com sucesso!</strong></font>";
+	    $sql_contagem_comissao = "UPDATE `contagem_comissao` SET `projetos` = '".($projetos+1)."' WHERE `semana` = '$semanaAtual'";
+        $con->query($sql_contagem_comissao);
+        $sql_historico = "INSERT INTO historico_etapa (idProjeto, idEtapaProjeto, data) VALUES ('$idProjeto', '$statusEnvio', '$dateNow')";
+        $query_historico = mysqli_query($con, $sql_historico);
+        $mensagem = "<span style='color: #01DF3A; '><strong>Enviado com sucesso!</strong></span>";
 		gravarLog($sql_historico);
 		gravarLog($sql_envioComissao);
 	}
 	else
 	{
-		$mensagem = "<font color='#FF0000'><strong>Erro ao enviar! Tente novamente.</strong></font>";
+		$mensagem = "<span style='color: #FF0000; '><strong>Erro ao enviar! Tente novamente.</strong></span>";
 	}
 }
 if (isset($_POST['arquivar'])){
     $idProjeto = $_POST['idProjeto'];
      $query = "UPDATE projeto SET publicado = 0 WHERE idProjeto = '$idProjeto' ";
      if (mysqli_query($con,$query)){
-         $mensagem = "Projeto arquivado com sucesso";
+         $mensagem = "<span style='color: #01DF3A; '><strong>Projeto arquivado com sucesso</strong></span>";
      }else{
-         $mensagem = "Erro ao arquivar o projeto";
+         $mensagem = "<span style='color: #FF0000; '><strong>Erro ao arquivar o projeto</strong></span>";
      }
 }
 
@@ -469,27 +479,6 @@ foreach ($array_status as $idStatus)
                                     }
                                     ?>
                                 </tr>
-                                <!-- Modal para arquivar projeto -->
-                                <div class="modal fade" id="arquivar" tabindex="-1" role="dialog" aria-labelledby="arquivar">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                <h4 class="modal-title" id="enviarComissao">Deseja arquivar esse projeto?</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p>Para confirmar clique no botão SIM!</p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <form method='POST' action='?perfil=smc_index'>
-                                                    <input type='hidden' name='idProjeto' value="<?= $campo['idProjeto'] ?>">
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
-                                                    <button type="submit" name='arquivar' class="btn btn-danger">SIM</button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                                 <?php
                                 $i++;
                             }
@@ -732,7 +721,7 @@ foreach ($array_status as $idStatus)
     </div>
 </div>
 
-<!-- Modal -->
+<!-- Modal Enviar a Comissão -->
 <div class="modal fade" id="enviarComissao" tabindex="-1" role="dialog" aria-labelledby="enviarComissao">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -753,12 +742,40 @@ foreach ($array_status as $idStatus)
     </div>
   </div>
 </div>
+
+<!-- Modal para arquivar projeto -->
+<div class="modal fade" id="arquivar" tabindex="-1" role="dialog" aria-labelledby="arquivar">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="arquivar">Deseja arquivar esse projeto?</h4>
+            </div>
+            <div class="modal-body">
+                <p>Para confirmar clique no botão SIM!</p>
+            </div>
+            <div class="modal-footer">
+                <form method='POST' action='' id="formArquivar">
+                    <input type='hidden' name='idProjeto' value="<?= $campo['idProjeto'] ?>">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
+                    <button type="submit" name='arquivar' class="btn btn-danger">SIM</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
  <script type="text/javascript">
     // Alimenta o modal com o idProjeto
     $('#enviarComissao').on('show.bs.modal', function (e)
     {
         let idProjeto = $(e.relatedTarget).attr('data-id');
         $(this).find('#formEnviar input[name="idProjeto"]').attr('value', idProjeto);
+
+    });
+    $('#arquivar').on('show.bs.modal', function (e)
+    {
+        let idProjeto = $(e.relatedTarget).attr('data-id');
+        $(this).find('#formArquivar input[name="idProjeto"]').attr('value', idProjeto);
 
     });
 </script>

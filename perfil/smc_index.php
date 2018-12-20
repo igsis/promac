@@ -58,6 +58,8 @@ if(isset($_POST['liberacaoPJ']))
             </h5>
         </div>
 
+        <?php limiteEnvioProjetos() ?>
+
         <ul class="nav nav-tabs">
             <?php
             if ($pf['idNivelAcesso'] != 4)

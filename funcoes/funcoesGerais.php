@@ -3443,4 +3443,23 @@ function dias_feriados($ano = null)
     return $feriados;
 }
 
+function limiteEnvioProjetos()
+{
+    $semanaAtual = date('W');
+    $semana = recuperaDados('contagem_comissao', 'semana', $semanaAtual);
+    $projetos = $semana['projetos'];
+
+    $cont = 50 - $projetos;
+
+    if ($cont <= 10)
+    {
+        echo "<div class='form-group'>
+            <div class='alert alert-danger' role='alert'>
+                <h5 class='alert-danger'>ATENÇÃO! JÁ FORAM ENVIADOS: $projetos PROJETOS PARA A COMISSÃO</h5>
+                <h6 class='alert-danger'>MÁXIMO DE 50 PERMITIDOS</h6>
+            </div>
+        </div>";
+    }
+}
+
 ?>
