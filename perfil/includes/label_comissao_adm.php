@@ -45,7 +45,7 @@
                     <input type="submit" class="btn btn-theme  btn-block" value="Atualizar responsável"
                            name="atualizaResponsavel">
                 </div>
-                <?php if ($usuario['idNivelAcesso'] == 3) { ?>
+                <?php if (($usuario['idNivelAcesso'] == 3) && ($projeto['idComissao'] != '0')) { ?>
                     <div class="col-md-3"><br/>
                         <input type="hidden" name="idProjeto" value="<?= $idProjeto; ?>"/>
                         <input type="submit" class="btn btn-theme  btn-block" value="Marcar como Verificado"
