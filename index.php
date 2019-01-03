@@ -50,7 +50,7 @@ $tipoPessoa = '6';
                         <div class="alert-danger">
                             <br/>
                             <h6><span style="color: red; ">ATENÇÃO!</span></h6>
-                            <p><span style="color: red; ">As  inscrições de projetos se encerram no dia <strong>31 de outubro</strong>, não deixem para última hora.</span></p>
+                            <p><span style="color: red; ">O PROMAC informa que dos dias 24/12/2018 a 07/01/2019 não haverá agendamento para assinatura do Termo de Responsabilidade. Os agendamentos retornarão normalmente no dia 08/01/2019.</span></p>
                             <br/>
                         </div>
                         <p>&nbsp;</p>
