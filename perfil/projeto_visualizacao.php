@@ -241,24 +241,6 @@ $link = $consulta->fetch()['linkAgendamento'];
                             }
                             ?>
 
-
-                            <?php
-                            if($projeto['idStatus'] == 5) {
-                            ?>
-                                    <div class="form-group">
-                                        <div class="col-md-offset-4 col-md-6">
-                                            <form class="form-horizontal" role="form" action="?perfil=complemento_informacoes&idProjeto=<?= $idProjeto ?>"
-                                                  method="post">
-                                                <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;">anexar complementos</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                                <?php
-
-                            }
-                            ?>
-
                             <?php
 //                            $sql = "SELECT *
 //                                        FROM lista_documento as list
