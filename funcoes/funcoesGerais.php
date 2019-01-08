@@ -2306,7 +2306,7 @@ function retornaCamposObrigatoriosPj($idProjeto)
 	             proj.contratoGestao AS contratoGestaoProjeto, 
 	             proj.nomeProjeto AS nomeProjeto, 	             
 	             proj.idRenunciaFiscal AS ValoresEnquadramentoRenunciaFiscal, 
-	             proj.exposicaoMarca AS ValoresEnquadramentoExposicaoMarca,              
+	             proj.idExposicaoMarca AS ValoresEnquadramentoExposicaoMarca,              
 	             proj.resumoProjeto AS resumoCurriculoProjeto, 
 	             proj.curriculo AS resumoCurriculoCvProponente, 	             
 	             proj.descricao AS ObjetoDescricao,  
@@ -2365,7 +2365,7 @@ function retornaCamposObrigatoriosPj($idProjeto)
   			   AND  orca.publicado = 1
   			   AND  proj.idProjeto =".$idProjeto." LIMIT 1";
 	
-	$resultado = mysqli_query($conexao,$query);		
+	$resultado = mysqli_query($conexao,$query);
 
 	while($campo = mysqli_fetch_assoc($resultado)) 
     {
