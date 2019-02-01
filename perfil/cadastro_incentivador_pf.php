@@ -23,7 +23,7 @@ if(isset($_POST['cep']) and empty($enderecos)):  $habilitaCampo = true; ?>
   </div>  
 <?php endif;
 
-if(isset($_POST['cadastraNovoPf']) and $_POST['numero'] and empty($endereço)):  
+if(isset($_POST['cadastraNovoPf']) and $_POST['numero'] and empty($endereco)):
   $nome = addslashes($_POST['nome']);
   $rg = $_POST['rg'];
   $telefone = $_POST['telefone'];

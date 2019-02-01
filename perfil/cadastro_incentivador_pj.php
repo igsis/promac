@@ -24,7 +24,7 @@ if(isset($_POST['cep']) and empty($enderecos)):  $habilitaCampo = true; ?>
 <?php endif; 
 
 
-if(isset($_POST['cadastraNovoPj']) and $_POST['numero'] and empty($endereço)):
+if(isset($_POST['cadastraNovoPj']) and $_POST['numero'] and empty($endereco)):
   $razaoSocial = addslashes($_POST['razaoSocial']);
   $cnpj = $_POST['cnpj'];
   $telefone = $_POST['telefone'];
