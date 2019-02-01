@@ -29,9 +29,9 @@ if(isset($_POST['cadastraNovoPf']) and $_POST['numero'] and empty($endereco)):
   $telefone = $_POST['telefone'];
   $celular = $_POST['celular'];
   $email = $_POST['email'];
-  $Endereco = $_POST['Endereco'];
-  $Bairro = $_POST['Bairro'];
-  $Cidade = $_POST['cidade'];
+  $Endereco = addslashes($_POST['Endereco']);
+  $Bairro = addslashes($_POST['Bairro']);
+  $Cidade = addslashes($_POST['cidade']);
   $Estado = $_POST['estado'];
   $CEP = $_POST['cep'];
   $Numero = $_POST['numero'];
