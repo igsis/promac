@@ -120,10 +120,10 @@ if(isset($_POST['apagar']))
 		<div class="form-group">
 			<h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
 		</div>
-		<div class="row">
-			<div class="col-md-offset-1 col-md-10">
-			<?php
-				if($pf['liberado'] == NULL OR $pf['liberado'] == 2 OR $pf['liberado'] == 4) 
+        <div class="col-md-offset-1 col-md-10">
+            <div class="row">
+			    <?php
+				if($pf['liberado'] == NULL OR $pf['liberado'] == 2 OR $pf['liberado'] == 4)
 				{
 					include 'includes/resumo_dados_incentivador_pf.php';
 				?>
@@ -131,12 +131,11 @@ if(isset($_POST['apagar']))
 						Após o preenchimento de todos os dados pessoais, conclua a inscrição do proponente e aguarde a análise da sua documentação pela Secretaria Municipal de Cultura.
 					</div>
 
-			</div>
-			<?php
-				}
-				elseif($pf['liberado'] == 1)// foi solicitada a liberação, porém a SMC não analisou ainda.
-				{
-			?>
+                <?php
+                    }
+                    elseif($pf['liberado'] == 1)// foi solicitada a liberação, porém a SMC não analisou ainda.
+                    {
+                ?>
 					<div class="alert alert-success">
 						<strong>Sua solicitação de inscrição foi enviada com sucesso à Secretaria Municipal de Cultura. Aguarde a análise da documentação.</strong>
 					</div>
@@ -147,34 +146,30 @@ if(isset($_POST['apagar']))
 			?>
 					<div class="alert alert-success">
 						<strong>Sua inscrição para incentivo foi aceita pela Secretaria Municipal de Cultura.</strong>
-					</div>		
-			<?php 
+					</div>
+			<?php
 				}
 			?>
 
-					<div>
-				 		<?php listaArquivosPessoaObs($idPf,4) ?>
-				 	</div>
 
-	 	<ul class='list-group'>
-            <li class='list-group-item list-group-item-success'>Notas</li>
-            <?php
-                $sql = "SELECT * FROM notas WHERE idPessoa = '$idPf' AND idTipo = '4' AND interna = '1'";
-                $query = mysqli_query($con,$sql);
-                $num = mysqli_num_rows($query);
-                if($num > 0)
-                {
-                    while($campo = mysqli_fetch_array($query))
-                    {
-                        echo "<li class='list-group-item' align='left'><strong>".exibirDataHoraBr($campo['data'])."</strong><br/>".$campo['nota']."</li>";
+            </div>
+            <div class="row">
+                <ul class='list-group'>
+                    <li class='list-group-item list-group-item-success'>Notas</li>
+                    <?php
+                    $sql = "SELECT * FROM notas WHERE idPessoa = '$idPf' AND idTipo = '4' AND interna = '1'";
+                    $query = mysqli_query($con, $sql);
+                    $num = mysqli_num_rows($query);
+                    if ($num > 0) {
+                        while ($campo = mysqli_fetch_array($query)) {
+                            echo "<li class='list-group-item' align='left'><strong>" . exibirDataHoraBr($campo['data']) . "</strong><br/>" . $campo['nota'] . "</li>";
+                        }
+                    } else {
+                        echo "<li class='list-group-item'>Não há notas disponíveis.</li>";
                     }
-                }
-                else
-                {
-                    echo "<li class='list-group-item'>Não há notas disponíveis.</li>";
-                }
-            ?>
-        </ul>
+                    ?>
+                </ul>
+            </div>
 
 
 			<?php
