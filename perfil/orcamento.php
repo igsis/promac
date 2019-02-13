@@ -169,7 +169,7 @@ if(isset($_POST['insereOrcamento']) || isset($_POST['editaOrcamento'])) {
 
                     <div class="row">
                         <div class="form-group">
-                            <div class="col-md-2">
+                            <div class="col-md-1">
                                 <br/><strong>Etapa* </strong>
                                 <select class="form-control" name="idEtapa">
 
@@ -209,7 +209,7 @@ if(isset($_POST['insereOrcamento']) || isset($_POST['editaOrcamento'])) {
                                     <input type="text" class="form-control" name="quantidadeUnidade" required>
                                 </div>
 
-                                <div class="col-md-1"><strong>Valor Unitário </strong>
+                                <div class="col-md-2"><strong><br/>Valor Unitário </strong>
                                     <input type="text" class="form-control" id='valor' name="valorUnitario" required>
                                 </div>
                             </div>
