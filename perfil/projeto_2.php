@@ -57,7 +57,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
                             <div class="form-group">
                                 <div class="col-md-offset-3 col-md-3">
                                     <label>Valor total do <br/>projeto</label>
-                                    <input type="text" name="valorProjeto" class="form-control" id="valorProjeto" value="<?php echo isset($projeto['valorProjeto']) ? dinheiroParaBr($projeto['valorProjeto']) : null ?>" />
+                                    <input type="text" name="valorProjeto" class="form-control" id="valor" value="<?php echo isset($projeto['valorProjeto']) ? dinheiroParaBr($projeto['valorProjeto']) : null ?>" />
                                 </div>
 
                                 <div class="col-md-3">
