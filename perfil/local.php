@@ -2,19 +2,24 @@
 $con = bancoMysqli();
 $idProjeto = $_SESSION['idProjeto'];
 
-$usuarioLogado = pegaUsuarioLogado(); 
+$usuarioLogado = pegaUsuarioLogado();
+
+if(isset($_POST['insereLocal']) || isset($_POST['editaLocal'])) {
+    $local = addslashes($_POST['local']);
+    $estimativaPublico = $_POST['estimativaPublico'];
+    $cep = $_POST['cep'];
+    $logradouro = addslashes($_POST['logradouro']);
+    $numero = $_POST['numero'];
+    $complemento = $_POST['complemento'] ?? NULL;
+    $bairro = addslashes($_POST['bairro']);
+    $cidade = addslashes($_POST['cidade']);
+    $uf = $_POST['uf'];
+}
 
 
 if(isset($_POST['insereLocal']))
 {
-	$local = addslashes($_POST['local']);
-	$estimativaPublico = $_POST['estimativaPublico'];
-	$idZona = $_POST['idZona'];
-	$idSubprefeitura = $_POST['idSubprefeitura'];
-	$idDistrito = $_POST['idDistrito'];
-
-
-	$sql_insere_local = "INSERT INTO `locais_realizacao`(`idProjeto`, `local`, `estimativaPublico`, `idZona`, `idSubprefeitura`, `idDistrito`, `publicado`) VALUES ('$idProjeto', '$local', '$estimativaPublico', '$idZona', '$idSubprefeitura', '$idDistrito', 1)";
+	$sql_insere_local = "INSERT INTO locais_realizacao(idProjeto, local, estimativaPublico, logradouro, numero, complemento, bairro, cidade, estado, cep, publicado) VALUES ('$idProjeto', '$local', '$estimativaPublico', '$logradouro', '$numero', '$complemento', '$bairro', '$cidade', '$uf', '$cep', 1)";
 
 	if(mysqli_query($con,$sql_insere_local))
 	{
@@ -23,25 +28,23 @@ if(isset($_POST['insereLocal']))
 	}
 	else
 	{
-		$mensagem = "<font color='#FF0000'><strong>Erro ao gravar! Tente novamente.</strong></font>";
+		$mensagem = "<font color='#FF0000'><strong>Erro ao gravar! Tente novamente.</strong></font>.$sql_insere_local";
 	}
 }
 
 if(isset($_POST['editaLocal']))
 {
-	$idLocaisRealizacao = $_POST['editaLocal'];
-	$local = $_POST['local'];
-	$estimativaPublico = $_POST['estimativaPublico'];
-	$idZona = $_POST['idZona'];
-	$idSubprefeitura = $_POST['idSubprefeitura'];
-	$idDistrito = $_POST['idDistrito'];
-
-	$sql_edita_local = "UPDATE `locais_realizacao` SET
+    $idLocaisRealizacao = $_POST['editaLocal'];
+    $sql_edita_local = "UPDATE `locais_realizacao` SET
 	`local`= '$local',
 	`estimativaPublico`= '$estimativaPublico',
-	`idZona`= '$idZona',
-	`idSubprefeitura`= '$idSubprefeitura',
-	`idDistrito`= '$idDistrito',
+    cep = '$cep',
+    logradouro = '$logradouro',
+    numero = '$numero',
+    complemento = '$complemento',
+    bairro = '$bairro',
+    cidade = '$cidade',
+    estado= '$uf',
 	`alteradoPor` = '$usuarioLogado'
 	WHERE idLocaisRealizacao = '$idLocaisRealizacao'";
 	if(mysqli_query($con,$sql_edita_local))
@@ -106,9 +109,11 @@ if(isset($_POST['apagaLocal']))
 									<tr class='list_menu'>
 										<td>Local</td>
 										<td>Público estimado</td>
-										<td>Zona</td>
-										<td>Prefeitura Regional</td>
-										<td>Distrito</td>
+										<td>Endereço</td>
+										<td>Bairro</td>
+										<td>Cidade</td>
+										<td>Estado</td>
+										<td>CEP</td>
 										<td width='10%'></td>
 										<td width='10%'></td>
 									</tr>
@@ -116,15 +121,14 @@ if(isset($_POST['apagaLocal']))
 								<tbody>";
 								while($campo = mysqli_fetch_array($query))
 								{
-									$zona = recuperaDados("zona","idZona",$campo['idZona']);
-									$subprefeitura = recuperaDados("subprefeitura","idSubprefeitura",$campo['idSubprefeitura']);
-									$distrito = recuperaDados("distrito","idDistrito",$campo['idDistrito']);
 									echo "<tr>";
 									echo "<td class='list_description'>".$campo['local']."</td>";
 									echo "<td class='list_description'>".$campo['estimativaPublico']."</td>";
-									echo "<td class='list_description'>".$zona['zona']."</td>";
-									echo "<td class='list_description'>".$subprefeitura['subprefeitura']."</td>";
-									echo "<td class='list_description'>".$distrito['distrito']."</td>";
+									echo "<td class='list_description'>".$campo['logradouro'].", ".$campo['numero']." ".$campo['complemento']."</td>";
+                                    echo "<td class='list_description'>".$campo['bairro']."</td>";
+									echo "<td class='list_description'>".$campo['cidade']."</td>";
+									echo "<td class='list_description'>".$campo['estado']."</td>";
+									echo "<td class='list_description'>".$campo['cep']."</td>";
 									echo "<td class='list_description'>
 											<form method='POST' action='?perfil=local_edicao'>
 												<input type='hidden' name='editarLocal' value='".$campo['idLocaisRealizacao']."' />
