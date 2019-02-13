@@ -240,3 +240,5 @@ ALTER TABLE `projeto` ADD COLUMN `verificadoComissao` TINYINT NOT NULL DEFAULT '
 
 
 ALTER TABLE locais_realizacao ADD logradouro VARCHAR(150) NOT NULL AFTER estimativaPublico, ADD numero INT(5) NOT NULL AFTER logradouro, ADD complemento VARCHAR(15) NOT NULL AFTER numero, ADD bairro VARCHAR(30) NOT NULL AFTER complemento, ADD cidade VARCHAR(50) NOT NULL AFTER bairro, ADD estado CHAR(2) NOT NULL AFTER cidade, ADD cep CHAR(9) NOT NULL AFTER estado;
+
+ALTER TABLE `projeto` ADD `midia_social_1` VARCHAR(60) NOT NULL AFTER `totalOutrosFinanciamentos`, ADD `midia_social_2` VARCHAR(60) NOT NULL AFTER `midia_social_1`;
