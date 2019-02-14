@@ -345,7 +345,7 @@ foreach ($array_status as $idStatus)
                         <tr class='list_menu'>
                             <td>Protocolo (nº ISP)</td>
                             <?php
-                            if (($status['idEtapaProjeto'] == 2) || ($status['idEtapaProjeto'] == 13) || ($status['idEtapaProjeto'] == 23) || ($status['idEtapaProjeto'] == 14))
+                            if (($status['idEtapaProjeto'] == 2) || ($status['idEtapaProjeto'] == 13) || ($status['idEtapaProjeto'] == 23) || ($status['idEtapaProjeto'] == 14) || ($status['idEtapaProjeto'] == 10))
                                 {
                                     ?>
                                 <td>Data do envio</td>
@@ -388,6 +388,11 @@ foreach ($array_status as $idStatus)
 
                                               echo "<td class='list_description'>" . date_format($dataEtapa, "d/m/Y H:i:s") . "</td>";
 
+                                        }elseif($status['idEtapaProjeto'] == 10) {
+
+                                            $dataEtapa = new DateTime ($campo['data']);
+
+                                            echo "<td class='list_description'>" . date_format($dataEtapa, "d/m/Y H:i:s") . "</td>";
                                         } elseif ($status['idEtapaProjeto'] == 13){
 
                                             $dataEtapa = new DateTime ($campo['data']);
