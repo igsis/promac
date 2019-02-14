@@ -6,457 +6,514 @@ $idProjeto = $_SESSION['idProjeto'];
 $tipoPessoa = $_SESSION['tipoPessoa'];
 
 //$envioProjetos = recuperaDados('statusprojeto', 'idStatus', 1);
-$projeto = recuperaDados("projeto","idProjeto",$idProjeto);
-$area = recuperaDados("area_atuacao","idArea",$projeto['idAreaAtuacao']);
-$renuncia = recuperaDados("renuncia_fiscal","idRenuncia",$projeto['idRenunciaFiscal']);
-$cronograma = recuperaDados("cronograma","idCronograma",$projeto['idCronograma']);
-$video = recuperaDados("projeto","idProjeto",$idProjeto);
-$marca = recuperaDados("exposicao_marca","id",$projeto['idExposicaoMarca']);
+$projeto = recuperaDados("projeto", "idProjeto", $idProjeto);
+$area = recuperaDados("area_atuacao", "idArea", $projeto['idAreaAtuacao']);
+$renuncia = recuperaDados("renuncia_fiscal", "idRenuncia", $projeto['idRenunciaFiscal']);
+$cronograma = recuperaDados("cronograma", "idCronograma", $projeto['idCronograma']);
+$video = recuperaDados("projeto", "idProjeto", $idProjeto);
+$marca = recuperaDados("exposicao_marca", "id", $projeto['idExposicaoMarca']);
 $v = array($video['video1'], $video['video2'], $video['video3']);
 
-if ($tipoPessoa == "1")
-{
-	$pf = recuperaDados("pessoa_fisica","idPf",$idPf);
-}
-else
-{
-	$pj = recuperaDados("pessoa_juridica","idPj",$idUsuario);
+if ($tipoPessoa == "1") {
+    $pf = recuperaDados("pessoa_fisica", "idPf", $idPf);
+} else {
+    $pj = recuperaDados("pessoa_juridica", "idPj", $idUsuario);
 }
 $alterar = 0;
 
 
-if($projeto['idEtapaProjeto'] == 6)
-	$alterar = 1;
+if ($projeto['idEtapaProjeto'] == 6)
+    $alterar = 1;
 
 ?>
 <section id="list_items" class="home-section bg-white">
-	<div class="container">
-		<?php
-		if($_SESSION['tipoPessoa'] == 1)
-		{
-			$idPf= $_SESSION['idUser'];
-			include '../perfil/includes/menu_interno_pf.php';
-		}
-		else
-		{
-			$idPj= $_SESSION['idUser'];
-			include '../perfil/includes/menu_interno_pj.php';
-		}
-		?>
-		<div class="form-group">
-			<h4>Resumo do Projeto</h4>
-			<div class="alert alert-warning">
-				<strong>Atenção!</strong> Confirme atentamente se os dados abaixo estão corretos!
-			</div>
-		</div>
+    <div class="container">
+        <?php
+        if ($_SESSION['tipoPessoa'] == 1) {
+            $idPf = $_SESSION['idUser'];
+            include '../perfil/includes/menu_interno_pf.php';
+        } else {
+            $idPj = $_SESSION['idUser'];
+            include '../perfil/includes/menu_interno_pj.php';
+        }
+        ?>
+        <div class="form-group">
+            <h4>Resumo do Projeto</h4>
+            <div class="alert alert-warning">
+                <strong>Atenção!</strong> Confirme atentamente se os dados abaixo estão corretos!
+            </div>
+        </div>
 
-		<div class="form-group">
-			<?php
-			/**Campos Obrigatórios**/
-			if(isset($idProjeto)):			  
-				require_once('validacaoCamposObrigatorios.php');
-			endif;
+        <div class="form-group">
+            <?php
+            /**Campos Obrigatórios**/
+            if (isset($idProjeto)):
+                require_once('validacaoCamposObrigatorios.php');
+            endif;
 
-			/**Arquivos Obrigatórios**/
-			if(isset($tipoPessoa)):
-				$tipoDoc = 'anexo';
-				$idUser = $idUsuario;				  
-				require_once('validacaoArquivosObrigatorios.php');
-			endif;
-			?>
-		</div>
+            /**Arquivos Obrigatórios**/
+            if (isset($tipoPessoa)):
+                $tipoDoc = 'anexo';
+                $idUser = $idUsuario;
+                require_once('validacaoArquivosObrigatorios.php');
+            endif;
+            ?>
+        </div>
 
-		<div class = "page-header">
-			<h5>Informações do projeto</h5>
-		</div>
+        <div class="page-header">
+            <h5>Informações do projeto</h5>
+        </div>
 
-		<div class="well">
-			<p align="justify"><strong>Nome do Projeto:</strong> <?php echo $projeto['nomeProjeto']; ?></p>
-			<p align="justify"><strong>Valor total do projeto:</strong> R$ <?php echo dinheiroParaBr($projeto['valorProjeto']) ?></p>
-			<p align="justify"><strong>Valor do incentivo:</strong> R$ <?php echo dinheiroParaBr($projeto['valorIncentivo']); ?><p>
-					<p align="justify"><strong>Área de atuação:</strong> <?php echo $area['areaAtuacao'] ?></p>
-					<p align="justify"><strong>Renúncia Fiscal:</strong> <?php echo $renuncia['renunciaFiscal'] ?></p>
-                    <p align="justify"><strong>Descrição da exposição da Marca:</strong> <?php echo $marca['exposicao_marca']; ?></p>
-                    <p align="justify"><strong>Indicação do valor do ingresso:</strong> <?php echo $projeto['indicacaoIngresso']; ?></p>
-					<p align="justify"><strong>Resumo do projeto:</strong> <?php echo isset($projeto['resumoProjeto']) ? $projeto['resumoProjeto'] : null; ?></p>
-					<p align="justify"><strong>Currículo:</strong> <?php echo isset($projeto['curriculo']) ? $projeto['curriculo'] : null; ?></p>
-					<p align="justify"><strong>Descrição:</strong> <?php echo isset($projeto['descricao']) ? $projeto['descricao'] : null; ?></p>
-					<p align="justify"><strong>Justificativa:</strong> <?php echo isset($projeto['justificativa']) ? $projeto['justificativa'] : null; ?></p>
-					<p align="justify"><strong>Objetivo:</strong> <?php echo isset($projeto['objetivo']) ? $projeto['objetivo'] : null; ?></p>
-					<p align="justify"><strong>Metodologia:</strong> <?php echo isset($projeto['metodologia']) ? $projeto['metodologia'] : null; ?></p>
-					<p align="justify"><strong>Contrapartida:</strong> <?php echo isset($projeto['contrapartida']) ? $projeto['contrapartida'] : null; ?></p>
-				</div>
+        <div class="well">
+            <p align="justify"><strong>Nome do Projeto:</strong> <?php echo $projeto['nomeProjeto']; ?></p>
+            <p align="justify"><strong>Área de atuação:</strong> <?php echo $area['areaAtuacao'] ?></p>
+            <p align="justify"><strong>Resumo do projeto:</strong> <?php echo isset($projeto['resumoProjeto']) ? $projeto['resumoProjeto'] : null; ?>
+            </p>
+            <p align="justify">
+                <strong>Currículo:</strong> <?php echo isset($projeto['curriculo']) ? $projeto['curriculo'] : null; ?>
+            </p>
+            <p align="justify">
+                <strong>Descrição do objeto e atividades:</strong> <?php echo isset($projeto['descricao']) ? $projeto['descricao'] : null; ?>
+            </p>
+            <p align="justify">
+                <strong>Justificativa do projeto:</strong> <?php echo isset($projeto['justificativa']) ? $projeto['justificativa'] : null; ?>
+            </p>
+            <p align="justify">
+                <strong>Objetivos e metas:</strong> <?php echo isset($projeto['objetivo']) ? $projeto['objetivo'] : null; ?></p>
+            <p align="justify">
+                <strong>Metodologia:</strong> <?php echo isset($projeto['metodologia']) ? $projeto['metodologia'] : null; ?>
+            </p>
+            <p align="justify">
+                <strong>Contrapartida:</strong> <?php echo isset($projeto['contrapartida']) ? $projeto['contrapartida'] : null; ?>
+            </p>
+        </div>
 
-				<div class="well">
-					<ul class="list-group">
-						<li class="list-group-item list-group-item-success"><b>Local</b></li>
-						<li class="list-group-item">
-							<table class="table table-bordered">
-								<tr>
-									<th>Local</th>
-									<th>Público estimado</th>
-									<th>Zona</th>
-								</tr>
-								<?php
-								$sql = "SELECT * FROM locais_realizacao
-								WHERE publicado = 1 AND idProjeto = ".$projeto['idProjeto']."";
-								$query = mysqli_query($con,$sql);
-								while($campo = mysqli_fetch_array($query))
-								{
-									$zona = recuperaDados("zona","idZona",$campo['idZona']);
-									echo "<tr>";
-									echo "<td>".$campo['local']."</td>";
-									echo "<td>".$campo['estimativaPublico']."</td>";
-									echo "<td>".$zona['zona']."</td>";
-									echo "</tr>";
-								}
-								?>
-							</table>
-						</li>
-					</ul>
-				</div>
+        <div class="well">
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-success"><b>Local</b></li>
+                <li class="list-group-item">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>Local</th>
+                            <th>Público estimado</th>
+                            <th>Endereço</th>
+                        </tr>
+                        <?php
+                        $sql = "SELECT * FROM locais_realizacao
+								WHERE publicado = 1 AND idProjeto = " . $projeto['idProjeto'] . "";
+                        $query = mysqli_query($con, $sql);
+                        while ($campo = mysqli_fetch_array($query)) {
+                            $zona = recuperaDados("zona", "idZona", $campo['idZona']);
+                            echo "<tr>";
+                            echo "<td>" . $campo['local'] . "</td>";
+                            echo "<td>" . $campo['estimativaPublico'] . "</td>";
+                            echo "<td>" . $campo['logradouro'] . ", ".$campo['numero']." ".$campo['complemento']." ".$campo['bairro'].", ".$campo['cidade']." - ".$campo['estado'].", CEP ".$campo['cep']."</td>";
+                            echo "</tr>";
+                        }
+                        ?>
+                    </table>
+                </li>
+            </ul>
+        </div>
 
-				<div class="well">
-					<p align="justify"><strong>Público alvo:</strong> <?php echo isset($projeto['publicoAlvo']) ? $projeto['publicoAlvo'] : null; ?></p>
-					<p align="justify"><strong>Plano de divulgação:</strong> <?php echo isset($projeto['planoDivulgacao']) ? $projeto['planoDivulgacao'] : null; ?></p>
-				</div>
+        <div class="well">
+            <p align="justify"><strong>Público alvo:</strong> <?php echo isset($projeto['publicoAlvo']) ? $projeto['publicoAlvo'] : null; ?></p>
+            <p align="justify"><strong>Plano de divulgação:</strong> <?php echo isset($projeto['planoDivulgacao']) ? $projeto['planoDivulgacao'] : null; ?></p>
+        </div>
 
-				<div class="well">
-					<ul class="list-group">
-						<li class="list-group-item list-group-item-success"><b>Ficha Técnica</b></li>
-						<li class="list-group-item">
-							<table class="table table-bordered">
-								<tr>
-									<th>Nome</th>
-									<th>CPF</th>
-									<th>Função</th>
-								</tr>
-								<?php
-								$sql = "SELECT * FROM ficha_tecnica
+        <div class="well">
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-success"><b>Ficha Técnica</b></li>
+                <li class="list-group-item">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>Nome</th>
+                            <th>CPF</th>
+                            <th>Função</th>
+                        </tr>
+                        <?php
+                        $sql = "SELECT * FROM ficha_tecnica
 								WHERE publicado = 1 AND idProjeto = '$idProjeto'";
-								$query = mysqli_query($con,$sql);
-								while($campo = mysqli_fetch_array($query))
-								{
-									echo "<tr>";
-									echo "<td class='list_description'>".$campo['nome']."</td>";
-									echo "<td class='list_description'>".$campo['cpf']."</td>";
-									echo "<td class='list_description'>".$campo['funcao']."</td>";
-									echo "</tr>";
-								}?>
-							</table>
-						</li>
-					</ul>
-				</div>
+                        $query = mysqli_query($con, $sql);
+                        while ($campo = mysqli_fetch_array($query)) {
+                            echo "<tr>";
+                            echo "<td class='list_description'>" . $campo['nome'] . "</td>";
+                            echo "<td class='list_description'>" . $campo['cpf'] . "</td>";
+                            echo "<td class='list_description'>" . $campo['funcao'] . "</td>";
+                            echo "</tr>";
+                        } ?>
+                    </table>
+                </li>
+            </ul>
+        </div>
 
-				<div class = "page-header">
-					<h5>Cronograma</h5>
-				</div>
+        <div class="well">
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-success"><b>Cronograma</b></li>
+                <li class="list-group-item">
+                    <table class="table table-bordered">
+                        <tr>
+                            <td><strong>Início do projeto:</strong> <?= isset($projeto['inicioCronograma']) ? exibirDataBr($projeto['inicioCronograma']) : null ?></td>
+                            <td><strong>Fim do projeto:</strong> <?= isset($projeto['fimCronograma']) ?  exibirDataBr($projeto['fimCronograma']) : null ?></td>
+                        </tr>
+                </li>
+                <li class="list-group-item">
+                    <table class="table table-bordered">
+                        <tr>
+                            <td><strong>Captação de recursos:</strong></td>
+                            <td><strong>Pré-Produção:</strong></td>
+                            <td><strong>Produção:</strong></td>
+                            <td><strong>Pós-Produção:</strong></td>
+                            <td><strong>Prestação de Contas:</strong></td>
+                        </tr>
+                        <tr>
+                            <td class='list_description exibir'><?= $cronograma['captacaoRecurso'] ?? '' ?></td>
+                            <td class='list_description exibir'><?= $cronograma['preProducao'] ?? '' ?></td>
+                            <td class='list_description exibir'><?= $cronograma['producao'] ?? '' ?></td>
+                            <td class='list_description exibir'><?= $cronograma['posProducao'] ?? '' ?></td>
+                            <td class='list_description exibir'><?= $cronograma['prestacaoContas'] ?? '' ?></td>
+                        </tr>
+                    </table>
+                </li>
+            </ul>
+        </div>
 
-				<div class="well">
-					<p align="justify"><strong>Início do projeto:</strong> <?= isset($projeto['inicioCronograma']) ? $projeto['inicioCronograma'] : null ?></p>
-					<p align="justify"><strong>Fim do projeto:</strong> <?= isset($projeto['fimCronograma']) ? $projeto['fimCronograma'] : null ?></p>
-					<table class="table table-bordered">
-						<tr>
-							<td><strong>Início do cronograma:</strong> <?= $projeto['inicioCronograma'] ?></td>
-							<td><strong>Fim do cronograma:</strong> <?= $projeto['fimCronograma'] ?></td>
-						</tr>
-						<tr>
-							<td><strong>Captação de recursos:</strong> <?php echo $cronograma['captacaoRecurso'] ?></td>
-							<td><strong>Pré-Produção:</strong> <?php echo $cronograma['preProducao'] ?></td>
-						</tr>
-						<tr>
-							<td><strong>Produção:</strong> <?php echo $cronograma['producao'] ?></td>
-							<td><strong>Pós-Produção:</strong> <?php echo $cronograma['posProducao'] ?></td>
-						</tr>
-						<tr>
-							<td colspan="2"><strong>Prestação de Contas:</strong> <?php echo $cronograma['prestacaoContas'] ?></td>
-						</tr>
-					</table>
-				</div>
+        <div class="well">
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-success"><b>Orçamento</b></li>
+                <li class="list-group-item">
+                    <table class="table table-bordered">
+                        <tr>
+                            <?php
+                            for ($i = 1; $i <= 8; $i++) {
+                                $sql_etapa = "SELECT idEtapa FROM orcamento
+                                        WHERE publicado > 0 AND idProjeto ='$idProjeto' AND idEtapa = '$i'
+                                        ORDER BY idOrcamento";
+                                $query_etapa = mysqli_query($con, $sql_etapa);
+                                $lista = mysqli_fetch_array($query_etapa);
 
-				<div class = "page-header">
-					<h5>Orçamento</h5>
-				</div>
+                                $etapa = recuperaDados("etapa", "idEtapa", $lista['idEtapa']);
+                                echo "<td><strong>" . $etapa['etapa'] . ":</strong>";
+                            }
+                            ?>
+                        </tr>
+                        <tr>
+                            <?php
+                            for ($i = 1; $i <= 8; $i++) {
+                                $sql_etapa = "SELECT SUM(valorTotal) AS tot FROM orcamento
+                                        WHERE publicado > 0 AND idProjeto ='$idProjeto' AND idEtapa = '$i'
+                                        ORDER BY idOrcamento";
+                                $query_etapa = mysqli_query($con, $sql_etapa);
+                                $lista = mysqli_fetch_array($query_etapa);
 
-				<div class="well">
-					<table class="table table-bordered">
-						<tr>
-							<?php
-							for ($i = 1; $i <= 7; $i++)
-							{
-								$sql_etapa = "SELECT idEtapa FROM orcamento
-								WHERE publicado > 0 AND idProjeto ='$idProjeto' AND idEtapa = '$i'
-								ORDER BY idOrcamento";
-								$query_etapa = mysqli_query($con,$sql_etapa);
-								$lista = mysqli_fetch_array($query_etapa);
+                                echo "<td>R$ " . dinheiroParaBr($lista['tot']) . "</td>";
+                            }
+                            ?>
+                        </tr>
+                        <tr>
+                            <?php
+                            $sql_total = "SELECT SUM(valorTotal) AS tot FROM orcamento
+                                    WHERE publicado > 0 AND idProjeto ='$idProjeto'
+                                    ORDER BY idOrcamento";
+                            $query_total = mysqli_query($con, $sql_total);
+                            $total = mysqli_fetch_array($query_total);
+                            echo "<td colspan='8'><strong>TOTAL: R$ " . dinheiroParaBr($total['tot']) . "</strong></td>";
+                            ?>
+                        </tr>
+                    </table>
+                </li>
+                <li class="list-group-item">
+                    <table class="table table-bordered">
+                        <tr>
+                            <td width='25%'><strong>Etapa</strong></td>
+                            <td><strong>Descrição</strong></td>
+                            <td width='5%'><strong>Qtde</strong></td>
+                            <td width='5%'><strong>Unid. Med.</strong></td>
+                            <td width='5%'><strong>Qtde Unid.</strong></td>
+                            <td><strong>Valor Unit.</strong></td>
+                            <td><strong>Valor Total</strong></td>
+                        </tr>
+                        <?php
+                        $sql = "SELECT * FROM orcamento
+                                WHERE publicado > 0 AND idProjeto ='$idProjeto'
+                                ORDER BY idEtapa";
+                        $query = mysqli_query($con, $sql);
+                        while ($campo = mysqli_fetch_array($query)) {
+                            $etapa = recuperaDados("etapa", "idEtapa", $campo['idEtapa']);
+                            $medida = recuperaDados("unidade_medida", "idUnidadeMedida", $campo['idUnidadeMedida']);
+                            echo "<tr>";
+                            echo "<td class='list_description'>" . $etapa['etapa'] . "</td>";
+                            echo "<td class='list_description'>" . $campo['descricao'] . "</td>";
+                            echo "<td class='list_description'>" . $campo['quantidade'] . "</td>";
+                            echo "<td class='list_description'>" . $medida['unidadeMedida'] . "</td>";
+                            echo "<td class='list_description'>" . $campo['quantidadeUnidade'] . "</td>";
+                            echo "<td class='list_description'>" . dinheiroParaBr($campo['valorUnitario']) . "</td>";
+                            echo "<td class='list_description'>" . dinheiroParaBr($campo['valorTotal']) . "</td>";
+                            echo "</tr>";
+                        } ?>
+                    </table>
+                </li>
+            </ul>
+        </div>
 
-								$etapa = recuperaDados("etapa","idEtapa",$lista['idEtapa']);
-								echo "<td><strong>".$etapa['etapa'].":</strong>";
-							}
-							?>
-						</tr>
-						<tr>
-							<?php
-							for ($i = 1; $i <= 7; $i++)
-							{
-								$sql_etapa = "SELECT SUM(valorTotal) AS tot FROM orcamento
-								WHERE publicado > 0 AND idProjeto ='$idProjeto' AND idEtapa = '$i'
-								ORDER BY idOrcamento";
-								$query_etapa = mysqli_query($con,$sql_etapa);
-								$lista = mysqli_fetch_array($query_etapa);
+        <div class="well">
+            <p align="justify"><strong>Valor total do projeto:</strong> R$ <?php echo dinheiroParaBr($projeto['valorProjeto']) ?></p>
+            <p align="justify"><strong>Valor do Incentivo solicitado no Pro-Mac:</strong> R$ <?php echo dinheiroParaBr($projeto['valorIncentivo']); ?><p>
+            <p align="justify"><strong>Enquadramento da renúncia fiscal:</strong> <?php echo $renuncia['renunciaFiscal'] ?></p>
+            <p align="justify"><strong>Descrição da exposição da marca:</strong> <?= $marca['exposicao_marca']; ?></p>
+            <p align="justify"><strong>Indicação do valor do ingresso:</strong> <?= $projeto['indicacaoIngresso']; ?></p>
+        </div>
 
-								echo "<td>R$ ".dinheiroParaBr($lista['tot'])."</td>";
-							}
-							?>
-						</tr>
-						<tr>
-							<?php
-							$sql_total = "SELECT SUM(valorTotal) AS tot FROM orcamento
-							WHERE publicado > 0 AND idProjeto ='$idProjeto'
-							ORDER BY idOrcamento";
-							$query_total = mysqli_query($con,$sql_total);
-							$total = mysqli_fetch_array($query_total);
-							echo "<td colspan='7'><strong>TOTAL: R$ ".dinheiroParaBr($total['tot'])."</strong></td>";
-							?>
-						</tr>
-					</table>
-					<li class="list-group-item">
-						<table class="table table-bordered">
-							<tr>
-								<td width='25%'><strong>Etapa</strong></td>
-								<td><strong>Descrição</strong></td>
-								<td width='5%'><strong>Qtde</strong></td>
-								<td width='5%'><strong>Unid. Med.</strong></td>
-								<td width='5%'><strong>Qtde Unid.</strong></td>
-								<td><strong>Valor Unit.</strong></td>
-								<td><strong>Valor Total</strong></td>
-							</tr>
-							<?php
-							$sql = "SELECT * FROM orcamento
-							WHERE publicado > 0 AND idProjeto ='$idProjeto'
-							ORDER BY idEtapa";
-							$query = mysqli_query($con,$sql);
-							while($campo = mysqli_fetch_array($query))
-							{
-								$etapa = recuperaDados("etapa","idEtapa",$campo['idEtapa']);
-								$medida = recuperaDados("unidade_medida","idUnidadeMedida",$campo['idUnidadeMedida']);
-								echo "<tr>";
-								echo "<td class='list_description'>".$etapa['etapa']."</td>";
-								echo "<td class='list_description'>".$campo['descricao']."</td>";
-								echo "<td class='list_description'>".$campo['quantidade']."</td>";
-								echo "<td class='list_description'>".$medida['unidadeMedida']."</td>";
-								echo "<td class='list_description'>".$campo['quantidadeUnidade']."</td>";
-								echo "<td class='list_description'>".dinheiroParaBr($campo['valorUnitario'])."</td>";
-								echo "<td class='list_description'>".dinheiroParaBr($campo['valorTotal'])."</td>";
-								echo "</tr>";
-							}?>
-						</table>
-					</li>
-				</div>
+        <div class="well" align="left">
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-success"><b>Mídias sociais</b></li>
+                <li class="list-group-item"><strong>Link 1:</strong> <?= $video['midia_social_1'] ?></li>
+                <li class="list-group-item"><strong>Link 2:</strong> <?= $video['midia_social_2'] ?></li>
+                <li class="list-group-item">
+                    <?php
 
-				<div class = "page-header">
-					<h5>Mídias sociais</h5>
-				</div>
-
-				<div class="well">
-					<ul class="list-group">
-						<li class="list-group-item list-group-item-success"><b>Mídias sociais</b></li>
-						<li class="list-group-item">
-							<?php
-
-							if(!empty($video['video1'] || $video['video2'] || $video['video3']))
-							{
-								?>
-								<table class='table table-condensed'>
-									<?php
-									foreach ($v as $key => $m)
-									{
-										if (!empty($m))
-										{
-											if(isYoutubeVideo($m) == "youtube")
-											{
-												$desc = "https://www.youtube.com/oembed?format=json&url=".$m;
-												$obj =	json_decode(file_get_contents($desc), true);
-											} else{
-												echo "<div class='alert alert-danger'>
+                    if (!empty($video['video1'] || $video['video2'] || $video['video3'])) {
+                        ?>
+                        <table class='table table-condensed'>
+                            <?php
+                            foreach ($v as $key => $m) {
+                                if (!empty($m)) {
+                                    if (isYoutubeVideo($m) == "youtube") {
+                                        $desc = "https://www.youtube.com/oembed?format=json&url=" . $m;
+                                        $obj = json_decode(file_get_contents($desc), true);
+                                    } else {
+                                        echo "<div class='alert alert-danger'>
 												<strong>Erro!</strong> O link ($m) não pode ser aberto, a plataforma aceita somente YouTube.
 												</div>";
-											}
-											if(isYoutubeVideo($m) == "youtube"){ ?>
-											<tr>
-												<td>
-													<img src="<?php echo $obj['thumbnail_url']; ?>" style='width: 150px;'>
-												</td>
-												<td>
-													<?php echo $obj['title']; ?><br/>
-													<?php echo $m ?>
-												</td>
-											</tr>
-											<?php } ?>
-											<?php
-										}
-									}?>
-								</table>
-								<?php
-							}
-							else
-							{
-								echo "<p>Não há video(s) inserido(s).<p/><br/>";
-							}
-							?>
-						</li>
-					</ul>
-				</div>
-
-				<div class = "page-header">
-					<h5>Arquivos do Projeto</h5>
-				</div>
-
-				<div class="well">
-					<ul class="list-group">
-						<li class="list-group-item"><?php exibirArquivos(3,$idProjeto); ?></li>
-					</ul>
-				</div>
-
-				<!--Pessoa Juridica-->
-				<?php
-				if($projeto['tipoPessoa'] == 2)
-				{
-					$pj = recuperaDados("pessoa_juridica","idPj",$projeto['idPj']);
-					?>
-					<div class = "page-header">
-						<h5>Pessoa Jurídica</h5>
-					</div>
-
-					<div class="well">
-						<p align="justify"><strong>Razão social:</strong> <?php echo isset($pj['razaoSocial']) ? $pj['razaoSocial'] : null; ?></p>
-						<p align="justify"><strong>CNPJ:</strong> <?php echo isset($pj['cnpj']) ? $pj['cnpj'] : null; ?></p>
-						<p align="justify"><strong>CCM:</strong> <?php echo isset($pj['ccm']) ? $pj['ccm'] : null; ?></p>
-						<p align="justify"><strong>Logradouro:</strong> <?php echo isset($pj['logradouro']) ? $pj['logradouro'] : null; ?></p>
-						<p align="justify"><strong>Bairro:</strong> <?php echo isset($pj['bairro']) ? $pj['bairro'] : null; ?></p>
-						<p align="justify"><strong>Cidade:</strong> <?php echo isset($pj['cidade']) ? $pj['cidade'] : null; ?></p>
-						<p align="justify"><strong>Estado:</strong> <?php echo isset($pj['estado']) ? $pj['estado'] : null; ?></p>
-						<p align="justify"><strong>CEP:</strong> <?php echo isset($pj['cep']) ? $pj['cep'] : null; ?></p>
-						<p align="justify"><strong>Número:</strong> <?php echo isset($pj['numero']) ? $pj['numero'] : null; ?></p>
-						<p align="justify"><strong>Telefone:</strong> <?php echo isset($pj['telefone']) ? $pj['telefone'] : null; ?></p>
-						<p align="justify"><strong>Celular:</strong> <?php echo isset($pj['celular']) ? $pj['celular'] : null; ?></p>
-						<p align="justify"><strong>Email:</strong> <?php echo isset($pj['email']) ? $pj['email'] : null; ?></p>
-					</div>
-					<?php
-				}else{
-					$pf = recuperaDados("pessoa_fisica", "idPf", $projeto['idPf']);
-					?>
-					<div class="page-header">
-						<h5>Pessoa Física</h5>
-					</div> 
-
-					<div class="well">
-						<p align="justify"><strong>Nome:</strong> <?php echo isset($pf['nome']) ? $pf['nome'] : null; ?></p>
-						<p align="justify"><strong>CPF:</strong> <?php echo isset($pf['cpf']) ? $pf['cpf'] : null; ?></p>
-						<p align="justify"><strong>Logradouro:</strong> <?php echo isset($pf['logradouro']) ? $pf['logradouro'] : null; ?></p>
-						<p align="justify"><strong>Bairro:</strong> <?php echo isset($pf['bairro']) ? $pf['bairro'] : null; ?></p>
-						<p align="justify"><strong>Cidade:</strong> <?php echo isset($pf['cidade']) ? $pf['cidade'] : null; ?></p>
-						<p align="justify"><strong>Estado:</strong> <?php echo isset($pf['estado']) ? $pf['estado'] : null; ?></p>
-						<p align="justify"><strong>CEP:</strong> <?php echo isset($pf['cep']) ? $pf['cep'] : null; ?></p>
-						<p align="justify"><strong>Número:</strong> <?php echo isset($pf['numero']) ? $pf['numero'] : null; ?></p>
-						<p align="justify"><strong>Telefone:</strong> <?php echo isset($pf['telefone']) ? $pf['telefone'] : null; ?></p>
-						<p align="justify"><strong>Celular:</strong> <?php echo isset($pf['celular']) ? $pf['celular'] : null; ?></p>
-						<p align="justify"><strong>Email:</strong> <?php echo isset($pf['email']) ? $pf['email'] : null; ?></p>
-					</div>
-					<?php
-				}
-				?>
-
-			</div>
-			<!--Inicio do termo do contrato-->
-                <?php
-                $statusProjeto = recuperaStatus();
-                if ($statusProjeto == 1)
-                {
-                    if (sizeof($erros) == 0 && sizeof($arqPendentes) == 0)
-                    { ?>
-                        <div class="container">
-                            <a href="#">
-                                <div class="btn btn-danger">
-                                    <input type="hidden" name="termos" id="termo" value="false">
-                                    <a href="#" data-toggle="modal" data-target="#myModal"  style="color: #fff;">CLIQUE AQUI PARA PROSSEGUIR</a>
-                                </div>
-                            </a>
-                            <div class="modal fade" id="myModal" role="dialog">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">Termo de aceite</h4>
-                                        </div>
-
-                                        <div class="modal-body">
-                                            <p>Li e aceito as condições para participação no Pro-Mac previstas na Lei nº
-                                                15.948/2013,
-                                                Decreto nº 58.041/2017, bem como demais atos regulamentares.</p>
-                                        </div>
-
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-danger" data-dismiss="modal"
-                                                    id="btnRejeitar">Rejeitar
-                                            </button>
-                                            <button type="button" class="btn btn-success" data-dismiss="modal"
-                                                    id="btnAceitar">Aceitar
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <?php
+                                    }
+                                    if (isYoutubeVideo($m) == "youtube") { ?>
+                                        <tr>
+                                            <td>
+                                                <img src="<?php echo $obj['thumbnail_url']; ?>" style='width: 150px;'>
+                                            </td>
+                                            <td>
+                                                <?php echo $obj['title']; ?><br/>
+                                                <?php echo $m ?>
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
+                                    <?php
+                                }
+                            } ?>
+                        </table>
+                    <?php
+                    } else {
+                        echo "<p>Não há video(s) inserido(s).<p/><br/>";
                     }
-                }
-                else
-                { ?>
-                    <div class="col-md-offset-2 col-md-8">
-                        <div class="form-group">
-                            <div class="alert alert-warning">
-                                <strong>Atenção!</strong> O envio de projetos está desabilitado pela SMC!
+                    ?>
+                </li>
+            </ul>
+        </div>
+
+        <div class="page-header">
+            <h5>Anexos do Projeto</h5>
+        </div>
+
+        <div class="well">
+            <ul class="list-group">
+                <li class="list-group-item"><?php exibirArquivos(3, $idProjeto); ?></li>
+            </ul>
+        </div>
+
+        <!--Pessoa Juridica-->
+        <?php
+        if ($projeto['tipoPessoa'] == 2) {
+            $pj = recuperaDados("pessoa_juridica", "idPj", $projeto['idPj']);
+            ?>
+            <div class="page-header">
+                <h5>Pessoa Jurídica</h5>
+            </div>
+
+            <div class="well">
+                <p align="justify"><strong>Razão social:</strong> <?php echo isset($pj['razaoSocial']) ? $pj['razaoSocial'] : null; ?></p>
+                <p align="justify"><strong>CNPJ:</strong> <?php echo isset($pj['cnpj']) ? $pj['cnpj'] : null; ?></p>
+                <p align="justify"><strong>CCM:</strong> <?php echo isset($pj['ccm']) ? $pj['ccm'] : null; ?></p>
+                <p align="justify"><strong>Logradouro:</strong> <?php echo isset($pj['logradouro']) ? $pj['logradouro'] : null; ?></p>
+                <p align="justify"><strong>Bairro:</strong> <?php echo isset($pj['bairro']) ? $pj['bairro'] : null; ?></p>
+                <p align="justify"><strong>Cidade:</strong> <?php echo isset($pj['cidade']) ? $pj['cidade'] : null; ?></p>
+                <p align="justify"><strong>Estado:</strong> <?php echo isset($pj['estado']) ? $pj['estado'] : null; ?></p>
+                <p align="justify"><strong>CEP:</strong> <?php echo isset($pj['cep']) ? $pj['cep'] : null; ?></p>
+                <p align="justify"><strong>Número:</strong> <?php echo isset($pj['numero']) ? $pj['numero'] : null; ?></p>
+                <p align="justify"><strong>Telefone:</strong> <?php echo isset($pj['telefone']) ? $pj['telefone'] : null; ?></p>
+                <p align="justify"><strong>Celular:</strong> <?php echo isset($pj['celular']) ? $pj['celular'] : null; ?></p>
+                <p align="justify"><strong>Email:</strong> <?php echo isset($pj['email']) ? $pj['email'] : null; ?></p>
+            </div>
+            <?php
+        } else {
+            $pf = recuperaDados("pessoa_fisica", "idPf", $projeto['idPf']);
+            ?>
+            <div class="page-header">
+                <h5>Pessoa Física</h5>
+            </div>
+
+            <div class="well">
+                <p align="justify"><strong>Nome:</strong> <?php echo isset($pf['nome']) ? $pf['nome'] : null; ?></p>
+                <p align="justify"><strong>CPF:</strong> <?php echo isset($pf['cpf']) ? $pf['cpf'] : null; ?></p>
+                <p align="justify"><strong>Logradouro:</strong> <?php echo isset($pf['logradouro']) ? $pf['logradouro'] : null; ?></p>
+                <p align="justify"><strong>Bairro:</strong> <?php echo isset($pf['bairro']) ? $pf['bairro'] : null; ?></p>
+                <p align="justify"><strong>Cidade:</strong> <?php echo isset($pf['cidade']) ? $pf['cidade'] : null; ?></p>
+                <p align="justify"><strong>Estado:</strong> <?php echo isset($pf['estado']) ? $pf['estado'] : null; ?></p>
+                <p align="justify"><strong>CEP:</strong> <?php echo isset($pf['cep']) ? $pf['cep'] : null; ?></p>
+                <p align="justify"><strong>Número:</strong> <?php echo isset($pf['numero']) ? $pf['numero'] : null; ?></p>
+                <p align="justify"><strong>Telefone:</strong> <?php echo isset($pf['telefone']) ? $pf['telefone'] : null; ?></p>
+                <p align="justify"><strong>Celular:</strong> <?php echo isset($pf['celular']) ? $pf['celular'] : null; ?></p>
+                <p align="justify"><strong>Email:</strong> <?php echo isset($pf['email']) ? $pf['email'] : null; ?></p>
+            </div>
+            <?php
+        }
+        ?>
+
+    </div>
+    <!--Inicio do termo do contrato-->
+    <?php
+    $statusProjeto = recuperaStatus();
+    if ($statusProjeto == 1) {
+        if (sizeof($erros) == 0 && sizeof($arqPendentes) == 0) { ?>
+            <div class="container">
+                <a href="#">
+                    <div class="btn btn-danger">
+                        <input type="hidden" name="termos" id="termo" value="false">
+                        <a href="#" data-toggle="modal" data-target="#myModal" style="color: #fff;">CLIQUE AQUI PARA
+                            PROSSEGUIR</a>
+                    </div>
+                </a>
+                <div class="modal fade" id="myModal" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Termo de aceite</h4>
+                            </div>
+
+                            <div class="modal-body">
+                                <p>Li e aceito as condições para participação no Pro-Mac previstas na Lei nº
+                                    15.948/2013,
+                                    Decreto nº 58.041/2017, bem como demais atos regulamentares.</p>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal"
+                                        id="btnRejeitar">Rejeitar
+                                </button>
+                                <button type="button" class="btn btn-success" data-dismiss="modal"
+                                        id="btnAceitar">Aceitar
+                                </button>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <?php
+        }
+    } else { ?>
+        <div class="col-md-offset-2 col-md-8">
+            <div class="form-group">
+                <div class="alert alert-warning">
+                    <strong>Atenção!</strong> O envio de projetos está desabilitado pela SMC!
+                </div>
+            </div>
+        </div>
+        <?php
+    }
+    ?>
+    <!--Fim do termo do contrato-->
+    </div>
+    <!-- Botão para Prosseguir -->
+    <div class="form-group">
+        <div class="col-md-offset-5 col-md-2">
+            <form class="form-horizontal" role="form" action="?perfil=informacoes_administrativas" method="post">
                 <?php
-                }
-                ?>
-			<!--Fim do termo do contrato-->
-		</div>
-		<!-- Botão para Prosseguir -->
-		<div class="form-group">
-			<div class="col-md-offset-5 col-md-2">
-				<form class="form-horizontal" role="form" action="?perfil=informacoes_administrativas" method="post">
-					<?php
-					if($alterar == 1){ ?>
-					<input type="hidden" name="alterar" value="<?php echo $alterar; ?>">
-					<?php } ?>
-					<button id="inptEnviar" class="btn btn-theme btn-lg" type="button" data-toggle="modal" data-target="#confirmApagar" data-title="Inscrever Projeto?" data-message="Deseja realmente inscrever o projeto <?= $projeto['nomeProjeto'] ?>? Após o envio não será possível editá-lo." style="display: none;">Inscrever Projeto</button>
+                if ($alterar == 1) { ?>
+                    <input type="hidden" name="alterar" value="<?php echo $alterar; ?>">
+                <?php } ?>
+                <br>
+                <button id="inptEnviar" class="btn btn-theme btn-lg" type="button" data-toggle="modal"
+                        data-target="#confirmApagar" data-title="Inscrever Projeto?"
+                        data-message="Deseja realmente inscrever o projeto <?= $projeto['nomeProjeto'] ?>? Após o envio não será possível editá-lo."
+                        style="display: none;">Inscrever Projeto
+                </button>
 
-			<!-- <input type="hidden" value="Inscrever Projeto" id="inptEnviar"
-				class="btn btn-theme btn-lg btn-block"> -->
-			</form>
-			<!-- INICIO Modal de confirmação de envio do projeto -->
-			<div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-							<h4 class="modal-title">Inscrever Projeto?</h4>
-						</div>
-						<div class="modal-body">
-							<p>Confirma?</p>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-							<button type="button" class="btn btn-success" id="confirm">Inscrever</button>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- FIM Modal de confirmação de envio do projeto -->
-		</div>
-	</div>
+                <!-- <input type="hidden" value="Inscrever Projeto" id="inptEnviar"
+                    class="btn btn-theme btn-lg btn-block"> -->
+            </form>
+            <!-- INICIO Modal de confirmação de envio do projeto -->
+            <div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">Inscrever Projeto?</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Confirma?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-success" id="confirm">Inscrever</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- FIM Modal de confirmação de envio do projeto -->
+        </div>
+    </div>
 </section>
+
+<script>
+
+    let btnsMenos = document.querySelectorAll('.menos');// pega todos os buttons .menos
+    let btnsMais = document.querySelectorAll('.mais');// pega todos os buttons .mais
+    let captacaoRecurso = document.querySelector('#captacaoRecurso');
+    let etapas = document.querySelectorAll('.progress input');
+    let btnInserir = document.querySelector('input[name="insereCronograma"]');
+    let listaEtapas = document.querySelectorAll('.exibir'); // lista
+
+
+    const quantidadeMes = (val) => {
+
+        if((val / 6.25) == 1) // meio
+        {
+            return `Metade de um mês`
+        }
+        else if((val / 6.25) == 2) // um
+        {
+            return `${(val / 12.5)} Mês`
+        }
+        else if((val / 6.25) == 3) 	// um e meio
+        {
+            return `${parseInt(val / 12.5)} Mês e Meio`
+        }
+        else if((val / 6.25) % 2 == 0) 	// par meses
+        {
+            return `${(val / 12.5)} Meses`
+        }
+        else{				// meses e meio
+            return `${parseInt(val / 12.5)} Meses e Meio`
+        }
+    }
+
+    const preencher = (item) => {
+        let val = parseFloat(item.value)
+        if(!isNaN(val)){
+            elemento = item.parentNode.children[0]
+            elemento.style.width = ((val / .5) * 6.25) + `%`
+            elemento.innerHTML = quantidadeMes(parseFloat((val / .5) * 6.25)) // exibe qtd de meses
+        }
+    }
+
+    for(let etapa of etapas){
+
+        preencher(etapa)
+    }
+
+    for(let etapa of listaEtapas){
+        etapa.innerHTML = quantidadeMes(parseFloat((etapa.innerHTML / .5) * 6.25))
+    }
+
+</script>
