@@ -99,7 +99,7 @@ for ($i = 0; $i < count($urlPf); $i++) {
                     }
                 ?>
                 <li class="<?php echo isset($acionar20) ? $acionar20 : 'clickable'; ?>">
-                    <a onclick="location.href='index_pf.php?perfil=resultado_inscricao_pf'" href=""><br /><small>Resultado Inscrição</small></a>
+                    <a onclick="location.href='index_pf.php?perfil=resultado_inscricao_pf'" href=""><br /><small>Confirmação da Inscrição</small></a>
                 </li>
                 <?php
                     if ($pf['liberado'] != 3) {

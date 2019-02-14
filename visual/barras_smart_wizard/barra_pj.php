@@ -111,7 +111,7 @@ for ($i = 0; $i < count($urlPj); $i++) {
                     }
                 ?>
                 <li class="<?php echo isset($ativa21) ? $ativa21 : 'clickable'; ?>">
-                    <a onclick="location.href='index_pj.php?perfil=resultado_inscricao_pj'" href=""><br /><small>Resultado Inscrição</small></a>
+                    <a onclick="location.href='index_pj.php?perfil=resultado_inscricao_pj'" href=""><br /><small>Confirmação da Inscrição</small></a>
                 </li>
                 <?php
                     if ($pj['liberado'] != 3) {
