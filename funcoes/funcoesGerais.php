@@ -3309,6 +3309,7 @@ function uploadArquivo($idProjeto, $tipoPessoa, $pagina, $idListaDocumento, $idT
 				<tr class='list_menu'>
 					<td>Tipo de arquivo</td>
 					<td>Data de Envio</td>
+					<td>Status</td>
 					<td></td>
 				</tr>
 			</thead>
@@ -3318,14 +3319,22 @@ function uploadArquivo($idProjeto, $tipoPessoa, $pagina, $idListaDocumento, $idT
                 echo "<td class='list_description'><a href='../uploadsdocs/" . $arquivo['arquivo'] . "' target='_blank'>" . mb_strimwidth($arquivo['documento'], 0, 60, "...") . "</a></td>";
                 $data = date_create($arquivo["dataEnvio"]);
                 echo "<td class='list_description'>" . date_format($data, 'd/m/Y') . "</td>";
+
                 if ($arquivo['idStatusDocumento'] == 3) {
-                    echo "
+                    echo "<td class='list_description'>
+								<select name='status' id='statusOpt' disabled>";
+                    echo "<option>Selecione</option>";
+                    geraOpcao('status_documento', $arquivo['idStatusDocumento']);
+                    echo " </select>
+							</td>";
+
+                    echo "                        
 						<td class='list_description'>
 							<form id='apagarArq' method='POST' action='?perfil=" . $pagina . "'>
 								<input type='hidden' name='idPessoa' value='" . $idProjeto . "' />
 								<input type='hidden' name='tipoPessoa' value='" . $tipoPessoa . "' />
-								<input type='hidden' name='apagar' value='" . $arquivo['idUploadArquivo'] . "' />
-								<input type='submit' class='btn btn-theme btn-md btn-block'  value='apagar' />
+								<input type='hidden' name='apagar' value='" . $arquivo['idUploadArquivo'] . "'/>	
+								<input style='margin-top: 10px' type='submit' class='btn btn-theme btn-md btn-block'  value='apagar' />
 							</form>
 						</td>";
                 }

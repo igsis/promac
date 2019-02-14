@@ -191,6 +191,7 @@
                     </button>
                     <h4 class="modal-title"><p>Confirma?</p></h4>
                 </div>
+
                 <div class="modal-body">
                     <p>Confirma?</p>
                 </div>
