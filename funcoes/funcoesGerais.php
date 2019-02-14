@@ -2058,9 +2058,14 @@ function retornaCamposObrigatoriosLocais($idProjeto)
 
 	$conexao = bancoMysqli();
 	$query =  "SELECT 	             	             
-	             loc_rea.local AS local, 
-	             loc_rea.estimativaPublico AS estimativaLocal, 
-	             loc_rea.idZona AS zonaLocal  				 
+	             loc_rea.local AS local,
+	             loc_rea.estimativaPublico AS estimativaLocal,
+                 loc_rea.logradouro AS logradouro,
+                 loc_rea.numero AS número_local,
+                 loc_rea.bairro AS bairro_local,
+                 loc_rea.cidade AS cidade_local,
+                 loc_rea.estado AS estado_local,
+                 loc_rea.cep AS cep_local			 
 			   FROM  
 			     projeto as proj			     			   
   			   INNER JOIN 
@@ -2194,7 +2199,12 @@ function retornaCamposObrigatoriosPf($idProjeto)
 	             proj.contrapartida AS MetodologiaContrapartidaDescricao,
 	             loc_rea.local AS local, 
 	             loc_rea.estimativaPublico AS estimativaLocal, 
-	             loc_rea.idZona AS zonaLocal,  				 
+	             loc_rea.logradouro AS logradouro,
+                 loc_rea.numero AS número_local,
+                 loc_rea.bairro AS bairro_local,
+                 loc_rea.cidade AS cidade_local,
+                 loc_rea.estado AS estado_local,
+                 loc_rea.cep AS cep_local,  				 
 	             proj.publicoAlvo AS publicoAlvo,
 	             proj.planoDivulgacao as publicoAlvoDivulgacao,
 	             ficha_t.nome AS nomeFichaTecnica, 
@@ -2320,7 +2330,12 @@ function retornaCamposObrigatoriosPj($idProjeto)
 	             proj.fimCronograma AS fimConogramaProjeto,  
 	             loc_rea.local AS local, 
 	             loc_rea.estimativaPublico AS estimativaLocal, 
-	             loc_rea.idZona AS zonaLocal,  				 
+	             loc_rea.logradouro AS logradouro,
+                 loc_rea.numero AS número_local,
+                 loc_rea.bairro AS bairro_local,
+                 loc_rea.cidade AS cidade_local,
+                 loc_rea.estado AS estado_local,
+                 loc_rea.cep AS cep_local,  				 
   				 ficha_t.nome AS nomeFichaTecnica, 
   				 ficha_t.cpf AS cpfFichaTecnica, 
   				 ficha_t.funcao AS funcaoFichaTecnica,  				 
