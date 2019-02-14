@@ -120,7 +120,7 @@ if(isset($_POST['insereOrcamento']) || isset($_POST['editaOrcamento'])) {
                         <table class="table table-bordered">
                             <tr>
                                 <?php
-                                for ($i = 1; $i <= 7; $i++) {
+                                for ($i = 1; $i <= 8; $i++) {
                                     $sql_etapa = "SELECT idEtapa FROM orcamento
 										WHERE publicado > 0 AND idProjeto ='$idProjeto' AND idEtapa = '$i'
 										ORDER BY idOrcamento";
@@ -134,7 +134,7 @@ if(isset($_POST['insereOrcamento']) || isset($_POST['editaOrcamento'])) {
                             </tr>
                             <tr>
                                 <?php
-                                for ($i = 1; $i <= 7; $i++) {
+                                for ($i = 1; $i <= 8; $i++) {
                                     $sql_etapa = "SELECT SUM(valorTotal) AS tot FROM orcamento
 										WHERE publicado > 0 AND idProjeto ='$idProjeto' AND idEtapa = '$i'
 										ORDER BY idOrcamento";
@@ -152,7 +152,7 @@ if(isset($_POST['insereOrcamento']) || isset($_POST['editaOrcamento'])) {
 											ORDER BY idOrcamento";
                                 $query_total = mysqli_query($con, $sql_total);
                                 $total = mysqli_fetch_array($query_total);
-                                echo "<td colspan='7'><strong>TOTAL: R$ " . dinheiroParaBr($total['tot']) . "</strong></td>";
+                                echo "<td colspan='8'><strong>TOTAL: R$ " . dinheiroParaBr($total['tot']) . "</strong></td>";
                                 ?>
                             </tr>
                         </table>
