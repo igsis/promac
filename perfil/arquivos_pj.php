@@ -45,7 +45,7 @@ if(isset($_POST["enviar"]))
 						$query = mysqli_query($con,$sql_insere_arquivo);
 						if($query)
 						{
-							$mensagem = "<font color='#01DF3A'><strong>Arquivo(s) recebido(s) com sucesso!</strong></font>";
+							$mensagem = "<font color='#01DF3A'><strong>Arquivo(s) recebido(s) com sucesso! <br> Avance para a próxima tela para confirmar sua inscrição.</strong></font>";
 							gravarLog($sql_insere_arquivo);
 						}
 						else
