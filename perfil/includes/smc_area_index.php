@@ -74,19 +74,28 @@ if (isset($_POST['arquivar'])){
 }
 
     if ($pf['idNivelAcesso'] == 2)
-    { ?>
+    {
+        $sql = "SELECT * FROM pessoa_fisica WHERE liberado = 1";
+        $query = mysqli_query($con,$sql);
+        $num = mysqli_num_rows($query);
+        ?>
         <!-- Lista 1 -->
         <div class="form-group">
             <h5><strong><?php if(isset($mensagem)){echo $mensagem;} ?></strong></h5>
-            <h5>Inscrições de proponente pessoa física a liberar</h5>
+            <h5>Inscrições de pessoa física a liberar<br>
+                <small>Máximo de 10 Registros exibidos</small></h5>
+
+            <form method='POST' action='?perfil=smc_pesquisa_pf_resultado' class='form-horizontal' role='form'>
+                <button type="submit" class="label label-warning" name="liberado" value="1">
+                    <span>Total: <?=$num?></span>
+                </button>
+            </form>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="table-responsive list_info">
                     <?php
-                    $sql = "SELECT * FROM pessoa_fisica WHERE liberado = 1 LIMIT 0,10";
-                    $query = mysqli_query($con,$sql);
-                    $num = mysqli_num_rows($query);
+
                     if($num > 0)
                     {
                         echo "
@@ -102,21 +111,26 @@ if (isset($_POST['arquivar'])){
                                     </tr>
                                 </thead>
                                 <tbody>";
+                        $i = 0;
                         while($campo = mysqli_fetch_array($query))
                         {
-                            echo "<tr>";
-                            echo "<td class='list_description'>".$campo['nome']."</td>";
-                            echo "<td class='list_description'>".$campo['cpf']."</td>";
-                            echo "<td class='list_description'>".$campo['rg']."</td>";
-                            echo "<td class='list_description'>".$campo['email']."</td>";
-                            echo "<td class='list_description'>".$campo['telefone']."</td>";
-                            echo "
-                                        <td class='list_description'>
-                                            <form method='POST' action='?perfil=smc_visualiza_perfil_pf'>
-                                                <input type='hidden' name='liberado' value='".$campo['idPf']."' />
-                                                <input type ='submit' class='btn btn-theme btn-block' value='Visualizar'>
-                                            </form>
-                                        </td>";
+                            if ($i < 10)
+                            {
+                                echo "<tr>";
+                                echo "<td class='list_description'>".$campo['nome']."</td>";
+                                echo "<td class='list_description'>".$campo['cpf']."</td>";
+                                echo "<td class='list_description'>".$campo['rg']."</td>";
+                                echo "<td class='list_description'>".$campo['email']."</td>";
+                                echo "<td class='list_description'>".$campo['telefone']."</td>";
+                                echo "
+                                            <td class='list_description'>
+                                                <form method='POST' action='?perfil=smc_visualiza_perfil_pf'>
+                                                    <input type='hidden' name='liberado' value='".$campo['idPf']."' />
+                                                    <input type ='submit' class='btn btn-theme btn-block' value='Visualizar'>
+                                                </form>
+                                            </td>";
+                            }
+                            $i++;
                         }
                         echo "</tr>";
                         echo "</tbody>
@@ -131,17 +145,27 @@ if (isset($_POST['arquivar'])){
             </div>
         </div>
 
+        <?php
+        $sql = "SELECT * FROM pessoa_juridica WHERE liberado = 1";
+        $query = mysqli_query($con,$sql);
+        $num = mysqli_num_rows($query);
+        ?>
         <!-- Lista 2 -->
         <div class="form-group">
-            <h5>Inscrições de proponente pessoa jurídica a liberar</h5>
+            <h5>Inscrições de pessoa jurídica a liberar<br>
+                <small>Máximo de 10 Registros exibidos</small>
+            </h5>
+
+            <form method='POST' action='?perfil=smc_pesquisa_pj_resultado' class='form-horizontal' role='form'>
+                <button type="submit" class="label label-warning" name="liberado" value="1">
+                    <span>Total: <?=$num?></span>
+                </button>
+            </form>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="table-responsive list_info">
                     <?php
-                    $sql = "SELECT * FROM pessoa_juridica WHERE liberado = 1 LIMIT 0,10";
-                    $query = mysqli_query($con,$sql);
-                    $num = mysqli_num_rows($query);
                     if($num > 0)
                     {
                         echo "
@@ -156,20 +180,25 @@ if (isset($_POST['arquivar'])){
                                     </tr>
                                 </thead>
                                 <tbody>";
+                        $i = 0;
                         while($campo = mysqli_fetch_array($query))
                         {
-                            echo "<tr>";
-                            echo "<td class='list_description'>".$campo['razaoSocial']."</td>";
-                            echo "<td class='list_description'>".$campo['cnpj']."</td>";
-                            echo "<td class='list_description'>".$campo['email']."</td>";
-                            echo "<td class='list_description'>".$campo['telefone']."</td>";
-                            echo "
-                                        <td class='list_description'>
-                                            <form method='POST' action='?perfil=smc_visualiza_perfil_pj'>
-                                                <input type='hidden' name='liberado' value='".$campo['idPj']."' />
-                                                <input type ='submit' class='btn btn-theme btn-block' value='Visualizar'>
-                                            </form>
-                                        </td>";
+                            if ($i < 10)
+                            {
+                                echo "<tr>";
+                                echo "<td class='list_description'>".$campo['razaoSocial']."</td>";
+                                echo "<td class='list_description'>".$campo['cnpj']."</td>";
+                                echo "<td class='list_description'>".$campo['email']."</td>";
+                                echo "<td class='list_description'>".$campo['telefone']."</td>";
+                                echo "
+                                            <td class='list_description'>
+                                                <form method='POST' action='?perfil=smc_visualiza_perfil_pj'>
+                                                    <input type='hidden' name='liberado' value='".$campo['idPj']."' />
+                                                    <input type ='submit' class='btn btn-theme btn-block' value='Visualizar'>
+                                                </form>
+                                            </td>";
+                            }
+                            $i++;
                         }
                         echo "</tr>";
                         echo "</tbody>
@@ -184,17 +213,27 @@ if (isset($_POST['arquivar'])){
             </div>
         </div>
 
+        <?php
+        $sql = "SELECT * FROM incentivador_pessoa_fisica WHERE liberado = 1";
+        $query = mysqli_query($con,$sql);
+        $num = mysqli_num_rows($query);
+        ?>
         <!-- Lista 3 -->
         <div class="form-group">
-            <h5>Inscrições de incentivador pessoa física a liberar</h5>
+            <h5>Inscrições de incentivador pessoa física a liberar<br>
+                <small>Máximo de 10 Registros exibidos</small>
+            </h5>
+
+            <form method='POST' action='?perfil=smc_pesquisa_incentivador_pf_resultado' class='form-horizontal' role='form'>
+                <button type="submit" class="label label-warning" name="liberado" value="1">
+                    <span>Total: <?=$num?></span>
+                </button>
+            </form>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="table-responsive list_info">
                     <?php
-                    $sql = "SELECT * FROM incentivador_pessoa_fisica WHERE liberado = 1 LIMIT 0,10";
-                    $query = mysqli_query($con,$sql);
-                    $num = mysqli_num_rows($query);
                     if($num > 0)
                     {
                         echo "
@@ -209,20 +248,24 @@ if (isset($_POST['arquivar'])){
                                     </tr>
                                 </thead>
                                 <tbody>";
+                        $i = 0;
                         while($campo = mysqli_fetch_array($query))
                         {
-                            echo "<tr>";
-                            echo "<td class='list_description'>".$campo['nome']."</td>";
-                            echo "<td class='list_description'>".$campo['cpf']."</td>";
-                            echo "<td class='list_description'>".$campo['email']."</td>";
-                            echo "<td class='list_description'>".$campo['telefone']."</td>";
-                            echo "
-                                        <td class='list_description'>
-                                            <form method='POST' action='?perfil=smc_visualiza_incentivadores_pf'>
-                                                <input type='hidden' name='liberado' value='".$campo['idPf']."' />
-                                                <input type ='submit' class='btn btn-theme btn-block' value='Visualizar'>
-                                            </form>
-                                        </td>";
+                            if ($i < 10) {
+                                echo "<tr>";
+                                echo "<td class='list_description'>" . $campo['nome'] . "</td>";
+                                echo "<td class='list_description'>" . $campo['cpf'] . "</td>";
+                                echo "<td class='list_description'>" . $campo['email'] . "</td>";
+                                echo "<td class='list_description'>" . $campo['telefone'] . "</td>";
+                                echo "
+                                            <td class='list_description'>
+                                                <form method='POST' action='?perfil=smc_visualiza_incentivadores_pf'>
+                                                    <input type='hidden' name='liberado' value='" . $campo['idPf'] . "' />
+                                                    <input type ='submit' class='btn btn-theme btn-block' value='Visualizar'>
+                                                </form>
+                                            </td>";
+                            }
+                            $i++;
                         }
                         echo "</tr>";
                         echo "</tbody>
@@ -237,17 +280,27 @@ if (isset($_POST['arquivar'])){
             </div>
         </div>
 
+        <?php
+        $sql = "SELECT * FROM incentivador_pessoa_juridica WHERE liberado = 1";
+        $query = mysqli_query($con,$sql);
+        $num = mysqli_num_rows($query);
+        ?>
         <!-- Lista 4 -->
         <div class="form-group">
-            <h5>Inscrições de incentivador pessoa jurídica a liberar</h5>
+            <h5>Inscrições de incentivador pessoa jurídica a liberar<br>
+                <small>Máximo de 10 Registros exibidos</small>
+            </h5>
+
+            <form method='POST' action='?perfil=smc_pesquisa_incentivador_pj_resultado' class='form-horizontal' role='form'>
+                <button type="submit" class="label label-warning" name="liberado" value="1">
+                    <span>Total: <?=$num?></span>
+                </button>
+            </form>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="table-responsive list_info">
                     <?php
-                    $sql = "SELECT * FROM incentivador_pessoa_juridica WHERE liberado = 1 LIMIT 0,10";
-                    $query = mysqli_query($con,$sql);
-                    $num = mysqli_num_rows($query);
                     if($num > 0)
                     {
                         echo "
@@ -262,20 +315,24 @@ if (isset($_POST['arquivar'])){
                                     </tr>
                                 </thead>
                                 <tbody>";
+                        $i = 0;
                         while($campo = mysqli_fetch_array($query))
                         {
-                            echo "<tr>";
-                            echo "<td class='list_description'>".$campo['razaoSocial']."</td>";
-                            echo "<td class='list_description'>".$campo['cnpj']."</td>";
-                            echo "<td class='list_description'>".$campo['email']."</td>";
-                            echo "<td class='list_description'>".$campo['telefone']."</td>";
-                            echo "
-                                        <td class='list_description'>
-                                            <form method='POST' action='?perfil=smc_visualiza_incentivadores_pj'>
-                                                <input type='hidden' name='liberado' value='".$campo['idPj']."' />
-                                                <input type ='submit' class='btn btn-theme btn-block' value='Visualizar'>
-                                            </form>
-                                        </td>";
+                            if ($i < 10) {
+                                echo "<tr>";
+                                echo "<td class='list_description'>" . $campo['razaoSocial'] . "</td>";
+                                echo "<td class='list_description'>" . $campo['cnpj'] . "</td>";
+                                echo "<td class='list_description'>" . $campo['email'] . "</td>";
+                                echo "<td class='list_description'>" . $campo['telefone'] . "</td>";
+                                echo "
+                                            <td class='list_description'>
+                                                <form method='POST' action='?perfil=smc_visualiza_incentivadores_pj'>
+                                                    <input type='hidden' name='liberado' value='" . $campo['idPj'] . "' />
+                                                    <input type ='submit' class='btn btn-theme btn-block' value='Visualizar'>
+                                                </form>
+                                            </td>";
+                            }
+                            $i++;
                         }
                         echo "</tr>";
                         echo "</tbody>
@@ -292,7 +349,6 @@ if (isset($_POST['arquivar'])){
 <?php
     }
 
-    
 $array_status = array(2, 3, 10, 12, 13, 20, 23, 25, 14, 15, 11,35); //status
 
 foreach ($array_status as $idStatus)
@@ -315,7 +371,6 @@ foreach ($array_status as $idStatus)
 
     foreach ($queryStatus as $status)
     {
-
         $i = 0;
         ?>
         <div class='form-group'>
@@ -370,14 +425,10 @@ foreach ($array_status as $idStatus)
                             <td width='10%'></td>
                         </tr>
                         </thead>
-
                         <?php
                         while ($campo = mysqli_fetch_array($queryProjeto))
                         {
                             if ($i < 5) {
-
-
-
                                 ?>
                                 <tr style="background: <?= ($campo['idStatus'] == 6 && $campo['publicado'] == 1? $cinza: "white") ?>">
                                     <td class='list_description maskProtocolo' data-mask = "0000.00.00/0000000"><?= $campo['protocolo'] ?></td>
