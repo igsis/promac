@@ -214,6 +214,10 @@
     </div>
 </div>
 
+<script src="sweetalert2/dist/sweetalert2.min.js"></script>
+<link rel="stylesheet" href="sweetalert2/dist/sweetalert2.min.css">
+
+
 <script>
 
     function deixarObrigatorio() {
@@ -227,10 +231,11 @@
 
         if (optionSelect != "1") {
             document.querySelector("#valorAprovado").required = false;
+            grava.disabled = false;
         } else if (optionSelect == "1") {
             document.querySelector("#valorAprovado").required = true;
             if ((valorAprovado == '') || (valorAprovado == "0,00")){
-                alert ("Informe o valor aprovado antes de gravar!");
+                swal("Atenção!", "Informe o valor aprovado para gravar!");
                 grava.disabled = true;
             }else{
                 grava.disabled = false;
