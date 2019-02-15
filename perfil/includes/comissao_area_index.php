@@ -16,7 +16,7 @@
                     LEFT JOIN pessoa_fisica AS pfc ON pro.idComissao = pfc.idPf 
                     INNER JOIN etapa_projeto AS etapa ON pro.idEtapaProjeto = etapa.idEtapaProjeto
                     WHERE pro.idStatus != 6 AND pro.idEtapaProjeto IN (7, 19, 24, 34) $parecerista AND pro.verificadoComissao = '0'
-                    ORDER BY pro.envioComissao DESC";
+                    ORDER BY pro.envioComissao ASC";
     $queryProjeto = mysqli_query($con,$sqlProjeto);
     $num = mysqli_num_rows($queryProjeto);
 ?>
@@ -53,7 +53,7 @@
                         $i = 0;
                         while ($campo = mysqli_fetch_array($queryProjeto))
                         {
-                            if ($i <= 10)
+                            if ($i < 10)
                             {
                                 $idComissao = $campo ['idComissao'];
                                 $idProjeto = $campo['idProjeto'];
@@ -61,7 +61,7 @@
                                 $dataEnvio = new DateTime ($campo['envioComissao']);
                                 ?>
                                 <tr>
-                                    <td class='list_description'><?= date_format($dataEtapa, "d/m/Y H:i:s") ?></td>
+                                    <td class='list_description'><?= date_format($dataEnvio, "d/m/Y") ?></td>
                                     <td class='list_description maskProtocolo' data-mask = "0000.00.00/0000000"><?= $campo['protocolo'] ?></td>
                                     <td class='list_description'><?= $campo['nomeProjeto'] ?></td>
                                     <td class='list_description'><?= isset($campo['nome']) ? $campo['nome'] : $campo['razaoSocial'] ?></td>
