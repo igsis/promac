@@ -233,7 +233,7 @@ $link = $consulta->fetch()['linkAgendamento'];
                                         <div class="col-md-offset-4 col-md-6">
                                             <form class="form-horizontal" role="form" action="?perfil=complemento_informacoes&idProjeto=<?= $idProjeto ?>"
                                                   method="post">
-                                                <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;">anexar complementos</button>
+                                                <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;">anexar complemento</button>
                                             </form>
                                         </div>
                                     </div>
