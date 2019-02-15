@@ -472,25 +472,25 @@ foreach ($array_status as $idStatus)
                                         <?php
                                         }elseif ($campo['idStatus'] == 6){
                                             if ($status['idEtapaProjeto'] == '2' || $status['idEtapaProjeto'] == '13' || $status['idEtapaProjeto'] == '14' || $status['idEtapaProjeto'] == '23'){
-                                                echo "<td style='color: #942a25;text-align: center;font-weight: bold'>Cancelado</td>";
-                                                echo "<td style='color: #942a25;text-align: center;font-weight: bold'>
+                                                echo "<td style='color: #942a25;text-align: center;font-weight: bold;'>
                                                 <form method='POST' action='?perfil=cancelado_visualizacao'>
                                                     <input type='hidden' name='idProjeto'
                                                            value='" . $campo['idProjeto'] . "'>
-                                                    <input style='background-color:#FF2E25;color:#fff' type='submit' class='btn btn-theme btn-block'
-                                                           value='Visualizar'>
+                                                    <input style='margin-top: 14px' type='submit' class='btn btn-warning btn-block'
+                                                           value='Resumo'><small>Cancelado</small>
                                                 </form>
                                                     </td>";
+                                                echo "<td style='color: #942a25;text-align: center;font-weight: bold'>
+                                                        <button class='btn btn-danger btn-block' data-id='" . $campo['idProjeto'] . "' name='arquivar' data-toggle='modal' data-target='#arquivar'>Arquivar</button><small>Cancelado</small>";
                                             }
                                             else{
-                                                echo "<td style='color: #942a25;text-align: center;font-weight: bold'>Cancelado
-                                                <form method='POST' action='?perfil=cancelado_visualizacao'>
-                                                    <input type='hidden' name='idProjeto'
-                                                           value='" . $campo['idProjeto'] . "'>
-                                                    <input style='background-color:#FF2E25;color:#fff' type='submit' class='btn btn-theme btn-block'
-                                                           value='Visualizar'>
-                                                </form>
-                                                    </td>";
+                                                echo "<td style='color: #942a25;text-align: center;font-weight: bold'><small>Cancelado</small>
+                                                        <form method='POST' action='?perfil=cancelado_visualizacao'>
+                                                            <input type='hidden' name='idProjeto' value='" . $campo['idProjeto'] . "'>
+                                                            <input type='submit' class='btn btn-warning btn-block'  value='Resumo'>
+                                                        </form>
+                                                        <button class='btn btn-danger btn-block'  data-id='" . $campo['idProjeto'] . "' name='arquivar' data-toggle='modal' data-target='#arquivar'>Arquivar</button>
+                                                     </td>";
                                             }
                                         }
                                         ?>

@@ -12,7 +12,6 @@ if ($projeto['tipoPessoa'] == 1) {
     $idPess = $projeto['idPf'];
     $pf = recuperaDados("pessoa_fisica", "idPf", $idPess);
 
-
 } else if ($projeto['tipoPessoa'] == 2) {
     $idPess = $projeto['idPj'];
     $pj = recuperaDados("pessoa_juridica", "idPj", $idPess);
@@ -25,7 +24,6 @@ $cronograma = recuperaDados("cronograma", "idCronograma", $projeto['idCronograma
 $video = recuperaDados("projeto", "idProjeto", $idProjeto);
 $v = array($video['video1'], $video['video2'], $video['video3']);
 
-
 ?>
 
 
@@ -34,11 +32,10 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
         <?= include 'includes/menu_smc.php'; ?>
         <div class="row">
             <div class="col-md-12">
-                <div role="tabpanel">
-                    <!-- LABELS -->
                     <div class="tab-content">
                         <section class="content-header">
-                            <h3>Resumo do projeto</h3>
+                            <h3>Resumo do projeto  </h3>
+                            <small class="text-warning">PROJETO CANCELADO</small>
                         </section>
                         <div role="tabpanel" class="tab-pane fade in active" id="info">
                             <div class="form-group">
@@ -212,7 +209,7 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                                 </tr>
                                                 <?php
                                                 $sql = "SELECT * FROM ficha_tecnica
-WHERE publicado = 1 AND idProjeto = '$idProjeto'";
+                                                        WHERE publicado = 1 AND idProjeto = '$idProjeto'";
                                                 $query = mysqli_query($con, $sql);
                                                 while ($campo = mysqli_fetch_array($query)) {
                                                     echo "<tr>";
