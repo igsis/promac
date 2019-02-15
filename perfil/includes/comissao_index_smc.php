@@ -19,7 +19,7 @@ foreach ($array_etapa as $idEtapaProjeto)
                     INNER JOIN area_atuacao AS ar ON pro.idAreaAtuacao = ar.idArea
                     LEFT JOIN pessoa_fisica AS pfc ON pro.idComissao = pfc.idPf 
                     INNER JOIN etapa_projeto AS etapa ON pro.idEtapaProjeto = etapa.idEtapaProjeto
-                    WHERE pro.idEtapaProjeto = '$idEtapaProjeto'" .$parecerista." ORDER BY protocolo";
+                    WHERE pro.idStatus != '6'AND pro.verificadoComissao = '1' AND pro.idEtapaProjeto = '$idEtapaProjeto'" .$parecerista." ORDER BY protocolo";
     $queryProjeto = mysqli_query($con,$sqlProjeto);
     $queryEtapaProjeto = mysqli_query($con,$sqlEtapaProjeto);
     $num = mysqli_num_rows($queryProjeto);
