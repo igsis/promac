@@ -422,7 +422,7 @@ foreach ($array_status as $idStatus)
                             }
                             ?>    
                             <?=($status['idEtapaProjeto'] == '2' || $status['idEtapaProjeto'] == '13' || $status['idEtapaProjeto'] == '14' || $status['idEtapaProjeto'] == '23') ? "<td></td>" : NULL ?>
-                            <td width='10%'></td>
+                            <td  colspan='2' width='10%'></td>
                         </tr>
                         </thead>
                         <?php
@@ -523,11 +523,25 @@ foreach ($array_status as $idStatus)
                                         <?php
                                         }elseif ($campo['idStatus'] == 6){
                                             if ($status['idEtapaProjeto'] == '2' || $status['idEtapaProjeto'] == '13' || $status['idEtapaProjeto'] == '14' || $status['idEtapaProjeto'] == '23'){
-                                                echo "<td style='color: #942a25;text-align: center;font-weight: bold'>Cancelado</td>";
-                                                echo "<td style='text-align: center;'><button style='background-color:#FF2E25;color:#fff' data-id='".$campo['idProjeto']."' name='arquivar' data-toggle='modal' data-target='#arquivar'>Arquivar</button></td>";
+                                                echo "<td style='color: #942a25;text-align: center;font-weight: bold;'>
+                                                <form method='POST' action='?perfil=cancelado_visualizacao'>
+                                                    <input type='hidden' name='idProjeto'
+                                                           value='" . $campo['idProjeto'] . "'>
+                                                    <input style='margin-top: 14px' type='submit' class='btn btn-warning btn-block'
+                                                           value='Resumo'><small>Cancelado</small>
+                                                </form>
+                                                    </td>";
+                                                echo "<td style='color: #942a25;text-align: center;font-weight: bold'>
+                                                        <button class='btn btn-danger btn-block' data-id='" . $campo['idProjeto'] . "' name='arquivar' data-toggle='modal' data-target='#arquivar'>Arquivar</button><small>Cancelado</small>";
                                             }
                                             else{
-                                                echo "<td colspan='2' style='color: #942a25;text-align: center;font-weight: bold'>Cancelado <button style='background-color:#FF2E25;color:#fff' data-id='".$campo['idProjeto']."' name='arquivar' data-toggle='modal' data-target='#arquivar'>Arquivar</button></td>";
+                                                echo "<td style='color: #942a25;text-align: center;font-weight: bold'><small>Cancelado</small>
+                                                        <form method='POST' action='?perfil=cancelado_visualizacao'>
+                                                            <input type='hidden' name='idProjeto' value='" . $campo['idProjeto'] . "'>
+                                                            <input type='submit' class='btn btn-warning btn-block'  value='Resumo'>
+                                                        </form>
+                                                        <button class='btn btn-danger btn-block'  data-id='" . $campo['idProjeto'] . "' name='arquivar' data-toggle='modal' data-target='#arquivar'>Arquivar</button>
+                                                     </td>";
                                             }
                                         }
                                         ?>
@@ -761,7 +775,7 @@ foreach ($array_status as $idStatus)
                         }else{
                             echo "<td colspan='2' style='color: #942a25;text-align: center;font-weight: bold'>Cancelado </td>";
                         }
-                        }
+                    }
                         ?>
                     </tr>
                     </tbody>
