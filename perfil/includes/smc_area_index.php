@@ -848,4 +848,7 @@ foreach ($array_status as $idStatus)
         $(this).find('#formArquivar input[name="idProjeto"]').attr('value', idProjeto);
 
     });
+
+
+
 </script>

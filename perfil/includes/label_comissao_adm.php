@@ -90,8 +90,8 @@
         </h5>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-4"><label>Valor Aprovado *</label><br/>
-                <input type="text" name="valorAprovado" id='valor' required class="form-control"
-                       value="<?php echo dinheiroParaBr($projeto['valorAprovado']) ?>">
+                <input type="text" name="valorAprovado" id='valorAprovado' required class="form-control"
+                       value="<?php echo dinheiroParaBr($projeto['valorAprovado']) ?>" onkeypress="deixarObrigatorio()">
             </div>
             <div class="col-md-4"><label>Valor da Renúncia *</label><br/>
                 <select class="form-control" name="idRenunciaFiscal" required>
@@ -102,7 +102,7 @@
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-4"><label>Análise do Parecerista *</label><br/>
-                <select class="form-control" name="idStatusParecerista" required>
+                <select class="form-control" name="idStatusParecerista" id="statusParecerista" onchange="deixarObrigatorio()" required >
                     <option value="">Selecione...</option>
                     <?php echo geraOpcao("status_parecerista", $projeto['idStatusParecerista']) ?>
                 </select>
@@ -116,7 +116,7 @@
             <div class="col-md-offset-2 col-md-8">
                 <input type="hidden" name="idEtapaProjeto" value="<?= $projeto['idEtapaProjeto'] ?>">
                 <input type="hidden" name="idProjeto" value="<?php echo $idProjeto ?>">
-                <input type="submit" name="gravarAdm" class="btn btn-theme btn-md btn-block" value="Gravar">
+                <input type="submit" name="gravarAdm" id="gravarAdm" class="btn btn-theme btn-md btn-block" value="Gravar">
             </div>
         </div>
     </form>
@@ -213,4 +213,43 @@
         </div>
     </div>
 </div>
+
+<script>
+
+    function deixarObrigatorio() {
+        let optionSelect = document.querySelector("#statusParecerista").value;
+        console.log(optionSelect);
+
+        let valorAprovado = document.querySelector("#valorAprovado").value;
+        console.log(valorAprovado);
+
+        let grava = document.querySelector('#gravarAdm');
+
+        if (optionSelect != "1") {
+            document.querySelector("#valorAprovado").required = false;
+            grava.disabled = false;
+        } else if (optionSelect == "1") {
+            document.querySelector("#valorAprovado").required = true;
+            if ((valorAprovado == '') || (valorAprovado == "0,00")){
+                alert ("Informe o valor aprovado antes de gravar!");
+                grava.disabled = true;
+            }else{
+                grava.disabled = false;
+            }
+        }
+    }
+
+    window.onload = deixarObrigatorio();
+
+    /*let select = document.querySelector("").value
+    select.value
+    select.innerHTML  // para texto
+    ".class"
+    "#id"
+     "nomeTag" */
+
+
+
+</script>
+
 
