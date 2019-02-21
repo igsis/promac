@@ -4,7 +4,7 @@ $idProjeto = $_SESSION['idProjeto'];
 
 if(isset($_POST['insere']))
 {
-	$valorProjeto = $_POST['valorProjeto'];
+	$valorProjeto = dinheiroDeBr($_POST['valorProjeto']);
 	$idRenunciaFiscal = $_POST['idRenunciaFiscal'];
 	$idExposicaoMarca = $_POST['idExposicaoMarca'];
 	$indicacaoIngresso = $_POST['indicacaoIngresso'];
