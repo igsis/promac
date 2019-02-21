@@ -33,7 +33,6 @@ else
 		<link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
 		<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 		<link rel="stylesheet" href="css/font-awesome.min.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <!-- JQUEY Mask -->
         <script src="dist/js/jquery-1.12.4.min.js"></script>
