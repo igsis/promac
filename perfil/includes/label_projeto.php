@@ -94,8 +94,8 @@
             </td>
         </tr>
         <tr>
-            <td colspan="3"><strong>Exposição da Marca:</strong>
-                <?php echo isset($projeto['exposicaoMarca']) ? $projeto['exposicaoMarca'] : null; ?>
+            <td colspan="3"><strong>Descrição da exposição da marca:</strong>
+                <?php echo isset($marca['exposicao_marca']) ? $marca['exposicao_marca'] : null; ?>
             </td>
         </tr>
         <tr>

@@ -18,6 +18,7 @@ $renuncia = recuperaDados("renuncia_fiscal", "idRenuncia", $projeto['idRenunciaF
 $cronograma = recuperaDados("cronograma", "idCronograma", $projeto['idCronograma']);
 $video = recuperaDados("projeto", "idProjeto", $idProjeto);
 $v = array($video['video1'], $video['video2'], $video['video3']);
+$marca = recuperaDados("exposicao_marca", "id", $projeto['idExposicaoMarca']);
 
 $dateNow = new DateTime('now');
 $dataPublicacaoDoc = $projeto['dataPublicacaoDoc'];
