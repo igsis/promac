@@ -1,14 +1,46 @@
-<html xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
-      xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+<?php
+require_once("../funcoes/funcoesConecta.php");
+require_once("../funcoes/funcoesGerais.php");
+
+//CONEXÃO COM BANCO DE DADOS
+
+$con = bancoMysqli();
+
+$idProjeto = $_GET['projeto'];
+$idPessoa = $_GET['pessoa'];
+
+$ano = date('Y');
+
+$projeto = recuperaDados("projeto", "idProjeto", $idProjeto);
+$area = recuperaDados("area_atuacao", "idArea", $projeto['idAreaAtuacao']);
+$renuncia = recuperaDados("renuncia_fiscal", "idRenuncia", $projeto['idRenunciaFiscal']);
+$cronograma = recuperaDados("cronograma", "idCronograma", $projeto['idCronograma']);
+$video = recuperaDados("projeto", "idProjeto", $idProjeto);
+$marca = recuperaDados("exposicao_marca", "id", $projeto['idExposicaoMarca']);
+$v = array($video['video1'], $video['video2'], $video['video3']);
+
+$tipoPessoa = $projeto['tipoPessoa'];
+
+if ($tipoPessoa == "1") {
+    $pf = recuperaDados("pessoa_fisica", "idPf", $projeto['idPf']);
+} else {
+    $pj = recuperaDados("pessoa_juridica", "idPj", $projeto['idPj']);
+    $rep = recuperaDados("representante_legal","idRepresentanteLegal",$pj['idRepresentanteLegal']);
+}
+?>
+<html lang="br">
 <head>
     <title>SMC / Pro-Mac - Programa Municipal de Apoio a Projetos Culturais</title>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- JQUEY Mask -->
+    <script src="../visual/dist/js/jquery-1.12.4.min.js"></script>
+    <script src="../visual/dist/js/jquery.mask.js"></script>
     <!-- JQuery -->
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <script type="text/javascript" src="../visual/js/jquery.js"></script>
     <script type="text/javascript">
-        $(function(){
+        $(function () {
             window.print();
             window.close();
         });
@@ -21,9 +53,17 @@
             font-family: Arial;
             margin-top: 30px;
         }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        table, th, td {
+            border: 1px solid #9e9e9e;
+        }
 
         @page {
-            margin: 0mm;
+            margin: 20mm;
             margin-left: 70px;
             margin-right: 70px;
             page-break-inside: avoid;
@@ -32,620 +72,416 @@
     </style>
 </head>
 <body>
-
-<?php
-require_once("../funcoes/funcoesConecta.php");
-require_once("../funcoes/funcoesGerais.php");
-
-//CONEXÃO COM BANCO DE DADOS
-
-$con = bancoMysqli();
-
-$tipoPessoa = $_GET['tipo'];
-$idProjeto = $_GET['projeto'];
-$idPessoa = $_GET['pessoa'];
-
-$ano=date('Y');
-
-$queryProjeto = "SELECT * FROM projeto WHERE idProjeto = '$idProjeto' AND publicado = 1";
-$enviaP = mysqli_query($con, $queryProjeto);
-/*
-  Dados gerais do projeto.
-*/
-while($row = mysqli_fetch_array($enviaP))
-{
-    $protocoloP = $row['protocolo'];
-    $nomeProjeto = $row['nomeProjeto'];
-    $idAreaAtuacao = $row['idAreaAtuacao']; //search it
-    $vProjeto = $row['valorProjeto'];
-    $vIncentivo = $row['valorIncentivo'];
-    $vFinanciamento = $row['valorFinanciamento'];
-    $idRenunciaFiscal = $row['idRenunciaFiscal']; //search it
-    $exposicaoMarca = $row['exposicaoMarca'];
-    $resumoProjeto = $row['resumoProjeto'];
-    $curriculo = $row['curriculo'];
-    $descricao = $row['descricao'];
-    $justificativa = $row['justificativa'];
-    $objetivo = $row['objetivo'];
-    $metodologia = $row['metodologia'];
-    $contrapartida = $row['contrapartida'];
-    $publicoAlvo = $row['publicoAlvo'];
-    $planoDivulgacao = $row['planoDivulgacao'];
-    $inicioCronograma = $row['inicioCronograma'];
-    $fimCronograma = $row['fimCronograma'];
-    $idCronograma = $row['idCronograma']; //search it
-    $totalPreProducao = $row['totalPreProducao'];
-    $totalProducao = $row['totalProducao'];
-    $totalImprensa = $row['totalImprensa'];
-    $totalAdministrativos = $row['totalCustosAdministrativos'];
-    $totalImpostos = $row['totalImpostos'];
-    $totalAgenciamento = $row['totalAgenciamento'];
-    $totalOutrosFinanciamentos = $row['totalOutrosFinanciamentos'];
-    $video1 = $row['video1'];
-    $video2 = $row['video2'];
-    $video3 = $row['video3'];
-    $valorAProvado = $row['valorAprovado'];
-    $idStatus = $row['idEtapaProjeto'];
-}
-
-/*
-  Dados dos locais de realização.
-*/
-$queryLocal = "SELECT * FROM locais_realizacao AS LOC
-                LEFT JOIN zona ON LOC.idZona =  zona.idZona
-                LEFT JOIN subprefeitura ON LOC.idSubprefeitura = subprefeitura.idSubprefeitura
-                LEFT JOIN distrito ON LOC.idDistrito = distrito.idDistrito
-                WHERE idProjeto = '$idProjeto' AND publicado = 1";
-$enviaLocal = mysqli_query($con, $queryLocal);
-
-
-/*
-  Dados de renúncia fiscal.
-*/
-$queryRen = "SELECT renunciaFiscal from renuncia_fiscal where idRenuncia = '$idRenunciaFiscal'";
-$enviaRen = mysqli_query($con, $queryRen);
-$rows = mysqli_fetch_array($enviaRen);
-$renunciaFiscal = $rows['renunciaFiscal'];
-
-/*
-  Dados do cronograma.
-*/
-$queryCrono = "SELECT * FROM cronograma WHERE idCronograma = '$idCronograma'";
-$enviaCrono = mysqli_query($con, $queryCrono);
-while($rowCron = mysqli_fetch_array($enviaCrono))
-{
-    $captacaoRecurso = $rowCron['captacaoRecurso'];
-    $preProducao = $rowCron['preProducao'];
-    $producao = $rowCron['producao'];
-    $posProducao = $rowCron['posProducao'];
-    $prestacaoContas = $rowCron['prestacaoContas'];
-}
-
-/*
-  Dados da área de atuação.
-*/
-$queryAreaAt = "SELECT areaAtuacao FROM area_atuacao WHERE idArea = '$idAreaAtuacao'";
-$enviaAreaAt = mysqli_query($con, $queryAreaAt);
-$rowArea = mysqli_fetch_array($enviaAreaAt);
-$areaAtuacao = $rowArea['areaAtuacao'];
-
-/*
-  Dados de orçamento.
-*/
-$queryOrca = "SELECT * FROM orcamento AS ORC
-              LEFT JOIN etapa ON ORC.idEtapa = etapa.idEtapa
-              LEFT JOIN unidade_medida ON ORC.idUnidadeMedida = unidade_medida.idUnidadeMedida
-              WHERE idProjeto = '$idProjeto' AND publicado = 1 ORDER BY idOrcamento ASC";
-$enviaOrca = mysqli_query($con, $queryOrca);
-
-$countTabela = mysqli_num_rows($enviaOrca);
-
-/*
-  Ficha técnica
-*/
-$queryFicha = "SELECT * FROM ficha_tecnica WHERE idProjeto = '$idProjeto' AND publicado = 1";
-$enviaFicha = mysqli_query($con,$queryFicha);
-
-/*
-  Dados das notas.
-*/
-$queryNota = "SELECT * FROM notas WHERE idPessoa = '$idProjeto'";
-$enviaNota = mysqli_query($con, $queryNota);
-while($rowNota = mysqli_fetch_array($enviaNota))
-{
-    $dataNota = $rowNota['data'];
-    $notaN = $rowNota['nota'];
-}
-
-if($tipoPessoa == 1)
-{
-    $pf = recuperaDados("pessoa_fisica","idPf",$idPessoa);
-    $NomePF = $pf["nome"];
-    $RGPF = $pf["rg"];
-    $CPF = $pf["cpf"];
-    $EnderecoPF = $pf ["logradouro"];
-    $NumeroPF = $pf["numero"];
-    $BairroPF = $pf["bairro"];
-    $CidadePF = $pf["cidade"];
-    $estadoPF = $pf['estado'];
-    $CepPF = $pf["cep"];
-    $numeroPF = $pf['numero'];
-    $complementoPF = $pf['complemento'];
-    $telefonePF = $pf['telefone'];
-    $celularPF = $pf['celular'];
-    $emailPF = $pf['email'];
-
-    if($pf['cooperado'] == 1)
-    {
-        $cooperadoPF = "sim";
-    }
-    else if($pf['cooperado'] == 2)
-    {
-        $cooperadoPF = "não";
-    }
-
-    ?>
-
-    <section id='list_items' class='home-section bg-white'>
-        <div class='container' style='height: 800px;'>
-
-            <br><h2 style="text-transform: uppercase;"><b>Projeto: <?= $nomeProjeto ?> </b></h2><br>
-
-            <h3><b><center>Dados de pessoa física</center></b></h3>
-
-            <p><b>Nome: </b> <?= $NomePF ?> </p>
-            <p><b>RG: </b> <?= $RGPF ?> </p>
-            <p><b>CPF: </b> <?= $CPF ?></p>
-            <p><b>Endereço: </b> <?=  $EnderecoPF . ", " . $NumeroPF . " " . $complementoPF . " - " . $CidadePF  . " - " . $estadoPF ?> </p>
-            <p><b>Telefones: </b> <?= $telefonePF . " | " . $celularPF  ?> </p>
-            <p><b>E-mail: </b><?= $emailPF ?></p>
-
-            <br><br><h3><b><center>Dados do projeto</center></b></h3>
-
-            <p><b>Protocolo: </b> <?= $protocoloP ?></p>
-            <p><b>Área de atuação: </b> <?= $areaAtuacao ?></p>
-            <p><b>Valor total do projeto: </b> <?= $vProjeto ?></p>
-            <p><b>Valor do Incentivo solicitado no Pro-Mac: </b> <?= $vIncentivo ?></p>
-            <p><b>Valor de outros finaciamentos: </b> <?= $vFinanciamento ?></p>
-            <p><b>Enquadramento da renúncia fiscal: </b><?= $renunciaFiscal ?></p>
-            <p><b>Descrição da exposição da marca e indicação do valor do ingresso: </b><?= $exposicaoMarca ?></p>
-
-            <br><br>
-            <div style="margin-top: 20px;" ><b style="font-size: 16px;">Resumo do projeto: </b>
-            <hr/>
-            <?= $resumoProjeto ?> </div> <br><br>
-
-            <div><b style="font-size: 16px;">Curriculo: </b>
-            <hr/>
-            <?= $curriculo ?> </div> <br><br>
-
-            <div><b style="font-size: 16px;">Descrição do objeto e atividades:  </b>
-            <hr/>
-            <?= $descricao ?> </div> <br><br>
-
-            <div><b style="font-size: 16px;">Justificativa do projeto:  </b>
-            <hr/>
-            <?= $justificativa?> </div> <br><br>
-
-            <div style="margin-top: 20px;"><b style="font-size: 16px;">Objetivos e metas: </b>
-            <hr/>
-            <?= $objetivo ?> </div> <br><br>
-
-            <div><b style="font-size: 16px;">Metodologia e parâmetros a serem utilizados para aferição do cumprimento de metas:  </b>
-            <hr/>
-            <?= $metodologia ?> </div> <br><br>
-
-            <div><b style="font-size: 16px;">Descrição da contrapartida:  </b>
-            <hr/>
-            <?= $contrapartida ?> </div> <br><br>
-
-            <div style="margin-top: 30px;"><b style="font-size: 16px;">Locais: </b>
-            <hr/>
-            <?php
-            while ($rowLocal = mysqli_fetch_array($enviaLocal)) {
-                echo "<p><b>Local: </b>" . $rowLocal['local']. "</p>";
-                echo "<p><b>Público estimado: </b>" . $rowLocal['estimativaPublico'] . "</p>";
-                echo "<p><b>Zona: </b>" .$rowLocal['zona'] ."</p>";
-                echo "<p><b>Prefeitura Regional:  </b>" . $rowLocal['subprefeitura'] . "</p>";
-                echo "<p><b>Distrito:  </b>" . $rowLocal['distrito'] . "</p><br>";
-            }
-            ?>
-            </div>
-
-
-            <div> <b style="font-size: 16px;">Público alvo: </b>
-            <hr/>
-            <?= $publicoAlvo ?> </div> <br><br>
-
-            <div><b style="font-size: 16px;">Plano de divulgação: </b>
-            <hr/>
-            <?= $planoDivulgacao?></div> <br><br>
-
-            <div><b style="font-size: 16px;">Ficha técnica: </b>
-            <hr/>
-
-            <?php
-            while($rowFicha = mysqli_fetch_array($enviaFicha))
-            {
-                $nomeFicha = $rowFicha['nome'];
-                $cpfFicha = $rowFicha['cpf'];
-                $funcaoFicha = $rowFicha['funcao'];
-
-                echo "<p><b>Nome: </b>" . $nomeFicha . "</p>";
-                echo "<p><b>CPF: </b>" . $cpfFicha . "</p>";
-                echo "<p><b>Função: </b>" . $funcaoFicha . "</p>";
-            }
-
-            ?>
-            </div>
-            <table border="1" style="border-collapse: collapse; margin-top: 20px;">
-                <tr>
-                    <th colspan="7" bgcolor="red" style= "font-size: 18px; align-items: center;"><b>CRONOGRAMA</b></th>
-                </tr>
-
-                <tr>
-                    <td align='center'><b>Início do cronograma</b></td>
-                    <td align='center'><b>Fim do cronograma</b></td>
-                    <td align='center'><b>Captação de recursos</b></td>
-                    <td align='center'><b>Pré-Produção</b></td>
-                    <td align='center'><b>Produção</b></td>
-                    <td align='center'><b>Pós-Produção</b></td>
-                    <td align='center'><b>Prestação de contas</b></td>
-                </tr>
-                <tr>
-                    <td class='list_description'> <?=$inicioCronograma?> </td>
-                    <td class='list_description'> <?=$fimCronograma?> </td>
-                    <td class='list_description'> <?= str_replace('a', '', $captacaoRecurso)?> </td>
-                    <td class='list_description'> <?= str_replace('a', '', $preProducao ) ?> </td>
-                    <td class='list_description'> <?= str_replace('a', '', $producao)?> </td>
-                    <td class='list_description'> <?=str_replace('a','', $posProducao)?> </td>
-                    <td class='list_description'> <?=str_replace('a', '', $prestacaoContas)?> </td>
-                </tr>
-            </table>
-            <br><hr/><br>
-            <table border="1" style="border-collapse: collapse;">
-                <tr>
-                    <th colspan="7" bgcolor="red" style= "font-size: 18px; align-content: center;"><b>ORÇAMENTO</b></th>
-                </tr>
-                <tr>
-                    <td width='25%' align='center'><b>Etapa</b></td>
-                    <td align='center'><b>Descrição</b></td>
-                    <td width='5%' align='center'><b>Qtde</b></td>
-                    <td width='5%' align='center'><b>Unid. Med.</b></td>
-                    <td width='5%' align='center'><b>Qtde Unid.</b></td>
-                    <td align='center'><b>Valor Unit.</b></td>
-                    <td align='center'><b>Valor Total</b></td>
-                </tr>
-
-                <?php
-
-                $count = 0;
-
-               // for ($i=0; $i < $countTabela; $i++) {}
-
-                while ($rowOrca = mysqli_fetch_array($enviaOrca)) {
-
-                    $count++;
-
-                    echo "<tr>";
-                    echo "<td class='list_description'>" . $rowOrca['etapa'] . "</td>";
-                    echo "<td class='list_description'>" . $rowOrca['descricao'] . "</td>";
-                    echo "<td class='list_description'>" . $rowOrca['quantidade'] . "</td>";
-                    echo "<td class='list_description'>" . $rowOrca['unidadeMedida'] . "</td>";
-                    echo "<td class='list_description'>" . $rowOrca['quantidadeUnidade'] . "</td>";
-                    echo "<td class='list_description'>" . dinheiroParaBr($rowOrca['valorUnitario']) . "</td>";
-                    echo "<td class='list_description'>" . dinheiroParaBr($rowOrca['valorTotal']) . "</td>";
-                    echo "</tr>";
-
-                   if ($count == 14) {
-                       echo "<table  border='1' style='page-break-before: always; border-collapse: collapse;'>
-                            <tr>    
-                <th colspan=\"7\" bgcolor=\"red\" style= \"font-size: 18px;\"><b>CONTINUAÇÃO</b></th>
-            </tr>
-                                <tr>
-                                    <td width='25%' align='center'><b>Etapa</b></td>
-                                    <td align='center'><b>Descrição</b></td>
-                                    <td width='5%' align='center'><b>Qtde</b></td>
-                                    <td width='5%' align='center'><b>Unid. Med.</b></td>
-                                    <td width='5%' align='center'><b>Qtde Unid.</b></td>
-                                    <td align='center'><b>Valor Unit.</b></td>
-                                    <td align='center'><b>Valor Total</b></td>
-                                </tr>";
-
-
-                        while ($rowOrca = mysqli_fetch_array($enviaOrca)) {
-                           echo "<tr>";
-                           echo "<td class='list_description'>" . $rowOrca['etapa'] . "</td>";
-                           echo "<td class='list_description'>" . $rowOrca['descricao'] . "</td>";
-                           echo "<td class='list_description'>" . $rowOrca['quantidade'] . "</td>";
-                           echo "<td class='list_description'>" . $rowOrca['unidadeMedida'] . "</td>";
-                           echo "<td class='list_description'>" . $rowOrca['quantidadeUnidade'] . "</td>";
-                           echo "<td class='list_description'>" . dinheiroParaBr($rowOrca['valorUnitario']) . "</td>";
-                           echo "<td class='list_description'>" . dinheiroParaBr($rowOrca['valorTotal']) . "</td>";
-                           echo "</tr>";
-                       }
-                       echo "</table>";
-                   }
-                }
-                echo "</table>";
-                ?>
-        </div> <br><br>
-
-        <div><b style="font-size: 16px;">Totais: </b>
-            <hr/>
-            <p><b>Pré-Produção: </b><?= $totalPreProducao ?> </p>
-            <p><b>Produção: </b><?= $totalProducao ?> </p>
-            <p><b>Assessoria de Imprensa, Divulgação e Mídia: </b><?= $totalImprensa ?> </p>
-            <p><b>Custos Administrativos:  </b><?= $totalAdministrativos ?></p>
-            <p><b>Impostos, taxas, tarifas bancárias, contribuições e seguros:  </b><?= $totalImpostos ?></p>
-            <p><b>Elaboração e Agenciamento:  </b><?= $totalAgenciamento ?> </p>
-            <p><b>Outros Financiamentos:  </b><?= $totalOutrosFinanciamentos ?> </p>
-        </div> <br><br>
-
-        <div><b style="font-size: 16px;">Link do Youtube: </b>
-            <hr/>
-            <p><b>Link 1: </b><?= $video1 ?> </p>
-            <p><b>Link 2: </b><?= $video2 ?> </p>
-            <p><b>Link 3: </b><?= $video3 ?> </p>
-        </div>
-
-<?php
-
-}
-else if($tipoPessoa == 2) {
-    $pj = recuperaDados("pessoa_juridica", "idPj", $idPessoa);
-    $razaoSocial = $pj['razaoSocial'];
-    $cnpj = $pj['cnpj'];
-    $logradouroPJ = $pj['logradouro'];
-    $bairroPJ = $pj['bairro'];
-    $cidadePJ = $pj['cidade'];
-    $estadoPJ = $pj['estado'];
-    $cepPJ = $pj['cep'];
-    $numeroPJ = $pj['numero'];
-    $complementoPJ = $pj['complemento'];
-    $telefonePJ = $pj['telefone'];
-    $celularPJ = $pj['celular'];
-    $emailPJ = $pj['email'];
-
-    if ($pj['cooperativa'] == 1) {
-        $cooperativa = "sim";
-    } else if ($pj['cooperativa'] == 2) {
-        $cooperativa = "não";
-    }
-
-    $idRepresentante = $pj['idRepresentanteLegal'];
-
-    $queryRep = "SELECT * FROM representante_legal WHERE idRepresentanteLegal = '$idRepresentante'";
-    $enviaRep = mysqli_query($con, $queryRep);
-    while ($rowRep = mysqli_fetch_array($enviaRep)) {
-        $nomeRep = $rowRep['nome'];
-        $cpfRep = $rowRep['cpf'];
-        $rgRep = $rowRep['rg'];
-        $logradouroRep = $rowRep['logradouro'];
-        $bairroRep = $rowRep['bairro'];
-        $cidadeRep = $rowRep['cidade'];
-        $estadoRep = $rowRep['estado'];
-        $cepRep = $rowRep['cep'];
-        $numeroRep = $rowRep['numero'];
-        $complementoRep = $rowRep['complemento'];
-        $telefoneRep = $rowRep['telefone'];
-        $celularRep = $rowRep['celular'];
-        $emailRep = $rowRep['email'];
-    }  ?>
-
+<section id='list_items' class='home-section bg-white'>
     <div class='container' style='height: 800px;'>
+        <h3 style="text-transform: uppercase;"><b>Projeto: <?= $projeto['nomeProjeto'] ?> </b></h3>
+        <table class="table table-bordered">
+            <tr>
+                <td>
+                    <strong>Protocolo (nº ISP):</strong>
+                    <span data-mask = "0000.00.00/0000000"><?= $projeto['protocolo'] ?></span>
+                </td>
+                <td><strong>Tipo:</strong>
+                    <?php
+                    if ($projeto['tipoPessoa'] == 1) {
+                        echo "Pessoa Física";
+                    } else {
+                        echo "Pessoa Jurídica";
+                    } ?>
+                </td>
+                <?php
+                if ($projeto['tipoPessoa'] == 1) { ?>
+                    <td><strong>Cooperado:</strong>
+                        <?php
+                        if ($pf['cooperado'] == 1) {
+                            echo "Sim";
+                        } else {
+                            echo "Não";
+                        } ?>
+                    </td>
+                <?php } else { ?>
+                    <td><strong>Cooperativa:</strong>
+                        <?php
+                        if ($pj['cooperativa'] == 1) {
+                            echo "Sim";
+                        } else {
+                            echo "Não";
+                        } ?>
+                    </td>
+                <?php } ?>
+            </tr>
+            <tr>
+                <td><strong>Valor do projeto:</strong> R$
+                    <?php echo
+                    dinheiroParabr(isset($projeto['valorProjeto'])
+                        ? $projeto['valorProjeto']
+                        : ''); ?>
+                </td>
+                <td><strong>Valor do incentivo:</strong> R$
+                    <?php echo
+                    dinheiroParabr(isset($projeto['valorIncentivo'])
+                        ? $projeto['valorIncentivo']
+                        : null); ?>
+                </td>
+                <td><strong>Renúncia Fiscal:</strong> <?php echo $renuncia['renunciaFiscal'] ?></td>
+            </tr>
+            <?php
+            if ($projeto['idAreaAtuacao'] == 22) {
+                ?>
+                <tr>
+                    <td colspan="3"><strong>Segmento:</strong>
+                        <?php echo isset($projeto['segmento']) ? $projeto['segmento'] : null; ?>
+                    </td>
+                </tr>
+                <?php
+            }
+            ?>
+        </table>
+        <br/>
+        <?php
+        if ($tipoPessoa == 1) {
+            ?>
+            <h3 align="center"><b>Dados de pessoa física</b></h3>
+            <p align="justify"><strong>Nome:</strong> <?php echo isset($pf['nome']) ? $pf['nome'] : null; ?></p>
+            <p align="justify"><strong>CPF:</strong> <?php echo isset($pf['cpf']) ? $pf['cpf'] : null; ?></p>
+            <p align="justify"><strong>Endereço:</strong> <?= $pf['logradouro'] . ", ".$pf['numero']." ".$pf['complemento']." ".$pf['bairro'].", ".$pf['cidade']." - ".$pf['estado'].", CEP ".$pf['cep'] ?>
+            <p align="justify"><strong>Telefone:</strong> <?php echo isset($pf['telefone']) ? $pf['telefone'] : null; ?><?php echo isset($pf['celular']) ? " / ".$pf['celular'] : null; ?></p>
+            <p align="justify"><strong>Email:</strong> <?php echo isset($pf['email']) ? $pf['email'] : null; ?></p>
+            <?php
+        } else {
+            ?>
+            <h3 align="center"><b>Dados de pessoa jurídica</b></h3>
+            <p align="justify"><strong>Razão social:</strong> <?php echo isset($pj['razaoSocial']) ? $pj['razaoSocial'] : null; ?></p>
+            <p align="justify"><strong>CNPJ:</strong> <?php echo isset($pj['cnpj']) ? $pj['cnpj'] : null; ?></p>
+            <p align="justify"><strong>CCM:</strong> <?php echo isset($pj['ccm']) ? $pj['ccm'] : null; ?></p>
+            <p align="justify"><strong>Endereço:</strong> <?= $pj['logradouro'] . ", ".$pj['numero']." ".$pj['complemento']." ".$pj['bairro'].", ".$pj['cidade']." - ".$pj['estado'].", CEP ".$pj['cep'] ?>
+            <p align="justify"><strong>Telefone:</strong> <?php echo isset($pj['telefone']) ? $pj['telefone'] : null; ?><?php echo isset($pj['celular']) ? " / ".$pj['celular'] : null; ?></p>
+            <p align="justify"><strong>Email:</strong> <?php echo isset($pj['email']) ? $pj['email'] : null; ?></p>
+            <br/>
 
-        <br><h2 style="text-transform: uppercase;"><b>Projeto: <?= $nomeProjeto ?> </b></h2><br>
-
-        <h3><b><center>Dados de pessoa jurídica</center></b></h3>
-
-        <p><b>Razão social: </b> <?= $razaoSocial ?> </p>
-        <p><b>CNPJ: </b> <?= $cnpj ?> </p>
-        <p><b>Endereço: </b> <?=  $logradouroPJ . ", " . $numeroPJ . " " . $complementoPJ . " - " . $cidadePJ  . " - " . $estadoPJ ?> </p>
-        <p><b>Telefones: </b> <?= $telefonePJ . " | " . $celularPJ  ?> </p>
-        <p><b>E-mail: </b><?= $emailPJ ?></p><br>
-
-        <h3><b><center>Dados do representante legal</center></b></h3>
-
-        <p><b>Nome: </b> <?= $nomeRep ?> </p>
-        <p><b>RG: </b> <?= $rgRep ?> </p>
-        <p><b>CPF: </b> <?= $cpfRep ?></p>
-        <p><b>Endereço: </b> <?=  $logradouroRep . ", " . $numeroRep . " " . $complementoRep . " - " . $cidadeRep  . " - " . $estadoRep ?> </p>
-        <p><b>Telefones: </b> <?= $telefoneRep . " | " . $celularRep  ?> </p>
-        <p><b>E-mail: </b><?= $emailRep ?></p>
-
-
-        <br><br><h3><b><center>Dados do projeto</center></b></h3>
-
-        <p><b>Protocolo: </b> <?= $protocoloP ?></p>
-        <p><b>Área de atuação: </b> <?= $areaAtuacao ?></p>
-        <p><b>Valor total do projeto: </b> <?= $vProjeto ?></p>
-        <p><b>Valor do Incentivo solicitado no Pro-Mac: </b> <?= $vIncentivo ?></p>
-        <p><b>Valor de outros finaciamentos: </b> <?= $vFinanciamento ?></p>
-        <p><b>Enquadramento da renúncia fiscal: </b><?= $renunciaFiscal ?></p>
-        <p><b>Descrição da exposição da marca e indicação do valor do ingresso: </b><?= $exposicaoMarca ?></p>
+            <h3 align="center"><b>Dados do representante legal</b></h3>
+            <p align="justify"><strong>Nome:</strong> <?php echo isset($rep['nome']) ? $rep['nome'] : null; ?></p>
+            <p align="justify"><strong>CPF:</strong> <?php echo isset($rep['cpf']) ? $rep['cpf'] : null; ?></p>
+            <p align="justify"><strong>Endereço:</strong> <?= $rep['logradouro'] . ", ".$rep['numero']." ".$rep['complemento']." ".$rep['bairro'].", ".$rep['cidade']." - ".$rep['estado'].", CEP ".$rep['cep'] ?>
+            <p align="justify"><strong>Telefone:</strong> <?php echo isset($rep['telefone']) ? $rep['telefone'] : null; ?><?php echo isset($rep['celular']) ? " / ".$rep['celular'] : null; ?></p>
+            <p align="justify"><strong>Email:</strong> <?php echo isset($rep['email']) ? $rep['email'] : null; ?></p>
+            <?php
+        }
+        ?>
 
         <br><br>
-        <div style="page-break-inside: avoid; margin-top: 20px;" ><b style="font-size: 16px;">Resumo do projeto: </b>
-            <hr/>
-            <?= $resumoProjeto ?> </div> <br><br>
+        <h3 align="center"><b>Dados do projeto</b></h3>
 
-        <div><b style="font-size: 16px;">Curriculo: </b>
-            <hr/>
-            <?= $curriculo ?> </div> <br><br>
-
-        <div><b style="font-size: 16px;">Descrição do objeto e atividades:  </b>
-            <hr/>
-            <?= $descricao ?> </div> <br><br>
-
-        <div><b style="font-size: 16px;">Justificativa do projeto:  </b>
-            <hr/>
-            <?= $justificativa?> </div> <br><br>
-
-        <div style="margin-top: 30px;"><b style="font-size: 16px;">Objetivos e metas: </b>
-            <hr/>
-            <?= $objetivo ?> </div> <br><br>
-
-        <div><b style="font-size: 16px;">Metodologia e parâmetros a serem utilizados para aferição do cumprimento de metas:  </b>
-            <hr/>
-            <?= $metodologia ?> </div> <br><br>
-
-        <div><b style="font-size: 16px;">Descrição da contrapartida:  </b>
-            <hr/>
-            <?= $contrapartida ?> </div> <br><br>
-
-        <div><b style="font-size: 16px;">Locais: </b>
-            <hr/>
+        <p align="justify"><strong>Nome do Projeto:</strong> <?php echo $projeto['nomeProjeto']; ?></p>
+        <p align="justify"><strong>Área de atuação:</strong> <?php echo $area['areaAtuacao'] ?></p>
+        <p align="justify"><strong>Resumo do projeto:</strong> <?php echo isset($projeto['resumoProjeto']) ? $projeto['resumoProjeto'] : null; ?>
+        </p>
+        <p align="justify">
+            <strong>Currículo:</strong> <?php echo isset($projeto['curriculo']) ? $projeto['curriculo'] : null; ?>
+        </p>
+        <p align="justify">
+            <strong>Descrição do objeto e atividades:</strong> <?php echo isset($projeto['descricao']) ? $projeto['descricao'] : null; ?>
+        </p>
+        <p align="justify">
+            <strong>Justificativa do projeto:</strong> <?php echo isset($projeto['justificativa']) ? $projeto['justificativa'] : null; ?>
+        </p>
+        <p align="justify">
+            <strong>Objetivos e metas:</strong> <?php echo isset($projeto['objetivo']) ? $projeto['objetivo'] : null; ?></p>
+        <p align="justify">
+            <strong>Metodologia:</strong> <?php echo isset($projeto['metodologia']) ? $projeto['metodologia'] : null; ?>
+        </p>
+        <p align="justify">
+            <strong>Contrapartida:</strong> <?php echo isset($projeto['contrapartida']) ? $projeto['contrapartida'] : null; ?>
+        </p>
+        <br>
+        <p align="center">
+            <strong>Local </strong><br/>
+        </p>
+        <table class="table table-bordered" border="1" width="100%">
+            <tr>
+                <th>Local</th>
+                <th>Público estimado</th>
+                <th>Endereço</th>
+            </tr>
             <?php
-            while ($rowLocal = mysqli_fetch_array($enviaLocal)) {
-                echo "<p><b>Local: </b>" . $rowLocal['local']. "</p>";
-                echo "<p><b>Público estimado: </b>" . $rowLocal['estimativaPublico'] . "</p>";
-                echo "<p><b>Zona: </b>" .$rowLocal['zona'] ."</p>";
-                echo "<p><b>Prefeitura Regional:  </b>" . $rowLocal['subprefeitura'] . "</p>";
-                echo "<p><b>Distrito:  </b>" . $rowLocal['distrito'] . "</p><br>";
+            $sql = "SELECT * FROM locais_realizacao
+                        WHERE publicado = 1 AND idProjeto = " . $projeto['idProjeto'] . "";
+            $query = mysqli_query($con, $sql);
+            while ($campo = mysqli_fetch_array($query)) {
+                $zona = recuperaDados("zona", "idZona", $campo['idZona']);
+                echo "<tr>";
+                echo "<td>" . $campo['local'] . "</td>";
+                echo "<td>" . $campo['estimativaPublico'] . "</td>";
+                echo "<td>" . $campo['logradouro'] . ", ".$campo['numero']." ".$campo['complemento']." ".$campo['bairro'].", ".$campo['cidade']." - ".$campo['estado'].", CEP ".$campo['cep']."</td>";
+                echo "</tr>";
             }
             ?>
-        </div>
-
-
-        <div> <b style="font-size: 16px;">Público alvo: </b>
-            <hr/>
-            <?= $publicoAlvo ?> </div> <br><br>
-
-        <div><b style="font-size: 16px;">Plano de divulgação: </b>
-            <hr/>
-            <?= $planoDivulgacao?></div> <br><br>
-
-        <div><b style="font-size: 16px;">Ficha técnica: </b>
-            <hr/>
-
+        </table>
+        <p align="justify"><strong>Público alvo:</strong> <?php echo isset($projeto['publicoAlvo']) ? $projeto['publicoAlvo'] : null; ?></p>
+        <p align="justify"><strong>Plano de divulgação:</strong> <?php echo isset($projeto['planoDivulgacao']) ? $projeto['planoDivulgacao'] : null; ?></p>
+        <br>
+        <p align="center">
+            <strong>Ficha Técnica</strong><br/>
+        </p>
+        <table class="table table-bordered" border="1" width="100%">
+            <tr>
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>Função</th>
+            </tr>
             <?php
-            while($rowFicha = mysqli_fetch_array($enviaFicha))
-            {
-                $nomeFicha = $rowFicha['nome'];
-                $cpfFicha = $rowFicha['cpf'];
-                $funcaoFicha = $rowFicha['funcao'];
-
-                echo "<p><b>Nome: </b>" . $nomeFicha . "</p>";
-                echo "<p><b>CPF: </b>" . $cpfFicha . "</p>";
-                echo "<p><b>Função: </b>" . $funcaoFicha . "</p>";
+            $sql = "SELECT * FROM ficha_tecnica
+                        WHERE publicado = 1 AND idProjeto = '$idProjeto'";
+            $query = mysqli_query($con, $sql);
+            while ($campo = mysqli_fetch_array($query)) {
+                echo "<tr>";
+                echo "<td class='list_description'>" . $campo['nome'] . "</td>";
+                echo "<td class='list_description'>" . $campo['cpf'] . "</td>";
+                echo "<td class='list_description'>" . $campo['funcao'] . "</td>";
+                echo "</tr>";
+            } ?>
+        </table>
+        <br>
+        <p align="center">
+            <strong>Cronograma</strong><br/>
+        </p>
+        <?php
+        $data = $projeto['inicioCronograma'];
+        function tipoCronograma($data){
+            $valores = explode('-',$data);
+            if(isset($valores[2]) && is_numeric($valores[2])){
+                if(count($valores) == 3 & checkdate($valores[1],$valores[2],$valores[0])){
+                    return true;
+                }
+                else{
+                    return false;
+                }
             }
-
+        }
+        if(tipoCronograma($data)){
             ?>
-        </div>
-        <table border="1" style="border-collapse: collapse; margin-top: 20px;">
+            <table class="table table-bordered">
+                <tr>
+                    <td><strong>Início do projeto:</strong> <?= isset($projeto['inicioCronograma']) ? exibirDataBr($projeto['inicioCronograma']) : null ?></td>
+                    <td><strong>Fim do projeto:</strong> <?= isset($projeto['fimCronograma']) ?  exibirDataBr($projeto['fimCronograma']) : null ?></td>
+                </tr>
+            </table>
+            <table class="table table-bordered" border="1" width="100%">
+                <tr>
+                    <td><strong>Captação de recursos:</strong></td>
+                    <td><strong>Pré-Produção:</strong></td>
+                    <td><strong>Produção:</strong></td>
+                    <td><strong>Pós-Produção:</strong></td>
+                    <td><strong>Prestação de Contas:</strong></td>
+                </tr>
+                <tr>
+                    <td class='list_description exibir'><?= $cronograma['captacaoRecurso'] ?? '' ?></td>
+                    <td class='list_description exibir'><?= $cronograma['preProducao'] ?? '' ?></td>
+                    <td class='list_description exibir'><?= $cronograma['producao'] ?? '' ?></td>
+                    <td class='list_description exibir'><?= $cronograma['posProducao'] ?? '' ?></td>
+                    <td class='list_description exibir'><?= $cronograma['prestacaoContas'] ?? '' ?></td>
+                </tr>
+            </table>
+            <?php
+        }
+        else{
+            ?>
+            <table class="table table-bordered" border="1" width="100%">
+                <tr>
+                    <td><strong>Início do cronograma:</strong>
+                        <?=$projeto['inicioCronograma'] ?>
+                    </td>
+                    <td><strong>Fim do cronograma:</strong>
+                        <?= $projeto['fimCronograma'] ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Captação de recursos:</strong>
+                        <?php echo $cronograma['captacaoRecurso'] ?>
+                    </td>
+                    <td><strong>Pré-Produção:</strong>
+                        <?php echo $cronograma['preProducao'] ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Produção:</strong>
+                        <?php echo $cronograma['producao'] ?>
+                    </td>
+                    <td><strong>Pós-Produção:</strong>
+                        <?php echo $cronograma['posProducao'] ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2"><strong>Prestação de Contas:</strong>
+                        <?php echo $cronograma['prestacaoContas'] ?>
+                    </td>
+                </tr>
+            </table>
+            <?php
+        }
+        ?>
+        <br>
+        <p align="center">
+            <strong>Orçamento</strong><br/>
+        </p>
+        <table class="table table-bordered" border="1" width="100%">
             <tr>
-                <th colspan="7" bgcolor="red" style= "font-size: 18px;"><b>CRONOGRAMA</b></th>
-            </tr>
+                <?php
+                for ($i = 1; $i <= 8; $i++) {
+                    $sql_etapa = "SELECT idEtapa FROM orcamento
+                                        WHERE publicado > 0 AND idProjeto ='$idProjeto' AND idEtapa = '$i'
+                                        ORDER BY idOrcamento";
+                    $query_etapa = mysqli_query($con, $sql_etapa);
+                    $lista = mysqli_fetch_array($query_etapa);
 
-            <tr>
-                <td align='center'><b>Início do cronograma</b></td>
-                <td align='center'><b>Fim do cronograma</b></td>
-                <td align='center'><b>Captação de recursos</b></td>
-                <td align='center'><b>Pré-Produção</b></td>
-                <td align='center'><b>Produção</b></td>
-                <td align='center'><b>Pós-Produção</b></td>
-                <td align='center'><b>Prestação de contas</b></td>
+                    $etapa = recuperaDados("etapa", "idEtapa", $lista['idEtapa']);
+                    echo "<td><strong>" . $etapa['etapa'] . ":</strong>";
+                }
+                ?>
             </tr>
-
             <tr>
-            <td class='list_description'> <?= $inicioCronograma ?></td>
-            <td class='list_description'> <?= $fimCronograma ?></td>
-            <td class='list_description'> <?= str_replace('a', '', $captacaoRecurso) ?> </td>
-            <td class='list_description'> <?= str_replace('a', '', $preProducao )?> </td>
-            <td class='list_description'> <?= str_replace('a', '', $producao) ?> </td>
-            <td class='list_description'> <?= str_replace('a', '',  $posProducao) ?> </td>
-            <td class='list_description'> <?= str_replace('a', '', $prestacaoContas) ?> </td>
+                <?php
+                for ($i = 1; $i <= 8; $i++) {
+                    $sql_etapa = "SELECT SUM(valorTotal) AS tot FROM orcamento
+                                        WHERE publicado > 0 AND idProjeto ='$idProjeto' AND idEtapa = '$i'
+                                        ORDER BY idOrcamento";
+                    $query_etapa = mysqli_query($con, $sql_etapa);
+                    $lista = mysqli_fetch_array($query_etapa);
+
+                    echo "<td>R$ " . dinheiroParaBr($lista['tot']) . "</td>";
+                }
+                ?>
+            </tr>
+            <tr>
+                <?php
+                $sql_total = "SELECT SUM(valorTotal) AS tot FROM orcamento
+                                    WHERE publicado > 0 AND idProjeto ='$idProjeto'
+                                    ORDER BY idOrcamento";
+                $query_total = mysqli_query($con, $sql_total);
+                $total = mysqli_fetch_array($query_total);
+                echo "<td colspan='8'><strong>TOTAL: R$ " . dinheiroParaBr($total['tot']) . "</strong></td>";
+                ?>
             </tr>
         </table>
-        <br><hr/><br>
-        <table border="1" style="border-collapse: collapse;">
+        <br/>
+        <table class="table table-bordered" border="1" width="100%">
             <tr>
-                <th colspan="7" bgcolor="red" style= "font-size: 18px;"><b>ORÇAMENTO</b></th>
-            </tr>
-
-            <tr>
-                <td width='25%' align='center'><b>Etapa</b></td>
-                <td align='center'><b>Descrição</b></td>
-                <td width='5%' align='center'><b>Qtde</b></td>
-                <td width='5%' align='center'><b>Unid. Med.</b></td>
-                <td width='5%' align='center'><b>Qtde Unid.</b></td>
-                <td align='center'><b>Valor Unit.</b></td>
-                <td align='center'><b>Valor Total</b></td>
+                <td width='25%'><strong>Etapa</strong></td>
+                <td><strong>Descrição</strong></td>
+                <td width='5%'><strong>Qtde</strong></td>
+                <td width='5%'><strong>Unid. Med.</strong></td>
+                <td width='5%'><strong>Qtde Unid.</strong></td>
+                <td><strong>Valor Unit.</strong></td>
+                <td><strong>Valor Total</strong></td>
             </tr>
             <?php
-
-            $count = 0;
-
-            while ($rowOrca = mysqli_fetch_array($enviaOrca)) {
-
-                $count++;
-
+            $sql = "SELECT * FROM orcamento
+                                WHERE publicado > 0 AND idProjeto ='$idProjeto'
+                                ORDER BY idEtapa";
+            $query = mysqli_query($con, $sql);
+            while ($campo = mysqli_fetch_array($query)) {
+                $etapa = recuperaDados("etapa", "idEtapa", $campo['idEtapa']);
+                $medida = recuperaDados("unidade_medida", "idUnidadeMedida", $campo['idUnidadeMedida']);
                 echo "<tr>";
-                echo "<td class='list_description'>" . $rowOrca['etapa'] . "</td>";
-                echo "<td class='list_description'>" . $rowOrca['descricao'] . "</td>";
-                echo "<td class='list_description'>" . $rowOrca['quantidade'] . "</td>";
-                echo "<td class='list_description'>" . $rowOrca['unidadeMedida'] . "</td>";
-                echo "<td class='list_description'>" . $rowOrca['quantidadeUnidade'] . "</td>";
-                echo "<td class='list_description'>" . dinheiroParaBr($rowOrca['valorUnitario']) . "</td>";
-                echo "<td class='list_description'>" . dinheiroParaBr($rowOrca['valorTotal']) . "</td>";
+                echo "<td class='list_description'>" . $etapa['etapa'] . "</td>";
+                echo "<td class='list_description'>" . $campo['descricao'] . "</td>";
+                echo "<td class='list_description'>" . $campo['quantidade'] . "</td>";
+                echo "<td class='list_description'>" . $medida['unidadeMedida'] . "</td>";
+                echo "<td class='list_description'>" . $campo['quantidadeUnidade'] . "</td>";
+                echo "<td class='list_description'>" . dinheiroParaBr($campo['valorUnitario']) . "</td>";
+                echo "<td class='list_description'>" . dinheiroParaBr($campo['valorTotal']) . "</td>";
                 echo "</tr>";
+            } ?>
+        </table>
+        <?php $marca = recuperaDados("exposicao_marca", "id", $projeto['idExposicaoMarca']); ?>
+        <p align="justify"><strong>Valor total do projeto:</strong> R$ <?php echo dinheiroParaBr($projeto['valorProjeto']) ?></p>
+        <p align="justify"><strong>Valor do Incentivo solicitado no Pro-Mac:</strong> R$ <?php echo dinheiroParaBr($projeto['valorIncentivo']); ?><p>
+        <p align="justify"><strong>Enquadramento da renúncia fiscal:</strong> <?php echo $renuncia['renunciaFiscal'] ?></p>
+        <p align="justify"><strong>Descrição da exposição da marca:</strong> <?= $marca['exposicao_marca']; ?></p>
+        <p align="justify"><strong>Indicação do valor do ingresso:</strong> <?= $projeto['indicacaoIngresso']; ?></p>
 
-                if ($count == 13) {
-                    echo "<table  border='1' style='page-break-before: always; border-collapse: collapse;'>
-                                <tr>
-                                    <td width='25%' align='center'><b>Etapa</b></td>
-                                    <td align='center'><b>Descrição</b></td>
-                                    <td width='5%' align='center'><b>Qtde</b></td>
-                                    <td width='5%' align='center'><b>Unid. Med.</b></td>
-                                    <td width='5%' align='center'><b>Qtde Unid.</b></td>
-                                    <td align='center'><b>Valor Unit.</b></td>
-                                    <td align='center'><b>Valor Total</b></td>
-                                </tr>";
-
-
-                    while ($rowOrca = mysqli_fetch_array($enviaOrca)) {
-                        echo "<tr>";
-                        echo "<td class='list_description'>" . $rowOrca['etapa'] . "</td>";
-                        echo "<td class='list_description'>" . $rowOrca['descricao'] . "</td>";
-                        echo "<td class='list_description'>" . $rowOrca['quantidade'] . "</td>";
-                        echo "<td class='list_description'>" . $rowOrca['unidadeMedida'] . "</td>";
-                        echo "<td class='list_description'>" . $rowOrca['quantidadeUnidade'] . "</td>";
-                        echo "<td class='list_description'>" . dinheiroParaBr($rowOrca['valorUnitario']) . "</td>";
-                        echo "<td class='list_description'>" . dinheiroParaBr($rowOrca['valorTotal']) . "</td>";
-                        echo "</tr>";
+        <br>
+        <p align="center">
+            <strong>Mídias Sociais</strong><br/>
+        </p>
+        <p align="justify"><strong>Link 1:</strong> <?= $video['midia_social_1'] ?></p>
+        <p align="justify"><strong>Link 2:</strong> <?= $video['midia_social_2'] ?></p>
+        <?php
+        if (!empty($video['video1'] || $video['video2'] || $video['video3'])) {
+            foreach ($v as $key => $m) {
+                if (!empty($m)) {
+                    if (isYoutubeVideo($m) == "youtube") {
+                        $desc = "https://www.youtube.com/oembed?format=json&url=" . $m;
+                        $obj = json_decode(file_get_contents($desc), true);
+                    } else {
+                        echo "<div class='alert alert-danger'>
+                                    <strong>Erro!</strong> O link ($m) não pode ser aberto, a plataforma aceita somente YouTube.
+                                    </div>";
                     }
-                    echo "</table>";
+                    if (isYoutubeVideo($m) == "youtube") { ?>
+                        <p>
+                            <?php echo $obj['title']; ?><br/>
+                            <?php echo $m ?>
+                        </p>
+                    <?php }
                 }
-
-
             }
-            ?>
-        </table> <br><br>
+        }
+        else {
+            echo "<p>Não há video(s) inserido(s).<p/><br/>";
+        }
+        ?>
 
-        <div><b style="font-size: 16px;">Totais: </b>
-            <hr/>
-            <p><b>Pré-Produção: </b><?= $totalPreProducao ?> </p>
-            <p><b>Produção: </b><?= $totalProducao ?> </p>
-            <p><b>Assessoria de Imprensa, Divulgação e Mídia: </b><?= $totalImprensa ?> </p>
-            <p><b>Custos Administrativos:  </b><?= $totalAdministrativos ?></p>
-            <p><b>Impostos, taxas, tarifas bancárias, contribuições e seguros:  </b><?= $totalImpostos ?></p>
-            <p><b>Elaboração e Agenciamento:  </b><?= $totalAgenciamento ?> </p>
-            <p><b>Outros Financiamentos:  </b><?= $totalOutrosFinanciamentos ?> </p>
-        </div> <br><br>
+        <script>
+            let btnsMenos = document.querySelectorAll('.menos');// pega todos os buttons .menos
+            let btnsMais = document.querySelectorAll('.mais');// pega todos os buttons .mais
+            let captacaoRecurso = document.querySelector('#captacaoRecurso');
+            let etapas = document.querySelectorAll('.progress input');
+            let btnInserir = document.querySelector('input[name="insereCronograma"]');
+            let listaEtapas = document.querySelectorAll('.exibir'); // lista
 
-        <div><b style="font-size: 16px;">Link do Youtube: </b>
-            <hr/>
-            <p><b>Link 1: </b><?= $video1 ?> </p>
-            <p><b>Link 2: </b><?= $video2 ?> </p>
-            <p><b>Link 3: </b><?= $video3 ?> </p>
-        </div>
 
-   <?php
-}
+            const quantidadeMes = (val) => {
 
-?>
+                if((val / 6.25) == 1) // meio
+                {
+                    return `Metade de um mês`
+                }
+                else if((val / 6.25) == 2) // um
+                {
+                    return `${(val / 12.5)} Mês`
+                }
+                else if((val / 6.25) == 3) 	// um e meio
+                {
+                    return `${parseInt(val / 12.5)} Mês e Meio`
+                }
+                else if((val / 6.25) % 2 == 0) 	// par meses
+                {
+                    return `${(val / 12.5)} Meses`
+                }
+                else{				// meses e meio
+                    return `${parseInt(val / 12.5)} Meses e Meio`
+                }
+            }
 
+            const preencher = (item) => {
+                let val = parseFloat(item.value)
+                if(!isNaN(val)){
+                    elemento = item.parentNode.children[0]
+                    elemento.style.width = ((val / .5) * 6.25) + `%`
+                    elemento.innerHTML = quantidadeMes(parseFloat((val / .5) * 6.25)) // exibe qtd de meses
+                }
+            }
+
+            for(let etapa of etapas){
+
+                preencher(etapa)
+            }
+
+            for(let etapa of listaEtapas){
+                etapa.innerHTML = quantidadeMes(parseFloat((etapa.innerHTML / .5) * 6.25))
+            }
+        </script>
+    </div>
 </body>
-
 </html>

@@ -468,7 +468,7 @@ foreach ($array_status as $idStatus)
                                     <td class='list_description'><?= isset($campo['nome']) ? $campo['nome'] : $campo['razaoSocial'] ?></td>
                                     <td class='list_description'><?= isset($campo['cpf']) ? $campo['cpf'] : $campo['cnpj'] ?></td>
                                     <td class='list_description'><?= mb_strimwidth($campo['areaAtuacao'], 0, 38, "...") ?></td>
-                                    <?php echo ($status['ordem'] >= 5) ? "<td class='list_description'>".$campo['comissao']."</td>" : NULL ?>
+                                    <?= ($status['ordem'] >= 5) ? "<td class='list_description'>".$campo['comissao']."</td>" : NULL ?>
                                     <?php
                                     /*TODO: Transformar este bloco de if/elseif em função*/
                                     if ($status['idEtapaProjeto'] == 23)
@@ -494,7 +494,7 @@ foreach ($array_status as $idStatus)
                                         echo "<td><a href='../uploadsdocs/".$complemento['arquivo']."' target='_blank'>".mb_strimwidth($complemento['arquivo'], 15, 25, "...")."</a></td>";
                                         echo "<td>".$dias->format("%a dias")."</td>";
                                     }
-                                    if ($pf['idNivelAcesso'] == 2 )
+                                    if ($pf['idNivelAcesso'] == 2)
                                     {
                                         if ($campo['idStatus'] != 6) {
                                             ?>
@@ -848,7 +848,4 @@ foreach ($array_status as $idStatus)
         $(this).find('#formArquivar input[name="idProjeto"]').attr('value', idProjeto);
 
     });
-
-
-
 </script>
