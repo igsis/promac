@@ -110,9 +110,24 @@ $pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
 						<div class="table-responsive list_info"><h6>Upload de Arquivo(s) Somente em PDF</h6>
 						<form method="POST" action="?perfil=arquivos_incentivador_pj" enctype="multipart/form-data">
 						<?php
+                            if ($pj['imposto'] == 1)
+                            {
+                                $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND idListaDocumento NOT IN (35) AND publicado = '1'";
+                            }
+                            elseif ($pj['imposto'] == 2)
+                            {
+                                $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND idListaDocumento NOT IN (53) AND publicado = '1'";
+                            }
+                            elseif ($pj['imposto'] == 3)
+                            {
+                                $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND publicado = '1'";
+                            }
+                            else
+                            {
+                                $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND idListaDocumento NOT IN (35, 53) AND publicado = '1'";
+                            }
 							$documentos = [];
-							$sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa'";
-							$query_arquivos = mysqli_query($con,$sql_arquivos);									
+							$query_arquivos = mysqli_query($con,$sql_arquivos);
 							while($arq = mysqli_fetch_array($query_arquivos))
 							{
 								$doc = $arq['documento'];
