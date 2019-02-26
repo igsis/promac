@@ -276,29 +276,6 @@ if ($pf['liberado'] == 3) {
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-8">
-                                <div class="row">
-                                    <label for="">Imposto:</label>
-                                </div>
-
-                                <div class="row">
-                                    <label class="radio-inline">
-                                        <input type="radio" name="imposto"
-                                               value="1" <?= ($pf['imposto'] == 1) ? "checked" : "" ?>>ISS
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="imposto"
-                                               value="2" <?= ($pf['imposto'] == 2) ? "checked" : "" ?>>IPTU
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="imposto"
-                                               value="3" <?= ($pf['imposto'] == 3) ? "checked" : "" ?>>ISS e IPTU
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
                         <!-- Botão para Gravar -->
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-8">

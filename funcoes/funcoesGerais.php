@@ -2421,17 +2421,32 @@ function validaLocalZona($conteudo)
   return $conteudo == 0 ? true : false;  
 }
 
-function retornaDocumentosObrigatoriosProponente($tipoPessoa)
+function retornaDocumentosObrigatoriosProponente($tipoPessoa, $id = null)
 {
   $documentos = [];
   $conexao = bancoMysqli();
-  $query =  "SELECT 
-               doc.idListaDocumento                         
-             FROM 
-               lista_documento AS doc  
-  			  WHERE doc.idListaDocumento <> 27
-  			  AND   doc.idListaDocumento <> 16
-  			  AND   doc.idListaDocumento <> 17
+  $listaDocumentos = [
+    'doc.idListaDocumento <> 27',
+    'doc.idListaDocumento <> 16',
+    'doc.idListaDocumento <> 17'
+  ];
+
+  if ($tipoPessoa == 5)
+  {
+      $imposto = $conexao->query("SELECT imposto FROM incentivador_pessoa_juridica WHERE idPj = '$id'")->fetch_assoc()['imposto'];
+      if ($imposto == 1)
+      {
+          array_push($listaDocumentos, 'doc.idListaDocumento <> 35');
+      }
+      elseif ($imposto == 2)
+      {
+          array_push($listaDocumentos, 'doc.idListaDocumento <> 53');
+      }
+  }
+
+  $query =  "SELECT doc.idListaDocumento                         
+             FROM lista_documento AS doc  
+  			  WHERE ".implode(' AND ', $listaDocumentos)."
   			  AND doc.idTipoUpload = ".$tipoPessoa;
 
   $resultado = mysqli_query($conexao,$query);
