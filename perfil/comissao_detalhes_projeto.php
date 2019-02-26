@@ -85,6 +85,8 @@ if(isset($_POST['gravarAdm']))
     $valorAprovado = dinheiroDeBr($_POST['valorAprovado']);
     $renunciaFiscal = $_POST['idRenunciaFiscal'];
     $statusParecerista = $_POST['idStatusParecerista'];
+    $areaAtuacao = $_POST['areaAtuacao'];
+
     if($_POST['dataReuniao'] == 0000-00-00)
     {
         $dataReuniao = '';
@@ -95,7 +97,7 @@ if(isset($_POST['gravarAdm']))
     }
     $data = date('Y-m-d H:i:s');
     $idUsuario = $_SESSION['idUser'];
-	$sql_gravarAdm = "UPDATE projeto SET valorAprovado = '$valorAprovado', idRenunciaFiscal = '$renunciaFiscal', idStatusParecerista = '$statusParecerista', dataReuniao = '$dataReuniao' WHERE idProjeto = '$idProjeto'";
+	$sql_gravarAdm = "UPDATE projeto SET idAreaAtuacao = '$areaAtuacao', valorAprovado = '$valorAprovado', idRenunciaFiscal = '$renunciaFiscal', idStatusParecerista = '$statusParecerista', dataReuniao = '$dataReuniao' WHERE idProjeto = '$idProjeto'";
 	if(mysqli_query($con,$sql_gravarAdm))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
