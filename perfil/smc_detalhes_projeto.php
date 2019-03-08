@@ -141,36 +141,44 @@ if(isset($_POST['aprovaProjeto']))
             $idEtapaNova = 5;
             $etapa = recuperaDados("etapa_projeto","idEtapaProjeto",$idEtapaNova);
             $idStatus = $etapa['idStatus'];
+            $etapaValida = true;
             break;
         case 20:
             $idEtapaNova = 21;
             $etapa = recuperaDados("etapa_projeto","idEtapaProjeto",$idEtapaNova);
             $idStatus = $etapa['idStatus'];
+            $etapaValida = true;
             break;
         case 25:
             $idEtapaNova = 26;
             $etapa = recuperaDados("etapa_projeto","idEtapaProjeto",$idEtapaNova);
             $idStatus = $etapa['idStatus'];
+            $etapaValida = true;
             break;
         case 15:
             $idEtapaNova = 16;
             $etapa = recuperaDados("etapa_projeto","idEtapaProjeto",$idEtapaNova);
             $idStatus = $etapa['idStatus'];
+            $etapaValida = true;
+            break;
+        default:
+            $etapaValida = false;
             break;
     }
-    $dateNow = date('Y-m-d H:i:s');
-    $sql_reprova = "UPDATE projeto SET idEtapaProjeto = '$idEtapaNova', idStatus = '$idStatus' WHERE idProjeto = '$idProjeto'";
-    if(mysqli_query($con,$sql_reprova))
-    {
-        $sql_historico = "INSERT INTO historico_etapa (idProjeto, idEtapaProjeto, data) VALUES ('$idProjeto', '$idEtapaNova', '$dateNow')";
-        $query_historico = mysqli_query($con, $sql_historico);
-        $mensagem = "<font color='#01DF3A'><strong>Aprovado com sucesso!</strong></font>";
-        gravarLog($sql_historico);
-        gravarLog($sql_reprova);
-    }
-    else
-    {
-        $mensagem = "<font color='#FF0000'><strong>Erro ao aprovar! Tente novamente.</strong></font>";
+    if ($etapaValida) {
+        $dateNow = date('Y-m-d H:i:s');
+        $sql_reprova = "UPDATE projeto SET idEtapaProjeto = '$idEtapaNova', idStatus = '$idStatus' WHERE idProjeto = '$idProjeto'";
+        if (mysqli_query($con, $sql_reprova)) {
+            $sql_historico = "INSERT INTO historico_etapa (idProjeto, idEtapaProjeto, data) VALUES ('$idProjeto', '$idEtapaNova', '$dateNow')";
+            $query_historico = mysqli_query($con, $sql_historico);
+            $mensagem = "<font color='#01DF3A'><strong>Aprovado com sucesso!</strong></font>";
+            gravarLog($sql_historico);
+            gravarLog($sql_reprova);
+        } else {
+            $mensagem = "<font color='#FF0000'><strong>Erro ao aprovar! Tente novamente.</strong></font>";
+        }
+    } else {
+        $mensagem = "<font color='#FF0000'><strong>Projeto já aprovado.</strong></font>";
     }
 }
 
@@ -183,36 +191,44 @@ if(isset($_POST['reprovaProjeto']))
             $idEtapaNova = 6;
             $etapa = recuperaDados("etapa_projeto","idEtapaProjeto",$idEtapaNova);
             $idStatus = $etapa['idStatus'];
+            $etapaValida = true;
             break;
         case 20:
             $idEtapaNova = 22;
             $etapa = recuperaDados("etapa_projeto","idEtapaProjeto",$idEtapaNova);
             $idStatus = $etapa['idStatus'];
+            $etapaValida = true;
             break;
         case 25:
             $idEtapaNova = 27;
             $etapa = recuperaDados("etapa_projeto","idEtapaProjeto",$idEtapaNova);
             $idStatus = $etapa['idStatus'];
+            $etapaValida = true;
             break;
         case 15:
             $idEtapaNova = 17;
             $etapa = recuperaDados("etapa_projeto","idEtapaProjeto",$idEtapaNova);
             $idStatus = $etapa['idStatus'];
+            $etapaValida = true;
+            break;
+        default:
+            $etapaValida = false;
             break;
     }
-    $dateNow = date('Y-m-d H:i:s');
-    $sql_reprova = "UPDATE projeto SET idEtapaProjeto = '$idEtapaNova', idStatus = '$idStatus' WHERE idProjeto = '$idProjeto'";
-    if(mysqli_query($con,$sql_reprova))
-    {
-        $sql_historico = "INSERT INTO historico_etapa (idProjeto, idEtapaProjeto, data) VALUES ('$idProjeto', '$idEtapaNova', '$dateNow')";
-        $query_historico = mysqli_query($con, $sql_historico);
-        $mensagem = "<font color='#01DF3A'><strong>Reaprovado com sucesso!</strong></font>";
-        gravarLog($sql_historico);
-        gravarLog($sql_reprova);
-    }
-    else
-    {
-        $mensagem = "<font color='#FF0000'><strong>Erro ao reaprovar! Tente novamente.</strong></font>";
+    if ($etapaValida) {
+        $dateNow = date('Y-m-d H:i:s');
+        $sql_reprova = "UPDATE projeto SET idEtapaProjeto = '$idEtapaNova', idStatus = '$idStatus' WHERE idProjeto = '$idProjeto'";
+        if (mysqli_query($con, $sql_reprova)) {
+            $sql_historico = "INSERT INTO historico_etapa (idProjeto, idEtapaProjeto, data) VALUES ('$idProjeto', '$idEtapaNova', '$dateNow')";
+            $query_historico = mysqli_query($con, $sql_historico);
+            $mensagem = "<font color='#01DF3A'><strong>Reaprovado com sucesso!</strong></font>";
+            gravarLog($sql_historico);
+            gravarLog($sql_reprova);
+        } else {
+            $mensagem = "<font color='#FF0000'><strong>Erro ao reaprovar! Tente novamente.</strong></font>";
+        }
+    } else {
+        $mensagem = "<font color='#FF0000'><strong>Projeto já reprovado.</strong></font>";
     }
 }
 
@@ -260,48 +276,57 @@ if(isset($_POST['envioComissao']))
     switch ($idEtapaProjeto) {
         case 2:
             $etapaProjeto = 7;
+            $etapaValida = true;
             $dataParecerista = "0000-00-00";
             break;
         case 10:
             $etapaProjeto = 7;
+            $etapaValida = true;
             break;
         case 13:
             $etapaProjeto = 19;
+            $etapaValida = true;
             break;
         case 20:
             $etapaProjeto = 19;
+            $etapaValida = true;
             break;
         case 14:
             $etapaProjeto = 34;
+            $etapaValida = true;
             break;
         case 15:
             $etapaProjeto = 34;
+            $etapaValida = true;
             break;
         case 23:
             $etapaProjeto = 24;
+            $etapaValida = true;
             break;
         case 25:
             $etapaProjeto = 24;
+            $etapaValida = true;
             break;
         default:
-            $idEtapaProjeto = $projeto['idEtapaProjeto'];
+            $etapaValida = false;
             break;
     }
 
-    $sql_envioComissao = "UPDATE projeto SET idEtapaProjeto = '$etapaProjeto', idStatus = 2, dataParecerista = '$dataParecerista', envioComissao = '$dateNow' WHERE idProjeto = '$idProjeto' ";
-    if(mysqli_query($con,$sql_envioComissao))
-    {
-        $sql_contagem_comissao = "UPDATE `contagem_comissao` SET `projetos` = '".($projetos+1)."' WHERE `semana` = '$semanaAtual'";
-        $con->query($sql_contagem_comissao);
-        $sql_historico = "INSERT INTO historico_etapa (idProjeto, idEtapaProjeto, data) VALUES ('$idProjeto', '$etapaProjeto', '$dateNow')";
-        $query_historico = mysqli_query($con, $sql_historico);
-        $mensagem = "<font color='#01DF3A'><strong>Enviado com sucesso!</strong></font>";
-        gravarLog($sql_historico);
-        gravarLog($sql_envioComissao);
-    }
-    else
-    {
-        $mensagem = "<font color='#FF0000'><strong>Erro ao enviar! Tente novamente.</strong></font>";
+    if ($etapaValida) {
+        $sql_envioComissao = "UPDATE projeto SET idEtapaProjeto = '$etapaProjeto', idStatus = 2, dataParecerista = '$dataParecerista', envioComissao = '$dateNow' WHERE idProjeto = '$idProjeto' ";
+        if (mysqli_query($con, $sql_envioComissao)) {
+            $sql_contagem_comissao = "UPDATE `contagem_comissao` SET `projetos` = '" . ($projetos + 1) . "' WHERE `semana` = '$semanaAtual'";
+            $con->query($sql_contagem_comissao);
+            $sql_historico = "INSERT INTO historico_etapa (idProjeto, idEtapaProjeto, data) VALUES ('$idProjeto', '$etapaProjeto', '$dateNow')";
+            $query_historico = mysqli_query($con, $sql_historico);
+            $mensagem = "<font color='#01DF3A'><strong>Enviado com sucesso!</strong></font>";
+            gravarLog($sql_historico);
+            gravarLog($sql_envioComissao);
+        } else {
+            $mensagem = "<font color='#FF0000'><strong>Erro ao enviar! Tente novamente.</strong></font>";
+        }
+    } else {
+        $mensagem = "<font color='#FF0000'><strong>Projeto já enviado.</strong></font>";
     }
 }
 
@@ -350,8 +375,6 @@ if(isset($_POST['gravarFin']))
         $mensagem = "<font color='#FF0000'><strong>Erro ao atualizar! Tente novamente.</strong></font>";
     }
 }
-
-
 
 if(isset($_POST['apagaIncentivador']))
 {

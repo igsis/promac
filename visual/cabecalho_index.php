@@ -10,6 +10,7 @@
 		<script src="visual/js/jquery-1.9.1.js"></script>
 		<script src="visual/js/jquery.maskedinput.js" type="text/javascript"></script>
 		<script src="visual/js/jquery.maskMoney.js" type="text/javascript"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 		<script type="text/javascript">
 			$(document).ready(function(){	$("#cpf").mask("999.999.999-99");});
 			$(document).ready(function(){	$("#cnpj").mask("99.999.999/9999-99");});

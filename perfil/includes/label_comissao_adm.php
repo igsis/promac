@@ -90,8 +90,8 @@
         </h5>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-4"><label>Valor Aprovado *</label><br/>
-                <input type="text" name="valorAprovado" id='valor' required class="form-control"
-                       value="<?php echo dinheiroParaBr($projeto['valorAprovado']) ?>">
+                <input type="text" name="valorAprovado" id='valorAprovado' required class="form-control"
+                       value="<?php echo dinheiroParaBr($projeto['valorAprovado']) ?>" onblur="deixarObrigatorio()" onkeypress="return(moeda(this,'.',',',event))">
             </div>
             <div class="col-md-4"><label>Valor da Renúncia *</label><br/>
                 <select class="form-control" name="idRenunciaFiscal" required>
@@ -102,7 +102,7 @@
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-4"><label>Análise do Parecerista *</label><br/>
-                <select class="form-control" name="idStatusParecerista" required>
+                <select class="form-control" name="idStatusParecerista" id="statusParecerista" onchange="deixarObrigatorio()" required >
                     <option value="">Selecione...</option>
                     <?php echo geraOpcao("status_parecerista", $projeto['idStatusParecerista']) ?>
                 </select>
@@ -116,7 +116,7 @@
             <div class="col-md-offset-2 col-md-8">
                 <input type="hidden" name="idEtapaProjeto" value="<?= $projeto['idEtapaProjeto'] ?>">
                 <input type="hidden" name="idProjeto" value="<?php echo $idProjeto ?>">
-                <input type="submit" name="gravarAdm" class="btn btn-theme btn-md btn-block" value="Gravar">
+                <input type="submit" name="gravarAdm" id="gravarAdm" class="btn btn-theme btn-md btn-block" value="Gravar">
             </div>
         </div>
     </form>
@@ -191,6 +191,7 @@
                     </button>
                     <h4 class="modal-title"><p>Confirma?</p></h4>
                 </div>
+
                 <div class="modal-body">
                     <p>Confirma?</p>
                 </div>
@@ -212,4 +213,85 @@
         </div>
     </div>
 </div>
+
+<script src="sweetalert2/dist/sweetalert2.min.js"></script>
+<link rel="stylesheet" href="sweetalert2/dist/sweetalert2.min.css">
+
+
+<script>
+
+    function deixarObrigatorio() {
+        let optionSelect = document.querySelector("#statusParecerista").value;
+        console.log(optionSelect);
+
+        let valorAprovado = document.querySelector("#valorAprovado").value;
+        console.log(valorAprovado);
+
+        let grava = document.querySelector('#gravarAdm');
+
+        if (optionSelect != "1") {
+            document.querySelector("#valorAprovado").required = false;
+            grava.disabled = false;
+        } else if (optionSelect == "1") {
+            document.querySelector("#valorAprovado").required = true;
+            if ((valorAprovado == '') || (valorAprovado == "0,00")){
+                swal("Atenção!", "Informe o valor aprovado para gravar!");
+                grava.disabled = true;
+            }else{
+                grava.disabled = false;
+            }
+        }
+    }
+
+    window.onload = deixarObrigatorio();
+
+    /*let select = document.querySelector("").value
+    select.value
+    select.innerHTML  // para texto
+    ".class"
+    "#id"
+    "nomeTag" */
+
+
+
+    function moeda(a, e, r, t) {
+        let n = ""
+            , h = j = 0
+            , u = tamanho2 = 0
+            , l = ajd2 = ""
+            , o = window.Event ? t.which : t.keyCode;
+        if (13 == o || 8 == o)
+            return !0;
+        if (n = String.fromCharCode(o),
+        -1 == "0123456789".indexOf(n))
+            return !1;
+        for (u = a.value.length,
+                 h = 0; h < u && ("0" == a.value.charAt(h) || a.value.charAt(h) == r); h++)
+            ;
+        for (l = ""; h < u; h++)
+            -1 != "0123456789".indexOf(a.value.charAt(h)) && (l += a.value.charAt(h));
+        if (l += n,
+        0 == (u = l.length) && (a.value = ""),
+        1 == u && (a.value = "0" + r + "0" + l),
+        2 == u && (a.value = "0" + r + l),
+        u > 2) {
+            for (ajd2 = "",
+                     j = 0,
+                     h = u - 3; h >= 0; h--)
+                3 == j && (ajd2 += e,
+                    j = 0),
+                    ajd2 += l.charAt(h),
+                    j++;
+            for (a.value = "",
+                     tamanho2 = ajd2.length,
+                     h = tamanho2 - 1; h >= 0; h--)
+                a.value += ajd2.charAt(h);
+            a.value += r + l.substr(u - 2, u)
+        }
+        return !1
+    }
+
+
+</script>
+
 

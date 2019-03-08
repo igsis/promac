@@ -3,6 +3,7 @@
 set_time_limit(1200);
 
 $con = bancoMysqli();
+$conn = bancoPDO();
 
 $nome = $_POST['nome'] ?? NULL;
 $cpf = $_POST['cpf'] ?? NULL;

@@ -36,6 +36,7 @@ if (isset($_POST['cadastraNovoPf']) and $_POST['numero']):
     $CEP = $_POST['cep'];
     $Numero = $_POST['numero'];
     $Complemento = addslashes($_POST['complemento']);
+    $imposto = $_POST['imposto'];
 
     $validar = array(
         $_POST['Endereco'],
@@ -76,6 +77,8 @@ if (isset($_POST['cadastraNovoPf']) and $_POST['numero']):
     }
 endif;
 
+$pf = recuperaDados("incentivador_pessoa_fisica", "idPf", $idPf);
+
 if ($pf['liberado'] == 3) {
     echo "<div class='alert alert-warning'>
 	<strong>Aviso!</strong> Seus dados já foram aceitos, portanto, não podem ser alterados.</div>";
@@ -87,8 +90,7 @@ if ($pf['liberado'] == 3) {
 
     include 'includes/resumo_dados_incentivador_pf.php';
 } else {
-
-    ?>
+?>
 
     <section id="contact" class="home-section bg-white">
         <div class="container"><?php include 'includes/menu_interno_pf.php'; ?>
@@ -106,15 +108,7 @@ if ($pf['liberado'] == 3) {
                             <div class="col-md-offset-2 col-md-8"><strong>Nome *:</strong><br/>
                                 <input type="text" class="form-control" name="nome"
                                        placeholder="Nome" required
-                                       value="<?php
-                                       if(!empty($_POST['nome'])):
-                                           echo $_POST['nome'];
-                                       elseif(!empty($pf['nome'])):
-                                           echo $pf['nome'];
-                                       else:
-                                           echo '';
-                                       endif
-                                       ?>">
+                                       value="<?= (!empty($pf['nome'])) ? $pf['nome'] : "" ?>">
                             </div>
                         </div>
 
@@ -127,15 +121,7 @@ if ($pf['liberado'] == 3) {
                             <div class="col-md-6"><strong>RG ou RNE *:</strong><br/>
                                 <input type="text" class="form-control" name="rg"
                                        placeholder="Número do Documento" required
-                                       value="<?php
-                                       if(!empty($_POST['rg'])):
-                                           echo $_POST['rg'];
-                                       elseif(!empty($pf['rg'])):
-                                           echo $pf['rg'];
-                                       else:
-                                           echo '';
-                                       endif
-                                       ?>">
+                                       value="<?= (!empty($pf['rg'])) ? $pf['rg'] : "" ?>">
                             </div>
                         </div>
 
@@ -143,15 +129,7 @@ if ($pf['liberado'] == 3) {
                             <div class="col-md-offset-2 col-md-8"><strong>Email *:</strong><br/>
                                 <input type="email" class="form-control" name="email"
                                        placeholder="E-mail" required
-                                       value="<?php
-                                       if(!empty($_POST['email'])):
-                                           echo $_POST['email'];
-                                       elseif(!empty($pf['email'])):
-                                           echo $pf['email'];
-                                       else:
-                                           echo '';
-                                       endif
-                                       ?>">
+                                       value="<?= (!empty($pf['email'])) ? $pf['email'] : "" ?>">
                             </div>
                         </div>
 
@@ -160,29 +138,13 @@ if ($pf['liberado'] == 3) {
                                 <input type="text" class="form-control" name="telefone" id="telefone"
                                        onkeyup="mascara( this, mtel );" maxlength="15"
                                        placeholder="Exemplo: (11) 98765-4321"
-                                       value="<?php
-                                       if(!empty($_POST['telefone'])):
-                                           echo $_POST['telefone'];
-                                       elseif(!empty($pf['telefone'])):
-                                           echo $pf['telefone'];
-                                       else:
-                                           echo '';
-                                       endif
-                                       ?>">
+                                       value="<?= (!empty($pf['telefone'])) ? $pf['telefone'] : "" ?>">
                             </div>
                             <div class="col-md-6"><strong>Celular:</strong><br/>
                                 <input type="text" class="form-control" name="celular" id="telefone"
                                        onkeyup="mascara( this, mtel );" maxlength="15"
                                        placeholder="Exemplo: (11) 98765-4321"
-                                       value="<?php
-                                       if(!empty($_POST['celular'])):
-                                           echo $_POST['celular'];
-                                       elseif(!empty($pf['celular'])):
-                                           echo $pf['celular'];
-                                       else:
-                                           echo '';
-                                       endif
-                                       ?>">
+                                       value="<?= (!empty($pf['celular'])) ? $pf['celular'] : "" ?>">
                             </div>
                         </div>
 
@@ -194,15 +156,7 @@ if ($pf['liberado'] == 3) {
                             <div class="col-md-offset-2 col-md-6"><strong>CEP *:</strong><br/>
                                 <input type="text" class="form-control" id="CEP" name="cep"
                                        placeholder="CEP" required
-                                       value="<?php
-                                       if(!empty($_POST['cep'])):
-                                           echo $_POST['cep'];
-                                       elseif(!empty($pf['cep'])):
-                                           echo $pf['cep'];
-                                       else:
-                                           echo '';
-                                       endif
-                                       ?>">
+                                       value="<?= (!empty($pf['cep'])) ? $pf['cep'] : "" ?>">
                             </div>
                             <div class="col-md-6" align="left">
                                 <i>Clique no número do CEP e pressione a tecla Tab para carregar</i>

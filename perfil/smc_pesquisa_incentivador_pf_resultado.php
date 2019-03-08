@@ -1,9 +1,9 @@
 <?php
 $con = bancoMysqli();
 
-$nome = $_POST['nome'];
-$cpf = $_POST['cpf'];
-$liberado = $_POST['liberado'];
+$nome = isset($_POST['nome']) ? $_POST['nome'] : null;
+$cpf = isset($_POST['cpf']) ? $_POST['cpf'] : null;
+$liberado = isset($_POST['liberado']) ? $_POST['liberado'] : null;
 
 if($nome != '')
 {

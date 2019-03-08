@@ -227,7 +227,7 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 								<td>Proponente</td>
 								<td>Documento</td>
 								<td>Área de Atuação</td>
-								<td>Eatapa</td>
+								<td>Etapa</td>
 								<td>Parecerista</td>
 								<td width='10%'></td>
 							</tr>
