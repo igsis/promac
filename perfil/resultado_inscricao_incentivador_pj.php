@@ -180,7 +180,22 @@ if(isset($_POST['apagar']))
 						<form method="POST" action="?perfil=resultado_inscricao_incentivador_pj" enctype="multipart/form-data">
 							<?php
 								$documentos = [];
-								$sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa'";
+                                if ($pj['imposto'] == 1)
+                                {
+                                    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND idListaDocumento NOT IN (35) AND publicado = '1'";
+                                }
+                                elseif ($pj['imposto'] == 2)
+                                {
+                                    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND idListaDocumento NOT IN (53) AND publicado = '1'";
+                                }
+                                elseif ($pj['imposto'] == 3)
+                                {
+                                    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND publicado = '1'";
+                                }
+                                else
+                                {
+                                    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND idListaDocumento NOT IN (35, 53) AND publicado = '1'";
+                                }
 								$query_arquivos = mysqli_query($con,$sql_arquivos);									
 								while($arq = mysqli_fetch_array($query_arquivos))
 								{

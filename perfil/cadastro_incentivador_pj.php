@@ -37,6 +37,7 @@ if (isset($_POST['cadastraNovoPj']) and $_POST['numero']):
     $CEP = $_POST['cep'];
     $Numero = $_POST['numero'];
     $Complemento = addslashes($_POST['complemento']);
+    $imposto = $_POST['imposto'];
 
     $validar = array(
         $_POST['Endereco'],
@@ -59,6 +60,7 @@ if (isset($_POST['cadastraNovoPj']) and $_POST['numero']):
 	`cep` = '$CEP',
 	`numero` = '$Numero',
 	`complemento` = '$Complemento',
+	`imposto` = '$imposto',
 	`alteradoPor` = '$userIn'
 	WHERE `idPj` = '$idPj'";
 
@@ -74,6 +76,8 @@ if (isset($_POST['cadastraNovoPj']) and $_POST['numero']):
         $mensagem = "<font color='#FF0000'><strong>Erro ao atualizar! Tente novamente.</strong></font>";
     }
 endif;
+
+$pj = recuperaDados("incentivador_pessoa_juridica", "idPj", $idPj);
 
 if ($pj['liberado'] == 3) {
     echo "<div class='alert alert-warning'>
@@ -104,35 +108,19 @@ if ($pj['liberado'] == 3) {
                             <div class="col-md-offset-2 col-md-8"><strong>Razão Social *:</strong><br/>
                                 <input type="text" class="form-control" name="razaoSocial"
                                        placeholder="Razão Social" required
-                                       value="<?php
-                                       if(!empty($_POST['razaoSocial'])):
-                                           echo $_POST['razaoSocial'];
-                                       elseif(!empty($pj['razaoSocial'])):
-                                           echo $pj['razaoSocial'];
-                                       else:
-                                           echo '';
-                                       endif
-                                       ?>">
+                                       value="<?= (!empty($pj['razaoSocial'])) ? $pj['razaoSocial'] : "" ?>">
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-6"><strong>CNPJ *:</strong><br/>
                                 <input type="text" readonly class="form-control" id="cnpj"
                                        name="cnpj" placeholder="CNPJ" required
-                                       value="<?php echo $pj['cnpj']; ?>" >
+                                       value="<?= $pj['cnpj'] ?>">
                             </div>
                             <div class="col-md-6"><strong>E-mail *:</strong><br/>
                                 <input type="text" class="form-control" name="email" required
                                        placeholder="E-mail"
-                                       value="<?php
-                                       if(!empty($_POST['email'])):
-                                           echo $_POST['email'];
-                                       elseif(!empty($pj['email'])):
-                                           echo $pj['email'];
-                                       else:
-                                           echo '';
-                                       endif
-                                       ?>">
+                                       value="<?= (!empty($pj['email'])) ? $pj['email'] : ""?>">
                             </div>
                         </div>
 
@@ -141,29 +129,13 @@ if ($pj['liberado'] == 3) {
                                 <input type="text" class="form-control" name="telefone" id="telefone"
                                        onkeyup="mascara( this, mtel );" maxlength="15"
                                        placeholder="Exemplo: (11) 98765-4321"
-                                       value="<?php
-                                       if(!empty($_POST['telefone'])):
-                                           echo $_POST['telefone'];
-                                       elseif(!empty($pj['telefone'])):
-                                           echo $pj['telefone'];
-                                       else:
-                                           echo '';
-                                       endif
-                                       ?>">
+                                       value="<?= (!empty($pj['telefone'])) ? $pj['telefone'] : ""?>">
                             </div>
                             <div class="col-md-6"><strong>Celular:</strong><br/>
                                 <input type="text" class="form-control" name="celular" id="telefone"
                                        onkeyup="mascara( this, mtel );" maxlength="15"
                                        placeholder="Exemplo: (11) 98765-4321"
-                                       value="<?php
-                                       if(!empty($_POST['celular'])):
-                                           echo $_POST['celular'];
-                                       elseif(!empty($pj['celular'])):
-                                           echo $pj['celular'];
-                                       else:
-                                           echo '';
-                                       endif
-                                       ?>">
+                                       value="<?= (!empty($pj['celular'])) ? $pj['celular'] : ""?>">
                             </div>
                         </div>
 
@@ -175,15 +147,7 @@ if ($pj['liberado'] == 3) {
                             <div class="col-md-offset-2 col-md-6"><strong>CEP *:</strong><br/>
                                 <input type="text" class="form-control" id="CEP" name="cep"
                                        placeholder="CEP" required
-                                       value="<?php
-                                       if(!empty($_POST['cep'])):
-                                           echo $_POST['cep'];
-                                       elseif(!empty($pj['cep'])):
-                                           echo $pj['cep'];
-                                       else:
-                                           echo '';
-                                       endif
-                                       ?>">
+                                       value="<?= (!empty($pj['cep'])) ? $pj['cep'] : ""?>">
                             </div>
                             <div class="col-md-6" align="left"><br/>
                                 <i>Pressione a tecla Tab para carregar</i>
@@ -218,28 +182,12 @@ if ($pj['liberado'] == 3) {
                             <div class="col-md-offset-2 col-md-6"><strong>Número *:</strong><br/>
                                 <input type="text" class="form-control" id="numero" name="numero"
                                        placeholder="Número" required
-                                       value="<?php
-                                       if(!empty($_POST['numero'])):
-                                           echo $_POST['numero'];
-                                       elseif(!empty($pj['numero'])):
-                                           echo $pj['numero'];
-                                       else:
-                                           echo '';
-                                       endif
-                                       ?>">
+                                       value="<?= (!empty($pj['numero'])) ? $pj['numero'] : ""?>">
                             </div>
                             <div class=" col-md-6"><strong>Complemento:</strong><br/>
                                 <input type="text" class="form-control" id="complemento"
                                        name="complemento" placeholder="Complemento"
-                                       value="<?php
-                                       if(!empty($_POST['complemento'])):
-                                           echo $_POST['complemento'];
-                                       elseif(!empty($pj['complemento'])):
-                                           echo $pj['complemento'];
-                                       else:
-                                           echo '';
-                                       endif
-                                       ?>">
+                                       value="<?= (!empty($pj['complemento'])) ? $pj['complemento'] : ""?>">
                             </div>
                         </div>
 
@@ -319,6 +267,29 @@ if ($pj['liberado'] == 3) {
                                                echo '';
                                            endif?>">
                                 <?php endif ?>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-8">
+                                <div class="row">
+                                    <label for="">Imposto:</label>
+                                </div>
+
+                                <div class="row">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="imposto"
+                                               value="1" <?= ($pj['imposto'] == 1) ? "checked" : "" ?>>ISS
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="imposto"
+                                               value="2" <?= ($pj['imposto'] == 2) ? "checked" : "" ?>>IPTU
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="imposto"
+                                               value="3" <?= ($pj['imposto'] == 3) ? "checked" : "" ?>>ISS e IPTU
+                                    </label>
+                                </div>
                             </div>
                         </div>
 
