@@ -50,7 +50,7 @@ $tipoPessoa = '6';
                         <div class="alert-danger">
                             <br/>
                             <h6><span style="color: red; ">ATENÇÃO!</span></h6>
-                            <p><span style="color: red; ">O PROMAC informa que dos dias 24/12/2018 a 07/01/2019 não haverá agendamento para assinatura do Termo de Responsabilidade. Os agendamentos retornarão normalmente no dia 08/01/2019.</span></p>
+                            <p><span style="color: red; ">O sistema PROMAC estará inoperante nos dias 06, 07 e 08 de Março de 2019 para implantação de novas funcionalidades</span></p>
                             <br/>
                         </div>
                         <p>&nbsp;</p>
