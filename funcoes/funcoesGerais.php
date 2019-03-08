@@ -2427,11 +2427,19 @@ function retornaDocumentosObrigatoriosProponente($tipoPessoa, $id = null)
   $conexao = bancoMysqli();
   $listaDocumentos = [
     'doc.idListaDocumento <> 27',
-    'doc.idListaDocumento <> 16',
-    'doc.idListaDocumento <> 17'
+    'doc.idListaDocumento <> 16'
   ];
 
-  if ($tipoPessoa == 5)
+  if ($tipoPessoa == 2)
+  {
+      $cooperativa = $conexao->query("SELECT cooperativa FROM pessoa_juridica WHERE idPj = '$id'")->fetch_assoc()['cooperativa'];
+      if ($cooperativa != 1)
+      {
+          array_push($listaDocumentos, 'doc.idListaDocumento <> 17');
+      }
+  }
+
+  elseif ($tipoPessoa == 5)
   {
       $imposto = $conexao->query("SELECT imposto FROM incentivador_pessoa_juridica WHERE idPj = '$id'")->fetch_assoc()['imposto'];
       if ($imposto == 1)

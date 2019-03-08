@@ -22,7 +22,7 @@ function arquivosObrigatorios($tipoPessoa, $tipoDoc, $idUser, $idProjeto)
 
     if ($tipoDoc == 'proponente'):
 
-        if ($tipoPessoa == 5) {
+        if (($tipoPessoa == 5) || ($tipoPessoa == 2)) {
             $docObrig = formataDados(retornaDocumentosObrigatoriosProponente($tipoPessoa, $idUser));
         }
         else {
