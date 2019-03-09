@@ -565,6 +565,29 @@ function recuperaStatus()
     }
 }
 
+function recuperaDataPublicacao($idProjeto){
+    $con = bancoMysqli();
+    $query = "SELECT list.documento,
+               list.idListaDocumento,
+               arq.arquivo,
+               arq.idUploadArquivo AS idArquivo,
+               disp.idUploadArquivo,
+               disp.id AS 'disponibilizar',
+               arq.idStatusDocumento,
+               arq.observacoes,
+               disp.data AS dataDisponivel
+              FROM lista_documento as list
+              INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
+              LEFT JOIN disponibilizar_documento AS disp ON arq.idUploadArquivo = disp.idUploadArquivo
+              WHERE arq.idPessoa = '$idProjeto'
+                AND arq.idTipo = '9'
+                AND (list.idListaDocumento = '37' OR list.idListaDocumento = '49')
+                AND arq.publicado = '1' ORDER BY arq.idUploadArquivo DESC LIMIT 0,1";
+    $dataPublicacao = $con->query($query)->fetch_assoc()['dataDisponivel'];
+
+    return $dataPublicacao;
+}
+
 function verificaExiste($idTabela,$idCampo,$idDado,$st)
 {
 	//retorna uma array com indice 'numero' de registros e 'dados' da tabela
