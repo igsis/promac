@@ -2427,6 +2427,7 @@ function retornaDocumentosObrigatoriosProponente($tipoPessoa, $id = null)
   $conexao = bancoMysqli();
   $listaDocumentos = [
     'doc.idListaDocumento <> 27',
+    'doc.idListaDocumento <> 10',
     'doc.idListaDocumento <> 16'
   ];
 

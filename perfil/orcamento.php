@@ -106,7 +106,7 @@ if(isset($_POST['insereOrcamento']) || isset($_POST['editaOrcamento'])) {
                 }; ?></h5>
         </div>
         <div class="table-responsive list_info">
-            <h8><strong>Observação:</strong> Caso o projeto comtemple outras fontes de recurso, poderá enviar uma
+            <h8><strong>Observação:</strong> Caso o projeto contemple outras fontes de recurso, poderá enviar uma
                 planilha orçamentária completa em formato PDF na etapa ANEXOS (campo de upload <strong>Planilha
                     Orçamentária Complementar</strong>).
             </h8>
