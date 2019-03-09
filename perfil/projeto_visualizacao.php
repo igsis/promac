@@ -269,12 +269,18 @@ $link = $consulta->fetch()['linkAgendamento'];
                                     </div>-->
                             <?php
 //                                }
+                            if ($projeto['idStatus'] != 6)
+                            {
                             ?>
-                        <div class="form-group">
-                            <div class="col-md-offset-4 col-md-6">
-                                <button class='btn btn-danger btn-block' type='button' data-toggle='modal' data-target='#confirmCancelar' data-title='Cancelamento de projeto' data-message='Você realmete deseja cancelar o projeto?'>Cancelar Projeto</button>
-                            </div>
-                        </div>
+                                <div class="form-group">
+                                    <div class="col-md-offset-4 col-md-6">
+                                        <button class='btn btn-danger btn-block' type='button' data-toggle='modal' data-target='#confirmCancelar' data-title='Cancelamento de projeto' data-message='Você realmete deseja cancelar o projeto?'>Cancelar Projeto</button>
+                                    </div>
+                                </div>
+                            <?php
+                            }
+                            ?>
+
                     </div>
 
                 <!-- LABEL PROJETO -->

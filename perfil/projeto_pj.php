@@ -24,7 +24,7 @@ if(isset($_POST['apagar']))
 	}
 }
 if (isset($_POST['cancelar'])){
-    $idProjeto = $_POST['projeto'];
+    $idProjeto = $_POST['idProjeto'];
     $dateNow = date('Y-m-d H:i:s');
     $observacao = $_POST['observacao'];
 
@@ -53,7 +53,7 @@ if (isset($_POST['cancelar'])){
             <?php
             $sql_cancelados = "SELECT distinct prj.idProjeto, nomeProjeto, protocolo, acao, observacao, data FROM projeto AS prj 
                             INNER JOIN historico_cancelamento AS hst ON prj.idProjeto = hst.idProjeto
-                            WHERE idPj = '$idPj' AND publicado = 0 AND idStatus = 6";
+                            WHERE idPj = '$idPj' AND publicado = 1 AND idStatus = 6";
             $query_cancelados = mysqli_query($con,$sql_cancelados);
             $num = mysqli_num_rows($query_cancelados);
             if($num > 0){

@@ -198,6 +198,12 @@ if(isset($_POST["enviar"]))
 						$query = mysqli_query($con,$sql_insere_arquivo);
 						if($query)
 						{
+						    if ($idTipoUpload == 9)
+                            {
+                                $idUploadArquivo = recuperaUltimo("upload_arquivo");
+                                $sql_insere_data = "INSERT INTO disponibilizar_documento (idUploadArquivo) VALUES ($idUploadArquivo)";
+                                $query_insere_data = mysqli_query($con,$sql_insere_data);
+                            }
 						    $mensagem = "<font color='#01DF3A'><strong>Arquivo recebido com sucesso!</strong></font>";
 							gravarLog($sql_insere_arquivo);
 						}
