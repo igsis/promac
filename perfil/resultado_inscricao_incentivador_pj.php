@@ -158,25 +158,6 @@ if(isset($_POST['apagar']))
 				 		<?php listaArquivosPessoaObs($idPj,5) ?>
 				 	</div>
 
-	 	<ul class='list-group'>
-            <li class='list-group-item list-group-item-success'>Notas</li>
-            <?php
-                $sql = "SELECT * FROM notas WHERE idPessoa = '$idPj' AND idTipo = '5' AND interna = '1'";
-                $query = mysqli_query($con,$sql);
-                $num = mysqli_num_rows($query);
-                if($num > 0)
-                {
-                    while($campo = mysqli_fetch_array($query))
-                    {
-                        echo "<li class='list-group-item' align='left'><strong>".exibirDataHoraBr($campo['data'])."</strong><br/>".$campo['nota']."</li>";
-                    }
-                }
-                else
-                {
-                    echo "<li class='list-group-item'>Não há notas disponíveis.</li>";
-                }
-            ?>
-        </ul>
 
 
 			<?php
@@ -199,7 +180,22 @@ if(isset($_POST['apagar']))
 						<form method="POST" action="?perfil=resultado_inscricao_incentivador_pj" enctype="multipart/form-data">
 							<?php
 								$documentos = [];
-								$sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa'";
+                                if ($pj['imposto'] == 1)
+                                {
+                                    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND idListaDocumento NOT IN (35) AND publicado = '1'";
+                                }
+                                elseif ($pj['imposto'] == 2)
+                                {
+                                    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND idListaDocumento NOT IN (53) AND publicado = '1'";
+                                }
+                                elseif ($pj['imposto'] == 3)
+                                {
+                                    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND publicado = '1'";
+                                }
+                                else
+                                {
+                                    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND idListaDocumento NOT IN (35, 53) AND publicado = '1'";
+                                }
 								$query_arquivos = mysqli_query($con,$sql_arquivos);									
 								while($arq = mysqli_fetch_array($query_arquivos))
 								{
@@ -287,11 +283,25 @@ if(isset($_POST['apagar']))
 					$enviaArquivos = mysqli_query($con, $queryArquivos);
 					$numRow = mysqli_num_rows($enviaArquivos);
 					if($numRow == 8)
-					{*/?>
-				<form class="form-horizontal" role="form" action="?perfil=resultado_inscricao_incentivador_pj" method="post">
-					<input type="submit" name="liberacao" value="Concluir inscrição do Incentivador" class="btn btn-theme btn-lg btn-block">
-				</form>
-				<?php
+					{*/$query_valida = "SELECT *
+                                      FROM upload_arquivo 
+                                      WHERE idPessoa = '$idPj' AND publicado = 1 AND idTipo = 5";
+                    if ($resuldato = mysqli_query($con,$query_valida)){
+                        $num_linhas = mysqli_num_rows($resuldato);
+                        if ($num_linhas == 8) {
+                            ?>
+                            <form class="form-horizontal" role="form"
+                                  action="?perfil=resultado_inscricao_incentivador_pj" method="post">
+                                <input type="submit" name="liberacao" value="Concluir inscrição do Incentivador"
+                                       class="btn btn-theme btn-lg btn-block">
+                            </form>
+                            <?php
+                        }else{
+                            echo "<div class='alert alert-warning'>
+                            <strong>Erro: </strong> Você deve enviar toda a documentação necessaria para prosseguir.
+                            </div>";
+                        }
+                    }
 				}
 				else{
 					echo "<div class='alert alert-warning'>

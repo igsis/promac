@@ -76,6 +76,8 @@ if(isset($_POST["enviar"]))
 {
 	$sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '3' AND idListaDocumento IN (39,40,41,42,43,44)";
 	$query_arquivos = mysqli_query($con,$sql_arquivos);
+	$new_status = "UPDATE `promac`.`projeto` SET `idEtapaProjeto`='11' WHERE `idProjeto`= '$idProjeto'";
+	$query_status = mysqli_query($con, $new_status);
 	while($arq = mysqli_fetch_array($query_arquivos))
 	{
 		$y = $arq['idListaDocumento'];
@@ -265,7 +267,7 @@ if(isset($_POST['apagar']))
 		                  			 <strong>Declaro não pertecencer às listas de Empresas Apenadas. </strong>&nbsp;&nbsp;&nbsp;<input type="checkbox" name="empresaApenada" value="1" <?php checar($projeto[ 'empresaApenada']) ?>>
            		    		    </div>
               					<div class="col-md-offset-2 col-md-8">
-									<strong>Declaro ter anexado todos os certificados necessários.</strong>&nbsp;&nbsp;&nbsp;<input type="checkbox" name="idEtapaProjeto" <?php checar($projeto['idEtapaProjeto']) ?>>
+									<strong>Declaro ter anexado todas as certidões necessárias.</strong>&nbsp;&nbsp;&nbsp;<input type="checkbox" name="idEtapaProjeto" <?php checar($projeto['idEtapaProjeto']) ?>>
                		    	    </div>
                		    	<br/>
                		    	<br/>
@@ -281,23 +283,8 @@ if(isset($_POST['apagar']))
 
                 <!-- Botão para Voltar -->
                 <div class="form-group">
-                    <div class="col-md-offset-4 col-md-6">
-                        <?php
-				if($projeto['tipoPessoa'] == 1)
-				{
-				?>
-               		 <form class="form-horizontal" role="form" action="?perfil=projeto_pf" method="post">
-                <?php
-				}
-				else
-				{
-				?>
-                    <form class="form-horizontal" role="form" action="?perfil=projeto_pj" method="post">
-                <?php
-				}
-				?>
-                   		 <input type="submit" value="Voltar" class="btn btn-theme btn-md btn-block">
-                    </form>
+                    <div class="col-md-offset-4 col-md-6">                    
+                   		<a href="?perfil=projeto_visualizacao" class="btn btn-theme btn-md btn-block">Voltar</a>            
                     </div>
                 </div>
 

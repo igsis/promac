@@ -222,7 +222,7 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 							for($h = 0; $h < $x['num']; $h++)
 							{
 								echo "<tr>";
-								echo "<td class='list_description'>".$x[$h]['protocolo']."</td>";
+								echo "<td class='list_description' data-mask = \"0000.00.00/0000000\">".$x[$h]['protocolo']."</td>";
 								echo "<td class='list_description'>".$x[$h]['nomeProjeto']."</td>";
 								echo "<td class='list_description'>".$x[$h]['proponente']."</td>";
 								echo "<td class='list_description'>".$x[$h]['documento']."</td>";

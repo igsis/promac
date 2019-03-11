@@ -4,12 +4,16 @@ $idProjeto = $_SESSION['idProjeto'];
 
 if(isset($_POST['insere']))
 {
-	$video1 = $_POST['video1'];
+	$midia1 = $_POST['midia_social_1'];
+	$midia2 = $_POST['midia_social_2'];
+    $video1 = $_POST['video1'];
 	$video2 = $_POST['video2'];
 	$video3 = $_POST['video3'];
 
 	$sql_insere = "UPDATE projeto SET
-		video1 = '$video1',
+		midia_social_1 = '$midia1',
+        midia_social_2 = '$midia2',
+        video1 = '$video1',
 		video2 = '$video2',
 		video3 = '$video3'
 		WHERE idProjeto = '$idProjeto'";
@@ -62,14 +66,26 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
     	?>
 		<div class="form-group">
 			<h4>Cadastro de Projeto</h4>
-			<h6>Link do YouTube</h6>
+			<h6>Mídias Sociais</h6>
 			<p><strong><?php if(isset($mensagem)){echo $mensagem;} ?></strong></p>
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
 				<form method="POST" action="?perfil=projeto_13" class="form-horizontal" role="form">
 
-					<div class="form-group">
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-8">
+                            <label>Link 1</label>
+                            <input class="form-control" type="url" name="midia_social_1" placeholder="Link" value="<?php echo $video['midia_social_1']; ?>" style="text-align: center;">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-8">
+                            <label>Link 2</label>
+                            <input class="form-control" type="url" name="midia_social_2" placeholder="Link" value="<?php echo $video['midia_social_2']; ?>" style="text-align: center;">
+                        </div>
+                    </div>
+                    <div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<label>Video 1</label>
 							<input class="form-control" type="url" name="video1" placeholder="Link YouTube" value="<?php echo $video['video1']; ?>" style="text-align: center;">

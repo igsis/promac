@@ -8,7 +8,7 @@ $http = $server."/pdf/";
 
 $idPf = $_SESSION['idUser'];
 $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
-$campos = array($pf['nome'], $pf['cpf'], $pf['rg'], $pf['email'], $pf['cep'], $pf['numero'], $pf['idZona'], $pf['idSubprefeitura'], $pf['idDistrito']);
+$campos = array($pf['nome'], $pf['cpf'], $pf['rg'], $pf['email'], $pf['cep'], $pf['numero']);
 $cpo = false;
 
 foreach ($campos as $cpos)
@@ -147,25 +147,6 @@ if(isset($_POST['apagar']))
                 <?php
                     }
                 ?>
-                <ul class='list-group'>
-                    <li class='list-group-item list-group-item-success'>Notas</li>
-                    <?php
-                        $sql = "SELECT * FROM notas WHERE idPessoa = '$idPf' AND idTipo = '1' AND interna = '1'";
-                        $query = mysqli_query($con,$sql);
-                        $num = mysqli_num_rows($query);
-                        if($num > 0)
-                        {
-                            while($campo = mysqli_fetch_array($query))
-                            {
-                                echo "<li class='list-group-item' align='left'><strong>".exibirDataHoraBr($campo['data'])."</strong><br/>".$campo['nota']."</li>";
-                            }
-                        }
-                        else
-                        {
-                            echo "<li class='list-group-item'>Não há notas disponíveis.</li>";
-                        }
-                    ?>
-                </ul>
 
                 <div>
                     <?php listaArquivosPessoaObs($idPf,1) ?>
@@ -301,10 +282,31 @@ if(isset($_POST['apagar']))
 						$enviaArquivos = mysqli_query($con, $queryArquivos);
 						$numRow = mysqli_num_rows($enviaArquivos);
 						if($numRow == 6)
-						{ */?>
-					<form class="form-horizontal" role="form" action="?perfil=resultado_inscricao_pf" method="post">
-						<input type="submit" name="liberacao" value="Concluir inscrição do proponente" class="btn btn-theme btn-lg btn-block">
-					</form>
+						{ */
+                 $query_valida = "SELECT *
+                                  FROM upload_arquivo 
+                                  WHERE idPessoa = '$idPf' AND publicado = 1 AND idTipo= 1";
+                 if ($resuldato = mysqli_query($con,$query_valida)){
+                     $num_linhas = mysqli_num_rows($resuldato);
+                     if ($num_linhas == 6){
+                         ?>
+                         <form class="form-horizontal" role="form" action="?perfil=resultado_inscricao_pf" method="post">
+                             <input type="submit" name="liberacao" value="Concluir inscrição do proponente" class="btn btn-theme btn-lg btn-block">
+                         </form>
+                         <?php
+                     }else{
+                         echo "<div class='alert alert-warning'>
+						<strong>Erro: </strong> Você deve enviar toda a documentação necessaria para prosseguir.
+						</div>";
+                     }
+                 }else{
+                     echo "<div class='alert alert-danger'>
+						<strong>Erro: </strong> Na validação dos arquivos tente novamente... ".die(mysqli_error($con))."
+						</div>";
+                 }
+
+                ?>
+
 					<?php
 					}
 					else

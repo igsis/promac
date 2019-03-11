@@ -39,9 +39,6 @@ if(isset($_POST['atualizarJuridica']) and $_POST['numero'] and empty($endereço)
 	$Numero = $_POST['numero'];
 	$Complemento = $_POST['complemento'];
 	$cooperativa = $_POST['cooperativa'];
-	$idZona = $_POST['idZona'];
-  	$idSubprefeitura = $_POST['idSubprefeitura'];
-		$idDistrito = $_POST['idDistrito'];
 		
 		$validar = array(
 			$_POST['Endereco'],
@@ -67,9 +64,6 @@ if(isset($_POST['atualizarJuridica']) and $_POST['numero'] and empty($endereço)
 	`numero` = '$Numero',
 	`complemento` = '$Complemento',
 	`cooperativa` = '$cooperativa',
-	`idZona` = '$idZona',
-	`idSubprefeitura` = '$idSubprefeitura',
-	`idDistrito` = '$idDistrito',
 	`alteradoPor` = '$usuarioLogado'
 	WHERE `idPj` = '$idPj'";
 
@@ -337,40 +331,20 @@ else
 							<?php endif ?>          
 						</div>
 					</div>
-
 					<div class="form-group">
-						<div class="col-md-offset-2 col-md-6"><strong>Zona *:</strong><br/>
-							<select class="form-control" name="idZona" required>
-								<option value=""></option>
-								<?php echo geraOpcao("zona", $pj['idZona']) ?>
-							</select>
+						<div class="col-md-offset-2 col-md-8"><strong>É cooperativa? *:</strong><br/>
+                            <select class="form-control" name="cooperativa">
+                                <?php
+                                $tipos = ['Não', 'Sim'];
+                                foreach($tipos as $chave => $tipo):
+                                    $selected = $pj['cooperativa'] == $chave ?
+                                        "selected='selected'" : "";
+                                    ?>
+                                    <option value="<?=$chave?>" <?=$selected?>>	<?=$tipo?> </option>
+                                <?php endforeach ?>
+                            </select>
 						</div>
-						<div class="col-md-6"><strong>Prefeitura Regional *: <a href="../pdf/lista_distritos.html" target="_blank"><i class="fa fa-info-circle"></i></a></strong><br/>
-							<select class="form-control" name="idSubprefeitura" required>
-								<option value=""></option>
-								<?php echo geraOpcao("subprefeitura",$pj['idSubprefeitura']) ?>
-							</select>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-6"><strong>Distrito *: <a href="../pdf/lista_distritos.html" target="_blank"><i class="fa fa-info-circle"></i></a></strong><br/>
-							<select class="form-control" name="idDistrito" required>
-								<option value=""></option>
-								<?php echo geraOpcao("distrito",$pj['idDistrito']) ?>
-							</select>
-						</div>
-						<div class="col-md-6"><strong>É cooperativa? *:</strong><br/>
-							<select class="form-control" name="cooperativa">
-							<?php
-								$tipos = ['Não', 'Sim'];
-								foreach($tipos as $chave => $tipo):
-									$selected = $_POST['cooperativa'] == $chave ?
-									"selected='selected'" : "";
-							?>
-								<option value="<?=$chave?>" <?=$selected?>>	<?=$tipo?> </option>
-							<?php endforeach ?>
-							</select>
+						<div class="col-md-6">
 						</div>
 					</div>
 

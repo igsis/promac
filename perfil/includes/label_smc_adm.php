@@ -34,7 +34,7 @@
                             </div>
                             <div class="modal-footer">
                                 <input type='hidden' name='idProjeto' value='<?php echo $idProjeto ?>'>
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Voltar</button>
                                 <button type='submit' class='btn btn-danger btn-sm' style="border-radius: 10px;" name="cancelarProjeto">Confirmar</button>
                             </div>
                         </form>
@@ -213,15 +213,6 @@
             </div>
 
             <div class="form-group">
-                <div class="col-md-offset-2 col-md-3"><label>Data Publicação DOC</label>
-                    <input type="text" name="dataPublicacaoDoc" id='datepicker09' class="form-control" value="<?php echo exibirDataBr($projeto['dataPublicacaoDoc']) ?>">
-                </div>
-                <div class="col-md-5"><label>Link Publicação DOC</label>
-                    <input type="text" name="linkPublicacaoDoc" class="form-control" value="<?php echo $projeto['linkPublicacaoDoc'] ?>">
-                </div>
-            </div>
-
-            <div class="form-group">
                 <div class="col-md-offset-2 col-md-8">
                     <?php echo "<input type='hidden' name='IDP' value='$idProjeto'>"; ?>
                     <input type="submit" name="gravarAdm" class="btn btn-theme btn-md btn-block" value="Gravar">
@@ -230,43 +221,6 @@
 
             <br/>
         </form>
-
-        <form method="POST" action="?perfil=smc_detalhes_projeto" class="form-horizontal" role="form">
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-8"><label>Notas</label><br/>
-                    <textarea name="nota" class="form-control" rows="5" placeholder="Insira neste campo informações de notificações para o usuário."></textarea>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-8">
-                    <?php echo "<input type='hidden' name='IDP' value='$idProjeto'>"; ?>
-                    <input type="submit" name="gravarNota" class="btn btn-theme btn-md btn-block" value="Gravar">
-                </div>
-            </div>
-        </form>
-
-        <div class="col-md-offset-2 col-md-8">
-            <ul class='list-group'>
-                <li class='list-group-item list-group-item-success'>Notas</li>
-                <?php
-                    $sql = "SELECT * FROM notas WHERE idPessoa = '$idProjeto'";
-                    $query = mysqli_query($con,$sql);
-                    $num = mysqli_num_rows($query);
-                    if($num > 0)
-                    {
-                        while($campo = mysqli_fetch_array($query))
-                        {
-                            echo "<li class='list-group-item' align='left'><strong>".exibirDataHoraBr($campo['data'])."</strong><br/>".$campo['nota']."</li>";
-                        }
-                    }
-                    else
-                    {
-                        echo "<li class='list-group-item'>Não há notas disponíveis.</li>";
-                    }
-                ?>
-            </ul>
-        </div>
 
         <div class="form-group">
             <div class="col-md-offset-1 col-md-10">
@@ -281,7 +235,7 @@
         <div class="form-group">
             <div class="col-md-12">
                 <div class="table-responsive list_info">
-                    <h6>Arquivo(s) Anexado(s)</h6>
+                    <h6>Parecer(s) Anexado(s)</h6>
                     <?php listaParecerSMC($idProjeto,9,"smc_detalhes_projeto"); ?>
                 </div>  
             </div>
@@ -290,7 +244,7 @@
        <!-- Upload do Arquivo -->
            <div class="form-group">
                 <div class="col-md-offset-1 col-md-10">
-                    <?php uploadArquivo($idProjeto,9, "smc_detalhes_projeto&idFF=$idProjeto", $idListaDocumento, 9); ?>
+                    <?php uploadArquivo($idProjeto,9, "smc_detalhes_projeto&idFF=$idProjeto", $idListaDocumento, 9,false); ?>
                 </div>
            </div>         
 

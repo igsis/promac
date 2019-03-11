@@ -5,7 +5,7 @@ $tipoPessoa = '1';
 
 $idPf = $_SESSION['idUser'];
 $pf = recuperaDados("pessoa_fisica", "idPf", $idPf);
-$statusProjeto = recuperaStatus("statusprojeto");
+$statusProjeto = recuperaStatus();
 
 
 if (isset($_POST['apagar'])) {
@@ -17,6 +17,26 @@ if (isset($_POST['apagar'])) {
     } else {
         $mensagem = "<font color='#FF0000'><strong>Erro ao apagar projeto! Tente novamente.</strong></font>";
     }
+}
+
+if (isset($_POST['cancelar'])){
+    $idProjeto = $_POST['idProjeto'];
+    $dateNow = date('Y-m-d H:i:s');
+    $observacao = $_POST['observacao'];
+
+    $query = "UPDATE `projeto` SET projeto.idStatus = '6' WHERE idProjeto = '$idProjeto'";
+    $historico = "INSERT INTO historico_cancelamento (idProjeto, observacao,idUsuario, data, acao) VALUES ('$idProjeto','$observacao','$idPf','$dateNow',1)";
+    if (mysqli_query($con,$query)){
+        if (mysqli_query($con,$historico)){
+            $mensagem = "<font color='#01DF3A'><strong>Projeto cancelado com sucesso!</strong></font>";
+        }
+        else{
+            $mensagem = "<font color='#FF0000'><strong>Erro ao cancelar projeto! Tente novamente.</strong></font>";
+        }
+    }else{
+        $mensagem = "<font color='#FF0000'><strong>Erro ao apagar projeto! Tente novamente.</strong></font>";
+    }
+
 }
 
 ?>
@@ -32,7 +52,7 @@ if (isset($_POST['apagar'])) {
         <?php
         $sql_cancelados = "SELECT distinct prj.idProjeto, nomeProjeto, protocolo, acao, observacao, data FROM projeto AS prj 
                             INNER JOIN historico_cancelamento AS hst ON prj.idProjeto = hst.idProjeto
-                            WHERE idPf = '$idPf' AND publicado = 0 AND acao = 1";
+                            WHERE idPf = '$idPf' AND publicado = 0 AND idStatus = 6";
         $query_cancelados = mysqli_query($con,$sql_cancelados);
         $num = mysqli_num_rows($query_cancelados);
         if($num > 0){
@@ -148,7 +168,10 @@ if (isset($_POST['apagar'])) {
                             $status = "SELECT etapaProjeto FROM etapa_projeto WHERE idEtapaProjeto='$idCampo'";
                             $envio = mysqli_query($con, $status);
                             $rowStatus = mysqli_fetch_array($envio);
-                            if ($campo['idEtapaProjeto'] == 1) {
+                            if($campo['idStatus'] == 6){
+                                echo "<td colspan='2' style='color: #942a25;text-align: center;font-weight: bold'>Cancelado </td>";
+                            }
+                            else if ($campo['idEtapaProjeto'] == 1) {
                                 echo "
                                                     <td class='list_description'>
                                                         <form method='POST' action='?perfil=projeto_edicao'>

@@ -540,13 +540,52 @@ function recuperaDadosProjeto($tabela,$campo,$variavelCampo)
 	return $campo;
 }
 
-function recuperaStatus($tabela)
+function recuperaStatus()
 {
-	$con = bancoMysqli();
-	$sql = "SELECT situacaoAtual FROM $tabela WHERE idStatus = '1'";
-	$query = mysqli_query($con,$sql);
-	$campo = mysqli_fetch_array($query);
-	return $campo['situacaoAtual'];
+    $con = bancoMysqli();
+    $dateNow = date('Y-m-d');
+    $sql = "SELECT situacaoAtual, data FROM liberacao_projeto WHERE idStatus = '1'";
+    $query = mysqli_query($con,$sql);
+    $campo = mysqli_fetch_array($query);
+    if($campo['situacaoAtual'] == 1){
+        if($campo['data'] <= $dateNow){
+            return "1";
+        }
+        else{
+            return "2";
+        }
+    }
+    else{
+        if($campo['data'] <= $dateNow){
+            return "2";
+        }
+        else{
+            return "1";
+        }
+    }
+}
+
+function recuperaDataPublicacao($idProjeto){
+    $con = bancoMysqli();
+    $query = "SELECT list.documento,
+               list.idListaDocumento,
+               arq.arquivo,
+               arq.idUploadArquivo AS idArquivo,
+               disp.idUploadArquivo,
+               disp.id AS 'disponibilizar',
+               arq.idStatusDocumento,
+               arq.observacoes,
+               disp.data AS dataDisponivel
+              FROM lista_documento as list
+              INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
+              LEFT JOIN disponibilizar_documento AS disp ON arq.idUploadArquivo = disp.idUploadArquivo
+              WHERE arq.idPessoa = '$idProjeto'
+                AND arq.idTipo = '9'
+                AND (list.idListaDocumento = '37' OR list.idListaDocumento = '49')
+                AND arq.publicado = '1' ORDER BY arq.idUploadArquivo DESC LIMIT 0,1";
+    $dataPublicacao = $con->query($query)->fetch_assoc()['dataDisponivel'];
+
+    return $dataPublicacao;
 }
 
 function verificaExiste($idTabela,$idCampo,$idDado,$st)
@@ -802,7 +841,6 @@ function listaArquivosEvento($idPessoa, $tipoPessoa, $pagina)
 			<thead>
 			<tr class='list_menu'>
 			<td>Tipo de arquivo</td>
-			<td>Nome do arquivo</td>
 			<td width='15%'></td>
 			</tr>
 			</thead>
@@ -810,8 +848,7 @@ function listaArquivosEvento($idPessoa, $tipoPessoa, $pagina)
 			while($arquivo = mysqli_fetch_array($query))
 			{
 				echo "<tr>";
-				echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
-				echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." ) ."</a></td>";
+				echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['documento'], 15 ,25,"..." ) ."</a></td>";
 				echo "
 				<td class='list_description'>
 				<form id='apagarArq' method='POST' action='?perfil=projeto_3'>
@@ -883,54 +920,6 @@ function listaArquivosPessoa($idPessoa,$tipoPessoa,$pagina)
 	}
 }
 
-function listaArquivosSmc($tipoPessoa,$pagina)
-{
-	$con = bancoMysqli();
-	$sql = "SELECT *
-			FROM lista_documento as list
-			INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
-			WHERE arq.idTipo = '$tipoPessoa'
-			AND arq.publicado = '1' ORDER BY arq.idUploadArquivo DESC LIMIT 0,1";
-	$query = mysqli_query($con,$sql);
-	$linhas = mysqli_num_rows($query);
-
-	if ($linhas > 0)
-	{
-	echo "
-		<table class='table table-condensed'>
-			<thead>
-				<tr class='list_menu'>
-					<td>Tipo de arquivo</td>
-					<td>Nome do arquivo</td>
-					<td width='15%'></td>
-				</tr>
-			</thead>
-			<tbody>";
-				while($arquivo = mysqli_fetch_array($query))
-				{
-					echo "<tr>";
-					echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
-					echo "<td class='list_description'><a href='../uploadssmc/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
-					echo "
-						<td class='list_description'>
-							<form id='apagarArq' method='POST' action='?perfil=".$pagina."'>
-								<input type='hidden' name='tipoPessoa' value='".$tipoPessoa."' />
-								<input type='hidden' name='apagar' value='".$arquivo['idUploadArquivo']."' />
-								<button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Remover Arquivo?' data-message='Deseja realmente excluir o arquivo ".$arquivo['documento']."?'>Remover
-								</button></td>
-							</form>";
-					echo "</tr>";
-				}
-				echo "
-		</tbody>
-		</table>";
-	}
-	else
-	{
-		echo "<p>Não há arquivo(s) inserido(s).<p/><br/>";
-	}
-}
-
 function listaArquivosAnalise($tipoPessoa,$pagina)
 {
 	$con = bancoMysqli();
@@ -945,20 +934,17 @@ function listaArquivosAnalise($tipoPessoa,$pagina)
 	if ($linhas > 0)
 	{
 	echo "
-		<table class='table table-condensed'>
+		<table class='table table-condensed text-center'>
 			<thead>
 				<tr class='list_menu'>
-					<td>Nome do arquivo</td>
 					<td>Data</td>
-					<td width='15%'></td>
 				</tr>
 			</thead>
 			<tbody>";
 				while($arquivo = mysqli_fetch_array($query))
 				{
 					echo "<tr>";
-					echo "<td class='list_description'><a href='uploadssmc/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
-					echo "<td class='list_description'>(".exibirDataHoraBr($arquivo['dataEnvio']).")</td>";
+					echo "<td class='list_description'><a href='uploadssmc/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['dataEnvio'], 0 ,25,"..." )."</a></td>";
 					echo "</tr>";
 				}
 				echo "
@@ -970,6 +956,55 @@ function listaArquivosAnalise($tipoPessoa,$pagina)
 		echo "<p>Não há listas disponíveis no momento.<p/><br/>";
 	}
 }
+
+function listaArquivosSMC($tipoPessoa,$pagina)
+{
+    $con = bancoMysqli();
+    $sql = "SELECT *
+			FROM lista_documento as list
+			INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
+			WHERE arq.idTipo = '$tipoPessoa'
+			AND arq.publicado = '1' ORDER BY arq.idUploadArquivo";
+    $query = mysqli_query($con,$sql);
+    $linhas = mysqli_num_rows($query);
+
+    if ($linhas > 0)
+    {
+        echo "
+		<table class='table table-condensed'>
+			<thead>
+				<tr class='list_menu'>
+					<td>Nome do arquivo</td>
+					<td>Data</td>
+					<td width='15%'></td>
+				</tr>
+			</thead>
+			<tbody>";
+        while($arquivo = mysqli_fetch_array($query))
+        {
+            echo "<tr>";
+            echo "<td class='list_description'><a href='uploadssmc/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
+            echo "<td class='list_description'>(".exibirDataHoraBr($arquivo['dataEnvio']).")</td>";
+            echo "
+                  <td class='list_description'>
+							<form id='apagarArq' method='POST' action='?perfil=".$pagina."'>
+								<input type='hidden' name='tipoPessoa' value='".$tipoPessoa."' />
+								<input type='hidden' name='apagar' value='".$arquivo['idUploadArquivo']."' />
+								<button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Remover Arquivo?' data-message='Deseja realmente excluir o arquivo ".$arquivo['arquivo']."?'>Remover
+								</button></td>
+							</form>";
+            echo "</tr>";
+        }
+        echo "
+		</tbody>
+		</table>";
+    }
+    else
+    {
+        echo "<p>Não há listas disponíveis no momento.<p/><br/>";
+    }
+}
+
 
 function listaParecer($idPessoa,$tipoPessoa,$pagina)
 {
@@ -1118,7 +1153,9 @@ function exibirArquivoParecer($tipoPessoa,$idPessoa)
 
 function listaArquivosPessoaSMC($idPessoa,$tipoPessoa,$pagina)
 {
+
 	$con = bancoMysqli();
+
 	$sql = "SELECT *
 			FROM lista_documento as list
 			INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
@@ -1143,7 +1180,7 @@ function listaArquivosPessoaSMC($idPessoa,$tipoPessoa,$pagina)
 			</thead>
 			<tbody>";
 				echo "<form method='POST' action='?perfil=".$pagina."'>";
-					while($arquivo = mysqli_fetch_array($query))
+                        while($arquivo = mysqli_fetch_array($query))
 					{
 						echo "<tr>";
 						echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
@@ -1180,9 +1217,10 @@ function listaArquivosPessoaSMC($idPessoa,$tipoPessoa,$pagina)
 function listaParecerSMC($idPessoa,$tipoPessoa,$pagina)
 {
     $con = bancoMysqli();
-    $sql = "SELECT documento, arquivo, arq.idUploadArquivo AS  idArquivo, idStatusDocumento,observacoes
+    $sql = "SELECT documento, arquivo, arq.idUploadArquivo AS idArquivo, disp.idUploadArquivo,disp.id 'disponibilizar', idStatusDocumento,observacoes,disp.data AS dataDisponivel
 			FROM lista_documento as list
 			INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
+			LEFT JOIN disponibilizar_documento AS disp ON arq.idUploadArquivo = disp.idUploadArquivo
 			WHERE arq.idPessoa = '$idPessoa'
 			AND arq.idTipo = '$tipoPessoa'
 			AND arq.publicado = '1'";
@@ -1199,32 +1237,38 @@ function listaParecerSMC($idPessoa,$tipoPessoa,$pagina)
 					<td>Nome do arquivo</td>
 					<td>Status</td>
 					<td>Observação</td>
+					<td>Data da Publicação</td>
 					<td width='15%'></td>
 				</tr>
 			</thead>
 			<tbody>";
-
+        $x = 1;
         while($arquivo = mysqli_fetch_array($query))
         {
-            echo "<form method='POST' action='?perfil=$pagina'>";
-        	echo "<tr>";
+            echo "<form method='POST' action='?perfil=".$pagina."'>";
+            echo "<tr>";
             echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
             echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
             echo "<td class='list_description'>
 								<select name='status' id='statusOpt'>";
-            echo "<option value=''>Selecione</option>";
+            echo "<option>Selecione</option>";
             geraOpcao('status_documento', $arquivo['idStatusDocumento']);
             echo " </select>
 							</td>";
             echo "<td class='list_description'>
 					<input type='text' name='observacoes' maxlength='100' id='observ' value='".$arquivo['observacoes']."'/></td>";
+            echo "<td class='list_description'>
+					<input type='text' name='dataDisponivel' id='datepicker0".$x."' class='form-control' value='".exibirDataBr($arquivo['dataDisponivel'])."'/></td>";
             echo "<td class='list_description'>	
 					<input type='hidden' name='idPessoa' value='".$idPessoa."' />
 					<input type='hidden' name='idArquivo' value='".$arquivo['idArquivo']."' />
-					<input type='submit' class='btn btn-theme btn-md btn-block' name='editarParecer' value='Atualizar'>
+					<input type='hidden' name='idDisponib' value='".$arquivo['disponibilizar']."'/>
+					<button class='btn btn-theme' type='submit' name='editarParecer'>Atualizar
+					</button>
 				</td>";
             echo "</tr>";
             echo "</form>";
+            $x++;
         }
         echo "
 		</tbody>
@@ -1255,7 +1299,6 @@ function listaAnexosProjeto($idPessoa,$tipoPessoa,$idArquivo)
 			<thead>
 				<tr class='list_menu'>
 					<td>Tipo de arquivo</td>
-					<td>Nome do arquivo</td>
 					<td width='15%'></td>
 				</tr>
 			</thead>
@@ -1263,8 +1306,7 @@ function listaAnexosProjeto($idPessoa,$tipoPessoa,$idArquivo)
         while($arquivo = mysqli_fetch_array($query))
         {
             echo "<tr>";
-            echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
-            echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
+            echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['documento'], 15 ,25,"..." )."</a></td>";
             echo "</tr>";
         }
         echo "
@@ -1296,7 +1338,6 @@ function listaAnexosProjetoSMC($idProjeto,$tipoPessoa,$pagina)
 			<thead>
 				<tr class='list_menu'>
 					<td>Tipo de arquivo</td>
-					<td>Nome do arquivo</td>
 					<td width='15%'></td>
 				</tr>
 			</thead>
@@ -1304,8 +1345,7 @@ function listaAnexosProjetoSMC($idProjeto,$tipoPessoa,$pagina)
         while($arquivo = mysqli_fetch_array($query))
         {
             echo "<tr>";
-            echo "<td class='list_description'>".$arquivo['documento']."</td>";
-            echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
+            echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['documento'], 0 ,100,"..." )."</a></td>";
             echo "<td class='list_description'>
 					<form id='apagarArq' method='POST' action='?perfil=".$pagina."'>
 						<input type='hidden' name='idProjeto' value='".$idProjeto."' />
@@ -1403,7 +1443,6 @@ function listaArquivosPessoaVisualizacao($idPessoa,$tipoPessoa,$pagina)
 			<thead>
 				<tr class='list_menu'>
 					<td>Tipo de arquivo</td>
-					<td>Nome do arquivo</td>
 					<td width='15%'></td>
 				</tr>
 			</thead>
@@ -1411,8 +1450,7 @@ function listaArquivosPessoaVisualizacao($idPessoa,$tipoPessoa,$pagina)
 				while($arquivo = mysqli_fetch_array($query))
 				{
 					echo "<tr>";
-					echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
-					echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
+					echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['documento'], 0 ,25,"..." )."</a></td>";
 				}
 				echo "
 		</tbody>
@@ -1845,11 +1883,13 @@ function exibirParecerProponente($idProjeto)
     $con = bancoMysqli();
     $dateNow = date('Y-m-d');
     $sql = "SELECT * FROM lista_documento as list
-            INNER JOIN upload_arquivo AS arq ON arq.idListaDocumento = list.idListaDocumento	  
+            INNER JOIN upload_arquivo AS arq ON arq.idListaDocumento = list.idListaDocumento
+            LEFT JOIN disponibilizar_documento AS disp ON arq.idUploadArquivo = disp.idUploadArquivo	  
             WHERE arq.idPessoa = '$idProjeto'
             AND arq.idTipo = '9'
             AND arq.publicado = '1'
-            AND arq.idStatusDocumento = '1'";
+            AND arq.idStatusDocumento = '1'
+            AND disp.data <= '$dateNow'";
     $query = mysqli_query($con,$sql);
     $num = mysqli_num_rows($query);
     if($num > 0){
@@ -1860,13 +1900,12 @@ function exibirParecerProponente($idProjeto)
 		<table class='table table-bordered'>
 			<tr>
 				<td><strong>Tipo de arquivo</strong></td>
-				<td><strong>Nome do arquivo</strong></td>
+				
 			</tr>";
         while($arquivo = mysqli_fetch_array($query))
         {
             echo "<tr>";
-            echo "<td class='list_description'>".$arquivo['documento']."</td>";
-            echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'],15 ,30 ,"..." )."</a></td>";
+            echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['documento'],0 ,190 ,"" )."</a></td>";
             echo "</tr>";
         }
         echo "</table>";
@@ -2042,9 +2081,14 @@ function retornaCamposObrigatoriosLocais($idProjeto)
 
 	$conexao = bancoMysqli();
 	$query =  "SELECT 	             	             
-	             loc_rea.local AS local, 
-	             loc_rea.estimativaPublico AS estimativaLocal, 
-	             loc_rea.idZona AS zonaLocal  				 
+	             loc_rea.local AS local,
+	             loc_rea.estimativaPublico AS estimativaLocal,
+                 loc_rea.logradouro AS logradouro,
+                 loc_rea.numero AS número_local,
+                 loc_rea.bairro AS bairro_local,
+                 loc_rea.cidade AS cidade_local,
+                 loc_rea.estado AS estado_local,
+                 loc_rea.cep AS cep_local			 
 			   FROM  
 			     projeto as proj			     			   
   			   INNER JOIN 
@@ -2167,7 +2211,8 @@ function retornaCamposObrigatoriosPf($idProjeto)
 	             proj.idAreaAtuacao AS areaAtuacaoProjeto, 	             
 	             proj.nomeProjeto AS nomeProjeto, 	             	             
 	             proj.idRenunciaFiscal AS ValoresEnquadramentoRenunciaFiscal, 
-	             proj.exposicaoMarca AS ValoresEnquadramentoExposicaoMarca, 	  
+	             proj.idExposicaoMarca AS exposicaoMarca, 	  
+	             proj.indicacaoIngresso AS indicacaoIngresso, 	  
 	             proj.resumoProjeto AS resumoCurriculoProjeto, 
 	             proj.curriculo AS resumoCurriculoCvProponente, 	             
 	             proj.descricao AS ObjetoDescricao,
@@ -2177,7 +2222,12 @@ function retornaCamposObrigatoriosPf($idProjeto)
 	             proj.contrapartida AS MetodologiaContrapartidaDescricao,
 	             loc_rea.local AS local, 
 	             loc_rea.estimativaPublico AS estimativaLocal, 
-	             loc_rea.idZona AS zonaLocal,  				 
+	             loc_rea.logradouro AS logradouro,
+                 loc_rea.numero AS número_local,
+                 loc_rea.bairro AS bairro_local,
+                 loc_rea.cidade AS cidade_local,
+                 loc_rea.estado AS estado_local,
+                 loc_rea.cep AS cep_local,  				 
 	             proj.publicoAlvo AS publicoAlvo,
 	             proj.planoDivulgacao as publicoAlvoDivulgacao,
 	             ficha_t.nome AS nomeFichaTecnica, 
@@ -2200,6 +2250,9 @@ function retornaCamposObrigatoriosPf($idProjeto)
 			     projeto as proj
 			   INNER JOIN 
                  pessoa_fisica AS pf ON pf.idPf = proj.idPf
+                 
+               INNER JOIN
+                 exposicao_marca as exp ON proj.idExposicaoMarca = exp.id
   			   
   			   INNER JOIN 
                   locais_realizacao AS loc_rea 
@@ -2286,7 +2339,7 @@ function retornaCamposObrigatoriosPj($idProjeto)
 	             proj.contratoGestao AS contratoGestaoProjeto, 
 	             proj.nomeProjeto AS nomeProjeto, 	             
 	             proj.idRenunciaFiscal AS ValoresEnquadramentoRenunciaFiscal, 
-	             proj.exposicaoMarca AS ValoresEnquadramentoExposicaoMarca,              
+	             proj.idExposicaoMarca AS ValoresEnquadramentoExposicaoMarca,              
 	             proj.resumoProjeto AS resumoCurriculoProjeto, 
 	             proj.curriculo AS resumoCurriculoCvProponente, 	             
 	             proj.descricao AS ObjetoDescricao,  
@@ -2300,7 +2353,12 @@ function retornaCamposObrigatoriosPj($idProjeto)
 	             proj.fimCronograma AS fimConogramaProjeto,  
 	             loc_rea.local AS local, 
 	             loc_rea.estimativaPublico AS estimativaLocal, 
-	             loc_rea.idZona AS zonaLocal,  				 
+	             loc_rea.logradouro AS logradouro,
+                 loc_rea.numero AS número_local,
+                 loc_rea.bairro AS bairro_local,
+                 loc_rea.cidade AS cidade_local,
+                 loc_rea.estado AS estado_local,
+                 loc_rea.cep AS cep_local,  				 
   				 ficha_t.nome AS nomeFichaTecnica, 
   				 ficha_t.cpf AS cpfFichaTecnica, 
   				 ficha_t.funcao AS funcaoFichaTecnica,  				 
@@ -2345,7 +2403,7 @@ function retornaCamposObrigatoriosPj($idProjeto)
   			   AND  orca.publicado = 1
   			   AND  proj.idProjeto =".$idProjeto." LIMIT 1";
 	
-	$resultado = mysqli_query($conexao,$query);		
+	$resultado = mysqli_query($conexao,$query);
 
 	while($campo = mysqli_fetch_assoc($resultado)) 
     {
@@ -2386,18 +2444,42 @@ function validaLocalZona($conteudo)
   return $conteudo == 0 ? true : false;  
 }
 
-function retornaDocumentosObrigatoriosProponente($tipoPessoa)
+function retornaDocumentosObrigatoriosProponente($tipoPessoa, $id = null)
 {
   $documentos = [];
   $conexao = bancoMysqli();
-  $query =  "SELECT 
-               doc.idListaDocumento                         
-             FROM 
-               lista_documento AS doc  
-  			  WHERE doc.idListaDocumento <> 27
-  			  AND   doc.idListaDocumento <> 16
-  			  AND   doc.idListaDocumento <> 17
-  			  AND doc.idTipoUpload = ".$tipoPessoa;  			  
+  $listaDocumentos = [
+    'doc.idListaDocumento <> 27',
+    'doc.idListaDocumento <> 10',
+    'doc.idListaDocumento <> 16'
+  ];
+
+  if ($tipoPessoa == 2)
+  {
+      $cooperativa = $conexao->query("SELECT cooperativa FROM pessoa_juridica WHERE idPj = '$id'")->fetch_assoc()['cooperativa'];
+      if ($cooperativa != 1)
+      {
+          array_push($listaDocumentos, 'doc.idListaDocumento <> 17');
+      }
+  }
+
+  elseif ($tipoPessoa == 5)
+  {
+      $imposto = $conexao->query("SELECT imposto FROM incentivador_pessoa_juridica WHERE idPj = '$id'")->fetch_assoc()['imposto'];
+      if ($imposto == 1)
+      {
+          array_push($listaDocumentos, 'doc.idListaDocumento <> 35');
+      }
+      elseif ($imposto == 2)
+      {
+          array_push($listaDocumentos, 'doc.idListaDocumento <> 53');
+      }
+  }
+
+  $query =  "SELECT doc.idListaDocumento                         
+             FROM lista_documento AS doc  
+  			  WHERE ".implode(' AND ', $listaDocumentos)."
+  			  AND doc.idTipoUpload = ".$tipoPessoa;
 
   $resultado = mysqli_query($conexao,$query);
   
@@ -2409,17 +2491,19 @@ function retornaDocumentosObrigatoriosProponente($tipoPessoa)
   return $documentos;
 }
 
-/*Função que retornar os documentos obrigatórios do projeto
-  está inativa, caso o cliente deseje mudar a regra de negócio*/
+/**
+ * Função que retornar os documentos obrigatórios do projeto <br>
+ * está inativa, caso o cliente deseje mudar a regra de negócio
+ */
 function retornaArquivosObrigatorios($tipoPessoa)
 {
   $documentos = [];
-  /*$conexao = bancoMysqli();
+  $conexao = bancoMysqli();
   $query =  "SELECT 
                doc.idListaDocumento                         
              FROM 
                lista_documento AS doc  
-  			  WHERE doc.idListaDocumento <> 20  	  			  
+  			  WHERE doc.idListaDocumento IN (20, 21)
   			  AND doc.idTipoUpload = 3";
 
   $resultado = mysqli_query($conexao,$query);
@@ -2427,7 +2511,7 @@ function retornaArquivosObrigatorios($tipoPessoa)
   while($documento = mysqli_fetch_assoc($resultado)) 
   {
     array_push($documentos, $documento);
-  }*/	  
+  }
 
   return $documentos;
 }
@@ -2467,7 +2551,8 @@ function retornaAnexosCarregados($idProjeto)
   			   up_arq.idListaDocumento 
 			 FROM  			     			 
                upload_arquivo AS up_arq              
-  			 WHERE up_arq.idPessoa =".$idProjeto;
+  			 WHERE up_arq.publicado = 1
+  			   AND up_arq.idPessoa =".$idProjeto;
 
   $resultado = mysqli_query($conexao,$query);
 	
@@ -3244,7 +3329,7 @@ function recuperaUsuario($idPf)
 	}	
 }
 
-function uploadArquivo($idProjeto, $tipoPessoa, $pagina, $idListaDocumento, $idTipoUpload)
+function uploadArquivo($idProjeto, $tipoPessoa, $pagina, $idListaDocumento, $idTipoUpload,$comissao = true)
 {
     $server = "http://".$_SERVER['SERVER_NAME']."/promac";
     $http = $server."/pdf/";
@@ -3260,53 +3345,60 @@ function uploadArquivo($idProjeto, $tipoPessoa, $pagina, $idListaDocumento, $idT
 			AND arq.publicado = '1' AND list.idListaDocumento = '$idListaDocumento'";
     $query = mysqli_query($con,$sql);
     $linhas = mysqli_num_rows($query);
-    echo '<div class="table-responsive list_info">
+
+    if ($comissao) {
+        echo '<div class="table-responsive list_info">
 				<h6>Parecer Anexado</h6>';
-    if ($linhas > 0)
-    {
-        echo "
+        if ($linhas > 0) {
+            echo "
 		<table class='table table-condensed'>
 			<thead>
 				<tr class='list_menu'>
 					<td>Tipo de arquivo</td>
-					<td>Nome do arquivo</td>
-					<td>Observação</td>
+					<td>Data de Envio</td>
+					<td>Status</td>
 					<td></td>
 				</tr>
 			</thead>
 			<tbody>";
-        while($arquivo = mysqli_fetch_array($query))
-        {
-            echo "<tr>";
-            echo "<td class='list_description'>".$arquivo['documento']."</td>";
-            echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
-            echo "<td class='list_description'>".$arquivo['observacoes']."</td>";
-            if($arquivo['idStatusDocumento'] == 3) {
-                echo "
+            while ($arquivo = mysqli_fetch_array($query)) {
+                echo "<tr>";
+                echo "<td class='list_description'><a href='../uploadsdocs/" . $arquivo['arquivo'] . "' target='_blank'>" . mb_strimwidth($arquivo['documento'], 0, 60, "...") . "</a></td>";
+                $data = date_create($arquivo["dataEnvio"]);
+                echo "<td class='list_description'>" . date_format($data, 'd/m/Y') . "</td>";
+
+                if ($arquivo['idStatusDocumento'] == 3) {
+                    echo "<td class='list_description'>
+								<select name='status' id='statusOpt' disabled>";
+                    echo "<option>Selecione</option>";
+                    geraOpcao('status_documento', $arquivo['idStatusDocumento']);
+                    echo " </select>
+							</td>";
+
+                    echo "                        
 						<td class='list_description'>
 							<form id='apagarArq' method='POST' action='?perfil=" . $pagina . "'>
 								<input type='hidden' name='idPessoa' value='" . $idProjeto . "' />
 								<input type='hidden' name='tipoPessoa' value='" . $tipoPessoa . "' />
-								<input type='hidden' name='apagar' value='" . $arquivo['idUploadArquivo'] . "' />
-								<input type='submit' class='btn btn-theme btn-md btn-block'  value='apagar' />
+								<input type='hidden' name='apagar' value='" . $arquivo['idUploadArquivo'] . "'/>	
+								<input style='margin-top: 10px' type='submit' class='btn btn-theme btn-md btn-block'  value='apagar' />
 							</form>
 						</td>";
+                }
+                echo "</tr>";
             }
-            echo "</tr>";
-        }
-        echo "
+            echo "
 		</tbody>
 		</table>";
+        } else {
+            echo "<p id='ofilhoeseu'>Não há arquivo(s) inserido(s).</p><br/>";
+            echo "<span style='color: #ff0000'><strong><i>Obrigatório anexar parecer antes de encaminhar à SMC.</i></strong></span>";
+        }
+
+        echo "</div>";
     }
-    else
-    {
-        echo "<p>Não há arquivo(s) inserido(s).</p><br/>";
-    }
-    echo "</div>";
-    /*
-     * Início da área de upload
-     */
-	echo '<div class="table-responsive list_info"><h6>Upload de Parecer (somente em PDF)</h6>';
+        echo '<div class="table-responsive list_info"><h6>Upload de Parecer (somente em PDF)</h6>';
+
     $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$idTipoUpload' AND idListaDocumento = '$idListaDocumento'";
     $query_arquivos = mysqli_query($con,$sql_arquivos);
 	while($arq = mysqli_fetch_array($query_arquivos))
@@ -3337,7 +3429,7 @@ function uploadArquivo($idProjeto, $tipoPessoa, $pagina, $idListaDocumento, $idT
 		} else {
 			echo "<td class='list_description path'>" . $arq['documento'] . "</td>";
 		}
-		echo "<td class='list_description'><input type='file' name='arquivo[" . $arq['sigla'] . "]'></td>";
+		echo "<td class='list_description'><input type='file' required name='arquivo[" . $arq['sigla'] . "]'></td>";
 		echo "</tr>";
 		echo "</table><br>";
 		echo "<input type='hidden' name='idPessoa' value='" . $idProjeto . "' />";
@@ -3349,7 +3441,7 @@ function uploadArquivo($idProjeto, $tipoPessoa, $pagina, $idListaDocumento, $idT
 
 
 	echo '</div>';
-	/* Fim Upload de arquivo */
+
 }
 
 function listaNota($idPessoa,$idTipo,$interna)
@@ -3370,4 +3462,75 @@ function listaNota($idPessoa,$idTipo,$interna)
         echo "<li class='list-group-item'>Não há notas disponíveis.</li>";
     }
 }
+
+function mensagem($tipo,$texto){
+    return "
+	    <div class=\"col-md-12\">
+                <div class=\"box box-".$tipo." box-solid\">
+                    <div class=\"box-header with-border\">
+                        <h3 class=\"box-title\">".$texto."</h3>                        
+                    </div>
+                </div>
+            </div>
+	    ";
+}
+
+function dias_feriados($ano = null)
+{
+    if ($ano === null)
+    {
+        $ano = intval(date('Y'));
+    }
+
+    $pascoa     = easter_date($ano); // Limite de 1970 ou após 2037 da easter_date PHP consulta http:www.php.net/manual/pt_BR/function.easter-date.php
+    $dia_pascoa = date('j', $pascoa);
+    $mes_pascoa = date('n', $pascoa);
+    $ano_pascoa = date('Y', $pascoa);
+
+    $feriados = array(
+        // Tatas Fixas dos feriados Nacionail Basileiras
+        mktime(0, 0, 0, 1,  1,   $ano), // Confraternização Universal - Lei nº 662, de 06/04/49
+        mktime(0, 0, 0, 4,  21,  $ano), // Tiradentes - Lei nº 662, de 06/04/49
+        mktime(0, 0, 0, 5,  1,   $ano), // Dia do Trabalhador - Lei nº 662, de 06/04/49
+        mktime(0, 0, 0, 9,  7,   $ano), // Dia da Independência - Lei nº 662, de 06/04/49
+        mktime(0, 0, 0, 10,  12, $ano), // N. S. Aparecida - Lei nº 6802, de 30/06/80
+        mktime(0, 0, 0, 11,  2,  $ano), // Todos os santos - Lei nº 662, de 06/04/49
+        mktime(0, 0, 0, 11, 15,  $ano), // Proclamação da republica - Lei nº 662, de 06/04/49
+        mktime(0, 0, 0, 12, 25,  $ano), // Natal - Lei nº 662, de 06/04/49
+        // Feriados municipais de sp
+        mktime(0, 0, 0, 7, 9, $ano),
+        mktime(0, 0, 0, 11, 20, $ano),
+        mktime(0, 0, 0, 1, 25, $ano),
+
+        // These days have a date depending on easter
+        mktime(0, 0, 0, $mes_pascoa, $dia_pascoa - 48,  $ano_pascoa), // 2ºferia Carnaval
+        mktime(0, 0, 0, $mes_pascoa, $dia_pascoa - 47,  $ano_pascoa), // 3ºferia Carnaval
+        mktime(0, 0, 0, $mes_pascoa, $dia_pascoa - 2 ,  $ano_pascoa), // 6ºfeira Santa
+        mktime(0, 0, 0, $mes_pascoa, $dia_pascoa + 60,  $ano_pascoa), // Corpus Cirist
+    );
+
+    sort($feriados);
+
+    return $feriados;
+}
+
+function limiteEnvioProjetos()
+{
+    $semanaAtual = date('W');
+    $semana = recuperaDados('contagem_comissao', 'semana', $semanaAtual);
+    $projetos = $semana['projetos'];
+
+    $cont = 50 - $projetos;
+
+    if ($cont <= 10)
+    {
+        echo "<div class='form-group'>
+            <div class='alert alert-danger' role='alert'>
+                <h5 class='alert-danger'>ATENÇÃO! JÁ FORAM ENVIADOS: $projetos PROJETOS PARA A COMISSÃO</h5>
+                <h6 class='alert-danger'>MÁXIMO DE 50 PERMITIDOS</h6>
+            </div>
+        </div>";
+    }
+}
+
 ?>

@@ -1,5 +1,9 @@
 <?php
+
+set_time_limit(1200);
+
 $con = bancoMysqli();
+$conn = bancoPDO();
 
 $nome = $_POST['nome'] ?? NULL;
 $cpf = $_POST['cpf'] ?? NULL;
@@ -56,6 +60,9 @@ if($nome != '' || $cpf != '')
 			$x[$i]['areaAtuacao'] = $area['areaAtuacao'];
 			$x[$i]['comissao'] = $comissao['nome'];
 			$x[$i]['etapa'] = $etapa['etapaProjeto'];
+			$x[$i]['dataParecerista'] = $lista['dataParecerista'];
+			$idComissao = $lista['idComissao'];
+			$idEtapaProjeto = $lista['idEtapaProjeto'];
 			$i++;
 		}
 		$x['num'] = $i;
@@ -108,9 +115,12 @@ elseif($razaoSocial != '' || $cnpj != '')
 			$x[$i]['areaAtuacao'] = $area['areaAtuacao'];
 			$x[$i]['comissao'] = $comissao['nome'];
 			$x[$i]['etapa'] = $etapa['etapaProjeto'];
+            $idComissao = $lista['idComissao'];
+            $idEtapaProjeto = $lista['idEtapaProjeto'];
 			$i++;
 		}
 		$x['num'] = $i;
+
 	}
 	else
 	{
@@ -167,7 +177,7 @@ else
 
 	$sql = "SELECT * FROM projeto AS prj
 			WHERE publicado = 1 AND idStatus != 6
-			$filtro_nomeProjeto $filtro_idProjeto $filtro_idAreaAtuacao $filtro_idEtapa $filtro_idComissao";
+			$filtro_nomeProjeto $filtro_idProjeto $filtro_idAreaAtuacao $filtro_idEtapa $filtro_idComissao ORDER BY protocolo";
 	$query = mysqli_query($con,$sql);
 	$num = mysqli_num_rows($query);
 	if($num > 0)
@@ -183,6 +193,9 @@ else
 			$x[$i]['idProjeto'] = $lista['idProjeto'];
 			$x[$i]['protocolo'] = $lista['protocolo'];
 			$x[$i]['nomeProjeto'] = $lista['nomeProjeto'];
+            $x[$i]['dataParecerista'] = $lista['dataParecerista'];
+            $idEtapaProjeto = $lista['idEtapaProjeto'];
+            $idComissao = $lista['idComissao'];
 			if($lista['tipoPessoa'] == 1)
 			{
 				$x[$i]['proponente'] = $pf['nome'];
@@ -211,9 +224,11 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 <section id="list_items" class="home-section bg-white">
 	<div class="container"><?php include 'includes/menu_smc.php'; ?>
 		<div class="form-group">
-			<h4>Pesquisar Projetos <?= (($_POST['idComissao'] != NULL) || ($_POST['idComissao'] != 0)) ? "Vinculados a(o) Parecerista" : "" ?><br>
-                <small><?= (($_POST['idComissao'] != NULL) || ($_POST['idComissao'] != 0)) ? "Parecerista: ".$comissao['nome'] : "" ?></small>
-            </h4>
+            <?php if (isset($_POST['idComissao'])) { ?>
+                <h4>Pesquisar Projetos <?= (($_POST['idComissao'] != NULL) || ($_POST['idComissao'] != 0)) ? "Vinculados a(o) Parecerista" : "" ?><br>
+                    <small><?= (($_POST['idComissao'] != NULL) || ($_POST['idComissao'] != 0)) ? "Parecerista: ".$comissao['nome'] : "" ?></small>
+                </h4>
+            <?php } ?>
 			<h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
 			<h5><a href="?perfil=smc_pesquisa_geral">Fazer outra busca</a></h5>
 		</div>
@@ -235,10 +250,12 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 						</thead>
 						<tbody>
 							<?php
+
 							for($h = 0; $h < $x['num']; $h++)
 							{
-								echo "<tr>";
-								echo "<td class='list_description'>".$x[$h]['protocolo']."</td>";
+
+                                echo "<tr style='background: white'></tr>";
+								echo "<td class='list_description maskProtocolo' data-mask = '0000.00.00/0000000'>".$x[$h]['protocolo']."</td>";
 								echo "<td class='list_description'>".$x[$h]['nomeProjeto']."</td>";
 								echo "<td class='list_description'>".$x[$h]['proponente']."</td>";
 								echo "<td class='list_description'>".$x[$h]['documento']."</td>";
@@ -260,16 +277,19 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 			</div>
 		</div>
         <?php
-        if (($_POST['idComissao'] != NULL) || ($_POST['idComissao'] != 0))
+        if (isset($_POST['idComissao']))
         {
-            if ($_POST['idComissao'] != 0)
+            if (($_POST['idComissao'] != NULL) || ($_POST['idComissao'] != 0))
             {
-        ?>
-                <h4>Histórico de Análise do(a) Parecerista <br>
-                    <small><?= $comissao['nome'] ?></small>
-                </h4>
-        <?php
-                include "includes/pesquisa_resultado_parecerista.php";
+                if ($_POST['idComissao'] != 0)
+                {
+            ?>
+                    <h4>Histórico de Análise do(a) Parecerista <br>
+                        <small><?= $comissao['nome'] ?></small>
+                    </h4>
+            <?php
+                    include "includes/pesquisa_resultado_parecerista.php";
+                }
             }
         }
         ?>

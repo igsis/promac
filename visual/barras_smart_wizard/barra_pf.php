@@ -89,17 +89,17 @@ for ($i = 0; $i < count($urlPf); $i++) {
                 <li class="<?php echo isset($acionar1) ? $acionar1 : 'clickable'; ?>">
                     <a onclick="location.href='index_pf.php?perfil=informacoes_iniciais_pf'" href=""><br /><small>Proponente</small></a>
                 </li>
-                <?php 
+                <?php
                     if ($pf['liberado'] != 3) {
                 ?>
                 <li class="<?php echo isset($acionar2) ? $acionar2 : 'clickable'; ?>">
                    <a onclick="location.href='index_pf.php?perfil=arquivos_pf'" href=""><br /><small>Documentos do Proponente</small></a>
                 </li>
-                <?php 
+                <?php
                     }
                 ?>
                 <li class="<?php echo isset($acionar20) ? $acionar20 : 'clickable'; ?>">
-                    <a onclick="location.href='index_pf.php?perfil=resultado_inscricao_pf'" href=""><br /><small>Resultado Inscrição</small></a>
+                    <a onclick="location.href='index_pf.php?perfil=resultado_inscricao_pf'" href=""><br /><small>Confirmação da Inscrição</small></a>
                 </li>
                 <?php
                     if ($pf['liberado'] != 3) {
@@ -118,77 +118,62 @@ for ($i = 0; $i < count($urlPf); $i++) {
                 <?php
                     if ($proj['idEtapaProjeto'] == 1)
                     {
-                ?> 
-                <?php
-                    if ($idProj == true) {
-                ?>
-                <li class="<?php echo isset($acionar6) ? $acionar6 : 'clickable'; ?>">
-                   <a onclick="location.href='index_pf.php?perfil=projeto_2'" href=""><br /><small>Valores Enquadramento</small></a>
-                </li>
-                <?php
-                    }else {
-                        break;
-                    }
-                ?>
-                <li class="<?php echo isset($acionar7) ? $acionar7 : 'clickable'; ?>">
-                   <a onclick="location.href='index_pf.php?perfil=projeto_3'" href=""><br /><small>Resumo e Currículo</small></a>
-                </li>
-                <li class="<?php echo isset($acionar8) ? $acionar8 : 'clickable'; ?>">
-                   <a onclick="location.href='index_pf.php?perfil=projeto_4'" href=""><br /><small>Objeto</small></a>
-                </li>
-                <li class="<?php echo isset($acionar9) ? $acionar9 : 'clickable'; ?>">
-                   <a onclick="location.href='index_pf.php?perfil=projeto_5'" href=""><br /><small>Justificativa e Objetivo</small></a>
-                </li>
-            </ul> <!-- Barra linha 2 -->
-            <ul>
-                <li class="<?php echo isset($acionar10) ? $acionar10 : 'clickable'; ?>">
-                   <a onclick="location.href='index_pf.php?perfil=projeto_6'" href=""><br /><small>Metodologia e Contrapartida</small></a>
-                </li>
-                <li class="<?php echo isset($acionar11) ? $acionar11 : 'clickable'; ?>">
-                   <a onclick="location.href='index_pf.php?perfil=local'" href=""><br /><small>Local</small></a>
-                </li>
-                <li class="<?php echo isset($acionar19) ? $acionar19 : 'clickable'; ?>">
-                   <a onclick="location.href='index_pf.php?perfil=projeto_8'" href=""><br /><small>Público Alvo e Plano de Divulgação</small></a>
-                </li>
-                <li class="<?php echo isset($acionar12) ? $acionar12 : 'clickable'; ?>">
-                   <a onclick="location.href='index_pf.php?perfil=ficha_tecnica'" href=""><br /><small>Ficha Técnica</small></a>
-                </li>
-                <li class="<?php echo isset($acionar13) ? $acionar13 : 'clickable'; ?>">
-                   <a onclick="location.href='index_pf.php?perfil=cronograma'" href=""><br /><small>Cronograma</small></a>
-                </li>
-                <li class="<?php echo isset($acionar14) ? $acionar14 : 'clickable'; ?>">
-                   <a onclick="location.href='index_pf.php?perfil=orcamento'" href=""><br /><small>Orçamento</small></a>
-                </li>
-                <li class="<?php echo isset($acionar15) ? $acionar15 : 'clickable'; ?>">
-                   <a onclick="location.href='index_pf.php?perfil=anexos'" href=""><br /><small>Anexos</small></a>
-                </li>
-                <li class="<?php echo isset($acionar16) ? $acionar16 : 'clickable'; ?>">
-                   <a onclick="location.href='index_pf.php?perfil=projeto_13'" href=""><br /><small>Link do YouTube</small></a>
-                </li>
-            </ul> <!-- Barra linha 3 -->
-            <ul>
-                <li class="<?php echo isset($acionar17) ? $acionar17 : 'clickable'; ?>">
-                   <a onclick="location.href='index_pf.php?perfil=finalProjeto'" href=""><br /><small>Concluir Inscrição</small></a>
-                </li>
+                    ?>
+                    <?php
+                        if ($idProj == true) {
+                    ?>
+                            <li class="<?php echo isset($acionar7) ? $acionar7 : 'clickable'; ?>">
+                                <a onclick="location.href='index_pf.php?perfil=projeto_3'" href=""><br /><small>Resumo e Currículo</small></a>
+                            </li>
+                    <?php
+                        }else {
+                            break;
+                        }
+                    ?>
+
+                    <li class="<?php echo isset($acionar8) ? $acionar8 : 'clickable'; ?>">
+                       <a onclick="location.href='index_pf.php?perfil=projeto_4'" href=""><br /><small>Objeto</small></a>
+                    </li>
+                    <li class="<?php echo isset($acionar9) ? $acionar9 : 'clickable'; ?>">
+                       <a onclick="location.href='index_pf.php?perfil=projeto_5'" href=""><br /><small>Justificativa e Objetivo</small></a>
+                    </li>
+                    <li class="<?php echo isset($acionar10) ? $acionar10 : 'clickable'; ?>">
+                        <a onclick="location.href='index_pf.php?perfil=projeto_6'" href=""><br /><small>Metodologia e Contrapartida</small></a>
+                    </li>
+                    <li class="<?php echo isset($acionar11) ? $acionar11 : 'clickable'; ?>">
+                        <a onclick="location.href='index_pf.php?perfil=local'" href=""><br /><small>Local</small></a>
+                    </li>
+                </ul> <!-- Barra linha 2 -->
+                <ul>
+                    <li class="<?php echo isset($acionar19) ? $acionar19 : 'clickable'; ?>">
+                       <a onclick="location.href='index_pf.php?perfil=projeto_8'" href=""><br /><small>Público Alvo e Plano de Divulgação</small></a>
+                    </li>
+                    <li class="<?php echo isset($acionar12) ? $acionar12 : 'clickable'; ?>">
+                       <a onclick="location.href='index_pf.php?perfil=ficha_tecnica'" href=""><br /><small>Ficha Técnica</small></a>
+                    </li>
+                    <li class="<?php echo isset($acionar13) ? $acionar13 : 'clickable'; ?>">
+                       <a onclick="location.href='index_pf.php?perfil=cronograma'" href=""><br /><small>Cronograma</small></a>
+                    </li>
+                    <li class="<?php echo isset($acionar14) ? $acionar14 : 'clickable'; ?>">
+                       <a onclick="location.href='index_pf.php?perfil=orcamento'" href=""><br /><small>Orçamento</small></a>
+                    </li>
+                    <li class="<?php echo isset($acionar6) ? $acionar6 : 'clickable'; ?>">
+                        <a onclick="location.href='index_pf.php?perfil=projeto_2'" href=""><br /><small>Valores Enquadramento</small></a>
+                    </li>
+                    <li class="<?php echo isset($acionar15) ? $acionar15 : 'clickable'; ?>">
+                       <a onclick="location.href='index_pf.php?perfil=anexos'" href=""><br /><small>Anexos</small></a>
+                    </li>
+                    <li class="<?php echo isset($acionar16) ? $acionar16 : 'clickable'; ?>">
+                       <a onclick="location.href='index_pf.php?perfil=projeto_13'" href=""><br /><small>Mídias Sociais</small></a>
+                    </li>
+                    <li class="<?php echo isset($acionar17) ? $acionar17 : 'clickable'; ?>">
+                        <a onclick="location.href='index_pf.php?perfil=finalProjeto'" href=""><br /><small>Concluir Inscrição</small></a>
+                    </li>
                 <?php
                 }
                 ?>
-                <?php
-                    /*if ($proj['idEtapaProjeto'] != 1) {
-                ?>
-                <li class="<?php echo isset($acionar18) ? $acionar18 : 'clickable'; ?>">
-                   <a onclick="location.href='index_pf.php?perfil=informacoes_administrativas'" href=""><br /><small>Informações da Inscrição</small></a>
-                </li>
-                <?php
-                    }else{
-                ?>
-                <li class="<?php echo isset($acionar18) ? $acionar18 : 'disabled'; ?>">
-                   <a><br /><small>Informações da Inscrição</small></a>
-                </li>
-                <?php
-                    }*/
-                ?>
-            </ul>
+            </ul> <!-- Barra linha 3 -->
+
        	</div>
 <?php
     }

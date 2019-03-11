@@ -162,7 +162,7 @@ else
 
 	$sql = "SELECT * FROM projeto AS prj
 			WHERE publicado = 1 AND idStatus != 6
-			$filtro_nomeProjeto $filtro_idProjeto $filtro_idAreaAtuacao $filtro_idComissao $filtro_idEtapaProjeto";
+			$filtro_nomeProjeto $filtro_idProjeto $filtro_idAreaAtuacao $filtro_idComissao $filtro_idEtapaProjeto ORDER BY protocolo";
 	$query = mysqli_query($con,$sql);
 	$num = mysqli_num_rows($query);
 	if($num > 0)
@@ -227,7 +227,7 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 								<td>Proponente</td>
 								<td>Documento</td>
 								<td>Área de Atuação</td>
-								<td>Eatapa</td>
+								<td>Etapa</td>
 								<td>Parecerista</td>
 								<td width='10%'></td>
 							</tr>
@@ -237,7 +237,7 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 							for($h = 0; $h < $x['num']; $h++)
 							{
 								echo "<tr>";
-								echo "<td class='list_description'>".$x[$h]['protocolo']."</td>";
+								echo "<td class='list_description maskProtocolo' data-mask = '0000.00.00/0000000'>".$x[$h]['protocolo']."</td>";
 								echo "<td class='list_description'>".$x[$h]['nomeProjeto']."</td>";
 								echo "<td class='list_description'>".$x[$h]['proponente']."</td>";
 								echo "<td class='list_description'>".$x[$h]['documento']."</td>";

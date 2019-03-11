@@ -32,7 +32,7 @@ if(isset($_POST['insereCooperativa']))
 		$num_busca = 1;
 		$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso! Utilize o menu para avançar.</strong></font>";
         gravarLog($sql_insere_cooperativa);
-        echo "<meta HTTP-EQUIV='refresh' CONTENT='0.5;URL=?perfil=projeto_2'>";
+        echo "<meta HTTP-EQUIV='refresh' CONTENT='0.5;URL=?perfil=projeto_3'>";
 	}
 	else
 	{

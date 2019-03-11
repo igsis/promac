@@ -97,16 +97,7 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 				<div class="form-group">
 					<div class="col-md-12">
 						<div class="table-responsive list_info"><h6>Listas de Projetos Aprovados</h6>
-							<?php listaArquivosAnalise($tipoPessoa,"analise_projeto"); ?>
-						</div>
-					</div>
-				</div>
-
-				<!-- Exibir arquivos -->
-				<div class="form-group">
-					<div class="col-md-12">
-						<div class="table-responsive list_info"><h6>Arquivo(s) Anexado(s)</h6>
-							<?php listaArquivosSmc($tipoPessoa,"smc_arquivos"); ?>
+							<?php listaArquivosSMC($tipoPessoa,"smc_arquivos"); ?>
 						</div>
 					</div>
 				</div>

@@ -63,9 +63,9 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
 							<br>
                             <table class="table table-bordered">
                                 <tr>
-                                    <td><strong>Protocolo (nº ISP):</strong>
-                                        <?php
-                                        echo $projeto['protocolo'] ?>
+                                    <td>
+                                        <strong>Protocolo (nº ISP):</strong>
+                                        <span data-mask = "0000.00.00/0000000"><?= $projeto['protocolo'] ?></span>
                                     </td>
                                     <td><strong>Tipo:</strong>
                                         <?php

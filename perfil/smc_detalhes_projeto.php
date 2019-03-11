@@ -79,18 +79,17 @@ if(isset($_POST['gravarAdm']))
     {
         $dataReuniao = exibirDataMysql($_POST['dataReuniao']);
     }
-    if($_POST['dataPublicacaoDoc'] == 0000-00-00)
-    {
-        $dataPublicacaoDoc = '';
-    }
-    else
-    {
-        $dataPublicacaoDoc = exibirDataMysql($_POST['dataPublicacaoDoc']);
-    }
-    $linkPublicacaoDoc = $_POST['linkPublicacaoDoc'];
+//    if($_POST['dataPublicacaoDoc'] == 0000-00-00)
+//    {
+//        $dataPublicacaoDoc = '';
+//    }
+//    else
+//    {
+//        $dataPublicacaoDoc = exibirDataMysql($_POST['dataPublicacaoDoc']);
+//    }
     $data = date('Y-m-d H:i:s');
     $idUsuario = $_SESSION['idUser'];
-    $sql_gravarAdm = "UPDATE projeto SET valorAprovado = '$valorAprovado', idRenunciaFiscal = '$idRenunciaFiscal', idStatusParecerista = '$statusParecerista', dataReuniao = '$dataReuniao', dataPublicacaoDoc = '$dataPublicacaoDoc', linkPublicacaoDoc = '$linkPublicacaoDoc' WHERE idProjeto = '$idP' ";
+    $sql_gravarAdm = "UPDATE projeto SET valorAprovado = '$valorAprovado', idRenunciaFiscal = '$idRenunciaFiscal', idStatusParecerista = '$statusParecerista', dataReuniao = '$dataReuniao' WHERE idProjeto = '$idP' ";
     if(mysqli_query($con,$sql_gravarAdm))
     {
         $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
@@ -111,21 +110,21 @@ if(isset($_POST['gravarAdm']))
                 $mensagem = "<font color='#FF0000'><strong>Erro ao atualizar! Tente novamente.</strong></font>";
             }
         }
-        if($dataPublicacaoDoc != '' || $linkPublicacaoDoc != '')
-        {
-            $sql_historico_publicacao = "INSERT INTO historico_publicacao (idProjeto,idEtapaProjeto,dataPublicacao,linkPublicacao,data,idUsuario) VALUES ('$idP','$idStatus','$dataPublicacaoDoc','$linkPublicacaoDoc','$data','$idUsuario')";
-            if(mysqli_query($con,$sql_historico_publicacao))
-            {
-                $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
-
-                gravarLog($sql_historico_publicacao);
-                echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
-            }
-            else
-            {
-                $mensagem = "<font color='#FF0000'><strong>Erro ao atualizar! Tente novamente.</strong></font>";
-            }
-        }
+//        if($dataPublicacaoDoc != '' || $linkPublicacaoDoc != '')
+//        {
+//            $sql_historico_publicacao = "INSERT INTO historico_publicacao (idProjeto,idEtapaProjeto,dataPublicacao,linkPublicacao,data,idUsuario) VALUES ('$idP','$idStatus','$dataPublicacaoDoc','$linkPublicacaoDoc','$data','$idUsuario')";
+//            if(mysqli_query($con,$sql_historico_publicacao))
+//            {
+//                $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso!</strong></font>";
+//
+//                gravarLog($sql_historico_publicacao);
+//                echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
+//            }
+//            else
+//            {
+//                $mensagem = "<font color='#FF0000'><strong>Erro ao atualizar! Tente novamente.</strong></font>";
+//            }
+//        }
     }
     else
     {
@@ -165,7 +164,6 @@ if(isset($_POST['aprovaProjeto']))
         default:
             $etapaValida = false;
             break;
-
     }
     if ($etapaValida) {
         $dateNow = date('Y-m-d H:i:s');
@@ -215,6 +213,7 @@ if(isset($_POST['reprovaProjeto']))
             break;
         default:
             $etapaValida = false;
+            break;
     }
     if ($etapaValida) {
         $dateNow = date('Y-m-d H:i:s');
@@ -260,14 +259,25 @@ if(isset($_POST['complementaProjeto']))
 
 if(isset($_POST['envioComissao']))
 {
+    $dateNow = date('Y-m-d H:i:s');
     $idProjeto = $_POST['idProjeto'];
     $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
     $idEtapaProjeto = $projeto['idEtapaProjeto'];
+    $dataParecerista = $dateNow;
+    $semanaAtual = date('W');
+    $semana = recuperaDados('contagem_comissao', 'semana', $semanaAtual);
+    $projetos = $semana['projetos'];
+
+    if ($projetos == 0)
+    {
+        $con->query("UPDATE contagem_comissao SET projetos = '0' WHERE semana != $semanaAtual");
+    }
 
     switch ($idEtapaProjeto) {
         case 2:
             $etapaProjeto = 7;
             $etapaValida = true;
+            $dataParecerista = "0000-00-00";
             break;
         case 10:
             $etapaProjeto = 7;
@@ -303,9 +313,10 @@ if(isset($_POST['envioComissao']))
     }
 
     if ($etapaValida) {
-        $dateNow = date('Y-m-d H:i:s');
-        $sql_envioComissao = "UPDATE projeto SET idEtapaProjeto = '$etapaProjeto', idStatus = 2, envioComissao = '$dateNow' WHERE idProjeto = '$idProjeto' ";
+        $sql_envioComissao = "UPDATE projeto SET idEtapaProjeto = '$etapaProjeto', idStatus = 2, dataParecerista = '$dataParecerista', envioComissao = '$dateNow' WHERE idProjeto = '$idProjeto' ";
         if (mysqli_query($con, $sql_envioComissao)) {
+            $sql_contagem_comissao = "UPDATE `contagem_comissao` SET `projetos` = '" . ($projetos + 1) . "' WHERE `semana` = '$semanaAtual'";
+            $con->query($sql_contagem_comissao);
             $sql_historico = "INSERT INTO historico_etapa (idProjeto, idEtapaProjeto, data) VALUES ('$idProjeto', '$etapaProjeto', '$dateNow')";
             $query_historico = mysqli_query($con, $sql_historico);
             $mensagem = "<font color='#01DF3A'><strong>Enviado com sucesso!</strong></font>";
@@ -362,27 +373,6 @@ if(isset($_POST['gravarFin']))
     else
     {
         $mensagem = "<font color='#FF0000'><strong>Erro ao atualizar! Tente novamente.</strong></font>";
-    }
-}
-
-if(isset($_POST['gravarNota']))
-{
-    $idP = $_POST['IDP'];
-    if ($idP != 0)
-    {
-        $dateNow = date('Y-m-d H:i:s');
-        $nota = addslashes($_POST['nota']);
-        $sql_nota = "INSERT INTO notas (idPessoa, idTipo, data, nota, interna) VALUES ('$idP', '3', '$dateNow', '$nota', '0')";
-        if(mysqli_query($con,$sql_nota))
-        {
-            $mensagem = "<font color='#01DF3A'><strong>Nota inserida com sucesso!</strong></font>";
-            gravarLog($sql_nota);
-            echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
-        }
-        else
-        {
-            $mensagem = "<font color='#FF0000'><strong>Erro ao inserir nota! Tente novamente.</strong></font>";
-        }
     }
 }
 
@@ -451,16 +441,20 @@ if(isset($_POST['editarParecer'])){
     $observacoes = $_POST['observacoes'];
     $idProjeto = $_POST['idPessoa'];
     $idArquivo = $_POST['idArquivo'];
-    $query = "UPDATE upload_arquivo SET idStatusDocumento = $status, observacoes = '$observacoes' WHERE idUploadArquivo = '$idArquivo' ";
+    $idDisponibilizar = $_POST['idDisponib'];
+    $dataDisponivel = exibirDataMysql($_POST['dataDisponivel']) ?? NULL;
+    $query = "UPDATE upload_arquivo SET idStatusDocumento = '$status', observacoes = '$observacoes' WHERE idUploadArquivo = '$idArquivo' ";
     $envia = mysqli_query($con, $query);
     if($envia)
     {
-        $mensagem = "<span style=\"color: #01DF3A; \"><strong>Os arquivos foram atualizados com sucesso!</strong></span>";
-        gravarLog($query);
+        $sql_data = "UPDATE disponibilizar_documento SET data = '$dataDisponivel' WHERE idUploadArquivo = '$idArquivo' AND id ='$idDisponibilizar' ";
+        $query_data = mysqli_query($con,$sql_data);
+        //echo "<script>window.location.href = 'index_pf.php?perfil=smc_detalhes_projeto&idFF=".$idProjeto."';</script>";
+        $mensagem = "<font color='#01DF3A'><strong>Os arquivos foram atualizados com sucesso!</strong></font>";
     }
     else
     {
-       // echo "<script>window.location.href = 'index_pf.php?perfil=smc_detalhes_projeto&idFF=".$idProjeto."';</script>";
+        echo "<script>window.location.href = 'index_pf.php?perfil=smc_detalhes_projeto&idFF=".$idProjeto."';</script>";
         echo "<script>alert('Erro durante o processamento, entre em contato com os responsáveis pelo sistema para maiores informações.')</script>";
     }
 }
@@ -517,6 +511,10 @@ if(isset($_POST["enviar"]))
                         $query = mysqli_query($con,$sql_insere_arquivo);
                         if($query)
                         {
+                            $idUploadArquivo = recuperaUltimo("upload_arquivo");
+                            $sql_insere_data = "INSERT INTO disponibilizar_documento (idUploadArquivo) VALUES ($idUploadArquivo)";
+                            $query_insere_data = mysqli_query($con,$sql_insere_data);
+                            echo $sql_insere_data;
                             $mensagem = "<font color='#01DF3A'><strong>Arquivo recebido com sucesso!</strong></font>";
                             gravarLog($sql_insere_arquivo);
                         }

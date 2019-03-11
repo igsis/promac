@@ -256,23 +256,8 @@ if(isset($_POST['apagar']))
 
                 <!-- Botão para Voltar -->
                 <div class="form-group">
-                    <div class="col-md-offset-4 col-md-6">
-                        <?php
-				if($projeto['tipoPessoa'] == 1)
-				{
-				?>
-               		 <form class="form-horizontal" role="form" action="?perfil=projeto_pf" method="post">
-                <?php
-				}
-				else
-				{
-				?>
-                    <form class="form-horizontal" role="form" action="?perfil=projeto_pj" method="post">
-                <?php
-				}
-				?>
-                   		 <input type="submit" value="Voltar" class="btn btn-theme btn-md btn-block">
-                    </form>
+                    <div class="col-md-offset-4 col-md-6">                    
+                   		<a href="?perfil=projeto_visualizacao" class="btn btn-theme btn-md btn-block">Voltar</a>            
                     </div>
                 </div>
 

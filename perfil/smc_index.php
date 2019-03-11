@@ -11,7 +11,7 @@ if (($pf['idNivelAcesso'] == 3) || ($pf['idNivelAcesso'] == 4))
     echo "<script>window.location = '?perfil=comissao_index';</script>";
 }
 
-$situacaoAtual = recuperaDados("statusprojeto", "idStatus", $idStatus);
+$situacaoAtual = recuperaDados("liberacao_projeto", "idStatus", $idStatus);
 
 if(isset($_POST['liberacaoPF']))
 {
@@ -58,6 +58,8 @@ if(isset($_POST['liberacaoPJ']))
             </h5>
         </div>
 
+        <?php limiteEnvioProjetos() ?>
+
         <ul class="nav nav-tabs">
             <?php
             if ($pf['idNivelAcesso'] != 4)
@@ -76,7 +78,7 @@ if(isset($_POST['liberacaoPJ']))
             </div>
 
             <div class="tab-pane fade" id="comissao">
-                <?php include "includes/comissao_area_index.php"; ?>
+                <?php include "includes/comissao_index_smc.php"; ?>
             </div>
         </div>
     </div>

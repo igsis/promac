@@ -215,7 +215,17 @@ if(isset($_POST['apagar']))
                                               </td>	
                                             <?php else: ?>
                                               <td class="list_description path">
-                                                <?=$arq['documento']?>	
+                                                <?php
+                                                    $obrigatorios = [20, 21];
+                                                    if (in_array($arq['idListaDocumento'], $obrigatorios))
+                                                    {
+                                                        echo $arq['documento']." *";
+                                                    }
+                                                    else
+                                                    {
+                                                        echo $arq['documento'];
+                                                    }
+                                                ?>
                                               </td>	
                                             <?php endif ?> 
 											<td class="list_description"><input type='file' name='arquivo[<?php echo $arq['sigla']; ?>]'></td>

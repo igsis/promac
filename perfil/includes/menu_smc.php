@@ -3,13 +3,6 @@
 		<button class="dl-trigger">Open Menu</button>
 		<ul class="dl-menu">
 			<li><a href="?perfil=smc_index">Home</a></li>
-			<li><a href="#">Usuários</a>
-				<ul class="dl-submenu">
-					<li><a href="?perfil=smc_pesquisa_nome">Nível de acesso</a></li>
-					<li><a href="?perfil=smc_pesquisa_reseta_senha">Reiniciar senha</a></li>
-				</ul>
-			</li>
-			<li><a href="?perfil=smc_arquivos">Uploads</a></li>
 			<li><a href="#">Pesquisas</a>
 				<ul class="dl-submenu">
 					<li><a href="?perfil=smc_pesquisa_pf">Pessoa Física</a></li>
@@ -41,15 +34,23 @@
 					<li><a href="../perfil/webLog.php" target="_blank">WebLog</a></li>
 				</ul>
 			</li>
+			<li><a href="?perfil=smc_projeto_agendamento_pesquisa">Agendamento</a></li>
 			<li><a href="?perfil=fazenda">Fazenda</a></li>
-			<li><a href="?perfil=informacoes_iniciais_pf">Módulo Proponente (provisório)</a></li>
-			<li><a href="#">Cadastro de projetos</a>
-				<ul class="dl-submenu">
-					<li><a href="?perfil=smc_gerenciar_projeto&id=1">Liberar</a></li>
-					<li><a href="?perfil=smc_gerenciar_projeto&id=2">Bloquear</a></li>
-				</ul>
-			</li>
-			<li><a href="?perfil=smc_area_atuacao">Área atuação</a></li>
+            <li><a href="#">Gerenciamento do sistema</a>
+                <ul class="dl-submenu">
+                    <li><a href="?perfil=smc_area_atuacao">Área atuação</a></li>
+                    <li><a href="?perfil=smc_agendamento_cadastro">Cadastro Link Agendamento</a></li>
+                    <li><a href="?perfil=smc_gerenciar_projeto">Liberar/Bloquear projetos</a></li>
+                    <li><a href="?perfil=informacoes_iniciais_pf">Módulo Proponente (provisório)</a></li>
+                    <li><a href="?perfil=smc_arquivos">Uploads</a></li>
+                    <li><a href="#">Usuários</a>
+                        <ul class="dl-submenu">
+                            <li><a href="?perfil=smc_pesquisa_nome">Nível de acesso</a></li>
+                            <li><a href="?perfil=smc_pesquisa_reseta_senha">Reiniciar senha</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
 			<li style="color:white;">-------------------------</li>
 			<li><a href="index_pf.php?perfil=smc_index">Início</a></li>
 			<li><a href="?perfil=senha">Alterar senha</a></li>

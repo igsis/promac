@@ -60,7 +60,8 @@ $ano = date('Y');
 					<div class="col-md-offset-2 col-md-8" align="left">
 						<ul class='list-group'>
 							<li class='list-group-item list-group-item-success'>
-								<li class='list-group-item'><strong>Protocolo (nº ISP):</strong> <?php echo $projeto['protocolo'] ?></li>
+								<li class='list-group-item'><strong>Protocolo (nº ISP):</strong>
+                                <span data-mask = "0000.00.00/0000000"><?= $projeto['protocolo'] ?></span></li>
 						</ul>
 					</div>
 				</div>

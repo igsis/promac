@@ -1,9 +1,22 @@
 <?php
+
+set_time_limit(1200);
+
+$cinza = "#EBEBEB";
+
 if(isset($_POST['envioComissao']))
 {
 	$idProjeto = $_POST['idProjeto'];
 	$projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 	$idEtapa = $projeto['idEtapaProjeto'];
+	$semanaAtual = date('W');
+    $semana = recuperaDados('contagem_comissao', 'semana', $semanaAtual);
+    $projetos = $semana['projetos'];
+
+    if ($projetos == 0)
+    {
+        $con->query("UPDATE contagem_comissao SET projetos = '0' WHERE semana != $semanaAtual");
+    }
 
 	switch ($idEtapa) {
 		case 2:
@@ -31,20 +44,33 @@ if(isset($_POST['envioComissao']))
 			$statusEnvio = 24;
 			break;
 	}
-	$dateNow = date('Y-m-d H:i:s');
+
+
+    $dateNow = date('Y-m-d H:i:s');
 	$sql_envioComissao = "UPDATE projeto SET idEtapaProjeto = '$statusEnvio', envioComissao = '$dateNow', idStatus = '2' WHERE idProjeto = '$idProjeto'";
 	if(mysqli_query($con,$sql_envioComissao))
 	{
-		$sql_historico = "INSERT INTO historico_etapa (idProjeto, idEtapaProjeto, data) VALUES ('$idProjeto', '$statusEnvio', '$dateNow')";
-		$query_historico = mysqli_query($con, $sql_historico);
-        $mensagem = "<font color='#01DF3A'><strong>Enviado com sucesso!</strong></font>";
+	    $sql_contagem_comissao = "UPDATE `contagem_comissao` SET `projetos` = '".($projetos+1)."' WHERE `semana` = '$semanaAtual'";
+        $con->query($sql_contagem_comissao);
+        $sql_historico = "INSERT INTO historico_etapa (idProjeto, idEtapaProjeto, data) VALUES ('$idProjeto', '$statusEnvio', '$dateNow')";
+        $query_historico = mysqli_query($con, $sql_historico);
+        $mensagem = "<span style='color: #01DF3A; '><strong>Enviado com sucesso!</strong></span>";
 		gravarLog($sql_historico);
 		gravarLog($sql_envioComissao);
 	}
 	else
 	{
-		$mensagem = "<font color='#FF0000'><strong>Erro ao enviar! Tente novamente.</strong></font>";
+		$mensagem = "<span style='color: #FF0000; '><strong>Erro ao enviar! Tente novamente.</strong></span>";
 	}
+}
+if (isset($_POST['arquivar'])){
+    $idProjeto = $_POST['idProjeto'];
+     $query = "UPDATE projeto SET publicado = 0 WHERE idProjeto = '$idProjeto' ";
+     if (mysqli_query($con,$query)){
+         $mensagem = "<span style='color: #01DF3A; '><strong>Projeto arquivado com sucesso</strong></span>";
+     }else{
+         $mensagem = "<span style='color: #FF0000; '><strong>Erro ao arquivar o projeto</strong></span>";
+     }
 }
 
     if ($pf['idNivelAcesso'] == 2)
@@ -322,19 +348,23 @@ if(isset($_POST['envioComissao']))
         </div>
 <?php
     }
-    
-$array_status = array(2, 3, 10, 12, 13, 20, 23, 25, 14, 15, 11); //status
+
+$array_status = array(2, 3, 10, 12, 13, 20, 23, 25, 14, 15, 11,35); //status
+
 foreach ($array_status as $idStatus)
 {
     $sqlStatus = "SELECT idEtapaProjeto, etapaProjeto, ordem FROM etapa_projeto WHERE idEtapaProjeto = '$idStatus'";
-    $sqlProjeto = "SELECT idProjeto, nomeProjeto, protocolo, pf.nome, pf.cpf, razaoSocial, cnpj, areaAtuacao, pfc.nome AS comissao, etapaProjeto, pro.idEtapaProjeto AS idEtapaProjeto 
+    $sqlProjeto = "SELECT he.data, pro.idProjeto, nomeProjeto, protocolo, idComissao, pro.dataParecerista, pf.nome, pf.cpf, razaoSocial, cnpj, areaAtuacao, pfc.nome AS comissao, etapaProjeto, pro.idEtapaProjeto AS idEtapaProjeto, pro.publicado, pro.idStatus
                     FROM projeto AS pro
-                    LEFT JOIN pessoa_fisica AS pf ON pro.idPf = pf.idPf
-                    LEFT JOIN pessoa_juridica AS pj ON pro.idPj = pj.idPj
-                    INNER JOIN area_atuacao AS ar ON pro.idAreaAtuacao = ar.idArea
-                    LEFT JOIN pessoa_fisica AS pfc ON pro.idComissao = pfc.idPf 
-                    INNER JOIN etapa_projeto AS st ON pro.idEtapaProjeto = st.idEtapaProjeto
-                    WHERE pro.publicado = 1 AND pro.idStatus != 6  AND pro.idEtapaProjeto = '$idStatus' ORDER BY idProjeto DESC";
+                           LEFT JOIN pessoa_fisica AS pf ON pro.idPf = pf.idPf
+                           LEFT JOIN pessoa_juridica AS pj ON pro.idPj = pj.idPj
+                           INNER JOIN area_atuacao AS ar ON pro.idAreaAtuacao = ar.idArea
+                           LEFT JOIN pessoa_fisica AS pfc ON pro.idComissao = pfc.idPf
+                           INNER JOIN etapa_projeto AS st ON pro.idEtapaProjeto = st.idEtapaProjeto
+                           LEFT JOIN (
+                             SELECT MAX(data) AS data, idProjeto FROM historico_etapa GROUP BY idProjeto
+                          ) AS he ON pro.idProjeto = he.idProjeto
+                    WHERE pro.publicado = 1 AND pro.idEtapaProjeto = '$idStatus' ORDER BY he.data, protocolo";
     $queryProjeto = mysqli_query($con,$sqlProjeto);
     $queryStatus = mysqli_query($con,$sqlStatus);
     $num = mysqli_num_rows($queryProjeto);
@@ -369,6 +399,14 @@ foreach ($array_status as $idStatus)
                         <thead>
                         <tr class='list_menu'>
                             <td>Protocolo (nº ISP)</td>
+                            <?php
+                            if (($status['idEtapaProjeto'] == 2) || ($status['idEtapaProjeto'] == 13) || ($status['idEtapaProjeto'] == 23) || ($status['idEtapaProjeto'] == 14) || ($status['idEtapaProjeto'] == 10))
+                                {
+                                    ?>
+                                <td>Data do envio</td>
+                                <?php
+                                }
+                                ?>
                             <td>Nome do Projeto</td>
                             <td>Proponente</td>
                             <td>Documento</td>
@@ -384,17 +422,48 @@ foreach ($array_status as $idStatus)
                             }
                             ?>    
                             <?=($status['idEtapaProjeto'] == '2' || $status['idEtapaProjeto'] == '13' || $status['idEtapaProjeto'] == '14' || $status['idEtapaProjeto'] == '23') ? "<td></td>" : NULL ?>
-                            <td width='10%'></td>
+                            <td  colspan='2' width='10%'></td>
                         </tr>
                         </thead>
                         <?php
                         while ($campo = mysqli_fetch_array($queryProjeto))
                         {
-
                             if ($i < 5) {
                                 ?>
-                                <tr>
-                                    <td class='list_description'><?= $campo['protocolo'] ?></td>
+                                <tr style="background: <?= ($campo['idStatus'] == 6 && $campo['publicado'] == 1? $cinza: "white") ?>">
+                                    <td class='list_description maskProtocolo' data-mask = "0000.00.00/0000000"><?= $campo['protocolo'] ?></td>
+                                    <?php
+                                        if ($status['idEtapaProjeto'] == 2) {
+
+                                            $dataEtapa = new DateTime ($campo['data']);
+
+                                              echo "<td class='list_description'>" . date_format($dataEtapa, "d/m/Y H:i:s") . "</td>";
+
+                                        }elseif($status['idEtapaProjeto'] == 10) {
+
+                                            $dataEtapa = new DateTime ($campo['data']);
+
+                                            echo "<td class='list_description'>" . date_format($dataEtapa, "d/m/Y H:i:s") . "</td>";
+                                        } elseif ($status['idEtapaProjeto'] == 13){
+
+                                            $dataEtapa = new DateTime ($campo['data']);
+
+                                            echo "<td class='list_description'>" . date_format($dataEtapa, "d/m/Y H:i:s") . "</td>";
+
+                                        } elseif ($status['idEtapaProjeto'] == 14) {
+                                            $dataEtapa = new DateTime ($campo['data']);
+
+                                            echo "<td class='list_description'>" . date_format($dataEtapa, "d/m/Y H:i:s") . "</td>";
+
+                                        } elseif($status['idEtapaProjeto'] == 23) {
+
+                                            $dataEtapa = new DateTime ($campo['data']);
+
+                                            echo "<td class='list_description'>" . date_format($dataEtapa, "d/m/Y H:i:s") . "</td>";
+                                        }
+                                    ?>
+
+
                                     <td class='list_description'><?= $campo['nomeProjeto'] ?></td>
                                     <td class='list_description'><?= isset($campo['nome']) ? $campo['nome'] : $campo['razaoSocial'] ?></td>
                                     <td class='list_description'><?= isset($campo['cpf']) ? $campo['cpf'] : $campo['cnpj'] ?></td>
@@ -427,26 +496,56 @@ foreach ($array_status as $idStatus)
                                     }
                                     if ($pf['idNivelAcesso'] == 2)
                                     {
-                                        ?>
-                                        <td class='list_description'>
-                                            <form method='POST' action='?perfil=smc_detalhes_projeto'>
-                                                <input type='hidden' name='idProjeto'
-                                                       value='<?= $campo['idProjeto'] ?>'/>
-                                                <input type='submit' class='btn btn-theme btn-block' value='Visualizar'>
-                                            </form>
-                                        </td>
-                                        <td class='list_description'>
-                                        <?php
-                                            if ($status['idEtapaProjeto'] == '2' || $status['idEtapaProjeto'] == '13' || $status['idEtapaProjeto'] == '14' || $status['idEtapaProjeto'] == '23') {
-                                        ?>
-                                                <form method="POST" action=''>
-                                                    <input type='button' data-id="<?= $campo['idProjeto'] ?>"  name='envioComissao' class='btn btn-theme btn-block' value='Enviar para comissão' data-toggle='modal' data-target='#enviarComissao'>
+                                        if ($campo['idStatus'] != 6) {
+                                            ?>
+                                            <td class='list_description'>
+                                                <form method='POST' action='?perfil=smc_detalhes_projeto'>
+                                                    <input type='hidden' name='idProjeto'
+                                                           value='<?= $campo['idProjeto'] ?>'/>
+                                                    <input type='submit' class='btn btn-theme btn-block'
+                                                           value='Visualizar'>
                                                 </form>
-                                        <?php                                                
+                                            </td>
+                                            <td class='list_description'>
+                                            <?php
+                                            if ($status['idEtapaProjeto'] == '2' || $status['idEtapaProjeto'] == '13' || $status['idEtapaProjeto'] == '14' || $status['idEtapaProjeto'] == '23') {
+                                                ?>
+                                                <form method="POST" action=''>
+                                                    <input type='button' data-id="<?= $campo['idProjeto'] ?>"
+                                                           name='envioComissao' class='btn btn-theme btn-block'
+                                                           value='Enviar para comissão' data-toggle='modal'
+                                                           data-target='#enviarComissao'>
+                                                </form>
+                                        <?php
                                             }
                                         ?>
-                                        </td>
-                                        <?php                                        
+                                            </td>
+                                        <?php
+                                        }elseif ($campo['idStatus'] == 6){
+                                            if ($status['idEtapaProjeto'] == '2' || $status['idEtapaProjeto'] == '13' || $status['idEtapaProjeto'] == '14' || $status['idEtapaProjeto'] == '23'){
+                                                echo "<td style='color: #942a25;text-align: center;font-weight: bold;'>
+                                                <form method='POST' action='?perfil=cancelado_visualizacao'>
+                                                    <input type='hidden' name='idProjeto'
+                                                           value='" . $campo['idProjeto'] . "'>
+                                                    <input style='margin-top: 14px' type='submit' class='btn btn-warning btn-block'
+                                                           value='Resumo'><small>Cancelado</small>
+                                                </form>
+                                                    </td>";
+                                                echo "<td style='color: #942a25;text-align: center;font-weight: bold'>
+                                                        <button class='btn btn-danger btn-block' data-id='" . $campo['idProjeto'] . "' name='arquivar' data-toggle='modal' data-target='#arquivar'>Arquivar</button><small>Cancelado</small>";
+                                            }
+                                            else{
+                                                echo "<td style='color: #942a25;text-align: center;font-weight: bold'><small>Cancelado</small>
+                                                        <form method='POST' action='?perfil=cancelado_visualizacao'>
+                                                            <input type='hidden' name='idProjeto' value='" . $campo['idProjeto'] . "'>
+                                                            <input type='submit' class='btn btn-warning btn-block'  value='Resumo'>
+                                                        </form>
+                                                        <button class='btn btn-danger btn-block'  data-id='" . $campo['idProjeto'] . "' name='arquivar' data-toggle='modal' data-target='#arquivar'>Arquivar</button>
+                                                     </td>";
+                                            }
+                                        }
+                                        ?>
+                                        <?php
                                     }
                                     ?>
                                 </tr>
@@ -477,7 +576,7 @@ foreach ($array_status as $idStatus)
     <div class="col-md-12">
         <div class="table-responsive list_info">
             <?php
-            $sql = "SELECT * FROM prazos_projeto AS prz INNER JOIN projeto AS prj ON prj.idProjeto = prz.idProjeto WHERE prj.publicado = 1 AND finalCaptacao != '0000-00-00' AND finalCaptacao BETWEEN CURRENT_DATE()-30 AND CURRENT_DATE() LIMIT 0,10";
+            $sql = "SELECT * FROM prazos_projeto AS prz INNER JOIN projeto AS prj ON prj.idProjeto = prz.idProjeto WHERE finalCaptacao != '0000-00-00' AND finalCaptacao BETWEEN CURRENT_DATE()-30 AND CURRENT_DATE() LIMIT 0,10";
             $query = mysqli_query($con,$sql);
             $num = mysqli_num_rows($query);
             if($num > 0)
@@ -498,21 +597,29 @@ foreach ($array_status as $idStatus)
                     while($campo = mysqli_fetch_array($query))
                     {
                     ?>
-                    <tr>
+
+                    <tr style="background: <?= ($campo['publicado'] == 0 ? $cinza : "white")?>">
+                    <tr style="background: <?= $limite == 1 ? "#ff4c4c" : "white" ?>">
                         <td class='list_description'><?=$campo['protocolo']?></td>
                         <td class='list_description'><?=exibirDataBr($campo['prazoCaptacao'])?></td>
                         <td class='list_description'><?=exibirDataBr($campo['inicioExecucao'])?></td>
                         <td class='list_description'><?=exibirDataBr($campo['fimExecucao'])?></td>
                         <?$idProjetos = $campo['idProjeto']?>
-                        <td class='list_description'>
-                            <form method='POST' action='?perfil=smc_detalhes_projeto'>
-                                <input type='hidden' name='idProjeto' value='<?=$idProjetos?>'/>
-                                <input type ='submit' class='btn btn-theme btn-block' value='Visualizar'>
-                            </form>
-                        </td>
                         <?php
+                        if ($campo['idStatus'] != 6 && $campo['publicado'] != 0) {
+                            ?>
+                            <td class='list_description'>
+                                <form method='POST' action='?perfil=smc_detalhes_projeto'>
+                                    <input type='hidden' name='idProjeto' value='<?= $idProjetos ?>'/>
+                                    <input type='submit' class='btn btn-theme btn-block' value='Visualizar'>
+                                </form>
+                            </td>
+                            <?php
+                        }else{
+                            echo "<td colspan='2' style='color: #942a25;text-align: center;font-weight: bold'>Cancelado </td>";
                         }
-                        ?>
+                    }
+                    ?>
                     </tr>
                     </tbody>
                 </table>
@@ -555,20 +662,41 @@ foreach ($array_status as $idStatus)
                     <?php
                     while($campo = mysqli_fetch_array($query))
                     {
+
+
+                    if ($campo['publicado'] == 0) {
+
+                        echo "<tr style='background: $cinza'>";
+
+                    } elseif($limite == 1) {
+
+                        echo "<tr style='background: #ff4c4c'>";
+
+                    } else {
+
+                        echo "<tr style='background: white'>";
+
+                    }
+
                     ?>
-                    <tr>
                         <td class='list_description'><?=$campo['protocolo']?></td>
                         <td class='list_description'><?=exibirDataBr($campo['prazoCaptacao'])?></td>
                         <td class='list_description'><?=exibirDataBr($campo['inicioExecucao'])?></td>
                         <td class='list_description'><?=exibirDataBr($campo['fimExecucao'])?></td>
                         <?$idProjetos = $campo['idProjeto']?>
+                        <?php
+                        if ($campo['publicado'] == 1) {
+                        ?>
                         <td class='list_description'>
                             <form method='POST' action='?perfil=smc_detalhes_projeto'>
                                 <input type='hidden' name='idProjeto' value='<?=$idProjetos?>' />
                                 <input type ='submit' name='liberacaoPF' class='btn btn-theme btn-block' value='Visualizar'>
                             </form>
                         </td>
-                        <?php
+                            <?php
+                        }else{
+                            echo "<td colspan='2' style='color: #942a25;text-align: center;font-weight: bold'>Cancelado </td>";
+                        }
                         }
                         ?>
                     </tr>
@@ -613,13 +741,30 @@ foreach ($array_status as $idStatus)
                     <?php
                     while($campo = mysqli_fetch_array($query))
                     {
+
+                    if ($campo['publicado'] == 0) {
+
+                        echo "<tr style='background: $cinza'>";
+
+                    } elseif($limite == 1) {
+
+                        echo "<tr style='background: #ff4c4c'>";
+
+                    } else {
+
+                        echo "<tr style='background: white'>";
+
+                    }
+
                     ?>
-                    <tr>
                         <td class='list_description'><?=$campo['protocolo']?></td>
                         <td class='list_description'><?=exibirDataBr($campo['prazoCaptacao'])?></td>
                         <td class='list_description'><?=exibirDataBr($campo['inicioExecucao'])?></td>
                         <td class='list_description'><?=exibirDataBr($campo['fimExecucao'])?></td>
                         <?$idProjetos = $campo['idProjeto']?>
+                        <?php
+                        if ($campo['publicado'] == 1) {
+                        ?>
                         <td class='list_description'>
                             <form method='POST' action='?perfil=smc_detalhes_projeto'>
                                 <input type='hidden' name='idProjeto' value='<?=$idProjetos?>' />
@@ -627,7 +772,10 @@ foreach ($array_status as $idStatus)
                             </form>
                         </td>
                         <?php
+                        }else{
+                            echo "<td colspan='2' style='color: #942a25;text-align: center;font-weight: bold'>Cancelado </td>";
                         }
+                    }
                         ?>
                     </tr>
                     </tbody>
@@ -643,7 +791,7 @@ foreach ($array_status as $idStatus)
     </div>
 </div>
 
-<!-- Modal -->
+<!-- Modal Enviar a Comissão -->
 <div class="modal fade" id="enviarComissao" tabindex="-1" role="dialog" aria-labelledby="enviarComissao">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -665,12 +813,39 @@ foreach ($array_status as $idStatus)
   </div>
 </div>
 
+<!-- Modal para arquivar projeto -->
+<div class="modal fade" id="arquivar" tabindex="-1" role="dialog" aria-labelledby="arquivar">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="arquivar">Deseja arquivar esse projeto?</h4>
+            </div>
+            <div class="modal-body">
+                <p>Para confirmar clique no botão SIM!</p>
+            </div>
+            <div class="modal-footer">
+                <form method='POST' action='' id="formArquivar">
+                    <input type='hidden' name='idProjeto' value="<?= $campo['idProjeto'] ?>">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
+                    <button type="submit" name='arquivar' class="btn btn-danger">SIM</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
  <script type="text/javascript">
     // Alimenta o modal com o idProjeto
     $('#enviarComissao').on('show.bs.modal', function (e)
     {
         let idProjeto = $(e.relatedTarget).attr('data-id');
         $(this).find('#formEnviar input[name="idProjeto"]').attr('value', idProjeto);
+
+    });
+    $('#arquivar').on('show.bs.modal', function (e)
+    {
+        let idProjeto = $(e.relatedTarget).attr('data-id');
+        $(this).find('#formArquivar input[name="idProjeto"]').attr('value', idProjeto);
 
     });
 </script>

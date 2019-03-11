@@ -61,7 +61,7 @@ foreach ($array_etapa as $idEtapa)
                             if ($i < 15) {
                                 ?>
                                 <tr>
-                                    <td class='list_description'><?= $campo['protocolo'] ?></td>
+                                    <td class='list_description' data-mask = "0000.00.00/0000000"><?= $campo['protocolo'] ?></td>
                                     <td class='list_description'><?= $campo['nomeProjeto'] ?></td>
                                     <td class='list_description'><?= $campo['etapaProjeto'] ?></td>
                                     <td class='list_description'><?= $campo['parecerista'] ?></td>

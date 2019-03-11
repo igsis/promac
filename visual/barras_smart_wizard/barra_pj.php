@@ -111,7 +111,7 @@ for ($i = 0; $i < count($urlPj); $i++) {
                     }
                 ?>
                 <li class="<?php echo isset($ativa21) ? $ativa21 : 'clickable'; ?>">
-                    <a onclick="location.href='index_pj.php?perfil=resultado_inscricao_pj'" href=""><br /><small>Resultado Inscrição</small></a>
+                    <a onclick="location.href='index_pj.php?perfil=resultado_inscricao_pj'" href=""><br /><small>Confirmação da Inscrição</small></a>
                 </li>
                 <?php
                     if ($pj['liberado'] != 3) {
@@ -176,7 +176,7 @@ for ($i = 0; $i < count($urlPj); $i++) {
                    <a onclick="location.href='index_pj.php?perfil=anexos'" href=""><br /><small>Anexos</small></a>
                 </li>
                 <li class="<?php echo isset($ativa17) ? $ativa17 : 'clickable'; ?>">
-                   <a onclick="location.href='index_pj.php?perfil=projeto_13'" href=""><br /><small>Link do YouTube</small></a>
+                   <a onclick="location.href='index_pj.php?perfil=projeto_13'" href=""><br /><small>Mídias Sociais</small></a>
                 </li>
                 <li class="<?php echo isset($ativa18) ? $ativa18 : 'clickable'; ?>">
                    <a onclick="location.href='index_pj.php?perfil=finalProjeto'" href=""><br /><small>Concluir Inscrição</small></a>

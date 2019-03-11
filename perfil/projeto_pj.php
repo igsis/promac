@@ -5,7 +5,7 @@ $tipoPessoa = '2';
 
 $idPj = $_SESSION['idUser'];
 $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
-$statusProjeto = recuperaStatus("statusprojeto");
+$statusProjeto = recuperaStatus();
 
 $dateNow = date('Y-m-d H:i:s');
 
@@ -23,17 +23,37 @@ if(isset($_POST['apagar']))
 		$mensagem = "<font color='#FF0000'><strong>Erro ao apagar projeto! Tente novamente.</strong></font>";
 	}
 }
+if (isset($_POST['cancelar'])){
+    $idProjeto = $_POST['idProjeto'];
+    $dateNow = date('Y-m-d H:i:s');
+    $observacao = $_POST['observacao'];
+
+    $query = "UPDATE `projeto` SET projeto.idStatus = '6' WHERE idProjeto = '$idProjeto'";
+    $historico = "INSERT INTO historico_cancelamento (idProjeto,observacao, idUsuario, data, acao) VALUES ('$idProjeto','$observacao','$idPj','$dateNow',1)";
+    if (mysqli_query($con,$query)){
+        if (mysqli_query($con,$historico)){
+            $mensagem = "<font color='#01DF3A'><strong>Projeto cancelado com sucesso!</strong></font>";
+        }
+        else{
+            $mensagem = "<font color='#FF0000'><strong>Erro ao cancelar projeto! Tente novamente.</strong></font>";
+        }
+    }else{
+        $mensagem = "<font color='#FF0000'><strong>Erro ao apagar projeto! Tente novamente.</strong></font>";
+    }
+
+}
 
 ?>
 <section id="list_items" class="home-section bg-white">
 	<div class="container"><?php include '../perfil/includes/menu_interno_pj.php'; ?>
 		<div class="form-group">
+
 			<h4>Projeto</h4>
             <!-- Início Lista Projetos Cancelados pela SMC -->
             <?php
             $sql_cancelados = "SELECT distinct prj.idProjeto, nomeProjeto, protocolo, acao, observacao, data FROM projeto AS prj 
                             INNER JOIN historico_cancelamento AS hst ON prj.idProjeto = hst.idProjeto
-                            WHERE idPj = '$idPj' AND publicado = 0 AND acao = 1";
+                            WHERE idPj = '$idPj' AND publicado = 1 AND idStatus = 6";
             $query_cancelados = mysqli_query($con,$sql_cancelados);
             $num = mysqli_num_rows($query_cancelados);
             if($num > 0){
@@ -75,24 +95,42 @@ if(isset($_POST['apagar']))
 			if ($pj['liberado'] == 3)
 			{
                 if(($statusProjeto == 1) || (($pj['idPj'] == 156 || $pj['idPj'] == 938) && $dateNow < '2018-11-21 18:01:00')) {
-                    if ($numProjetos <= 1) {
+                    $sql = "SELECT idAreaAtuacao AS area FROM projeto WHERE idPj = '$idPj' AND publicado = 1 AND idAreaAtuacao = 22;";
+                    $query = mysqli_query($con,$sql);
+                    $num = mysqli_num_rows($query);
+                    if ($num < 1) {
+                        if ($numProjetos <= 1) {
 
-                        ?>
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-8">
-                                <form class="form-horizontal" role="form"
-                                      action="  ?perfil=projeto_novo" method="post">
-                                    <input type="submit" value="Inscrever Projeto"
-                                           class="btn btn-theme btn-lg btn-block">
-                                </form>
+                            ?>
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-8">
+                                    <form class="form-horizontal" role="form"
+                                          action="  ?perfil=projeto_novo" method="post">
+                                        <input type="submit" value="Inscrever Projeto"
+                                               class="btn btn-theme btn-lg btn-block">
+                                    </form>
+                                </div>
                             </div>
-                        </div>
-                        <?php
+                            <?php
 
-                    } else {
+                        } else {
+                            ?>
+                            <div class="alert alert-danger">
+                                <p>Você possui dois projetos em andamento:<b>
+                                        <?php
+                                        foreach ($projetos as $key => $value):
+                                            echo $value . ',';
+                                        endforeach;
+                                        ?>
+                                    </b>este é o seu limite.
+                                </p>
+                            </div>
+                            <?php
+                        }
+                    }else{
                         ?>
                         <div class="alert alert-danger">
-                            <p>Você possui dois projetos em andamento:<b>
+                            <p>Você possui um projeto anual em andamento:<b>
                                     <?php
                                     foreach ($projetos as $key => $value):
                                         echo $value . ',';

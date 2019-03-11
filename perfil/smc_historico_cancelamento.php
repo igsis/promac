@@ -58,7 +58,7 @@ $total = mysqli_num_rows($query_lista);
                 while($historico = mysqli_fetch_array($query_lista))
                 {
                     echo "<tr>";
-                    echo "<td>".$historico['protocolo']."</td>";
+                    echo "<td data-mask = \"0000.00.00/0000000\">".$historico['protocolo']."</td>";
                     echo "<td>". mb_strimwidth($historico['nomeProjeto'], 0 ,35,"..." )."</td>";
                     echo "<td>".$historico['nome']."</td>";
                     echo "<td>".$historico['observacao']."</td>";

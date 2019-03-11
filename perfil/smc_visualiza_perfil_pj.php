@@ -152,7 +152,7 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 					$row = mysqli_fetch_array($send);
 
 						echo "<td class='list_description'>
-							<select name='dado[$count][status]' id='statusOpt' value='teste'>";
+							<select class='colorindo' name='dado[$count][status]' id='statusOpt' value='teste'>";
 							echo "<option value=''>Selecione</option>";
 							geraOpcao('status_documento', $row['idStatusDocumento']);
 							echo " </select>
@@ -175,7 +175,7 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 				echo "
 		</tbody>
 		</table>";
-        echo "<input type='submit' name='atualizar' class='btn btn-theme btn-lg' value='Atualizar'>";
+        echo "<input type='submit' name='atualizar' class='btn btn-theme btn-lg' value='GRAVAR INFORMAÇÕES'>";
         echo "<input type='hidden' name='liberado' class='btn btn-theme btn-lg' value='$idPessoa'>";
         echo "</form>";
 	}
@@ -185,28 +185,7 @@ function listaArquivosPessoaEditorr($idPessoa,$tipoPessoa,$pagina)
 	}
 }
 
-if(isset($_POST['nota']))
-{
-    if($_POST['nota'] != "")
-    {
-        $id = $_POST['LIBPF'];
-        if ($id != 0)
-        {
-            $dateNow = date('Y-m-d H:i:s');
-            $nota = addslashes($_POST['nota']);
-            $sql_nota = "INSERT INTO notas (idPessoa, idTipo, data, nota, interna) VALUES ('$id', '2', '$dateNow', '$nota', '1')";
-            if(mysqli_query($con,$sql_nota))
-            {
-                $mensagem .= "<br><font color='#01DF3A'><strong>Nota inserida com sucesso!</strong></font>";
-                gravarLog($sql_nota);
-            }
-            else
-            {
-                $mensagem .= "<br><font color='#FF0000'><strong>Erro ao inserir nota! Tente novamente.</strong></font>";
-            }
-        }
-    }
-}
+
 
 $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 ?>
@@ -294,24 +273,9 @@ $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 //        {
 ?>
         <div class="container">
-            <div class='col-md-offset-2 col-md-8'>
-                <div class="form-group">
-                    <ul class='list-group'>
-                        <li class='list-group-item list-group-item-success'>Notas</li>
-                        <?php
-                            listaNota($idPj,2,1)
-                        ?>
-                    </ul>
-                </div>
-            </div>
+
             <form method="POST" action="?perfil=smc_visualiza_perfil_pj" class="form-horizontal" role="form">
-                <div class="row">
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-8"><label>Notas</label><br/>
-                            <input type="text" class="form-control" name="nota">
-                        </div>
-                    </div>
-                </div>
+
                 <div class="form-group">
                     <div class='col-md-offset-4 col-md-2'>
                         <input type='hidden' name='LIBPF' value='<?php echo $pj['idPj'] ?>' />
@@ -344,14 +308,7 @@ $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 	{
 	?>
         <div class="container">
-            <div class='col-md-offset-2 col-md-8'>
-                <ul class='list-group'>
-                    <li class='list-group-item list-group-item-success'>Notas</li>
-                    <?php
-                    listaNota($idPj,2,1)
-                    ?>
-                </ul>
-            </div>
+
             <div class="form-group">
                 <div class='col-md-offset-2 col-md-8'>
                     <form class='form-horizontal' role='form' action='?perfil=smc_visualiza_perfil_pj' method='post'>
@@ -370,3 +327,27 @@ $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
         </div>
     </div>
 </section>
+
+<script>
+
+    let statusAll = document.querySelectorAll(".colorindo")
+
+    for (let status of statusAll) {
+
+        if (status.options[status.selectedIndex].value == "") {
+            status.style.backgroundColor = "#fdff72"
+        }
+    }
+
+    for (let status of statusAll) {
+
+        status.addEventListener("change", () => {
+            if (status.options[status.selectedIndex].value == "") {
+                status.style.backgroundColor = "#fdff72"
+            } else {
+                status.style.backgroundColor = "#F0F0E9"
+            }
+        })
+    }
+
+</script>
