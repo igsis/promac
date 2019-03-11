@@ -32,9 +32,7 @@ function DiasUteis() {
 
     $idProjeto = $_SESSION['idProjeto'];
 
-    $projeto = recuperaDados("projeto", "idProjeto", $idProjeto);
-
-    $suaConsulta = $projeto['dataPublicacaoDoc'];
+    $suaConsulta = recuperaDataPublicacao($idProjeto);
 
     $dtSuaData = DateTime::createFromFormat("Y-m-d", $suaConsulta); //isso vai fazer um obj datetime da sua data no banco
 
@@ -168,7 +166,7 @@ $link = $consulta->fetch()['linkAgendamento'];
 
                                         <div class="row">
                                             <div class="form-horizontal col-md-11">
-                                                <a  <?php if($certidoes == NULL) { echo 'disabled';} ?> class="btn btn-default btn-block" target="_blank" style="border-radius: 7px;" href="<?= $link ?><?= $idProjeto ?>">Link do agendamento Google Forms</a>
+                                                <a  <?php if($certidoes == NULL) { echo 'disabled';} ?> class="btn btn-default btn-block" target="_blank" style="border-radius: 7px;" href="<?= $link ?>">Link do agendamento Google Forms</a>
                                             </div>
                                         </div><br>
 
@@ -191,16 +189,6 @@ $link = $consulta->fetch()['linkAgendamento'];
                                                 <a <?php if($agendamento == NULL) { echo 'disabled';} ?> style="border-radius: 7px;" class="btn btn-default btn-block" href="?perfil=carta_incentivo&idProjeto=<?= $idProjeto ?>">Inserir carta de incentivo</a></div>
                                         </div><br>
 
-                                        <div class="form-group">
-                                            <div class="col-md-offset-2 col-md-8">
-                                                <div class="row">
-                                                    <div class="form-horizontal col-md-12">
-                                                        <a href="?perfil=alteracao_projeto&idProjeto=<?= $idProjeto ?>" class="btn btn-warning btn-block" style="border-radius: 7px;">solicitar alteração do projeto</a>
-                                                    </div>
-                                                </div><br>
-                                            </div>
-                                        </div><br>
-
                                     </div>
                                 </div>
                             <?php
@@ -210,20 +198,31 @@ $link = $consulta->fetch()['linkAgendamento'];
                             /*Exibir botão de recurso ou de solicitação de alteração*/
                             if (($projeto['idStatus'] == 3) || ($projeto['idStatus'] == 4)) {
                                 if (($dateNow < DiasUteis()) && (($idEtapa != 26) && ($idEtapa != 27))){
-                            ?>
+                                    ?>
                                     <div class="form-group">
                                         <div class="col-md-offset-2 col-md-8">
                                             <div class="row">
-                                                <form class="form-horizontal col-md-11" role="form"
-                                                      action="?perfil=envio_recursos&idProjeto=<?= $idProjeto ?>" method="post">
-                                                    <button type="submit" class="btn btn-success btn-block"
-                                                            style="border-radius: 7px;">Anexar Recurso
-                                                    </button>
-                                                </form>
-                                            </div>
+                                                <div class="form-horizontal col-md-11" >
+                                                    <a style="border-radius: 7px;" class="btn btn-warning btn-block" href="?perfil=envio_recursos&idProjeto=<?= $idProjeto ?>">Anexar Recurso</a>
+                                                </div>
+                                            </div><br>
                                         </div>
                                     </div>
-                                <?php
+                                    <?php
+                                }
+                                else
+                                {
+                                    ?>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-8">
+                                            <div class="row">
+                                                <div class="form-horizontal col-md-11" >
+                                                    <a style="border-radius: 7px;" class="btn btn-warning btn-block" href="?perfil=alteracao_projeto&idProjeto=<?= $idProjeto ?>">solicitar alteração do projeto</a>
+                                                </div>
+                                            </div><br>
+                                        </div>
+                                    </div>
+                                    <?php
                                 }
                             }
                             ?>
