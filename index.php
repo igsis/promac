@@ -114,8 +114,8 @@ $tipoPessoa = '6';
                                         <div class="well">
                                             <h6>Documentos para Projetos Aprovados</h6>
                                             <ul class="list-group">
-                                                <li class="list-group-item"><a href="pdf/1. TERMO DE RESPONSABILIDADE DE REALIZAÇÃO DE PROJETO CULTURAL FINAL.docx" target="_blank">Termo de Responsabilidade de Realização de Projeto Cultural</a></li>
-                                                <li class="list-group-item"><a href="pdf/CARTA DE INTENCAO DE INCENTIVO.docx" target="_blank">Carta de Intenção de Incentivo</a></li>
+                                                <li class="list-group-item"><a href="pdf/TERMO_DE_RESPONSABILIDADE_FINAL.docx" target="_blank">Termo de Responsabilidade de Realização de Projeto Cultural</a></li>
+                                                <li class="list-group-item"><a href="pdf/CARTA_DE_INTENCAO_DE_INCENTIVO.docx" target="_blank">Carta de Intenção de Incentivo</a></li>
                                                 <li class="list-group-item"><a href="pdf/Certificado_Incentivo.docx" target="_blank">Certificado de Incentivo</a></li>
                                             </ul>
                                         </div>
