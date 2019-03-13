@@ -447,7 +447,14 @@ if(isset($_POST['editarParecer'])){
     $envia = mysqli_query($con, $query);
     if($envia)
     {
-        $sql_data = "UPDATE disponibilizar_documento SET data = '$dataDisponivel' WHERE idUploadArquivo = '$idArquivo' AND id ='$idDisponibilizar' ";
+        if ($idDisponibilizar == "")
+        {
+            $sql_data = "INSERT INTO disponibilizar_documento (idUploadArquivo, data) VALUES ('$idArquivo', '$dataDisponivel')";
+        }
+        else
+        {
+            $sql_data = "UPDATE disponibilizar_documento SET data = '$dataDisponivel' WHERE idUploadArquivo = '$idArquivo' AND id ='$idDisponibilizar' ";
+        }
         $query_data = mysqli_query($con,$sql_data);
         //echo "<script>window.location.href = 'index_pf.php?perfil=smc_detalhes_projeto&idFF=".$idProjeto."';</script>";
         $mensagem = "<font color='#01DF3A'><strong>Os arquivos foram atualizados com sucesso!</strong></font>";
