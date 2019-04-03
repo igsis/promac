@@ -89,6 +89,16 @@
             <?php if (isset($mensagem)) {echo $mensagem;}; ?>
         </h5>
         <div class="form-group">
+            <div class="col-md-offset-2 col-md-8">
+                <label for="areaAtuacao">Area de Atuação do Projeto *</label><br/>
+                <select class="form-control" name="areaAtuacao" id="areaAtuacao" required>
+                    <div style="max-width: 100%">
+                        <?= geraOpcao('area_atuacao', $projeto['idAreaAtuacao']) ?>
+                    </div>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-4"><label>Valor Aprovado *</label><br/>
                 <input type="text" name="valorAprovado" id='valorAprovado' required class="form-control"
                        value="<?php echo dinheiroParaBr($projeto['valorAprovado']) ?>" onblur="deixarObrigatorio()" onkeypress="return(moeda(this,'.',',',event))">
@@ -96,7 +106,7 @@
             <div class="col-md-4"><label>Valor da Renúncia *</label><br/>
                 <select class="form-control" name="idRenunciaFiscal" required>
                     <option value="">Selecione...</option>
-                    <?php echo geraOpcao("renuncia_fiscal", $projeto['idRenunciaFiscal']) ?>
+                    <?= geraOpcao("renuncia_fiscal", $projeto['idRenunciaFiscal']) ?>
                 </select>
             </div>
         </div>

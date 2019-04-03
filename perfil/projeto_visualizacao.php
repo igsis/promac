@@ -9,6 +9,13 @@ if (isset($_POST['carregar'])) {
 $idProjeto = $_SESSION['idProjeto'];
 
 $projeto = recuperaDados("projeto", "idProjeto", $idProjeto);
+
+if ($projeto['tipoPessoa'] == 1) {
+    $pf = recuperaDados('pessoa_fisica', 'idPf', $projeto['idPf']);
+} else {
+    $pj = recuperaDados('pessoa_juridica', 'idPj', $projeto['idPj']);
+}
+
 $status = recuperaDados("etapa_status", "idStatus", $projeto['idStatus']);
 $idEtapa = $projeto['idEtapaProjeto'];
 

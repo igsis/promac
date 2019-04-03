@@ -54,9 +54,7 @@
         <tr>
             <td><strong>Valor do projeto:</strong>R$
                 <?php echo
-                dinheiroParabr(isset($projeto['valorProjeto'])
-                    ? $projeto['valorProjeto']
-                    : ''); ?>
+                dinheiroParabr(isset($projeto['valorProjeto']) ? $projeto['valorProjeto'] : ''); ?>
             </td>
             <td><strong>Valor do incentivo:</strong> R$
                 <?php echo
