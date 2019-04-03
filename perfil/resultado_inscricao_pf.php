@@ -155,11 +155,8 @@ if(isset($_POST['apagar']))
 
 
 			<?php
-				if(($pf['liberado'] == NULL) || ($pf['liberado'] == 2) || ($pf['liberado'] == 4))
-				{
-                    if($pf['liberado'] != NULL)
-                    {
-            ?>
+				if(($pf['liberado'] == NULL) || ($pf['liberado'] == 2) || ($pf['liberado'] == 4)) {
+                    if($pf['liberado'] != NULL) { ?>
                             <!-- Exibir arquivos -->
                             <div class="form-group">
                                 <div class="col-md-12">
@@ -168,9 +165,7 @@ if(isset($_POST['apagar']))
                                     </div>
                                 </div>
                             </div>
-                    <?php
-                        }
-                    ?>
+                    <?php } ?>
 
                     <div class="form-group">
                         <div class="col-md-12">
@@ -266,9 +261,7 @@ if(isset($_POST['apagar']))
 
                     <div class="form-group">
                     <div class="col-md-offset-2 col-md-8">
-				<?php
-				if ($cpo == false)
-				{/*
+				    <?php if ($cpo == false) {/*
 						$idPess = $pf['idPf'];
 						$queryArquivos =
 						  "SELECT
@@ -283,39 +276,37 @@ if(isset($_POST['apagar']))
 						$numRow = mysqli_num_rows($enviaArquivos);
 						if($numRow == 6)
 						{ */
-                 $query_valida = "SELECT *
-                                  FROM upload_arquivo 
-                                  WHERE idPessoa = '$idPf' AND publicado = 1 AND idTipo= 1";
-                 if ($resuldato = mysqli_query($con,$query_valida)){
-                     $num_linhas = mysqli_num_rows($resuldato);
-                     if ($num_linhas == 6){
-                         ?>
-                         <form class="form-horizontal" role="form" action="?perfil=resultado_inscricao_pf" method="post">
-                             <input type="submit" name="liberacao" value="Concluir inscrição do proponente" class="btn btn-theme btn-lg btn-block">
-                         </form>
-                         <?php
+                     $query_valida = "SELECT *
+                                      FROM upload_arquivo 
+                                      WHERE idPessoa = '$idPf' AND publicado = 1 AND idTipo= 1";
+                     if ($resuldato = mysqli_query($con,$query_valida)){
+                         $num_linhas = mysqli_num_rows($resuldato);
+                         if ($num_linhas == 6){
+                             ?>
+                             <form class="form-horizontal" role="form" action="?perfil=resultado_inscricao_pf" method="post">
+                                 <input type="submit" name="liberacao" value="Concluir inscrição do proponente" class="btn btn-theme btn-lg btn-block">
+                             </form>
+                             <?php
+                         }else{
+                             echo "<div class='alert alert-warning'>
+                            <strong>Erro: </strong> Você deve enviar toda a documentação necessaria para prosseguir.
+                            </div>";
+                         }
                      }else{
-                         echo "<div class='alert alert-warning'>
-						<strong>Erro: </strong> Você deve enviar toda a documentação necessaria para prosseguir.
-						</div>";
+                         echo "<div class='alert alert-danger'>
+                            <strong>Erro: </strong> Na validação dos arquivos tente novamente... ".die(mysqli_error($con))."
+                            </div>";
                      }
-                 }else{
-                     echo "<div class='alert alert-danger'>
-						<strong>Erro: </strong> Na validação dos arquivos tente novamente... ".die(mysqli_error($con))."
-						</div>";
-                 }
 
-                ?>
+                    ?>
 
 					<?php
-					}
-					else
-					{
+					} else {
 						echo "<div class='alert alert-warning'>
 						<strong>Erro: </strong> Você deve preencher todos os campos obrigatórios para prosseguir.
 						</div>";
 					}
-				}?>
+				} ?>
 			</div>
 		</div>
 		<!-- Confirmação de Exclusão -->

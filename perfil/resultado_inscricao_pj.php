@@ -139,31 +139,22 @@ if(isset($_POST['apagar']))
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
-			<?php
-				if($pj['liberado'] == NULL OR $pj['liberado'] == 2 OR $pj['liberado'] == 4)
-				{
-					include 'includes/resumo_pj.php';
-				?>
+                <?php
+                if($pj['liberado'] == NULL OR $pj['liberado'] == 2 OR $pj['liberado'] == 4) {
+                    include 'includes/resumo_pj.php';
+                ?>
 			</div>
 			<?php
-				}
-				elseif($pj['liberado'] == 1)// foi solicitada a liberação, porém a SMC não analisou ainda.
-				{
-			?>
+				} elseif($pj['liberado'] == 1) { // foi solicitada a liberação, porém a SMC não analisou ainda. ?>
 					<div class="alert alert-success">
 						<strong>Sua solicitação de inscrição foi enviada com sucesso à Secretaria Municipal de Cultura. Aguarde a análise da documentação.</strong>
 					</div>
-			<?php
-				}
-				else// a inscrição para incentivo foi aceita pela SMC.
-				{
-			?>
+			    <?php
+				} else { // a inscrição para incentivo foi aceita pela SMC. ?>
 					<div class="alert alert-success">
 						<strong>Sua inscrição para incentivo foi aceita pela Secretaria Municipal de Cultura.</strong>
 					</div>
-			<?php
-				}
-			?>
+			    <?php } ?>
 
 					<div>
 				 		<?php listaArquivosPessoaObs($idPj,2) ?>
@@ -190,26 +181,23 @@ if(isset($_POST['apagar']))
 <!--        </ul>-->
 
 
-			<?php
-				if($pj['liberado'] == NULL OR $pj['liberado'] == 2 OR $pj['liberado'] == 4)
-				{
-			?>
+			    <?php if($pj['liberado'] == NULL OR $pj['liberado'] == 2 OR $pj['liberado'] == 4) { ?>
 
-			 	<!-- Exibir arquivos -->
-				<div class="form-group">
-					<div class="col-md-12">
-						<div class="table-responsive list_info"><h6>Documentos não aprovados</h6>
-							<?php listaArquivosPendentePessoa($idPj,$tipoPessoa,"resultado_inscricao_pj"); ?>
-						</div>
-					</div>
-				</div>
+                    <!-- Exibir arquivos -->
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <div class="table-responsive list_info"><h6>Documentos não aprovados</h6>
+                                <?php listaArquivosPendentePessoa($idPj,$tipoPessoa,"resultado_inscricao_pj"); ?>
+                            </div>
+                        </div>
+                    </div>
 
-				<div class="form-group">
-					<div class="col-md-12">
-						<div class="table-responsive list_info"><h6>Upload de Arquivo(s) Somente em PDF</h6>
-						<form method="POST" action="?perfil=resultado_inscricao_pj" enctype="multipart/form-data">
-						<?php
-								$documentos = [];
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <div class="table-responsive list_info"><h6>Upload de Arquivo(s) Somente em PDF</h6>
+                            <form method="POST" action="?perfil=resultado_inscricao_pj" enctype="multipart/form-data">
+                            <?php
+                                $documentos = [];
                                 $cooperativ = "SELECT cooperativa FROM pessoa_juridica WHERE idPj = '$idPj'";
                                 $resultado = mysqli_query($con,$cooperativ);
                                 $res = mysqli_fetch_array($resultado);
@@ -219,72 +207,66 @@ if(isset($_POST['apagar']))
                                 }else{
                                     $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND idListaDocumento IN (7,9,16,10,8,11,12,13,14,15)";
                                 }
-								$query_arquivos = mysqli_query($con,$sql_arquivos);
-								while($arq = mysqli_fetch_array($query_arquivos))
-								{
-									$doc = $arq['documento'];
-									$query = "SELECT idListaDocumento FROM lista_documento WHERE documento='$doc' AND publicado='1' AND idTipoUpload='2'";
-									$envio = $con->query($query);
-									$row = $envio->fetch_array(MYSQLI_ASSOC);
+                                $query_arquivos = mysqli_query($con,$sql_arquivos);
+                                while($arq = mysqli_fetch_array($query_arquivos)) {
+                                    $doc = $arq['documento'];
+                                    $query = "SELECT idListaDocumento FROM lista_documento WHERE documento='$doc' AND publicado='1' AND idTipoUpload='2'";
+                                    $envio = $con->query($query);
+                                    $row = $envio->fetch_array(MYSQLI_ASSOC);
 
-									if(verificaArquivosExistentesPF($idPj,$row['idListaDocumento'])){
-										echo '<div class="alert alert-success">O arquivo ' . $doc . ' já foi enviado.</div>';
-									}
-									else{
+                                    if(verificaArquivosExistentesPF($idPj,$row['idListaDocumento'])) {
+                                        echo '<div class="alert alert-success">O arquivo ' . $doc . ' já foi enviado.</div>';
+                                    } else {
 
-										$documento = (object)
-										[
-											'idListaDocumento' 	=>  $arq['idListaDocumento'] ?? null,
-											'nomeDocumento'		=>	$arq['documento'],
-											'sigla' 			=>	$arq['sigla']
-										];
-										array_push($documentos, $documento);
-									}
-								}
+                                        $documento = (object)
+                                        [
+                                            'idListaDocumento' 	=>  $arq['idListaDocumento'] ?? null,
+                                            'nomeDocumento'		=>	$arq['documento'],
+                                            'sigla' 			=>	$arq['sigla']
+                                        ];
+                                        array_push($documentos, $documento);
+                                    }
+                                }
 
-								if ($documentos)
-								{
-								?>
-									<table class='table table-condensed'>
-										<tr class='list_menu'>
-											<td>Tipo de Arquivo</td>
-											<td></td>
-										</tr>
+                                if ($documentos) { ?>
+                                    <table class='table table-condensed'>
+                                        <tr class='list_menu'>
+                                            <td>Tipo de Arquivo</td>
+                                            <td></td>
+                                        </tr>
 
-										<?php
-											foreach ($documentos as $documento) {
+                                        <?php
+                                            foreach ($documentos as $documento) {
 
-												$urlArquivo = $http.$documento->idListaDocumento;
-												echo "<tr>";
-												if(arquivosExiste($urlArquivo)){
-													echo "<td class='list_description path'>";
+                                                $urlArquivo = $http.$documento->idListaDocumento;
+                                                echo "<tr>";
+                                                if(arquivosExiste($urlArquivo)){
+                                                    echo "<td class='list_description path'>";
 
-															$path = selecionaArquivoAnexo($http, $documento->idListaDocumento);
+                                                            $path = selecionaArquivoAnexo($http, $documento->idListaDocumento);
 
-														echo "<a href='$path' target='_blank'>$documento->nomeDocumento</a>";
+                                                        echo "<a href='$path' target='_blank'>$documento->nomeDocumento</a>";
 
-													echo "</td>";
+                                                    echo "</td>";
 
-												}else{
-													echo "<td class='list_description'><label>$documento->nomeDocumento</label></td>";
-												}
+                                                }else{
+                                                    echo "<td class='list_description'><label>$documento->nomeDocumento</label></td>";
+                                                }
 
-												echo 	"<td class='list_description'><input type='file' name='arquivo[$documento->sigla]'></td>";
-												echo "</tr>";
-											}
-										?>
+                                                echo 	"<td class='list_description'><input type='file' name='arquivo[$documento->sigla]'></td>";
+                                                echo "</tr>";
+                                            }
+                                        ?>
 
-									</table>
-									<input type="hidden" name="idPessoa" value="<?php echo $idPj; ?>"  />
-									<input type="hidden" name="tipoPessoa" value="<?php echo $tipoPessoa; ?>"  />
-									<input type="submit" name="enviar" class="btn btn-theme btn-lg btn-block" value='Enviar'>
-							<?php
-								}
-							?>
-						</form>
-						</div>
-					</div>
-				</div>
+                                    </table>
+                                    <input type="hidden" name="idPessoa" value="<?php echo $idPj; ?>"  />
+                                    <input type="hidden" name="tipoPessoa" value="<?php echo $tipoPessoa; ?>"  />
+                                    <input type="submit" name="enviar" class="btn btn-theme btn-lg btn-block" value='Enviar'>
+                                <?php } ?>
+                            </form>
+                            </div>
+                        </div>
+                    </div>
 				<!-- Fim Upload de arquivo -->
 				<!-- Confirmação de Exclusão -->
 					<div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel" aria-hidden="true">
@@ -373,23 +355,13 @@ if(isset($_POST['apagar']))
                                            class="btn btn-theme btn-lg btn-block">
                                 </form>
                                 <?php
-                            } else {
-                                echo "<div class='alert alert-warning'>
-                                    <strong>Erro: </strong> Você deve enviar todos os arquivos  obrigatórios solicitados.
-                                    </div>";
                             }
                         }
                     }
 				}
 				?>
 				<?php
-				}
-				else{
-					echo "<div class='alert alert-warning'>
-					<strong>Erro: </strong> Você deve preencher todos os campos obrigatórios para prosseguir.
-					</div>";
-
-			}?>
+				} ?>
 			</div>
 		</div>
 
