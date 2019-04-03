@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 $con = bancoMysqli();
 $idPj = $_SESSION['idUser'];

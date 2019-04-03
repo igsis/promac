@@ -31,15 +31,6 @@ foreach ($representante as $rep)
 	}
 }
 
-
-/**Arquivos Obrigatórios**/
-if(isset($tipoPessoa)):
-  $tipoDoc = 'proponente';
-  $idUser = $idPj;
-  $idProjeto = 0; /*Incluso devido a busca pelos anexos*/
-  require_once('validacaoArquivosObrigatorios.php');
-endif;
-
 if(isset($_POST['liberacao']))
 {
 	$date = date('Y:m:d H:i:s');
@@ -130,6 +121,13 @@ if(isset($_POST['apagar']))
 	}
 }
 
+/**Arquivos Obrigatórios**/
+if(isset($tipoPessoa)):
+    $tipoDoc = 'proponente';
+    $idUser = $idPj;
+    $idProjeto = 0; /*Incluso devido a busca pelos anexos*/
+    require_once('validacaoArquivosObrigatorios.php');
+endif;
 
 ?>
 <section id="list_items" class="home-section bg-white">
@@ -143,7 +141,6 @@ if(isset($_POST['apagar']))
                 if($pj['liberado'] == NULL OR $pj['liberado'] == 2 OR $pj['liberado'] == 4) {
                     include 'includes/resumo_pj.php';
                 ?>
-			</div>
 			<?php
 				} elseif($pj['liberado'] == 1) { // foi solicitada a liberação, porém a SMC não analisou ainda. ?>
 					<div class="alert alert-success">
@@ -160,26 +157,25 @@ if(isset($_POST['apagar']))
 				 		<?php listaArquivosPessoaObs($idPj,2) ?>
 				 	</div>
 
-<!--	 	<ul class='list-group'>-->
-<!--            <li class='list-group-item list-group-item-success'>Notas</li>-->
-<!--            --><?php
-//                $sql = "SELECT * FROM notas WHERE idPessoa = '$idPj' AND idTipo = '2' AND interna = '1'";
-//                $query = mysqli_query($con,$sql);
-//                $num = mysqli_num_rows($query);
-//                if($num > 0)
-//                {
-//                    while($campo = mysqli_fetch_array($query))
-//                    {
-//                        echo "<li class='list-group-item' align='left'><strong>".exibirDataHoraBr($campo['data'])."</strong><br/>".$campo['nota']."</li>";
-//                    }
-//                }
-//                else
-//                {
-//                    echo "<li class='list-group-item'>Não há notas disponíveis.</li>";
-//                }
-//            ?>
-<!--        </ul>-->
-
+                <ul class='list-group'>
+                    <li class='list-group-item list-group-item-success'>Notas</li>
+                    <?php
+                        $sql = "SELECT * FROM notas WHERE idPessoa = '$idPj' AND idTipo = '2' AND interna = '1'";
+                        $query = mysqli_query($con,$sql);
+                        $num = mysqli_num_rows($query);
+                        if($num > 0)
+                        {
+                            while($campo = mysqli_fetch_array($query))
+                            {
+                                echo "<li class='list-group-item' align='left'><strong>".exibirDataHoraBr($campo['data'])."</strong><br/>".$campo['nota']."</li>";
+                            }
+                        }
+                        else
+                        {
+                            echo "<li class='list-group-item'>Não há notas disponíveis.</li>";
+                        }
+                    ?>
+                </ul>
 
 			    <?php if($pj['liberado'] == NULL OR $pj['liberado'] == 2 OR $pj['liberado'] == 4) { ?>
 

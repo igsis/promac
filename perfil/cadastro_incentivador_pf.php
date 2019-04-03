@@ -36,7 +36,6 @@ if (isset($_POST['cadastraNovoPf']) and $_POST['numero']):
     $CEP = $_POST['cep'];
     $Numero = $_POST['numero'];
     $Complemento = addslashes($_POST['complemento']);
-    $imposto = $_POST['imposto'];
 
     $validar = array(
         $_POST['Endereco'],

@@ -376,6 +376,27 @@ if(isset($_POST['gravarFin']))
     }
 }
 
+if(isset($_POST['gravarNota']))
+{
+    $idP = $_POST['IDP'];
+    if ($idP != 0)
+    {
+        $dateNow = date('Y-m-d H:i:s');
+        $nota = addslashes($_POST['nota']);
+        $sql_nota = "INSERT INTO notas (idPessoa, idTipo, data, nota, interna) VALUES ('$idP', '3', '$dateNow', '$nota', '0')";
+        if(mysqli_query($con,$sql_nota))
+        {
+            $mensagem = "<font color='#01DF3A'><strong>Nota inserida com sucesso!</strong></font>";
+            gravarLog($sql_nota);
+            echo "<script>window.location = '?perfil=smc_detalhes_projeto&idFF=$idP';</script>";
+        }
+        else
+        {
+            $mensagem = "<font color='#FF0000'><strong>Erro ao inserir nota! Tente novamente.</strong></font>";
+        }
+    }
+}
+
 if(isset($_POST['apagaIncentivador']))
 {
     $tipoPessoa = $_POST['tipoPessoa'];
