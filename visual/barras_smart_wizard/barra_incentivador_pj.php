@@ -56,10 +56,10 @@ for ($i = 0; $i < count($urlIncentivadorPj); $i++) {
                 }
             ?>
             <li class="<?php echo $liga5 ?? 'clickable'; ?>">
-                <a onclick="location.href='incentivador_index_pj.php?perfil=resultado_inscricao_incentivador_pj'" href=""><br /><small>Resultado Inscrição</small></a>
+                <a onclick="location.href='incentivador_index_pj.php?perfil=resultado_inscricao_incentivador_pj'" href=""><br /><small>Concluir Inscrição</small></a>
             </li>
             <li class="<?php echo $liga4 ?? 'clickable'; ?>">
-                <a onclick="location.href='incentivador_index_pj.php?perfil=incentivador_concluir_pj'" href=""><br />Concluir Inscrição</a>
+                <a onclick="location.href='incentivador_index_pj.php?perfil=incentivador_concluir_pj'" href=""><br />Resultado Inscrição</a>
             </li>
         </ul>
     </div>
