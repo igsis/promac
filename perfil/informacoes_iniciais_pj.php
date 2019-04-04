@@ -31,9 +31,9 @@ if(isset($_POST['atualizarJuridica']) and $_POST['numero'] and empty($endereço)
 	$telefone = $_POST['telefone'];
 	$celular = $_POST['celular'];
 	$email = $_POST['email'];
-	$Endereco = $_POST['Endereco'];
-	$Bairro = $_POST['Bairro'];
-	$cidade = $_POST['cidade'];
+	$Endereco = addslashes($_POST['Endereco']);
+	$Bairro = addslashes($_POST['Bairro']);
+	$cidade = addslashes($_POST['cidade']);
 	$estado = $_POST['estado'];
 	$CEP = $_POST['cep'];
 	$Numero = $_POST['numero'];

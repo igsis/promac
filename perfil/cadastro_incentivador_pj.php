@@ -279,7 +279,7 @@ if ($pj['liberado'] == 3) {
                                 <div class="row">
                                     <label class="radio-inline">
                                         <input type="radio" name="imposto"
-                                               value="1" <?= ($pj['imposto'] == 1) ? "checked" : "" ?>>ISS
+                                               value="1" <?= ($pj['imposto'] == 1) ? "checked" : "" ?> required>ISS
                                     </label>
                                     <label class="radio-inline">
                                         <input type="radio" name="imposto"

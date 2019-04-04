@@ -45,10 +45,10 @@ for ($i = 0; $i < count($urlIncentivadorPf); $i++) {
                 }
             ?>
             <li class="<?php echo $ligar4 ?? 'clickable'; ?>">
-                <a onclick="location.href='incentivador_index_pf.php?perfil=resultado_inscricao_incentivador_pf'" href=""><br /><small>Resultado Inscrição</small></a>
+                <a onclick="location.href='incentivador_index_pf.php?perfil=resultado_inscricao_incentivador_pf'" href=""><br /><small>Concluir Inscrição</small></a>
             </li>
             <li class="<?php echo $ligar3 ?? 'clickable'; ?>">
-                <a onclick="location.href='incentivador_index_pf.php?perfil=incentivador_concluir_pf'" href=""><br />Concluir Inscrição</a>
+                <a onclick="location.href='incentivador_index_pf.php?perfil=incentivador_concluir_pf'" href=""><br />Resultado Inscrição</a>
             </li>
         </ul>
     </div>

@@ -41,7 +41,7 @@ if(isset($_POST["enviar"]))
 						$query = mysqli_query($con,$sql_insere_arquivo);
 						if($query)
 						{
-							$mensagem = "<font color='#01DF3A'><strong>Arquivo(s) recebido(s) com sucesso!</strong></font>";
+							$mensagem = "<font color='#01DF3A'><strong>Arquivo(s) recebido(s) com sucesso, utilize o menu para concluir e enviar sua inscrição para a SMC</strong></font>";
 							gravarLog($sql_insere_arquivo);
 						}
 						else
