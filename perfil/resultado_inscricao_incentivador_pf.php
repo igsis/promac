@@ -171,7 +171,6 @@ if(isset($_POST['apagar']))
                 </ul>
             </div>
 
-
 			<?php
 				if($pf['liberado'] == NULL OR $pf['liberado'] == 2 OR $pf['liberado'] == 4)
 				{
