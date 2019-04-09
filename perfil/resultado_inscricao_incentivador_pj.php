@@ -295,10 +295,25 @@ if(isset($_POST['apagar']))
                         if($numRow == 8)
                         {
 				    */
-				    $qtdDocumentos = ($pj['imposto'] == 3 ? 8 : 7);
-				    $query_valida = "SELECT *
-                                      FROM upload_arquivo 
-                                      WHERE idPessoa = '$idPj' AND publicado = 1 AND idTipo = 5";
+				    $qtdDocumentos = ($pj['imposto'] == 3 ? 9 : 8);
+				    switch ($pj['imposto']) {
+                        case 1:
+                            $query_valida = "SELECT * FROM upload_arquivo WHERE idPessoa = '$idPj' AND publicado = 1 AND idTipo = 5 AND idListaDocumento NOT IN (35) AND publicado = '1'";
+                            break;
+
+                        case 2:
+                            $query_valida = "SELECT * FROM upload_arquivo WHERE idPessoa = '$idPj' AND publicado = 1 AND idTipo = 5 AND idListaDocumento NOT IN (53) AND publicado = '1'";
+                            break;
+
+                        case 3:
+                            $query_valida = $sql_arquivos = "SELECT * FROM upload_arquivo WHERE idPessoa = '$idPj' AND publicado = 1 AND idTipo = 5 AND publicado = '1'";
+                            break;
+
+                        default:
+                            $query_valida = "SELECT * FROM upload_arquivo WHERE idPessoa = '$idPj' AND publicado = 1 AND idTipo = 5 AND idListaDocumento NOT IN (35, 53) AND publicado = '1'";
+                            break;
+                    }
+                    
                     if ($resuldato = mysqli_query($con,$query_valida)) {
                         $num_linhas = mysqli_num_rows($resuldato);
                         if ($num_linhas == $qtdDocumentos) {
