@@ -74,7 +74,7 @@ if(isset($_POST['insereOrcamento']) || isset($_POST['editaOrcamento'])) {
     $total = mysqli_fetch_array($query_total);
     $valorIncentivo = $total['tot'];
 
-    $sql_incentivo = "UPDATE projeto SET valorIncentivo = '$valorIncentivo'";
+    $sql_incentivo = "UPDATE projeto SET valorIncentivo = '$valorIncentivo' WHERE idProjeto = '$idProjeto'";
     $query_incentivo = mysqli_query($con, $sql_incentivo);
     if (mysqli_query($con, $sql_incentivo)) {
         $mensagem .= "<br/><font color='#01DF3A'><strong>Valor total do incentivo atualizado!</strong></font>";
