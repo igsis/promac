@@ -180,8 +180,8 @@ if(isset($_POST['apagar']))
 
 
 			<?php
-				if($pj['liberado'] == NULL OR $pj['liberado'] == 2 OR $pj['liberado'] == 4)
-				{
+            if($pj['liberado'] == NULL OR $pj['liberado'] == 2 OR $pj['liberado'] == 4)
+            {
 			?>
 
 			 	<!-- Exibir arquivos -->
@@ -286,28 +286,22 @@ if(isset($_POST['apagar']))
 		<div class="form-group">
 			<div class="col-md-offset-2 col-md-8">
 				<?php							
-				if ($cpo == false)
-				{/*
-					
-					$idPess = $pj['idPj'];
-					$queryArquivos = 
-					  "SELECT 
-					    idUploadArquivo 
-					   FROM 
-					     upload_arquivo 
-					   WHERE 
-					     idPessoa = $idPess 
-					   AND idTipo = '5' AND publicado = '1'";
-					
-					$enviaArquivos = mysqli_query($con, $queryArquivos);
-					$numRow = mysqli_num_rows($enviaArquivos);
-					if($numRow == 8)
-					{*/$query_valida = "SELECT *
+				if ($cpo == false) {
+				    /*
+                        $idPess = $pj['idPj'];
+                        $queryArquivos = "SELECT idUploadArquivo FROM upload_arquivo WHERE idPessoa = $idPess AND idTipo = '5' AND publicado = '1'";
+                        $enviaArquivos = mysqli_query($con, $queryArquivos);
+                        $numRow = mysqli_num_rows($enviaArquivos);
+                        if($numRow == 8)
+                        {
+				    */
+				    $qtdDocumentos = ($pj['imposto'] == 3 ? 8 : 7);
+				    $query_valida = "SELECT *
                                       FROM upload_arquivo 
                                       WHERE idPessoa = '$idPj' AND publicado = 1 AND idTipo = 5";
-                    if ($resuldato = mysqli_query($con,$query_valida)){
+                    if ($resuldato = mysqli_query($con,$query_valida)) {
                         $num_linhas = mysqli_num_rows($resuldato);
-                        if ($num_linhas == 8) {
+                        if ($num_linhas == $qtdDocumentos) {
                             ?>
                             <form class="form-horizontal" role="form"
                                   action="?perfil=resultado_inscricao_incentivador_pj" method="post">
@@ -315,20 +309,20 @@ if(isset($_POST['apagar']))
                                        class="btn btn-theme btn-lg btn-block">
                             </form>
                             <?php
-                        }else{
+                        } else {
                             echo "<div class='alert alert-warning'>
                             <strong>Erro: </strong> Você deve enviar toda a documentação necessaria para prosseguir.
                             </div>";
                         }
                     }
-				}
-				else{
+				} else {
 					echo "<div class='alert alert-warning'>
 					<strong>Erro: </strong> Você deve preencher todos os campos obrigatórios para prosseguir.
 
 					</div>";
 				}
-			}?>
+			}
+            ?>
 			</div>
 		</div>
 	
