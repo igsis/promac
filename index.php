@@ -38,7 +38,7 @@ $tipoPessoa = '6';
 						<p align="justify">O Programa de Municipal de Apoio a Projetos Culturais – Pro-Mac, instituído pela Lei nº 15.948/2013 e regulamentado pelo Decreto nº 58.041/2017, tem como objetivo incentivar projetos culturais e artísticos por meio da renúncia fiscal. Os incentivadores – pessoa física ou jurídica - poderão contribuir por meio da renúncia de até 20% do Imposto sobre Serviços de Qualquer Natureza - ISS e do Imposto Predial e Territorial Urbano - IPTU.</p>
 
 						<p align="justify"><strong>Inscrição de proponente: </strong>aberta o ano todo.<br/>
-						<strong>Inscrição de projeto: </strong>de 23/04/2018 à 31/10/2018.</p>	
+						<strong>Inscrição de projeto: </strong>encerrada.</p>
 
 						<p align="justify">O proponente deverá inscrever-se no link abaixo e após habilitação poderá inscrever o projeto.</p>
 
@@ -50,7 +50,7 @@ $tipoPessoa = '6';
                         <div class="alert-danger">
                             <br/>
                             <h6><span style="color: red; ">ATENÇÃO!</span></h6>
-                            <p><span style="color: red; ">O sistema PROMAC estará inoperante nos dias 06, 07 e 08 de Março de 2019 para implantação de novas funcionalidades</span></p>
+                            <p><span style="color: red; ">Os recursos orçamentários do Programa Municipal de Apoio a Projetos Culturais - PROMAC se esgotaram, encerrando a possibilidade de captação de recursos para projetos culturais neste ano. Para aqueles que desejam enviar uma Carta de Incentivo para algum projeto já aprovado, estamos protocolando uma fila de espera na Secretaria Municipal de Cultura (Rua Líbero Badaró, 346, 3° andar - PROMAC) para caso haja mais recursos disponíveis. Dúvidas são esclarecidas pelo email promac@prefeitura.sp.gov.br.</span></p>
                             <br/>
                         </div>
                         <p>&nbsp;</p>
