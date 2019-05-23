@@ -65,11 +65,11 @@ if(isset($_POST['liberacaoPJ']))
             if ($pf['idNivelAcesso'] != 4)
             {
             ?>    
-            <li class="nav active"><a href="#smc" data-toggle="tab">Área SMC</a></li>
+                <li class="nav active"><a href="#smc" data-toggle="tab">Área SMC</a></li>
             <?php
             }
             ?>
-            <li class="nav"><a href="#comissao" data-toggle="tab">Área Comissão</a></li>
+                <li class="nav"><a href="#comissao" data-toggle="tab">Área Comissão</a></li>
         </ul>
 
         <div class="tab-content">

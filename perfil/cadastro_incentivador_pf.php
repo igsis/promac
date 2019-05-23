@@ -1,6 +1,4 @@
 <?php
-
-
 $con = bancoMysqli();
 $idPf = $_SESSION['idUser'];
 $pf = recuperaDados("incentivador_pessoa_fisica", "idPf", $idPf);
@@ -79,10 +77,36 @@ endif;
 $pf = recuperaDados("incentivador_pessoa_fisica", "idPf", $idPf);
 
 if ($pf['liberado'] == 3) {
-    echo "<div class='alert alert-warning'>
-	<strong>Aviso!</strong> Seus dados já foram aceitos, portanto, não podem ser alterados.</div>";
+    ?>
+    <br>
+    <div class="container">
+        <ul class="nav nav-tabs">
+            <li class="nav active"><a href="#resumo" data-toggle="tab">Resumo do projeto</a></li>
+            <li class="nav"><a href="#lalal" data-toggle="tab">lalal</a></li>
+            <li class="nav"><a href="#lolol" data-toggle="tab">lalal</a></li>
+        </ul>
 
-    include 'includes/resumo_dados_incentivador_pf.php';
+        <div class="tab-content">
+            <div class="tab-pane fade in active" id="resumo">
+                <?php
+                    echo "<div class='alert alert-warning'>
+	                    <strong>Aviso!</strong> Seus dados já foram aceitos, portanto, não podem ser alterados.</div>";
+                    include 'includes/resumo_dados_incentivador_pf.php';
+                ?>
+            </div>
+
+            <div class="tab-pane fade" id="lalal">
+                oi
+            </div>
+
+            <div class="tab-pane fade" id="lolol">
+                tudo bem?
+            </div>
+        </div>
+    </div>
+
+    </div>
+    <?php
 } elseif ($pf['liberado'] == 1) {
     echo "<div class='alert alert-warning'>
 	<strong>Aviso!</strong> Seus dados foram encaminhados para análise, portanto, não podem ser alterados.</div>";
