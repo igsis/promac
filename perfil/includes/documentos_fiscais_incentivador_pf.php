@@ -97,7 +97,7 @@ $pf = recuperaDados("incentivador_pessoa_fisica", "idPf", $idPf);
         <div class="row">
             <div class="col-md-offset-1 col-md-10">
                 <?php
-                if ($pf['liberado'] == 3)
+                if ($pf['liberado'] >= 3)
                 {
                 ?>
                 <!-- Exibir arquivos -->

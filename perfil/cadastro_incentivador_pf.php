@@ -83,9 +83,7 @@ if ($pf['liberado'] >= 3) {
         <ul class="nav nav-tabs">
             <li class="nav active"><a href="#admIncentivador" data-toggle="tab">Administrativo</a></li>
             <li class="nav"><a href="#resumo" data-toggle="tab">Resumo do projeto</a></li>
-            <li class="nav"><a href="#lolol" data-toggle="tab">lalal</a></li>
         </ul>
-
         <div class="tab-content">
             <div class="tab-pane fade in active" id="admIncentivador">
                 <?php include 'includes/incentivador_adm.php'?>

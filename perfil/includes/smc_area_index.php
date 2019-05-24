@@ -281,6 +281,74 @@ if (isset($_POST['arquivar'])){
         </div>
 
         <?php
+        $sql = "SELECT * FROM incentivador_pessoa_fisica WHERE liberado = 4";
+        $query = mysqli_query($con,$sql);
+        $num = mysqli_num_rows($query);
+        ?>
+        <!-- Lista 3 -->
+        <div class="form-group">
+            <h5>Incentivadores com certidões de regularidade fiscal anexadas.<br>
+                <small>Máximo de 10 Registros exibidos</small>
+            </h5>
+
+            <form method='POST' action='?perfil=smc_pesquisa_incentivador_pf_resultado' class='form-horizontal' role='form'>
+                <button type="submit" class="label label-warning" name="liberado" value="4">
+                    <span>Total: <?=$num?></span>
+                </button>
+            </form>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive list_info">
+                    <?php
+                    if($num > 0)
+                    {
+                        echo "
+                            <table class='table table-condensed'>
+                                <thead>
+                                    <tr class='list_menu'>
+                                        <td>Nome</td>
+                                        <td>CPF</td>
+                                        <td>Email</td>
+                                        <td>Telefone</td>
+                                        <td width='10%'></td>
+                                    </tr>
+                                </thead>
+                                <tbody>";
+                        $i = 0;
+                        while($campo = mysqli_fetch_array($query))
+                        {
+                            if ($i < 10) {
+                                echo "<tr>";
+                                echo "<td class='list_description'>" . $campo['nome'] . "</td>";
+                                echo "<td class='list_description'>" . $campo['cpf'] . "</td>";
+                                echo "<td class='list_description'>" . $campo['email'] . "</td>";
+                                echo "<td class='list_description'>" . $campo['telefone'] . "</td>";
+                                echo "
+                                            <td class='list_description'>
+                                                <form method='POST' action='?perfil=smc_certidoes_incentivadores_pf'>
+                                                    <input type='hidden' name='idPf' value='" . $campo['idPf'] . "' />
+                                                    <input type ='submit' class='btn btn-theme btn-block' value='Visualizar'>
+                                                </form>
+                                            </td>";
+                            }
+                            $i++;
+                        }
+                        echo "</tr>";
+                        echo "</tbody>
+                                </table>";
+                    }
+                    else
+                    {
+                        echo "Não há resultado no momento.";
+                    }
+                    ?>
+                </div>
+            </div>
+        </div>
+
+
+        <?php
         $sql = "SELECT * FROM incentivador_pessoa_juridica WHERE liberado = 1";
         $query = mysqli_query($con,$sql);
         $num = mysqli_num_rows($query);
