@@ -876,13 +876,21 @@ function listaArquivosEvento($idPessoa, $tipoPessoa, $pagina)
 	}
 }
 
-function listaArquivosPessoa($idPessoa,$tipoPessoa,$pagina)
+function listaArquivosPessoa($idPessoa,$tipoPessoa,$pagina, $idsDeterminados = '')
 {
 	$con = bancoMysqli();
+
+	if ($idsDeterminados != '') {
+	    $filtroIds = "AND list.idListaDocumento IN ($idsDeterminados)";
+    } else {
+	    $filtroIds = '';
+    }
+
 	$sql = "SELECT *
 			FROM lista_documento as list
 			INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
 			WHERE arq.idPessoa = '$idPessoa'
+			$filtroIds
 			AND arq.idTipo = '$tipoPessoa'
 			AND arq.publicado = '1'";
 	$query = mysqli_query($con,$sql);
@@ -919,6 +927,7 @@ function listaArquivosPessoa($idPessoa,$tipoPessoa,$pagina)
 				echo "
 		</tbody>
 		</table>";
+				return $linhas;
 	}
 	else
 	{

@@ -25,7 +25,7 @@ for ($i = 0; $i < count($urlIncentivadorPf); $i++) {
             $ligar4 = 'active loading';
         }
 
-        if($barraPf['liberado'] !=3 ){
+        if($barraPf['liberado'] < 3 ){
 ?>
 
 	<!-- SmartWizard html -->
