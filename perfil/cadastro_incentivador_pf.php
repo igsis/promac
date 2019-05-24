@@ -82,7 +82,7 @@ if ($pf['liberado'] == 3) {
     <div class="container">
         <ul class="nav nav-tabs">
             <li class="nav active"><a href="#resumo" data-toggle="tab">Resumo do projeto</a></li>
-            <li class="nav"><a href="#lalal" data-toggle="tab">lalal</a></li>
+            <li class="nav"><a href="#admIncentivador" data-toggle="tab">Administrativo</a></li>
             <li class="nav"><a href="#lolol" data-toggle="tab">lalal</a></li>
         </ul>
 
@@ -95,12 +95,14 @@ if ($pf['liberado'] == 3) {
                 ?>
             </div>
 
-            <div class="tab-pane fade" id="lalal">
-                oi
+            <div class="tab-pane fade" id="admIncentivador">
+                <?php include 'includes/incentivador_adm.php'?>
             </div>
 
             <div class="tab-pane fade" id="lolol">
-                tudo bem?
+
+
+
             </div>
         </div>
     </div>
