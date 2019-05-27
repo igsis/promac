@@ -16,13 +16,11 @@ if (isset($_POST['cep'])):
     endif;
 endif;
 
-
 if (isset($_POST['cep']) and empty($enderecos)): $habilitaCampo = true; ?>
     <div class="alert alert-warning">
         <p>O cep: <b><?= $_POST['cep'] ?></b> não foi localizado. Informe manualmente</p>
     </div>
 <?php endif;
-
 
 if (isset($_POST['cadastraNovoPj']) and $_POST['numero']):
     $razaoSocial = addslashes($_POST['razaoSocial']);
@@ -79,11 +77,33 @@ endif;
 
 $pj = recuperaDados("incentivador_pessoa_juridica", "idPj", $idPj);
 
-if ($pj['liberado'] == 3) {
-    echo "<div class='alert alert-warning'>
-	<strong>Aviso!</strong> Seus dados já foram aceitos, portanto, não podem ser alterados.</div>";
+if ($pj['liberado'] >= 3) {
+    ?>
+    <br>
+    <div class="container">
+        <ul class="nav nav-tabs">
+            <li class="nav active"><a href="#admIncentivador" data-toggle="tab">Administrativo</a></li>
+            <li class="nav"><a href="#resumo" data-toggle="tab">Resumo do projeto</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane fade in active" id="admIncentivador">
+                <?php include 'includes/incentivador_adm.php'?>
+            </div>
+            <div class="tab-pane fade" id="resumo">
+                <?php
+                    echo "<div class='alert alert-warning'>
+	                    <strong>Aviso!</strong> Seus dados já foram aceitos, portanto, não podem ser alterados.</div>";
+                        include 'includes/resumo_dados_incentivador_pj.php';
+                        include 'includes/resumo_dados_representante_pj.php'
+                ?>
+            </div>
+            <div class="tab-pane fade" id="lolol">
+            </div>
+        </div>
+    </div>
+    </div>
+    <?php
 
-    include 'includes/resumo_dados_incentivador_pj.php';
 } elseif ($pj['liberado'] == 1) {
     echo "<div class='alert alert-warning'>
 	<strong>Aviso!</strong> Seus dados foram encaminhados para análise, portanto, não podem ser alterados.</div>";
