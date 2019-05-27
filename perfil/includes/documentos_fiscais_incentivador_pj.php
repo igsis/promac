@@ -1,7 +1,7 @@
 <?php
 $con = bancoMysqli();
-$idPf = $_SESSION['idUser'];
-$tipoPessoa = '3';
+$idPj = $_SESSION['idUser'];
+$tipoPessoa = '4';
 
 if (isset($_POST["enviar"])) {
     $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '3' AND idListaDocumento IN (39, 40, 41, 42, 43, 53)";
@@ -30,7 +30,7 @@ if (isset($_POST["enviar"])) {
                 if (in_array($ext, $allowedExts)) //Pergunta se a extensão do arquivo, está presente no array das extensões permitidas
                 {
                     if (move_uploaded_file($nome_temporario, $dir . $new_name)) {
-                        $sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('$tipoPessoa', '$idPf', '$y', '$new_name', '$hoje', '1'); ";
+                        $sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('$tipoPessoa', '$idPj', '$y', '$new_name', '$hoje', '1'); ";
                         $query = mysqli_query($con, $sql_insere_arquivo);
                         if ($query) {
                             $mensagem = "<font color='#01DF3A'><strong>Arquivo(s) recebido(s) com sucesso!</strong></font>";
@@ -60,9 +60,9 @@ if (isset($_POST['apagar'])) {
     }
 }
 
-$pf = recuperaDados("incentivador_pessoa_fisica", "idPf", $idPf);
-
+$pf = recuperaDados("incentivador_pessoa_juridica", "idPj", $idPj);
 ?>
+
 <section id="list_items" class="home-section bg-white">
     <div class="container">
         <ul class="nav nav-tabs">
@@ -106,14 +106,13 @@ $pf = recuperaDados("incentivador_pessoa_fisica", "idPf", $idPf);
                         <div class="table-responsive list_info"><h6>Arquivo(s) Anexado(s)</h6>
                             <?php
 
-                            $teste = listaArquivosPessoa($idPf, $tipoPessoa, "includes/documentos_fiscais_incentivador_pf", "39, 40, 41, 42, 43, 54");
+                            $teste = listaArquivosPessoa($idPj, $tipoPessoa, "includes/documentos_fiscais_incentivador_pf", "39, 40, 41, 42, 43, 54");
                             if ($teste == 6) {
                                 echo "
                                       <form method='POST' action='?perfil=includes/incentivador_adm_pj' enctype='multipart/form-data'>
-                                      <input type='hidden' name='idPf' value='$idPf'>                                   
+                                      <input type='hidden' name='idPf' value='$idPj'>                                   
                                           <input type='submit' name='enviarSMC' class='btn btn-theme btn-lg btn-block'
                                                value='Enviar à SMC'>                                     
-                                        
                                       </form>  ";
                             } else {
 
@@ -130,13 +129,14 @@ $pf = recuperaDados("incentivador_pessoa_fisica", "idPf", $idPf);
                                 $documentos = [];
                                 $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '3' AND idListaDocumento IN (39, 40, 41, 42, 43, 54)";
                                 $query_arquivos = mysqli_query($con, $sql_arquivos);
+
                                 while ($arq = mysqli_fetch_array($query_arquivos)) {
                                     $doc = $arq['documento'];
                                     $query = "SELECT idListaDocumento FROM lista_documento WHERE documento='$doc' AND publicado='1' AND idTipoUpload='3'";
                                     $envio = $con->query($query);
                                     $row = $envio->fetch_array(MYSQLI_ASSOC);
 
-                                    if (!verificaArquivosExistentesIncentivador($idPf, $row['idListaDocumento'])) {
+                                    if (!verificaArquivosExistentesIncentivador($idPj, $row['idListaDocumento'])) {
                                         $documento = (object)
                                         [
                                             'nomeDocumento' => $arq['documento'],
@@ -162,7 +162,7 @@ $pf = recuperaDados("incentivador_pessoa_fisica", "idPf", $idPf);
                                         }
                                         ?>
                                     </table>
-                                    <input type="hidden" name="idPessoa" value="<?php echo $idPf; ?>"/>
+                                    <input type="hidden" name="idPessoa" value="<?php echo $idPj; ?>"/>
                                     <input type="hidden" name="tipoPessoa" value="<?php echo $tipoPessoa; ?>"/>
                                     <input type="submit" name="enviar" class="btn btn-theme btn-lg btn-block"
                                            value='upload'>
@@ -205,12 +205,16 @@ $pf = recuperaDados("incentivador_pessoa_fisica", "idPf", $idPf);
 
 
 <script>
+    var resposta = $('.resposta');
+    resposta.on("change", verificaResposta);
+    $(document).ready(verificaResposta());
+
     function verificaResposta() {
         if ($('#nao').is(':checked')) {
-            location.href = '?perfil=cadastro_incentivador_pf'
+            $('#aviso').css('display', 'block');
+            $('#incentivar').css('display', 'none');
         } else if ($('#sim').is(':checked')) {
-            //$('#aviso').css('display', 'none');
-            location.href = '?perfil=includes/documentos_fiscais_incentivador_pf'
+            location.href = '?perfil=includes/documentos_fiscais_incentivador_pj'
         }
     }
 </script>

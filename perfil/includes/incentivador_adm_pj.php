@@ -1,11 +1,11 @@
 <?php
 $con = bancoMysqli();
-$idPf = $_SESSION['idUser'];
+$idPj = $_SESSION['idUser'];
 $enviado = 0;
-$tipoPessoa = 3;
+$tipoPessoa = 4;
 
-$pf = recuperaDados("incentivador_pessoa_fisica", "idPf", $idPf);
-$liberado = $pf['liberado'];
+$pj = recuperaDados("incentivador_pessoa_juridica", "idPj", $idPj);
+$liberado = $pj['liberado'];
 
 switch ($liberado) {
     case 4:
@@ -21,7 +21,7 @@ switch ($liberado) {
 
 
 if (isset($_POST['enviarSMC'])) {
-    $sql = "UPDATE incentivador_pessoa_fisica SET liberado = 4 WHERE idPf = $idPf";
+    $sql = "UPDATE incentivador_pessoa_juridica SET liberado = 4 WHERE idPj = $idPj";
 
     if (mysqli_query($con, $sql)) {
         $enviado = 1;
@@ -31,7 +31,6 @@ if (isset($_POST['enviarSMC'])) {
 } elseif ($liberado >= 4) {
     $enviado = 1;
 }
-
 
 if ($enviado == 0) {
     ?>
@@ -49,6 +48,7 @@ if ($enviado == 0) {
                     incentivar, retorne a essa página, por gentileza.
                 </div>
             </div>
+
         </div>
     </form>
     <?php
@@ -67,16 +67,19 @@ if ($enviado == 0) {
                     <?php
                     echo "<div class='alert alert-warning'>
 	                    <strong>Aviso!</strong> Seus dados já foram aceitos, portanto, não podem ser alterados.</div>";
-                    include 'resumo_dados_incentivador_pf.php';
+                    include 'resumo_dados_incentivador_pj.php';
                     ?>
                 </div>
+                
                 <div class="tab-pane fade in active" id="admIncentivador">
                     <br>
                     <div class="form-group">
                         <div class="col-md-12">
+            
                             <h5><?php if (isset($mensagem)) {
                                     echo $mensagem;
                                 }; ?></h5>
+
                             <ul class="list-group">
                                 <li class="list-group-item list-group-item-success">
                                     <strong>Status da Análise de Regularidade Fiscal do Incentivador: <?= $statusIncentivador ?>.</strong>
@@ -84,6 +87,7 @@ if ($enviado == 0) {
                             </ul>
                         </div>
                     </div>
+
                     <div class="form-group">
                         <div class="col-md-12">
                             <table class='table table-condensed table-striped text-center'>
@@ -101,18 +105,21 @@ if ($enviado == 0) {
                                 $sql = "SELECT *
                                         FROM lista_documento as list
                                         INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
-                                        WHERE arq.idPessoa = '$idPf'
+                                        WHERE arq.idPessoa = '$idPj'
                                         AND list.idListaDocumento IN (39, 40, 41, 42, 43, 53)
                                         AND arq.idTipo = '$tipoPessoa'
                                         AND arq.publicado = '1'";
+
                                 $query = mysqli_query($con, $sql);
                                 $linhas = mysqli_num_rows($query);
                                 $count = 0;
+
                                 while ($arquivo = mysqli_fetch_array($query)) {
                                     echo "<tr>
-                                <td class='list_description'>(" . $arquivo['documento'] . ")</td>
-                                <td class='list_description'><a href='../uploadsdocs/" . $arquivo['arquivo'] . "' target='_blank'>" . mb_strimwidth($arquivo['arquivo'], 15, 25, "...") . "</a></td>
-                                <td class='list_description'>" . exibirDataBr($arquivo['dataEnvio']) . "</td>";
+                                    <td class='list_description'>(" . $arquivo['documento'] . ")</td>
+                                    <td class='list_description'><a href='../uploadsdocs/" . $arquivo['arquivo'] . "' target='_blank'>" . mb_strimwidth($arquivo['arquivo'], 15, 25, "...") . "</a></td>
+                                    <td class='list_description'>" . exibirDataBr($arquivo['dataEnvio']) . "</td>";
+                                    
                                     $queryy = "SELECT idStatusDocumento FROM upload_arquivo WHERE idUploadArquivo = '" . $arquivo['idUploadArquivo'] . "'";
                                     $send = mysqli_query($con, $queryy);
                                     $row = mysqli_fetch_array($send);
@@ -160,7 +167,6 @@ if ($enviado == 0) {
 ?>
 
 <script>
-
     var resposta = $('.resposta');
     resposta.on("change", verificaResposta);
     $(document).ready(verificaResposta());
@@ -170,7 +176,7 @@ if ($enviado == 0) {
             $('#aviso').css('display', 'block');
             $('#incentivar').css('display', 'none');
         } else if ($('#sim').is(':checked')) {
-            location.href = '?perfil=includes/documentos_fiscais_incentivador_pf'
+            location.href = '?perfil=includes/documentos_fiscais_incentivador_pj'
         }
     }
 </script>

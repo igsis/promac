@@ -87,7 +87,7 @@ if ($pj['liberado'] >= 3) {
         </ul>
         <div class="tab-content">
             <div class="tab-pane fade in active" id="admIncentivador">
-                <?php include 'includes/incentivador_adm.php'?>
+                <?php include 'includes/incentivador_adm_pj.php'?>
             </div>
             <div class="tab-pane fade" id="resumo">
                 <?php
