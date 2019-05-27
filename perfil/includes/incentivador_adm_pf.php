@@ -160,12 +160,16 @@ if ($enviado == 0) {
 ?>
 
 <script>
+
+    var resposta = $('.resposta');
+    resposta.on("change", verificaResposta);
+    $(document).ready(verificaResposta());
+
     function verificaResposta() {
         if ($('#nao').is(':checked')) {
             $('#aviso').css('display', 'block');
             $('#incentivar').css('display', 'none');
         } else if ($('#sim').is(':checked')) {
-            //$('#aviso').css('display', 'none');
             location.href = '?perfil=includes/documentos_fiscais_incentivador_pf'
         }
     }
