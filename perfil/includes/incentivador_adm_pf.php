@@ -21,9 +21,10 @@ switch ($liberado) {
 
 
 if (isset($_POST['enviarSMC'])) {
-    $sql = "UPDATE incentivador_pessoa_fisica SET liberado = 4 WHERE idPf = $idPf";
+    $sqlLiberado = "UPDATE incentivador_pessoa_fisica SET liberado = 4 WHERE idPf = $idPf";
+    $sqlEtapa = "UPDATE etapas_incentivo SET etapa = 2 WHERE idIncentivador = $idPf";
 
-    if (mysqli_query($con, $sql)) {
+    if (mysqli_query($con, $sqlLiberado) && mysqli_query($sqlEtapa)) {
         $enviado = 1;
         $mensagem = "<font color='#01DF3A'><strong>Suas certidões de regularidade fiscal foram enviadas à SMC!</strong></font>";
         gravarLog($sql);
@@ -35,7 +36,6 @@ if (isset($_POST['enviarSMC'])) {
 
 if ($enviado == 0) {
     ?>
-    <form method="POST">
         <div class="well">
             <label for="admResposta">Você deseja incentivar um projeto agora?</label><br>
             <input type="radio" name="admResposta" value="1" class="resposta" id="sim"> Sim
@@ -49,8 +49,13 @@ if ($enviado == 0) {
                     incentivar, retorne a essa página, por gentileza.
                 </div>
             </div>
+            <div id="incentivar" style="display: none;">
+                <br>
+                <form method="post" action="?perfil=includes/documentos_fiscais_incentivador_pf" class="form-group">
+                    <input type="submit" name="iniciar_incentivo" value="Iniciar incentivo" class="btn btn-success">
+                </form>
+            </div>
         </div>
-    </form>
     <?php
 } else {
     ?>
@@ -139,7 +144,7 @@ if ($enviado == 0) {
 <script>
 
     var resposta = $('.resposta');
-    resposta.on("change", verificaResposta);
+    resposta.on("click", verificaResposta);
     $(document).ready(verificaResposta());
 
     function verificaResposta() {
@@ -147,7 +152,9 @@ if ($enviado == 0) {
             $('#aviso').css('display', 'block');
             $('#incentivar').css('display', 'none');
         } else if ($('#sim').is(':checked')) {
-            location.href = '?perfil=includes/documentos_fiscais_incentivador_pf'
+            $('#aviso').css('display', 'none');
+            $('#incentivar').css('display', 'block');
+           // location.href = '?perfil=includes/documentos_fiscais_incentivador_pf'
         }
     }
 </script>

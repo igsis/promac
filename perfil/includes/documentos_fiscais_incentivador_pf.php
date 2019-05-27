@@ -75,17 +75,13 @@ $pf = recuperaDados("incentivador_pessoa_fisica", "idPf", $idPf);
             </div>
             <div class="tab-pane fade" id="resumo">
                 <?php
-                echo "<div class='alert alert-warning'>
+                echo "<br><div class='alert alert-warning'>
 	                    <strong>Aviso!</strong> Seus dados já foram aceitos, portanto, não podem ser alterados.</div>";
                 include 'resumo_dados_incentivador_pf.php';
                 ?>
             </div>
         </div>
         <br>
-        <label for="admResposta">1 - Você deseja incentivar um projeto agora?</label><br>
-        <input type="radio" name="admResposta" value="1" class="resposta" id="sim" checked onclick="verificaResposta()">
-        Sim
-        <input type="radio" name="admResposta" value="0" class="resposta" id="nao" onclick="verificaResposta()"> Não
         <div class="form-group">
             <h4>Certidões de Regularidade Fiscal: <br>
                 <small>(Para incentivar projetos do PROMAC, você deve estar em dia com suas obrigações fiscais).</small>
