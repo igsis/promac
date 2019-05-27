@@ -86,16 +86,15 @@ if ($pf['liberado'] >= 3) {
         </ul>
         <div class="tab-content">
             <div class="tab-pane fade in active" id="admIncentivador">
+                <br>
                 <?php include 'includes/incentivador_adm_pf.php'?>
             </div>
             <div class="tab-pane fade" id="resumo">
                 <?php
-                    echo "<div class='alert alert-warning'>
+                    echo "<br><div class='alert alert-warning'>
 	                    <strong>Aviso!</strong> Seus dados já foram aceitos, portanto, não podem ser alterados.</div>";
                     include 'includes/resumo_dados_incentivador_pf.php';
                 ?>
-            </div>
-            <div class="tab-pane fade" id="lolol">
             </div>
         </div>
     </div>

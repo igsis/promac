@@ -4,7 +4,7 @@ $idPf = $_SESSION['idUser'];
 $tipoPessoa = '3';
 
 if (isset($_POST["enviar"])) {
-    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '3' AND idListaDocumento IN (39, 40, 41, 42, 43, 53)";
+    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '3' AND idListaDocumento IN (39, 40, 41, 42, 43, 54)";
     $query_arquivos = mysqli_query($con, $sql_arquivos);
     while ($arq = mysqli_fetch_array($query_arquivos)) {
         $y = $arq['idListaDocumento'];
@@ -109,7 +109,7 @@ $pf = recuperaDados("incentivador_pessoa_fisica", "idPf", $idPf);
                             $teste = listaArquivosPessoa($idPf, $tipoPessoa, "includes/documentos_fiscais_incentivador_pf", "39, 40, 41, 42, 43, 54");
                             if ($teste == 6) {
                                 echo "
-                                      <form method='POST' action='?perfil=includes/incentivador_adm_pj' enctype='multipart/form-data'>
+                                      <form method='POST' action='?perfil=includes/incentivador_adm_pf' enctype='multipart/form-data'>
                                       <input type='hidden' name='idPf' value='$idPf'>                                   
                                           <input type='submit' name='enviarSMC' class='btn btn-theme btn-lg btn-block'
                                                value='Enviar à SMC'>                                     
