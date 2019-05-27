@@ -83,7 +83,7 @@ if ($pj['liberado'] >= 3) {
     <div class="container">
         <ul class="nav nav-tabs">
             <li class="nav active"><a href="#admIncentivador" data-toggle="tab">Administrativo</a></li>
-            <li class="nav"><a href="#resumo" data-toggle="tab">Resumo do projeto</a></li>
+            <li class="nav"><a href="#resumo" data-toggle="tab">Resumo do cadastro</a></li>
         </ul>
         <div class="tab-content">
             <div class="tab-pane fade in active" id="admIncentivador">
@@ -94,7 +94,7 @@ if ($pj['liberado'] >= 3) {
                     echo "<div class='alert alert-warning'>
 	                    <strong>Aviso!</strong> Seus dados já foram aceitos, portanto, não podem ser alterados.</div>";
                         include 'includes/resumo_dados_incentivador_pj.php';
-                        include 'includes/resumo_dados_representante_pj.php'
+                        include 'includes/resumo_dados_representante_pj.php';
                 ?>
             </div>
             <div class="tab-pane fade" id="lolol">

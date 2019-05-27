@@ -76,17 +76,18 @@ endif;
 
 $pf = recuperaDados("incentivador_pessoa_fisica", "idPf", $idPf);
 
+
+
 if ($pf['liberado'] >= 3) {
     ?>
     <br>
-    <div class="container">
+    <div class="container"><?php include 'includes/menu_interno_pf.php';?>
         <ul class="nav nav-tabs">
             <li class="nav active"><a href="#admIncentivador" data-toggle="tab">Administrativo</a></li>
-            <li class="nav"><a href="#resumo" data-toggle="tab">Resumo do projeto</a></li>
+            <li class="nav"><a href="#resumo" data-toggle="tab">Resumo do cadastro</a></li>
         </ul>
         <div class="tab-content">
             <div class="tab-pane fade in active" id="admIncentivador">
-                <br>
                 <?php include 'includes/incentivador_adm_pf.php'?>
             </div>
             <div class="tab-pane fade" id="resumo">
