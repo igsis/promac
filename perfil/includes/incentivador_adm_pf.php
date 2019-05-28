@@ -5,7 +5,10 @@ $enviado = 0;
 $tipoPessoa = 3;
 
 $pf = recuperaDados("incentivador_pessoa_fisica", "idPf", $idPf);
+$etapaArray = recuperaDados("etapas_incentivo", "idIncentivador", $idPf);
+
 $liberado = $pf['liberado'];
+$etapa = $etapaArray['etapa'];
 
 switch ($liberado) {
     case '4':
@@ -24,18 +27,18 @@ if (isset($_POST['enviarSMC'])) {
     $sqlLiberado = "UPDATE incentivador_pessoa_fisica SET liberado = 4 WHERE idPf = $idPf";
     $sqlEtapa = "UPDATE etapas_incentivo SET etapa = 2 WHERE idIncentivador = $idPf";
 
-    if (mysqli_query($con, $sqlLiberado) && mysqli_query($sqlEtapa)) {
+    if (mysqli_query($con, $sqlLiberado) && mysqli_query($con, $sqlEtapa)) {
         $enviado = 1;
         $mensagem = "<font color='#01DF3A'><strong>Suas certidões de regularidade fiscal foram enviadas à SMC!</strong></font>";
-        gravarLog($sql);
+        gravarLog($sqlLiberado);
+        gravarLog($sqlEtapa);
     }
-} elseif ($liberado >= 4) {
-    $enviado = 1;
 }
 
 
-if ($enviado == 0) {
-    ?>
+switch ($etapa) {
+    case '':
+        ?>
         <div class="well">
             <label for="admResposta">Você deseja incentivar um projeto agora?</label><br>
             <input type="radio" name="admResposta" value="1" class="resposta" id="sim"> Sim
@@ -56,88 +59,119 @@ if ($enviado == 0) {
                 </form>
             </div>
         </div>
-    <?php
-} else {
-    ?>
-    <div class="form-group">
-        <h5><?php if (isset($mensagem)) {
-                echo $mensagem;
-            }; ?></h5>
+        <?php
+        break;
+    case '1':
+        echo "<script>location.href = '?perfil=includes/documentos_fiscais_incentivador_pf'</script>";
+        break;
+
+    case '2':
+        ?>
+        <?php
+        if (isset($mensagem)) {
+            ?>
+            <section id="list_items" class="home-section bg-white">
+            <div class="container"><?php include 'menu_interno_pf.php' ?>
+            <ul class="nav nav-tabs">
+                <li class="nav active"><a href="#admIncentivador" data-toggle="tab">Administrativo</a></li>
+                <li class="nav"><a href="#resumo" data-toggle="tab">Resumo do projeto</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="admIncentivador">
+
+                </div>
+                <div class="tab-pane fade" id="resumo">
+                    <?php
+                    echo "<br><div class='alert alert-warning'>
+	                    <strong>Aviso!</strong> Seus dados já foram aceitos, portanto, não podem ser alterados.</div>";
+                    include 'resumo_dados_incentivador_pf.php';
+                    ?>
+                </div>
+            </div>
+
+            <?php
+            echo "<h5>" . $mensagem . "</h5>";
+        }
+        ?>
+        <br>
         <ul class="list-group">
             <li class="list-group-item list-group-item-success">
-                <strong>Status da Análise de Regularidade Fiscal do Incentivador: <?= $statusIncentivador ?>.</strong>
+                <strong>Status da Análise de Regularidade Fiscal do Incentivador: <?= $statusIncentivador ?>
+                    .</strong>
             </li>
         </ul>
-    </div>
 
-    <div class="well">
-        <div class="form-group">
-            <table class='table table-condensed table-striped text-center'>
-                <thead>
-                <tr class='list_menu' style="font-weight: bold;">
-                    <td>Tipo de arquivo</td>
-                    <td>Nome do arquivo</td>
-                    <td width="10%">Data do envio</td>
-                    <td width='10%'>Status</td>
-                    <td>Observações</td>
-                </tr>
-                </thead>
-                <tbody>
-                <?php
-                $sql = "SELECT *
+        <div class="well">
+            <div class="form-group">
+                <table class='table table-condensed table-striped text-center'>
+                    <thead>
+                    <tr class='list_menu' style="font-weight: bold;">
+                        <td>Tipo de arquivo</td>
+                        <td>Nome do arquivo</td>
+                        <td width="10%">Data do envio</td>
+                        <td width='10%'>Status</td>
+                        <td>Observações</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    $sql = "SELECT *
                                         FROM lista_documento as list
                                         INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
                                         WHERE arq.idPessoa = '$idPf'
                                         AND list.idListaDocumento IN (39, 40, 41, 42, 43, 53)
                                         AND arq.idTipo = '$tipoPessoa'
                                         AND arq.publicado = '1'";
-                $query = mysqli_query($con, $sql);
-                $linhas = mysqli_num_rows($query);
-                $count = 0;
-                while ($arquivo = mysqli_fetch_array($query)) {
-                    echo "<tr>
+                    $query = mysqli_query($con, $sql);
+                    $linhas = mysqli_num_rows($query);
+                    $count = 0;
+                    while ($arquivo = mysqli_fetch_array($query)) {
+                        echo "<tr>
                                 <td class='list_description'>(" . $arquivo['documento'] . ")</td>
                                 <td class='list_description'><a href='../uploadsdocs/" . $arquivo['arquivo'] . "' target='_blank'>" . mb_strimwidth($arquivo['arquivo'], 15, 25, "...") . "</a></td>
                                 <td class='list_description'>" . exibirDataBr($arquivo['dataEnvio']) . "</td>";
-                    $queryy = "SELECT idStatusDocumento FROM upload_arquivo WHERE idUploadArquivo = '" . $arquivo['idUploadArquivo'] . "'";
-                    $send = mysqli_query($con, $queryy);
-                    $row = mysqli_fetch_array($send);
+                        $queryy = "SELECT idStatusDocumento FROM upload_arquivo WHERE idUploadArquivo = '" . $arquivo['idUploadArquivo'] . "'";
+                        $send = mysqli_query($con, $queryy);
+                        $row = mysqli_fetch_array($send);
 
-                    $idStatus = $row['idStatusDocumento']; // == '' ? 'Em análise' : $row['idStatusDocumento'];
+                        $idStatus = $row['idStatusDocumento']; // == '' ? 'Em análise' : $row['idStatusDocumento'];
 
-                    switch ($idStatus) {
-                        case '':
-                            $status = "Em análise";
-                            $cor = "orange";
-                            break;
-                        case 1:
-                            $status = "Aceito";
-                            $cor = "green";
-                            break;
-                        case 3:
-                            $status = "Negado";
-                            $cor = "red";
-                            break;
-                    }
+                        switch ($idStatus) {
+                            case '':
+                                $status = "Em análise";
+                                $cor = "orange";
+                                break;
+                            case 1:
+                                $status = "Aceito";
+                                $cor = "green";
+                                break;
+                            case 3:
+                                $status = "Negado";
+                                $cor = "red";
+                                break;
+                        }
 
-                    echo "<td class='list_description'>                                   
+                        echo "<td class='list_description'>                                   
                                         <input class='form-control text-center' style='color: $cor' type='text' value='$status' disabled>
                                     </td>";
-                    $queryOBS = "SELECT observacoes FROM upload_arquivo WHERE idUploadArquivo = '" . $arquivo['idUploadArquivo'] . "'";
-                    $send = mysqli_query($con, $queryOBS);
-                    $row = mysqli_fetch_array($send);
-                    echo "<td class='list_description'>
+                        $queryOBS = "SELECT observacoes FROM upload_arquivo WHERE idUploadArquivo = '" . $arquivo['idUploadArquivo'] . "'";
+                        $send = mysqli_query($con, $queryOBS);
+                        $row = mysqli_fetch_array($send);
+                        echo "<td class='list_description'>
                                     <input  class='form-control text-center' type='text' maxlength='100' disabled id='observ' value='" . $row['observacoes'] . "'/> 
                                 </td>";
-                    $count++;
-                }
-                ?>
-                </tbody>
-            </table>
+                        $count++;
+                    }
+                    ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
+        </div>
+        </section>
 
-    <?php
+        <?php
+        break;
 }
 ?>
 
@@ -154,7 +188,7 @@ if ($enviado == 0) {
         } else if ($('#sim').is(':checked')) {
             $('#aviso').css('display', 'none');
             $('#incentivar').css('display', 'block');
-           // location.href = '?perfil=includes/documentos_fiscais_incentivador_pf'
+            // location.href = '?perfil=includes/documentos_fiscais_incentivador_pf'
         }
     }
 </script>

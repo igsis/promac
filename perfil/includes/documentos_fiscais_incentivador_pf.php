@@ -3,6 +3,13 @@ $con = bancoMysqli();
 $idPf = $_SESSION['idUser'];
 $tipoPessoa = '3';
 
+if (isset($_POST['iniciar_incentivo'])) {
+    $sqlEtapa = "INSERT INTO etapas_incentivo (tipoPessoa, idIncentivador, etapa) VALUES ($tipoPessoa, $idPf, 1)";
+    if (mysqli_query($con, $sqlEtapa)) {
+        $mensagemInicial = "<font color='#01DF3A'><strong>Você iniciou o processo de incentivar um projeto.<br>Por favor, siga as etapas seguintes preenchendo corretamente todas as informações solicitadas.</strong></font>";
+    }
+}
+
 if (isset($_POST["enviar"])) {
     $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '3' AND idListaDocumento IN (39, 40, 41, 42, 43, 54)";
     $query_arquivos = mysqli_query($con, $sql_arquivos);
@@ -64,7 +71,7 @@ $pf = recuperaDados("incentivador_pessoa_fisica", "idPf", $idPf);
 
 ?>
 <section id="list_items" class="home-section bg-white">
-    <div class="container">
+    <div class="container"><?php include 'menu_interno_pf.php'?>
         <ul class="nav nav-tabs">
             <li class="nav active"><a href="#admIncentivador" data-toggle="tab">Administrativo</a></li>
             <li class="nav"><a href="#resumo" data-toggle="tab">Resumo do projeto</a></li>
@@ -82,8 +89,11 @@ $pf = recuperaDados("incentivador_pessoa_fisica", "idPf", $idPf);
             </div>
         </div>
         <br>
+        <h5><?php if (isset($mensagemInicial)) {
+                echo $mensagemInicial;
+            }; ?></h5>
         <div class="form-group">
-            <h4>Certidões de Regularidade Fiscal: <br>
+            <h4>2 - Certidões de Regularidade Fiscal: <br>
                 <small>(Para incentivar projetos do PROMAC, você deve estar em dia com suas obrigações fiscais).</small>
             </h4>
             <h5><?php if (isset($mensagem)) {
@@ -102,8 +112,8 @@ $pf = recuperaDados("incentivador_pessoa_fisica", "idPf", $idPf);
                         <div class="table-responsive list_info"><h6>Arquivo(s) Anexado(s)</h6>
                             <?php
 
-                            $teste = listaArquivosPessoa($idPf, $tipoPessoa, "includes/documentos_fiscais_incentivador_pf", "39, 40, 41, 42, 43, 54");
-                            if ($teste == 6) {
+                            $arqsEnviados = listaArquivosPessoa($idPf, $tipoPessoa, "includes/documentos_fiscais_incentivador_pf", "39, 40, 41, 42, 43, 54");
+                            if ($arqsEnviados == 6) {
                                 echo "
                                       <form method='POST' action='?perfil=includes/incentivador_adm_pf' enctype='multipart/form-data'>
                                       <input type='hidden' name='idPf' value='$idPf'>                                   
