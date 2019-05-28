@@ -1,12 +1,11 @@
 <?php
-
 $con = bancoMysqli();
 $idPj = $_SESSION['idUser'];
-$tipoPessoa = '5';
+$tipoPessoa = '4';
 
 if(isset($_POST["enviar"]))
 {
-	$sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '5'";
+	$sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '4'";
 	$query_arquivos = mysqli_query($con,$sql_arquivos);
 	while($arq = mysqli_fetch_array($query_arquivos))
 	{
@@ -31,7 +30,7 @@ if(isset($_POST["enviar"]))
 				$hoje = date("Y-m-d H:i:s");
 				$dir = '../uploadsdocs/'; //Diretório para uploads				
 				$allowedExts = array(".pdf", ".PDF"); //Extensões permitidas
-				$ext = strtolower(substr($nome_arquivo,-4));
+				$ext = strtolower(substr($nome_arquivo, -4));
 
 				if(in_array($ext, $allowedExts)) //Pergunta se a extensão do arquivo, está presente no array das extensões permitidas
 				{
@@ -41,7 +40,7 @@ if(isset($_POST["enviar"]))
 						$query = mysqli_query($con,$sql_insere_arquivo);
 						if($query)
 						{
-							$mensagem = "<font color='#01DF3A'><strong>Arquivo(s) recebido(s) com sucesso, utilize o menu para concluir e enviar sua inscrição para a SMC</strong></font>";
+							$mensagem = "<font color='#01DF3A'><strong>Arquivo(s) recebido(s) com sucesso!</strong></font>";
 							gravarLog($sql_insere_arquivo);
 						}
 						else
@@ -83,7 +82,8 @@ $pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
 ?>
 
 <section id="list_items" class="home-section bg-white">
-	<div class="container"><?php include 'includes/menu_interno_pj.php'; ?>
+	<div class="container">
+	<?php include 'includes/menu_interno_pj.php'; ?>
 		<div class="form-group">
 			<h4>Documentos do Incentivador <br>
 				<small>Pessoa Jurídica</small>
@@ -109,68 +109,53 @@ $pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
 					<div class="col-md-12">
 						<div class="table-responsive list_info"><h6>Upload de Arquivo(s) Somente em PDF</h6>
 						<form method="POST" action="?perfil=arquivos_incentivador_pj" enctype="multipart/form-data">
-						<?php
-                            if ($pj['imposto'] == 1)
-                            {
-                                $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND idListaDocumento NOT IN (35) AND publicado = '1'";
-                            }
-                            elseif ($pj['imposto'] == 2)
-                            {
-                                $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND idListaDocumento NOT IN (53) AND publicado = '1'";
-                            }
-                            elseif ($pj['imposto'] == 3)
-                            {
-                                $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND publicado = '1'";
-                            }
-                            else
-                            {
-                                $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND idListaDocumento NOT IN (35, 53) AND publicado = '1'";
-                            }
-							$documentos = [];
-							$query_arquivos = mysqli_query($con,$sql_arquivos);
-							while($arq = mysqli_fetch_array($query_arquivos))
-							{
-								$doc = $arq['documento'];
-								$query = "SELECT idListaDocumento FROM lista_documento WHERE documento='$doc' AND publicado='1' AND idTipoUpload='5'";
-								$envio = $con->query($query);
-								$row = $envio->fetch_array(MYSQLI_ASSOC);
+							<?php
+								$documentos = [];
+								$sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa'";
+								$query_arquivos = mysqli_query($con,$sql_arquivos);									
+								while($arq = mysqli_fetch_array($query_arquivos))
+								{
+									$doc = $arq['documento'];
+									$query = "SELECT idListaDocumento FROM lista_documento WHERE documento='$doc' AND publicado='1' AND idTipoUpload='4'";
+									$envio = $con->query($query);
+									$row = $envio->fetch_array(MYSQLI_ASSOC);
 
-								if(verificaArquivosExistentesIncentivador($idPj,$row['idListaDocumento'])){
-									echo '<div class="alert alert-success">O arquivo ' . $doc . ' já foi enviado.</div>';
+									if(verificaArquivosExistentesIncentivador($idPj,$row['idListaDocumento'])){
+										echo '<div class="alert alert-success">O arquivo ' . $doc . ' já foi enviado.</div>';
+									}
+									else{ 											
+										$documento = (object) 
+										[
+											'nomeDocumento'	=>	$arq['documento'],
+											'sigla' 		=>	 $arq['sigla']
+										];
+										array_push($documentos, $documento);									
+									}
 								}
-								else{ 											
-									$documento = (object) 
-									[
-										'nomeDocumento'	=>	$arq['documento'],
-										'sigla' 		=>	 $arq['sigla']
-									];
-									array_push($documentos, $documento);									
-								}
-							}
 
-							if ($documentos)
-							{							
-							?>
-								<table class='table table-condensed'>
-									<tr class='list_menu'>
-										<td>Tipo de Arquivo</td>
-										<td></td>
-									</tr>									
-										<?php 										
-											foreach ($documentos as $documento) {	
-												echo "<tr>";											
-												echo 	"<td class='list_description'><label>$documento->nomeDocumento</label></td>";
-												echo 	"<td class='list_description'><input type='file' name='arquivo[$documento->sigla]'></td>";												
-												echo "<tr>";
-											}
-										?>	
-								</table>
-								<input type="hidden" name="idPessoa" value="<?php echo $idPj; ?>"  />
-								<input type="hidden" name="tipoPessoa" value="<?php echo $tipoPessoa; ?>"  />
-								<input type="submit" name="enviar" class="btn btn-theme btn-lg btn-block" value='Enviar'>
+								if ($documentos)
+								{							
+								?>
+									<table class='table table-condensed'>
+										<tr class='list_menu'>
+											<td>Tipo de Arquivo</td>
+											<td></td>
+										</tr>									
+											<?php 										
+												foreach ($documentos as $documento) {	
+													echo "<tr>";											
+													echo 	"<td class='list_description'><label>$documento->nomeDocumento</label></td>";
+													echo 	"<td class='list_description'><input type='file' name='arquivo[$documento->sigla]'></td>";												
+													echo "<tr>";
+												}
+											?>	
+									</table>
+									<input type="hidden" name="idPessoa" value="<?php echo $idPj; ?>"  />
+									<input type="hidden" name="tipoPessoa" value="<?php echo $tipoPessoa; ?>"  />
+									<input type="submit" name="enviar" class="btn btn-theme btn-lg btn-block" value='Enviar'>
 							<?php
 								}
-							?>							
+							?>	
 						</form>
 						</div>
 					</div>

@@ -80,25 +80,25 @@ $pj = recuperaDados("incentivador_pessoa_juridica", "idPj", $idPj);
 if ($pj['liberado'] >= 3) {
     ?>
     <br>
-    <div class="container">
+    <div class="container"><?php include 'includes/menu_interno_pj.php';?>
         <ul class="nav nav-tabs">
             <li class="nav active"><a href="#admIncentivador" data-toggle="tab">Administrativo</a></li>
             <li class="nav"><a href="#resumo" data-toggle="tab">Resumo do cadastro</a></li>
-        </ul>
+        </ul>    
         <div class="tab-content">
             <div class="tab-pane fade in active" id="admIncentivador">
+            <br>
                 <?php include 'includes/incentivador_adm_pj.php'?>
             </div>
             <div class="tab-pane fade" id="resumo">
                 <?php
-                    echo "<div class='alert alert-warning'>
+                    echo "<br><div class='alert alert-warning'>
 	                    <strong>Aviso!</strong> Seus dados já foram aceitos, portanto, não podem ser alterados.</div>";
                         include 'includes/resumo_dados_incentivador_pj.php';
                         include 'includes/resumo_dados_representante_pj.php';
                 ?>
             </div>
-            <div class="tab-pane fade" id="lolol">
-            </div>
+
         </div>
     </div>
     </div>

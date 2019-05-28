@@ -3,8 +3,15 @@ $con = bancoMysqli();
 $idPj = $_SESSION['idUser'];
 $tipoPessoa = '4';
 
+if (isset($_POST['iniciar_incentivo'])) {
+    $sqlEtapa = "INSERT INTO etapas_incentivo (tipoPessoa, idIncentivador, etapa) VALUES ($tipoPessoa, $idPj, 1)";
+    if (mysqli_query($con, $sqlEtapa)) {
+        $mensagemInicial = "<font color='#01DF3A'><strong>Você iniciou o processo de incentivar um projeto.<br>Por favor, siga as etapas seguintes preenchendo corretamente todas as informações solicitadas.</strong></font>";
+    }
+}
+
 if (isset($_POST["enviar"])) {
-    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '3' AND idListaDocumento IN (39, 40, 41, 42, 43, 53)";
+    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '3' AND idListaDocumento IN (39, 40, 41, 42, 43, 54)";
     $query_arquivos = mysqli_query($con, $sql_arquivos);
     while ($arq = mysqli_fetch_array($query_arquivos)) {
         $y = $arq['idListaDocumento'];
@@ -60,11 +67,12 @@ if (isset($_POST['apagar'])) {
     }
 }
 
-$pf = recuperaDados("incentivador_pessoa_juridica", "idPj", $idPj);
-?>
+$pj = recuperaDados("incentivador_pessoa_juridica", "idPj", $idPj);
 
+?>
 <section id="list_items" class="home-section bg-white">
     <div class="container">
+    <?php include 'menu_interno_pj.php'?>
         <ul class="nav nav-tabs">
             <li class="nav active"><a href="#admIncentivador" data-toggle="tab">Administrativo</a></li>
             <li class="nav"><a href="#resumo" data-toggle="tab">Resumo do projeto</a></li>
@@ -75,19 +83,18 @@ $pf = recuperaDados("incentivador_pessoa_juridica", "idPj", $idPj);
             </div>
             <div class="tab-pane fade" id="resumo">
                 <?php
-                echo "<div class='alert alert-warning'>
+                echo "<br><div class='alert alert-warning'>
 	                    <strong>Aviso!</strong> Seus dados já foram aceitos, portanto, não podem ser alterados.</div>";
-                include 'resumo_dados_incentivador_pf.php';
+                include 'resumo_dados_incentivador_pj.php';
                 ?>
             </div>
         </div>
         <br>
-        <label for="admResposta">1 - Você deseja incentivar um projeto agora?</label><br>
-        <input type="radio" name="admResposta" value="1" class="resposta" id="sim" checked onclick="verificaResposta()">
-        Sim
-        <input type="radio" name="admResposta" value="0" class="resposta" id="nao" onclick="verificaResposta()"> Não
+        <h5><?php if (isset($mensagemInicial)) {
+                echo $mensagemInicial;
+            }; ?></h5>
         <div class="form-group">
-            <h4>Certidões de Regularidade Fiscal: <br>
+            <h4>2 - Certidões de Regularidade Fiscal: <br>
                 <small>(Para incentivar projetos do PROMAC, você deve estar em dia com suas obrigações fiscais).</small>
             </h4>
             <h5><?php if (isset($mensagem)) {
@@ -97,7 +104,7 @@ $pf = recuperaDados("incentivador_pessoa_juridica", "idPj", $idPj);
         <div class="row">
             <div class="col-md-offset-1 col-md-10">
                 <?php
-                if ($pf['liberado'] >= 3)
+                if ($pj['liberado'] >= 3)
                 {
                 ?>
                 <!-- Exibir arquivos -->
@@ -106,13 +113,14 @@ $pf = recuperaDados("incentivador_pessoa_juridica", "idPj", $idPj);
                         <div class="table-responsive list_info"><h6>Arquivo(s) Anexado(s)</h6>
                             <?php
 
-                            $teste = listaArquivosPessoa($idPj, $tipoPessoa, "includes/documentos_fiscais_incentivador_pf", "39, 40, 41, 42, 43, 54");
-                            if ($teste == 6) {
+                            $arqsEnviados = listaArquivosPessoa($idPj, $tipoPessoa, "includes/documentos_fiscais_incentivador_pj", "39, 40, 41, 42, 43, 54");
+                            if ($arqsEnviados == 6) {
                                 echo "
                                       <form method='POST' action='?perfil=includes/incentivador_adm_pj' enctype='multipart/form-data'>
-                                      <input type='hidden' name='idPf' value='$idPj'>                                   
+                                      <input type='hidden' name='idPj' value='$idPj'>                                   
                                           <input type='submit' name='enviarSMC' class='btn btn-theme btn-lg btn-block'
                                                value='Enviar à SMC'>                                     
+                                        
                                       </form>  ";
                             } else {
 
@@ -123,13 +131,12 @@ $pf = recuperaDados("incentivador_pessoa_juridica", "idPj", $idPj);
                 <div class="form-group" id="uploadDocs">
                     <div class="col-md-12">
                         <div class="table-responsive list_info"><h6>Upload de Arquivo(s) Somente em PDF</h6>
-                            <form method="POST" action="?perfil=includes/documentos_fiscais_incentivador_pf"
+                            <form method="POST" action="?perfil=includes/documentos_fiscais_incentivador_pj"
                                   enctype="multipart/form-data">
                                 <?php
                                 $documentos = [];
                                 $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '3' AND idListaDocumento IN (39, 40, 41, 42, 43, 54)";
                                 $query_arquivos = mysqli_query($con, $sql_arquivos);
-
                                 while ($arq = mysqli_fetch_array($query_arquivos)) {
                                     $doc = $arq['documento'];
                                     $query = "SELECT idListaDocumento FROM lista_documento WHERE documento='$doc' AND publicado='1' AND idTipoUpload='3'";
@@ -205,15 +212,11 @@ $pf = recuperaDados("incentivador_pessoa_juridica", "idPj", $idPj);
 
 
 <script>
-    var resposta = $('.resposta');
-    resposta.on("change", verificaResposta);
-    $(document).ready(verificaResposta());
-
     function verificaResposta() {
         if ($('#nao').is(':checked')) {
-            $('#aviso').css('display', 'block');
-            $('#incentivar').css('display', 'none');
+            location.href = '?perfil=cadastro_incentivador_pj'
         } else if ($('#sim').is(':checked')) {
+            //$('#aviso').css('display', 'none');
             location.href = '?perfil=includes/documentos_fiscais_incentivador_pj'
         }
     }
