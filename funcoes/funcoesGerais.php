@@ -876,7 +876,7 @@ function listaArquivosEvento($idPessoa, $tipoPessoa, $pagina)
 	}
 }
 
-function listaArquivosPessoa($idPessoa,$tipoPessoa,$pagina, $idsDeterminados = '')
+function listaArquivosPessoa($idPessoa,$tipoPessoa,$pagina, $idsDeterminados = '', $table = '')
 {
 	$con = bancoMysqli();
 
@@ -899,7 +899,7 @@ function listaArquivosPessoa($idPessoa,$tipoPessoa,$pagina, $idsDeterminados = '
 	if ($linhas > 0)
 	{
 	echo "
-		<table class='table table-condensed'>
+		<table class='table table-condensed $table'>
 			<thead>
 				<tr class='list_menu'>
 					<td>Tipo de arquivo</td>
