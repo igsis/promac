@@ -28,46 +28,59 @@ if (isset($_POST['atualizar'])) {
     }
 }
 
-if (isset($_POST['nota'])) {
-    if ($_POST['nota'] != "") {
-        $id = $_POST['idPf'];
-        if ($id != 0) {
-            $dateNow = date('Y-m-d H:i:s');
-            $nota = addslashes($_POST['nota']);
-            $sql_nota = "INSERT INTO notas (idPessoa, idTipo, data, nota, interna) VALUES ('$idPf', '3', '$dateNow', '$nota', '1')";
-            if (mysqli_query($con, $sql_nota)) {
-                $mensagem = "<br><font color='#01DF3A'><strong>Nota inserida com sucesso!</strong></font>";
-                gravarLog($sql_nota);
-            } else {
-                $mensagem = "<br><font color='#FF0000'><strong>Erro ao inserir nota! Tente novamente.</strong></font>";
+if (isset($_POST['apto']) || isset($_POST['inapto'])) {
+
+    print_r($_POST);
+
+    if (isset($_POST['nota'])) {
+        echo "caiu no isset";
+        if ($_POST['nota'] != "") {
+            $id = $_POST['idPf'];
+            echo "nota diferente de null id = " . $id;
+            if ($id != 0) {
+                echo "id diferente de 0";
+                $dateNow = date('Y-m-d H:i:s');
+                $nota = addslashes($_POST['nota']);
+                $sql_nota = "INSERT INTO notas (idPessoa, idTipo, data, nota, interna) VALUES ('$idPf', '3', '$dateNow', '$nota', '1')";
+                echo $sql_nota;
+                if (mysqli_query($con, $sql_nota)) {
+                    $mensagem = "<br><font color='#01DF3A'><strong>Nota inserida com sucesso!</strong></font>";
+                    gravarLog($sql_nota);
+                } else {
+                    $mensagem = "<br><font color='#FF0000'><strong>Erro ao inserir nota! Tente novamente.</strong></font>";
+                }
             }
         }
     }
-}
 
-if(isset($_POST['apto'])){
-    $sql = "UPDATE incentivador_pessoa_fisica SET liberado = '5' WHERE idPf = $idPf";
+    if(isset($_POST['apto'])){
+        $sql = "UPDATE incentivador_pessoa_fisica SET liberado = '5' WHERE idPf = $idPf";
 
-    $apto = mysqli_query($con, $sql);
-    if ($apto) {
-        $mensagem = "<br><font color='#01DF3A'><strong>Incentivador APTO!</strong></font>";
-        gravarLog($sql);
-    } else {
-        $mensagem = "<br><font color='#FF0000'><strong>Erro ao deixar o incentivador APTO! Tente novamente.</strong></font>";
+        $apto = mysqli_query($con, $sql);
+        if ($apto) {
+            $mensagem = "<br><font color='#01DF3A'><strong>Incentivador classificado como APTO!</strong></font>";
+            gravarLog($sql);
+        } else {
+            $mensagem = "<br><font color='#FF0000'><strong>Erro ao deixar o incentivador APTO! Tente novamente.</strong></font>";
+        }
     }
-}
 
 
-if(isset($_POST['inapto'])){
-    $sql = "UPDATE incentivador_pessoa_fisica SET liberado = 6 WHERE idPf = '$idPf'";
-    
-    if (mysqli_query($con, $sql)) {
-        $mensagem = "<br><font color='#01DF3A'><strong>Incentivador INAPTO!</strong></font>";
-        gravarLog($sql);
-    } else {
-        $mensagem = "<br><font color='#FF0000'><strong>Erro ao deixar o incentivador INAPTO! Tente novamente.</strong></font>";
+    if(isset($_POST['inapto'])){
+        $sql = "UPDATE incentivador_pessoa_fisica SET liberado = 6 WHERE idPf = '$idPf'";
+
+        if (mysqli_query($con, $sql)) {
+            $mensagem = "<br><font color='#01DF3A'><strong>Incentivador classificado como INAPTO!</strong></font>";
+            gravarLog($sql);
+        } else {
+            $mensagem = "<br><font color='#FF0000'><strong>Erro ao deixar o incentivador INAPTO! Tente novamente.</strong></font>";
+        }
     }
+
+
+
 }
+
 
 function listaArquivosPessoaEditorr($idPessoa, $tipoPessoa)
 {
@@ -138,7 +151,7 @@ function listaArquivosPessoaEditorr($idPessoa, $tipoPessoa)
 }
 
 ?>
-<h5><?php if(isset($mensagem)){echo $mensagem;};?></h5>
+
 <section id="list_items" class="home-section bg-white">
     <div class="container"><?php include 'includes/menu_smc.php'; ?>
         <ul class="nav nav-tabs">
@@ -153,6 +166,10 @@ function listaArquivosPessoaEditorr($idPessoa, $tipoPessoa)
             </div>
             <div class="tab-pane fade in active" id="admIncentivador">
                 <div class="table-responsive list_info"><h4>Certidões de Regularidade Fiscal</h4>
+
+                    <div class="row">
+                        <h5><?php if(isset($mensagem)){echo $mensagem;};?></h5>
+                    </div>
                     <br>
                     <?php
                     listaArquivosPessoaEditorr($pf['idPf'], '3');
