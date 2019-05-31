@@ -128,8 +128,6 @@ case '1':
 
 case '2':
 case '3':
-?>
-<?php
 if (isset($mensagem)) {
 ?>
 <section id="list_items" class="home-section bg-white">
@@ -146,7 +144,7 @@ if (isset($mensagem)) {
                 ?>
                 <br>
                 <ul class="list-group">
-                    <li class="list-group-item list-group-item-<?=$cor_status?>">
+                    <li class="list-group-item list-group-item-<?= $cor_status ?>">
                         <strong><?= $statusIncentivador ?>
                             .</strong>
                     </li>
@@ -242,37 +240,37 @@ if (isset($mensagem)) {
                     </form>
                 </div>
 
-                    <?php
-                }
+            <?php
+            }
 
-                if ($negados != '') {
-                    $negados = substr($negados, 0, -2);
-                    ?>
-                    <div class="well">
-                        <div class="form-group">
-                            <hr>
-                            <div class="table-responsive list_info"><h6>Arquivo(s) Negado(s)</h6>
-                                <?php
-                                listaArquivosPessoa($idPf, $tipoPessoa, "includes/incentivador_adm_pf", $negados, 'table-striped', $apagados);
-                                ?>
-                            </div>
+            if ($negados != '') {
+                $negados = substr($negados, 0, -2);
+                ?>
+                <div class="well">
+                    <div class="form-group">
+                        <hr>
+                        <div class="table-responsive list_info"><h6>Arquivo(s) Negado(s)</h6>
+                            <?php
+                            listaArquivosPessoa($idPf, $tipoPessoa, "includes/incentivador_adm_pf", $negados, 'table-striped', $apagados);
+                            ?>
                         </div>
                     </div>
-                    <?php
-                }
-                if ($apagados != '') {
-                    //$apagados = substr($apagados, 0, -2);
-                    ?>
-                    <div class="well">
-                    <div class="form-group" id="uploadDocs">
-                    <hr>
-                    <div class="table-responsive list_info"><h6>Upload de Arquivo(s) Somente em PDF</h6>
-                    <form method="POST" action="?perfil=includes/incentivador_adm_pf"
-                          enctype="multipart/form-data">
-                    <?php
-                    $i = 0;
-                    $documentos = [];
-                    $sql_arquivos = "SELECT * FROM lista_documento AS lista 
+                </div>
+                <?php
+            }
+            if ($apagados != '') {
+                //$apagados = substr($apagados, 0, -2);
+                ?>
+                <div class="well">
+                <div class="form-group" id="uploadDocs">
+                <hr>
+                <div class="table-responsive list_info"><h6>Upload de Arquivo(s) Somente em PDF</h6>
+                <form method="POST" action="?perfil=includes/incentivador_adm_pf"
+                      enctype="multipart/form-data">
+                <?php
+                $i = 0;
+                $documentos = [];
+                $sql_arquivos = "SELECT * FROM lista_documento AS lista 
                                             INNER JOIN upload_arquivo AS uploads ON uploads.idListaDocumento = lista.idListaDocumento 
                                             WHERE uploads.idPessoa = $idPf 
                                             AND uploads.idStatusDocumento = 3 
@@ -280,54 +278,54 @@ if (isset($mensagem)) {
                                             AND lista.idListaDocumento IN ($apagados)
                                             GROUP BY lista.idListaDocumento";
 
-                    $query_arquivos = mysqli_query($con, $sql_arquivos);
+                $query_arquivos = mysqli_query($con, $sql_arquivos);
 
-                    while ($arq = mysqli_fetch_array($query_arquivos)) {
-                        $doc = $arq['documento'];
-                        $query = "SELECT idListaDocumento FROM lista_documento WHERE documento='$doc' AND publicado='1' AND idTipoUpload='3'";
-                        $envio = $con->query($query);
-                        $row = $envio->fetch_array(MYSQLI_ASSOC);
-                        $sigla = $arq['sigla'];
+                while ($arq = mysqli_fetch_array($query_arquivos)) {
+                    $doc = $arq['documento'];
+                    $query = "SELECT idListaDocumento FROM lista_documento WHERE documento='$doc' AND publicado='1' AND idTipoUpload='3'";
+                    $envio = $con->query($query);
+                    $row = $envio->fetch_array(MYSQLI_ASSOC);
+                    $sigla = $arq['sigla'];
 
-                        $documento =
-                            [
-                                'nomeDocumento' => $arq['documento'],
-                                'sigla' => $arq['sigla']
-                            ];
-                        array_push($documentos, $documento);
-                    }
-
-                    if ($documentos) {
-                        ?>
-                        <table class='table table-condensed table-striped'>
-                            <tr class='list_menu'>
-                                <td>Tipo de Arquivo</td>
-                                <td></td>
-                            </tr>
-                            <?php
-                            foreach ($documentos as $documento) {
-                                $nomeDoc = $documento['nomeDocumento'];
-                                $sigla = $documento['sigla'];
-                                echo "<tr>";
-                                echo "<td class='list_description'><label>$nomeDoc</label></td>";
-                                echo "<td class='list_description'><input type='file' name='arquivo[$sigla]'></td>";
-                                echo "<tr>";
-                            }
-                            ?>
-                        </table>
-                        <input type="hidden" name="idPessoa" value="<?php echo $idPf; ?>"/>
-                        <input type="hidden" name="tipoPessoa" value="<?php echo $tipoPessoa; ?>"/>
-                        <input type="submit" name="enviar" class="btn btn-theme btn-lg btn-block"
-                               value='upload'>
-
-                        </form>
-                        </div>
-                        </div>
-                        </div>
-                        <?php
-                    }
+                    $documento =
+                        [
+                            'nomeDocumento' => $arq['documento'],
+                            'sigla' => $arq['sigla']
+                        ];
+                    array_push($documentos, $documento);
                 }
-                ?>
+
+                if ($documentos) {
+                    ?>
+                    <table class='table table-condensed table-striped'>
+                        <tr class='list_menu'>
+                            <td>Tipo de Arquivo</td>
+                            <td></td>
+                        </tr>
+                        <?php
+                        foreach ($documentos as $documento) {
+                            $nomeDoc = $documento['nomeDocumento'];
+                            $sigla = $documento['sigla'];
+                            echo "<tr>";
+                            echo "<td class='list_description'><label>$nomeDoc</label></td>";
+                            echo "<td class='list_description'><input type='file' name='arquivo[$sigla]'></td>";
+                            echo "<tr>";
+                        }
+                        ?>
+                    </table>
+                    <input type="hidden" name="idPessoa" value="<?php echo $idPf; ?>"/>
+                    <input type="hidden" name="tipoPessoa" value="<?php echo $tipoPessoa; ?>"/>
+                    <input type="submit" name="enviar" class="btn btn-theme btn-lg btn-block"
+                           value='upload'>
+
+                    </form>
+                    </div>
+                    </div>
+                    </div>
+                    <?php
+                }
+            }
+            ?>
 
                 <div class='form-group'>
                     <ul class='list-group'>
@@ -349,47 +347,87 @@ if (isset($mensagem)) {
     <?php
     break;
     case '4':
-
-    }
+    if (isset($mensagem)) {
     ?>
+    <section id="list_items" class="home-section bg-white">
+        <div class="container"><?php include 'menu_interno_pf.php' ?>
+            <ul class="nav nav-tabs">
+                <li class="nav active"><a href="#admIncentivador" data-toggle="tab">Administrativo</a></li>
+                <li class="nav"><a href="#resumo" data-toggle="tab">Resumo do projeto</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="admIncentivador">
+                    <?php
+                    echo "<h5>" . $mensagem . "</h5>";
+                    }
+                    ?>
+                    <br>
+                    <ul class="list-group">
+                        <li class="list-group-item list-group-item-<?= $cor_status ?>">
+                            <strong><?= $statusIncentivador ?>.</strong>
+                        </li>
+                    </ul>
 
+                    <div class="well">
+                        <form method="POST" action="?perfil=includes/incentivador_adm_pf" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <h4><b>4 - Qual projeto você deseja incentivar? </b><br>
+                                </h4>
+                                <div class="row">
+                                    <div class="col-md-offset-3 col-md-6">
+                                        <div class="input-group">
+                                            <input type="text" name="projeto" class="form-control"
+                                                   placeholder="Busque aqui o nome do projeto">
+                                            <div class="input-group-btn">
+                                                <button type="submit" class="btn btn-default" style="font-size: 20px"><span
+                                                            class="glyphicon glyphicon-search"></span></button>
+                                            </div>
+                                        </div><!-- /input-group -->
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <?php
 
-    <!-- Confirmação de Exclusão -->
-    <div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;
-                    </button>
-                    <h4 class="modal-title">Excluir Arquivo?</h4>
-                </div>
-                <div class="modal-body">
-                    <p>Confirma?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-danger" id="confirm">Remover</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Fim Confirmação de Exclusão -->
+                    }
+                    ?>
+                    <!-- Confirmação de Exclusão -->
+                    <div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;
+                                    </button>
+                                    <h4 class="modal-title">Excluir Arquivo?</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Confirma?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                    <button type="button" class="btn btn-danger" id="confirm">Remover</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Fim Confirmação de Exclusão -->
 
-    <script>
+                    <script>
 
-        var resposta = $('.resposta');
-        resposta.on("click", verificaResposta);
-        $(document).ready(verificaResposta());
+                        var resposta = $('.resposta');
+                        resposta.on("click", verificaResposta);
+                        $(document).ready(verificaResposta());
 
-        function verificaResposta() {
-            if ($('#nao').is(':checked')) {
-                $('#aviso').css('display', 'block');
-                $('#incentivar').css('display', 'none');
-            } else if ($('#sim').is(':checked')) {
-                $('#aviso').css('display', 'none');
-                $('#incentivar').css('display', 'block');
-                // location.href = '?perfil=includes/documentos_fiscais_incentivador_pf'
-            }
-        }
-    </script>
+                        function verificaResposta() {
+                            if ($('#nao').is(':checked')) {
+                                $('#aviso').css('display', 'block');
+                                $('#incentivar').css('display', 'none');
+                            } else if ($('#sim').is(':checked')) {
+                                $('#aviso').css('display', 'none');
+                                $('#incentivar').css('display', 'block');
+                                // location.href = '?perfil=includes/documentos_fiscais_incentivador_pf'
+                            }
+                        }
+                    </script>

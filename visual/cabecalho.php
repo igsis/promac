@@ -37,7 +37,10 @@ else
         <!-- JQUEY Mask -->
         <script src="dist/js/jquery-1.12.4.min.js"></script>
         <script src="dist/js/jquery.mask.js"></script>
-		<?php include "../include/script.php"; ?>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+        <?php include "../include/script.php"; ?>
     </head>
 	<body>
 		<div id="bar">

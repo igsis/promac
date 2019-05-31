@@ -74,10 +74,18 @@ if (isset($_POST['inapto'])) {
     $sql_etapa = "UPDATE etapas_incentivo SET etapa = 3 WHERE idIncentivador = $idPf AND tipoPessoa = 3";
 
     if (mysqli_query($con, $sql)) {
-        $mensagem = "<br><font color='#01DF3A'><strong>Incentivador classificado como INAPTO!</strong></font>";
+        if (isset($mensagem)) {
+            $mensagem .= "<br><font color='#01DF3A'><strong>Incentivador classificado como INAPTO!</strong></font>";
+        } else {
+            $mensagem = "\"<br><font color='#01DF3A'><strong>Incentivador classificado como INAPTO!</strong></font>\"";
+        }
         gravarLog($sql);
     } else {
-        $mensagem = "<br><font color='#FF0000'><strong>Erro ao deixar o incentivador INAPTO! Tente novamente.</strong></font>";
+        if (isset($mensagem)) {
+            $mensagem .= "<br><font color='#FF0000'><strong>Erro ao deixar o incentivador INAPTO! Tente novamente.</strong></font>";
+        } else {
+            $mensagem = "<br><font color='#FF0000'><strong>Erro ao deixar o incentivador INAPTO! Tente novamente.</strong></font>";
+        }
     }
 
 
