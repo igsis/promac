@@ -19,7 +19,7 @@ if (isset($_POST['atualizar'])) {
         $query = "UPDATE upload_arquivo SET idStatusDocumento = '" . $dado['status'] . "', observacoes = '$observacao' WHERE idUploadArquivo = '" . $dado['idArquivo'] . "' ";
         $envia = mysqli_query($con, $query);
         if ($envia) {
-            $mensagem = "<font color='#01DF3A'><strong>Os arquivos foram atualizados com sucesso!</strong></font>";
+            $mensagem = "<font color='#01DF3A'><strong>Os status dos arquivos foram atualizados com sucesso!</strong></font>";
             gravarLog($query);
         } else {
             echo "<script>alert('Erro durante o processamento, entre em contato com os responsáveis pelo sistema para maiores informações.')</script>";
@@ -28,55 +28,57 @@ if (isset($_POST['atualizar'])) {
     }
 }
 
-if (isset($_POST['apto']) || isset($_POST['inapto'])) {
-
-    print_r($_POST);
-
-    if (isset($_POST['nota'])) {
-        echo "caiu no isset";
-        if ($_POST['nota'] != "") {
-            $id = $_POST['idPf'];
-            echo "nota diferente de null id = " . $id;
-            if ($id != 0) {
-                echo "id diferente de 0";
-                $dateNow = date('Y-m-d H:i:s');
-                $nota = addslashes($_POST['nota']);
-                $sql_nota = "INSERT INTO notas (idPessoa, idTipo, data, nota, interna) VALUES ('$idPf', '3', '$dateNow', '$nota', '1')";
-                echo $sql_nota;
-                if (mysqli_query($con, $sql_nota)) {
-                    $mensagem = "<br><font color='#01DF3A'><strong>Nota inserida com sucesso!</strong></font>";
-                    gravarLog($sql_nota);
-                } else {
-                    $mensagem = "<br><font color='#FF0000'><strong>Erro ao inserir nota! Tente novamente.</strong></font>";
-                }
+if (isset($_POST['nota'])) {
+    if ($_POST['nota'] != "") {
+        $id = $_POST['idPf'];
+        if ($id != 0) {
+            $dateNow = date('Y-m-d H:i:s');
+            $nota = addslashes($_POST['nota']);
+            $sql_nota = "INSERT INTO notas (idPessoa, idTipo, data, nota, interna) VALUES ('$idPf', '3', '$dateNow', '$nota', '1')";
+            if (mysqli_query($con, $sql_nota)) {
+                $mensagem = "<br><font color='#01DF3A'><strong>Nota inserida com sucesso!</strong></font>";
+                gravarLog($sql_nota);
+            } else {
+                $mensagem = "<br><font color='#FF0000'><strong>Erro ao inserir nota! Tente novamente.</strong></font>";
             }
         }
     }
+}
 
-    if(isset($_POST['apto'])){
-        $sql = "UPDATE incentivador_pessoa_fisica SET liberado = '5' WHERE idPf = $idPf";
 
-        $apto = mysqli_query($con, $sql);
-        if ($apto) {
+if (isset($_POST['apto'])) {
+    $sql = "UPDATE incentivador_pessoa_fisica SET liberado = '5' WHERE idPf = $idPf";
+    $sql_etapa = "UPDATE etapas_incentivo SET etapa = 4 WHERE idIncentivador = $idPf AND tipoPessoa = 3";
+    $apto = mysqli_query($con, $sql);
+    $prox_etapa = mysqli_query($con, $sql_etapa);
+
+    if ($apto && $prox_etapa) {
+        if (isset($mensagem)) {
+            $mensagem .= "<br><font color='#01DF3A'><strong>Incentivador classificado como APTO!</strong></font>";
+        } else {
             $mensagem = "<br><font color='#01DF3A'><strong>Incentivador classificado como APTO!</strong></font>";
-            gravarLog($sql);
+        }
+        gravarLog($sql);
+    } else {
+        if (isset($mensagem)) {
+            $mensagem .= "<br><font color='#FF0000'><strong>Erro ao deixar o incentivador APTO! Tente novamente.</strong></font>";
         } else {
             $mensagem = "<br><font color='#FF0000'><strong>Erro ao deixar o incentivador APTO! Tente novamente.</strong></font>";
         }
+
     }
+}
 
+if (isset($_POST['inapto'])) {
+    $sql = "UPDATE incentivador_pessoa_fisica SET liberado = 6 WHERE idPf = '$idPf'";
+    $sql_etapa = "UPDATE etapas_incentivo SET etapa = 3 WHERE idIncentivador = $idPf AND tipoPessoa = 3";
 
-    if(isset($_POST['inapto'])){
-        $sql = "UPDATE incentivador_pessoa_fisica SET liberado = 6 WHERE idPf = '$idPf'";
-
-        if (mysqli_query($con, $sql)) {
-            $mensagem = "<br><font color='#01DF3A'><strong>Incentivador classificado como INAPTO!</strong></font>";
-            gravarLog($sql);
-        } else {
-            $mensagem = "<br><font color='#FF0000'><strong>Erro ao deixar o incentivador INAPTO! Tente novamente.</strong></font>";
-        }
+    if (mysqli_query($con, $sql)) {
+        $mensagem = "<br><font color='#01DF3A'><strong>Incentivador classificado como INAPTO!</strong></font>";
+        gravarLog($sql);
+    } else {
+        $mensagem = "<br><font color='#FF0000'><strong>Erro ao deixar o incentivador INAPTO! Tente novamente.</strong></font>";
     }
-
 
 
 }
@@ -168,7 +170,9 @@ function listaArquivosPessoaEditorr($idPessoa, $tipoPessoa)
                 <div class="table-responsive list_info"><h4>Certidões de Regularidade Fiscal</h4>
 
                     <div class="row">
-                        <h5><?php if(isset($mensagem)){echo $mensagem;};?></h5>
+                        <h5><?php if (isset($mensagem)) {
+                                echo $mensagem;
+                            }; ?></h5>
                     </div>
                     <br>
                     <?php
@@ -180,7 +184,7 @@ function listaArquivosPessoaEditorr($idPessoa, $tipoPessoa)
                         <div class='form-group'>
                             <ul class='list-group'>
                                 <li class='list-group-item list-group-item-success'>Notas</li>
-                                <?php listaNota($idPf, 1, 1) ?>
+                                <?php listaNota($idPf, 3, 1) ?>
                             </ul>
                         </div>
                     </div>
