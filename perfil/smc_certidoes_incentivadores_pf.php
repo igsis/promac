@@ -175,7 +175,7 @@ function listaArquivosPessoaEditorr($idPessoa, $tipoPessoa)
                 ?>
             </div>
             <div class="tab-pane fade in active" id="admIncentivador">
-                <div class="table-responsive list_info"><h4>Certidões de Regularidade Fiscal</h4>
+                <div class="table-responsive list_info" style="overflow: hidden"><h4>Certidões de Regularidade Fiscal</h4>
 
                     <div class="row">
                         <h5><?php if (isset($mensagem)) {
