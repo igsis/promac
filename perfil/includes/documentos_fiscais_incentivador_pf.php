@@ -77,9 +77,6 @@ $pf = recuperaDados("incentivador_pessoa_fisica", "idPf", $idPf);
             <li class="nav"><a href="#resumo" data-toggle="tab">Resumo do projeto</a></li>
         </ul>
         <div class="tab-content">
-            <div class="tab-pane fade in active" id="admIncentivador">
-
-            </div>
             <div class="tab-pane fade" id="resumo">
                 <?php
                 echo "<br><div class='alert alert-warning'>
@@ -87,7 +84,9 @@ $pf = recuperaDados("incentivador_pessoa_fisica", "idPf", $idPf);
                 include 'resumo_dados_incentivador_pf.php';
                 ?>
             </div>
-        </div>
+        <div class="tab-pane fade in active" id="admIncentivador">
+
+
         <br>
         <h5><?php if (isset($mensagemInicial)) {
                 echo $mensagemInicial;
@@ -180,6 +179,9 @@ $pf = recuperaDados("incentivador_pessoa_fisica", "idPf", $idPf);
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        </div>
                 <!-- Fim Upload de arquivo -->
 
                 <!-- Confirmação de Exclusão -->
