@@ -77,7 +77,7 @@ if (isset($_POST['inapto'])) {
         if (isset($mensagem)) {
             $mensagem .= "<br><font color='#01DF3A'><strong>Incentivador classificado como INAPTO!</strong></font>";
         } else {
-            $mensagem = "\"<br><font color='#01DF3A'><strong>Incentivador classificado como INAPTO!</strong></font>\"";
+            $mensagem = "<br><font color='#01DF3A'><strong>Incentivador classificado como <b style='color: red'>INAPTO!</b></strong></font>";
         }
         gravarLog($sql);
     } else {

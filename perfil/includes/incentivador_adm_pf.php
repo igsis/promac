@@ -25,78 +25,6 @@ switch ($liberado) {
 }
 
 
-if (isset($_POST['enviarSMC'])) {
-    $sqlLiberado = "UPDATE incentivador_pessoa_fisica SET liberado = 4 WHERE idPf = $idPf";
-    $sqlEtapa = "UPDATE etapas_incentivo SET etapa = 2 WHERE idIncentivador = $idPf";
-
-    if (mysqli_query($con, $sqlLiberado) && mysqli_query($con, $sqlEtapa)) {
-        $mensagem = "<font color='#01DF3A'><strong>Suas certidões de regularidade fiscal foram enviadas à SMC!</strong></font>";
-        gravarLog($sqlLiberado);
-        gravarLog($sqlEtapa);
-    }
-}
-
-if (isset($_POST["enviar"])) {
-    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '3' AND idListaDocumento IN (39, 40, 41, 42, 43, 54)";
-    $query_arquivos = mysqli_query($con, $sql_arquivos);
-    while ($arq = mysqli_fetch_array($query_arquivos)) {
-        $y = $arq['idListaDocumento'];
-        $x = $arq['sigla'];
-        $nome_arquivo = isset($_FILES['arquivo']['name'][$x]) ? $_FILES['arquivo']['name'][$x] : null;
-        $f_size = isset($_FILES['arquivo']['size'][$x]) ? $_FILES['arquivo']['size'][$x] : null;
-
-        //Extensões permitidas
-        $ext = array("PDF", "pdf");
-
-        if ($f_size > 6242880) // 6MB em bytes
-        {
-            $mensagem = "<font color='#FF0000'><strong>Erro! Tamanho de arquivo excedido! Tamanho máximo permitido: 06 MB.</strong></font>";
-        } else {
-            if ($nome_arquivo != "") {
-                $nome_temporario = $_FILES['arquivo']['tmp_name'][$x];
-                $new_name = date("YmdHis") . "_" . semAcento($nome_arquivo); //Definindo um novo nome para o arquivo
-                $hoje = date("Y-m-d H:i:s");
-                $dir = '../uploadsdocs/'; //Diretório para uploads
-                $allowedExts = array(".pdf", ".PDF"); //Extensões permitidas
-                $ext = strtolower(substr($nome_arquivo, -4));
-
-                if (in_array($ext, $allowedExts)) //Pergunta se a extensão do arquivo, está presente no array das extensões permitidas
-                {
-                    if (move_uploaded_file($nome_temporario, $dir . $new_name)) {
-                        $sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('$tipoPessoa', '$idPf', '$y', '$new_name', '$hoje', '1'); ";
-                        $query = mysqli_query($con, $sql_insere_arquivo);
-
-                        if ($query) {
-                            $mensagem = "<font color='#01DF3A'><strong>Arquivo(s) recebido(s) com sucesso!</strong></font>";
-                            gravarLog($sql_insere_arquivo);
-                        } else {
-                            $mensagem = "<font color='#FF0000'><strong>Erro ao gravar no banco.</strong></font>";
-                        }
-                    } else {
-                        $mensagem = "<font color='#FF0000'><strong>Erro no upload! Tente novamente.</strong></font>";
-                    }
-                } else {
-                    $mensagem = "<font color='#FF0000'><strong>Erro no upload! Anexar documentos somente no formato PDF.</strong></font>";
-                }
-            }
-        }
-    }
-}
-
-
-if (isset($_POST['apagar'])) {
-    $idArquivo = $_POST['apagar'];
-    $idListaDoc = $_POST['idListaDocumento'];
-    $sql_apagar_arquivo = "UPDATE upload_arquivo SET publicado = 0 WHERE idUploadArquivo = '$idArquivo'";
-    if (mysqli_query($con, $sql_apagar_arquivo)) {
-        $mensagem = "<font color='#01DF3A'><strong>Arquivo apagado com sucesso!</strong></font>";
-        gravarLog($sql_apagar_arquivo);
-    } else {
-        $mensagem = "<font color='#FF0000'><strong>Erro ao apagar arquivo!</strong></font>";
-    }
-}
-
-
 switch ($etapa) {
 case '':
     ?>
@@ -177,27 +105,6 @@ case '3':
 
                     }
                     ?>
-                    <!-- Confirmação de Exclusão -->
-                    <div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel"
-                         aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;
-                                    </button>
-                                    <h4 class="modal-title">Excluir Arquivo?</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <p>Confirma?</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                                    <button type="button" class="btn btn-danger" id="confirm">Remover</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Fim Confirmação de Exclusão -->
 
                     <script>
 
