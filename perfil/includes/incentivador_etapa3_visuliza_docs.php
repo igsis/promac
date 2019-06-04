@@ -3,6 +3,17 @@ $con = bancoMysqli();
 $idPf = $_SESSION['idUser'];
 $tipoPessoa = 3;
 
+if (isset($_POST['enviarSMC'])) {
+    $sqlLiberado = "UPDATE incentivador_pessoa_fisica SET liberado = 4 WHERE idPf = $idPf";
+    $sqlEtapa = "UPDATE etapas_incentivo SET etapa = 2 WHERE idIncentivador = $idPf";
+
+    if (mysqli_query($con, $sqlLiberado) && mysqli_query($con, $sqlEtapa)) {
+        $mensagem = "<font color='#01DF3A'><strong>Suas certidões de regularidade fiscal foram enviadas à SMC!</strong></font>";
+        gravarLog($sqlLiberado);
+        gravarLog($sqlEtapa);
+    }
+}
+
 $pf = recuperaDados("incentivador_pessoa_fisica", "idPf", $idPf);
 $etapaArray = recuperaDados("etapas_incentivo", "idIncentivador", $idPf);
 
@@ -25,23 +36,10 @@ switch ($liberado) {
 }
 
 
-if (isset($_POST['enviarSMC'])) {
-    $sqlLiberado = "UPDATE incentivador_pessoa_fisica SET liberado = 4 WHERE idPf = $idPf";
-    $sqlEtapa = "UPDATE etapas_incentivo SET etapa = 2 WHERE idIncentivador = $idPf";
-
-    if (mysqli_query($con, $sqlLiberado) && mysqli_query($con, $sqlEtapa)) {
-        $mensagem = "<font color='#01DF3A'><strong>Suas certidões de regularidade fiscal foram enviadas à SMC!</strong></font>";
-        gravarLog($sqlLiberado);
-        gravarLog($sqlEtapa);
-    }
-}
-
 
 if (isset($_POST["enviar"])) {
     $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '3' AND idListaDocumento IN (39, 40, 41, 42, 43, 54)";
     $query_arquivos = mysqli_query($con, $sql_arquivos);
-
-    echo "caiu no if enviar";
     while ($arq = mysqli_fetch_array($query_arquivos)) {
         $y = $arq['idListaDocumento'];
         $x = $arq['sigla'];
@@ -116,16 +114,15 @@ if (isset($_POST['apagar'])) {
                 ?>
             </div>
             <div class="tab-pane fade in active" id="admIncentivador">
+                <br>
                 <?php
                 if (isset($mensagem)) {
                    echo "<h5>" . $mensagem . "</h5>";
                 }
                 ?>
-                <br>
                 <ul class="list-group">
                     <li class="list-group-item list-group-item-<?= $cor_status ?>">
-                        <strong><?= $statusIncentivador ?>
-                            .</strong>
+                        <strong><?= $statusIncentivador ?>.</strong>
                     </li>
                 </ul>
 
@@ -212,7 +209,7 @@ if (isset($_POST['apagar'])) {
                     if ($linhas == 6 && $liberado != 4) {
                         ?>
 
-                        <form method="POST" action="?perfil=includes/incentivador_adm_pf"
+                        <form method="POST" action="?perfil=includes/incentivador_etapa3_visuliza_docs"
                               enctype="multipart/form-data">
                             <input type="submit" name="enviarSMC" class="btn btn-theme btn-lg btn-block"
                                    value='Reenviar à SMC'>
