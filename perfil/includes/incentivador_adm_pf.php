@@ -1,7 +1,8 @@
 <?php
+
 $con = bancoMysqli();
 $idPf = $_SESSION['idUser'];
-$tipoPessoa = 3;
+$tipoPessoa = 4;
 
 $pf = recuperaDados("incentivador_pessoa_fisica", "idPf", $idPf);
 $etapaArray = recuperaDados("etapas_incentivo", "idIncentivador", $idPf);
@@ -56,7 +57,7 @@ case '1':
 
 case '2':
 case '3':
-    echo "<script>location.href = '?perfil=includes/incentivador_etapa3_visuliza_docs'</script>";
+    echo "<script>location.href = '?perfil=includes/incentivadorPF_etapa3_visualiza_docs'</script>";
     break;
 
     case '4':

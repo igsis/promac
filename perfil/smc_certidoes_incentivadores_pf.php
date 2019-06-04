@@ -1,6 +1,6 @@
 <?php
 $con = bancoMysqli();
-$tipoPessoa = '3';
+$tipoPessoa = '4';
 $idPf = $_POST['idPf'];
 $pf = recuperaDados("incentivador_pessoa_fisica", "idPf", $idPf);
 
@@ -184,7 +184,7 @@ function listaArquivosPessoaEditorr($idPessoa, $tipoPessoa)
                     </div>
                     <br>
                     <?php
-                    listaArquivosPessoaEditorr($pf['idPf'], '3');
+                        listaArquivosPessoaEditorr($pf['idPf'], $tipoPessoa);
                     ?>
                 </div>
                 <div class="container">

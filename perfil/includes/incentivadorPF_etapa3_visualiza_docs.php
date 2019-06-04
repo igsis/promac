@@ -1,7 +1,7 @@
 <?php
 $con = bancoMysqli();
 $idPf = $_SESSION['idUser'];
-$tipoPessoa = 3;
+$tipoPessoa = '4';
 
 if (isset($_POST['enviarSMC'])) {
     $sqlLiberado = "UPDATE incentivador_pessoa_fisica SET liberado = 4 WHERE idPf = $idPf";
@@ -43,41 +43,58 @@ if (isset($_POST["enviar"])) {
     while ($arq = mysqli_fetch_array($query_arquivos)) {
         $y = $arq['idListaDocumento'];
         $x = $arq['sigla'];
-        $nome_arquivo = isset($_FILES['arquivo']['name'][$x]) ? $_FILES['arquivo']['name'][$x] : null;
-        $f_size = isset($_FILES['arquivo']['size'][$x]) ? $_FILES['arquivo']['size'][$x] : null;
 
-        //Extensões permitidas
-        $ext = array("PDF", "pdf");
 
-        if ($f_size > 6242880) // 6MB em bytes
-        {
-            $mensagem = "<font color='#FF0000'><strong>Erro! Tamanho de arquivo excedido! Tamanho máximo permitido: 06 MB.</strong></font>";
-        } else {
-            if ($nome_arquivo != "") {
-                $nome_temporario = $_FILES['arquivo']['tmp_name'][$x];
-                $new_name = date("YmdHis") . "_" . semAcento($nome_arquivo); //Definindo um novo nome para o arquivo
-                $hoje = date("Y-m-d H:i:s");
-                $dir = '../uploadsdocs/'; //Diretório para uploads
-                $allowedExts = array(".pdf", ".PDF"); //Extensões permitidas
-                $ext = strtolower(substr($nome_arquivo, -4));
+            $nome_arquivo = isset($_FILES['arquivo']['name'][$x]) ? $_FILES['arquivo']['name'][$x] : null;
+            $f_size = isset($_FILES['arquivo']['size'][$x]) ? $_FILES['arquivo']['size'][$x] : null;
 
-                if (in_array($ext, $allowedExts)) //Pergunta se a extensão do arquivo, está presente no array das extensões permitidas
-                {
-                    if (move_uploaded_file($nome_temporario, $dir . $new_name)) {
-                        $sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('$tipoPessoa', '$idPf', '$y', '$new_name', '$hoje', '1'); ";
-                        $query = mysqli_query($con, $sql_insere_arquivo);
+            //Extensões permitidas
+            $ext = array("PDF", "pdf");
 
-                        if ($query) {
-                            $mensagem = "<font color='#01DF3A'><strong>Arquivo(s) recebido(s) com sucesso!</strong></font>";
-                            gravarLog($sql_insere_arquivo);
+            if ($f_size > 6242880) // 6MB em bytes
+            {
+                $mensagem = "<font color='#FF0000'><strong>Erro! Tamanho de arquivo excedido! Tamanho máximo permitido: 06 MB.</strong></font>";
+            } else {
+                if ($nome_arquivo != "") {
+
+                    if (verificaArquivosExistentesPF($idPf,$y)){
+
+                        if ($mensagem != '') {
+
+                            $mensagem .= '<div class="alert alert-warning">O arquivo ' . $arq['documento'] . ' já foi enviado.</div>';
+
                         } else {
-                            $mensagem = "<font color='#FF0000'><strong>Erro ao gravar no banco.</strong></font>";
+
+                            $mensagem = '<div class="alert alert-warning">O arquivo ' . $arq['documento'] . ' já foi enviado.</div>';
+                        }
+
+                    } else {
+
+                    $nome_temporario = $_FILES['arquivo']['tmp_name'][$x];
+                    $new_name = date("YmdHis") . "_" . semAcento($nome_arquivo); //Definindo um novo nome para o arquivo
+                    $hoje = date("Y-m-d H:i:s");
+                    $dir = '../uploadsdocs/'; //Diretório para uploads
+                    $allowedExts = array(".pdf", ".PDF"); //Extensões permitidas
+                    $ext = strtolower(substr($nome_arquivo, -4));
+
+                    if (in_array($ext, $allowedExts)) //Pergunta se a extensão do arquivo, está presente no array das extensões permitidas
+                    {
+                        if (move_uploaded_file($nome_temporario, $dir . $new_name)) {
+                            $sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('$tipoPessoa', '$idPf', '$y', '$new_name', '$hoje', '1'); ";
+                            $query = mysqli_query($con, $sql_insere_arquivo);
+
+                            if ($query) {
+                                $mensagem = "<font color='#01DF3A'><strong>Arquivo(s) recebido(s) com sucesso!</strong></font>";
+                                gravarLog($sql_insere_arquivo);
+                            } else {
+                                $mensagem = "<font color='#FF0000'><strong>Erro ao gravar no banco.</strong></font>";
+                            }
+                        } else {
+                            $mensagem = "<font color='#FF0000'><strong>Erro no upload! Tente novamente.</strong></font>";
                         }
                     } else {
-                        $mensagem = "<font color='#FF0000'><strong>Erro no upload! Tente novamente.</strong></font>";
+                        $mensagem = "<font color='#FF0000'><strong>Erro no upload! Anexar documentos somente no formato PDF.</strong></font>";
                     }
-                } else {
-                    $mensagem = "<font color='#FF0000'><strong>Erro no upload! Anexar documentos somente no formato PDF.</strong></font>";
                 }
             }
         }
@@ -206,10 +223,10 @@ if (isset($_POST['apagar'])) {
                     </div>
                     <?php
 
-                    if ($linhas == 6 && $liberado != 4) {
+                    if ($linhas == 6 && $liberado != 4 && $negados == '') {
                         ?>
 
-                        <form method="POST" action="?perfil=includes/incentivador_etapa3_visuliza_docs"
+                        <form method="POST" action="?perfil=includes/incentivadorPF_etapa3_visualiza_docs"
                               enctype="multipart/form-data">
                             <input type="submit" name="enviarSMC" class="btn btn-theme btn-lg btn-block"
                                    value='Reenviar à SMC'>
@@ -235,7 +252,7 @@ if (isset($_POST['apagar'])) {
                     <div class="form-group">
                         <div class="table-responsive list_info"><h6>Arquivo(s) Negado(s)</h6>
                             <?php
-                            listaArquivosPessoa($idPf, $tipoPessoa, "includes/incentivador_etapa3_visuliza_docs", $negados, 'table-striped');
+                            listaArquivosPessoa($idPf, $tipoPessoa, "includes/incentivadorPF_etapa3_visualiza_docs", $negados, 'table-striped');
                             ?>
                         </div>
                     </div>
@@ -245,7 +262,7 @@ if (isset($_POST['apagar'])) {
                 ?>
                 <div class="form-group" id="uploadDocs">
                     <div class="table-responsive list_info"><h6>Upload de Arquivo(s) Somente em PDF</h6>
-                        <form method="POST" action="?perfil=includes/incentivador_etapa3_visuliza_docs"
+                        <form method="POST" action="?perfil=includes/incentivadorPF_etapa3_visualiza_docs"
                               enctype="multipart/form-data">
                             <?php
                             $i = 0;
