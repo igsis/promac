@@ -145,14 +145,12 @@ if (isset($_POST['procurar'])) {
                         if ($linha['contaCaptacao'] == '' || $linha['contaMovimentacao'] == '') {
                             ?>
 
-                            <tr class="list-menu">
-                                <td></td>
-                                <td></td>
-                                <td><small><i color='#FF0000'><strong>O proponente do projeto que você deseja incentivar ainda não inseriu as contas do projeto no sistema.
+                            <tr>
+
+                                <small><i color='#FF0000'><strong>O proponente do projeto que você deseja incentivar ainda não inseriu as contas do projeto no sistema.
                                                 Aguarde a inserção dos dados no sistema para prosseguir com o processo de incentivo. Se desejar agilizar
-                                                o processo, entre em contato diretamente com o proponente.</strong></i></small></td>
-                                <td></td>
-                                <td></td>
+                                                o processo, entre em contato diretamente com o proponente.</strong></i></small>
+
                             </tr>
 
 
