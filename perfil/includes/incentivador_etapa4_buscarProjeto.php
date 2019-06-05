@@ -30,9 +30,9 @@ switch ($liberado) {
 
 
 if (isset($_POST['procurar'])) {
-    $projeto = $_POST['projeto'];
+    $projeto = addslashes($_POST['projeto']);
 
-    $sqlBusca = "SELECT * FROM projeto WHERE nomeProjeto like '%$projeto%'";
+    $sqlBusca = "SELECT * FROM projeto LEFT JOIN exposicao_marca as marca ON marca.id = projeto.idExposicaoMarca WHERE nomeProjeto like '%$projeto%'";
 
     if ($query = mysqli_query($con, $sqlBusca)) {
         $linhas = mysqli_num_rows($query);
@@ -97,15 +97,6 @@ if (isset($_POST['procurar'])) {
                         </div>
                     </form>
                 </div>
-                <div id="botoes" style="display: <?= $displayBotao ?>;">
-                    <div class="form-group">
-                        <div class="col-md-offset-4 col-md-6">
-                            <input type="button" class="btn btn-theme btn-block" name="novaPesquisa" id="novaPesquisa"
-                                   value="Nova Pesquisa" onclick="mostraDiv()">
-                            <hr>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -113,27 +104,60 @@ if (isset($_POST['procurar'])) {
         <?php
         if ($buscaProjeto == 1) {
             ?>
-            <div class="table-responsive list_info table-striped" id="tabelaEventos">
-                <table class='table table-condensed'>
+            <div class="row">
+                <div class="col-md-offset-4 col-md-6">
+                    <div class="input-group">
+                        <input type="text" name="projeto" class="form-control"
+                               placeholder="Pesquisa realizada: <?=$projeto ?>">
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-default" name="procurar" style="font-size: 20px"><span class="glyphicon glyphicon-search"></span></button>
+                        </div>
+                    </div><!-- /input-group -->
+                </div>
+            </div>
+            <br>
+            <div class="table-responsive list_info" id="tabelaEventos">
+                <table class='table table-condensed table-striped'>
                     <thead>
                     <tr class='list_menu'>
                         <td>Projeto</td>
+                        <td>Percentual de renúncia &nbsp;&nbsp;<i id="info" class="glyphicon glyphicon-info-sign" data-toggle="tooltip easyTooltip" title="O percentual de renúncia significa o quanto do dinheiro aportado poderá ser abatido como pagamento de imposto."></i></td>
                         <td>Valor Aprovado</td>
-                        <td>Espaço Público?</td>
-                        <td>Local do Evento</td>
+                        <td>Exposicao da marca</td>
+                        <td>Conta Captação</td>
+                        <td>Conta Movimento</td>
                     </tr>
                     </thead>
-                    <tbody>
                     <?php
                     while ($linha = mysqli_fetch_array($query)) {
+
                         ?>
                         <tr>
                             <td class="list_description"><?= $linha['nomeProjeto']?></td>
+                            <td class="list_description"></td>
                             <td class="list_description"><?= dinheiroParaBr($linha['valorAprovado']) ?></td>
-                            <td class="list_description"></td>
-                            <td class="list_description"></td>
+                            <td class="list_description"><?= $linha['exposicao_marca'] != 0 ? $linha['exposicao_marca']  : "Nao especificado"?></td>
+                            <td class="list_description"><?= $linha['contaCaptacao']?></td>
+                            <td class="list_description"><?= $linha['contaCaptacao']?></td>
+                            <td class="list_description"><?= $linha['contaMovimentacao']?></td>
                         </tr>
                         <?php
+                        if ($linha['contaCaptacao'] == '' || $linha['contaMovimentacao'] == '') {
+                            ?>
+
+                            <tr class="list-menu">
+                                <td></td>
+                                <td></td>
+                                <td><small><i color='#FF0000'><strong>O proponente do projeto que você deseja incentivar ainda não inseriu as contas do projeto no sistema.
+                                                Aguarde a inserção dos dados no sistema para prosseguir com o processo de incentivo. Se desejar agilizar
+                                                o processo, entre em contato diretamente com o proponente.</strong></i></small></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+
+
+                    <?php
+                        }
                     }
                     ?>
                     </tbody>
