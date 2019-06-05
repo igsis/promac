@@ -1,7 +1,6 @@
 <?php
 $con = bancoMysqli();
 $idPf = $_SESSION['idUser'];
-$tipoPessoa = 3;
 
 $buscaProjeto = isset($_POST['procurar']) ? 1 : 0;
 $displayForm = 'block';
@@ -116,52 +115,47 @@ if (isset($_POST['procurar'])) {
                 </div>
             </div>
             <br>
-            <div class="table-responsive list_info" id="tabelaEventos">
-                <table class='table table-condensed table-striped'>
-                    <thead>
-                    <tr class='list_menu'>
-                        <td>Projeto</td>
-                        <td>Percentual de renúncia &nbsp;&nbsp;<i id="info" class="glyphicon glyphicon-info-sign" data-toggle="tooltip easyTooltip" title="O percentual de renúncia significa o quanto do dinheiro aportado poderá ser abatido como pagamento de imposto."></i></td>
-                        <td>Valor Aprovado</td>
-                        <td>Exposicao da marca</td>
-                        <td>Conta Captação</td>
-                        <td>Conta Movimento</td>
-                    </tr>
-                    </thead>
-                    <?php
-                    while ($linha = mysqli_fetch_array($query)) {
-
-                        ?>
-                        <tr>
-                            <td class="list_description"><?= $linha['nomeProjeto']?></td>
-                            <td class="list_description"></td>
-                            <td class="list_description"><?= dinheiroParaBr($linha['valorAprovado']) ?></td>
-                            <td class="list_description"><?= $linha['exposicao_marca'] != 0 ? $linha['exposicao_marca']  : "Nao especificado"?></td>
-                            <td class="list_description"><?= $linha['contaCaptacao']?></td>
-                            <td class="list_description"><?= $linha['contaCaptacao']?></td>
-                            <td class="list_description"><?= $linha['contaMovimentacao']?></td>
-                        </tr>
-                        <?php
-                        if ($linha['contaCaptacao'] == '' || $linha['contaMovimentacao'] == '') {
-                            ?>
-
-                            <tr>
-
-                                <small><i color='#FF0000'><strong>O proponente do projeto que você deseja incentivar ainda não inseriu as contas do projeto no sistema.
-                                                Aguarde a inserção dos dados no sistema para prosseguir com o processo de incentivo. Se desejar agilizar
-                                                o processo, entre em contato diretamente com o proponente.</strong></i></small>
-
-                            </tr>
-
-
-                    <?php
-                        }
-                    }
-                    ?>
-                    </tbody>
-                </table>
-            </div>
             <?php
+            while ($linha = mysqli_fetch_array($query)) {
+
+                ?>
+                <div class="well">
+                    <h4><strong>Projeto “<?= $linha['nomeProjeto'] ?>”</strong></></h4>
+                    <p align="justify"><strong>Valor Aprovado para Captação:</strong> <?= dinheiroParaBr($linha['valorAprovado']) ?>
+                    <p>
+                    <p align="justify"><strong>Percentual de renúncia
+                            <i id="info" class="glyphicon glyphicon-info-sign" data-toggle="tooltip easyTooltip"
+                               title="O percentual de renúncia significa o quanto do dinheiro aportado poderá ser abatido como pagamento de imposto."></i>:
+                        </strong></p>
+
+                    <p align="justify"><strong>Exposicao da
+                            marca: </strong><?= $linha['exposicao_marca'] != 0 ? $linha['exposicao_marca'] : "Nao especificado" ?>
+                    <p>
+                    <p align="justify"><strong>Conta Captação:</strong> <?= $linha['contaCaptacao']; ?><p>
+                    <p align="justify"><strong>Conta Movimento:</strong> <?= $linha['contaMovimentacao']; ?><p>
+                        <?php
+                            if ($linha['contaCaptacao'] == '' || $linha['contaMovimentacao'] == '') {
+                                ?>
+                                <font color='#FF0000'><strong>O proponente do projeto que você deseja incentivar ainda
+                                        não inseriu as contas do projeto no sistema.
+                                        Aguarde a inserção dos dados no sistema para prosseguir com o processo de
+                                        incentivo. Se desejar agilizar
+                                        o processo, entre em contato diretamente com o proponente.</strong></font>
+
+
+
+                                <?php
+                            } else {
+                               echo "<form method='post' action='?perfil=includes/incentivador_etapa5_incentivarProjeto' class='form-group'>
+                                        <input type='hidden' name='idProjeto' value='". $linha['idProjeto'] . "'>
+                                        <input type='submit' name='incentivar_projeto' value='Incentivar esse projeto' class='btn btn-success'>
+                                    </form>";
+
+                            }
+                            ?>
+                </div>
+        <?php
+            }
         }
         ?>
     </div>

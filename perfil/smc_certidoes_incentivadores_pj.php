@@ -1,6 +1,6 @@
 <?php
 $con = bancoMysqli();
-$tipoPessoa = '4';
+$tipoPessoa = '5';
 $idPj = $_POST['idPj'];
 $pj = recuperaDados("incentivador_pessoa_juridica", "idPj", $idPj);
 
@@ -34,7 +34,7 @@ if (isset($_POST['nota'])) {
         if ($id != 0) {
             $dateNow = date('Y-m-d H:i:s');
             $nota = addslashes($_POST['nota']);
-            $sql_nota = "INSERT INTO notas (idPessoa, idTipo, data, nota, interna) VALUES ('$idPj', '4', '$dateNow', '$nota', '1')";
+            $sql_nota = "INSERT INTO notas (idPessoa, idTipo, data, nota, interna) VALUES ('$idPj', '5', '$dateNow', '$nota', '1')";
             if (mysqli_query($con, $sql_nota)) {
                 $mensagem = "<br><font color='#01DF3A'><strong>Nota inserida com sucesso!</strong></font>";
                 gravarLog($sql_nota);
@@ -170,8 +170,8 @@ function listaArquivosPessoaEditorr($idPessoa, $tipoPessoa)
                 ?>
             </div>
             <div class="tab-pane fade in active" id="admIncentivador">
-                <div class="table-responsive list_info"><h4>Certidões de Regularidade Fiscal</h4>
-
+                <div class="table-responsive list_info" style="overflow: hidden">
+                    <h4>Certidões de Regularidade Fiscal</h4>
                     <div class="row">
                         <h5><?php if (isset($mensagem)) {
                                 echo $mensagem;
@@ -179,7 +179,7 @@ function listaArquivosPessoaEditorr($idPessoa, $tipoPessoa)
                     </div>
                     <br>
                     <?php
-                    listaArquivosPessoaEditorr($pj['idPj'], '4');
+                    listaArquivosPessoaEditorr($idPj, '5');
                     ?>
                 </div>
                 <div class="container">
