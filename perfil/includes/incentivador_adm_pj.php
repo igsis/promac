@@ -58,70 +58,29 @@ case '3':
     echo "<script>location.href = '?perfil=includes/incentivadorPJ_etapa3_visualiza_docs'</script>";
     break;
 
+
+case '4':
+    echo "<script>location.href = '?perfil=includes/incentivador_etapa4_buscarProjeto&tipoPessoa=$tipoPessoa'</script>";
     break;
-    case '4':
-    if (isset($mensagem)) {
-    ?>
-    <section id="list_items" class="home-section bg-white">
-        <div class="container"><?php include 'menu_interno_pj.php' ?>
-            <ul class="nav nav-tabs">
-                <li class="nav active"><a href="#admIncentivador" data-toggle="tab">Administrativo</a></li>
-                <li class="nav"><a href="#resumo" data-toggle="tab">Resumo do projeto</a></li>
-            </ul>
-            <div class="tab-content">
-                <div class="tab-pane fade in active" id="admIncentivador">
-                    <?php
-                    echo "<h5>" . $mensagem . "</h5>";
-                    }
-                    ?>
-                    <br>
-                    <ul class="list-group">
-                        <li class="list-group-item list-group-item-<?= $cor_status ?>">
-                            <strong><?= $statusIncentivador ?>.</strong>
-                        </li>
-                    </ul>
 
-                    <div class="well">
-                        <form method="POST" action="?perfil=includes/incentivador_adm_pj" enctype="multipart/form-data">
-                            <div class="form-group">
-                                <h4><b>4 - Qual projeto você deseja incentivar? </b><br>
-                                </h4>
-                                <div class="row">
-                                    <div class="col-md-offset-3 col-md-6">
-                                        <div class="input-group">
-                                            <input type="text" name="projeto" class="form-control"
-                                                   placeholder="Busque aqui o nome do projeto">
-                                            <div class="input-group-btn">
-                                                <button type="submit" class="btn btn-default"
-                                                        style="font-size: 20px"><span
-                                                            class="glyphicon glyphicon-search"></span></button>
-                                            </div>
-                                        </div><!-- /input-group -->
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <?php
-
-                    }
-                    ?>
+}
+?>
 
 
-                    <script>
+<script>
 
-                        var resposta = $('.resposta');
-                        resposta.on("click", verificaResposta);
-                        $(document).ready(verificaResposta());
+    var resposta = $('.resposta');
+    resposta.on("click", verificaResposta);
+    $(document).ready(verificaResposta());
 
-                        function verificaResposta() {
-                            if ($('#nao').is(':checked')) {
-                                $('#aviso').css('display', 'block');
-                                $('#incentivar').css('display', 'none');
-                            } else if ($('#sim').is(':checked')) {
-                                $('#aviso').css('display', 'none');
-                                $('#incentivar').css('display', 'block');
-                                // location.href = '?perfil=includes/documentos_fiscais_incentivador_pj'
-                            }
-                        }
-                    </script>
+    function verificaResposta() {
+        if ($('#nao').is(':checked')) {
+            $('#aviso').css('display', 'block');
+            $('#incentivar').css('display', 'none');
+        } else if ($('#sim').is(':checked')) {
+            $('#aviso').css('display', 'none');
+            $('#incentivar').css('display', 'block');
+            // location.href = '?perfil=includes/documentos_fiscais_incentivador_pj'
+        }
+    }
+</script>

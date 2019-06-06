@@ -1,16 +1,30 @@
 <?php
 $con = bancoMysqli();
-$idPf = $_SESSION['idUser'];
+$idIncentivador = $_SESSION['idUser'];
+$tipoPessoa = $_GET['tipoPessoa'] ?? $_POST['tipoPessoa'];
 
 $buscaProjeto = isset($_POST['procurar']) ? 1 : 0;
 $displayForm = 'block';
 $displayBotao = 'none';
 
-$pf = recuperaDados("incentivador_pessoa_fisica", "idPf", $idPf);
-$etapaArray = recuperaDados("etapas_incentivo", "idIncentivador", $idPf);
+if ($tipoPessoa == 4)
+{
+    $pf = recuperaDados("incentivador_pessoa_fisica", "idPf", $idPf);
+    $etapaArray = recuperaDados("etapas_incentivo", "idIncentivador", $idPf);
 
-$liberado = $pf['liberado'];
-$etapa = $etapaArray['etapa'];
+    $liberado = $pf['liberado'];
+    $etapa = $etapaArray['etapa'];
+}
+elseif ($tipoPessoa == 5)
+{
+    $pj = recuperaDados("incentivador_pessoa_juridica", "idPj", $idPj);
+    $etapaArray = recuperaDados("etapas_incentivo", "idIncentivador", $idPj);
+
+    $liberado = $pj['liberado'];
+    $etapa = $etapaArray['etapa'];
+}
+
+
 
 switch ($liberado) {
     case '4':
@@ -31,7 +45,7 @@ switch ($liberado) {
 if (isset($_POST['procurar'])) {
     $projeto = addslashes($_POST['projeto']);
 
-    $sqlBusca = "SELECT * FROM projeto LEFT JOIN exposicao_marca as marca ON marca.id = projeto.idExposicaoMarca WHERE nomeProjeto like '%$projeto%'";
+    $sqlBusca = "SELECT * FROM projeto LEFT JOIN exposicao_marca as marca ON marca.id = projeto.idExposicaoMarca WHERE nomeProjeto like '%$projeto%' ORDER BY nomeProjeto";
 
     if ($query = mysqli_query($con, $sqlBusca)) {
         $linhas = mysqli_num_rows($query);
@@ -47,7 +61,6 @@ if (isset($_POST['procurar'])) {
         $mensagem = "<font color='#FF0000'><strong>Erro ao encontrar projeto, tente novamente!</strong></font>";
     }
 }
-
 
 ?>
 
@@ -87,6 +100,7 @@ if (isset($_POST['procurar'])) {
                                     <div class="input-group">
                                         <input type="text" name="projeto" class="form-control"
                                                placeholder="Busque aqui o nome do projeto">
+                                        <input type="hidden" name="tipoPessoa" value="<?=$tipoPessoa?>">
                                         <div class="input-group-btn">
                                             <button type="submit" class="btn btn-default" name="procurar" style="font-size: 20px"><span class="glyphicon glyphicon-search"></span></button>
                                         </div>
@@ -103,24 +117,28 @@ if (isset($_POST['procurar'])) {
         <?php
         if ($buscaProjeto == 1) {
             ?>
+        <form method="POST" action="?perfil=includes/incentivador_etapa4_buscarProjeto" enctype="multipart/form-data">
+            <small><b>4 - Qual projeto você deseja incentivar? </b></small>
             <div class="row">
                 <div class="col-md-offset-4 col-md-6">
                     <div class="input-group">
                         <input type="text" name="projeto" class="form-control"
                                placeholder="Pesquisa realizada: <?=$projeto ?>">
+                        <input type="hidden" name="tipoPessoa" value="<?=$tipoPessoa?>">
                         <div class="input-group-btn">
                             <button type="submit" class="btn btn-default" name="procurar" style="font-size: 20px"><span class="glyphicon glyphicon-search"></span></button>
                         </div>
                     </div><!-- /input-group -->
                 </div>
             </div>
+        </form>
             <br>
             <?php
             while ($linha = mysqli_fetch_array($query)) {
 
                 ?>
                 <div class="well">
-                    <h4><strong>Projeto “<?= $linha['nomeProjeto'] ?>”</strong></></h4>
+                    <h4><strong>Projeto “<?=$linha['nomeProjeto'] ?>”</strong></></h4>
                     <p align="justify"><strong>Valor Aprovado para Captação:</strong> <?= dinheiroParaBr($linha['valorAprovado']) ?>
                     <p>
                     <p align="justify"><strong>Percentual de renúncia
@@ -128,7 +146,7 @@ if (isset($_POST['procurar'])) {
                                title="O percentual de renúncia significa o quanto do dinheiro aportado poderá ser abatido como pagamento de imposto."></i>:
                         </strong></p>
 
-                    <p align="justify"><strong>Exposicao da
+                    <p align="justify"><strong>Exposição da
                             marca: </strong><?= $linha['exposicao_marca'] != 0 ? $linha['exposicao_marca'] : "Nao especificado" ?>
                     <p>
                     <p align="justify"><strong>Conta Captação:</strong> <?= $linha['contaCaptacao']; ?><p>
@@ -136,7 +154,7 @@ if (isset($_POST['procurar'])) {
                         <?php
                             if ($linha['contaCaptacao'] == '' || $linha['contaMovimentacao'] == '') {
                                 ?>
-                                <font color='#FF0000'><strong>O proponente do projeto que você deseja incentivar ainda
+                                <font color='#FF0000'><strong>O proponente desse projeto ainda
                                         não inseriu as contas do projeto no sistema.
                                         Aguarde a inserção dos dados no sistema para prosseguir com o processo de
                                         incentivo. Se desejar agilizar
@@ -148,6 +166,7 @@ if (isset($_POST['procurar'])) {
                             } else {
                                echo "<form method='post' action='?perfil=includes/incentivador_etapa5_incentivarProjeto' class='form-group'>
                                         <input type='hidden' name='idProjeto' value='". $linha['idProjeto'] . "'>
+                                        <input type='hidden' name='tipoPessoa' value='".$tipoPessoa."'>
                                         <input type='submit' name='incentivar_projeto' value='Incentivar esse projeto' class='btn btn-success'>
                                     </form>";
 
@@ -160,17 +179,3 @@ if (isset($_POST['procurar'])) {
         ?>
     </div>
 </section>
-
-
-<script>
-    function mostraDiv() {
-        let form = document.querySelector('#testeTana');
-        form.style.display = 'block';
-
-        let botoes = document.querySelector('#botoes');
-        botoes.style.display = 'none';
-
-        let resultado = document.querySelector('#resultado');
-        resultado.style.display = 'none';
-    }
-</script>

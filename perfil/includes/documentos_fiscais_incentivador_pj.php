@@ -1,7 +1,7 @@
 <?php
 $con = bancoMysqli();
 $idPj = $_SESSION['idUser'];
-$tipoPessoa = '4';
+$tipoPessoa = '5';
 
 if (isset($_POST['iniciar_incentivo'])) {
     $sqlEtapa = "INSERT INTO etapas_incentivo (tipoPessoa, idIncentivador, etapa) VALUES ($tipoPessoa, $idPj, 1)";
@@ -116,7 +116,7 @@ $pj = recuperaDados("incentivador_pessoa_juridica", "idPj", $idPj);
                             $arqsEnviados = listaArquivosPessoa($idPj, $tipoPessoa, "includes/documentos_fiscais_incentivador_pj", "39, 40, 41, 42, 43, 54");
                             if ($arqsEnviados == 6) {
                                 echo "
-                                      <form method='POST' action='?perfil=includes/incentivador_adm_pj' enctype='multipart/form-data'>
+                                      <form method='POST' action='?perfil=includes/incentivadorPJ_etapa3_visualiza_docs' enctype='multipart/form-data'>
                                       <input type='hidden' name='idPj' value='$idPj'>                                   
                                           <input type='submit' name='enviarSMC' class='btn btn-theme btn-lg btn-block'
                                                value='Enviar à SMC'>                                     

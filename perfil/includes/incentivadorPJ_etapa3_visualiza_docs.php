@@ -162,18 +162,20 @@ if (isset($_POST['apagar'])) {
 
                             switch ($idStatus) {
                             case '':
-                            $status = "Em análise";
-                            $cor = "orange";
-                            break;
+                                $status = "Em análise";
+                                $cor = "orange";
+                                break;
+
                             case 1:
-                            $status = "Aceito";
-                            $cor = "green";
-                            break;
+                                $status = "Aceito";
+                                $cor = "green";
+                                break;
+
                             case 3:
-                            $status = "Negado";
-                            $cor = "red";
-                            $negados .= $arquivo['idListaDocumento'] . ", ";
-                            break;
+                                $status = "Negado";
+                                $cor = "red";
+                                $negados .= $arquivo['idListaDocumento'] . ", ";
+                                break;
                             }
 
                             echo "<tr>

@@ -287,7 +287,7 @@ if (isset($_POST['arquivar'])){
         ?>
         <!-- Lista 4 -->
         <div class="form-group">
-            <h5>Incentivadores com certidões de regularidade fiscal anexadas.<br>
+            <h5>Incentivador Pessoa Física com certidões de regularidade fiscal anexadas.<br>
                 <small>Pessoa Física</small>
                 <br>
                 <small>Máximo de 10 Registros exibidos</small>
@@ -425,7 +425,7 @@ if (isset($_POST['arquivar'])){
 
         <!-- Lista 6 -->
         <div class="form-group">
-            <h5>Incentivadores com certidões de regularidade fiscal anexadas.<br>
+            <h5>Incentivador Pessoa Jurídica com certidões de regularidade fiscal anexadas.<br>
                 <small>Pessoa Jurídica</small>
                 <br>
                 <small>Máximo de 10 Registros exibidos</small>
