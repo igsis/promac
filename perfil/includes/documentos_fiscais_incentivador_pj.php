@@ -211,7 +211,7 @@ $pj = recuperaDados("incentivador_pessoa_juridica", "idPj", $idPj);
 </section>
 
 
-<script>
+<script type="text/javascript">
     function verificaResposta() {
         if ($('#nao').is(':checked')) {
             location.href = '?perfil=cadastro_incentivador_pj'
@@ -220,4 +220,6 @@ $pj = recuperaDados("incentivador_pessoa_juridica", "idPj", $idPj);
             location.href = '?perfil=includes/documentos_fiscais_incentivador_pj'
         }
     }
+
+
 </script>

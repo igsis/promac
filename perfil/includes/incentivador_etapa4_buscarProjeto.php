@@ -25,7 +25,6 @@ elseif ($tipoPessoa == 5)
 }
 
 
-
 switch ($liberado) {
     case '4':
         $statusIncentivador = "Status da Análise de Regularidade Fiscal do Incentivador: Em análise";
@@ -142,7 +141,7 @@ if (isset($_POST['procurar'])) {
                     <p align="justify"><strong>Valor Aprovado para Captação:</strong> <?= dinheiroParaBr($linha['valorAprovado']) ?>
                     <p>
                     <p align="justify"><strong>Percentual de renúncia
-                            <i id="info" class="glyphicon glyphicon-info-sign" data-toggle="tooltip easyTooltip"
+                            <i id="info" class="glyphicon glyphicon-question-sign text-info" data-toggle="tooltip easyTooltip"
                                title="O percentual de renúncia significa o quanto do dinheiro aportado poderá ser abatido como pagamento de imposto."></i>:
                         </strong></p>
 
@@ -167,7 +166,9 @@ if (isset($_POST['procurar'])) {
                                echo "<form method='post' action='?perfil=includes/incentivador_etapa5_incentivarProjeto' class='form-group'>
                                         <input type='hidden' name='idProjeto' value='". $linha['idProjeto'] . "'>
                                         <input type='hidden' name='tipoPessoa' value='".$tipoPessoa."'>
-                                        <input type='submit' name='incentivar_projeto' value='Incentivar esse projeto' class='btn btn-success'>
+                                        <button class='btn btn-success' type='button' data-id='". $linha['idProjeto'] . "' data-toggle='modal' data-target='#incentivarProjeto' >Incentivar esse Projeto
+								</button>
+                                       <!-- <input type='submit' name='incentivar_projeto' value='Incentivar esse projeto' class='btn btn-success'> -->
                                     </form>";
 
                             }
@@ -178,4 +179,46 @@ if (isset($_POST['procurar'])) {
         }
         ?>
     </div>
+
+
+    <!-- valor que deseja aportar no projeto -->
+    <div class="modal fade" id="incentivarProjeto" role="dialog" aria-labelledby="incentivarProjetoLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;
+                    </button>
+                    <h4 class="modal-title">5 - Quanto você deseja aportar no projeto (valor total)?</h4>
+                </div>
+                <form action="?perfil=includes/incentivador_etapa6_incentivarProjeto" method="post" class="form-group">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-offset-4 col-md-4">
+                            <input type="hidden" name="idProjeto" id="idProjeto" value="">
+                            <input type="hidden" name="tipoPessoa" id="tipoPessoa" value="<?=$tipoPessoa?>">
+                            <input class="form-control" type="text" name="valor_aportado" placeholder="R$ 100.000,00">
+                        </div>
+                    </div>
+                </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success" name="incentivar_projeto">Prosseguir</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <!-- Fim do modal -->
 </section>
+
+
+<script type="text/javascript">
+    $('#incentivarProjeto').on('show.bs.modal', function (e) {
+        let id = $(e.relatedTarget).attr('data-id');
+
+        $(this).find('#idProjeto').attr('value', id);
+    })
+</script>

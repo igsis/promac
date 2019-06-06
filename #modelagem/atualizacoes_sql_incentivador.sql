@@ -31,3 +31,16 @@ ALTER TABLE `etapas_incentivo`
 * FIM
 * 27/05/2019 -> Lorelei
 */
+
+/*Inicio 
+*06/06/2019 -> Tanair
+*/ 
+
+ALTER TABLE `promac`.`incentivador_projeto` 
+ADD COLUMN `valor_aportado` DECIMAL(11,2) NOT NULL AFTER `idProjeto`;
+
+/* FIM
+* 06/06/2019 -> Tanair 
+*/
+
+
