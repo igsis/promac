@@ -215,7 +215,7 @@ $valor = $incentivador_projeto['valor_aportado'];
                                     <br>
                                     <div class="col-md-2">
                                         <button style="margin-top: 5px;" id="editarParcelas" class="btn btn-primary"
-                                                type='button' data-toggle='modal' data-target='#editarParcelas'>Editar
+                                                type='button' data-toggle='modal' data-id="teste" data-target='#addParcelas'>Editar
                                             Parcelas
                                         </button>
                                         <!--<button type="button" style="margin-top: 5px;" id="editarParcelas" class="btn btn-primary">
@@ -235,48 +235,78 @@ $valor = $incentivador_projeto['valor_aportado'];
             <input type="hidden" name="idProjeto" value="<? /*=$idProjeto*/ ?>">
             </form>
         </div>
+    </div>
 
 
-    </div>
-    </div>
-    </div>
-</section>
+    <!-- valor que deseja aportar no projeto -->
+    <div class="modal fade" id="addParcelas" role="dialog" aria-labelledby="editarParcelasLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;
+                    </button>
+                    <h4 class="modal-title">Cronograma</h4>
+                </div>
+                <form action="?perfil=includes/incentivador_etapa6_incentivarProjeto" method="post" class="form-group">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input type="hidden" name="idProjeto" id="idProjeto" value="">
+                                <input type="hidden" name="tipoPessoa" id="tipoPessoa" value="<?=$tipoPessoa?>">
+                                <div class="inputs">
+                                    <div class='form-group col-md-offset-1 col-md-2'>
+                                        <label for='parcela'>Parcela</label>
+                                        <input type='number' class='form-control' name='parcela1' value='1' disabled>
+                                    </div>
+                                    <div class='form-group col-md-4'>
+                                        <label for='data'>Data</label>
+                                        <input type='date' class='form-control' name='data' value="1" required>
 
-<!-- valor que deseja aportar no projeto -->
-<div class="modal fade" id="editarParcelas" role="dialog" aria-labelledby="editarParcelasLabel"
-     aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;
-                </button>
-                <h4 class="modal-title">5 - Quanto você deseja aportar no projeto (valor total)?</h4>
-            </div>
-            <form action="?perfil=includes/incentivador_etapa6_incentivarProjeto" method="post" class="form-group">
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-offset-4 col-md-4">
-                            <input type="hidden" name="idProjeto" id="idProjeto" value="">
-                            <input type="hidden" name="tipoPessoa" id="tipoPessoa" value="<?= $tipoPessoa ?>">
-                            <input class="form-control" type="text" onkeypress="return(moeda(this, '.', ',', event))"
-                                   name="valor_aportado" placeholder="R$ 100.000,00">
+                                    </div>
+                                    <div class='form-group col-md-4'>
+                                        <label for='valor'>Valor</label>
+                                        <input type='text' class='form-control' value="1" name='valor' onkeypress="return(moeda(this, '.', ',', event));" required>
+
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-success" name="incentivar_projeto">Prosseguir</button>
-                </div>
-            </form>
-
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success" name="incentivar_projeto">Prosseguir</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
-<!-- Fim do modal -->
+    <!-- Fim do modal -->
+
+</section>
 
 
 <script>
 
+    console.log("Testesss");
+
+    $('#addParcelas').on('shown', function () {
+
+        let numero_parcelas = $("#numero_parcelas").val();
+
+        let firstChild = ('#.inputs'):firstChild;
+
+        console.log("testaaaando " + numero_parcelas);
+
+        for (let i = 2; i <= numero_parcelas; i++) {
+
+            console.log(i);
+
+            $('#inputs').after("<label for='parcela'>Parcela</label><input type='number' class='form-control' name='parcela"+ i +"' value='" + i +"' >" + "<label for='data'>Data</label><input type='date' class='form-control' name='data'>" + "<label for='valor'>Valor</label><input type='text' class='form-control' name='valor'>");
+
+
+        }
+    });
 
 </script>
