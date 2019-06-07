@@ -197,7 +197,7 @@ if (isset($_POST['procurar'])) {
                         <div class="col-md-offset-4 col-md-4">
                             <input type="hidden" name="idProjeto" id="idProjeto" value="">
                             <input type="hidden" name="tipoPessoa" id="tipoPessoa" value="<?=$tipoPessoa?>">
-                            <input class="form-control" type="text" name="valor_aportado" placeholder="R$ 100.000,00">
+                            <input class="form-control" type="text" onkeypress="return(moeda(this, '.', ',', event))"  name="valor_aportado" placeholder="R$ 100.000,00">
                         </div>
                     </div>
                 </div>

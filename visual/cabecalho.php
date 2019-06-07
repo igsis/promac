@@ -39,6 +39,7 @@ else
         <!-- JQUEY Mask -->
         <script src="dist/js/jquery-1.12.4.min.js"></script>
         <script src="dist/js/jquery.mask.js"></script>
+        <script src="dist/js/handlebars-v4.1.0.js"></script>
 
         <?php include "../include/script.php"; ?>
     </head>

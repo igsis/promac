@@ -64,6 +64,9 @@ case '3':
         echo "<script>location.href = '?perfil=includes/incentivador_etapa4_buscarProjeto&tipoPessoa=$tipoPessoa'</script>";
         break;
 
+    case '6':
+        echo "<script>location.href = '?perfil=includes/incentivador_etapa6_incentivarProjeto&tipoPessoa=$tipoPessoa'</script>";
+        break;
 
 }
 
