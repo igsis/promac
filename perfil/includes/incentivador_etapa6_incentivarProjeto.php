@@ -3,19 +3,6 @@ $con = bancoMysqli();
 $idIncentivador = $_SESSION['idUser'];
 $tipoPessoa = $_POST['tipoPessoa'] ?? $_GET['tipoPessoa'];
 
-if ($tipoPessoa == 4) {
-    $pf = recuperaDados("incentivador_pessoa_fisica", "idPf", $idIncentivador);
-    $etapaArray = recuperaDados("etapas_incentivo", "idIncentivador", $idIncentivador);
-
-    $liberado = $pf['liberado'];
-    $etapa = $etapaArray['etapa'];
-} elseif ($tipoPessoa == 5) {
-    $pj = recuperaDados("incentivador_pessoa_juridica", "idPj", $idIncentivador);
-    $etapaArray = recuperaDados("etapas_incentivo", "idIncentivador", $idIncentivador);
-
-    $liberado = $pj['liberado'];
-    $etapa = $etapaArray['etapa'];
-}
 
 if (isset($_POST['incentivar_projeto']) || isset($_POST['editar'])) {
     $idProjeto = $_POST['idProjeto'];
@@ -24,26 +11,24 @@ if (isset($_POST['incentivar_projeto']) || isset($_POST['editar'])) {
     if (isset($_POST['incentivar_projeto'])) {
 
         $sql_incentivar = "INSERT INTO incentivador_projeto (idIncentivador, 
-                                                          tipoPessoa, 
-                                                          idProjeto, 
-                                                          valor_aportado) 
-                                                    VALUES 
-                                                          ('$idIncentivador',
-                                                          '$tipoPessoa',
-                                                          '$idProjeto',
-                                                          '$valor')";
+                                                              tipoPessoa, 
+                                                              idProjeto, 
+                                                              valor_aportado) 
+                                                        VALUES 
+                                                              ('$idIncentivador',
+                                                              '$tipoPessoa',
+                                                              '$idProjeto',
+                                                              '$valor')";
 
         if (mysqli_query($con, $sql_incentivar)) {
-
             $sqlEtapa = "UPDATE etapas_incentivo SET 
-                                                idProjeto = '$idProjeto', 
-                                                etapa = 6 
-                                            WHERE 
-                                                tipoPessoa = '$tipoPessoa' 
-                                            AND idIncentivador = '$idIncentivador'";
+                                                     idProjeto = '$idProjeto', 
+                                                     etapa = 6 
+                                                 WHERE 
+                                                     tipoPessoa = '$tipoPessoa' 
+                                                 AND idIncentivador = '$idIncentivador'";
 
             mysqli_query($con, $sqlEtapa);
-
         }
     }
 
@@ -57,6 +42,25 @@ if (isset($_POST['incentivar_projeto']) || isset($_POST['editar'])) {
 }
 
 
+if ($tipoPessoa == 4) {
+    $pf = recuperaDados("incentivador_pessoa_fisica", "idPf", $idIncentivador);
+    $sqlEtapa = "SELECT * FROM etapas_incentivo WHERE idIncentivador = $idIncentivador AND tipoPessoa = $tipoPessoa";
+    $queryEtapa = mysqli_query($con, $sqlEtapa);
+    $etapaArray = mysqli_fetch_array($queryEtapa);
+
+    $liberado = $pf['liberado'];
+    $etapa = $etapaArray['etapa'];
+
+} elseif ($tipoPessoa == 5) {
+    $pj = recuperaDados("incentivador_pessoa_juridica", "idPj", $idIncentivador);
+    $sqlEtapa = "SELECT * FROM etapas_incentivo WHERE idIncentivador = $idIncentivador AND tipoPessoa = $tipoPessoa";
+    $queryEtapa = mysqli_query($con, $sqlEtapa);
+    $etapaArray = mysqli_fetch_array($queryEtapa);
+
+    $liberado = $pj['liberado'];
+    $etapa = $etapaArray['etapa'];
+}
+
 if ($etapa == 6) {
     $sqlProjeto = "SELECT * FROM incentivador_projeto WHERE idIncentivador = $idIncentivador AND tipoPessoa = $tipoPessoa";
 
@@ -64,7 +68,6 @@ if ($etapa == 6) {
         $incentivador_projeto = mysqli_fetch_array($query);
 
     }
-
 }
 
 $idProjeto = $incentivador_projeto['idProjeto'];
@@ -101,17 +104,15 @@ $valor = $incentivador_projeto['valor_aportado'];
                         <div class="form-group">
                             <h6><b>5 - Quanto você deseja aportar no projeto (valor total)?</b></h6>
                             <div class="row">
-                                <div class="col-md-offset-4 col-md-6 text-center">
+                                <div class="col-md-3 text-center" style="margin-left: 40%;">
                                     <label for="valor_aportado">
                                         <div class="input-group">
-                                            <input type="text" name="valor_aportado"
-                                                   onkeypress="return(moeda(this, '.', ',', event))"
-                                                   class="form-control"
+                                            <input type="text" name="valor_aportado" onkeypress="return(moeda(this, '.', ',', event))" class="form-control"
                                                    value="<?= dinheiroParaBr($valor) ?>">
                                             <div class="input-group-btn">
-                                                <button type="submit" class="btn btn-default" name="editar"
-                                                        style="font-size: 20px"><span
-                                                            class="glyphicon glyphicon-edit"></span></button>
+                                                <button type="submit" class="btn btn-default" name="editar" style="font-size: 20px">
+                                                    <span class="glyphicon glyphicon-edit"></span>
+                                                </button>
                                             </div>
                                         </div>
                                     </label>
@@ -124,43 +125,6 @@ $valor = $incentivador_projeto['valor_aportado'];
                         </div>
                     </form>
                 </div>
-                <!--<div class="well">
-                    <form method="POST" class="form-group" action="?perfil=includes/incentivador_etapa6_incentivarProjeto" enctype="multipart/form-data">
-                        <h6><b>6 - Preencha as informações abaixo para gerar o contrato de incentivo</b></h6>
-                        <div class="row">
-                            <div class="col-md-offset-4 col-md-6 text-center">
-                                <label for="editais">Projeto inscrito no Edital Nº. 001/
-                                    <select name="editais" id="" class="form-control">
-                                        <option value="2018">2018</option>
-                                        <option value="2019">2019</option>
-                                        <option value="2020">2020</option>
-                                        <option value="2021">2021</option>
-                                        <option value="2022">2022</option>
-                                    </select>
-                                </label>
-                                <hr>
-                            </div> /input-group
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-offset-4 col-md-6 text-center">
-                                <label for="impostos">O imposto a ser utilizado para dedução do incentivo será:
-                                </label>
-                            </div>
-                            <div class="col-lg-offset-5 col-md-2">
-                                <select name="impostos" class="form-control">
-                                    <option value="ISS">ISS</option>
-                                    <option value="IPTU">IPTU</option>
-                                </select>
-                            </div>
-
-                             /input-group
-                        </div>
-                        <input type="hidden" name="tipoPessoa" value="<? /*=$tipoPessoa*/ ?>">
-                        <input type="hidden" name="idProjeto" value="<? /*=$idProjeto*/ ?>">
-
-                    </form>
-                </div>-->
 
                 <div class="well">
                     <form method="POST" class="form-group"
@@ -169,8 +133,8 @@ $valor = $incentivador_projeto['valor_aportado'];
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <div class="col-md-offset-2 col-md-6"><label>Projeto inscrito no Edital Nº.
-                                            001/</label><br/>
+                                    <div class="col-md-offset-4 col-md-2"><label>Projeto inscrito no Edital Nº.
+                                            001/</label>
                                         <br><select name="editais" id="" class="form-control">
                                             <option value="">Selecione...</option>
                                             <option value="2018">2018</option>
@@ -187,10 +151,10 @@ $valor = $incentivador_projeto['valor_aportado'];
                                                title="Se desejar usar o outro imposto, por favor, retorne a essa etapa e preencha outro Contrato de Incentivo utilizando o imposto desejado."></i>:
                                         </label>
                                         <br/>
-                                        <select name="impostos" class="form-control text-center">
-                                            <option value="ISS">ISS</option>
-                                            <option value="IPTU">IPTU</option>
-                                        </select>
+                                        <label for="imposto">
+                                            <input type="radio" name="imposto" value="ISS">&nbsp;ISS
+                                            &nbsp;&nbsp;&nbsp;<input type="radio" name="imposto" value="IPTU">&nbsp;IPTU
+                                        </label>
                                     </div>
                                 </div>
                             </div>
@@ -200,41 +164,64 @@ $valor = $incentivador_projeto['valor_aportado'];
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <div class="col-md-offset-3 col-md-4">
-                                        <label for="numero_parcelas">Número de Parcelas</label>
-                                        <select class="form-control" id="numero_parcelas" name="numero_parcelas"
-                                                required>
-                                            <option value="">Selecione...</option>
-                                            <?php
-                                            for ($i = 1; $i <= 10; $i++) {
-                                                echo "<option value='$i'>$i</option>";
-                                            }
-                                            ?>
-                                        </select>
+                                    <div class="inputs">
+                                        <div class='row'>
+                                            <div class="col-md-offset-3 col-md-1">
+                                                <label for='parcela'>Parcela</label>
+                                                <input type='number' class='form-control' name='parcela1' value='1'
+                                                       disabled>
+                                            </div>
+                                            <div class='col-md-3'>
+                                                <label for='data'>Data</label>
+                                                <input type='date' class='form-control' name='data' value="1" required>
+                                            </div>
+                                            <div class='col-md-2'>
+                                                <label for='valor'>Valor</label>
+                                                <input type='text' class='form-control' value="1" name='valor'
+                                                       onkeypress="return(moeda(this, '.', ',', event));" required>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <br>
+                                                <button id="addParcelas" style="margin-top: 5px; margin-left: -15px; height: 33px;"  class="btn btn-success pull-left" type='button'>
+                                                    <i class="glyphicon glyphicon-plus" style="margin-bottom: 2px; margin-left: 2px;"></i></button>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <br>
-                                    <div class="col-md-2">
-                                        <button style="margin-top: 5px;" id="editarParcelas" class="btn btn-primary"
-                                                type='button' data-toggle='modal' data-id="teste" data-target='#addParcelas'>Editar
-                                            Parcelas
-                                        </button>
-                                        <!--<button type="button" style="margin-top: 5px;" id="editarParcelas" class="btn btn-primary">
+                                    <!-- <div class="col-md-offset-4 col-md-2">
+                                         <label for="numero_parcelas">Número de Parcelas</label>
+                                         <select class="form-control" id="numero_parcelas" name="numero_parcelas"
+                                                 required>
+                                             <option value="">Selecione...</option>
+                                             < ?php
+ /*                                            for ($i = 1; $i <= 10; $i++) {
+                                                 echo "<option value='$i'>$i</option>";
+                                             }
+                                             */?>
+                                         </select>
+                                     </div>
+                                     <br>
+                                     <div class="col-md-6">
+                                         <button style="margin-top: 5px;" id="editarParcelas" class="btn btn-primary"
+                                                 type='button' data-toggle='modal' data-id="teste" data-target='#addParcelas'>Editar
+                                             Parcelas
+                                         </button>
+                                         < !--<button type="button" style="margin-top: 5px;" id="editarParcelas" class="btn btn-primary">
 
-                                        </button>-->
-                                    </div>
+                                         </button>-->
                                 </div>
                             </div>
                         </div>
                 </div>
-
-                <!-- Button trigger modal -->
-
             </div>
 
-            <input type="hidden" name="tipoPessoa" value="<? /*=$tipoPessoa*/ ?>">
-            <input type="hidden" name="idProjeto" value="<? /*=$idProjeto*/ ?>">
-            </form>
+            <!-- Button trigger modal -->
+
         </div>
+
+        <input type="hidden" name="tipoPessoa" value="<? /*=$tipoPessoa*/ ?>">
+        <input type="hidden" name="idProjeto" value="<? /*=$idProjeto*/ ?>">
+        </form>
+    </div>
     </div>
 
 
@@ -253,7 +240,7 @@ $valor = $incentivador_projeto['valor_aportado'];
                         <div class="row">
                             <div class="col-md-12">
                                 <input type="hidden" name="idProjeto" id="idProjeto" value="">
-                                <input type="hidden" name="tipoPessoa" id="tipoPessoa" value="<?=$tipoPessoa?>">
+                                <input type="hidden" name="tipoPessoa" id="tipoPessoa" value="<?= $tipoPessoa ?>">
                                 <div class="inputs">
                                     <div class='form-group col-md-offset-1 col-md-2'>
                                         <label for='parcela'>Parcela</label>
@@ -266,7 +253,8 @@ $valor = $incentivador_projeto['valor_aportado'];
                                     </div>
                                     <div class='form-group col-md-4'>
                                         <label for='valor'>Valor</label>
-                                        <input type='text' class='form-control' value="1" name='valor' onkeypress="return(moeda(this, '.', ',', event));" required>
+                                        <input type='text' class='form-control' value="1" name='valor'
+                                               onkeypress="return(moeda(this, '.', ',', event));" required>
 
                                     </div>
                                 </div>
@@ -295,7 +283,9 @@ $valor = $incentivador_projeto['valor_aportado'];
 
         let numero_parcelas = $("#numero_parcelas").val();
 
-        let firstChild = ('#.inputs'):firstChild;
+        let firstChild = ('#.inputs')
+    :
+        firstChild;
 
         console.log("testaaaando " + numero_parcelas);
 
@@ -303,7 +293,7 @@ $valor = $incentivador_projeto['valor_aportado'];
 
             console.log(i);
 
-            $('#inputs').after("<label for='parcela'>Parcela</label><input type='number' class='form-control' name='parcela"+ i +"' value='" + i +"' >" + "<label for='data'>Data</label><input type='date' class='form-control' name='data'>" + "<label for='valor'>Valor</label><input type='text' class='form-control' name='valor'>");
+            $('#inputs').after("<label for='parcela'>Parcela</label><input type='number' class='form-control' name='parcela" + i + "' value='" + i + "' >" + "<label for='data'>Data</label><input type='date' class='form-control' name='data'>" + "<label for='valor'>Valor</label><input type='text' class='form-control' name='valor'>");
 
 
         }

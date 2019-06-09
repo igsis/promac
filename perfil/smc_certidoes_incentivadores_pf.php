@@ -48,7 +48,7 @@ if (isset($_POST['nota'])) {
 
 if (isset($_POST['apto'])) {
     $sql = "UPDATE incentivador_pessoa_fisica SET liberado = '5' WHERE idPf = $idPf";
-    $sql_etapa = "UPDATE etapas_incentivo SET etapa = 4 WHERE idIncentivador = $idPf AND tipoPessoa = 3";
+    $sql_etapa = "UPDATE etapas_incentivo SET etapa = 4 WHERE idIncentivador = $idPf AND tipoPessoa = 4";
     $apto = mysqli_query($con, $sql);
     $prox_etapa = mysqli_query($con, $sql_etapa);
 
