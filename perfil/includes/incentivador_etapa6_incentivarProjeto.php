@@ -76,6 +76,13 @@ $valor = $incentivador_projeto['valor_aportado'];
 
 ?>
 
+<style>
+    .none {
+        display: none;
+    }
+
+</style>
+
 <section id="list_items" class="home-section bg-white">
     <div class="container"><?php include 'menu_interno_pf.php' ?>
         <ul class="nav nav-tabs">
@@ -107,10 +114,13 @@ $valor = $incentivador_projeto['valor_aportado'];
                                 <div class="col-md-3 text-center" style="margin-left: 40%;">
                                     <label for="valor_aportado">
                                         <div class="input-group">
-                                            <input type="text" name="valor_aportado" onkeypress="return(moeda(this, '.', ',', event))" class="form-control"
+                                            <input type="text" name="valor_aportado"
+                                                   onkeypress="return(moeda(this, '.', ',', event))"
+                                                   class="form-control"
                                                    value="<?= dinheiroParaBr($valor) ?>">
                                             <div class="input-group-btn">
-                                                <button type="submit" class="btn btn-default" name="editar" style="font-size: 20px">
+                                                <button type="submit" class="btn btn-default" name="editar"
+                                                        style="font-size: 20px">
                                                     <span class="glyphicon glyphicon-edit"></span>
                                                 </button>
                                             </div>
@@ -164,11 +174,11 @@ $valor = $incentivador_projeto['valor_aportado'];
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <div class="inputs">
-                                        <div class='row'>
+                                    <div class="row">
+                                        <div class='inputs'>
                                             <div class="col-md-offset-3 col-md-1">
                                                 <label for='parcela'>Parcela</label>
-                                                <input type='number' class='form-control' name='parcela1' value='1'
+                                                <input type='number' class='form-control' id="idParcela" name='parcela[]' value='1'
                                                        disabled>
                                             </div>
                                             <div class='col-md-3'>
@@ -180,47 +190,70 @@ $valor = $incentivador_projeto['valor_aportado'];
                                                 <input type='text' class='form-control' value="1" name='valor'
                                                        onkeypress="return(moeda(this, '.', ',', event));" required>
                                             </div>
+                                        </div>
+                                        <div class="addButton">
                                             <div class="col-md-1">
                                                 <br>
-                                                <button id="addParcelas" style="margin-top: 5px; margin-left: -15px; height: 33px;"  class="btn btn-success pull-left" type='button'>
-                                                    <i class="glyphicon glyphicon-plus" style="margin-bottom: 2px; margin-left: 2px;"></i></button>
+                                                <button id="addParcelas"
+                                                        style="margin-top: 5px; margin-left: -15px; height: 33px;"
+                                                        class="btn btn-success pull-left" type='button'>
+                                                    <i class="glyphicon glyphicon-plus"
+                                                       style="margin-bottom: 2px; margin-left: 2px;"></i></button>
                                             </div>
                                         </div>
+                                        <div class="removeButton none">
+                                            <div class="col-md-1">
+                                                <br>
+                                                <button id="addParcelas"
+                                                        style="margin-top: 5px; margin-left: -15px; height: 33px;"
+                                                        class="btn btn-success pull-left" type='button'>
+                                                    <i class="glyphicon glyphicon-plus"
+                                                       style="margin-bottom: 2px; margin-left: 2px;"></i></button>
+                                            </div>
+                                        </div>
+                                        </div>
                                     </div>
-                                    <!-- <div class="col-md-offset-4 col-md-2">
-                                         <label for="numero_parcelas">Número de Parcelas</label>
-                                         <select class="form-control" id="numero_parcelas" name="numero_parcelas"
-                                                 required>
-                                             <option value="">Selecione...</option>
-                                             < ?php
- /*                                            for ($i = 1; $i <= 10; $i++) {
-                                                 echo "<option value='$i'>$i</option>";
-                                             }
-                                             */?>
-                                         </select>
-                                     </div>
-                                     <br>
-                                     <div class="col-md-6">
-                                         <button style="margin-top: 5px;" id="editarParcelas" class="btn btn-primary"
-                                                 type='button' data-toggle='modal' data-id="teste" data-target='#addParcelas'>Editar
-                                             Parcelas
-                                         </button>
-                                         < !--<button type="button" style="margin-top: 5px;" id="editarParcelas" class="btn btn-primary">
+                                    <div class="row nextDiv">
+                                        <div class="inputsNextDiv">
 
-                                         </button>-->
+                                        </div>
+
+                                    </div>
                                 </div>
+                                <!-- <div class="col-md-offset-4 col-md-2">
+                                     <label for="numero_parcelas">Número de Parcelas</label>
+                                     <select class="form-control" id="numero_parcelas" name="numero_parcelas"
+                                             required>
+                                         <option value="">Selecione...</option>
+                                         < ?php
+/*                                            for ($i = 1; $i <= 10; $i++) {
+                                             echo "<option value='$i'>$i</option>";
+                                         }
+                                         */?>
+                                     </select>
+                                 </div>
+                                 <br>
+                                 <div class="col-md-6">
+                                     <button style="margin-top: 5px;" id="editarParcelas" class="btn btn-primary"
+                                             type='button' data-toggle='modal' data-id="teste" data-target='#addParcelas'>Editar
+                                         Parcelas
+                                     </button>
+                                     < !--<button type="button" style="margin-top: 5px;" id="editarParcelas" class="btn btn-primary">
+
+                                     </button>-->
                             </div>
                         </div>
                 </div>
             </div>
-
-            <!-- Button trigger modal -->
-
         </div>
 
-        <input type="hidden" name="tipoPessoa" value="<? /*=$tipoPessoa*/ ?>">
-        <input type="hidden" name="idProjeto" value="<? /*=$idProjeto*/ ?>">
-        </form>
+        <!-- Button trigger modal -->
+
+    </div>
+
+    <input type="hidden" name="tipoPessoa" value="<? /*=$tipoPessoa*/ ?>">
+    <input type="hidden" name="idProjeto" value="<? /*=$idProjeto*/ ?>">
+    </form>
     </div>
     </div>
 
@@ -277,26 +310,35 @@ $valor = $incentivador_projeto['valor_aportado'];
 
 <script>
 
-    console.log("Testesss");
+    $('#addParcelas').on('click', function () {
+        console.log("clicou");
+        let num = $('.inputs #idParcela:last').val();
+        let prox = parseInt(num) + 1;
 
-    $('#addParcelas').on('shown', function () {
+        //console.log($('.inputs #idParcela:last').val());
 
-        let numero_parcelas = $("#numero_parcelas").val();
-
-        let firstChild = ('#.inputs')
-    :
-        firstChild;
-
-        console.log("testaaaando " + numero_parcelas);
-
-        for (let i = 2; i <= numero_parcelas; i++) {
-
-            console.log(i);
-
-            $('#inputs').after("<label for='parcela'>Parcela</label><input type='number' class='form-control' name='parcela" + i + "' value='" + i + "' >" + "<label for='data'>Data</label><input type='date' class='form-control' name='data'>" + "<label for='valor'>Valor</label><input type='text' class='form-control' name='valor'>");
+        $('.inputsNextDiv').append($('.inputs:first').clone(true).append("<div class='col-md-1'>\n" +
+            "                                            <br>\n" +
+            "                                            <button id='removeParcela' style='margin-top: 5px; margin-left: -15px; height: 33px;'\n" +
+            "                                                    class='remover btn btn-danger pull-left' type='button'>\n" +
+            "                                                <i class='glyphicon glyphicon-trash'\n" +
+            "                                                   style='margin-bottom: 2px; margin-left: 2px;'></i></button>\n" +
+            "                                        </div>"));
 
 
-        }
+        $('.inputs #idParcela:last').val(prox);
+
     });
+
+    $('.inputsNextDiv').on('click', 'button.remover', function () {
+
+        let numAtual = $(this).parent().parents('#idParcela').val();
+
+        console.log($(this).parents('.inputs').parents($("#idParcela")));
+
+        //console.log($(this).parents('.inputs'));
+        $(this).parents('.inputs').remove();
+
+    })
 
 </script>
