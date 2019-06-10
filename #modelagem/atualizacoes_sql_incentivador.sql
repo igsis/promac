@@ -43,4 +43,27 @@ ADD COLUMN `valor_aportado` DECIMAL(11,2) NOT NULL AFTER `idProjeto`;
 * 06/06/2019 -> Tanair 
 */
 
+/* Início
+* 10/06/2019 -> Tanair 
+*/ 
 
+CREATE TABLE `promac`.`parcelas_incentivo` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `idProjeto` INT NOT NULL,
+  `tipoPessoa` TINYINT(1) NOT NULL,
+  `idIncentivador` INT NOT NULL,
+  `numero_parcela` TINYINT(1) NOT NULL,
+  `valor` DECIMAL(8,2) NOT NULL,
+  `data_pagamento` DATE NOT NULL,
+  `publicado` TINYINT(1) NOT NULL DEFAULT 1,
+  PRIMARY KEY (`id`));
+
+
+ALTER TABLE `promac`.`incentivador_projeto` 
+ADD COLUMN `numero_parcelas` TINYINT(1) NULL AFTER `valor_aportado`;
+
+
+/* 
+* FIM -> Tanair
+* 10/06/2019 
+*/ 

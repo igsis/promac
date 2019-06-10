@@ -28,6 +28,8 @@ if (isset($_POST['incentivar_projeto']) || isset($_POST['editar'])) {
                                                      tipoPessoa = '$tipoPessoa' 
                                                  AND idIncentivador = '$idIncentivador'";
 
+            $etapa = 6;
+
             mysqli_query($con, $sqlEtapa);
         }
     }
@@ -42,36 +44,43 @@ if (isset($_POST['incentivar_projeto']) || isset($_POST['editar'])) {
 }
 
 
-if ($tipoPessoa == 4) {
-    $pf = recuperaDados("incentivador_pessoa_fisica", "idPf", $idIncentivador);
-    $sqlEtapa = "SELECT * FROM etapas_incentivo WHERE idIncentivador = $idIncentivador AND tipoPessoa = $tipoPessoa";
-    $queryEtapa = mysqli_query($con, $sqlEtapa);
-    $etapaArray = mysqli_fetch_array($queryEtapa);
+$sqlProjeto = "SELECT * FROM incentivador_projeto WHERE idIncentivador = $idIncentivador AND tipoPessoa = $tipoPessoa";
 
-    $liberado = $pf['liberado'];
-    $etapa = $etapaArray['etapa'];
+if ($query = mysqli_query($con, $sqlProjeto)) {
+    $incentivador_projeto = mysqli_fetch_array($query);
 
-} elseif ($tipoPessoa == 5) {
-    $pj = recuperaDados("incentivador_pessoa_juridica", "idPj", $idIncentivador);
-    $sqlEtapa = "SELECT * FROM etapas_incentivo WHERE idIncentivador = $idIncentivador AND tipoPessoa = $tipoPessoa";
-    $queryEtapa = mysqli_query($con, $sqlEtapa);
-    $etapaArray = mysqli_fetch_array($queryEtapa);
-
-    $liberado = $pj['liberado'];
-    $etapa = $etapaArray['etapa'];
 }
 
-if ($etapa == 6) {
-    $sqlProjeto = "SELECT * FROM incentivador_projeto WHERE idIncentivador = $idIncentivador AND tipoPessoa = $tipoPessoa";
-
-    if ($query = mysqli_query($con, $sqlProjeto)) {
-        $incentivador_projeto = mysqli_fetch_array($query);
-
-    }
-}
 
 $idProjeto = $incentivador_projeto['idProjeto'];
 $valor = $incentivador_projeto['valor_aportado'];
+$qtadeParcelas = $incentivador_projeto['numero_parcelas'];
+
+//print_r($incentivador_projeto);
+
+
+//verificando parcelas
+$sqlParcelas = "SELECT * FROM parcelas_incentivo WHERE idProjeto = '$idProjeto' AND tipoPessoa = '$tipoPessoa' AND idIncentivador = '$idIncentivador'";
+$query = mysqli_query($con, $sqlParcelas);
+$numRows = mysqli_num_rows($query);
+
+if ($numRows > 0) {
+    $somaParcelas = 0;
+    while ($parcela = mysqli_fetch_array($query)) {
+        $arrayValores[] = dinheiroParaBr($parcela['valor']);
+        $arrayDatas[] = $parcela['data_pagamento'];
+        $idsParcela [] = $parcela['id'];
+
+        $somaParcelas += $parcela['valor'];
+    }
+
+    $StringValores = implode("|", $arrayValores);
+    $StringDatas = implode("|", $arrayDatas);
+}
+
+
+
+
 
 
 ?>
@@ -139,11 +148,13 @@ $valor = $incentivador_projeto['valor_aportado'];
                 <div class="well ">
                     <form method="POST" class="form-group"
                           action="?perfil=includes/incentivador_etapa6_incentivarProjeto" enctype="multipart/form-data">
-                        <h6 class="col-md-12"><b>6 - Preencha as informações abaixo para gerar o contrato de incentivo</b></h6>
+                        <h6 class="col-md-12"><b>6 - Preencha as informações abaixo para gerar o contrato de
+                                incentivo</b></h6>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <div class="col-md-offset-4 col-md-2" style="margin-left: 28%"><label>Projeto inscrito no Edital Nº.
+                                    <div class="col-md-offset-4 col-md-2" style="margin-left: 28%"><label>Projeto
+                                            inscrito no Edital Nº.
                                             001/</label>
                                         <br><select name="editais" id="" class="form-control">
                                             <option value="">Selecione...</option>
@@ -175,10 +186,11 @@ $valor = $incentivador_projeto['valor_aportado'];
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <div class="row">
-                                        <div class='inputs' style="display: none;">
+                                        <div class='inputs none'>
                                             <div class="col-md-offset-3 col-md-1">
                                                 <label for='parcela'>Parcela</label>
-                                                <input type='number' class='form-control' id="idParcela" name='parcela' value='1'
+                                                <input type='number' class='form-control' id="idParcela" name='parcela'
+                                                       value='1'
                                                        disabled>
                                             </div>
                                             <div class='col-md-3'>
@@ -191,39 +203,49 @@ $valor = $incentivador_projeto['valor_aportado'];
                                                        onkeypress="return(moeda(this, '.', ',', event));" required>
                                             </div>
                                         </div>
-                                 <div class="col-md-offset-4 col-md-2">
-                                     <label for="numero_parcelas">Número de Parcelas</label>
-                                     <select class="form-control" id="numero_parcelas" name="numero_parcelas"
-                                             required>
-                                         <option value="">Selecione...</option>
-                                         <?php
-                                            for ($i = 1; $i <= 10; $i++) {
-                                             echo "<option value='$i'>$i</option>";
-                                         }
-                                         ?>
-                                     </select>
-                                 </div>
-                                 <br>
-                                 <div class="col-md-6">
-                                     <button type="button" style="margin-top: 5px;"
-                                             id="adicionarParcelas" onclick="abrirModal()" class="btn btn-primary pull-left">
-                                         Editar Parcelas
-                                     </button>
-                                 </div>
+                                        <div class="col-md-offset-4 col-md-2">
+                                            <label for="numero_parcelas">Número de Parcelas</label>
+                                            <select class="form-control" id="numero_parcelas" name="numero_parcelas"
+                                                    required>
+                                                <option value="">Selecione...</option>
+                                                <?php
+                                                for ($i = 1; $i <= 10; $i++) {
+
+                                                    if ($i == $qtadeParcelas) {
+                                                        echo "<option value='" . $qtadeParcelas . "' selected>$qtadeParcelas</option>";
+
+                                                    } else {
+
+                                                        echo $i . " parcelas = " . $qtadeParcelas;
+                                                    }
+                                                }
+
+                                                echo $qtadeParcelas;
+                                                ?>
+                                            </select>
+                                        </div>
+                                        <br>
+                                        <div class="col-md-6">
+                                            <button type="button" style="margin-top: 5px;"
+                                                    id="adicionarParcelas" onclick="abrirModal()"
+                                                    class="btn btn-primary pull-left">
+                                                Editar Parcelas
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                 </div>
+
+                <!-- Button trigger modal -->
+
             </div>
+
+            <input type="hidden" name="tipoPessoa" value="<? /*=$tipoPessoa*/ ?>">
+            <input type="hidden" name="idProjeto" value="<? /*=$idProjeto*/ ?>">
+            </form>
         </div>
-
-        <!-- Button trigger modal -->
-
-    </div>
-
-    <input type="hidden" name="tipoPessoa" value="<? /*=$tipoPessoa*/ ?>">
-    <input type="hidden" name="idProjeto" value="<? /*=$idProjeto*/ ?>">
-    </form>
-    </div>
     </div>
 
 
@@ -344,14 +366,12 @@ $valor = $incentivador_projeto['valor_aportado'];
 </script>
 
 
-
 <script type="text/javascript">
 
     $(function () {
         $('#numero_parcelas').on('change', ocultarBotao);
 
-       // $('#adicionarParcelas').on('click', abrirModal);
-
+        // $('#adicionarParcelas').on('click', abrirModal);
 
 
         $('#editarModal').on('click', editarModal);
@@ -363,11 +383,10 @@ $valor = $incentivador_projeto['valor_aportado'];
     });
 
 
-/*    $('#  addParcelas').on('click', function () {
+    /*    $('#  addParcelas').on('click', function () {
 
-        console.log('chamou a functionnnnn');
-    });*/
-
+            console.log('chamou a functionnnnn');
+        });*/
 
 
     $('#numero_parcelas').on('change', function () {
@@ -412,28 +431,28 @@ $valor = $incentivador_projeto['valor_aportado'];
             restante -= arrayValor[i];
         }
 
-            $('#modalParcelas').find('#soma').html(soma.toFixed(2).replace('.', ','));
-            $('#modalParcelas').find('#valor_restante').html(restante.toFixed(2).replace('.', ','));
+        $('#modalParcelas').find('#soma').html(soma.toFixed(2).replace('.', ','));
+        $('#modalParcelas').find('#valor_restante').html(restante.toFixed(2).replace('.', ','));
 
-            if (Math.sign(restante) != 0) {
-                console.log(Math.sign(restante));
-                $("#salvarModal").attr("disabled", true);
-                $("#editarModal").attr("disabled", true);
-                restanteText.style.display = "block";
-                $("#modalParcelas").find('#msg').html("<em class='text-danger'>O valor das parcelas somadas devem ser igual ao valor total do contrato! </em>");
+        if (Math.sign(restante) != 0) {
+            console.log(Math.sign(restante));
+            $("#salvarModal").attr("disabled", true);
+            $("#editarModal").attr("disabled", true);
+            restanteText.style.display = "block";
+            $("#modalParcelas").find('#msg').html("<em class='text-danger'>O valor das parcelas somadas devem ser igual ao valor total do contrato! </em>");
+        } else {
+            $("#salvarModal").attr("disabled", false);
+            $("#editarModal").attr("disabled", false);
+            restanteText.style.display = "none";
+
+            var nums = "<?= isset($numRows) ? $numRows : ''; ?>";
+
+            if (nums != '') {
+                $("#modalParcelas").find('#msg').html("<em class='text-success'> Agora os valores batem! Clique em editar para continuar.");
             } else {
-                $("#salvarModal").attr("disabled", false);
-                $("#editarModal").attr("disabled", false);
-                restanteText.style.display = "none";
-
-                var nums = "<?= isset($numRows) ? $numRows : ''; ?>";
-
-                if (nums != '') {
-                    $("#modalParcelas").find('#msg').html("<em class='text-success'> Agora os valores batem! Clique em editar para continuar.");
-                } else {
-                    $("#modalParcelas").find('#msg').html("<em class='text-success'> Agora os valores batem! Clique em salvar para continuar.");
-                }
+                $("#modalParcelas").find('#msg').html("<em class='text-success'> Agora os valores batem! Clique em salvar para continuar.");
             }
+        }
     }
 
     function abrirModal() {
@@ -444,12 +463,92 @@ $valor = $incentivador_projeto['valor_aportado'];
         var template = Handlebars.compile(source);
         var html = '';
 
-            var parcelasSelected = $("#numero_parcelas").val();
+        var parcelasSalvas = "<?= isset($numRows) ? $numRows : ''; ?>";
 
-            if (parcelasSelected == '') {
-                swal("Escolha a quantidade de parcelas para edita-lás!", "", "warning");
+        var StringValores = "<?= isset($StringValores) ? $StringValores : ''; ?>";
+
+        var StringDatas = "<?= isset($StringDatas) ? $StringDatas : ''; ?>";
+
+        var idAtracao = parseInt("<?= isset($oficina) ? $oficina : '' ?>");
+
+        var parcelasSelected = $("#numero_parcelas").val();
+
+        if (parcelasSelected == '') {
+            swal("Escolha a quantidade de parcelas para edita-lás!", "", "warning");
+
+        } else {
+
+
+
+            if (parseInt(parcelasSelected) < parseInt(parcelasSalvas)) {
+                swal("Haviam  " + parcelasSalvas + " parcelas nesse pedido!", "Número de parcelas selecionadas menor que quantidade de parcelas salvas, ao edita-lás as demais seram excluídas!", "warning");
+            }
+
+            if (StringValores != "" && StringDatas != "") {
+
+                console.log(StringDatas + StringValores);
+
+                $(".botoes").html("<button type='button' class='btn btn-secondary' data-dismiss='modal'>Fechar</button>" + "<button type='button' class='btn btn-primary' name='editar' id='editarModal'>Editar</button>");
+
+                var valores = StringValores.split("|");
+                var datas = StringDatas.split("|");
+
+                var somando = 0;
+
+                console.log(valores);
+
+                if (parseInt(parcelasSelected) < parseInt(parcelasSalvas)) {
+                    for (var count = 0; count < parcelasSelected; count++) {
+                        html += template({
+                            count: count + 1, // para sincronizar com o array vindo do banco
+                            valor: valores [count],
+                            date: datas [count],
+                        });
+
+                        var valor = valores[count].replace('.', '').replace(',', '.');
+                        somando += parseFloat(valor);
+                    }
+                    var valorFaltando = 0;
+                    for (var x = parcelasSelected; x < parcelasSalvas; x++) {
+                        var valor = valores[x].replace('.', '').replace(',', '.');
+                        valorFaltando += parseFloat(valor);
+                    }
+                    $('#modalParcelas').find('#valor_restante').html(valorFaltando.toFixed(2).replace('.', ','));
+
+                    if ($("#valor_restante") != "0,00") {
+                        $("#editarModal").attr("disabled", true);
+                        $('#modalParcelas').find('#soma').html(somando.toFixed(2).replace('.', ','));
+                        $("#modalParcelas").find('#msg').html("<em class='text-danger'>O valor das parcelas somadas devem ser igual ao valor total do contrato! </em>");
+                    }
+
+                } else {
+                    for (var count = 0; count < parcelasSalvas; count++) {
+                        html += template({
+                            count: count + 1, // para sincronizar com o array vindo do banco
+                            valor: valores [count],
+                            date: datas [count],
+                        });
+                    }
+                }
+
+                if (parseInt(parcelasSalvas) < parseInt(parcelasSelected)) {
+                    var faltando = parcelasSelected - parcelasSalvas;
+                    var count = parcelasSalvas;
+                    for (var i = 1; i <= parseInt(faltando); i++) {
+                        html += template({
+                            count: parseInt(count) + 1,
+                        });
+                        count++;
+                    }
+                }
+
+                $('#modalParcelas').find('#formParcela').html(html);
+
+                $('#editarModal').on('click', editarModal);
+                $('#modalParcelas').modal('show');
+
+
             } else {
-
 
                 $(".botoes").html("<button type='button' class='btn btn-secondary' data-dismiss='modal'>Fechar</button>" + "<button type='button' class='btn btn-primary' name='salvar' id='salvarModal'>Salvar</button>");
 
@@ -461,17 +560,20 @@ $valor = $incentivador_projeto['valor_aportado'];
                 $('#salvarModal').on('click', salvarModal);
                 $('#modalParcelas').find('#formParcela').html(html);
                 $('#modalParcelas').modal('show');
-
             }
 
+        }
 
     };
 
 
     var salvarModal = function () {
-        var idAtracao = "<?= isset($oficina) ? $oficina : '' ?>";
+
+        let idProjeto = "<?php echo $idProjeto ?>";
+        let tipoPessoa = "<?php echo $tipoPessoa ?>";
 
         var count = 0;
+
         $("#formParcela input").each(function () {
             if ($(this).val() == "" || $(this).val() == "0,00") {
                 count++;
@@ -482,115 +584,51 @@ $valor = $incentivador_projeto['valor_aportado'];
             swal("Preencha todas as informações para editar as parcelas!", "", "warning");
         } else {
 
-            if (idAtracao == 4) {
-                if ($("#numero_parcelas").val() == 4) {
-                    // $("#numero_parcelas").val("3");
-                    var parcelas = $("#numero_parcelas").val() - 1;
+            var parcelas = $("#numero_parcelas").val();
+            var arrayData = [];
+            var arrayValor = [];
 
-                } else if ($("#numero_parcelas").val() == 3) {
-                    //$("#numero_parcelas").val("2");
-                    var parcelas = $("#numero_parcelas").val() - 1;
-
-                } else {
-                    var parcelas = $("#numero_parcelas").val();
-                }
-
-                var arrayKit = [];
-                var arrayValor = [];
-                var arrayInicial = [];
-                var arrayFinal = [];
-                var horas = [];
-
-                for (var i = 1; i <= parcelas; i++) {
-                    arrayKit [i] = $("input[name='modal_data_kit_pagamento[" + i + "]']").val();
-                    arrayValor [i] = $("input[name='valor[" + i + "]']").val();
-                    arrayInicial [i] = $("input[name='inicial[" + i + "]']").val();
-                    arrayFinal[i] = $("input[name='final[" + i + "]']").val();
-                    horas[i] = $("input[name='horas[" + i + "]']").val();
-                }
-
-                $('#modalOficina').slideUp();
-
-                $.post('?perfil=evento&p=parcelas_cadastro', {
-                    parcelas: parcelas,
-                    arrayValor: arrayValor,
-                    arrayKit: arrayKit,
-                    arrayInicial: arrayInicial,
-                    arrayFinal: arrayFinal,
-                    horas: horas
-                })
-                    .done(function () {
-                        var sourceOficina = document.getElementById("templateOficina").innerHTML;
-                        var templateOficina = Handlebars.compile(sourceOficina);
-                        var html = '';
-
-                        for (var count = 0; count < parcelas; count++) {
-                            html += templateOficina({
-                                count: count + 1, // para sincronizar com o array vindo do banco
-                                valor: arrayValor [count],
-                                kit: arrayKit [count],
-                                inicial: arrayInicial [count],
-                                final: arrayFinal [count],
-                                horas: horas [count],
-                            });
-                        }
-
-                        swal("" + parcelas + " parcelas gravadas com sucesso!", "", "success")
-                            .then(() => {
-                                // location.reload(true);
-                                //$('#modalOficina').slideDown('slow');
-                            });
-                    })
-                    .fail(function () {
-                        swal("danger", "Erro ao gravar");
-                    });
-
-            } else {
-
-                var parcelas = $("#numero_parcelas").val();
-                var arrayKit = [];
-                var arrayValor = [];
-
-                for (var i = 1; i <= parcelas; i++) {
-                    arrayKit [i] = $("input[name='modal_data_kit_pagamento[" + i + "]']").val();
-                    arrayValor [i] = $("input[name='valor[" + i + "]']").val();
-                }
-
-                var newButtons = "<button type='button' class='btn btn-secondary' data-dismiss='modal'>Fechar</button>" + "<button type='button' class='btn btn-primary' name='editar' id='editarModal'>Editar</button>";
-
-                $('#modalParcelas').slideUp();
-
-                $.post('?perfil=evento&p=parcelas_cadastro', {
-                    parcelas: parcelas,
-                    arrayValor: arrayValor,
-                    arrayKit: arrayKit
-                })
-                    .done(function () {
-                        var source = document.getElementById("templateParcela").innerHTML;
-                        var template = Handlebars.compile(source);
-                        var html = '';
-
-                        for (var count = 0; count < parcelas; count++) {
-                            html += template({
-                                count: count + 1, // para sincronizar com o array vindo do banco
-                                valor: arrayValor[count],
-                                kit: arrayKit[count],
-                            });
-                        }
-
-                        $(".botoes").html(newButtons);
-                        $('#editarModal').on('click', editarModal);
-
-                        swal("" + parcelas + " parcelas gravadas com sucesso!", "", "success")
-                            .then(() => {
-                                $('#modalParcelas').slideDown('slow');
-                                //window.location.href = "?perfil=evento&p=parcelas_cadastro";
-                            });
-                    })
-                    .fail(function () {
-                        swal("danger", "Erro ao gravar");
-                    });
+            for (var i = 1; i <= parcelas; i++) {
+                arrayData [i] = $("input[name='modal_data[" + i + "]']").val();
+                arrayValor [i] = $("input[name='valor[" + i + "]']").val();
             }
+
+            var newButtons = "<button type='button' class='btn btn-secondary' data-dismiss='modal'>Fechar</button>" + "<button type='button' class='btn btn-primary' name='editar' id='editarModal'>Editar</button>";
+
+            $('#modalParcelas').slideUp();
+
+            $.post('?perfil=includes/parcelas_cadastro', {
+                parcelas: parcelas,
+                arrayValor: arrayValor,
+                arrayData: arrayData,
+                idProjeto: idProjeto,
+                tipoPessoa: tipoPessoa
+            })
+                .done(function () {
+                    var source = document.getElementById("templateParcela").innerHTML;
+                    var template = Handlebars.compile(source);
+                    var html = '';
+
+                    for (var count = 0; count < parcelas; count++) {
+                        html += template({
+                            count: count + 1, // para sincronizar com o array vindo do banco
+                            valor: arrayValor[count],
+                            date: arrayData[count],
+                        });
+                    }
+
+                    $(".botoes").html(newButtons);
+                    $('#editarModal').on('click', editarModal);
+
+                    swal("" + parcelas + " parcelas gravadas com sucesso!", "", "success")
+                        .then(() => {
+                            $('#modalParcelas').slideDown('slow');
+                            //window.location.href = "?perfil=evento&p=parcelas_cadastro";
+                        });
+                })
+                .fail(function () {
+                    swal("danger", "Erro ao gravar");
+                });
         }
     };
 
@@ -621,14 +659,14 @@ $valor = $incentivador_projeto['valor_aportado'];
                 } else {
                     var parcelas = $("#numero_parcelas").val();
                 }
-                var arrayKit = [];
+                var arrayData = [];
                 var arrayValor = [];
                 var arrayInicial = [];
                 var arrayFinal = [];
                 var horas = [];
 
                 for (var i = 1; i <= parcelas; i++) {
-                    arrayKit [i] = $("input[name='modal_data_kit_pagamento[" + i + "]']").val();
+                    arrayData [i] = $("input[name='modal_data_kit_pagamento[" + i + "]']").val();
                     arrayValor [i] = $("input[name='valor[" + i + "]']").val();
                     arrayInicial [i] = $("input[name='inicial[" + i + "]']").val();
                     arrayFinal[i] = $("input[name='final[" + i + "]']").val();
@@ -646,7 +684,7 @@ $valor = $incentivador_projeto['valor_aportado'];
                 $.post('?perfil=evento&p=parcelas_edita', {
                     parcelas: parcelas,
                     valores: arrayValor,
-                    datas: arrayKit,
+                    datas: arrayData,
                     arrayInicial: arrayInicial,
                     arrayFinal: arrayFinal,
                     horas: horas
@@ -656,7 +694,7 @@ $valor = $incentivador_projeto['valor_aportado'];
                             html += templateOficina({
                                 count: count + 1, // para sincronizar com o array vindo do banco
                                 valor: arrayValor [count],
-                                kit: arrayKit [count],
+                                kit: arrayData [count],
                                 inicial: arrayInicial [count],
                                 final: arrayFinal [count],
                                 horas: horas [count],
