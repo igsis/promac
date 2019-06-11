@@ -54,19 +54,19 @@ if ($query = mysqli_query($con, $sqlProjeto)) {
 
 $idProjeto = $incentivador_projeto['idProjeto'];
 $valor = $incentivador_projeto['valor_aportado'];
-$qtadeParcelas = $incentivador_projeto['numero_parcelas'];
 
 //print_r($incentivador_projeto);
 
 
 //verificando parcelas
 $sqlParcelas = "SELECT * FROM parcelas_incentivo WHERE idProjeto = '$idProjeto' AND tipoPessoa = '$tipoPessoa' AND idIncentivador = '$idIncentivador'";
-$query = mysqli_query($con, $sqlParcelas);
-$numRows = mysqli_num_rows($query);
+$queryParcelas = mysqli_query($con, $sqlParcelas);
+$numRows = mysqli_num_rows($queryParcelas);
 
 if ($numRows > 0) {
+    $qtadeParcelas = $incentivador_projeto['numero_parcelas'];
     $somaParcelas = 0;
-    while ($parcela = mysqli_fetch_array($query)) {
+    while ($parcela = mysqli_fetch_array($queryParcelas)) {
         $arrayValores[] = dinheiroParaBr($parcela['valor']);
         $arrayDatas[] = $parcela['data_pagamento'];
         $idsParcela [] = $parcela['id'];
@@ -77,10 +77,6 @@ if ($numRows > 0) {
     $StringValores = implode("|", $arrayValores);
     $StringDatas = implode("|", $arrayDatas);
 }
-
-
-
-
 
 
 ?>
@@ -186,23 +182,6 @@ if ($numRows > 0) {
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <div class="row">
-                                        <div class='inputs none'>
-                                            <div class="col-md-offset-3 col-md-1">
-                                                <label for='parcela'>Parcela</label>
-                                                <input type='number' class='form-control' id="idParcela" name='parcela'
-                                                       value='1'
-                                                       disabled>
-                                            </div>
-                                            <div class='col-md-3'>
-                                                <label for='data'>Data</label>
-                                                <input type='date' class='form-control' name='data' value="1" required>
-                                            </div>
-                                            <div class='col-md-2'>
-                                                <label for='valor'>Valor</label>
-                                                <input type='text' class='form-control' value="1" name='valor'
-                                                       onkeypress="return(moeda(this, '.', ',', event));" required>
-                                            </div>
-                                        </div>
                                         <div class="col-md-offset-4 col-md-2">
                                             <label for="numero_parcelas">Número de Parcelas</label>
                                             <select class="form-control" id="numero_parcelas" name="numero_parcelas"
@@ -211,26 +190,30 @@ if ($numRows > 0) {
                                                 <?php
                                                 for ($i = 1; $i <= 10; $i++) {
 
-                                                    if ($i == $qtadeParcelas) {
+                                                    if (isset($qtadeParcelas) && $i == $qtadeParcelas) {
                                                         echo "<option value='" . $qtadeParcelas . "' selected>$qtadeParcelas</option>";
-
                                                     } else {
-
-                                                        echo $i . " parcelas = " . $qtadeParcelas;
+                                                        echo "<option value='$i'>$i</option>";
                                                     }
                                                 }
-
-                                                echo $qtadeParcelas;
                                                 ?>
                                             </select>
                                         </div>
+                                        <div class="dataPagamento none">
+                                            <div class='col-md-3'>
+                                                <label for='data'>Data</label>
+                                                <input type='date' class='form-control' name='data' value="1" required>
+                                            </div>
+                                        </div>
                                         <br>
-                                        <div class="col-md-6">
-                                            <button type="button" style="margin-top: 5px;"
-                                                    id="adicionarParcelas" onclick="abrirModal()"
-                                                    class="btn btn-primary pull-left">
-                                                Editar Parcelas
-                                            </button>
+                                        <div class="botaoEditar">
+                                            <div class="col-md-6">
+                                                <button type="button" style="margin-top: 5px;"
+                                                        id="adicionarParcelas" onclick="abrirModal()"
+                                                        class="btn btn-primary pull-left">
+                                                    Editar Parcelas
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -393,16 +376,16 @@ if ($numRows > 0) {
 
         var optionSelect = document.querySelector("#numero_parcelas").value;
         var editarParcelas = document.querySelector('#adicionarParcelas');
-        var inputs = document.querySelector(".inputs");
+        var dataPagamento = document.querySelector(".dataPagamento");
 
         if (optionSelect == "1" || optionSelect == 0) {
-            inputs.required = true;
+            dataPagamento.required = true;
             editarParcelas.style.display = "none";
-            inputs.style.display = "block";
+            dataPagamento.style.display = "block";
         } else {
             $("#data_kit_pagamento").attr("required", false);
             editarParcelas.style.display = "block";
-            inputs.style.display = "none";
+            dataPagamento.style.display = "none";
         }
     });
 
