@@ -1,10 +1,10 @@
 <?php
 $con = bancoMysqli();
-$idPj = $_SESSION['idUser'];
-$tipoPessoa = '5';
+$idPf = $_SESSION['idUser'];
+$tipoPessoa = '4';
 
 if (isset($_POST['iniciar_incentivo'])) {
-    $sqlEtapa = "INSERT INTO etapas_incentivo (tipoPessoa, idIncentivador, etapa) VALUES ($tipoPessoa, $idPj, 1)";
+    $sqlEtapa = "INSERT INTO etapas_incentivo (tipoPessoa, idIncentivador, etapa) VALUES ($tipoPessoa, $idPf, 1)";
     if (mysqli_query($con, $sqlEtapa)) {
         $mensagemInicial = "<font color='#01DF3A'><strong>Você iniciou o processo de incentivar um projeto.<br>Por favor, siga as etapas seguintes preenchendo corretamente todas as informações solicitadas.</strong></font>";
     }
@@ -37,7 +37,7 @@ if (isset($_POST["enviar"])) {
                 if (in_array($ext, $allowedExts)) //Pergunta se a extensão do arquivo, está presente no array das extensões permitidas
                 {
                     if (move_uploaded_file($nome_temporario, $dir . $new_name)) {
-                        $sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('$tipoPessoa', '$idPj', '$y', '$new_name', '$hoje', '1'); ";
+                        $sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('$tipoPessoa', '$idPf', '$y', '$new_name', '$hoje', '1'); ";
                         $query = mysqli_query($con, $sql_insere_arquivo);
                         if ($query) {
                             $mensagem = "<font color='#01DF3A'><strong>Arquivo(s) recebido(s) com sucesso!</strong></font>";
@@ -67,28 +67,26 @@ if (isset($_POST['apagar'])) {
     }
 }
 
-$pj = recuperaDados("incentivador_pessoa_juridica", "idPj", $idPj);
+$pf = recuperaDados("incentivador_pessoa_fisica", "idPf", $idPf);
 
 ?>
 <section id="list_items" class="home-section bg-white">
-    <div class="container">
-    <?php include 'menu_interno_pj.php'?>
+    <div class="container"><?php include '../includes/menu_interno_pf.php' ?>
         <ul class="nav nav-tabs">
             <li class="nav active"><a href="#admIncentivador" data-toggle="tab">Administrativo</a></li>
             <li class="nav"><a href="#resumo" data-toggle="tab">Resumo do projeto</a></li>
         </ul>
         <div class="tab-content">
-            <div class="tab-pane fade in active" id="admIncentivador">
-
-            </div>
             <div class="tab-pane fade" id="resumo">
                 <?php
                 echo "<br><div class='alert alert-warning'>
 	                    <strong>Aviso!</strong> Seus dados já foram aceitos, portanto, não podem ser alterados.</div>";
-                include 'resumo_dados_incentivador_pj.php';
+                include '../includes/resumo_dados_incentivador_pf.php';
                 ?>
             </div>
-        </div>
+        <div class="tab-pane fade in active" id="admIncentivador">
+
+
         <br>
         <h5><?php if (isset($mensagemInicial)) {
                 echo $mensagemInicial;
@@ -104,7 +102,7 @@ $pj = recuperaDados("incentivador_pessoa_juridica", "idPj", $idPj);
         <div class="row">
             <div class="col-md-offset-1 col-md-10">
                 <?php
-                if ($pj['liberado'] >= 3)
+                if ($pf['liberado'] >= 3)
                 {
                 ?>
                 <!-- Exibir arquivos -->
@@ -113,11 +111,11 @@ $pj = recuperaDados("incentivador_pessoa_juridica", "idPj", $idPj);
                         <div class="table-responsive list_info"><h6>Arquivo(s) Anexado(s)</h6>
                             <?php
 
-                            $arqsEnviados = listaArquivosPessoa($idPj, $tipoPessoa, "includes/documentos_fiscais_incentivador_pj", "39, 40, 41, 42, 43, 54");
+                            $arqsEnviados = listaArquivosPessoa($idPf, $tipoPessoa, "includes/documentos_fiscais_incentivador_pf", "39, 40, 41, 42, 43, 54");
                             if ($arqsEnviados == 6) {
                                 echo "
-                                      <form method='POST' action='?perfil=includes/incentivadorPJ_etapa3_visualiza_docs' enctype='multipart/form-data'>
-                                      <input type='hidden' name='idPj' value='$idPj'>                                   
+                                      <form method='POST' action='?perfil=includes/incentivadorPF_etapa3_visualiza_docs' enctype='multipart/form-data'>
+                                      <input type='hidden' name='idPf' value='$idPf'>                                   
                                           <input type='submit' name='enviarSMC' class='btn btn-theme btn-lg btn-block'
                                                value='Enviar à SMC'>                                     
                                         
@@ -131,7 +129,7 @@ $pj = recuperaDados("incentivador_pessoa_juridica", "idPj", $idPj);
                 <div class="form-group" id="uploadDocs">
                     <div class="col-md-12">
                         <div class="table-responsive list_info"><h6>Upload de Arquivo(s) Somente em PDF</h6>
-                            <form method="POST" action="?perfil=includes/documentos_fiscais_incentivador_pj"
+                            <form method="POST" action="?perfil=includes/documentos_fiscais_incentivador_pf"
                                   enctype="multipart/form-data">
                                 <?php
                                 $documentos = [];
@@ -143,7 +141,7 @@ $pj = recuperaDados("incentivador_pessoa_juridica", "idPj", $idPj);
                                     $envio = $con->query($query);
                                     $row = $envio->fetch_array(MYSQLI_ASSOC);
 
-                                    if (!verificaArquivosExistentesIncentivador($idPj, $row['idListaDocumento'])) {
+                                    if (!verificaArquivosExistentesIncentivador($idPf, $row['idListaDocumento'])) {
                                         $documento = (object)
                                         [
                                             'nomeDocumento' => $arq['documento'],
@@ -169,7 +167,7 @@ $pj = recuperaDados("incentivador_pessoa_juridica", "idPj", $idPj);
                                         }
                                         ?>
                                     </table>
-                                    <input type="hidden" name="idPessoa" value="<?php echo $idPj; ?>"/>
+                                    <input type="hidden" name="idPessoa" value="<?php echo $idPf; ?>"/>
                                     <input type="hidden" name="tipoPessoa" value="<?php echo $tipoPessoa; ?>"/>
                                     <input type="submit" name="enviar" class="btn btn-theme btn-lg btn-block"
                                            value='upload'>
@@ -181,6 +179,9 @@ $pj = recuperaDados("incentivador_pessoa_juridica", "idPj", $idPj);
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        </div>
                 <!-- Fim Upload de arquivo -->
 
                 <!-- Confirmação de Exclusão -->
@@ -211,15 +212,13 @@ $pj = recuperaDados("incentivador_pessoa_juridica", "idPj", $idPj);
 </section>
 
 
-<script type="text/javascript">
+<script>
     function verificaResposta() {
         if ($('#nao').is(':checked')) {
-            location.href = '?perfil=cadastro_incentivador_pj'
+            location.href = '?perfil=cadastro_incentivador_pf'
         } else if ($('#sim').is(':checked')) {
             //$('#aviso').css('display', 'none');
-            location.href = '?perfil=includes/documentos_fiscais_incentivador_pj'
+            location.href = '?perfil=includes/documentos_fiscais_incentivador_pf'
         }
     }
-
-
 </script>

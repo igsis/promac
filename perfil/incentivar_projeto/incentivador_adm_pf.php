@@ -52,20 +52,20 @@ case '':
     <?php
     break;
 case '1':
-    echo "<script>location.href = '?perfil=includes/documentos_fiscais_incentivador_pf'</script>";
+    echo "<script>location.href = '?perfil=incentivar_projeto/documentos_fiscais_incentivador_pf'</script>";
     break;
 
 case '2':
 case '3':
-    echo "<script>location.href = '?perfil=includes/incentivadorPF_etapa3_visualiza_docs'</script>";
+    echo "<script>location.href = '?perfil=incentivar_projeto/incentivadorPF_etapa3_visualiza_docs'</script>";
     break;
 
     case '4':
-        echo "<script>location.href = '?perfil=includes/incentivador_etapa4_buscarProjeto&tipoPessoa=$tipoPessoa'</script>";
+        echo "<script>location.href = '?perfil=incentivar_projeto/incentivador_etapa4_buscarProjeto&tipoPessoa=$tipoPessoa'</script>";
         break;
 
     case '6':
-        echo "<script>location.href = '?perfil=includes/incentivador_etapa6_incentivarProjeto&tipoPessoa=$tipoPessoa'</script>";
+        echo "<script>location.href = '?perfil=incentivar_projeto/incentivador_etapa6_incentivarProjeto&tipoPessoa=$tipoPessoa'</script>";
         break;
 
 }

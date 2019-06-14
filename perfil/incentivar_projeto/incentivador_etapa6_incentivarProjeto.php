@@ -34,7 +34,7 @@ if (isset($_POST['incentivar_projeto']) || isset($_POST['editar'])) {
         }
     }
 
-    if (isset($_POST['editar'])) {
+    if (isset($_POST['editarValor'])) {
         $sql_incentivar = "UPDATE incentivador_projeto SET valor_aportado = '$valor' WHERE idIncentivador = '$idIncentivador' AND tipoPessoa = '$tipoPessoa' AND idProjeto = '$idProjeto'";
 
         if (mysqli_query($con, $sql_incentivar)) {
@@ -89,7 +89,7 @@ if ($numRows > 0) {
 </style>
 
 <section id="list_items" class="home-section bg-white">
-    <div class="container"><?php include 'menu_interno_pf.php' ?>
+    <div class="container"><?php include '../includes/menu_interno_pf.php' ?>
         <ul class="nav nav-tabs">
             <li class="nav active"><a href="#admIncentivador" data-toggle="tab">Administrativo</a></li>
             <li class="nav"><a href="#resumo" data-toggle="tab">Resumo do projeto</a></li>
@@ -124,7 +124,7 @@ if ($numRows > 0) {
                                                    class="form-control"
                                                    value="<?= dinheiroParaBr($valor) ?>">
                                             <div class="input-group-btn">
-                                                <button type="submit" class="btn btn-default" name="editar"
+                                                <button type="submit" class="btn btn-default" name="editarValor"
                                                         style="font-size: 20px">
                                                     <span class="glyphicon glyphicon-edit"></span>
                                                 </button>
@@ -220,9 +220,7 @@ if ($numRows > 0) {
                             </div>
                         </div>
                 </div>
-
                 <!-- Button trigger modal -->
-
             </div>
 
             <input type="hidden" name="tipoPessoa" value="<? /*=$tipoPessoa*/ ?>">
