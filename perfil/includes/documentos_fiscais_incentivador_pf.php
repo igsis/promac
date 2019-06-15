@@ -71,7 +71,7 @@ $pf = recuperaDados("incentivador_pessoa_fisica", "idPf", $idPf);
 
 ?>
 <section id="list_items" class="home-section bg-white">
-    <div class="container"><?php include '../includes/menu_interno_pf.php' ?>
+    <div class="container"><?php include 'menu_interno_pf.php' ?>
         <ul class="nav nav-tabs">
             <li class="nav active"><a href="#admIncentivador" data-toggle="tab">Administrativo</a></li>
             <li class="nav"><a href="#resumo" data-toggle="tab">Resumo do projeto</a></li>
@@ -81,7 +81,7 @@ $pf = recuperaDados("incentivador_pessoa_fisica", "idPf", $idPf);
                 <?php
                 echo "<br><div class='alert alert-warning'>
 	                    <strong>Aviso!</strong> Seus dados já foram aceitos, portanto, não podem ser alterados.</div>";
-                include '../includes/resumo_dados_incentivador_pf.php';
+                include 'resumo_dados_incentivador_pf.php';
                 ?>
             </div>
         <div class="tab-pane fade in active" id="admIncentivador">

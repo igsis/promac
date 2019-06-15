@@ -117,7 +117,7 @@ if (isset($_POST['apagar'])) {
 ?>
 
 <section id="list_items" class="home-section bg-white">
-    <div class="container"><?php include '../includes/menu_interno_pf.php' ?>
+    <div class="container"><?php include 'menu_interno_pf.php' ?>
         <ul class="nav nav-tabs">
             <li class="nav active"><a href="#admIncentivador" data-toggle="tab">Administrativo</a></li>
             <li class="nav"><a href="#resumo" data-toggle="tab">Resumo do projeto</a></li>
