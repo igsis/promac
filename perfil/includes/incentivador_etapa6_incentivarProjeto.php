@@ -176,6 +176,17 @@ if ($numRows > 0) {
                                 </div>
                             </div>
                         </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-lg-offset-4 col-md-6">
+                                    <button type="submit" id="" name="gravarInfos"
+                                            class="btn btn-success pull-center">
+                                        Gravar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                         <hr>
                         <h6>Cronograma</h6>
                         <div class="row">
@@ -350,11 +361,6 @@ if ($numRows > 0) {
 <script type="text/javascript">
 
     $(function () {
-        $('#numero_parcelas').on('change', ocultarBotao);
-
-        // $('#adicionarParcelas').on('click', abrirModal);
-
-
         $('#editarModal').on('click', editarModal);
     });
 
@@ -362,13 +368,6 @@ if ($numRows > 0) {
     $('#modalParcelas').on('hide.bs.modal', function () {
         location.reload(true);
     });
-
-
-    /*    $('#  addParcelas').on('click', function () {
-
-            console.log('chamou a functionnnnn');
-        });*/
-
 
     $('#numero_parcelas').on('change', function () {
 
