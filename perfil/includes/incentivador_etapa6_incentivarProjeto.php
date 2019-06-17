@@ -70,6 +70,7 @@ if (isset($_POST['gravarInfos'])) {
 }
 
 $impostoRegistrado = $incentivador_projeto['imposto'] ?? '';
+$edital = $incentivador_projeto['edital'] ?? '';
 
 
 //verificando parcelas
@@ -120,19 +121,18 @@ if (isset($qtadeParcelas) && $impostoRegistrado && $edital) {
                     ?>
                     <div class='alert alert-warning'>
                         <strong>Verifique atentamente as informações gravadas antes de gerar seu
-                        contrato!</div>
+                            contrato!</div>
                     <div class="row">
-                        <div class='botaoGerarContrato'>
-                            <form action="../../pdf/pdf_incentivar_projeto.php" method="post" class="form-group">
-                                <div class='col-md-offset-4 col-md-6'>
-                                    <button type='button' id='gerarContrato'
-                                            class='btn btn-success btn-block pull-center'>
-                                        Gerar Contrato
-                                    </button>
-                                </div>
-                            </form>
-
-                        </div>
+                        <form action="../pdf/pdf_incentivar_projeto.php" method="post" class="form-group">
+                            <div class='col-md-offset-4 col-md-6'>
+                                <a href='<?php echo "../pdf/pdf_incentivar_projeto.php?tipoPessoa=$tipoPessoa&idPessoa=$idIncentivador&idProjeto=$idProjeto"; ?>' target='_blank'
+                                   class="btn btn-theme btn-md btn-block"><strong>Gerar Contrato</strong></a><br/>
+                                <!--<button type='submit' id='gerarContrato'
+                                        class='btn btn-success btn-block pull-center'>
+                                    Gerar Contrato
+                                </button>-->
+                            </div>
+                        </form>
                     </div>
                     <hr width="50%">
                     <?php
@@ -220,7 +220,8 @@ if (isset($qtadeParcelas) && $impostoRegistrado && $edital) {
                                             ?>
 
                                             <input type="radio" name="imposto" value="ISS" <?= $iss ?>>&nbsp;ISS
-                                            &nbsp;&nbsp;&nbsp;<input type="radio" name="imposto" value="IPTU"<?= $iptu ?> >&nbsp;IPTU
+                                            &nbsp;&nbsp;&nbsp;<input type="radio" name="imposto"
+                                                                     value="IPTU"<?= $iptu ?> >&nbsp;IPTU
 
 
                                         </label>
