@@ -50,14 +50,19 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('W1', 'Estado')
             ->setCellValue('Z1', 'CEP')
             ->setCellValue('Y1', 'Etapa')
-            ->setCellValue('Z1', 'Status');
+            ->setCellValue('Z1', 'Início do Cronograma')
+            ->setCellValue('AA1', 'Fim do Cronograma')
+            ->setCellValue('AB1', 'Prestação de Contas')
+            ->setCellValue('AC1', 'Status');
 
 //Colorir a primeira fila
-$objPHPExcel->getActiveSheet()->getStyle('A1:AA1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
-$objPHPExcel->getActiveSheet()->getStyle('A1:AA1')->getFill()->getStartColor()->setARGB('#29bb04');
+$objPHPExcel->getActiveSheet()->getStyle('A1:AD1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+$objPHPExcel->getActiveSheet()->getStyle('A1:AD1')->getFill()->getStartColor()->setARGB('#29bb04');
 // Add some data
-$objPHPExcel->getActiveSheet()->getStyle("A1:AA1")->getFont()->setBold(true);
-$objPHPExcel->getActiveSheet()->getStyle('A1:AA1')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+$objPHPExcel->getActiveSheet()->getStyle("A1:AD1")->getFont()->setBold(true);
+$objPHPExcel->getActiveSheet()->getStyle('A1:AD1')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+
+
 $styleArray = array(
       'borders' => array(
           'allborders' => array(
@@ -93,10 +98,13 @@ $objPHPExcel->getActiveSheet()->getColumnDimension('W')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('X')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('Y')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('Z')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('AA')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('AB')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('AC')->setAutoSize(true);
 
 
 //Dados Projeto
-$sql = "SELECT idProjeto, areaAtuacao, segmento, protocolo, nomeProjeto, valorProjeto, valorIncentivo, resumoProjeto, publicoAlvo, tipoPessoa, idPj, idPf, etapaProjeto, pr.idEtapaProjeto, es.status, tipoPessoa, valorAprovado, idRenunciaFiscal
+$sql = "SELECT idProjeto, pr.idCronograma, pr.inicioCronograma, pr.fimCronograma, areaAtuacao, segmento, protocolo, nomeProjeto, valorProjeto, valorIncentivo, resumoProjeto, publicoAlvo, tipoPessoa, idPj, idPf, etapaProjeto, pr.idEtapaProjeto, es.status, tipoPessoa, valorAprovado, idRenunciaFiscal
          FROM projeto AS pr
          INNER JOIN etapa_projeto AS st ON pr.idEtapaProjeto = st.idEtapaProjeto
          LEFT JOIN etapa_status AS es ON pr.idStatus = es.idStatus
@@ -196,6 +204,8 @@ while($row = mysqli_fetch_array($query))
    $lista_local = listaLocal($row['idProjeto']);
    $lista_prazos = recuperaDados("prazos_projeto","idProjeto",$row['idProjeto']);
 
+   $cronograma = recuperaDados("cronograma", "idCronograma", $row['idCronograma']);
+
    $tipoPessoa = $row['tipoPessoa'];
    if($tipoPessoa == 1)
    {
@@ -237,7 +247,10 @@ while($row = mysqli_fetch_array($query))
                ->setCellValue('W'.$i, $estado)
                ->setCellValue('X'.$i, $cep)
                ->setCellValue('Y'.$i, $row['etapaProjeto'])
-               ->setCellValue('Z'.$i, $row['status']);
+               ->setCellValue('Z'.$i, $row['inicioCronograma'])
+               ->setCellValue('AA'.$i, $row['fimCronograma'])
+               ->setCellValue('AB'.$i, $cronograma['prestacaoContas'])
+               ->setCellValue('AC'.$i, $row['status']);
    $i++;
 }
 
