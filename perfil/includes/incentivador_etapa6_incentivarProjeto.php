@@ -52,7 +52,6 @@ if ($query = mysqli_query($con, $sqlProjeto)) {
 }
 $idProjeto = $incentivador_projeto['idProjeto'];
 $valor = $incentivador_projeto['valor_aportado'];
-$impostoRegistrado = $incentivador_projeto['imposto'];
 
 if (isset($_POST['gravarInfos'])) {
     $edital = $_POST['edital'];
@@ -69,6 +68,8 @@ if (isset($_POST['gravarInfos'])) {
         $impostoRegistrado = $imposto;
     }
 }
+
+$impostoRegistrado = $incentivador_projeto['imposto'] ?? '';
 
 
 //verificando parcelas
@@ -117,21 +118,23 @@ if (isset($qtadeParcelas) && $impostoRegistrado && $edital) {
 
                 if ($gerarContrato != 0) {
                     ?>
-                    <font color='#FFA500'><strong>Observe atentamente as informacoes preenchidas antes de gerar seu
-                            contrato!</strong></font>
+                    <div class='alert alert-warning'>
+                        <strong>Verifique atentamente as informações gravadas antes de gerar seu
+                        contrato!</div>
                     <div class="row">
                         <div class='botaoGerarContrato'>
-                            <form action="?perfil=includes/incentivador_etapa6_incentivarProjeto"></form>
-                            <div class='col-md-offset-4 col-md-6'>
-                                <button type='button'
-                                        id='gerarContrato'
-                                        class='btn btn-success btn-block pull-center'>
-                                    Gerar Contrato
-                                </button>
-                            </div>
+                            <form action="../../pdf/pdf_incentivar_projeto.php" method="post" class="form-group">
+                                <div class='col-md-offset-4 col-md-6'>
+                                    <button type='button' id='gerarContrato'
+                                            class='btn btn-success btn-block pull-center'>
+                                        Gerar Contrato
+                                    </button>
+                                </div>
+                            </form>
+
                         </div>
                     </div>
-                    <hr>
+                    <hr width="50%">
                     <?php
                 }
                 ?>
@@ -203,8 +206,6 @@ if (isset($qtadeParcelas) && $impostoRegistrado && $edital) {
                                         <label for="imposto">
                                             <?php
                                             if ($impostoRegistrado) {
-                                                //  echo "<input type='radio' name='imposto' value='" . $imposto. "' checked>&nbsp;$imposto</option>";
-
                                                 if ($impostoRegistrado == "ISS") {
                                                     $iss = 'checked';
                                                     $iptu = '';
@@ -212,12 +213,14 @@ if (isset($qtadeParcelas) && $impostoRegistrado && $edital) {
                                                     $iptu = 'checked';
                                                     $iss = '';
                                                 }
+                                            } else {
+                                                $iss = '';
+                                                $iptu = '';
                                             }
                                             ?>
 
                                             <input type="radio" name="imposto" value="ISS" <?= $iss ?>>&nbsp;ISS
-                                            &nbsp;&nbsp;&nbsp;<input type="radio" name="imposto"
-                                                                     value="IPTU"<?= $iptu ?> >&nbsp;IPTU
+                                            &nbsp;&nbsp;&nbsp;<input type="radio" name="imposto" value="IPTU"<?= $iptu ?> >&nbsp;IPTU
 
 
                                         </label>
