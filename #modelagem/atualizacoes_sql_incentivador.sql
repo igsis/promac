@@ -32,18 +32,21 @@ ALTER TABLE `etapas_incentivo`
 * 27/05/2019 -> Lorelei
 */
 
-/*Inicio 
-*06/06/2019 -> Tanair
+/*
+* Inicio 
+* 06/06/2019 -> Tanair
 */ 
 
 ALTER TABLE `promac`.`incentivador_projeto` 
 ADD COLUMN `valor_aportado` DECIMAL(11,2) NOT NULL AFTER `idProjeto`;
 
-/* FIM
+/* 
+* FIM
 * 06/06/2019 -> Tanair 
 */
 
-/* Início
+/* 
+* Início
 * 10/06/2019 -> Tanair 
 */ 
 
@@ -66,4 +69,19 @@ ADD COLUMN `numero_parcelas` TINYINT(1) NULL AFTER `valor_aportado`;
 /* 
 * FIM -> Tanair
 * 10/06/2019 
+*/ 
+
+/* 
+* Início 
+* 17/06/2019 -> Tanair 
+*/ 
+
+ALTER TABLE `promac`.`incentivador_projeto` 
+ADD COLUMN `edital` INT NULL COMMENT '' AFTER `numero_parcelas`,
+ADD COLUMN `imposto` VARCHAR(5) NULL COMMENT '' AFTER `edital`;
+
+
+/* 
+* FIM -> Tanair
+* 17/06/2019 
 */ 

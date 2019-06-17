@@ -2,6 +2,7 @@
 $con = bancoMysqli();
 $idIncentivador = $_SESSION['idUser'];
 $tipoPessoa = $_POST['tipoPessoa'] ?? $_GET['tipoPessoa'];
+$gerarContrato = 0;
 
 
 if (isset($_POST['incentivar_projeto']) || isset($_POST['editar'])) {
@@ -43,19 +44,31 @@ if (isset($_POST['incentivar_projeto']) || isset($_POST['editar'])) {
     }
 }
 
-
 $sqlProjeto = "SELECT * FROM incentivador_projeto WHERE idIncentivador = $idIncentivador AND tipoPessoa = $tipoPessoa";
 
 if ($query = mysqli_query($con, $sqlProjeto)) {
     $incentivador_projeto = mysqli_fetch_array($query);
 
 }
-
-
 $idProjeto = $incentivador_projeto['idProjeto'];
 $valor = $incentivador_projeto['valor_aportado'];
+$impostoRegistrado = $incentivador_projeto['imposto'];
 
-//print_r($incentivador_projeto);
+if (isset($_POST['gravarInfos'])) {
+    $edital = $_POST['edital'];
+    $imposto = $_POST['imposto'];
+
+    $sqlInfos = "UPDATE incentivador_projeto SET edital = '$edital', 
+                                                 imposto = '$imposto'
+                                             WHERE idIncentivador = '$idIncentivador' 
+                                               AND tipoPessoa = '$tipoPessoa' 
+                                               AND idProjeto = '$idProjeto'";
+
+
+    if (mysqli_query($con, $sqlInfos)) {
+        $impostoRegistrado = $imposto;
+    }
+}
 
 
 //verificando parcelas
@@ -65,17 +78,10 @@ $numRows = mysqli_num_rows($queryParcelas);
 
 if ($numRows > 0) {
     $qtadeParcelas = $incentivador_projeto['numero_parcelas'];
-    $somaParcelas = 0;
-    while ($parcela = mysqli_fetch_array($queryParcelas)) {
-        $arrayValores[] = dinheiroParaBr($parcela['valor']);
-        $arrayDatas[] = $parcela['data_pagamento'];
-        $idsParcela [] = $parcela['id'];
+}
 
-        $somaParcelas += $parcela['valor'];
-    }
-
-    $StringValores = implode("|", $arrayValores);
-    $StringDatas = implode("|", $arrayDatas);
+if (isset($qtadeParcelas) && $impostoRegistrado && $edital) {
+    $gerarContrato = 1;
 }
 
 
@@ -107,6 +113,26 @@ if ($numRows > 0) {
                 <?php
                 if (isset($mensagem)) {
                     echo "<h5>" . $mensagem . "</h5>";
+                }
+
+                if ($gerarContrato != 0) {
+                    ?>
+                    <font color='#FFA500'><strong>Observe atentamente as informacoes preenchidas antes de gerar seu
+                            contrato!</strong></font>
+                    <div class="row">
+                        <div class='botaoGerarContrato'>
+                            <form action="?perfil=includes/incentivador_etapa6_incentivarProjeto"></form>
+                            <div class='col-md-offset-4 col-md-6'>
+                                <button type='button'
+                                        id='gerarContrato'
+                                        class='btn btn-success btn-block pull-center'>
+                                    Gerar Contrato
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <?php
                 }
                 ?>
 
@@ -152,13 +178,19 @@ if ($numRows > 0) {
                                     <div class="col-md-offset-4 col-md-2" style="margin-left: 28%"><label>Projeto
                                             inscrito no Edital Nº.
                                             001/</label>
-                                        <br><select name="editais" id="" class="form-control">
+                                        <br><select name="edital" id="" class="form-control">
                                             <option value="">Selecione...</option>
-                                            <option value="2018">2018</option>
-                                            <option value="2019">2019</option>
-                                            <option value="2020">2020</option>
-                                            <option value="2021">2021</option>
-                                            <option value="2022">2022</option>
+                                            <?php
+                                            $anosEdital = [2018, 2019, 2020, 2021, 2022];
+                                            foreach ($anosEdital as $ano) {
+                                                if ($ano == $edital) {
+                                                    echo "<option value='$ano' selected> $ano </option>";
+                                                } else {
+                                                    echo "<option value='$ano'> $ano </option>";
+                                                }
+                                            }
+                                            ?>
+
                                         </select>
                                     </div>
                                     <div class="col-md-6">
@@ -169,8 +201,25 @@ if ($numRows > 0) {
                                         </label>
                                         <br/>
                                         <label for="imposto">
-                                            <input type="radio" name="imposto" value="ISS">&nbsp;ISS
-                                            &nbsp;&nbsp;&nbsp;<input type="radio" name="imposto" value="IPTU">&nbsp;IPTU
+                                            <?php
+                                            if ($impostoRegistrado) {
+                                                //  echo "<input type='radio' name='imposto' value='" . $imposto. "' checked>&nbsp;$imposto</option>";
+
+                                                if ($impostoRegistrado == "ISS") {
+                                                    $iss = 'checked';
+                                                    $iptu = '';
+                                                } else {
+                                                    $iptu = 'checked';
+                                                    $iss = '';
+                                                }
+                                            }
+                                            ?>
+
+                                            <input type="radio" name="imposto" value="ISS" <?= $iss ?>>&nbsp;ISS
+                                            &nbsp;&nbsp;&nbsp;<input type="radio" name="imposto"
+                                                                     value="IPTU"<?= $iptu ?> >&nbsp;IPTU
+
+
                                         </label>
                                     </div>
                                 </div>
@@ -180,63 +229,102 @@ if ($numRows > 0) {
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="col-lg-offset-4 col-md-6">
-                                    <button type="submit" id="" name="gravarInfos"
-                                            class="btn btn-success pull-center">
-                                        Gravar
-                                    </button>
+                                    <input type="hidden" name="tipoPessoa" value="<?= $tipoPessoa ?>">
+                                    <input type="hidden" name="idProjeto" value="<?= $idProjeto ?>">
+                                    <input type="submit" name="gravarInfos" value="Gravar"
+                                           class="btn btn-primary pull-center">
+
                                 </div>
                             </div>
                         </div>
-                        <hr>
-                        <h6>Cronograma</h6>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-md-offset-4 col-md-2">
-                                            <label for="numero_parcelas">Número de Parcelas</label>
-                                            <select class="form-control" id="numero_parcelas" name="numero_parcelas"
-                                                    required>
-                                                <option value="">Selecione...</option>
-                                                <?php
-                                                for ($i = 1; $i <= 10; $i++) {
 
-                                                    if (isset($qtadeParcelas) && $i == $qtadeParcelas) {
-                                                        echo "<option value='" . $qtadeParcelas . "' selected>$qtadeParcelas</option>";
-                                                    } else {
-                                                        echo "<option value='$i'>$i</option>";
-                                                    }
+                    </form>
+                    <hr>
+                    <h6>Cronograma</h6>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="row">
+                                    <?php
+                                    if (isset($qtadeParcelas)) {
+
+                                        ?>
+                                        <div class="col-md-offset-4 col-md-6 form-group">
+                                            <table class="table bg-white text-center table-hover table-responsive table-condensed table-bordered">
+                                                <thead class="bg-success">
+                                                <tr class="list_menu" style="font-weight: bold;">
+                                                    <td>Parcela</td>
+                                                    <td>Data</td>
+                                                    <td>Valor</td>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <?php
+                                                $somaParcelas = 0;
+                                                while ($parcela = mysqli_fetch_array($queryParcelas)) {
+                                                    $arrayValores[] = dinheiroParaBr($parcela['valor']);
+                                                    $arrayDatas[] = $parcela['data_pagamento'];
+                                                    $idsParcela [] = $parcela['id'];
+
+                                                    $somaParcelas += $parcela['valor'];
+
+                                                    ?>
+                                                    <tr>
+                                                        <td class="list_description"><?= $parcela['numero_parcela'] ?></td>
+                                                        <td class="list_description"><?= exibirDataBr($parcela['data_pagamento']) ?></td>
+                                                        <td class="list_description"><?= dinheiroParaBr($parcela['valor']) ?></td>
+                                                    </tr>
+                                                    <?php
                                                 }
+                                                $StringValores = implode("|", $arrayValores);
+                                                $StringDatas = implode("|", $arrayDatas);
                                                 ?>
-                                            </select>
+                                                </tbody>
+                                            </table>
                                         </div>
-                                        <div class="dataPagamento none">
-                                            <div class='col-md-3'>
-                                                <label for='data'>Data</label>
-                                                <input type='date' class='form-control' name='data' value="1" required>
-                                            </div>
+                                        <?php
+                                    }
+                                    ?>
+                                    <div class="col-md-offset-4 col-md-2">
+                                        <label for="numero_parcelas">Número de Parcelas</label>
+                                        <select class="form-control" id="numero_parcelas"
+                                                name="numero_parcelas"
+                                                required>
+                                            <option value="">Selecione...</option>
+                                            <?php
+                                            for ($i = 1; $i <= 10; $i++) {
+                                                if (isset($qtadeParcelas) && $i == $qtadeParcelas) {
+                                                    echo "<option value='" . $qtadeParcelas . "' selected>$qtadeParcelas</option>";
+                                                } else {
+                                                    echo "<option value='$i'>$i</option>";
+                                                }
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                    <div class="dataPagamento none">
+                                        <div class='col-md-3'>
+                                            <label for='data'>Data</label>
+                                            <input type='date' class='form-control' name='data' value="1" required>
                                         </div>
-                                        <br>
-                                        <div class="botaoEditar">
-                                            <div class="col-md-6">
-                                                <button type="button" style="margin-top: 5px;"
-                                                        id="adicionarParcelas" onclick="abrirModal()"
-                                                        class="btn btn-primary pull-left">
-                                                    Editar Parcelas
-                                                </button>
-                                            </div>
+                                    </div>
+                                    <br>
+                                    <div class="botaoEditar">
+                                        <div class="col-md-6">
+                                            <button type="button" style="margin-top: 27px;"
+                                                    id="adicionarParcelas" onclick="abrirModal()"
+                                                    class="btn btn-primary pull-left">
+                                                Editar Parcelas
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
                 </div>
                 <!-- Button trigger modal -->
             </div>
-
-            <input type="hidden" name="tipoPessoa" value="<? /*=$tipoPessoa*/ ?>">
-            <input type="hidden" name="idProjeto" value="<? /*=$idProjeto*/ ?>">
-            </form>
         </div>
     </div>
 
@@ -297,8 +385,7 @@ if ($numRows > 0) {
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 style="margin-top: 15px;" class="modal-title text-bold" id="exampleModalLongTitle">Editar
-                    Parcelas</h3>
+                <h3 style="margin-top: 15px;" class="modal-title text-bold" id="exampleModalLongTitle">Cronograma</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -448,8 +535,6 @@ if ($numRows > 0) {
         var StringValores = "<?= isset($StringValores) ? $StringValores : ''; ?>";
 
         var StringDatas = "<?= isset($StringDatas) ? $StringDatas : ''; ?>";
-
-        var idAtracao = parseInt("<?= isset($oficina) ? $oficina : '' ?>");
 
         var parcelasSelected = $("#numero_parcelas").val();
 
