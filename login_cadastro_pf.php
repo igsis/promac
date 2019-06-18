@@ -6,6 +6,10 @@ $con = bancoMysqli(); // conecta no banco
 
 if(isset($_POST['cadastraNovoPf']))
 {
+    $nacionalidade = $_POST['nacionalidade'];
+    $estadoCivil = $_POST['estadoCivil'];
+    $profissao = $_POST['profissao'];
+
 	$email = $_POST['email'];
 	$nome = addslashes($_POST['nome']);
 	$idFraseSeguranca = $_POST['idFraseSeguranca'];
@@ -25,7 +29,7 @@ if(isset($_POST['cadastraNovoPf']))
 				$dataAtualizacao = date("Y-m-d");
 				$idFraseSeguranca = $_POST['idFraseSeguranca'];
 				$respostaFrase = strtolower($_POST['respostaFrase']);
-				$sql_senha = "INSERT INTO `pessoa_fisica`(nome, cpf, email, senha, idNivelAcesso, idFraseSeguranca, respostaFrase) VALUES ('$nome', '$login', '$email', '$senha01', '1', '$idFraseSeguranca', '$respostaFrase')";
+				$sql_senha = "INSERT INTO `pessoa_fisica`(nome, cpf, email, senha, idNivelAcesso, idFraseSeguranca, respostaFrase, nacionalidade_id, estado_civil, profissao) VALUES ('$nome', '$login', '$email', '$senha01', '1', '$idFraseSeguranca', '$respostaFrase', '$nacionalidade', '$estadoCivil', '$profissao')";
 				$query_senha = mysqli_query($con,$sql_senha);
 				$sql_select = "SELECT * FROM pessoa_fisica WHERE cpf = '$login'";
 				$query_select = mysqli_query($con,$sql_select);
@@ -41,6 +45,7 @@ if(isset($_POST['cadastraNovoPf']))
 				}
 				else
 				{
+				    echo $sql_senha;
 					$mensagem = "<font color='#FF0000'><strong>Erro ao cadastrar! Tente novamente.</strong></font>";
 				}
 			}
@@ -75,15 +80,6 @@ if(isset($_POST['cadastraNovoPf']))
 					</div>
 
 					<div class="form-group">
-						<div class="col-md-offset-2 col-md-6"><strong>Senha: *</strong>
-							<input type="password" name="senha01" class="form-control" id="inputName" placeholder="">
-						</div>
-						<div class=" col-md-6"><strong>Redigite a senha: *</strong>
-							<input type="password" name="senha02" class="form-control" id="inputEmail" placeholder="">
-						</div>
-					</div>
-
-					<div class="form-group">
 						<div class="col-md-offset-2 col-md-6"><strong>CPF: *</strong><br/>
 							<input type="text" readonly class="form-control" name="cpf" value="<?php echo $busca ?>" placeholder="CPF">
 						</div>
@@ -91,6 +87,48 @@ if(isset($_POST['cadastraNovoPf']))
 							<input type="text" class="form-control" name="email" placeholder="E-mail">
 						</div>
 					</div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-4">
+                            <label>Estado Civil</label>
+                            <select name="estadoCivil" class="form-control">
+                                <option value="">Selecione...</option>
+                                <?php
+                                $estadosCivis = ['Solteiro', 'Casado', 'Separado', 'Divorciado', 'Viúvo'];
+                                $estadoCivil = isset($estadoCivil) ? $estadoCivil : '';
+
+                                foreach ($estadosCivis as $estado) {
+                                    if ($estado == $estadoCivil) {
+                                        echo "<option value='$estadoCivil' selected> $estadoCivil </option>";
+                                    } else {
+                                        echo "<option value='$estado'> $estado </option>";
+                                    }
+                                }
+
+                                ?>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label>Nacionalidade</label>
+                            <select name="nacionalidade" class="form-control">
+                                <option value="">Selecione...</option>
+                                <?php echo geraOpcao("nacionalidades", $nacionalidade ?? ''); ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-8">
+                            <label>Profissão</label>
+                            <input class="form-control" type="text" name="profissao" placeholder="Exs.: Desenvolvedora, Dentista, Médico, Professora, etc...  " value="<?php $profissao ?? '' ?>" style="text-align: center;">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-6"><strong>Senha: *</strong>
+                            <input type="password" name="senha01" class="form-control" id="inputName" placeholder="">
+                        </div>
+                        <div class=" col-md-6"><strong>Redigite a senha: *</strong>
+                            <input type="password" name="senha02" class="form-control" id="inputEmail" placeholder="">
+                        </div>
+                    </div>
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><strong>Escolha uma pergunta secreta, para casos de recuperação de senha:</strong><br/>

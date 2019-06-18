@@ -6,6 +6,9 @@ $tipoPessoa = $_SESSION['tipoPessoa'];
 if ($tipoPessoa == "1")
 {
 	$pf = recuperaDados("pessoa_fisica","idPf",$idPf);
+
+	$nacionalidade = recuperaDados("nacionalidades", "id", $pf['nacionalidade_id']);
+
 }
 else
 {
@@ -89,6 +92,9 @@ function listaArquivosPessoaSApagar($idPessoa,$tipoPessoa,$pagina)
 				<p align='justify'><strong>Telefone:</strong> <?php echo isset($pf['telefone']) ? $pf['telefone'] : null; ?></p>
 				<p align='justify'><strong>Celular:</strong> <?php echo isset($pf['celular']) ? $pf['celular'] : null; ?></p>
 				<p align='justify'><strong>Email:</strong> <?php echo isset($pf['email']) ? $pf['email'] : null; ?></p>
+                <p align='justify'><strong>Estado Civil:</strong> <?php echo isset($pf['estado_civil']) ? $pf['estado_civil'] : null; ?></p>
+                <p align='justify'><strong>Nacionalidade:</strong> <?php echo isset($pf['nacionalidade_id']) ? $nacionalidade['nacionalidade'] : null; ?></p>
+                <p align='justify'><strong>Profissão:</strong> <?php echo isset($pf['profissao']) ? $pf['profissao'] : null; ?></p>
 
 				<p align="justify"><strong>Cooperado:</strong>
 				<?php

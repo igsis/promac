@@ -9,6 +9,7 @@ $cidades = formataDados(listaCidades());
 $habilitaCampo = false;
 $usuarioLogado = pegaUsuarioLogado();
 
+
 if(isset($_POST['cep'])):
 	$enderecos = retornaEndereco($_POST['cep']);
 	if(isset($enderecos)):
@@ -39,6 +40,9 @@ if(isset($_POST['atualizarFisica']) and $_POST['numero'] and empty($endereço))
   $Numero = $_POST['numero'];
   $Complemento = $_POST['complemento'];
   $cooperado = $_POST['cooperado'];
+  $nacionalidade = $_POST['nacionalidade'];
+  $estadoCivil = $_POST['estadoCivil'];
+  $profissao = $_POST['profissao'];
 
 
 	$validar = array(
@@ -52,22 +56,25 @@ if(isset($_POST['atualizarFisica']) and $_POST['numero'] and empty($endereço))
 
 
   $sql_atualiza_pf =
-    "UPDATE pessoa_fisica SET 
-        `nome` = '$nome',
-        `rg` = '$rg',
-        `telefone` = '$telefone',
-        `celular` = '$celular',
-        `email` = '$email',
-        `logradouro` = '$Endereco',
-        `bairro` = '$Bairro',
-        `cidade` = '$Cidade',
-        `estado` = '$Estado',
-        `cep` = '$cep',
-        `numero` = '$Numero',
-        `complemento` = '$Complemento',
-        `cooperado` = '$cooperado',
-        `alteradoPor` = '$usuarioLogado'
-    WHERE `idPf` = '$idPf'";
+    "UPDATE promac.pessoa_fisica SET 
+        nome = '$nome',
+        rg = '$rg',
+        telefone = '$telefone',
+        celular = '$celular',
+        email = '$email',
+        logradouro = '$Endereco',
+        bairro = '$Bairro',
+        cidade = '$Cidade',
+        estado = '$Estado',
+        cep = '$cep',
+        numero = '$Numero',
+        complemento = '$Complemento',
+        cooperado = '$cooperado',
+        alteradoPor = '$usuarioLogado',
+        nacionalidade_id = '$nacionalidade',
+        estado_civil = '$estadoCivil', 
+        profissao = '$profissao'
+    WHERE idPf = '$idPf'";
 
 	if(mysqli_query($con,$sql_atualiza_pf)){
 
@@ -81,6 +88,7 @@ if(isset($_POST['atualizarFisica']) and $_POST['numero'] and empty($endereço))
 	}
 	else
 	{
+	    echo $sql_atualiza_pf;
 		$mensagem = "<font color='#FF0000'><strong>Erro ao atualizar! Tente novamente.</strong></font>";
 	}
 }
@@ -102,6 +110,8 @@ elseif ($pf['liberado'] == 1)
 else
 {
 	$pf = recuperaDados("pessoa_fisica","idPf",$idPf);
+    $profissao = $pf['profissao'];
+    $estadoCivil = $pf['estado_civil'];
 ?>
 	<section id="list_items" class="home-section bg-white">
 		<div class="container"><?php include 'includes/menu_interno_pf.php'; ?>
@@ -131,8 +141,7 @@ else
 						<div class="form-group">
 						  <div class="col-md-offset-2 col-md-6"><strong>CPF *:</strong><br/>
 						    <input type="text" readonly class="form-control" id="cpf" 
-						           name="cpf" placeholder="CPF" 
-						           value="<?php echo $pf['cpf']; ?>" required>
+						           name="cpf" value="<?php echo $pf['cpf']; ?>" required>
 						  </div>
 						  <div class="col-md-6"><strong>RG ou RNE *:</strong><br/>
 						    <input type="text" class="form-control" name="rg" 
@@ -195,6 +204,40 @@ else
 							        ?>"> 
 						  </div>
 						</div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-4">
+                                <label>Estado Civil</label>
+                                <select name="estadoCivil" class="form-control">
+                                    <option value="">Selecione...</option>
+                                    <?php
+                                    $estadosCivis = ['Solteiro', 'Casado', 'Separado', 'Divorciado', 'Viúvo'];
+                                    $estadoCivil = isset($estadoCivil) ? $estadoCivil : '';
+
+                                    foreach ($estadosCivis as $estado) {
+                                        if ($estado == $estadoCivil) {
+                                            echo "<option value='$estadoCivil' selected> $estadoCivil </option>";
+                                        } else {
+                                            echo "<option value='$estado'> $estado </option>";
+                                        }
+                                    }
+
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Nacionalidade</label>
+                                <select name="nacionalidade" class="form-control">
+                                    <option value="">Selecione...</option>
+                                    <?php echo geraOpcao("nacionalidades", $pf['nacionalidade_id'] ?? ''); ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-8">
+                                <label>Profissão</label>
+                                <input class="form-control" type="text" name="profissao" placeholder="Exs.: Desenvolvedora, Dentista, Médico, Professora, etc..." value="<?= $profissao ?? '' ?>" style="text-align: center;">
+                            </div>
+                        </div>
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><hr/></div>
