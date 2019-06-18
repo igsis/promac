@@ -37,7 +37,8 @@ $urlPf = array(
     25 => '/promac/visual/index_pf.php?perfil=finalProjeto',
     26 => '/promac/visual/index_pf.php?perfil=informacoes_administrativas',
     28 => '/promac/visual/index_pf.php?perfil=projeto_8', // Passo 8
-    29 => '/promac/visual/index_pf.php?perfil=resultado_inscricao_pf'
+    29 => '/promac/visual/index_pf.php?perfil=resultado_inscricao_pf',
+    30 => '/promac/visual/index_pf.php?perfil=infos_adicionais_pf'
 );
 for ($i = 0; $i < count($urlPf); $i++) {
     if ($uri == $urlPf[$i]) {
@@ -77,6 +78,8 @@ for ($i = 0; $i < count($urlPf); $i++) {
             $acionar19 = 'active loading';
         }elseif ($i == 29){ // passo 8
             $acionar20 = 'active loading';
+        }elseif ($i == 30) {
+            $acionar21 = 'active loading';
         }
 
 ?>
@@ -165,6 +168,9 @@ for ($i = 0; $i < count($urlPf); $i++) {
                     </li>
                     <li class="<?php echo isset($acionar16) ? $acionar16 : 'clickable'; ?>">
                        <a onclick="location.href='index_pf.php?perfil=projeto_13'" href=""><br /><small>Mídias Sociais</small></a>
+                    </li>
+                    <li class="<?php echo isset($acionar21) ? $acionar21 : 'clickable'; ?>">
+                        <a onclick="location.href='index_pf.php?perfil=infos_adicionais_pf'" href=""><br /><small>Informações Adicionais</small></a>
                     </li>
                     <li class="<?php echo isset($acionar17) ? $acionar17 : 'clickable'; ?>">
                         <a onclick="location.href='index_pf.php?perfil=finalProjeto'" href=""><br /><small>Concluir Inscrição</small></a>

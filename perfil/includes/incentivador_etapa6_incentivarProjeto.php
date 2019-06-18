@@ -63,14 +63,11 @@ if (isset($_POST['gravarInfos'])) {
                                                AND tipoPessoa = '$tipoPessoa' 
                                                AND idProjeto = '$idProjeto'";
 
-
-    if (mysqli_query($con, $sqlInfos)) {
-        $impostoRegistrado = $imposto;
-    }
+    mysqli_query($con, $sqlInfos);
 }
 
 $impostoRegistrado = $incentivador_projeto['imposto'] ?? '';
-$edital = $incentivador_projeto['edital'] ?? '';
+$editalRegistrado = $incentivador_projeto['edital'] ?? '';
 
 
 //verificando parcelas
@@ -84,6 +81,9 @@ if ($numRows > 0) {
 
 if (isset($qtadeParcelas) && $impostoRegistrado && $edital) {
     $gerarContrato = 1;
+    $mensagem = "<div class='alert alert-success'>
+                    <small><strong>Verifique atentamente as informações inseridas, se estiverem corretas avance para a próxima etapa utilizando o botão de avançar ao final página.</strong></small>
+                 </div>";
 }
 
 
@@ -117,26 +117,6 @@ if (isset($qtadeParcelas) && $impostoRegistrado && $edital) {
                     echo "<h5>" . $mensagem . "</h5>";
                 }
 
-                if ($gerarContrato != 0) {
-                    ?>
-                    <div class='alert alert-warning'>
-                        <strong>Verifique atentamente as informações gravadas antes de gerar seu
-                            contrato!</div>
-                    <div class="row">
-                        <form action="../pdf/pdf_incentivar_projeto.php" method="post" class="form-group">
-                            <div class='col-md-offset-4 col-md-6'>
-                                <a href='<?php echo "../pdf/pdf_incentivar_projeto.php?tipoPessoa=$tipoPessoa&idPessoa=$idIncentivador&idProjeto=$idProjeto"; ?>' target='_blank'
-                                   class="btn btn-theme btn-md btn-block"><strong>Gerar Contrato</strong></a><br/>
-                                <!--<button type='submit' id='gerarContrato'
-                                        class='btn btn-success btn-block pull-center'>
-                                    Gerar Contrato
-                                </button>-->
-                            </div>
-                        </form>
-                    </div>
-                    <hr width="50%">
-                    <?php
-                }
                 ?>
 
                 <div class="well">
@@ -185,6 +165,7 @@ if (isset($qtadeParcelas) && $impostoRegistrado && $edital) {
                                             <option value="">Selecione...</option>
                                             <?php
                                             $anosEdital = [2018, 2019, 2020, 2021, 2022];
+                                            $edital = isset($edital) ? $edital : $editalRegistrado;
                                             foreach ($anosEdital as $ano) {
                                                 if ($ano == $edital) {
                                                     echo "<option value='$ano' selected> $ano </option>";
@@ -206,7 +187,8 @@ if (isset($qtadeParcelas) && $impostoRegistrado && $edital) {
                                         <label for="imposto">
                                             <?php
                                             if ($impostoRegistrado) {
-                                                if ($impostoRegistrado == "ISS") {
+                                                $imposto = isset($imposto) ? $imposto : $impostoRegistrado;
+                                                if ($imposto == "ISS") {
                                                     $iss = 'checked';
                                                     $iptu = '';
                                                 } else {
@@ -245,50 +227,50 @@ if (isset($qtadeParcelas) && $impostoRegistrado && $edital) {
                     </form>
                     <hr>
                     <h6>Cronograma</h6>
+                    <?php
+                    if (isset($qtadeParcelas)) {
+
+                        ?>
+                        <div class="col-md-offset-4 col-md-6 form-group">
+                            <table class="table bg-white text-center table-hover table-responsive table-condensed table-bordered">
+                                <thead class="bg-success">
+                                <tr class="list_menu" style="font-weight: bold;">
+                                    <td>Parcela</td>
+                                    <td>Data</td>
+                                    <td>Valor</td>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <?php
+                                $somaParcelas = 0;
+                                while ($parcela = mysqli_fetch_array($queryParcelas)) {
+                                    $arrayValores[] = dinheiroParaBr($parcela['valor']);
+                                    $arrayDatas[] = $parcela['data_pagamento'];
+                                    $idsParcela [] = $parcela['id'];
+
+                                    $somaParcelas += $parcela['valor'];
+
+                                    ?>
+                                    <tr>
+                                        <td class="list_description"><?= $parcela['numero_parcela'] ?></td>
+                                        <td class="list_description"><?= exibirDataBr($parcela['data_pagamento']) ?></td>
+                                        <td class="list_description"><?= dinheiroParaBr($parcela['valor']) ?></td>
+                                    </tr>
+                                    <?php
+                                }
+                                $StringValores = implode("|", $arrayValores);
+                                $StringDatas = implode("|", $arrayDatas);
+                                ?>
+                                </tbody>
+                            </table>
+                        </div>
+                        <?php
+                    }
+                    ?>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
                                 <div class="row">
-                                    <?php
-                                    if (isset($qtadeParcelas)) {
-
-                                        ?>
-                                        <div class="col-md-offset-4 col-md-6 form-group">
-                                            <table class="table bg-white text-center table-hover table-responsive table-condensed table-bordered">
-                                                <thead class="bg-success">
-                                                <tr class="list_menu" style="font-weight: bold;">
-                                                    <td>Parcela</td>
-                                                    <td>Data</td>
-                                                    <td>Valor</td>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <?php
-                                                $somaParcelas = 0;
-                                                while ($parcela = mysqli_fetch_array($queryParcelas)) {
-                                                    $arrayValores[] = dinheiroParaBr($parcela['valor']);
-                                                    $arrayDatas[] = $parcela['data_pagamento'];
-                                                    $idsParcela [] = $parcela['id'];
-
-                                                    $somaParcelas += $parcela['valor'];
-
-                                                    ?>
-                                                    <tr>
-                                                        <td class="list_description"><?= $parcela['numero_parcela'] ?></td>
-                                                        <td class="list_description"><?= exibirDataBr($parcela['data_pagamento']) ?></td>
-                                                        <td class="list_description"><?= dinheiroParaBr($parcela['valor']) ?></td>
-                                                    </tr>
-                                                    <?php
-                                                }
-                                                $StringValores = implode("|", $arrayValores);
-                                                $StringDatas = implode("|", $arrayDatas);
-                                                ?>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <?php
-                                    }
-                                    ?>
                                     <div class="col-md-offset-4 col-md-2">
                                         <label for="numero_parcelas">Número de Parcelas</label>
                                         <select class="form-control" id="numero_parcelas"
@@ -306,6 +288,7 @@ if (isset($qtadeParcelas) && $impostoRegistrado && $edital) {
                                             ?>
                                         </select>
                                     </div>
+
                                     <div class="dataPagamento none">
                                         <div class='col-md-3'>
                                             <label for='data'>Data</label>
@@ -315,7 +298,7 @@ if (isset($qtadeParcelas) && $impostoRegistrado && $edital) {
                                     <br>
                                     <div class="botaoEditar">
                                         <div class="col-md-6">
-                                            <button type="button" style="margin-top: 27px;"
+                                            <button type="button" style="margin-top: 5px;"
                                                     id="adicionarParcelas" onclick="abrirModal()"
                                                     class="btn btn-primary pull-left">
                                                 Editar Parcelas
@@ -327,7 +310,23 @@ if (isset($qtadeParcelas) && $impostoRegistrado && $edital) {
                         </div>
                     </div>
                 </div>
-                <!-- Button trigger modal -->
+                <?php
+                    if ($gerarContrato != 0) {
+                        ?>
+                        <form action='?perfil=includes/incentivador_etapa7_gerarContrato' class='form-group'
+                              method='post'>
+                            <div class='col-md-12'>
+                                <input type='hidden' name='tipoPessoa' value='<?=$tipoPessoa?>'>
+                                <input type='hidden' name='idProjeto' value='<?=$idProjeto?>'>
+                                <button type='submit' id='avancar'
+                                        class='btn btn-theme pull-right'>
+                                    Avançar
+                                </button>
+                            </div>
+                        </form>
+                        <?php
+                    }
+                ?>
             </div>
         </div>
     </div>

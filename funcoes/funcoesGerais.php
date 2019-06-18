@@ -3549,4 +3549,31 @@ function limiteEnvioProjetos()
     }
 }
 
+
+function primeiraEstofreContrato ($idProjeto) {
+    $projeto = recuperaDados("projeto", "idProjeto", $idProjeto);
+
+    $tipoPessoa = $projeto['tipoPessoa'];
+
+    if ($tipoPessoa == 1) {
+        $idPf = $projeto['idPf'];
+        $pf = recuperaDados("pessoa_fisica", "idPf", $idPf);
+
+        $estrofone = $pf['nome']. ", ";
+
+
+
+    }
+
+
+
+
+
+}
+
+
+
+
+
+
 ?>
