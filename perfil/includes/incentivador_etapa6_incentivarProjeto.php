@@ -53,19 +53,6 @@ if ($query = mysqli_query($con, $sqlProjeto)) {
 $idProjeto = $incentivador_projeto['idProjeto'];
 $valor = $incentivador_projeto['valor_aportado'];
 
-if (isset($_POST['gravarInfos'])) {
-    $edital = $_POST['edital'];
-    $imposto = $_POST['imposto'];
-
-    $sqlInfos = "UPDATE incentivador_projeto SET edital = '$edital', 
-                                                 imposto = '$imposto'
-                                             WHERE idIncentivador = '$idIncentivador' 
-                                               AND tipoPessoa = '$tipoPessoa' 
-                                               AND idProjeto = '$idProjeto'";
-
-    mysqli_query($con, $sqlInfos);
-}
-
 $impostoRegistrado = $incentivador_projeto['imposto'] ?? '';
 $editalRegistrado = $incentivador_projeto['edital'] ?? '';
 
@@ -79,7 +66,23 @@ if ($numRows > 0) {
     $qtadeParcelas = $incentivador_projeto['numero_parcelas'];
 }
 
-if (isset($qtadeParcelas) && $impostoRegistrado && $edital) {
+
+if (isset($_POST['gravarInfos'])) {
+    $edital = $_POST['edital'];
+    $imposto = $_POST['imposto'];
+
+    $sqlInfos = "UPDATE incentivador_projeto SET edital = '$edital', 
+                                                 imposto = '$imposto'
+                                             WHERE idIncentivador = '$idIncentivador' 
+                                               AND tipoPessoa = '$tipoPessoa' 
+                                               AND idProjeto = '$idProjeto'";
+
+    if (mysqli_query($con, $sqlInfos) && $qtadeParcelas != '') {
+        $gerarContrato = 1;
+    }
+}
+
+if (($qtadeParcelas != 0 && $impostoRegistrado != '' && $editalRegistrado != '') || $gerarContrato == 1) {
     $gerarContrato = 1;
     $mensagem = "<div class='alert alert-success'>
                     <small><strong>Verifique atentamente as informações inseridas, se estiverem corretas avance para a próxima etapa utilizando o botão de avançar ao final página.</strong></small>
@@ -186,7 +189,7 @@ if (isset($qtadeParcelas) && $impostoRegistrado && $edital) {
                                         <br/>
                                         <label for="imposto">
                                             <?php
-                                            if ($impostoRegistrado) {
+                                            if (isset($imposto) || $impostoRegistrado != '') {
                                                 $imposto = isset($imposto) ? $imposto : $impostoRegistrado;
                                                 if ($imposto == "ISS") {
                                                     $iss = 'checked';
