@@ -7,6 +7,8 @@ if (isset($_POST['iniciar_incentivo'])) {
     $sqlEtapa = "INSERT INTO etapas_incentivo (tipoPessoa, idIncentivador, etapa) VALUES ($tipoPessoa, $idPf, 1)";
     if (mysqli_query($con, $sqlEtapa)) {
         $mensagemInicial = "<font color='#01DF3A'><strong>Você iniciou o processo de incentivar um projeto.<br>Por favor, siga as etapas seguintes preenchendo corretamente todas as informações solicitadas.</strong></font>";
+    } else {
+        echo $sqlEtapa;
     }
 }
 

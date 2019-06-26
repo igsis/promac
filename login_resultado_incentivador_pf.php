@@ -92,15 +92,6 @@ else
 					</div>
 
 					<div class="form-group">
-						<div class="col-md-offset-2 col-md-6"><strong>Senha: *</strong>
-							<input type="password" name="senha01" class="form-control" id="inputName" placeholder="">
-						</div>
-						<div class=" col-md-6"><strong>Redigite a senha: *</strong>
-							<input type="password" name="senha02" class="form-control" id="inputEmail" placeholder="">
-						</div>
-					</div>
-
-					<div class="form-group">
 						<div class="col-md-offset-2 col-md-6"><strong>CPF: *</strong><br/>
 							<input type="text" readonly class="form-control" name="cpf" value="<?php echo $busca ?>" placeholder="CPF">
 						</div>
@@ -108,6 +99,50 @@ else
 							<input type="email" class="form-control" name="email" placeholder="Email">
 						</div>
 					</div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-4">
+                            <label>Estado Civil</label>
+                            <select name="estadoCivil" class="form-control">
+                                <option value="">Selecione...</option>
+                                <?php
+                                $estadosCivis = ['Solteiro', 'Casado', 'Separado', 'Divorciado', 'Viúvo'];
+                                $estadoCivil = isset($estadoCivil) ? $estadoCivil : '';
+
+                                foreach ($estadosCivis as $estado) {
+                                    if ($estado == $estadoCivil) {
+                                        echo "<option value='$estadoCivil' selected> $estadoCivil </option>";
+                                    } else {
+                                        echo "<option value='$estado'> $estado </option>";
+                                    }
+                                }
+
+                                ?>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label>Nacionalidade</label>
+                            <select name="nacionalidade" class="form-control">
+                                <option value="">Selecione...</option>
+                                <?php echo geraOpcao("nacionalidades", $nacionalidade ?? ''); ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-8">
+                            <label>Profissão</label>
+                            <input class="form-control" type="text" name="profissao" placeholder="Exs.: Desenvolvedora, Dentista, Médico, Professor, etc...  " value="<?php $profissao ?? '' ?>" style="text-align: center;">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-6"><strong>Senha: *</strong>
+                            <input type="password" name="senha01" class="form-control" id="inputName" placeholder="">
+                        </div>
+                        <div class=" col-md-6"><strong>Redigite a senha: *</strong>
+                            <input type="password" name="senha02" class="form-control" id="inputEmail" placeholder="">
+                        </div>
+                    </div>
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><strong>Escolha uma pergunta secreta, para casos de recuperação de senha:</strong><br/>

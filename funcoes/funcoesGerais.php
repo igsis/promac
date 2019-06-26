@@ -3558,16 +3558,17 @@ function primeiraEstofreContrato ($idProjeto) {
     if ($tipoPessoa == 1) {
         $idPf = $projeto['idPf'];
         $pf = recuperaDados("pessoa_fisica", "idPf", $idPf);
+        $nacionalidade = recuperaDados("nacionalidades", "id", $pf['nacionalidade_id']);
 
-        $estrofone = $pf['nome']. ", ";
+        $V = ", ";
 
-
+        $estrofone = $pf['nome'] . $V . $nacionalidade['nacionalidade'] . $V . $pf['estado_civil'] . $V . $pf['profissao'] . ", residente e domiciliada em "
+            . $pf['logradouro'] . $V . $pf['numero'] . " - " . $pf['bairro'] . "   " . $pf['cidade'] . "/" . $pf['estado'] . "   " . $pf['cep'] .
+            ", portador da cédula de identidade RG nº " . $pf['rg'] . " e inscrito no CPF/MF sob nº " . $pf['cpf'] . ", dovorante designado PROPONENTE;";
 
     }
 
-
-
-
+    return $estrofone;
 
 }
 

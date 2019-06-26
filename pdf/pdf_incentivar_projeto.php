@@ -70,6 +70,11 @@ if ($tipoPessoa == "4") {
         <img src="../visual/images/cabecalho_carta_incentivo.png">
         <br>
         <h1 style="margin-left: 20%">CARTA DE INTENÇÃO DE INCENTIVO </h1>
+        <br>
+
+        <div class="row">
+            <h3><?php echo primeiraEstofreContrato($idProjeto); ?>  </h3>
+        </div>
 
 
     </div>

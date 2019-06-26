@@ -4,7 +4,6 @@ $idIncentivador = $_SESSION['idUser'];
 $tipoPessoa = $_POST['tipoPessoa'] ?? $_GET['tipoPessoa'];
 $gerarContrato = 0;
 
-
 if (isset($_POST['incentivar_projeto']) || isset($_POST['editar'])) {
     $idProjeto = $_POST['idProjeto'];
     $valor = dinheiroDeBr($_POST['valor_aportado']);
@@ -50,6 +49,7 @@ if ($query = mysqli_query($con, $sqlProjeto)) {
     $incentivador_projeto = mysqli_fetch_array($query);
 
 }
+
 $idProjeto = $incentivador_projeto['idProjeto'];
 $valor = $incentivador_projeto['valor_aportado'];
 
@@ -82,7 +82,7 @@ if (isset($_POST['gravarInfos'])) {
     }
 }
 
-if (($qtadeParcelas != 0 && $impostoRegistrado != '' && $editalRegistrado != '') || $gerarContrato == 1) {
+if (((isset($qtadeParcelas) && $qtadeParcelas != 0) && (isset($impostoRegistrado) && $impostoRegistrado != '')  && (isset($editalRegistrado) && $editalRegistrado != '')) || $gerarContrato == 1) {
     $gerarContrato = 1;
     $mensagem = "<div class='alert alert-success'>
                     <small><strong>Verifique atentamente as informações inseridas, se estiverem corretas avance para a próxima etapa utilizando o botão de avançar ao final página.</strong></small>
@@ -321,8 +321,7 @@ if (($qtadeParcelas != 0 && $impostoRegistrado != '' && $editalRegistrado != '')
                             <div class='col-md-12'>
                                 <input type='hidden' name='tipoPessoa' value='<?=$tipoPessoa?>'>
                                 <input type='hidden' name='idProjeto' value='<?=$idProjeto?>'>
-                                <button type='submit' id='avancar'
-                                        class='btn btn-theme pull-right'>
+                                <button type='submit' id='avancar' class='btn btn-theme pull-right'>
                                     Avançar
                                 </button>
                             </div>

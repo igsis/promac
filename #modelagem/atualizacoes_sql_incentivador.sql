@@ -27,6 +27,10 @@ ALTER TABLE `etapas_incentivo`
 ALTER TABLE `etapas_incentivo`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
+
+ALTER TABLE `etapas_incentivo` CHANGE `idProjeto` `idProjeto` INT(11) NULL DEFAULT NULL;
+
+
 /*
 * FIM
 * 27/05/2019 -> Lorelei
@@ -92,6 +96,9 @@ ADD COLUMN `imposto` VARCHAR(5) NULL COMMENT '' AFTER `edital`;
 */ 
 
 ALTER TABLE pessoa_fisica ADD nacionalidade_id TINYINT(3) NOT NULL AFTER cooperado, ADD estado_civil VARCHAR(45) NOT NULL AFTER nacionalidade_id, ADD profissao VARCHAR(100) NOT NULL AFTER estado_civil;
+
+
+ALTER TABLE incentivador_pessoa_fisica ADD nacionalidade_id TINYINT(3) NOT NULL AFTER email, ADD estado_civil VARCHAR(45) NOT NULL AFTER nacionalidade_id, ADD profissao VARCHAR(100) NOT NULL AFTER estado_civil;
 
 
 CREATE TABLE nacionalidades (

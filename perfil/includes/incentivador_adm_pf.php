@@ -44,7 +44,7 @@ case '':
         </div>
         <div id="incentivar" style="display: none;">
             <br>
-            <form method="post" action="?perfil=incentivar_projeto/documentos_fiscais_incentivador_pf" class="form-group">
+            <form method="post" action="?perfil=includes/documentos_fiscais_incentivador_pf" class="form-group">
                 <input type="submit" name="iniciar_incentivo" value="Iniciar incentivo" class="btn btn-success">
             </form>
         </div>
