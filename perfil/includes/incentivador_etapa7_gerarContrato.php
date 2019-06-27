@@ -2,9 +2,23 @@
 $con = bancoMysqli();
 
 $idIncentivador = $_SESSION['idUser'];
+$tipoPessoa = $_POST['tipoPessoa'] ?? $_GET['tipoPessoa'];
 
-$idProjeto = $_POST['idProjeto'];
-$tipoPessoa = $_POST['tipoPessoa'];
+
+if (isset($_POST['idProjeto'])) {
+    $idProjeto = $_POST['idProjeto'];
+} else {
+    $sqlProject = "SELECT idProjeto FROM etapas_incentivo WHERE tipoPessoa = '$tipoPessoa' AND idIncentivador = '$idIncentivador' AND etapa = 7";
+    $queryProject = mysqli_query($con, $sqlProject);
+    $arr = mysqli_fetch_assoc($queryProject);
+    $idProjeto = $arr['idProjeto'];
+}
+
+if (isset($_POST['avancar_etapa7'])) {
+    $sqlEtapa = "UPDATE etapas_incentivo SET etapa = 7 WHERE idProjeto = '$idProjeto' AND tipoPessoa = '$tipoPessoa' AND idIncentivador = '$idIncentivador'";
+    mysqli_query($con, $sqlEtapa);
+
+}
 
 
 ?>
@@ -35,9 +49,12 @@ $tipoPessoa = $_POST['tipoPessoa'];
                 <div class="well">
                     <strong style="color: red">ATENÇÃO</strong>
                     <p>Após a impressão desta carta de incentivo, você deve colher as assinaturas do proponente e
-                    do incentivador (ou de seus respectivos responsáveis legais, em caso de pessoas jurídicas),
-                    digitalizar a carta assinada em pdf e subir o arquivo aqui neste sistema, na próxima etapa. Em seguida, você deve
-                    encaminhar a Carta de Intenção ORIGINAL para a Secretaria Municipal de Cultura – PROMAC, pessoalmente, via portador ou Correios, no seguinte endereço: Rua Líbero Badaró, 346 – 3º andar –
+                        do incentivador (ou de seus respectivos responsáveis legais, em caso de pessoas jurídicas),
+                        digitalizar a carta assinada em pdf e subir o arquivo aqui neste sistema, na próxima etapa. Em
+                        seguida, você deve
+                        encaminhar a Carta de Intenção ORIGINAL para a Secretaria Municipal de Cultura – PROMAC,
+                        pessoalmente, via portador ou Correios, no seguinte endereço: Rua Líbero Badaró, 346 – 3º andar
+                        –
                         PROMAC. Recebimento das 9h às 17h.</p>
 
                     <hr width="50%">
@@ -45,10 +62,10 @@ $tipoPessoa = $_POST['tipoPessoa'];
                     <div class="row">
                         <form action="../pdf/pdf_incentivar_projeto.php" method="post" class="form-group">
                             <div class='col-md-12'>
-                                <a href='<?php echo "../pdf/pdf_incentivar_projeto.php?tipoPessoa=$tipoPessoa&idPessoa=$idIncentivador&idProjeto=$idProjeto"; ?>'
-                                   target='_blank'
+                                <button type="button" onclick="loadOtherPage()"
                                    class="btn btn-theme">CLIQUE AQUI PARA GERAR PDF DA CARTA DE
-                                    INCENTIVO PREENCHIDA PARA IMPRESSÃO</a><br/>
+                                    INCENTIVO PREENCHIDA PARA IMPRESSÃO <!-- href='< ?php echo "../pdf/pdf_incentivar_projeto.php?tipoPessoa=$tipoPessoa&idPessoa=$idIncentivador&idProjeto=$idProjeto"; ?>'
+                                   target='_blank' -->></button><br/>
                             </div>
                         </form>
                     </div>
@@ -57,3 +74,21 @@ $tipoPessoa = $_POST['tipoPessoa'];
         </div>
     </div>
 </section>
+
+<script>
+    function loadOtherPage() {
+        let idProjeto = "<?=$idProjeto?>";
+        let tipoPessoa = "<?=$tipoPessoa?>";
+        let idIncentivador = "<?=$idIncentivador?>";
+
+        let link = "../pdf/pdf_incentivar_projeto.php?tipoPessoa=" + tipoPessoa + "&idPessoa=" + idIncentivador + "&idProjeto=" + idProjeto +"";
+
+        $("<iframe>")                             // create a new iframe element
+            .hide()                               // make it invisible
+            .attr("src", link) // point the iframe to the page you want to print
+            .appendTo("body");                    // add iframe to the DOM to cause it to load the page
+
+    }
+
+
+</script>

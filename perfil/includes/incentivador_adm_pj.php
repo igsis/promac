@@ -25,48 +25,52 @@ switch ($liberado) {
 }
 
 switch ($etapa) {
-case '':
-    ?>
-    <div class="well">
-        <label for="admResposta">Você deseja incentivar um projeto agora?</label><br>
-        <input type="radio" name="admResposta" value="1" class="resposta" id="sim"> Sim
-        <input type="radio" name="admResposta" value="0" class="resposta" id="nao" checked> Não
+    case '':
+        ?>
+        <div class="well">
+            <label for="admResposta">Você deseja incentivar um projeto agora?</label><br>
+            <input type="radio" name="admResposta" value="1" class="resposta" id="sim"> Sim
+            <input type="radio" name="admResposta" value="0" class="resposta" id="nao" checked> Não
 
-        <div id="aviso" style="display: none;">
-            <hr>
-            <div class='alert alert-warning'>
-                Para encontrar um projeto para incentivar, continue buscando os projetos aprovados semanalmente na
-                Consulta Pública disponível na Home do site PROMAC.<br> Depois de escolher o projeto que deseja
-                incentivar, retorne a essa página, por gentileza.
+            <div id="aviso" style="display: none;">
+                <hr>
+                <div class='alert alert-warning'>
+                    Para encontrar um projeto para incentivar, continue buscando os projetos aprovados semanalmente na
+                    Consulta Pública disponível na Home do site PROMAC.<br> Depois de escolher o projeto que deseja
+                    incentivar, retorne a essa página, por gentileza.
+                </div>
+            </div>
+            <div id="incentivar" style="display: none;">
+                <br>
+                <form method="post" action="?perfil=includes/documentos_fiscais_incentivador_pj" class="form-group">
+                    <input type="submit" name="iniciar_incentivo" value="Iniciar incentivo" class="btn btn-success">
+                </form>
             </div>
         </div>
-        <div id="incentivar" style="display: none;">
-            <br>
-            <form method="post" action="?perfil=includes/documentos_fiscais_incentivador_pj" class="form-group">
-                <input type="submit" name="iniciar_incentivo" value="Iniciar incentivo" class="btn btn-success">
-            </form>
-        </div>
-    </div>
-    <?php
-    break;
+        <?php
+        break;
 
-case '1':
-    echo "<script>location.href = '?perfil=includes/documentos_fiscais_incentivador_pj'</script>";
-    break;
+    case '1':
+        echo "<script>location.href = '?perfil=includes/documentos_fiscais_incentivador_pj'</script>";
+        break;
 
-case '2':
-case '3':
-    echo "<script>location.href = '?perfil=includes/incentivadorPJ_etapa3_visualiza_docs'</script>";
-    break;
+    case '2':
+    case '3':
+        echo "<script>location.href = '?perfil=includes/incentivadorPJ_etapa3_visualiza_docs'</script>";
+        break;
 
 
-case '4':
-    echo "<script>location.href = '?perfil=includes/incentivador_etapa4_buscarProjeto&tipoPessoa=$tipoPessoa'</script>";
-    break;
+    case '4':
+        echo "<script>location.href = '?perfil=includes/incentivador_etapa4_buscarProjeto&tipoPessoa=$tipoPessoa'</script>";
+        break;
 
-case '6':
-    echo "<script>location.href = '?perfil=includes/incentivador_etapa6_incentivarProjeto&tipoPessoa=$tipoPessoa'</script>";
-    break;
+    case '6':
+        echo "<script>location.href = '?perfil=includes/incentivador_etapa6_incentivarProjeto&tipoPessoa=$tipoPessoa'</script>";
+        break;
+
+    case '7':
+        echo "<script>location.href = '?perfil=includes/incentivador_etapa7_gerarContrato&tipoPessoa=$tipoPessoa'</script>";
+        break;
 
 }
 ?>

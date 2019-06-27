@@ -3550,25 +3550,62 @@ function limiteEnvioProjetos()
 }
 
 
-function primeiraEstofreContrato ($idProjeto) {
+function primeiraEstrofeContrato ($idProjeto) {
     $projeto = recuperaDados("projeto", "idProjeto", $idProjeto);
-
     $tipoPessoa = $projeto['tipoPessoa'];
+
+    $V = ", ";
 
     if ($tipoPessoa == 1) {
         $idPf = $projeto['idPf'];
         $pf = recuperaDados("pessoa_fisica", "idPf", $idPf);
         $nacionalidade = recuperaDados("nacionalidades", "id", $pf['nacionalidade_id']);
 
-        $V = ", ";
+        $estrofe1 = "<b>". $pf['nome'] . "</b>$V" . $nacionalidade['nacionalidade'] . $V . $pf['estado_civil'] . $V . $pf['profissao'] . ", residente e domiciliada em "
+            . $pf['logradouro'] . $V . $pf['numero'] . "  (" . $pf['complemento'] . ") -  " . $pf['bairro'] . "   " . $pf['cidade'] . "/" . $pf['estado'] . "   " . $pf['cep'] .
+            ", portador da cédula de identidade RG nº " . $pf['rg'] . " e inscrito no CPF/MF sob nº " . $pf['cpf'] . ", dovorante designado <b>PROPONENTE</b>;";
 
-        $estrofone = $pf['nome'] . $V . $nacionalidade['nacionalidade'] . $V . $pf['estado_civil'] . $V . $pf['profissao'] . ", residente e domiciliada em "
-            . $pf['logradouro'] . $V . $pf['numero'] . " - " . $pf['bairro'] . "   " . $pf['cidade'] . "/" . $pf['estado'] . "   " . $pf['cep'] .
-            ", portador da cédula de identidade RG nº " . $pf['rg'] . " e inscrito no CPF/MF sob nº " . $pf['cpf'] . ", dovorante designado PROPONENTE;";
+    } elseif ($tipoPessoa == 2) {
+        $idPj = $projeto['idPj'];
+        $pj = recuperaDados("pessoa_juridica", "idPj", $idPj);
+        $representante = recuperaDados("representante_legal", "idRepresentanteLegal", $pj['idRepresentanteLegal']);
+
+        $estrofe1 = "<b>" . $pj['razaoSocial'] . "</b>$V" .
+            trim($pj['logradouro']). ", " . $pj['numero'] . "  (" . $pj['complemento'] . ") - " . $pj['bairro'] . "   " . $pj['cidade'] . "/" . $pj['estado'] . ", CEP: " . $pj['cep'] .
+            ", inscrita no CNPJ/MF nº " . $pj['cnpj'] . ", neste ato representado por " . $representante['nome'] . ", portador da cédula de Identidade RG nº " . $representante['rg'] . " e inscrito CPF/MF sob o nº " . $representante['cpf'] .
+            ", doravante designado <b>PROPONENTE</b>";
+    }
+
+    return $estrofe1;
+
+}
+
+function segundaEstrofeContrato ($idIncentivador, $tipoPessoa) {
+    $V = ", ";
+
+    if ($tipoPessoa == 4) {
+        $pf = recuperaDados("incentivador_pessoa_fisica", "idPf", $idIncentivador);
+        $nacionalidade = recuperaDados("nacionalidades", "id", $pf['nacionalidade_id']);
+
+        $estrofe2 = "<b>". $pf['nome'] . "</b>$V" . $nacionalidade['nacionalidade'] . $V . $pf['estado_civil'] . $V . $pf['profissao'] . ", residente e domiciliada em "
+            . $pf['logradouro'] . $V . $pf['numero'] . "  (" . $pf['complemento'] . ") -  " . $pf['bairro'] . "   " . $pf['cidade'] . "/" . $pf['estado'] . "   " . $pf['cep'] .
+            ", portador da cédula de identidade RG nº " . $pf['rg'] . " e inscrito no CPF/MF sob nº " . $pf['cpf'] . ", dovorante designado <b>CONTRIBUINTE INCENTIVADOR</b>;";
+
+
+
+
+    } elseif ($tipoPessoa == 5) {
+        $pj = recuperaDados("pessoa_juridica", "idPj", $idIncentivador);
+        $representante = recuperaDados("representante_legal", "id", $pj['idRepresentanteLegal']);
+
+        $estrofe2 = "<b>" . $pj['razaoSocial'] . "</b>$V" .
+            $pj['logradouro'] . $V . $pj['numero'] . "  (" . $pj['complemento'] . ") - " . $pj['bairro'] . "   " . $pj['cidade'] . "/" . $pj['estado'] . ", CEP: " . $pj['cep'] .
+            ", inscrita no CNPJ/MF nº " . $pj['cnpj'] . ", neste ato representado por " . $representante['nome'] . ", portador da cédula de Identidade RG nº " . $representante['rg'] . " e inscrito CPF/MF sob o nº " . $representante['cpf'] .
+            ", doravante designado <b>CONTRIBUINTE INCENTIVADOR</b>";
 
     }
 
-    return $estrofone;
+    return $estrofe2;
 
 }
 

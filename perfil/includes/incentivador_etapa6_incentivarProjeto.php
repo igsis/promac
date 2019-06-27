@@ -3,6 +3,7 @@ $con = bancoMysqli();
 $idIncentivador = $_SESSION['idUser'];
 $tipoPessoa = $_POST['tipoPessoa'] ?? $_GET['tipoPessoa'];
 $gerarContrato = 0;
+$qtadeParcelas = 0;
 
 if (isset($_POST['incentivar_projeto']) || isset($_POST['editar'])) {
     $idProjeto = $_POST['idProjeto'];
@@ -77,7 +78,7 @@ if (isset($_POST['gravarInfos'])) {
                                                AND tipoPessoa = '$tipoPessoa' 
                                                AND idProjeto = '$idProjeto'";
 
-    if (mysqli_query($con, $sqlInfos) && $qtadeParcelas != '') {
+    if (mysqli_query($con, $sqlInfos) && $qtadeParcelas != 0) {
         $gerarContrato = 1;
     }
 }
@@ -231,7 +232,7 @@ if (((isset($qtadeParcelas) && $qtadeParcelas != 0) && (isset($impostoRegistrado
                     <hr>
                     <h6>Cronograma</h6>
                     <?php
-                    if (isset($qtadeParcelas)) {
+                    if ($qtadeParcelas != 0) {
 
                         ?>
                         <div class="col-md-offset-4 col-md-6 form-group">
@@ -321,7 +322,7 @@ if (((isset($qtadeParcelas) && $qtadeParcelas != 0) && (isset($impostoRegistrado
                             <div class='col-md-12'>
                                 <input type='hidden' name='tipoPessoa' value='<?=$tipoPessoa?>'>
                                 <input type='hidden' name='idProjeto' value='<?=$idProjeto?>'>
-                                <button type='submit' id='avancar' class='btn btn-theme pull-right'>
+                                <button type='submit' name='avancar_etapa7' class='btn btn-theme pull-right'>
                                     Avançar
                                 </button>
                             </div>

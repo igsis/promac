@@ -58,6 +58,7 @@ if(isset($_POST['insereAtuacao']))
 	}
 	else
 	{
+	    echo $sql_insere_projeto;
 		$mensagem = "<font color='#01DF3A'><strong>Erro ao gravar! Tente novamente.</strong></font> <br/>";
 	}
 }
