@@ -126,12 +126,10 @@ if ($etapa == 10) {
                         </div>
                         <br>
                         <div class="col-md-1 pull-left">
-                            <button class="form-control btn"><span class="glyphicon glyphicon-arrow-left"></span>
+                            <button class="btn btn-outline-dark"><span class="glyphicon glyphicon-arrow-left"></span>
                                 Solicitar autorização de depósito desta parcela
                             </button>
-
                         </div>
-
 
                         <hr width="50%">
 
