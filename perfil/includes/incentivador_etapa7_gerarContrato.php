@@ -4,7 +4,9 @@ $idIncentivador = $_SESSION['idUser'];
 $tipoPessoa = $_POST['tipoPessoa'] ?? $_GET['tipoPessoa'];
 
 
-$etapaArray = recuperaDados("etapas_incentivo", "idIncentivador", $idPj);
+$sqlEtapa = "SELECT etapa FROM etapas_incentivo WHERE idProjeto = '$idProjeto' AND idIncentivador = '$idIncentivador' AND tipoPessoa = '$tipoPessoa'";
+$queryEtapa = mysqli_query($con, $sqlEtapa);
+$etapaArray = mysqli_fetch_assoc($queryEtapa);
 $etapa = $etapaArray['etapa'];
 
 if ($etapa == 8) {

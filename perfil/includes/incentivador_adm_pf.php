@@ -5,7 +5,22 @@ $idPf = $_SESSION['idUser'];
 $tipoPessoa = 4;
 
 $pf = recuperaDados("incentivador_pessoa_fisica", "idPf", $idPf);
-$etapaArray = recuperaDados("etapas_incentivo", "idIncentivador", $idPf);
+
+$sqlProject = "SELECT idProjeto FROM etapas_incentivo WHERE tipoPessoa = '$tipoPessoa' AND idIncentivador = '$idPf'";
+$queryProject = mysqli_query($con, $sqlProject);
+$arr = mysqli_fetch_assoc($queryProject);
+$idProjeto = $arr['idProjeto'];
+
+if($idProjeto != '') {
+    $idProjeto = $idProjeto;
+} else {
+    $idProjeto = '';
+}
+
+$sqlEtapa = "SELECT etapa FROM etapas_incentivo WHERE idProjeto = '$idProjeto' AND idIncentivador = '$idPf' AND tipoPessoa = '$tipoPessoa'";
+$queryEtapa = mysqli_query($con, $sqlEtapa);
+$etapaArray = mysqli_fetch_assoc($queryEtapa);
+$etapa = $etapaArray['etapa'];
 
 $liberado = $pf['liberado'];
 $etapa = $etapaArray['etapa'];
@@ -75,6 +90,7 @@ switch ($etapa) {
         break;
 
     case '9':
+    case '10':
         echo "<script>location.href = '?perfil=includes/incentivador_etapa9_verificaData&tipoPessoa=$tipoPessoa'</script>";
         break;
 

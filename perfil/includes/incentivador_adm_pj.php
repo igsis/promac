@@ -4,7 +4,22 @@ $idPj = $_SESSION['idUser'];
 $tipoPessoa = '5';
 
 $pj = recuperaDados("incentivador_pessoa_juridica", "idPj", $idPj);
-$etapaArray = recuperaDados("etapas_incentivo", "idIncentivador", $idPj);
+
+$sqlProject = "SELECT idProjeto FROM etapas_incentivo WHERE tipoPessoa = '$tipoPessoa' AND idIncentivador = '$idPj'";
+$queryProject = mysqli_query($con, $sqlProject);
+$arr = mysqli_fetch_assoc($queryProject);
+$idProjeto = $arr['idProjeto'];
+
+if($idProjeto != '') {
+    $idProjeto = $idProjeto;
+} else {
+    $idProjeto = '';
+}
+
+$sqlEtapa = "SELECT etapa FROM etapas_incentivo WHERE idProjeto = '$idProjeto' AND idIncentivador = '$idPj' AND tipoPessoa = '$tipoPessoa'";
+$queryEtapa = mysqli_query($con, $sqlEtapa);
+$etapaArray = mysqli_fetch_assoc($queryEtapa);
+$etapa = $etapaArray['etapa'];
 
 $liberado = $pj['liberado'];
 $etapa = $etapaArray['etapa'];
@@ -71,6 +86,11 @@ switch ($etapa) {
     case '7':
     case '8':
         echo "<script>location.href = '?perfil=includes/incentivador_etapa7_gerarContrato&tipoPessoa=$tipoPessoa'</script>";
+        break;
+
+    case '9':
+    case '10':
+        echo "<script>location.href = '?perfil=includes/incentivador_etapa9_verificaData&tipoPessoa=$tipoPessoa'</script>";
         break;
 
 }
