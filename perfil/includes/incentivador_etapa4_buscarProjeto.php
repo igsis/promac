@@ -9,16 +9,24 @@ $displayBotao = 'none';
 
 if ($tipoPessoa == 4)
 {
-    $pf = recuperaDados("incentivador_pessoa_fisica", "idPf", $idPf);
-    $etapaArray = recuperaDados("etapas_incentivo", "idIncentivador", $idPf);
+    $pf = recuperaDados("incentivador_pessoa_fisica", "idPf", $idIncentivador);
+
+    $sqlEtapa = "SELECT etapa FROM etapas_incentivo WHERE idProjeto = '$idProjeto' AND idIncentivador = '$idIncentivador' AND tipoPessoa = '$tipoPessoa'";
+    $queryEtapa = mysqli_query($con, $sqlEtapa);
+    $etapaArray = mysqli_fetch_assoc($queryEtapa);
+
 
     $liberado = $pf['liberado'];
     $etapa = $etapaArray['etapa'];
 }
 elseif ($tipoPessoa == 5)
 {
-    $pj = recuperaDados("incentivador_pessoa_juridica", "idPj", $idPj);
-    $etapaArray = recuperaDados("etapas_incentivo", "idIncentivador", $idPj);
+    $pj = recuperaDados("incentivador_pessoa_juridica", "idPj", $idIncentivador);
+
+    $sqlEtapa = "SELECT etapa FROM etapas_incentivo WHERE idProjeto = '$idProjeto' AND idIncentivador = '$idIncentivador' AND tipoPessoa = '$tipoPessoa'";
+    $queryEtapa = mysqli_query($con, $sqlEtapa);
+    $etapaArray = mysqli_fetch_assoc($queryEtapa);
+
 
     $liberado = $pj['liberado'];
     $etapa = $etapaArray['etapa'];
