@@ -910,8 +910,14 @@ function listaArquivosPessoa($idPessoa,$tipoPessoa,$pagina, $idsDeterminados = '
 			<tbody>";
 				while($arquivo = mysqli_fetch_array($query))
 				{
+				    if ($idsDeterminados != '' && $idsDeterminados == 18) {
+				        $nomeDoc = "Carta de Intenção de Incentivo";
+                    } else {
+				        $nomeDoc = $arquivo['documento'];
+                    }
+
 					echo "<tr>";
-					echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
+					echo "<td class='list_description'>($nomeDoc)</td>";
 					echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
 					echo "
 						<td class='list_description'>
@@ -920,7 +926,7 @@ function listaArquivosPessoa($idPessoa,$tipoPessoa,$pagina, $idsDeterminados = '
 								<input type='hidden' name='tipoPessoa' value='".$tipoPessoa."' />
 								<input type='hidden' name='apagar' value='".$arquivo['idUploadArquivo']."' />
 								<input type='hidden' name='idListaDocumento' value='".$arquivo['idListaDocumento']."' />
-								<button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Remover Arquivo?' data-message='Deseja realmente excluir o arquivo ".$arquivo['documento']."?'>Remover
+								<button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Remover Arquivo?' data-message='Deseja realmente excluir o arquivo $nomeDoc?'>Remover
 								</button></td>
 							</form>";
 					echo "</tr>";

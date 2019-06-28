@@ -70,6 +70,7 @@ switch ($etapa) {
         break;
 
     case '7':
+    case '8':
         echo "<script>location.href = '?perfil=includes/incentivador_etapa7_gerarContrato&tipoPessoa=$tipoPessoa'</script>";
         break;
 
