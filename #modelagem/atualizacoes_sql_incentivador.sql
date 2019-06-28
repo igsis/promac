@@ -220,6 +220,10 @@ INSERT INTO nacionalidades (id, nacionalidade) VALUES
 (110, 'Vietnamita'),
 (111, 'Zimbabuense');
 
+
+ALTER TABLE `incentivador_projeto` ADD `data_recebimento_carta` DATE NULL AFTER `imposto`;
+
+
 /* 
 * FIM -> Tanair
 * 18/06/2019
