@@ -94,8 +94,8 @@ if ($etapa == 10) {
 
                 <div id="etapa10" style="display: <?=$etapa10?>">
                     <div class="well">
-                        <h6><b>10 - Solicite a autorização de depósito</b></h6>
-                        <div class="col-md-offset-3 col-md-6 form-group">
+                        <h6><b>10 - Solicite a autorização de depósito</b></h6><br>
+                        <div class="col-md-offset-2 col-md-6 form-group">
                             <table class="table bg-white text-center table-hover table-responsive table-condensed table-bordered">
                                 <thead class="bg-success">
                                 <tr class="list_menu" style="font-weight: bold;">
@@ -125,9 +125,9 @@ if ($etapa == 10) {
                             </table>
                         </div>
                         <br>
-                        <div class="col-md-1 pull-left">
-                            <button class="btn btn-outline-dark"><span class="glyphicon glyphicon-arrow-left"></span>
-                                Solicitar autorização de depósito desta parcela
+                        <div class="col-md-2 pull-left">
+                            <button class="btn" style="background-color: #f5f5f5; margin-top: 8px;"><span class="glyphicon glyphicon-arrow-left" style="margin-left: -20px;color: green; font-size: 13px;">    Solicitar autorização de depósito desta parcela</span>
+                                <!--<span style="color: green;"></span>-->
                             </button>
                         </div>
 
