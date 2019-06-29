@@ -98,17 +98,76 @@ if ($pf['idNivelAcesso'] == 2) {
     $num = mysqli_num_rows($query);
     ?>
     <!-- Lista 1 -->
+    <style>
+        .none {
+            display: none;
+        }
+    </style>
     <div class="form-group">
         <h5><strong><?php if (isset($mensagem)) {
                     echo $mensagem;
                 } ?></strong></h5>
-        <h5>Inscrições de pessoa física a liberar<br></h5>
+        <button type="button" id="button_incricoes_PF" onclick="mostrarDiv('inscricoes_PF')" style="font-size: 20px;" class="btn bg-white">Inscrições de pessoa física a liberar
+            &nbsp;<span id="icon_inscricoes_PF"><span class="glyphicon glyphicon-chevron-right"></span></span></button>
 
         <form method='POST' action='?perfil=smc_pesquisa_pf_resultado' class='form-horizontal' role='form'>
-            <button type="submit" class="label label-warning" name="liberado" value="1">
-                <span style="font-size: 15px;">Total: <?= $num ?></span>
-            </button>
+            <!--<button type="submit" class="label label-warning" name="liberado" value="1">
+                <span>Total: < ?/*= $num */?></span>
+            </button>-->
         </form>
+
+        <div class="row" id="inscricoes_PF" style="display: none;">
+            <div class="col-md-12">
+                <div class="table-responsive list_info">
+                    <?php
+                    if($num > 0)
+                    {
+                        echo "
+                            <table class='table table-condensed'>
+                                <thead>
+                                    <tr class='list_menu'>
+                                        <td>Nome</td>
+                                        <td>CPF</td>
+                                        <td>RG</td>
+                                        <td>Email</td>
+                                        <td>Telefone</td>
+                                        <td width='10%'></td>
+                                    </tr>
+                                </thead>
+                                <tbody>";
+                        $i = 0;
+                        while($campo = mysqli_fetch_array($query))
+                        {
+                            if ($i < 10)
+                            {
+                                echo "<tr>";
+                                echo "<td class='list_description'>".$campo['nome']."</td>";
+                                echo "<td class='list_description'>".$campo['cpf']."</td>";
+                                echo "<td class='list_description'>".$campo['rg']."</td>";
+                                echo "<td class='list_description'>".$campo['email']."</td>";
+                                echo "<td class='list_description'>".$campo['telefone']."</td>";
+                                echo "
+                                            <td class='list_description'>
+                                                <form method='POST' action='?perfil=smc_visualiza_perfil_pf'>
+                                                    <input type='hidden' name='liberado' value='".$campo['idPf']."' />
+                                                    <input type ='submit' class='btn btn-theme btn-block' value='Visualizar'>
+                                                </form>
+                                            </td>";
+                            }
+                            $i++;
+                        }
+                        echo "</tr>";
+                        echo "</tbody>
+                                </table>";
+                    }
+                    else
+                    {
+                        echo "Não há resultado no momento.";
+                    }
+                    ?>
+                </div>
+            </div>
+        </div>
     </div>
 
     <hr width="50%">
@@ -120,12 +179,64 @@ if ($pf['idNivelAcesso'] == 2) {
     ?>
     <!-- Lista 2 -->
     <div class="form-group">
-        <h5>Inscrições de pessoa jurídica a liberar <br></h5>
+        <button type="button" id="button_incricoes_PJ" onclick="mostrarDiv('inscricoes_PJ')" style="font-size: 20px;" class="btn bg-white">Inscrições de pessoa jurídica a liberar
+            &nbsp;<span id="icon_inscricoes_PJ"><span class="glyphicon glyphicon-chevron-right"></span></span></button>
         <form method='POST' action='?perfil=smc_pesquisa_pj_resultado' class='form-horizontal' role='form'>
             <button type="submit" class="label label-warning" name="liberado" value="1">
-                <span style="font-size: 15px;">Total: <?= $num ?></span>
+                <span>Total: <?= $num ?></span>
             </button>
         </form>
+
+        <div class="row" id="inscricoes_PJ" style="display: none">
+            <div class="col-md-12">
+                <div class="table-responsive list_info">
+                    <?php
+                    if($num > 0)
+                    {
+                        echo "
+                            <table class='table table-condensed'>
+                                <thead>
+                                    <tr class='list_menu'>
+                                        <td>Razão Social</td>
+                                        <td>CNPJ</td>
+                                        <td>Email</td>
+                                        <td>Telefone</td>
+                                        <td width='10%'></td>
+                                    </tr>
+                                </thead>
+                                <tbody>";
+                        $i = 0;
+                        while($campo = mysqli_fetch_array($query))
+                        {
+                            if ($i < 10)
+                            {
+                                echo "<tr>";
+                                echo "<td class='list_description'>".$campo['razaoSocial']."</td>";
+                                echo "<td class='list_description'>".$campo['cnpj']."</td>";
+                                echo "<td class='list_description'>".$campo['email']."</td>";
+                                echo "<td class='list_description'>".$campo['telefone']."</td>";
+                                echo "
+                                            <td class='list_description'>
+                                                <form method='POST' action='?perfil=smc_visualiza_perfil_pj'>
+                                                    <input type='hidden' name='liberado' value='".$campo['idPj']."' />
+                                                    <input type ='submit' class='btn btn-theme btn-block' value='Visualizar'>
+                                                </form>
+                                            </td>";
+                            }
+                            $i++;
+                        }
+                        echo "</tr>";
+                        echo "</tbody>
+                                </table>";
+                    }
+                    else
+                    {
+                        echo "Não há resultado no momento.";
+                    }
+                    ?>
+                </div>
+            </div>
+        </div>
     </div>
 
     <hr width="50%">
@@ -143,7 +254,7 @@ if ($pf['idNivelAcesso'] == 2) {
 
         <form method='POST' action='?perfil=smc_pesquisa_incentivador_pf_resultado' class='form-horizontal' role='form'>
             <button type="submit" class="label label-warning" name="liberado" value="1">
-                <span style="font-size: 15px;">Total: <?= $num ?></span>
+                <span>Total: <?= $num ?></span>
             </button>
         </form>
     </div>
@@ -162,7 +273,7 @@ if ($pf['idNivelAcesso'] == 2) {
 
         <form method='POST' action='?perfil=smc_pesquisa_incentivador_pj_resultado' class='form-horizontal' role='form'>
             <button type="submit" class="label label-warning" name="liberado" value="1">
-                <span style="font-size: 15px;">Total: <?= $num ?></span>
+                <span>Total: <?= $num ?></span>
             </button>
         </form>
     </div>
@@ -203,7 +314,7 @@ foreach ($array_status as $idStatus) {
 
             <button type="submit" class="label label-warning" name="idEtapaProjeto"
                     value="<?= $status['idEtapaProjeto'] ?>">
-                <span style="font-size: 15px;">Total: <?= $num ?></span>
+                <span>Total: <?= $num ?></span>
             </button>
             </form>
         </div>
@@ -612,7 +723,7 @@ $num = mysqli_num_rows($query);
 
     <form method='POST' action='?perfil=smc_pesquisa_incentivador_pf_resultado' class='form-horizontal' role='form'>
         <button type="submit" class="label label-warning" name="liberado" value="4">
-            <span style="font-size: 15px;">Total: <?= $num ?></span>
+            <span>Total: <?= $num ?></span>
         </button>
     </form>
 </div>
@@ -678,7 +789,7 @@ $num = mysqli_num_rows($query);
 
     <form method='POST' action='?perfil=smc_pesquisa_incentivador_pj_resultado' class='form-horizontal' role='form'>
         <button type="submit" class="label label-warning" name="liberado" value="4">
-            <span style="font-size: 15px;">Total: <?= $num ?></span>
+            <span>Total: <?= $num ?></span>
         </button>
     </form>
 </div>
@@ -745,7 +856,7 @@ $numCartas = mysqli_num_rows($queryContratos);
 
     <form method='POST' action='?perfil=smc_pesquisa_pf_resultado' class='form-horizontal' role='form'>
         <button type="submit" class="label label-warning" name="liberado" value="1">
-            <span style="font-size: 15px;">Total: <?= $numCartas ?></span>
+            <span>Total: <?= $numCartas ?></span>
         </button>
     </form>
 </div>
@@ -894,7 +1005,6 @@ $numCartas = mysqli_num_rows($queryContratos);
 
     });
 
-
     let statusAll = document.querySelectorAll(".colorindo")
 
     for (let status of statusAll) {
@@ -914,6 +1024,20 @@ $numCartas = mysqli_num_rows($queryContratos);
             }
         })
     }
+
+    var mostrarDiv = function (divId) {
+        if ($('#' + divId).is(':visible')) {
+            $('#' + divId).slideUp();
+            $('#icon_' + divId).html("<span class='glyphicon glyphicon-chevron-right'></span>");
+        } else {
+            $('#' + divId).slideDown('slow');
+            $('#icon_' + divId).html("<span class='glyphicon glyphicon-chevron-down'></span>");
+
+        }
+    }
+
+
+    $('#inscricoes_PJ').on('click', mostrarDiv);
 
 
 </script>
