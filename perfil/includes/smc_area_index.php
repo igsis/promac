@@ -731,9 +731,10 @@ $num = mysqli_num_rows($query);
 
 <?php
 
-$sqlContratos = "SELECT * FROM upload_arquivo WHERE idListaDocumento = 18 AND publicado = 1 AND dataEnvio LIKE '2019%' AND idStatusDocumento != 1";
+$sqlContratos = "SELECT * FROM upload_arquivo WHERE idListaDocumento = 18 AND publicado = 1 AND dataEnvio LIKE '2019%' AND (idStatusDocumento IS NULL OR idStatusDocumento = 3)";
 $queryContratos = mysqli_query($con, $sqlContratos);
 $numCartas = mysqli_num_rows($queryContratos);
+
 ?>
 
 

@@ -3,6 +3,16 @@ $con = bancoMysqli();
 $idIncentivador = $_SESSION['idUser'];
 $tipoPessoa = $_POST['tipoPessoa'] ?? $_GET['tipoPessoa'];
 
+if (isset($_POST['idProjeto'])) {
+    $idProjeto = $_POST['idProjeto'];
+
+} else {
+    $sqlProject = "SELECT idProjeto FROM etapas_incentivo WHERE tipoPessoa = '$tipoPessoa' AND idIncentivador = '$idIncentivador' AND (etapa = 7 OR etapa = 8)";
+    $queryProject = mysqli_query($con, $sqlProject);
+    $arr = mysqli_fetch_assoc($queryProject);
+    $idProjeto = $arr['idProjeto'];
+}
+
 
 $sqlEtapa = "SELECT etapa FROM etapas_incentivo WHERE idProjeto = '$idProjeto' AND idIncentivador = '$idIncentivador' AND tipoPessoa = '$tipoPessoa'";
 $queryEtapa = mysqli_query($con, $sqlEtapa);
@@ -17,15 +27,6 @@ if ($etapa == 8) {
     $etapa7 = 'block';
 }
 
-if (isset($_POST['idProjeto'])) {
-    $idProjeto = $_POST['idProjeto'];
-
-} else {
-    $sqlProject = "SELECT idProjeto FROM etapas_incentivo WHERE tipoPessoa = '$tipoPessoa' AND idIncentivador = '$idIncentivador' AND etapa = '$etapa'";
-    $queryProject = mysqli_query($con, $sqlProject);
-    $arr = mysqli_fetch_assoc($queryProject);
-    $idProjeto = $arr['idProjeto'];
-}
 
 if (isset($_POST['avancar_etapa7'])) {
     $sqlEtapa = "UPDATE etapas_incentivo SET etapa = 7 WHERE idProjeto = '$idProjeto' AND tipoPessoa = '$tipoPessoa' AND idIncentivador = '$idIncentivador'";
