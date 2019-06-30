@@ -375,8 +375,6 @@ if (verificaArquivosExistentesIncentivador($idIncentivador, 18)) {
                 </div>
             </div>
             <!-- Fim Confirmação de Exclusão -->
-
-
         </div>
     </div>
     </div>

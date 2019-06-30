@@ -1,7 +1,5 @@
 <?php
-
 set_time_limit(1200);
-
 $cinza = "#EBEBEB";
 
 if (isset($_POST['envioComissao'])) {
@@ -107,21 +105,21 @@ if ($pf['idNivelAcesso'] == 2) {
         <h5><strong><?php if (isset($mensagem)) {
                     echo $mensagem;
                 } ?></strong></h5>
-        <button type="button" id="button_incricoes_PF" onclick="mostrarDiv('inscricoes_PF')" style="font-size: 20px;" class="btn bg-white">Inscrições de pessoa física a liberar
+        <button type="button" id="button_incricoes_PF" onclick="mostrarDiv('inscricoes_PF')" style="font-size: 20px;"
+                class="btn bg-white">Inscrições de pessoa física a liberar
             &nbsp;<span id="icon_inscricoes_PF"><span class="glyphicon glyphicon-chevron-right"></span></span></button>
 
         <form method='POST' action='?perfil=smc_pesquisa_pf_resultado' class='form-horizontal' role='form'>
-            <!--<button type="submit" class="label label-warning" name="liberado" value="1">
-                <span>Total: < ?/*= $num */?></span>
-            </button>-->
+            <button type="submit" class="label label-warning" name="liberado" value="1">
+                <span>Total: <?= $num ?></span>
+            </button>
         </form>
 
-        <div class="row" id="inscricoes_PF" style="display: none;">
+        <div class="row none" id="inscricoes_PF">
             <div class="col-md-12">
                 <div class="table-responsive list_info">
                     <?php
-                    if($num > 0)
-                    {
+                    if ($num > 0) {
                         echo "
                             <table class='table table-condensed'>
                                 <thead>
@@ -136,20 +134,18 @@ if ($pf['idNivelAcesso'] == 2) {
                                 </thead>
                                 <tbody>";
                         $i = 0;
-                        while($campo = mysqli_fetch_array($query))
-                        {
-                            if ($i < 10)
-                            {
+                        while ($campo = mysqli_fetch_array($query)) {
+                            if ($i < 10) {
                                 echo "<tr>";
-                                echo "<td class='list_description'>".$campo['nome']."</td>";
-                                echo "<td class='list_description'>".$campo['cpf']."</td>";
-                                echo "<td class='list_description'>".$campo['rg']."</td>";
-                                echo "<td class='list_description'>".$campo['email']."</td>";
-                                echo "<td class='list_description'>".$campo['telefone']."</td>";
+                                echo "<td class='list_description'>" . $campo['nome'] . "</td>";
+                                echo "<td class='list_description'>" . $campo['cpf'] . "</td>";
+                                echo "<td class='list_description'>" . $campo['rg'] . "</td>";
+                                echo "<td class='list_description'>" . $campo['email'] . "</td>";
+                                echo "<td class='list_description'>" . $campo['telefone'] . "</td>";
                                 echo "
                                             <td class='list_description'>
                                                 <form method='POST' action='?perfil=smc_visualiza_perfil_pf'>
-                                                    <input type='hidden' name='liberado' value='".$campo['idPf']."' />
+                                                    <input type='hidden' name='liberado' value='" . $campo['idPf'] . "' />
                                                     <input type ='submit' class='btn btn-theme btn-block' value='Visualizar'>
                                                 </form>
                                             </td>";
@@ -159,9 +155,7 @@ if ($pf['idNivelAcesso'] == 2) {
                         echo "</tr>";
                         echo "</tbody>
                                 </table>";
-                    }
-                    else
-                    {
+                    } else {
                         echo "Não há resultado no momento.";
                     }
                     ?>
@@ -179,7 +173,8 @@ if ($pf['idNivelAcesso'] == 2) {
     ?>
     <!-- Lista 2 -->
     <div class="form-group">
-        <button type="button" id="button_incricoes_PJ" onclick="mostrarDiv('inscricoes_PJ')" style="font-size: 20px;" class="btn bg-white">Inscrições de pessoa jurídica a liberar
+        <button type="button" id="button_incricoes_PJ" onclick="mostrarDiv('inscricoes_PJ')" style="font-size: 20px;"
+                class="btn bg-white">Inscrições de pessoa jurídica a liberar
             &nbsp;<span id="icon_inscricoes_PJ"><span class="glyphicon glyphicon-chevron-right"></span></span></button>
         <form method='POST' action='?perfil=smc_pesquisa_pj_resultado' class='form-horizontal' role='form'>
             <button type="submit" class="label label-warning" name="liberado" value="1">
@@ -187,12 +182,11 @@ if ($pf['idNivelAcesso'] == 2) {
             </button>
         </form>
 
-        <div class="row" id="inscricoes_PJ" style="display: none">
+        <div class="row none" id="inscricoes_PJ">
             <div class="col-md-12">
                 <div class="table-responsive list_info">
                     <?php
-                    if($num > 0)
-                    {
+                    if ($num > 0) {
                         echo "
                             <table class='table table-condensed'>
                                 <thead>
@@ -206,19 +200,17 @@ if ($pf['idNivelAcesso'] == 2) {
                                 </thead>
                                 <tbody>";
                         $i = 0;
-                        while($campo = mysqli_fetch_array($query))
-                        {
-                            if ($i < 10)
-                            {
+                        while ($campo = mysqli_fetch_array($query)) {
+                            if ($i < 10) {
                                 echo "<tr>";
-                                echo "<td class='list_description'>".$campo['razaoSocial']."</td>";
-                                echo "<td class='list_description'>".$campo['cnpj']."</td>";
-                                echo "<td class='list_description'>".$campo['email']."</td>";
-                                echo "<td class='list_description'>".$campo['telefone']."</td>";
+                                echo "<td class='list_description'>" . $campo['razaoSocial'] . "</td>";
+                                echo "<td class='list_description'>" . $campo['cnpj'] . "</td>";
+                                echo "<td class='list_description'>" . $campo['email'] . "</td>";
+                                echo "<td class='list_description'>" . $campo['telefone'] . "</td>";
                                 echo "
                                             <td class='list_description'>
                                                 <form method='POST' action='?perfil=smc_visualiza_perfil_pj'>
-                                                    <input type='hidden' name='liberado' value='".$campo['idPj']."' />
+                                                    <input type='hidden' name='liberado' value='" . $campo['idPj'] . "' />
                                                     <input type ='submit' class='btn btn-theme btn-block' value='Visualizar'>
                                                 </form>
                                             </td>";
@@ -228,9 +220,7 @@ if ($pf['idNivelAcesso'] == 2) {
                         echo "</tr>";
                         echo "</tbody>
                                 </table>";
-                    }
-                    else
-                    {
+                    } else {
                         echo "Não há resultado no momento.";
                     }
                     ?>
@@ -239,7 +229,7 @@ if ($pf['idNivelAcesso'] == 2) {
         </div>
     </div>
 
-    <hr width="50%">
+    <hr width="50%" size="10px">
 
     <?php
     $sql = "SELECT * FROM incentivador_pessoa_fisica WHERE liberado = 1";
@@ -248,17 +238,63 @@ if ($pf['idNivelAcesso'] == 2) {
     ?>
     <!-- Lista 3 -->
     <div class="form-group">
-        <h5>Inscrições de incentivador pessoa física a liberar<br>
-            <small>Máximo de 10 Registros exibidos</small>
-        </h5>
-
+        <button type="button" id="button_incricoes_PJ" onclick="mostrarDiv('incentivador_PF')" style="font-size: 20px;"
+                class="btn bg-white">
+            Inscrições de incentivador pessoa física a liberar
+            &nbsp;<span id="icon_incentivador_PF"><span class="glyphicon glyphicon-chevron-right"></span></span>
+        </button>
         <form method='POST' action='?perfil=smc_pesquisa_incentivador_pf_resultado' class='form-horizontal' role='form'>
             <button type="submit" class="label label-warning" name="liberado" value="1">
                 <span>Total: <?= $num ?></span>
             </button>
         </form>
-    </div>
 
+        <div class="row none" id="incentivador_PF">
+            <div class="col-md-12">
+                <div class="table-responsive list_info">
+                    <?php
+                    if ($num > 0) {
+                        echo "
+                            <table class='table table-condensed'>
+                                <thead>
+                                    <tr class='list_menu'>
+                                        <td>Nome</td>
+                                        <td>CPF</td>
+                                        <td>Email</td>
+                                        <td>Telefone</td>
+                                        <td width='10%'></td>
+                                    </tr>
+                                </thead>
+                                <tbody>";
+                        $i = 0;
+                        while ($campo = mysqli_fetch_array($query)) {
+                            if ($i < 10) {
+                                echo "<tr>";
+                                echo "<td class='list_description'>" . $campo['nome'] . "</td>";
+                                echo "<td class='list_description'>" . $campo['cpf'] . "</td>";
+                                echo "<td class='list_description'>" . $campo['email'] . "</td>";
+                                echo "<td class='list_description'>" . $campo['telefone'] . "</td>";
+                                echo "
+                                            <td class='list_description'>
+                                                <form method='POST' action='?perfil=smc_visualiza_incentivadores_pf'>
+                                                    <input type='hidden' name='liberado' value='" . $campo['idPf'] . "' />
+                                                    <input type ='submit' class='btn btn-theme btn-block' value='Visualizar'>
+                                                </form>
+                                            </td>";
+                            }
+                            $i++;
+                        }
+                        echo "</tr>";
+                        echo "</tbody>
+                                </table>";
+                    } else {
+                        echo "Não há resultado no momento.";
+                    }
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
     <hr width="50%">
 
     <?php
@@ -268,16 +304,60 @@ if ($pf['idNivelAcesso'] == 2) {
     ?>
     <!-- Lista 5 -->
     <div class="form-group">
-        <h5>Inscrições de incentivador pessoa jurídica a liberar<br>
-        </h5>
+        <button type="button" onclick="mostrarDiv('incentivador_PJ')" style="font-size: 20px;" class="btn bg-white">
+            Inscrições de incentivador pessoa jurídica a liberar
+            &nbsp;<span id="icon_incentivador_PJ"><span class="glyphicon glyphicon-chevron-right"></span></span>
+        </button>
 
         <form method='POST' action='?perfil=smc_pesquisa_incentivador_pj_resultado' class='form-horizontal' role='form'>
             <button type="submit" class="label label-warning" name="liberado" value="1">
                 <span>Total: <?= $num ?></span>
             </button>
         </form>
-    </div>
 
+        <div class="row none" id="incentivador_PJ">
+            <div class="col-md-12">
+                <div class="table-responsive list_info">
+                    <?php
+                    if ($num > 0) {
+                        echo "
+                            <table class='table table-condensed'>
+                                <thead>
+                                    <tr class='list_menu'>
+                                        <td>Razão Social</td>
+                                        <td>CNPJ</td>
+                                        <td>Email</td>
+                                        <td>Telefone</td>
+                                        <td width='10%'></td>
+                                    </tr>
+                                </thead>
+                                <tbody>";
+                        while ($campo = mysqli_fetch_array($query)) {
+                            echo "<tr>";
+                            echo "<td class='list_description'>" . $campo['razaoSocial'] . "</td>";
+                            echo "<td class='list_description'>" . $campo['cnpj'] . "</td>";
+                            echo "<td class='list_description'>" . $campo['email'] . "</td>";
+                            echo "<td class='list_description'>" . $campo['telefone'] . "</td>";
+                            echo "
+                                    <td class='list_description'>
+                                        <form method='POST' action='?perfil=smc_visualiza_incentivadores_pj'>
+                                            <input type='hidden' name='liberado' value='" . $campo['idPj'] . "' />
+                                            <input type ='submit' class='btn btn-theme btn-block' value='Visualizar'>
+                                        </form>
+                                    </td>";
+
+                        }
+                        echo "</tr>";
+                        echo "</tbody>
+                                </table>";
+                    } else {
+                        echo "Não há resultado no momento.";
+                    }
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
     <hr width="50%">
     <?php
 }
@@ -305,7 +385,13 @@ foreach ($array_status as $idStatus) {
         $i = 0;
         ?>
         <div class='form-group'>
-            <h5>Projetos com Etapa "<?= $status['etapaProjeto'] ?>"</h5>
+            <!--<h5>Projetos com Etapa "<?/*= $status['etapaProjeto'] */ ?>"</h5>-->
+            <button type="button" onclick="mostrarDiv('projeto<?= $status['idEtapaProjeto'] ?>')"
+                    style="font-size: 20px;" class="btn bg-white">
+                Projetos com Etapa "<?= $status['etapaProjeto'] ?>"
+                &nbsp;<span id="icon_projeto<?= $status['idEtapaProjeto'] ?>"><span
+                            class="glyphicon glyphicon-chevron-right"></span></span>
+            </button>
             <?php
             if ($pf['idNivelAcesso'] == 2) {
                 echo "<form method='POST' action='?perfil=smc_pesquisa_geral_resultado' class='form-horizontal' role='form'>";
@@ -318,7 +404,7 @@ foreach ($array_status as $idStatus) {
             </button>
             </form>
         </div>
-        <div class="row">
+        <div class="row none" id="projeto<?= $status['idEtapaProjeto'] ?>">
             <div class="col-md-12">
                 <div class="table-responsive list_info">
                     <?php
@@ -356,99 +442,98 @@ foreach ($array_status as $idStatus) {
                         </thead>
                         <?php
                         while ($campo = mysqli_fetch_array($queryProjeto)) {
-                            if ($i < 5) {
+                            ?>
+                            <tr style="background: <?= ($campo['idStatus'] == 6 && $campo['publicado'] == 1 ? $cinza : "white") ?>">
+                                <td class='list_description maskProtocolo'
+                                    data-mask="0000.00.00/0000000"><?= $campo['protocolo'] ?></td>
+                                <?php
+                                if ($status['idEtapaProjeto'] == 2) {
+
+                                    $dataEtapa = new DateTime ($campo['data']);
+
+                                    echo "<td class='list_description'>" . date_format($dataEtapa, "d/m/Y H:i:s") . "</td>";
+
+                                } elseif ($status['idEtapaProjeto'] == 10) {
+
+                                    $dataEtapa = new DateTime ($campo['data']);
+
+                                    echo "<td class='list_description'>" . date_format($dataEtapa, "d/m/Y H:i:s") . "</td>";
+                                } elseif ($status['idEtapaProjeto'] == 13) {
+
+                                    $dataEtapa = new DateTime ($campo['data']);
+
+                                    echo "<td class='list_description'>" . date_format($dataEtapa, "d/m/Y H:i:s") . "</td>";
+
+                                } elseif ($status['idEtapaProjeto'] == 14) {
+                                    $dataEtapa = new DateTime ($campo['data']);
+
+                                    echo "<td class='list_description'>" . date_format($dataEtapa, "d/m/Y H:i:s") . "</td>";
+
+                                } elseif ($status['idEtapaProjeto'] == 23) {
+
+                                    $dataEtapa = new DateTime ($campo['data']);
+
+                                    echo "<td class='list_description'>" . date_format($dataEtapa, "d/m/Y H:i:s") . "</td>";
+                                }
                                 ?>
-                                <tr style="background: <?= ($campo['idStatus'] == 6 && $campo['publicado'] == 1 ? $cinza : "white") ?>">
-                                    <td class='list_description maskProtocolo'
-                                        data-mask="0000.00.00/0000000"><?= $campo['protocolo'] ?></td>
-                                    <?php
-                                    if ($status['idEtapaProjeto'] == 2) {
-
-                                        $dataEtapa = new DateTime ($campo['data']);
-
-                                        echo "<td class='list_description'>" . date_format($dataEtapa, "d/m/Y H:i:s") . "</td>";
-
-                                    } elseif ($status['idEtapaProjeto'] == 10) {
-
-                                        $dataEtapa = new DateTime ($campo['data']);
-
-                                        echo "<td class='list_description'>" . date_format($dataEtapa, "d/m/Y H:i:s") . "</td>";
-                                    } elseif ($status['idEtapaProjeto'] == 13) {
-
-                                        $dataEtapa = new DateTime ($campo['data']);
-
-                                        echo "<td class='list_description'>" . date_format($dataEtapa, "d/m/Y H:i:s") . "</td>";
-
-                                    } elseif ($status['idEtapaProjeto'] == 14) {
-                                        $dataEtapa = new DateTime ($campo['data']);
-
-                                        echo "<td class='list_description'>" . date_format($dataEtapa, "d/m/Y H:i:s") . "</td>";
-
-                                    } elseif ($status['idEtapaProjeto'] == 23) {
-
-                                        $dataEtapa = new DateTime ($campo['data']);
-
-                                        echo "<td class='list_description'>" . date_format($dataEtapa, "d/m/Y H:i:s") . "</td>";
-                                    }
-                                    ?>
 
 
-                                    <td class='list_description'><?= $campo['nomeProjeto'] ?></td>
-                                    <td class='list_description'><?= isset($campo['nome']) ? $campo['nome'] : $campo['razaoSocial'] ?></td>
-                                    <td class='list_description'><?= isset($campo['cpf']) ? $campo['cpf'] : $campo['cnpj'] ?></td>
-                                    <td class='list_description'><?= mb_strimwidth($campo['areaAtuacao'], 0, 38, "...") ?></td>
-                                    <?= ($status['ordem'] >= 5) ? "<td class='list_description'>" . $campo['comissao'] . "</td>" : NULL ?>
-                                    <?php
-                                    /*TODO: Transformar este bloco de if/elseif em função*/
-                                    if ($status['idEtapaProjeto'] == 23) {
-                                        $sqlRecurso = "SELECT DISTINCT `arquivo`, `dataEnvio` FROM `upload_arquivo` WHERE `idTipo` = '3' AND `idPessoa` = '" . $campo['idProjeto'] . "' AND `idListaDocumento` = '52' AND `publicado` = '1'";
-                                        $recurso = mysqli_fetch_array(mysqli_query($con, $sqlRecurso));
-                                        $dataEnvio = date_create($recurso['dataEnvio']);
-                                        $dataAtual = date_create(date("Y-m-d"));
-                                        $dias = date_diff($dataEnvio, $dataAtual);
+                                <td class='list_description'><?= $campo['nomeProjeto'] ?></td>
+                                <td class='list_description'><?= isset($campo['nome']) ? $campo['nome'] : $campo['razaoSocial'] ?></td>
+                                <td class='list_description'><?= isset($campo['cpf']) ? $campo['cpf'] : $campo['cnpj'] ?></td>
+                                <td class='list_description'><?= mb_strimwidth($campo['areaAtuacao'], 0, 38, "...") ?></td>
+                                <?= ($status['ordem'] >= 5) ? "<td class='list_description'>" . $campo['comissao'] . "</td>" : NULL ?>
+                                <?php
+                                /*TODO: Transformar este bloco de if/elseif em função*/
+                                if ($status['idEtapaProjeto'] == 23) {
+                                    $sqlRecurso = "SELECT DISTINCT `arquivo`, `dataEnvio` FROM `upload_arquivo` WHERE `idTipo` = '3' AND `idPessoa` = '" . $campo['idProjeto'] . "' AND `idListaDocumento` = '52' AND `publicado` = '1'";
+                                    $recurso = mysqli_fetch_array(mysqli_query($con, $sqlRecurso));
+                                    $dataEnvio = date_create($recurso['dataEnvio']);
+                                    $dataAtual = date_create(date("Y-m-d"));
+                                    $dias = date_diff($dataEnvio, $dataAtual);
 
 
-                                        echo "<td><a href='../uploadsdocs/" . $recurso['arquivo'] . "' target='_blank'>" . mb_strimwidth($recurso['arquivo'], 15, 38, "...") . "</a></td>";
-                                        echo "<td>" . $dias->format("%a dias") . "</td>";
-                                    } elseif (($status['idEtapaProjeto'] == 13)) {
-                                        $sqlComplemento = "SELECT DISTINCT `arquivo`, `dataEnvio` FROM `upload_arquivo` WHERE `idTipo` = '3' AND `idPessoa` = '" . $campo['idProjeto'] . "' AND `idListaDocumento` = '46' AND `publicado` = '1'";
-                                        $complemento = mysqli_fetch_array(mysqli_query($con, $sqlComplemento));
-                                        $dataEnvio = date_create($complemento['dataEnvio']);
-                                        $dataAtual = date_create(date("Y-m-d"));
-                                        $dias = date_diff($dataEnvio, $dataAtual);
+                                    echo "<td><a href='../uploadsdocs/" . $recurso['arquivo'] . "' target='_blank'>" . mb_strimwidth($recurso['arquivo'], 15, 38, "...") . "</a></td>";
+                                    echo "<td>" . $dias->format("%a dias") . "</td>";
+                                } elseif (($status['idEtapaProjeto'] == 13)) {
+                                    $sqlComplemento = "SELECT DISTINCT `arquivo`, `dataEnvio` FROM `upload_arquivo` WHERE `idTipo` = '3' AND `idPessoa` = '" . $campo['idProjeto'] . "' AND `idListaDocumento` = '46' AND `publicado` = '1'";
+                                    $complemento = mysqli_fetch_array(mysqli_query($con, $sqlComplemento));
+                                    $dataEnvio = date_create($complemento['dataEnvio']);
+                                    $dataAtual = date_create(date("Y-m-d"));
+                                    $dias = date_diff($dataEnvio, $dataAtual);
 
-                                        echo "<td><a href='../uploadsdocs/" . $complemento['arquivo'] . "' target='_blank'>" . mb_strimwidth($complemento['arquivo'], 15, 25, "...") . "</a></td>";
-                                        echo "<td>" . $dias->format("%a dias") . "</td>";
-                                    }
-                                    if ($pf['idNivelAcesso'] == 2) {
-                                        if ($campo['idStatus'] != 6) {
-                                            ?>
-                                            <td class='list_description'>
-                                                <form method='POST' action='?perfil=smc_detalhes_projeto'>
-                                                    <input type='hidden' name='idProjeto'
-                                                           value='<?= $campo['idProjeto'] ?>'/>
-                                                    <input type='submit' class='btn btn-theme btn-block'
-                                                           value='Visualizar'>
-                                                </form>
-                                            </td>
-                                            <td class='list_description'>
-                                                <?php
-                                                if ($status['idEtapaProjeto'] == '2' || $status['idEtapaProjeto'] == '13' || $status['idEtapaProjeto'] == '14' || $status['idEtapaProjeto'] == '23') {
-                                                    ?>
-                                                    <form method="POST" action=''>
-                                                        <input type='button' data-id="<?= $campo['idProjeto'] ?>"
-                                                               name='envioComissao' class='btn btn-theme btn-block'
-                                                               value='Enviar para comissão' data-toggle='modal'
-                                                               data-target='#enviarComissao'>
-                                                    </form>
-                                                    <?php
-                                                }
-                                                ?>
-                                            </td>
+                                    echo "<td><a href='../uploadsdocs/" . $complemento['arquivo'] . "' target='_blank'>" . mb_strimwidth($complemento['arquivo'], 15, 25, "...") . "</a></td>";
+                                    echo "<td>" . $dias->format("%a dias") . "</td>";
+                                }
+                                if ($pf['idNivelAcesso'] == 2) {
+                                    if ($campo['idStatus'] != 6) {
+                                        ?>
+                                        <td class='list_description'>
+                                            <form method='POST' action='?perfil=smc_detalhes_projeto'>
+                                                <input type='hidden' name='idProjeto'
+                                                       value='<?= $campo['idProjeto'] ?>'/>
+                                                <input type='submit' class='btn btn-theme btn-block'
+                                                       value='Visualizar'>
+                                            </form>
+                                        </td>
+                                        <td class='list_description'>
                                             <?php
-                                        } elseif ($campo['idStatus'] == 6) {
                                             if ($status['idEtapaProjeto'] == '2' || $status['idEtapaProjeto'] == '13' || $status['idEtapaProjeto'] == '14' || $status['idEtapaProjeto'] == '23') {
-                                                echo "<td style='color: #942a25;text-align: center;font-weight: bold;'>
+                                                ?>
+                                                <form method="POST" action=''>
+                                                    <input type='button' data-id="<?= $campo['idProjeto'] ?>"
+                                                           name='envioComissao' class='btn btn-theme btn-block'
+                                                           value='Enviar para comissão' data-toggle='modal'
+                                                           data-target='#enviarComissao'>
+                                                </form>
+                                                <?php
+                                            }
+                                            ?>
+                                        </td>
+                                        <?php
+                                    } elseif ($campo['idStatus'] == 6) {
+                                        if ($status['idEtapaProjeto'] == '2' || $status['idEtapaProjeto'] == '13' || $status['idEtapaProjeto'] == '14' || $status['idEtapaProjeto'] == '23') {
+                                            echo "<td style='color: #942a25;text-align: center;font-weight: bold;'>
                                                 <form method='POST' action='?perfil=cancelado_visualizacao'>
                                                     <input type='hidden' name='idProjeto'
                                                            value='" . $campo['idProjeto'] . "'>
@@ -456,26 +541,25 @@ foreach ($array_status as $idStatus) {
                                                            value='Resumo'><small>Cancelado</small>
                                                 </form>
                                                     </td>";
-                                                echo "<td style='color: #942a25;text-align: center;font-weight: bold'>
+                                            echo "<td style='color: #942a25;text-align: center;font-weight: bold'>
                                                         <button class='btn btn-danger btn-block' data-id='" . $campo['idProjeto'] . "' name='arquivar' data-toggle='modal' data-target='#arquivar'>Arquivar</button><small>Cancelado</small>";
-                                            } else {
-                                                echo "<td style='color: #942a25;text-align: center;font-weight: bold'><small>Cancelado</small>
+                                        } else {
+                                            echo "<td style='color: #942a25;text-align: center;font-weight: bold'><small>Cancelado</small>
                                                         <form method='POST' action='?perfil=cancelado_visualizacao'>
                                                             <input type='hidden' name='idProjeto' value='" . $campo['idProjeto'] . "'>
                                                             <input type='submit' class='btn btn-warning btn-block'  value='Resumo'>
                                                         </form>
                                                         <button class='btn btn-danger btn-block'  data-id='" . $campo['idProjeto'] . "' name='arquivar' data-toggle='modal' data-target='#arquivar'>Arquivar</button>
                                                      </td>";
-                                            }
                                         }
-                                        ?>
-                                        <?php
                                     }
                                     ?>
-                                </tr>
-                                <?php
-                                $i++;
-                            }
+                                    <?php
+                                }
+                                ?>
+                            </tr>
+                            <?php
+
                         }
                         }
                         else {
@@ -486,6 +570,7 @@ foreach ($array_status as $idStatus) {
                 </div>
             </div>
         </div>
+        <hr width="50%">
         <?php
     }
 }
@@ -1025,19 +1110,13 @@ $numCartas = mysqli_num_rows($queryContratos);
         })
     }
 
-    var mostrarDiv = function (divId) {
+    function mostrarDiv(divId) {
         if ($('#' + divId).is(':visible')) {
             $('#' + divId).slideUp();
             $('#icon_' + divId).html("<span class='glyphicon glyphicon-chevron-right'></span>");
         } else {
             $('#' + divId).slideDown('slow');
             $('#icon_' + divId).html("<span class='glyphicon glyphicon-chevron-down'></span>");
-
         }
     }
-
-
-    $('#inscricoes_PJ').on('click', mostrarDiv);
-
-
 </script>
