@@ -31,7 +31,7 @@ $intervalo = $data_pagamento->diff($data_recebimento);
 echo $intervalo->d;
 
 if ($intervalo->d < 15) {
-    $mensagemEtapa9 = "<div style='color: red'>
+    $mensagem = "<div style='color: red'>
                     <strong>PRAZO EXCEDIDO!</strong><br>
                     O recebimento da Carta de Incentivo original na SMC deve ocorrer antes de 15 dias do vencimento do tributo a ser utilizado para incentivo do projeto cultural. 
                     <br>Exigimos esse prazo para que a Secretaria possa executar o procedimento necessário para o abatimento do tributo. 
@@ -43,7 +43,7 @@ if ($intervalo->d < 15) {
 
     $sqlEtapa = "UPDATE etapas_incentivo SET etapa = 10 WHERE idProjeto = '$idProjeto' AND idIncentivador = '$idIncentivador' AND tipoPessoa = '$tipoPessoa'";
     if (mysqli_query($con, $sqlEtapa)) {
-        $mensagemEtapa9 = "<div class='alert alert-success'>
+        $mensagem = "<div class='text-success'>
                     <strong>Certo!</strong><br>
                     Como recebemos a Carta de Incentivo original com mais de 15 dias de antecedência para o vencimento do tributo da 1ª parcela do aporte, podemos prosseguir com o procedimento de incentivo.
                 </div>";
@@ -55,14 +55,6 @@ $sqlEtapa = "SELECT etapa FROM etapas_incentivo WHERE idProjeto = '$idProjeto' A
 $queryEtapa = mysqli_query($con, $sqlEtapa);
 $etapaArray = mysqli_fetch_assoc($queryEtapa);
 $etapa = $etapaArray['etapa'];
-
-if ($etapa == 10) {
-    $etapa9 = 'none';
-    $etapa10 = 'block';
-} elseif($etapa == 9) {
-    $etapa9 = 'block';
-    $etapa10 = 'none';
-}
 
 
 ?>
@@ -84,17 +76,16 @@ if ($etapa == 10) {
             </div>
             <div class="tab-pane fade in active" id="admIncentivador">
                 <br>
-                <div id="etapa9" style="display: <?=$etapa9?>">
+                <div id="etapa9">
                     <?php
                     if (isset($mensagem)) {
                         echo "<h5>" . $mensagem . "</h5>";
                     }
                     ?>
                 </div>
-
-                <div id="etapa10" style="display: <?=$etapa10?>">
-                    <div class="well">
-                        <h6><b>10 - Solicite a autorização de depósito</b></h6><br>
+                <hr width="50%">
+                <div id="etapa10">
+                        <h6><b>10 - Solicite a autorização de depósito</b></h6>
                         <div class="col-md-offset-2 col-md-6 form-group">
                             <table class="table bg-white text-center table-hover table-responsive table-condensed table-bordered">
                                 <thead class="bg-success">
@@ -126,12 +117,13 @@ if ($etapa == 10) {
                         </div>
                         <br>
                         <div class="col-md-2 pull-left">
-                            <button class="btn" style="background-color: #f5f5f5; margin-top: 8px;"><span class="glyphicon glyphicon-arrow-left" style="margin-left: -20px;color: green; font-size: 13px;">    Solicitar autorização de depósito desta parcela</span>
+                            <button class="btn" style="background-color: white; margin-top: 10px; color: green;" onclick="mostrarDiv('etapa11')">
+                                <span class="glyphicon glyphicon-arrow-left" style="margin-left: -20px; font-size: 13px;"></span>
+                                &nbsp;Solicitar autorização de depósito desta parcela
                                 <!--<span style="color: green;"></span>-->
                             </button>
                         </div>
 
-                        <hr width="50%">
 
                         <div class="row">
                             <form action="../pdf/pdf_incentivar_projeto.php" method="post" class="form-group">
@@ -141,6 +133,13 @@ if ($etapa == 10) {
                             </form>
                         </div>
                     </div>
+                </div>
+
+                <div id="etapa11" style="display: none">
+                    <div class="well">
+                        <h6><b>11- Faça o upload dos documentos que comprovam que o aporte foi realizado na conta do projeto: </b></h6><br>
+
+                    </div>
 
                 </div>
 
@@ -148,3 +147,16 @@ if ($etapa == 10) {
         </div>
     </div>
 </section>
+
+
+<script>
+    function mostrarDiv(divId) {
+        if ($('#' + divId).is(':visible')) {
+            $('#' + divId).slideUp();
+           // $('#icon_' + divId).html("<span class='glyphicon glyphicon-chevron-right'></span>");
+        } else {
+            $('#' + divId).slideDown('slow');
+           // $('#icon_' + divId).html("<span class='glyphicon glyphicon-chevron-down'></span>");
+        }
+    }
+</script>
