@@ -272,69 +272,69 @@ if (verificaArquivosExistentesIncentivador($idIncentivador, 18)) {
                             </div>
                         </div>
                         <!-- Exibir arquivos -->
+
                         <div class="form-group" style="display: <?= $arqAnexado ?>">
-                            <div class="form-group" style="display: <?= $arqAnexado ?>">
-                                <div class="col-md-12">
-                                    <table class='table table-responsive table-condensed table-striped text-center table-bordered'>
-                                        <thead class="bg-success">
-                                        <tr class='list_menu' style="font-weight: bold; height: 50px;">
-                                            <td>Tipo de arquivo</td>
-                                            <td>Nome do arquivo</td>
-                                            <td width="15%">Data do envio</td>
-                                            <td width='13%'>Status</td>
-                                            <td width='20%'>Observação</td>
-                                            <td></td>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <?php
-                                        $sql = "SELECT *
+                            <div class="col-md-12">
+                                <table class='table table-responsive table-condensed table-striped text-center table-bordered'>
+                                    <thead class="bg-success">
+                                    <tr class='list_menu' style="font-weight: bold; height: 50px;">
+                                        <td>Tipo de arquivo</td>
+                                        <td>Nome do arquivo</td>
+                                        <td width="15%">Data do envio</td>
+                                        <td width='13%'>Status</td>
+                                        <td width='20%'>Observação</td>
+                                        <td></td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php
+                                    $sql = "SELECT *
                                         FROM lista_documento as list
                                         INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
                                         WHERE arq.idPessoa = '$idIncentivador'
                                         AND list.idListaDocumento IN (18)
                                         AND arq.idTipo = '$tipoPessoa'
                                         AND arq.publicado = '1'";
-                                        $query = mysqli_query($con, $sql);
-                                        $linhas = mysqli_num_rows($query);
+                                    $query = mysqli_query($con, $sql);
+                                    $linhas = mysqli_num_rows($query);
 
-                                        while ($arquivo = mysqli_fetch_array($query)) {
-                                            $queryStatusDoc = "SELECT idStatusDocumento FROM upload_arquivo WHERE idUploadArquivo = '" . $arquivo['idUploadArquivo'] . "'";
-                                            $send = mysqli_query($con, $queryStatusDoc);
-                                            $row = mysqli_fetch_array($send);
+                                    while ($arquivo = mysqli_fetch_array($query)) {
+                                        $queryStatusDoc = "SELECT idStatusDocumento FROM upload_arquivo WHERE idUploadArquivo = '" . $arquivo['idUploadArquivo'] . "'";
+                                        $send = mysqli_query($con, $queryStatusDoc);
+                                        $row = mysqli_fetch_array($send);
 
-                                            $idStatus = $row['idStatusDocumento']; // == '' ? 'Em análise' : $row['idStatusDocumento'];
+                                        $idStatus = $row['idStatusDocumento']; // == '' ? 'Em análise' : $row['idStatusDocumento'];
 
-                                            switch ($idStatus) {
-                                                case '':
-                                                    $status = "Em análise";
-                                                    $cor = "orange";
-                                                    break;
-                                                case 1:
-                                                    $status = "Aceito";
-                                                    $cor = "green";
-                                                    break;
-                                                case 3:
-                                                    $status = "Negado";
-                                                    $cor = "red";
-                                                    break;
-                                            }
+                                        switch ($idStatus) {
+                                            case '':
+                                                $status = "Em análise";
+                                                $cor = "orange";
+                                                break;
+                                            case 1:
+                                                $status = "Aceito";
+                                                $cor = "green";
+                                                break;
+                                            case 3:
+                                                $status = "Negado";
+                                                $cor = "red";
+                                                break;
+                                        }
 
-                                            echo "<tr>
+                                        echo "<tr>
                                                 <td class='list_description'>(Carta de Intenção de Incentivo)</td>
                                                 <td class='list_description'><a href='../uploadsdocs/" . $arquivo['arquivo'] . "' target='_blank'>" . mb_strimwidth($arquivo['arquivo'], 15, 25, "...") . "</a></td>
                                                 <td class='list_description'>" . exibirDataBr($arquivo['dataEnvio']) . "</td>";
 
-                                            echo "<td class='list_description text-center'>                                   
+                                        echo "<td class='list_description text-center'>                                   
                                                     <input class='form-control text-center' style='color: $cor; width: 100px; margin-left: 18px;' type='text' value='$status' disabled>
                                                 </td>";
-                                            echo "<td class='list_description text-center'>                                   
-                                                    <input class='form-control text-center' type='text' value='" . $arquivo['observacoes']. "' disabled>
+                                        echo "<td class='list_description text-center'>                                   
+                                                    <input class='form-control text-center' type='text' value='" . $arquivo['observacoes'] . "' disabled>
                                                 </td>";
-                                            $queryOBS = "SELECT observacoes FROM upload_arquivo WHERE idUploadArquivo = '" . $arquivo['idUploadArquivo'] . "'";
-                                            $send = mysqli_query($con, $queryOBS);
-                                            $row = mysqli_fetch_array($send);
-                                            echo "
+                                        $queryOBS = "SELECT observacoes FROM upload_arquivo WHERE idUploadArquivo = '" . $arquivo['idUploadArquivo'] . "'";
+                                        $send = mysqli_query($con, $queryOBS);
+                                        $row = mysqli_fetch_array($send);
+                                        echo "
                                                 <td class='list_description'>
                                                     <form id='apagarArq' method='POST' action='?perfil=includes/incentivador_etapa7_gerarContrato'>
                                                         <input type='hidden' name='idPessoa' value='$idIncentivador' />
@@ -344,12 +344,11 @@ if (verificaArquivosExistentesIncentivador($idIncentivador, 18)) {
                                                         <button class='btn btn-theme' style='margin-top: 11px;' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Remover Arquivo?' data-message='Deseja realmente excluir o arquivo Carta de Intenção de Incentivo?'>Remover
                                                         </button>
                                                     </form></td>";
-                                        }
+                                    }
 
-                                        ?>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                    ?>
+                                    </tbody>
+                                </table>
                             </div>
                             <!-- Fim do exibir arquivo -->
                         </div>

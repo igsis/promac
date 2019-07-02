@@ -28,8 +28,6 @@ $data_pagamento = new DateTime($parcelas['data_pagamento']);
 
 $intervalo = $data_pagamento->diff($data_recebimento);
 
-echo $intervalo->d;
-
 if ($intervalo->d < 15) {
     $mensagem = "<div style='color: red'>
                     <strong>PRAZO EXCEDIDO!</strong><br>
@@ -47,6 +45,98 @@ if ($intervalo->d < 15) {
                     Como recebemos a Carta de Incentivo original com mais de 15 dias de antecedência para o vencimento do tributo da 1ª parcela do aporte, podemos prosseguir com o procedimento de incentivo.
                 </div>";
     }
+}
+
+if (isset($_POST["enviar"])) {
+
+        $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '3' AND idListaDocumento IN (55,56)";
+        $query_arquivos = mysqli_query($con, $sql_arquivos);
+        while ($arq = mysqli_fetch_array($query_arquivos)) {
+            if (!verificaArquivosExistentesIncentivador($idIncentivador, $arq['idListaDocumento'])) {
+            $y = $arq['idListaDocumento'];
+            $x = $arq['sigla'];
+            $nome_arquivo = isset($_FILES['arquivo']['name'][$x]) ? $_FILES['arquivo']['name'][$x] : null;
+            $f_size = isset($_FILES['arquivo']['size'][$x]) ? $_FILES['arquivo']['size'][$x] : null;
+
+            //Extensões permitidas
+            $ext = array("PDF", "pdf");
+
+            if ($f_size > 6242880) // 6MB em bytes
+            {
+                $mensagem = "<font color='#FF0000'><strong>Erro! Tamanho de arquivo excedido! Tamanho máximo permitido: 06 MB.</strong></font>";
+            } else {
+                if ($nome_arquivo != "") {
+                    $nome_temporario = $_FILES['arquivo']['tmp_name'][$x];
+                    $new_name = date("YmdHis") . "_" . semAcento($nome_arquivo); //Definindo um novo nome para o arquivo
+                    $hoje = date("Y-m-d H:i:s");
+                    $dir = '../uploadsdocs/'; //Diretório para uploads
+                    $allowedExts = array(".pdf", ".PDF"); //Extensões permitidas
+                    $ext = strtolower(substr($nome_arquivo, -4));
+
+                    if (in_array($ext, $allowedExts)) //Pergunta se a extensão do arquivo, está presente no array das extensões permitidas
+                    {
+                        if (move_uploaded_file($nome_temporario, $dir . $new_name)) {
+                            $sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('$tipoPessoa', '$idPf', '$y', '$new_name', '$hoje', '1'); ";
+                            $query = mysqli_query($con, $sql_insere_arquivo);
+                            if ($query) {
+                                $mensagem = "<font color='#01DF3A'><strong>Arquivo(s) recebido(s) com sucesso!</strong></font>";
+                                gravarLog($sql_insere_arquivo);
+                                $arqAnexado = "block";
+                            } else {
+                                $mensagem = "<font color='#FF0000'><strong>Erro ao gravar no banco.</strong></font>";
+                            }
+                        } else {
+                            $mensagem = "<font color='#FF0000'><strong>Erro no upload! Tente novamente.</strong></font>";
+                        }
+                    } else {
+                        $mensagem = "<font color='#FF0000'><strong>Erro no upload! Anexar documentos somente no formato PDF.</strong></font>";
+                    }
+                }
+            }
+        } else {
+                echo "<script> swal('Você já anexou o ". $arq['documento']. "', '', 'warning') </script>";
+            }
+    }
+}
+
+if (isset($_POST['apagar'])) {
+    $idArquivo = $_POST['apagar'];
+    $sql_apagar_arquivo = "UPDATE upload_arquivo SET publicado = 0 WHERE idUploadArquivo = '$idArquivo'";
+    if (mysqli_query($con, $sql_apagar_arquivo)) {
+        $mensagem = "<font color='#01DF3A'><strong>Arquivo apagado com sucesso!</strong></font>";
+        gravarLog($sql_apagar_arquivo);
+    } else {
+        $mensagem = "<font color='#FF0000'><strong>Erro ao apagar arquivo!</strong></font>";
+    }
+}
+
+$etapa11 = "none";
+
+$botaoSolicitar = "<button class='btn' style='background-color: white; margin-top: 10px; color: green;'
+                                    onclick=\"mostrarDiv('etapa11')\">
+                            <span class='glyphicon glyphicon-arrow-left'
+                                  style='margin-left: -20px; font-size: 13px;'></span>
+                                &nbsp;Solicitar autorização de depósito desta parcela                              
+                            </button>";
+
+$offSetTabela = "col-md-offset-2";
+
+if (verificaArquivosExistentesIncentivador($idIncentivador, 55) && verificaArquivosExistentesIncentivador($idIncentivador, 56)) {
+    $uploadArq = 'none';
+    $arqAnexado = 'block';
+    $etapa11 = 'block';
+    $botaoSolicitar = "<span class='glyphicon glyphicon-info-sign text-success'
+                                  style='margin-left: -20px;'></span>
+                                  <b class='text-success'>Autorização de depósito da parcela solicitada. Acompanhe a análise da SMC pelo sistema. </b>";
+    $offSetTabela = 'col-md-offset-4';
+                                
+} elseif (verificaArquivosExistentesIncentivador($idIncentivador, 55) || verificaArquivosExistentesIncentivador($idIncentivador, 56)) {
+    $uploadArq = 'block';
+    $arqAnexado = 'block';
+    $etapa11 = 'block';
+} else {
+    $uploadArq = 'block';
+    $arqAnexado = 'none';
 }
 
 
@@ -84,8 +174,9 @@ $etapa = $etapaArray['etapa'];
                 </div>
                 <hr width="50%">
                 <div id="etapa10">
+                    <div class="col-md-12">
                         <h6><b>10 - Solicite a autorização de depósito</b></h6>
-                        <div class="col-md-offset-2 col-md-6 form-group">
+                        <div class="<?=$offSetTabela?> col-md-6 form-group">
                             <table class="table bg-white text-center table-hover table-responsive table-condensed table-bordered">
                                 <thead class="bg-success">
                                 <tr class="list_menu" style="font-weight: bold;">
@@ -116,32 +207,176 @@ $etapa = $etapaArray['etapa'];
                         </div>
                         <br>
                         <div class="col-md-2 pull-left">
-                            <button class="btn" style="background-color: white; margin-top: 10px; color: green;" onclick="mostrarDiv('etapa11')">
-                                <span class="glyphicon glyphicon-arrow-left" style="margin-left: -20px; font-size: 13px;"></span>
-                                &nbsp;Solicitar autorização de depósito desta parcela
-                                <!--<span style="color: green;"></span>-->
-                            </button>
+                            <?=$botaoSolicitar?>
                         </div>
+                    </div>
+                </div>
+                <hr width="50%">
+                <div class="row">
+                    <div id="etapa11" style="display: <?=$etapa11?>">
+                        <h6><b>11- Faça o upload dos documentos que comprovam que o aporte foi realizado na conta do
+                                projeto: </b></h6><br>
+                        <div class="form-group" id="uploadDocs" style="display: <?= $uploadArq ?>">
+                            <div class="col-md-offset-1 col-md-10">
+                                <div class="table-responsive list_info">
+                                    <h6>Upload do comprovante de depósito e extrato da conta</h6>
+                                    <form method="POST" action="?perfil=includes/incentivador_etapa9_verificaData"
+                                          enctype="multipart/form-data">
+                                        <?php
+                                        $documentos = [];
+                                        $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '3' AND idListaDocumento IN (55, 56)";
+                                        $query_arquivos = mysqli_query($con, $sql_arquivos);
+                                        while ($arq = mysqli_fetch_array($query_arquivos)) {
+                                            $doc = $arq['documento'];
+                                            $query = "SELECT idListaDocumento FROM lista_documento WHERE documento='$doc' AND publicado='1' AND idTipoUpload='3'";
+                                            $envio = $con->query($query);
+                                            $row = $envio->fetch_array(MYSQLI_ASSOC);
 
+                                            if (!verificaArquivosExistentesIncentivador($idPf, $row['idListaDocumento'])) {
+                                                $documento = (object)
+                                                [
+                                                    'nomeDocumento' => $arq['documento'],
+                                                    'sigla' => $arq['sigla']
+                                                ];
+                                                array_push($documentos, $documento);
+                                            }
+                                        }
 
-                        <div class="row">
-                            <form action="../pdf/pdf_incentivar_projeto.php" method="post" class="form-group">
-                                <div class='col-md-12'>
+                                        if ($documentos) {
+                                            ?>
+                                            <table class='table table-condensed table-striped'>
+                                                <thead class="bg-success">
+                                                <tr class='list_menu'>
+                                                    <td>Tipo de Arquivo</td>
+                                                    <td></td>
+                                                </tr>
+                                                </thead>
 
+                                                <?php
+                                                foreach ($documentos as $documento) {
+                                                    echo "<tr>";
+                                                    echo "<td class='list_description'><label>" . $documento->nomeDocumento . "</label></td>";
+                                                    echo "<td class='list_description'><input type='file' name='arquivo[$documento->sigla]'></td>";
+                                                    echo "<tr>";
+                                                }
+                                                ?>
+                                            </table>
+                                            <input type="hidden" name="idPessoa" value="<?php echo $idPf; ?>"/>
+                                            <input type="hidden" name="tipoPessoa" value="<?php echo $tipoPessoa; ?>"/>
+                                            <input type="submit" name="enviar" class="btn btn-theme"
+                                                   value='upload'>
+                                            <?php
+                                        } else {
+                                            $arqAnexado = 'block';
+                                        }
+                                        ?>
+                                    </form>
                                 </div>
-                            </form>
+                            </div>
+                        </div>
+                        <!-- Exibir arquivos -->
+                        <div class="form-group" style="display: <?= $arqAnexado ?>">
+                            <div class="col-md-12">
+                                <table class='table table-responsive table-condensed table-striped text-center table-bordered'>
+                                    <thead class="bg-success">
+                                    <tr class='list_menu' style="font-weight: bold; height: 50px;">
+                                        <td>Tipo de arquivo</td>
+                                        <td>Nome do arquivo</td>
+                                        <td width="15%">Data do envio</td>
+                                        <td width='13%'>Status</td>
+                                        <td width='20%'>Observação</td>
+                                        <td></td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php
+                                    $sql = "SELECT *
+                                        FROM lista_documento as list
+                                        INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
+                                        WHERE arq.idPessoa = '$idIncentivador'
+                                        AND list.idListaDocumento IN (55,56)
+                                        AND arq.idTipo = '$tipoPessoa'
+                                        AND arq.publicado = '1'";
+                                    $query = mysqli_query($con, $sql);
+                                    $linhas = mysqli_num_rows($query);
+
+                                    while ($arquivo = mysqli_fetch_array($query)) {
+                                        $queryStatusDoc = "SELECT idStatusDocumento FROM upload_arquivo WHERE idUploadArquivo = '" . $arquivo['idUploadArquivo'] . "'";
+                                        $send = mysqli_query($con, $queryStatusDoc);
+                                        $row = mysqli_fetch_array($send);
+
+                                        $idStatus = $row['idStatusDocumento']; // == '' ? 'Em análise' : $row['idStatusDocumento'];
+
+                                        switch ($idStatus) {
+                                            case '':
+                                                $status = "Em análise";
+                                                $cor = "orange";
+                                                break;
+                                            case 1:
+                                                $status = "Aceito";
+                                                $cor = "green";
+                                                break;
+                                            case 3:
+                                                $status = "Negado";
+                                                $cor = "red";
+                                                break;
+                                        }
+
+                                        echo "<tr>
+                                                <td class='list_description'>(".$arquivo['documento'].")</td>
+                                                <td class='list_description'><a href='../uploadsdocs/" . $arquivo['arquivo'] . "' target='_blank'>" . mb_strimwidth($arquivo['arquivo'], 15, 25, "...") . "</a></td>
+                                                <td class='list_description'>" . exibirDataBr($arquivo['dataEnvio']) . "</td>";
+
+                                        echo "<td class='list_description text-center'>                                   
+                                                    <input class='form-control text-center' style='color: $cor; width: 100px; margin-left: 18px;' type='text' value='$status' disabled>
+                                                </td>";
+                                        echo "<td class='list_description text-center'>                                   
+                                                    <input class='form-control text-center' type='text' value='" . $arquivo['observacoes'] . "' disabled>
+                                                </td>";
+                                        $queryOBS = "SELECT observacoes FROM upload_arquivo WHERE idUploadArquivo = '" . $arquivo['idUploadArquivo'] . "'";
+                                        $send = mysqli_query($con, $queryOBS);
+                                        $row = mysqli_fetch_array($send);
+                                        echo "
+                                                <td class='list_description'>
+                                                    <form id='apagarArq' method='POST' action='?perfil=includes/incentivador_etapa9_verificaData'>
+                                                        <input type='hidden' name='idPessoa' value='$idIncentivador' />
+                                                        <input type='hidden' name='tipoPessoa' value='" . $tipoPessoa . "' />
+                                                        <input type='hidden' name='apagar' value='" . $arquivo['idUploadArquivo'] . "' />
+                                                        <input type='hidden' name='idListaDocumento' value='" . $arquivo['idListaDocumento'] . "' />
+                                                        <button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Remover Arquivo?' data-message='Deseja realmente excluir o arquivo ".$arquivo['documento']."?'>Remover
+                                                        </button>
+                                                    </form></td>";
+                                    }
+
+                                    ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- Fim do exibir arquivo -->
+                    </div>
+                </div>
+                <!-- Confirmação de Exclusão -->
+                <div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;
+                                </button>
+                                <h4 class="modal-title">Excluir Arquivo?</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>Confirma?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-danger" id="confirm">Remover</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-                <div id="etapa11" style="display: none">
-                    <div class="well">
-                        <h6><b>11- Faça o upload dos documentos que comprovam que o aporte foi realizado na conta do projeto: </b></h6><br>
-
-                    </div>
-
-                </div>
-
+                <!-- Fim Confirmação de Exclusão -->
             </div>
         </div>
     </div>
@@ -152,10 +387,10 @@ $etapa = $etapaArray['etapa'];
     function mostrarDiv(divId) {
         if ($('#' + divId).is(':visible')) {
             $('#' + divId).slideUp();
-           // $('#icon_' + divId).html("<span class='glyphicon glyphicon-chevron-right'></span>");
+            // $('#icon_' + divId).html("<span class='glyphicon glyphicon-chevron-right'></span>");
         } else {
             $('#' + divId).slideDown('slow');
-           // $('#icon_' + divId).html("<span class='glyphicon glyphicon-chevron-down'></span>");
+            // $('#icon_' + divId).html("<span class='glyphicon glyphicon-chevron-down'></span>");
         }
     }
 </script>

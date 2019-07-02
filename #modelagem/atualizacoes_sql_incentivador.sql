@@ -240,6 +240,12 @@ ALTER TABLE `projeto` CHANGE `contaMovimentacao` `contaMovimentacao`
 VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, 
 CHANGE `contaCaptacao` `contaCaptacao` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
 
+INSERT INTO lista_documento (idListaDocumento, idTipoUpload, documento, sigla, publicado) 
+VALUES 
+(55, 3, "Comprovante de déposito por parcela", "cdp", 1), 
+(56, 3, "Extrato da conta do projeto", "ecp", 1);
+
+
 /*
 * FIM -> Tanair 
 * 02/07/2019 
