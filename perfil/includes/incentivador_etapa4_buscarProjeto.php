@@ -11,7 +11,7 @@ if ($tipoPessoa == 4)
 {
     $pf = recuperaDados("incentivador_pessoa_fisica", "idPf", $idIncentivador);
 
-    $sqlEtapa = "SELECT etapa FROM etapas_incentivo WHERE idProjeto = '$idProjeto' AND idIncentivador = '$idIncentivador' AND tipoPessoa = '$tipoPessoa'";
+    $sqlEtapa = "SELECT etapa FROM etapas_incentivo WHERE idIncentivador = '$idIncentivador' AND tipoPessoa = '$tipoPessoa'";
     $queryEtapa = mysqli_query($con, $sqlEtapa);
     $etapaArray = mysqli_fetch_assoc($queryEtapa);
 
@@ -23,7 +23,7 @@ elseif ($tipoPessoa == 5)
 {
     $pj = recuperaDados("incentivador_pessoa_juridica", "idPj", $idIncentivador);
 
-    $sqlEtapa = "SELECT etapa FROM etapas_incentivo WHERE idProjeto = '$idProjeto' AND idIncentivador = '$idIncentivador' AND tipoPessoa = '$tipoPessoa'";
+    $sqlEtapa = "SELECT etapa FROM etapas_incentivo WHERE idIncentivador = '$idIncentivador' AND tipoPessoa = '$tipoPessoa'";
     $queryEtapa = mysqli_query($con, $sqlEtapa);
     $etapaArray = mysqli_fetch_assoc($queryEtapa);
 
@@ -72,7 +72,7 @@ if (isset($_POST['procurar'])) {
 ?>
 
 <section id="list_items" class="home-section bg-white">
-    <div class="container"><?php include '../includes/menu_interno_pf.php' ?>
+    <div class="container"><?php include 'menu_interno_pf.php' ?>
         <ul class="nav nav-tabs">
             <li class="nav active"><a href="#admIncentivador" data-toggle="tab">Administrativo</a></li>
             <li class="nav"><a href="#resumo" data-toggle="tab">Resumo do projeto</a></li>

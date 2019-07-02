@@ -12,15 +12,19 @@ $arr = mysqli_fetch_assoc($queryProject);
 $idProjeto = $arr['idProjeto'];
 
 if($idProjeto != '') {
-    $idProjeto = $idProjeto;
+    $condicaoProjeto = "idProjeto = $idProjeto";
+    //$idProjeto = $idProjeto;
 } else {
-    $idProjeto = '';
+    $condicaoProjeto = "idProjeto IS NULL";
+    //$idProjeto = 'IS NULL';
 }
 
-$sqlEtapa = "SELECT etapa FROM etapas_incentivo WHERE idProjeto = '$idProjeto' AND idIncentivador = '$idPf' AND tipoPessoa = '$tipoPessoa'";
+$sqlEtapa = "SELECT etapa FROM etapas_incentivo WHERE $condicaoProjeto AND idIncentivador = '$idPf' AND tipoPessoa = '$tipoPessoa'";
 $queryEtapa = mysqli_query($con, $sqlEtapa);
 $etapaArray = mysqli_fetch_assoc($queryEtapa);
 $etapa = $etapaArray['etapa'];
+
+echo $sqlEtapa;
 
 $liberado = $pf['liberado'];
 $etapa = $etapaArray['etapa'];
@@ -43,6 +47,7 @@ switch ($liberado) {
 
 switch ($etapa) {
     case '':
+        echo $etapa;
         ?>
         <div class="well">
             <label for="admResposta">Você deseja incentivar um projeto agora?</label><br>

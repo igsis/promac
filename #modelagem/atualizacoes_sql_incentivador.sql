@@ -230,3 +230,19 @@ ALTER TABLE `incentivador_projeto` ADD `data_recebimento_carta` DATE NULL AFTER 
 */
 
 
+/*
+* Início -> Tanair
+* 02/07/2019
+*/
+
+
+ALTER TABLE `projeto` CHANGE `contaMovimentacao` `contaMovimentacao` 
+VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, 
+CHANGE `contaCaptacao` `contaCaptacao` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+
+/*
+* FIM -> Tanair 
+* 02/07/2019 
+*/
+
+

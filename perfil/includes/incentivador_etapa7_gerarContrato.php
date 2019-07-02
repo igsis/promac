@@ -282,6 +282,7 @@ if (verificaArquivosExistentesIncentivador($idIncentivador, 18)) {
                                             <td>Nome do arquivo</td>
                                             <td width="15%">Data do envio</td>
                                             <td width='13%'>Status</td>
+                                            <td width='20%'>Observação</td>
                                             <td></td>
                                         </tr>
                                         </thead>
@@ -316,7 +317,6 @@ if (verificaArquivosExistentesIncentivador($idIncentivador, 18)) {
                                                 case 3:
                                                     $status = "Negado";
                                                     $cor = "red";
-                                                    $negados .= $arquivo['idListaDocumento'] . ", ";
                                                     break;
                                             }
 
@@ -327,6 +327,9 @@ if (verificaArquivosExistentesIncentivador($idIncentivador, 18)) {
 
                                             echo "<td class='list_description text-center'>                                   
                                                     <input class='form-control text-center' style='color: $cor; width: 100px; margin-left: 18px;' type='text' value='$status' disabled>
+                                                </td>";
+                                            echo "<td class='list_description text-center'>                                   
+                                                    <input class='form-control text-center' type='text' value='" . $arquivo['observacoes']. "' disabled>
                                                 </td>";
                                             $queryOBS = "SELECT observacoes FROM upload_arquivo WHERE idUploadArquivo = '" . $arquivo['idUploadArquivo'] . "'";
                                             $send = mysqli_query($con, $queryOBS);

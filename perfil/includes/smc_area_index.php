@@ -73,18 +73,32 @@ if (isset($_POST['gravarAnaliseCarta'])) {
     $idPessoa = $_POST['idPessoa'];
     $idProjeto = $_POST['idProjeto'];
     $tipoPessoa = $_POST['tipoPessoa'];
+    $obs = $_POST['observacao'] ?? null;
 
-    $sqlAtualiza = "UPDATE upload_arquivo SET idStatusDocumento = $status WHERE idUploadArquivo = '$idArquivo'";
+    $data_recebimento = new DateTime (exibirDataMysql($_POST['dataRecebimento']));
+    $data_1Parcela = new DateTime ($_POST['primeiraParcela']);
+
+    $sqlAtualiza = "UPDATE upload_arquivo SET idStatusDocumento = $status, observacoes = '$obs' WHERE idUploadArquivo = '$idArquivo'";
 
     if (mysqli_query($con, $sqlAtualiza)) {
         $sqlData = "UPDATE incentivador_projeto SET data_recebimento_carta = '$data' WHERE idIncentivador = '$idPessoa' AND tipoPessoa = '$tipoPessoa' AND idProjeto = '$idProjeto'";
+
         if (mysqli_query($con, $sqlData)) {
-            $sqlEtapa = "UPDATE etapas_incentivo SET etapa = 9 WHERE idIncentivador = '$idPessoa' AND tipoPessoa = '$tipoPessoa' AND idProjeto = '$idProjeto'";
-            if (mysqli_query($con, $sqlEtapa)) {
+
+            if ($status == 1) {
+                if ($data_recebimento->diff($data_1Parcela)->d > 15) {
+                    $sqlEtapa = "UPDATE etapas_incentivo SET etapa = 9 WHERE idIncentivador = '$idPessoa' AND tipoPessoa = '$tipoPessoa' AND idProjeto = '$idProjeto'";
+                } else {
+                    $mensagem = "<span style='color: #FFA500; '><strong>A análise foi gravada com sucesso, o usuario será notificado que o intervalo entre a data do recebimento pela SMC e a data da primeira parcela é menor que 15 dias e retornará a etapa 6.</strong></span>";
+                    $sqlEtapa = "UPDATE etapas_incentivo SET etapa = 6 WHERE idIncentivador = '$idPessoa' AND tipoPessoa = '$tipoPessoa' AND idProjeto = '$idProjeto'";
+                }
+            } else {
+                $mensagem = "<span style='color: #FFA500; '><strong>A análise foi gravada com sucesso, o usuario será notificado sua carta foi negada e permanecerá na etapa de envio da mesma.</strong></span>";
+            }
+            if (isset($sqlEtapa)) {
+                mysqli_query($con, $sqlEtapa);
                 $mensagem = "<span style='color: #01DF3A; '><strong>Análise gravada com sucesso!</strong></span>";
             }
-        } else {
-            echo $sqlData;
         }
     }
 }
@@ -583,7 +597,8 @@ $num = mysqli_num_rows($query);
 ?>
 <!-- Lista 4 -->
 <div class="form-group">
-    <button type="button" onclick="mostrarDiv('certidoes_incentivador_PF')" style="font-size: 20px;" class="btn bg-white">
+    <button type="button" onclick="mostrarDiv('certidoes_incentivador_PF')" style="font-size: 20px;"
+            class="btn bg-white">
         Incentivador Pessoa Física com certidões de regularidade fiscal anexadas.
         &nbsp;<span id="icon_certidoes_incentivador_PF"><span class="glyphicon glyphicon-chevron-right"></span></span>
     </button>
@@ -648,7 +663,8 @@ $num = mysqli_num_rows($query);
 
 <!-- Lista 6 -->
 <div class="form-group">
-    <button type="button" onclick="mostrarDiv('certidoes_incentivador_PJ')" style="font-size: 20px;" class="btn bg-white">
+    <button type="button" onclick="mostrarDiv('certidoes_incentivador_PJ')" style="font-size: 20px;"
+            class="btn bg-white">
         Incentivador Pessoa Jurídica com certidões de regularidade fiscal anexadas.
         &nbsp;<span id="icon_certidoes_incentivador_PJ"><span class="glyphicon glyphicon-chevron-right"></span></span>
     </button>
@@ -708,7 +724,7 @@ $num = mysqli_num_rows($query);
 
 <?php
 
-$sqlContratos = "SELECT * FROM upload_arquivo WHERE idListaDocumento = 18 AND publicado = 1 AND dataEnvio LIKE '2019%' AND (idStatusDocumento IS NULL OR idStatusDocumento = 3)";
+$sqlContratos = "SELECT * FROM upload_arquivo WHERE idListaDocumento = 18 AND publicado = 1 AND dataEnvio LIKE '2019%' AND idStatusDocumento IS NULL";
 $queryContratos = mysqli_query($con, $sqlContratos);
 $numCartas = mysqli_num_rows($queryContratos);
 
@@ -739,67 +755,74 @@ $numCartas = mysqli_num_rows($queryContratos);
                                 <thead>
                                     <tr class='list_menu'>
                                         <td>Incentivador</td>
+                                        <td>Documento</td>
                                         <td>Nome do Projeto</td>
                                         <td>Carta de incentivo</td>
-                                        <td>Status</td>
-                                        <td width='15%'>Data do recebimento</td>
+                                        <td>1ª parcela de aporte</td>
+                                        <td>Edital</td>
+                                        <td>Imposto</td>
                                         <td width='10%'></td>
                                     </tr>
                                 </thead>
                                 <tbody>";
-                $i = 0;
+
                 while ($campo = mysqli_fetch_array($queryContratos)) {
                     $idPessoa = $campo['idPessoa'];
                     if ($campo['idTipo'] == 4) {
                         $incentivador = recuperaDados("incentivador_pessoa_fisica", "idPf", $idPessoa);
+                        $docPessoa = $incentivador['cpf'];
                     } elseif ($campo['idTipo'] == 5) {
                         $incentivador = recuperaDados("incentivador_pessoa_juridica", "idPj", $idPessoa);
+                        $docPessoa = $incentivador['cnpj'];
                     }
 
-                    $sqlIncentivador = "SELECT I_P.valor_aportado, I_P.edital, I_P.imposto, P.nomeProjeto, P.idProjeto FROM incentivador_projeto AS I_P 
+                    $sqlIncentivador = "SELECT I_P.valor_aportado, I_P.edital, I_P.imposto, P.nomeProjeto, P.idProjeto, parcelas.data_pagamento FROM incentivador_projeto AS I_P 
                                                     INNER JOIN projeto AS P ON I_P.idProjeto = P.idProjeto
-                                                    WHERE I_P.idIncentivador = '$idPessoa' AND I_P.tipoPessoa = '" . $campo['idTipo'] . "' AND I_P.publicado = 1";
+                                                    INNER JOIN parcelas_incentivo AS parcelas ON parcelas.idProjeto = I_P.idProjeto AND parcelas.idIncentivador = I_P.idIncentivador
+                                                    WHERE I_P.idIncentivador = '$idPessoa' AND I_P.tipoPessoa = '" . $campo['idTipo'] . "' AND I_P.publicado = 1
+                                                    ORDER BY parcelas.data_pagamento limit 1";
 
                     $queryIncentivar = mysqli_query($con, $sqlIncentivador);
                     $infos = mysqli_fetch_assoc($queryIncentivar);
 
-                    //print_r($infos);
-
-                    if ($i < 10) {
-                        echo "<tr> 
+                    echo "<tr> 
                             <form method='POST' action=''>";
-                        echo "<td class='list_description'>" . $incentivador['nome'] . "</td>";
-                        echo "<td class='list_description'>" . $infos['nomeProjeto'] . "</td>";
-                        echo "<td class='list_description'><a href='../uploadsdocs/" . $campo['arquivo'] . "' target='_blank'>" . mb_strimwidth($campo['arquivo'], 15, 25, "...") . "</a></td>";
+                    echo "<td class='list_description'>" . $incentivador['nome'] . "</td>";
+                    echo "<td class='list_description'> $docPessoa </td>";
+                    echo "<td class='list_description'>" . $infos['nomeProjeto'] . "</td>";
+                    echo "<td class='list_description'><a href='../uploadsdocs/" . $campo['arquivo'] . "' target='_blank'>" . mb_strimwidth($campo['arquivo'], 15, 25, "...") . "</a></td>";
 
-                        //$queryy = ";
-                        $send = mysqli_query($con, "SELECT idStatusDocumento FROM upload_arquivo WHERE idUploadArquivo = '" . $campo['idUploadArquivo'] . "'");
-                        $row = mysqli_fetch_array($send);
+                    //$queryy = ";
+                    $send = mysqli_query($con, "SELECT idStatusDocumento FROM upload_arquivo WHERE idUploadArquivo = '" . $campo['idUploadArquivo'] . "'");
+                    $row = mysqli_fetch_array($send);
 
-                        echo "<td class='list_description'>
-							<select class='colorindo' name='statusDoc' id='statusOpt' value='teste'>";
-                        echo "<option value=''>Selecione</option>";
-                        geraOpcao('status_documento', $row['idStatusDocumento']);
-                        echo " </select>
-						</td>";
+                    /* echo "<td class='list_description'>
+                             <select class='colorindo' name='statusDoc' id='statusOpt' value='teste'>";
+                     echo "<option value=''>Selecione</option>";
+                     geraOpcao('status_documento', $row['idStatusDocumento']);
+                     echo " </select>
+                         </td>";*/
 
-                        echo "<td class='list_description'><input type='text' name='dataRecebimento' class='form-control datepicker' value='$today'>  </td>";
+                    echo "<td class='list_description'>" . exibirDataBr($infos['data_pagamento']) . "</td>";
+                    echo "<td class='list_description'>" . $infos['edital'] . "</td>";
 
-                        echo "
+                    //echo "<td class='list_description'><input type='text' name='dataRecebimento' class='form-control datepicker' value='$today'>  </td>";
+                    echo "<td class='list_description'>" . $infos['imposto'] . " </td>";
+
+                    echo "
                                             <td class='list_description'>                                                
                                                     <input type='hidden' name='idPessoa' value='" . $campo['idPessoa'] . "' />
                                                     <input type='hidden' name='idArquivo' value='" . $campo['idUploadArquivo'] . "' />                                                   
                                                     <input type='hidden' name='idProjeto' value='" . $infos['idProjeto'] . "' />
                                                     <input type='hidden' name='tipoPessoa' value='" . $campo ['idTipo'] . "' />
-                                                    <input type='button' name='cartaIncentivo' data-arquivo='" . $campo['arquivo']."' class='btn btn-theme'
-                                                           value='Verificar' data-toggle='modal'
-                                                           data-target='#cartaIncentivo'>
+                                                    <!-- <input type ='submit' name='gravarAnaliseCarta' class='btn btn-theme btn-block' value='Gravar'> -->
+                                                     <input type='button' name='cartaIncentivo' data-idPessoa='" . $campo['idPessoa'] . "' data-idArquivo='" . $campo['idUploadArquivo'] . "'
+                                                      data-idProjeto='" . $infos['idProjeto'] . "' data-tipoPessoa='" . $campo['idTipo'] . "' data-primeiraParcela='". $infos['data_pagamento']."' 
+                                                      class='btn btn-theme' data-toggle='modal' data-target='#cartaIncentivo' value='Análise' > 
                                                 </form>
                                             </td>";
-                        echo "<tr  style='display: none;' class='list_description' id='obs'><td></td><td></td><td class='list_description text-center'><b>Observações </b></td><td class='list_description' colspan='2'><textarea class='form-control' type='text' id='observacao'></textarea></td></tr>";
+                    //  echo "<tr  style='display: none;' class='list_description' id='obs'><td></td><td></td><td class='list_description text-center'><b>Observações </b></td><td class='list_description' colspan='2'><textarea class='form-control' type='text' id='observacao'></textarea></td></tr>";
 
-                    }
-                    $i++;
                 }
                 echo "</tr>";
                 echo "</tbody>
@@ -871,39 +894,58 @@ $numCartas = mysqli_num_rows($queryContratos);
                 <h4 class="modal-title" id="enviarComissao">Análise da carta de incentivo</h4>
             </div>
             <div class="modal-body" id="modalIncentivo">
-                <div class="col-md-12">
+                <form action="" method="post" id="formCartaIncentivo">
+                <?php
+                $send = mysqli_query($con, "SELECT idStatusDocumento FROM upload_arquivo WHERE idUploadArquivo = '" . $campo['idUploadArquivo'] . "'");
+                $row = mysqli_fetch_array($send);
 
-                    <?php
-                    $arquivo = "<span id='arquivo'></span>";
-                    $send = mysqli_query($con, "SELECT idStatusDocumento FROM upload_arquivo WHERE idUploadArquivo = '" . $campo['idUploadArquivo'] . "'");
-                    $row = mysqli_fetch_array($send);
+                ?>
+                    <div class="table-responsive list_info">
+                        <table class="table table-condensed table-hover">
+                            <thead>
+                            <tr class="list_menu text-center">
+                                <td>Data Recebimento</td>
+                                <td>Status</td>
+                                <!-- <td>Observação</td>-->
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td class="list_description" width="50%">
+                                    <input type='text' name='dataRecebimento' class='form-control datepicker'
+                                           value='<?= $today ?>'>
+                                </td>
+                                <td class="list_description" width="50$">
+                                    <select class='colorindo form-control' name='statusDoc' id='statusOpt' value='teste'>
+                                        <option value=''>Selecione</option>
+                                        <?= geraOpcao('status_documento', $status); ?>
+                                    </select>
+                                </td>
+                            </tr>
+                            <thead class="none" id="observacao">
+                            <tr style="height: 15px;"></tr>
+                            <tr class="text-center list_menu" >
+                                <td colspan="2">Observações</td>
+                            </tr>
+                            </thead>
 
-                    echo "teste " . $arquivo;
-
-                    ?>
-                    <div class="row">
-
-
-                            <a href="../uploadsdocs/<?=$arquivo?>" target='_blank'> <?= mb_strimwidth($arquivo, 0, 25, "...")?> </a>
-                        <div class="col-md-3">
-                            <select class='colorindo' name='statusDoc' id='statusOpt' value='teste'>";
-                                <option value=''>Selecione</option>
-                                <?=geraOpcao('status_documento', $row['idStatusDocumento']);?>
-                            </select>
-                        </div>
+                            <tr class="none text-center" id="observacaotext">
+                                <td class="list_description" colspan="2">
+                                    <textarea class="form-control" name="observacao" id="observacao" rows="3" placeholder="Informe o motivo para o documento está sendo negado..."></textarea>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
-
-                </div>
-            </div>
-            <div class="modal-footer">
-                <form method='POST' action='' id='formEnviar'>
-                    <input type='hidden' name='idProjeto'>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
-                    <input type='hidden' name='idPessoa' value='" . $campo['idPessoa'] . "' />
-                    <input type='hidden' name='idArquivo' value='" . $campo['idUploadArquivo'] . "' />
-                    <input type='hidden' name='idProjeto' value='" . $infos['idProjeto'] . "' />
-                    <input type='hidden' name='tipoPessoa' value='" . $campo['idTipo'] . "' />
-                    <button type="submit" name='envioComissao' class="btn btn-primary">SIM</button>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
+                        <input type='hidden' name='idPessoa' value='' />
+                        <input type='hidden' name='idArquivo' value='' />
+                        <input type='hidden' name='idProjeto' value='' />
+                        <input type='hidden' name='tipoPessoa' value='' />
+                        <input type='text' name='primeiraParcela' value='' />
+                        <input type ='submit' name='gravarAnaliseCarta' class='btn btn-success' value='Gravar'>
+                    </div>
                 </form>
             </div>
         </div>
@@ -911,65 +953,76 @@ $numCartas = mysqli_num_rows($queryContratos);
 </div>
 
 
-<script type="text/javascript">
+    <script type="text/javascript">
 
+        $('#statusOpt').on('change', function () {
+            if ($('#statusOpt').val() == 3) {
+                $('#observacao').show();
+                $('#observacaotext').show();
+            } else {
+                $('#observacao').hide();
+                $('#observacaotext').hide();
+            }
 
-   $('#statusOpt').on('change', function () {
-        if ($('#statusOpt').val() == 3) {
-            $('#obs').show();
-        } else {
-            $('#obs').hide();
-        }
+            console.log($('#statusOpt').val());
+        });
 
-        console.log($('#statusOpt').val());
-    });
+        $('.datepicker').datepicker();
 
-    $('.datepicker').datepicker();
+        // Alimenta o modal com o idProjeto
+        $('#enviarComissao').on('show.bs.modal', function (e) {
+            let idProjeto = $(e.relatedTarget).attr('data-id');
+            $(this).find('#formEnviar input[name="idProjeto"]').attr('value', idProjeto);
 
-    // Alimenta o modal com o idProjeto
-    $('#enviarComissao').on('show.bs.modal', function (e) {
-        let idProjeto = $(e.relatedTarget).attr('data-id');
-        $(this).find('#formEnviar input[name="idProjeto"]').attr('value', idProjeto);
+        });
+        $('#arquivar').on('show.bs.modal', function (e) {
+            let idProjeto = $(e.relatedTarget).attr('data-id');
+            $(this).find('#formArquivar input[name="idProjeto"]').attr('value', idProjeto);
 
-    });
-    $('#arquivar').on('show.bs.modal', function (e) {
-        let idProjeto = $(e.relatedTarget).attr('data-id');
-        $(this).find('#formArquivar input[name="idProjeto"]').attr('value', idProjeto);
+        });
 
-    });
+        $('#cartaIncentivo').on('show.bs.modal', function (e) {
+            let idPessoa = $(e.relatedTarget).attr('data-idPessoa');
+            let idArquivo = $(e.relatedTarget).attr('data-idArquivo');
+            let idProjeto = $(e.relatedTarget).attr('data-idProjeto');
+            let tipoPessoa = $(e.relatedTarget).attr('data-tipoPessoa');
+            let first = $(e.relatedTarget).attr('data-primeiraParcela');
 
-    $('#cartaIncentivo').on('show.bs.modal', function (e) {
-        let arquivo = $(e.relatedTarget).attr('data-arquivo');
-        $('#arquivo').html(arquivo);
-    });
+            $(this).find('#formCartaIncentivo input[name="idPessoa"]').attr('value', idPessoa);
+            $(this).find('#formCartaIncentivo input[name="idArquivo"]').attr('value', idArquivo);
+            $(this).find('#formCartaIncentivo input[name="idProjeto"]').attr('value', idProjeto);
+            $(this).find('#formCartaIncentivo input[name="tipoPessoa"]').attr('value', tipoPessoa);
+            $(this).find('#formCartaIncentivo input[name="primeiraParcela"]').attr('value', first);
 
-    let statusAll = document.querySelectorAll(".colorindo")
+        });
 
-    for (let status of statusAll) {
+        let statusAll = document.querySelectorAll(".colorindo")
 
-        if (status.options[status.selectedIndex].value == "") {
-            status.style.backgroundColor = "yellow"
-        }
-    }
+        for (let status of statusAll) {
 
-    for (let status of statusAll) {
-
-        status.addEventListener("change", () => {
             if (status.options[status.selectedIndex].value == "") {
                 status.style.backgroundColor = "yellow"
-            } else {
-                status.style.backgroundColor = "#F0F0E9"
             }
-        })
-    }
-
-    function mostrarDiv(divId) {
-        if ($('#' + divId).is(':visible')) {
-            $('#' + divId).slideUp();
-            $('#icon_' + divId).html("<span class='glyphicon glyphicon-chevron-right'></span>");
-        } else {
-            $('#' + divId).slideDown('slow');
-            $('#icon_' + divId).html("<span class='glyphicon glyphicon-chevron-down'></span>");
         }
-    }
-</script>
+
+        for (let status of statusAll) {
+
+            status.addEventListener("change", () => {
+                if (status.options[status.selectedIndex].value == "") {
+                    status.style.backgroundColor = "yellow"
+                } else {
+                    status.style.backgroundColor = "#F0F0E9"
+                }
+            })
+        }
+
+        function mostrarDiv(divId) {
+            if ($('#' + divId).is(':visible')) {
+                $('#' + divId).slideUp();
+                $('#icon_' + divId).html("<span class='glyphicon glyphicon-chevron-right'></span>");
+            } else {
+                $('#' + divId).slideDown('slow');
+                $('#icon_' + divId).html("<span class='glyphicon glyphicon-chevron-down'></span>");
+            }
+        }
+    </script>
