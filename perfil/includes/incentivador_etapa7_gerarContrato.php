@@ -182,7 +182,6 @@ if (verificaArquivosExistentesIncentivador($idIncentivador, 18)) {
                 </div>
 
                 <div id="etapa8" style="display: <?= $etapa8 ?>">
-
                     <div class="row">
                         <div class="col-md-12">
                             <div class="col-md-offset-2 col-md-8 text-center">

@@ -83,7 +83,7 @@ if (isset($_POST['gravarInfos'])) {
     }
 }
 
-if (((isset($qtadeParcelas) && $qtadeParcelas != 0) && (isset($impostoRegistrado) && $impostoRegistrado != '')  && (isset($editalRegistrado) && $editalRegistrado != '')) || $gerarContrato == 1) {
+if (((isset($qtadeParcelas) && $qtadeParcelas != 0) && (isset($impostoRegistrado) && $impostoRegistrado != '') && (isset($editalRegistrado) && $editalRegistrado != '')) || $gerarContrato == 1) {
     $gerarContrato = 1;
     $mensagem = "<div class='alert alert-success'>
                     <small><strong>Verifique atentamente as informações inseridas, se estiverem corretas avance para a próxima etapa utilizando o botão de avançar ao final página.</strong></small>
@@ -117,6 +117,13 @@ if ($intervalo->d < 15) {
 
     $gerarContrato = 0;
 
+}
+
+$today = new DateTime();
+
+if ($today > $data_pagamento) {
+    echo $today->diff($data_pagamento)->format('%d');
+    $mensagem = "A data de pagamento é anterior ao dia de hoje";
 }
 
 
@@ -278,7 +285,7 @@ if ($intervalo->d < 15) {
                                 $somaParcelas = 0;
                                 while ($parcela = mysqli_fetch_array($queryParcelas)) {
                                     $arrayValores[] = dinheiroParaBr($parcela['valor']);
-                                    $arrayDatas[] = $parcela['data_pagamento'];
+                                    $arrayDatas[] = exibirDataBr($parcela['data_pagamento']);
                                     $idsParcela [] = $parcela['id'];
 
                                     $somaParcelas += $parcela['valor'];
@@ -325,7 +332,7 @@ if ($intervalo->d < 15) {
                                     <div class="dataPagamento none">
                                         <div class='col-md-3'>
                                             <label for='data'>Data</label>
-                                            <input type='date' class='form-control' name='data' value="1" required>
+                                            <input type='text' class='form-control' name='data' value="1" required>
                                         </div>
                                     </div>
                                     <br>
@@ -344,20 +351,20 @@ if ($intervalo->d < 15) {
                     </div>
                 </div>
                 <?php
-                    if ($gerarContrato != 0) {
-                        ?>
-                        <form action='?perfil=includes/incentivador_etapa7_gerarContrato' class='form-group'
-                              method='post'>
-                            <div class='col-md-12'>
-                                <input type='hidden' name='tipoPessoa' value='<?=$tipoPessoa?>'>
-                                <input type='hidden' name='idProjeto' value='<?=$idProjeto?>'>
-                                <button type='submit' name='avancar_etapa7' class='btn btn-theme pull-right'>
-                                    Avançar
-                                </button>
-                            </div>
-                        </form>
-                        <?php
-                    }
+                if ($gerarContrato != 0) {
+                    ?>
+                    <form action='?perfil=includes/incentivador_etapa7_gerarContrato' class='form-group'
+                          method='post'>
+                        <div class='col-md-12'>
+                            <input type='hidden' name='tipoPessoa' value='<?= $tipoPessoa ?>'>
+                            <input type='hidden' name='idProjeto' value='<?= $idProjeto ?>'>
+                            <button type='submit' name='avancar_etapa7' class='btn btn-theme pull-right'>
+                                Avançar
+                            </button>
+                        </div>
+                    </form>
+                    <?php
+                }
                 ?>
             </div>
         </div>
@@ -381,21 +388,21 @@ if ($intervalo->d < 15) {
                                 <input type="hidden" name="idProjeto" id="idProjeto" value="">
                                 <input type="hidden" name="tipoPessoa" id="tipoPessoa" value="<?= $tipoPessoa ?>">
                                 <div class="inputs">
-                                    <div class='form-group col-md-offset-1 col-md-2'>
-                                        <label for='parcela'>Parcela</label>
-                                        <input type='number' class='form-control' name='parcela1' value='1' disabled>
-                                    </div>
-                                    <div class='form-group col-md-4'>
-                                        <label for='data'>Data</label>
-                                        <input type='date' class='form-control' name='data' value="1" required>
+                                    <!--  <div class='form-group col-md-offset-1 col-md-2'>
+                                          <label for='parcela'>Parcela</label>
+                                          <input type='number' class='form-control' name='parcela1' value='1' disabled>
+                                      </div>
+                                      <div class='form-group col-md-4'>
+                                          <label for='data'>Data</label>
+                                          <input type='text' class='form-control' name='data' value="1" required>
 
-                                    </div>
-                                    <div class='form-group col-md-4'>
-                                        <label for='valor'>Valor</label>
-                                        <input type='text' class='form-control' value="1" name='valor'
-                                               onkeypress="return(moeda(this, '.', ',', event));" required>
+                                      </div>
+                                      <div class='form-group col-md-4'>
+                                          <label for='valor'>Valor</label>
+                                          <input type='text' class='form-control' value="1" name='valor'
+                                                 onkeypress="return(moeda(this, '.', ',', event));" required>
 
-                                    </div>
+                                      </div>-->
                                 </div>
                             </div>
                         </div>
@@ -466,8 +473,9 @@ if ($intervalo->d < 15) {
         </div>
         <div class='form-group col-md-4'>
             <label for='modal_data'>Data</label>
-            <input type='date' id='modal_data' value="{{date}}" required name='modal_data[{{count}}]'
-                   class='form-control'>
+            <input type='text' name='modal_data[{{count}}]' class='form-control datepicker'
+                   value="{{date}}">
+
         </div>
         <div class='form-group col-md-3'>
             <label for='valor'>Valor </label>
@@ -475,7 +483,6 @@ if ($intervalo->d < 15) {
                    placeholder="R$ 20.000,00"
                    onkeypress="return(moeda(this, '.', ',', event));" onkeyup="somar()" class='form-control'>
         </div>
-
     </div>
 </script>
 
@@ -559,8 +566,6 @@ if ($intervalo->d < 15) {
 
     function abrirModal() {
 
-        console.log("chamou função");
-
         var source = document.getElementById("templateParcela").innerHTML;
         var template = Handlebars.compile(source);
         var html = '';
@@ -585,16 +590,12 @@ if ($intervalo->d < 15) {
 
             if (StringValores != "" && StringDatas != "") {
 
-                console.log(StringDatas + StringValores);
-
                 $(".botoes").html("<button type='button' class='btn btn-secondary' data-dismiss='modal'>Fechar</button>" + "<button type='button' class='btn btn-primary' name='editar' id='editarModal'>Editar</button>");
 
                 var valores = StringValores.split("|");
                 var datas = StringDatas.split("|");
 
                 var somando = 0;
-
-                console.log(valores);
 
                 if (parseInt(parcelasSelected) < parseInt(parcelasSalvas)) {
                     for (var count = 0; count < parcelasSelected; count++) {
@@ -660,8 +661,13 @@ if ($intervalo->d < 15) {
                 $('#modalParcelas').find('#formParcela').html(html);
                 $('#modalParcelas').modal('show');
             }
-
         }
+
+
+        $('.datepicker').datepicker({
+            minDate: 0
+        });
+
 
     };
 

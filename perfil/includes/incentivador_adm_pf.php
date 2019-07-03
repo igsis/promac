@@ -86,7 +86,12 @@ switch ($etapa) {
         break;
 
     case '6':
-        echo "<script>location.href = '?perfil=includes/incentivador_etapa6_incentivarProjeto&tipoPessoa=$tipoPessoa'</script>";
+        echo "<script>location.href = '?perfil=includes/incentivador_etapa6_incentivarProjeto&tipoPessoa=$tipoPessoa';
+              $('.datepicker').datepicker({
+                   minDate: 0,
+                   format: 'dd/mm/yyyy'
+                });
+            </script>";
         break;
 
     case '7':
@@ -104,6 +109,8 @@ switch ($etapa) {
 ?>
 
 <script>
+
+
 
     var resposta = $('.resposta');
     resposta.on("click", verificaResposta);

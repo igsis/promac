@@ -96,6 +96,7 @@ if (isset($_POST['gravarAnaliseCarta'])) {
                 $mensagem = "<span style='color: #FFA500; '><strong>A análise foi gravada com sucesso, o usuario será notificado sua carta foi negada e permanecerá na etapa de envio da mesma.</strong></span>";
             }
             if (isset($sqlEtapa)) {
+                echo $data_recebimento->diff($data_1Parcela)->days;
                 mysqli_query($con, $sqlEtapa);
                 $mensagem = "<span style='color: #01DF3A; '><strong>Análise gravada com sucesso!</strong></span>";
             }
@@ -817,7 +818,7 @@ $numCartas = mysqli_num_rows($queryContratos);
                                                     <input type='hidden' name='tipoPessoa' value='" . $campo ['idTipo'] . "' />
                                                     <!-- <input type ='submit' name='gravarAnaliseCarta' class='btn btn-theme btn-block' value='Gravar'> -->
                                                      <input type='button' name='cartaIncentivo' data-idPessoa='" . $campo['idPessoa'] . "' data-idArquivo='" . $campo['idUploadArquivo'] . "'
-                                                      data-idProjeto='" . $infos['idProjeto'] . "' data-tipoPessoa='" . $campo['idTipo'] . "' data-primeiraParcela='". $infos['data_pagamento']."' 
+                                                      data-idProjeto='" . $infos['idProjeto'] . "' data-tipoPessoa='" . $campo['idTipo'] . "' data-primeiraParcela='" . $infos['data_pagamento'] . "' 
                                                       class='btn btn-theme' data-toggle='modal' data-target='#cartaIncentivo' value='Análise' > 
                                                 </form>
                                             </td>";
@@ -895,28 +896,28 @@ $numCartas = mysqli_num_rows($queryContratos);
             </div>
             <div class="modal-body" id="modalIncentivo">
                 <form action="" method="post" id="formCartaIncentivo">
-                <?php
-                $send = mysqli_query($con, "SELECT idStatusDocumento FROM upload_arquivo WHERE idUploadArquivo = '" . $campo['idUploadArquivo'] . "'");
-                $row = mysqli_fetch_array($send);
+                    <?php
+                    $send = mysqli_query($con, "SELECT idStatusDocumento FROM upload_arquivo WHERE idUploadArquivo = '" . $campo['idUploadArquivo'] . "'");
+                    $row = mysqli_fetch_array($send);
 
-                ?>
+                    ?>
                     <div class="table-responsive list_info">
                         <table class="table table-condensed table-hover">
                             <thead>
                             <tr class="list_menu text-center">
                                 <td>Data Recebimento</td>
                                 <td>Status</td>
-                                <!-- <td>Observação</td>-->
                             </tr>
                             </thead>
                             <tbody>
                             <tr>
-                                <td class="list_description" width="50%">
-                                    <input type='text' name='dataRecebimento' class='form-control datepicker'
+                                <td class="list_description">
+                                    <input type='text' name='dataRecebimento' class='input-group form-control datepicker'
                                            value='<?= $today ?>'>
                                 </td>
-                                <td class="list_description" width="50$">
-                                    <select class='colorindo form-control' name='statusDoc' id='statusOpt' value='teste'>
+                                <td class="list_description" width="50%">
+                                    <select class='colorindo form-control' name='statusDoc' id='statusOpt'
+                                            value='teste'>
                                         <option value=''>Selecione</option>
                                         <?= geraOpcao('status_documento', $status); ?>
                                     </select>
@@ -924,14 +925,15 @@ $numCartas = mysqli_num_rows($queryContratos);
                             </tr>
                             <thead class="none" id="observacao">
                             <tr style="height: 15px;"></tr>
-                            <tr class="text-center list_menu" >
+                            <tr class="text-center list_menu">
                                 <td colspan="2">Observações</td>
                             </tr>
                             </thead>
 
                             <tr class="none text-center" id="observacaotext">
                                 <td class="list_description" colspan="2">
-                                    <textarea class="form-control" name="observacao" id="observacao" rows="3" placeholder="Informe o motivo para o documento está sendo negado..."></textarea>
+                                    <textarea class="form-control" name="observacao" id="observacao" rows="3"
+                                              placeholder="Informe o motivo para o documento está sendo negado..."></textarea>
                                 </td>
                             </tr>
                             </tbody>
@@ -939,12 +941,12 @@ $numCartas = mysqli_num_rows($queryContratos);
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
-                        <input type='hidden' name='idPessoa' value='' />
-                        <input type='hidden' name='idArquivo' value='' />
-                        <input type='hidden' name='idProjeto' value='' />
-                        <input type='hidden' name='tipoPessoa' value='' />
-                        <input type='text' name='primeiraParcela' value='' />
-                        <input type ='submit' name='gravarAnaliseCarta' class='btn btn-success' value='Gravar'>
+                        <input type='hidden' name='idPessoa' value=''/>
+                        <input type='hidden' name='idArquivo' value=''/>
+                        <input type='hidden' name='idProjeto' value=''/>
+                        <input type='hidden' name='tipoPessoa' value=''/>
+                        <input type='hidden' name='primeiraParcela' value=''/>
+                        <input type='submit' name='gravarAnaliseCarta' class='btn btn-success' value='Gravar'>
                     </div>
                 </form>
             </div>
@@ -953,76 +955,76 @@ $numCartas = mysqli_num_rows($queryContratos);
 </div>
 
 
-    <script type="text/javascript">
+<script type="text/javascript">
 
-        $('#statusOpt').on('change', function () {
-            if ($('#statusOpt').val() == 3) {
-                $('#observacao').show();
-                $('#observacaotext').show();
-            } else {
-                $('#observacao').hide();
-                $('#observacaotext').hide();
-            }
+    $('#statusOpt').on('change', function () {
+        if ($('#statusOpt').val() == 3) {
+            $('#observacao').show();
+            $('#observacaotext').show();
+        } else {
+            $('#observacao').hide();
+            $('#observacaotext').hide();
+        }
+    });
 
-            console.log($('#statusOpt').val());
-        });
+    $('.datepicker').datepicker({
+        minDate: 0
+    });
 
-        $('.datepicker').datepicker();
+    // Alimenta o modal com o idProjeto
+    $('#enviarComissao').on('show.bs.modal', function (e) {
+        let idProjeto = $(e.relatedTarget).attr('data-id');
+        $(this).find('#formEnviar input[name="idProjeto"]').attr('value', idProjeto);
 
-        // Alimenta o modal com o idProjeto
-        $('#enviarComissao').on('show.bs.modal', function (e) {
-            let idProjeto = $(e.relatedTarget).attr('data-id');
-            $(this).find('#formEnviar input[name="idProjeto"]').attr('value', idProjeto);
+    });
+    $('#arquivar').on('show.bs.modal', function (e) {
+        let idProjeto = $(e.relatedTarget).attr('data-id');
+        $(this).find('#formArquivar input[name="idProjeto"]').attr('value', idProjeto);
 
-        });
-        $('#arquivar').on('show.bs.modal', function (e) {
-            let idProjeto = $(e.relatedTarget).attr('data-id');
-            $(this).find('#formArquivar input[name="idProjeto"]').attr('value', idProjeto);
+    });
 
-        });
+    $('#cartaIncentivo').on('show.bs.modal', function (e) {
+        let idPessoa = $(e.relatedTarget).attr('data-idPessoa');
+        let idArquivo = $(e.relatedTarget).attr('data-idArquivo');
+        let idProjeto = $(e.relatedTarget).attr('data-idProjeto');
+        let tipoPessoa = $(e.relatedTarget).attr('data-tipoPessoa');
+        let first = $(e.relatedTarget).attr('data-primeiraParcela');
 
-        $('#cartaIncentivo').on('show.bs.modal', function (e) {
-            let idPessoa = $(e.relatedTarget).attr('data-idPessoa');
-            let idArquivo = $(e.relatedTarget).attr('data-idArquivo');
-            let idProjeto = $(e.relatedTarget).attr('data-idProjeto');
-            let tipoPessoa = $(e.relatedTarget).attr('data-tipoPessoa');
-            let first = $(e.relatedTarget).attr('data-primeiraParcela');
+        $(this).find('#formCartaIncentivo input[name="idPessoa"]').attr('value', idPessoa);
+        $(this).find('#formCartaIncentivo input[name="idArquivo"]').attr('value', idArquivo);
+        $(this).find('#formCartaIncentivo input[name="idProjeto"]').attr('value', idProjeto);
+        $(this).find('#formCartaIncentivo input[name="tipoPessoa"]').attr('value', tipoPessoa);
+        $(this).find('#formCartaIncentivo input[name="primeiraParcela"]').attr('value', first);
 
-            $(this).find('#formCartaIncentivo input[name="idPessoa"]').attr('value', idPessoa);
-            $(this).find('#formCartaIncentivo input[name="idArquivo"]').attr('value', idArquivo);
-            $(this).find('#formCartaIncentivo input[name="idProjeto"]').attr('value', idProjeto);
-            $(this).find('#formCartaIncentivo input[name="tipoPessoa"]').attr('value', tipoPessoa);
-            $(this).find('#formCartaIncentivo input[name="primeiraParcela"]').attr('value', first);
+    });
 
-        });
+    let statusAll = document.querySelectorAll(".colorindo")
 
-        let statusAll = document.querySelectorAll(".colorindo")
+    for (let status of statusAll) {
 
-        for (let status of statusAll) {
+        if (status.options[status.selectedIndex].value == "") {
+            status.style.backgroundColor = "yellow"
+        }
+    }
 
+    for (let status of statusAll) {
+
+        status.addEventListener("change", () => {
             if (status.options[status.selectedIndex].value == "") {
                 status.style.backgroundColor = "yellow"
-            }
-        }
-
-        for (let status of statusAll) {
-
-            status.addEventListener("change", () => {
-                if (status.options[status.selectedIndex].value == "") {
-                    status.style.backgroundColor = "yellow"
-                } else {
-                    status.style.backgroundColor = "#F0F0E9"
-                }
-            })
-        }
-
-        function mostrarDiv(divId) {
-            if ($('#' + divId).is(':visible')) {
-                $('#' + divId).slideUp();
-                $('#icon_' + divId).html("<span class='glyphicon glyphicon-chevron-right'></span>");
             } else {
-                $('#' + divId).slideDown('slow');
-                $('#icon_' + divId).html("<span class='glyphicon glyphicon-chevron-down'></span>");
+                status.style.backgroundColor = "#F0F0E9"
             }
+        })
+    }
+
+    function mostrarDiv(divId) {
+        if ($('#' + divId).is(':visible')) {
+            $('#' + divId).slideUp();
+            $('#icon_' + divId).html("<span class='glyphicon glyphicon-chevron-right'></span>");
+        } else {
+            $('#' + divId).slideDown('slow');
+            $('#icon_' + divId).html("<span class='glyphicon glyphicon-chevron-down'></span>");
         }
-    </script>
+    }
+</script>
