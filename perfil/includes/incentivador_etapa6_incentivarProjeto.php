@@ -5,6 +5,7 @@ $tipoPessoa = $_POST['tipoPessoa'] ?? $_GET['tipoPessoa'];
 $gerarContrato = 0;
 $qtadeParcelas = 0;
 
+
 if (isset($_POST['incentivar_projeto']) || isset($_POST['editar'])) {
     $idProjeto = $_POST['idProjeto'];
     $valor = dinheiroDeBr($_POST['valor_aportado']);
@@ -49,6 +50,8 @@ $sqlProjeto = "SELECT * FROM incentivador_projeto WHERE idIncentivador = $idInce
 if ($query = mysqli_query($con, $sqlProjeto)) {
     $incentivador_projeto = mysqli_fetch_array($query);
 
+} else {
+    echo $sqlProjeto;
 }
 
 $idProjeto = $incentivador_projeto['idProjeto'];
@@ -56,6 +59,20 @@ $valor = $incentivador_projeto['valor_aportado'];
 
 $impostoRegistrado = $incentivador_projeto['imposto'] ?? '';
 $editalRegistrado = $incentivador_projeto['edital'] ?? '';
+
+if (isset($_GET['retornando'])) {
+    $sqlEtapa = "UPDATE etapas_incentivo SET 
+                                             idProjeto = '$idProjeto', 
+                                             etapa = 6 
+                                         WHERE 
+                                             tipoPessoa = '$tipoPessoa' 
+                                         AND idIncentivador = '$idIncentivador'";
+
+    $etapa = 6;
+
+    mysqli_query($con, $sqlEtapa);
+}
+
 
 
 //verificando parcelas
@@ -103,27 +120,30 @@ $data_pagamento = new DateTime($parcelas['data_pagamento']);
 
 //echo $sqlUltimaParcela;
 
-$intervalo = $data_pagamento->diff($data_recebimento);
+/*$intervalo = $data_pagamento->diff($data_recebimento);
 
 echo $intervalo->d;
 
 if ($intervalo->d < 15) {
     $mensagem = "<div class='alert alert-danger' style='color: red'>
                     <strong>PRAZO EXCEDIDO!</strong><br>
-                    O recebimento da Carta de Incentivo original na SMC deve ocorrer antes de 15 dias do vencimento do tributo a ser utilizado para incentivo do projeto cultural. 
-                    <br>Exigimos esse prazo para que a Secretaria possa executar o procedimento necessário para o abatimento do tributo. 
+                    O recebimento da Carta de Incentivo original na SMC deve ocorrer antes de 15 dias do vencimento do tributo a ser utilizado para incentivo do projeto cultural.
+                    <br>Exigimos esse prazo para que a Secretaria possa executar o procedimento necessário para o abatimento do tributo.
                     <br>Você retornou a etapa 6, por favor, preencha novamente a Carta de Incentivo com a data atualizada e repita os passos seguintes.
                 </div>";
 
     $gerarContrato = 0;
 
-}
+}*/
 
 $today = new DateTime();
 
-if ($today > $data_pagamento) {
-    echo $today->diff($data_pagamento)->format('%d');
-    $mensagem = "A data de pagamento é anterior ao dia de hoje";
+if ($data_recebimento->diff($data_pagamento)->d < 15) {
+    $gerarContrato = 0;
+    $mensagem = "<p class='text-warning'>O intervalo entre a data de pagamento da primeira parcela e da data de recebimento pela SMC (".exibirDataBr($infos['data_recebimento_carta']) .") é menor que 15 dias.</p><p class='text-danger'>LEMBRE-SE O recebimento da Carta de Incentivo original na SMC deve ocorrer antes de 15 dias do vencimento do tributo a ser utilizado para incentivo do projeto cultural. ";
+} elseif ($today > $data_pagamento) {
+    $gerarContrato = 0;
+    $mensagem = "<p class='text-warning'>A data de pagamento da primeira parcela é anterior ao dia de hoje.</p><p class='text-danger'>LEMBRE-SE O recebimento da Carta de Incentivo original na SMC deve ocorrer antes de 15 dias do vencimento do tributo a ser utilizado para incentivo do projeto cultural. ";
 }
 
 
@@ -358,7 +378,7 @@ if ($today > $data_pagamento) {
                         <div class='col-md-12'>
                             <input type='hidden' name='tipoPessoa' value='<?= $tipoPessoa ?>'>
                             <input type='hidden' name='idProjeto' value='<?= $idProjeto ?>'>
-                            <button type='submit' name='avancar_etapa7' class='btn btn-theme pull-right'>
+                            <button type='submit' name='avancar_etapa7' id="avancar_etapa7" class='btn btn-theme pull-right'>
                                 Avançar
                             </button>
                         </div>
@@ -665,7 +685,7 @@ if ($today > $data_pagamento) {
 
 
         $('.datepicker').datepicker({
-            minDate: 0
+            minDate: 15
         });
 
 
@@ -810,38 +830,3 @@ if ($today > $data_pagamento) {
 </script>
 
 
-<!--
-<script>
-
-    $('#addParcelas').on('click', function () {
-        console.log("clicou");
-        let num = $('.inputs #idParcela:last').val();
-        let prox = parseInt(num) + 1;
-
-        //console.log($('.inputs #idParcela:last').val());
-
-        $('.inputsNextDiv').append($('.inputs:first').clone(true).append("<div class='col-md-1'>\n" +
-            "                                            <br>\n" +
-            "                                            <button id='removeParcela' style='margin-top: 5px; margin-left: -15px; height: 33px;'\n" +
-            "                                                    class='remover btn btn-danger pull-left' type='button'>\n" +
-            "                                                <i class='glyphicon glyphicon-trash'\n" +
-            "                                                   style='margin-bottom: 2px; margin-left: 2px;'></i></button>\n" +
-            "                                        </div>"));
-
-
-        $('.inputs #idParcela:last').val(prox);
-
-    });
-
-    $('.inputsNextDiv').on('click', 'button.remover', function () {
-
-        let numAtual = $(this).parent().parents('#idParcela').val();
-
-        console.log($(this).parents('.inputs').parents($("#idParcela")));
-
-        //console.log($(this).parents('.inputs'));
-        $(this).parents('.inputs').remove();
-
-    })
-
-</script>-->

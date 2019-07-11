@@ -101,7 +101,9 @@ if (isset($_POST['apagar'])) {
     if (mysqli_query($con, $sql_apagar_arquivo)) {
         $mensagem = "<font color='#01DF3A'><strong>Arquivo apagado com sucesso!</strong></font>";
         gravarLog($sql_apagar_arquivo);
+        $etapa6 = 1;
     } else {
+        $etapa6 = 0;
         $mensagem = "<font color='#FF0000'><strong>Erro ao apagar arquivo!</strong></font>";
     }
 }
@@ -150,6 +152,7 @@ if (verificaArquivosExistentesIncentivador($idIncentivador, 18)) {
                 }
 
                 ?>
+              
                 <div id="etapa7" style="display: <?= $etapa7 ?>">
                     <h6><b>7 - Impressão do Contrato de Incentivo</b></h6>
                     <div class="well">
@@ -190,8 +193,7 @@ if (verificaArquivosExistentesIncentivador($idIncentivador, 18)) {
                             <div class="col-md-2">
                                 <form action="../pdf/pdf_incentivar_projeto.php" method="post" class="form-group">
                                     <button type="button" onclick="loadOtherPage()" class="btn btn-theme"
-                                            style="margin-top: 5px;"><span class="glyphicon glyphicon-download"></span> <!-- href='< ?php echo "../pdf/pdf_incentivar_projeto.php?tipoPessoa=$tipoPessoa&idPessoa=$idIncentivador&idProjeto=$idProjeto"; ?>'
-                               target='_blank' --></button>
+                                            style="margin-top: 5px;"><span class="glyphicon glyphicon-download"></span> </button>
                                     <br/>
                                 </form>
                             </div>
@@ -214,8 +216,7 @@ if (verificaArquivosExistentesIncentivador($idIncentivador, 18)) {
                     <div class="row">
                         <div class="form-group" id="uploadDocs" style="display: <?= $uploadArq ?>">
                             <div class="col-md-offset-2 col-md-8">
-                                <div class="table-responsive list_info"><h6>Upload do Contrato de Incentivo
-                                        assinado</h6>
+                                <div class="table-responsive list_info"><h6>Upload do Contrato de Incentivo assinado</h6>
                                     <form method="POST" action="?perfil=includes/incentivador_etapa7_gerarContrato"
                                           enctype="multipart/form-data">
                                         <?php
@@ -316,6 +317,7 @@ if (verificaArquivosExistentesIncentivador($idIncentivador, 18)) {
                                             case 3:
                                                 $status = "Negado";
                                                 $cor = "red";
+                                                $etapa6 = 1;
                                                 break;
                                         }
 
@@ -350,6 +352,10 @@ if (verificaArquivosExistentesIncentivador($idIncentivador, 18)) {
                                 </table>
                             </div>
                             <!-- Fim do exibir arquivo -->
+                        </div>
+                        <div style="display: none;" id="buttonEtapa6">
+                            <a href='?perfil=includes/incentivador_etapa6_incentivarProjeto&tipoPessoa=<?=$tipoPessoa?>&retornando=etapa6'>
+                                <button class='btn btn-warning'> <span class="glyphicon glyphicon-arrow-left"></span>&nbsp; Retornar ao item 6.</button></a>
                         </div>
                     </div>
                 </div>
@@ -404,7 +410,15 @@ if (verificaArquivosExistentesIncentivador($idIncentivador, 18)) {
             $('#etapa8').show();
             $('#etapa7').hide();
         }
+    };
+
+
+</script>
+
+<script>
+    let etapa6 = "<?=$etapa6?>";
+
+    if (etapa6 == 1) {
+        $('#buttonEtapa6').slideDown();
     }
-
-
 </script>

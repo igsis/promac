@@ -86,19 +86,18 @@ if (isset($_POST['gravarAnaliseCarta'])) {
         if (mysqli_query($con, $sqlData)) {
 
             if ($status == 1) {
-                if ($data_recebimento->diff($data_1Parcela)->d > 15) {
-                    $sqlEtapa = "UPDATE etapas_incentivo SET etapa = 9 WHERE idIncentivador = '$idPessoa' AND tipoPessoa = '$tipoPessoa' AND idProjeto = '$idProjeto'";
-                } else {
-                    $mensagem = "<span style='color: #FFA500; '><strong>A análise foi gravada com sucesso, o usuario será notificado que o intervalo entre a data do recebimento pela SMC e a data da primeira parcela é menor que 15 dias e retornará a etapa 6.</strong></span>";
-                    $sqlEtapa = "UPDATE etapas_incentivo SET etapa = 6 WHERE idIncentivador = '$idPessoa' AND tipoPessoa = '$tipoPessoa' AND idProjeto = '$idProjeto'";
-                }
+                $sqlEtapa = "UPDATE etapas_incentivo SET etapa = 9 WHERE idIncentivador = '$idPessoa' AND tipoPessoa = '$tipoPessoa' AND idProjeto = '$idProjeto'";
+
             } else {
+                $sqlEtapa = "UPDATE etapas_incentivo SET etapa = 8 WHERE idIncentivador = '$idPessoa' AND tipoPessoa = '$tipoPessoa' AND idProjeto = '$idProjeto'";
                 $mensagem = "<span style='color: #FFA500; '><strong>A análise foi gravada com sucesso, o usuario será notificado sua carta foi negada e permanecerá na etapa de envio da mesma.</strong></span>";
             }
+
             if (isset($sqlEtapa)) {
                 echo $data_recebimento->diff($data_1Parcela)->days;
                 mysqli_query($con, $sqlEtapa);
-                $mensagem = "<span style='color: #01DF3A; '><strong>Análise gravada com sucesso!</strong></span>";
+                $mensagem = "<span style='color: #01DF3A;'><strong>Análise gravada com sucesso!</strong></span>";
+
             }
         }
     }
@@ -895,6 +894,9 @@ $numCartas = mysqli_num_rows($queryContratos);
                 <h4 class="modal-title" id="enviarComissao">Análise da carta de incentivo</h4>
             </div>
             <div class="modal-body" id="modalIncentivo">
+              <!--  <div class="row">
+                    <h5 class="text-center" id="diffDates"><b><p id="diff">A data de vencimento do tributo é  </p><b/></h5>
+                </div>-->
                 <form action="" method="post" id="formCartaIncentivo">
                     <?php
                     $send = mysqli_query($con, "SELECT idStatusDocumento FROM upload_arquivo WHERE idUploadArquivo = '" . $campo['idUploadArquivo'] . "'");
@@ -912,7 +914,8 @@ $numCartas = mysqli_num_rows($queryContratos);
                             <tbody>
                             <tr>
                                 <td class="list_description">
-                                    <input type='text' name='dataRecebimento' class='input-group form-control datepicker'
+                                    <input type='text' name='dataRecebimento'
+                                           class='input-group form-control datepicker'
                                            value='<?= $today ?>'>
                                 </td>
                                 <td class="list_description" width="50%">

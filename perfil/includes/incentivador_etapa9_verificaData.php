@@ -29,12 +29,17 @@ $data_pagamento = new DateTime($parcelas['data_pagamento']);
 $intervalo = $data_pagamento->diff($data_recebimento);
 
 if ($intervalo->d < 15) {
-    $mensagem = "<div style='color: red'>
-                    <strong>PRAZO EXCEDIDO!</strong><br>
-                    O recebimento da Carta de Incentivo original na SMC deve ocorrer antes de 15 dias do vencimento do tributo a ser utilizado para incentivo do projeto cultural. 
-                    <br>Exigimos esse prazo para que a Secretaria possa executar o procedimento necessário para o abatimento do tributo. 
-                    <br>Por favor, retorne ao item 6 e preencha novamente a Carta de Incentivo com a data atualizada e repita os passos seguintes.
-                </div>";
+       /* $sqlEtapa = "UPDATE etapas_incentivo SET etapa = 6 WHERE idProjeto = '$idProjeto' AND idIncentivador = '$idIncentivador' AND tipoPessoa = '$tipoPessoa'";
+        $sqlCarta = "UPDATE upload_arquivo SET idStatusDocumento = NULL WHERE idListaDocumento = 18 and idTipo = '$tipoPessoa' AND idPessoa = '$idIncentivador'";*/
+        $mensagem = "<div style='color: red'>
+                        <strong>PRAZO EXCEDIDO!</strong><br>
+                        O recebimento da Carta de Incentivo original na SMC deve ocorrer antes de 15 dias do vencimento do tributo a ser utilizado para incentivo do projeto cultural. 
+                        <br>Exigimos esse prazo para que a Secretaria possa executar o procedimento necessário para o abatimento do tributo. <hr width='30%'>
+                        <a href='?perfil=includes/incentivador_etapa6_incentivarProjeto&tipoPessoa=$tipoPessoa&retornando=etapa6'>
+                        <button class='btn btn-danger'>Por favor, retorne ao item 6 e preencha novamente a Carta de Incentivo com a data atualizada e repita os passos seguintes.</button></a>
+                    </div>";
+
+        $prazoExcedido = 1;
 
 } else {
 
@@ -392,5 +397,14 @@ $etapa = $etapaArray['etapa'];
             $('#' + divId).slideDown('slow');
             // $('#icon_' + divId).html("<span class='glyphicon glyphicon-chevron-down'></span>");
         }
+    }
+</script>
+
+<script>
+
+    let prazo = "<?=$prazoExcedido?>";
+
+    if (prazo == 1){
+        $('#etapa10').hide();
     }
 </script>
