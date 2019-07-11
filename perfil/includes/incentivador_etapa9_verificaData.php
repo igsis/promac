@@ -201,15 +201,15 @@ $etapa = $etapaArray['etapa'];
 
                                 while ($parcela = mysqli_fetch_array($queryParcelas)) {
                                     ?>
-                                    <tr>
-                                        <td class="list_description"><?= $parcela['numero_parcela'] ?></td>
-                                        <td class="list_description"><?= exibirDataBr($parcela['data_pagamento']) ?></td>
-                                        <td class="list_description"><?= dinheiroParaBr($parcela['valor']) ?></td>
+                                    <tr style="height: 45px;">
+                                        <td style="vertical-align: middle;" class="list_description" ><?= $parcela['numero_parcela'] ?></td>
+                                        <td style="vertical-align: middle;" class="list_description"><?= exibirDataBr($parcela['data_pagamento']) ?></td>
+                                        <td style="vertical-align: middle;" class="list_description"><?= dinheiroParaBr($parcela['valor']) ?></td>
                                         <?php
                                         if ($parcela['comprovante_deposito'] == '' && $parcela['extrato_conta_projeto'] == '' && $i == 0):
 
                                         ?>
-                                            <td style="border: none;">
+                                            <td style="border: none; vertical-align: middle;">
                                                 <button class='btn' style='background-color: white; color: green;'
                                                         onmouseover="$(this).css('background-color', '#f5f5f5'); $(this).css('font-style', 'italic')" onmouseout="$(this).css('background-color', 'white'); $(this).css('font-style', '')" onclick="mostrarDiv('etapa11')">
                                                     <span class='glyphicon glyphicon-arrow-left' style='font-size: 13px;'></span>
