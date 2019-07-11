@@ -28,10 +28,10 @@ $data_pagamento = new DateTime($parcelas['data_pagamento']);
 
 $intervalo = $data_pagamento->diff($data_recebimento);
 
-if ($intervalo->d < 15) {
-       /* $sqlEtapa = "UPDATE etapas_incentivo SET etapa = 6 WHERE idProjeto = '$idProjeto' AND idIncentivador = '$idIncentivador' AND tipoPessoa = '$tipoPessoa'";
-        $sqlCarta = "UPDATE upload_arquivo SET idStatusDocumento = NULL WHERE idListaDocumento = 18 and idTipo = '$tipoPessoa' AND idPessoa = '$idIncentivador'";*/
-        $mensagem = "<div style='color: red'>
+if ($intervalo->days < 15) {
+    /* $sqlEtapa = "UPDATE etapas_incentivo SET etapa = 6 WHERE idProjeto = '$idProjeto' AND idIncentivador = '$idIncentivador' AND tipoPessoa = '$tipoPessoa'";
+     $sqlCarta = "UPDATE upload_arquivo SET idStatusDocumento = NULL WHERE idListaDocumento = 18 and idTipo = '$tipoPessoa' AND idPessoa = '$idIncentivador'";*/
+    $mensagem = "<div style='color: red'>
                         <strong>PRAZO EXCEDIDO!</strong><br>
                         O recebimento da Carta de Incentivo original na SMC deve ocorrer antes de 15 dias do vencimento do tributo a ser utilizado para incentivo do projeto cultural. 
                         <br>Exigimos esse prazo para que a Secretaria possa executar o procedimento necessário para o abatimento do tributo. <hr width='30%'>
@@ -39,7 +39,7 @@ if ($intervalo->d < 15) {
                         <button class='btn btn-danger'>Por favor, retorne ao item 6 e preencha novamente a Carta de Incentivo com a data atualizada e repita os passos seguintes.</button></a>
                     </div>";
 
-        $prazoExcedido = 1;
+    $prazoExcedido = 1;
 
 } else {
 
@@ -54,10 +54,10 @@ if ($intervalo->d < 15) {
 
 if (isset($_POST["enviar"])) {
 
-        $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '3' AND idListaDocumento IN (55,56)";
-        $query_arquivos = mysqli_query($con, $sql_arquivos);
-        while ($arq = mysqli_fetch_array($query_arquivos)) {
-            if (!verificaArquivosExistentesIncentivador($idIncentivador, $arq['idListaDocumento'])) {
+    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '3' AND idListaDocumento IN (55,56)";
+    $query_arquivos = mysqli_query($con, $sql_arquivos);
+    while ($arq = mysqli_fetch_array($query_arquivos)) {
+        if (!verificaArquivosExistentesIncentivador($idIncentivador, $arq['idListaDocumento'])) {
             $y = $arq['idListaDocumento'];
             $x = $arq['sigla'];
             $nome_arquivo = isset($_FILES['arquivo']['name'][$x]) ? $_FILES['arquivo']['name'][$x] : null;
@@ -99,8 +99,8 @@ if (isset($_POST["enviar"])) {
                 }
             }
         } else {
-                echo "<script> swal('Você já anexou o ". $arq['documento']. "', '', 'warning') </script>";
-            }
+            echo "<script> swal('Você já anexou o " . $arq['documento'] . "', '', 'warning') </script>";
+        }
     }
 }
 
@@ -134,7 +134,7 @@ if (verificaArquivosExistentesIncentivador($idIncentivador, 55) && verificaArqui
                                   style='margin-left: -20px;'></span>
                                   <b class='text-success'>Autorização de depósito da parcela solicitada. Acompanhe a análise da SMC pelo sistema. </b>";
     $offSetTabela = 'col-md-offset-4';
-                                
+
 } elseif (verificaArquivosExistentesIncentivador($idIncentivador, 55) || verificaArquivosExistentesIncentivador($idIncentivador, 56)) {
     $uploadArq = 'block';
     $arqAnexado = 'block';
@@ -181,13 +181,14 @@ $etapa = $etapaArray['etapa'];
                 <div id="etapa10">
                     <div class="col-md-12">
                         <h6><b>10 - Solicite a autorização de depósito</b></h6>
-                        <div class="<?=$offSetTabela?> col-md-6 form-group">
+                        <div class="col-md-offset-1 col-md-10 form-group">
                             <table class="table bg-white text-center table-hover table-responsive table-condensed table-bordered">
                                 <thead class="bg-success">
                                 <tr class="list_menu" style="font-weight: bold;">
                                     <td>Parcela</td>
                                     <td>Data</td>
                                     <td>Valor</td>
+                                    <td>Ação</td>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -196,6 +197,7 @@ $etapa = $etapaArray['etapa'];
                                 $sqlParcelas = "SELECT * FROM parcelas_incentivo WHERE idProjeto = '$idProjeto' AND tipoPessoa = '$tipoPessoa' AND idIncentivador = '$idIncentivador'";
                                 $queryParcelas = mysqli_query($con, $sqlParcelas);
                                 $numRows = mysqli_num_rows($queryParcelas);
+                                $i = 0;
 
                                 while ($parcela = mysqli_fetch_array($queryParcelas)) {
                                     ?>
@@ -203,22 +205,38 @@ $etapa = $etapaArray['etapa'];
                                         <td class="list_description"><?= $parcela['numero_parcela'] ?></td>
                                         <td class="list_description"><?= exibirDataBr($parcela['data_pagamento']) ?></td>
                                         <td class="list_description"><?= dinheiroParaBr($parcela['valor']) ?></td>
+                                        <?php
+                                        if ($parcela['comprovante_deposito'] == '' && $parcela['extrato_conta_projeto'] == '' && $i == 0):
+
+                                        ?>
+                                            <td style="border: none;">
+                                                <button class='btn' style='background-color: white; color: green;'
+                                                        onmouseover="$(this).css('background-color', '#f5f5f5'); $(this).css('font-style', 'italic')" onmouseout="$(this).css('background-color', 'white'); $(this).css('font-style', '')" onclick="mostrarDiv('etapa11')">
+                                                    <span class='glyphicon glyphicon-arrow-left' style='font-size: 13px;'></span>
+                                                    &nbsp;Solicitar autorização de depósito desta parcela
+                                                </button>
+                                            </td>
                                     </tr>
                                     <?php
+                                        else:
+                                            echo "<td style='border: none;'></td>";
+                                        endif;
+                                    $i++;
                                 }
                                 ?>
+
                                 </tbody>
                             </table>
                         </div>
                         <br>
-                        <div class="col-md-2 pull-left">
-                            <?=$botaoSolicitar?>
-                        </div>
+                        <!--<div class="col-md-2 pull-left">
+                            < ?/*= $botaoSolicitar */?>
+                        </div>-->
                     </div>
                 </div>
                 <hr width="50%">
                 <div class="row">
-                    <div id="etapa11" style="display: <?=$etapa11?>">
+                    <div id="etapa11" style="display: <?= $etapa11 ?>">
                         <h6><b>11- Faça o upload dos documentos que comprovam que o aporte foi realizado na conta do
                                 projeto: </b></h6><br>
                         <div class="form-group" id="uploadDocs" style="display: <?= $uploadArq ?>">
@@ -328,7 +346,7 @@ $etapa = $etapaArray['etapa'];
                                         }
 
                                         echo "<tr>
-                                                <td class='list_description'>(".$arquivo['documento'].")</td>
+                                                <td class='list_description'>(" . $arquivo['documento'] . ")</td>
                                                 <td class='list_description'><a href='../uploadsdocs/" . $arquivo['arquivo'] . "' target='_blank'>" . mb_strimwidth($arquivo['arquivo'], 15, 25, "...") . "</a></td>
                                                 <td class='list_description'>" . exibirDataBr($arquivo['dataEnvio']) . "</td>";
 
@@ -348,7 +366,7 @@ $etapa = $etapaArray['etapa'];
                                                         <input type='hidden' name='tipoPessoa' value='" . $tipoPessoa . "' />
                                                         <input type='hidden' name='apagar' value='" . $arquivo['idUploadArquivo'] . "' />
                                                         <input type='hidden' name='idListaDocumento' value='" . $arquivo['idListaDocumento'] . "' />
-                                                        <button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Remover Arquivo?' data-message='Deseja realmente excluir o arquivo ".$arquivo['documento']."?'>Remover
+                                                        <button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Remover Arquivo?' data-message='Deseja realmente excluir o arquivo " . $arquivo['documento'] . "?'>Remover
                                                         </button>
                                                     </form></td>";
                                     }
@@ -404,7 +422,7 @@ $etapa = $etapaArray['etapa'];
 
     let prazo = "<?=$prazoExcedido?>";
 
-    if (prazo == 1){
+    if (prazo == 1) {
         $('#etapa10').hide();
     }
 </script>

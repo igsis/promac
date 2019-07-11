@@ -251,4 +251,19 @@ VALUES
 * 02/07/2019 
 */
 
+/* 
+* Início -> Tanair 
+* 11/07/2019
+*/ 
+
+ALTER TABLE parcelas_incentivo 
+ADD comprovante_deposito TINYINT(1) NULL AFTER data_pagamento, 
+ADD extrato_conta_projeto TINYINT(1) NULL AFTER comprovante_deposito;
+
+/*
+* FIM -> Tanair 
+* 11/07/2019
+*/
+
+
 

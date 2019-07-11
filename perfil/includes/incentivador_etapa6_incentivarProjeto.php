@@ -138,9 +138,9 @@ if ($intervalo->d < 15) {
 
 $today = new DateTime();
 
-if ($data_recebimento->diff($data_pagamento)->d < 15) {
+if ($data_recebimento->diff($data_pagamento)->days < 15) {
     $gerarContrato = 0;
-    $mensagem = "<p class='text-warning'>O intervalo entre a data de pagamento da primeira parcela e da data de recebimento pela SMC (".exibirDataBr($infos['data_recebimento_carta']) .") é menor que 15 dias.</p><p class='text-danger'>LEMBRE-SE O recebimento da Carta de Incentivo original na SMC deve ocorrer antes de 15 dias do vencimento do tributo a ser utilizado para incentivo do projeto cultural. ";
+    $mensagem = "<p class='text-warning'>O intervalo entre a data de pagamento da primeira parcela (".exibirDataBr($parcelas['data_pagamento']).") e da data de recebimento pela SMC (".exibirDataBr($infos['data_recebimento_carta']) .") é menor que 15 dias.</p><p class='text-danger'>LEMBRE-SE O recebimento da Carta de Incentivo original na SMC deve ocorrer antes de 15 dias do vencimento do tributo a ser utilizado para incentivo do projeto cultural. ";
 } elseif ($today > $data_pagamento) {
     $gerarContrato = 0;
     $mensagem = "<p class='text-warning'>A data de pagamento da primeira parcela é anterior ao dia de hoje.</p><p class='text-danger'>LEMBRE-SE O recebimento da Carta de Incentivo original na SMC deve ocorrer antes de 15 dias do vencimento do tributo a ser utilizado para incentivo do projeto cultural. ";
