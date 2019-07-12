@@ -178,60 +178,68 @@ $etapa = $etapaArray['etapa'];
                     ?>
                 </div>
                 <hr width="50%">
-                <div id="etapa10">
-                    <div class="col-md-12">
-                        <h6><b>10 - Solicite a autorização de depósito</b></h6>
-                        <div class="col-md-offset-1 col-md-10 form-group">
-                            <table class="table bg-white text-center table-hover table-responsive table-condensed table-bordered">
-                                <thead class="bg-success">
-                                <tr class="list_menu" style="font-weight: bold;">
-                                    <td>Parcela</td>
-                                    <td>Data</td>
-                                    <td>Valor</td>
-                                    <td>Ação</td>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <?php
-                                //verificando parcelas
-                                $sqlParcelas = "SELECT * FROM parcelas_incentivo WHERE idProjeto = '$idProjeto' AND tipoPessoa = '$tipoPessoa' AND idIncentivador = '$idIncentivador'";
-                                $queryParcelas = mysqli_query($con, $sqlParcelas);
-                                $numRows = mysqli_num_rows($queryParcelas);
-                                $i = 0;
+                <div class="row">
+                    <div id="etapa10">
+                        <div class="col-md-12">
+                            <h6><b>10 - Solicite a autorização de depósito</b></h6>
+                            <div class="col-md-offset-1 col-md-10 form-group">
+                                <table class="table bg-white text-center table-hover table-responsive table-condensed table-bordered">
+                                    <thead class="bg-success">
+                                    <tr class="list_menu" style="font-weight: bold;">
+                                        <td>Parcela</td>
+                                        <td>Data</td>
+                                        <td>Valor</td>
+                                        <td width="50%">Ação</td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php
+                                    //verificando parcelas
+                                    $sqlParcelas = "SELECT * FROM parcelas_incentivo WHERE idProjeto = '$idProjeto' AND tipoPessoa = '$tipoPessoa' AND idIncentivador = '$idIncentivador'";
+                                    $queryParcelas = mysqli_query($con, $sqlParcelas);
+                                    $numRows = mysqli_num_rows($queryParcelas);
+                                    $i = 0;
 
-                                while ($parcela = mysqli_fetch_array($queryParcelas)) {
-                                    ?>
-                                    <tr style="height: 45px;">
-                                        <td style="vertical-align: middle;" class="list_description" ><?= $parcela['numero_parcela'] ?></td>
-                                        <td style="vertical-align: middle;" class="list_description"><?= exibirDataBr($parcela['data_pagamento']) ?></td>
-                                        <td style="vertical-align: middle;" class="list_description"><?= dinheiroParaBr($parcela['valor']) ?></td>
+                                    while ($parcela = mysqli_fetch_array($queryParcelas)) {
+                                        ?>
+                                        <tr style="height: 45px;" id="linhasTabela">
+                                        <td style="vertical-align: middle;"
+                                            class="list_description"><?= $parcela['numero_parcela'] ?></td>
+                                        <td style="vertical-align: middle;"
+                                            class="list_description"><?= exibirDataBr($parcela['data_pagamento']) ?></td>
+                                        <td style="vertical-align: middle;"
+                                            class="list_description"><?= dinheiroParaBr($parcela['valor']) ?></td>
                                         <?php
                                         if ($parcela['comprovante_deposito'] == '' && $parcela['extrato_conta_projeto'] == '' && $i == 0):
 
-                                        ?>
-                                            <td style="border: none; vertical-align: middle;">
+                                            ?>
+                                            <td style="border: none; vertical-align: middle;" class="list_description">
                                                 <button class='btn' style='background-color: white; color: green;'
-                                                        onmouseover="$(this).css('background-color', '#f5f5f5'); $(this).css('font-style', 'italic')" onmouseout="$(this).css('background-color', 'white'); $(this).css('font-style', '')" onclick="mostrarDiv('etapa11')">
-                                                    <span class='glyphicon glyphicon-arrow-left' style='font-size: 13px;'></span>
+                                                        onmouseover="$(this).css('background-color', '#f5f5f5'); $(this).css('font-style', 'italic')"
+                                                        onmouseout="$(this).css('background-color', 'white'); $(this).css('font-style', '')"
+                                                        onclick="mostrarDiv('etapa11')">
+                                                    <span class='glyphicon glyphicon-arrow-left'
+                                                          style='font-size: 13px;'></span>
                                                     &nbsp;Solicitar autorização de depósito desta parcela
                                                 </button>
                                             </td>
-                                    </tr>
-                                    <?php
+                                            </tr>
+                                        <?php
                                         else:
                                             echo "<td style='border: none;'></td>";
                                         endif;
-                                    $i++;
-                                }
-                                ?>
+                                        $i++;
+                                    }
+                                    ?>
 
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <br>
+                            <!--<div class="col-md-2 pull-left">
+                                < ?/*= $botaoSolicitar */?>
+                            </div>-->
                         </div>
-                        <br>
-                        <!--<div class="col-md-2 pull-left">
-                            < ?/*= $botaoSolicitar */?>
-                        </div>-->
                     </div>
                 </div>
                 <hr width="50%">
@@ -410,9 +418,15 @@ $etapa = $etapaArray['etapa'];
     function mostrarDiv(divId) {
         if ($('#' + divId).is(':visible')) {
             $('#' + divId).slideUp();
+            $('#etapa10').animate({"height": 200}, "slow");
             // $('#icon_' + divId).html("<span class='glyphicon glyphicon-chevron-right'></span>");
         } else {
             $('#' + divId).slideDown('slow');
+            $('#etapa10').animate({
+                opacity: '0.5',
+                height: '50px',
+                fontSize: '3em'
+            }, "slow");
             // $('#icon_' + divId).html("<span class='glyphicon glyphicon-chevron-down'></span>");
         }
     }
