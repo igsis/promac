@@ -1,4 +1,4 @@
-
+﻿
 INSERT INTO promac.lista_documento (idListaDocumento, idTipoUpload, documento, sigla, publicado) 
 VALUES ('54', '3', 'Comprovante de que o incentivador n�o pertence �s listas de Empresas Apenadas', 'apenadas', 1);
 
@@ -263,6 +263,18 @@ ADD extrato_conta_projeto TINYINT(1) NULL AFTER comprovante_deposito;
 /*
 * FIM -> Tanair 
 * 11/07/2019
+*/
+
+/* 
+* Início -> Tanair 
+* 12/07/2019
+*/ 
+
+INSERT INTO etapa_projeto (idEtapaProjeto, etapaProjeto, ordem, idStatus) VALUES (35, 'Projetos que solicitaram autorização de depósito', 32, 0);
+
+/*
+* FIM -> Tanair 
+* 12/07/2019
 */
 
 

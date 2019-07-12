@@ -132,12 +132,8 @@ if (verificaArquivosExistentesIncentivador($idIncentivador, 55) && verificaArqui
     $uploadArq = 'none';
     $arqAnexado = 'block';
     $etapa11 = 'block';
-    $spanAviso = "<!--
-<span class='glyphicon glyphicon-info-sign text-success'
-                                  style='margin-left: -15px; font-size: 17px;'></span>-->
-";
-    $botaoSolicitar = "<b class='text-success'><i>Autorização de depósito da parcela solicitada. <br><span class='glyphicon glyphicon-info-sign text-success'
-                                  style='margin-left: 30px;font-size: 15px; float: left;  margin-top: -8px;'></span> </i><i style='margin-left: -50px;'> Acompanhe a análise da SMC pelo sistema. </i></b>";
+    $botaoSolicitar = "<b class='text-warning'><i>Autorização de depósito da parcela solicitada. <br><span class='glyphicon glyphicon-info-sign text-warning'
+                                  style='margin-left: 30px;font-size: 17px; float: left;  margin-top: -8px;'></span> </i><i style='margin-left: -50px;'> Acompanhe a análise da SMC pelo sistema. </i></b>";
     $offSetTabela = 'col-md-offset-4';
 
 } elseif (verificaArquivosExistentesIncentivador($idIncentivador, 55) || verificaArquivosExistentesIncentivador($idIncentivador, 56)) {
