@@ -117,12 +117,14 @@ if (isset($_POST['apagar'])) {
 
 $etapa11 = "none";
 
-$botaoSolicitar = "<button class='btn' style='background-color: white; margin-top: 10px; color: green;'
-                                    onclick=\"mostrarDiv('etapa11')\">
-                            <span class='glyphicon glyphicon-arrow-left'
-                                  style='margin-left: -20px; font-size: 13px;'></span>
-                                &nbsp;Solicitar autorização de depósito desta parcela                              
-                            </button>";
+$botaoSolicitar = "<button class='btn' style='background-color: white; color: green;'
+                        onmouseover=\"$(this).css('background-color', '#f5f5f5'); $(this).css('font-style', 'italic')\"
+                        onmouseout=\"$(this).css('background-color', 'white'); $(this).css('font-style', '')\"
+                        onclick=\"mostrarDiv('etapa11')\">
+                        <span class='glyphicon glyphicon-arrow-left'
+                              style='font-size: 13px;'></span>
+                    &nbsp;Solicitar autorização de depósito desta parcela
+                </button>";
 
 $offSetTabela = "col-md-offset-2";
 
@@ -130,9 +132,12 @@ if (verificaArquivosExistentesIncentivador($idIncentivador, 55) && verificaArqui
     $uploadArq = 'none';
     $arqAnexado = 'block';
     $etapa11 = 'block';
-    $botaoSolicitar = "<span class='glyphicon glyphicon-info-sign text-success'
-                                  style='margin-left: -20px;'></span>
-                                  <b class='text-success'>Autorização de depósito da parcela solicitada. Acompanhe a análise da SMC pelo sistema. </b>";
+    $spanAviso = "<!--
+<span class='glyphicon glyphicon-info-sign text-success'
+                                  style='margin-left: -15px; font-size: 17px;'></span>-->
+";
+    $botaoSolicitar = "<b class='text-success'><i>Autorização de depósito da parcela solicitada. <br><span class='glyphicon glyphicon-info-sign text-success'
+                                  style='margin-left: 30px;font-size: 15px; float: left;  margin-top: -8px;'></span> </i><i style='margin-left: -50px;'> Acompanhe a análise da SMC pelo sistema. </i></b>";
     $offSetTabela = 'col-md-offset-4';
 
 } elseif (verificaArquivosExistentesIncentivador($idIncentivador, 55) || verificaArquivosExistentesIncentivador($idIncentivador, 56)) {
@@ -178,196 +183,184 @@ $etapa = $etapaArray['etapa'];
                     ?>
                 </div>
                 <hr width="50%">
-                <div class="row">
-                    <div id="etapa10">
-                        <div class="col-md-12">
-                            <h6><b>10 - Solicite a autorização de depósito</b></h6>
-                            <div class="col-md-offset-1 col-md-10 form-group">
-                                <table class="table bg-white text-center table-hover table-responsive table-condensed table-bordered">
-                                    <thead class="bg-success">
-                                    <tr class="list_menu" style="font-weight: bold;">
-                                        <td>Parcela</td>
-                                        <td>Data</td>
-                                        <td>Valor</td>
-                                        <td width="50%">Ação</td>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php
-                                    //verificando parcelas
-                                    $sqlParcelas = "SELECT * FROM parcelas_incentivo WHERE idProjeto = '$idProjeto' AND tipoPessoa = '$tipoPessoa' AND idIncentivador = '$idIncentivador'";
-                                    $queryParcelas = mysqli_query($con, $sqlParcelas);
-                                    $numRows = mysqli_num_rows($queryParcelas);
-                                    $i = 0;
+                <div class="row" id="etapa10">
+                    <div class="col-md-12">
+                        <h6><b>10 - Solicite a autorização de depósito</b></h6>
+                        <div class="col-md-offset-1 col-md-10 form-group">
+                            <table class="table bg-white text-center table-hover table-responsive table-condensed table-bordered table-parcelas">
+                                <thead class="bg-success">
+                                <tr class="list_menu" style="font-weight: bold;">
+                                    <td>Parcela</td>
+                                    <td>Data</td>
+                                    <td>Valor</td>
+                                    <td width="50%">Ação</td>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <?php
+                                //verificando parcelas
+                                $sqlParcelas = "SELECT * FROM parcelas_incentivo WHERE idProjeto = '$idProjeto' AND tipoPessoa = '$tipoPessoa' AND idIncentivador = '$idIncentivador'";
+                                $queryParcelas = mysqli_query($con, $sqlParcelas);
+                                $numRows = mysqli_num_rows($queryParcelas);
+                                $i = 0;
 
-                                    while ($parcela = mysqli_fetch_array($queryParcelas)) {
-                                        ?>
-                                        <tr style="height: 45px;" id="linhasTabela">
-                                        <td style="vertical-align: middle;"
-                                            class="list_description"><?= $parcela['numero_parcela'] ?></td>
-                                        <td style="vertical-align: middle;"
-                                            class="list_description"><?= exibirDataBr($parcela['data_pagamento']) ?></td>
-                                        <td style="vertical-align: middle;"
-                                            class="list_description"><?= dinheiroParaBr($parcela['valor']) ?></td>
-                                        <?php
-                                        if ($parcela['comprovante_deposito'] == '' && $parcela['extrato_conta_projeto'] == '' && $i == 0):
-
-                                            ?>
-                                            <td style="border: none; vertical-align: middle;" class="list_description">
-                                                <button class='btn' style='background-color: white; color: green;'
-                                                        onmouseover="$(this).css('background-color', '#f5f5f5'); $(this).css('font-style', 'italic')"
-                                                        onmouseout="$(this).css('background-color', 'white'); $(this).css('font-style', '')"
-                                                        onclick="mostrarDiv('etapa11')">
-                                                    <span class='glyphicon glyphicon-arrow-left'
-                                                          style='font-size: 13px;'></span>
-                                                    &nbsp;Solicitar autorização de depósito desta parcela
-                                                </button>
-                                            </td>
-                                            </tr>
-                                        <?php
-                                        else:
-                                            echo "<td style='border: none;'></td>";
-                                        endif;
-                                        $i++;
-                                    }
+                                while ($parcela = mysqli_fetch_array($queryParcelas)) {
                                     ?>
+                                    <tr style="height: 45px;" id="linhasTabela">
+                                    <td style="vertical-align: middle;"
+                                        class="list_description"><?= $parcela['numero_parcela'] ?></td>
+                                    <td style="vertical-align: middle;"
+                                        class="list_description"><?= exibirDataBr($parcela['data_pagamento']) ?></td>
+                                    <td style="vertical-align: middle;"
+                                        class="list_description"><?= dinheiroParaBr($parcela['valor']) ?></td>
+                                    <?php
+                                    if ($parcela['comprovante_deposito'] == '' && $parcela['extrato_conta_projeto'] == '' && $i == 0):
+                                        ?>
+                                        <td style="border: none; vertical-align: middle;" class="list_description">
+                                            <?= $spanAviso . $botaoSolicitar ?>
+                                        </td>
+                                        </tr>
+                                    <?php
+                                    else:
+                                        echo "<td style='border: none;'></td>";
+                                    endif;
+                                    $i++;
+                                }
+                                ?>
 
-                                    </tbody>
-                                </table>
-                            </div>
-                            <br>
-                            <!--<div class="col-md-2 pull-left">
-                                < ?/*= $botaoSolicitar */?>
-                            </div>-->
+                                </tbody>
+                            </table>
                         </div>
+                        <br>
+                        <!--<div class="col-md-2 pull-left">
+                            < ?/*= $botaoSolicitar */?>
+                        </div>-->
                     </div>
                 </div>
-                <hr width="50%">
-                <div class="row">
-                    <div id="etapa11" style="display: <?= $etapa11 ?>">
-                        <h6><b>11- Faça o upload dos documentos que comprovam que o aporte foi realizado na conta do
-                                projeto: </b></h6><br>
-                        <div class="form-group" id="uploadDocs" style="display: <?= $uploadArq ?>">
-                            <div class="col-md-offset-1 col-md-10">
-                                <div class="table-responsive list_info">
-                                    <h6>Upload do comprovante de depósito e extrato da conta</h6>
-                                    <form method="POST" action="?perfil=includes/incentivador_etapa9_verificaData"
-                                          enctype="multipart/form-data">
-                                        <?php
-                                        $documentos = [];
-                                        $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '3' AND idListaDocumento IN (55, 56)";
-                                        $query_arquivos = mysqli_query($con, $sql_arquivos);
-                                        while ($arq = mysqli_fetch_array($query_arquivos)) {
-                                            $doc = $arq['documento'];
-                                            $query = "SELECT idListaDocumento FROM lista_documento WHERE documento='$doc' AND publicado='1' AND idTipoUpload='3'";
-                                            $envio = $con->query($query);
-                                            $row = $envio->fetch_array(MYSQLI_ASSOC);
+                <div class="row" id="etapa11" style="display: <?= $etapa11 ?>">
+                    <h6><b>11- Faça o upload dos documentos que comprovam que o aporte foi realizado na conta do
+                            projeto: </b></h6><br>
+                    <div class="form-group" id="uploadDocs" style="display: <?= $uploadArq ?>">
+                        <div class="col-md-offset-1 col-md-10">
+                            <div class="table-responsive list_info">
+                                <h6>Upload do comprovante de depósito e extrato da conta</h6>
+                                <form method="POST" action="?perfil=includes/incentivador_etapa9_verificaData"
+                                      enctype="multipart/form-data">
+                                    <?php
+                                    $documentos = [];
+                                    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '3' AND idListaDocumento IN (55, 56)";
+                                    $query_arquivos = mysqli_query($con, $sql_arquivos);
+                                    while ($arq = mysqli_fetch_array($query_arquivos)) {
+                                        $doc = $arq['documento'];
+                                        $query = "SELECT idListaDocumento FROM lista_documento WHERE documento='$doc' AND publicado='1' AND idTipoUpload='3'";
+                                        $envio = $con->query($query);
+                                        $row = $envio->fetch_array(MYSQLI_ASSOC);
 
-                                            if (!verificaArquivosExistentesIncentivador($idPf, $row['idListaDocumento'])) {
-                                                $documento = (object)
-                                                [
-                                                    'nomeDocumento' => $arq['documento'],
-                                                    'sigla' => $arq['sigla']
-                                                ];
-                                                array_push($documentos, $documento);
-                                            }
+                                        if (!verificaArquivosExistentesIncentivador($idPf, $row['idListaDocumento'])) {
+                                            $documento = (object)
+                                            [
+                                                'nomeDocumento' => $arq['documento'],
+                                                'sigla' => $arq['sigla']
+                                            ];
+                                            array_push($documentos, $documento);
                                         }
+                                    }
 
-                                        if ($documentos) {
-                                            ?>
-                                            <table class='table table-condensed table-striped'>
-                                                <thead class="bg-success">
-                                                <tr class='list_menu'>
-                                                    <td>Tipo de Arquivo</td>
-                                                    <td></td>
-                                                </tr>
-                                                </thead>
-
-                                                <?php
-                                                foreach ($documentos as $documento) {
-                                                    echo "<tr>";
-                                                    echo "<td class='list_description'><label>" . $documento->nomeDocumento . "</label></td>";
-                                                    echo "<td class='list_description'><input type='file' name='arquivo[$documento->sigla]'></td>";
-                                                    echo "<tr>";
-                                                }
-                                                ?>
-                                            </table>
-                                            <input type="hidden" name="idPessoa" value="<?php echo $idPf; ?>"/>
-                                            <input type="hidden" name="tipoPessoa" value="<?php echo $tipoPessoa; ?>"/>
-                                            <input type="submit" name="enviar" class="btn btn-theme"
-                                                   value='upload'>
-                                            <?php
-                                        } else {
-                                            $arqAnexado = 'block';
-                                        }
+                                    if ($documentos) {
                                         ?>
-                                    </form>
-                                </div>
+                                        <table class='table table-condensed table-striped'>
+                                            <thead class="bg-success">
+                                            <tr class='list_menu'>
+                                                <td>Tipo de Arquivo</td>
+                                                <td></td>
+                                            </tr>
+                                            </thead>
+
+                                            <?php
+                                            foreach ($documentos as $documento) {
+                                                echo "<tr>";
+                                                echo "<td class='list_description'><label>" . $documento->nomeDocumento . "</label></td>";
+                                                echo "<td class='list_description'><input type='file' name='arquivo[$documento->sigla]'></td>";
+                                                echo "<tr>";
+                                            }
+                                            ?>
+                                        </table>
+                                        <input type="hidden" name="idPessoa" value="<?php echo $idPf; ?>"/>
+                                        <input type="hidden" name="tipoPessoa" value="<?php echo $tipoPessoa; ?>"/>
+                                        <input type="submit" name="enviar" class="btn btn-theme"
+                                               value='upload'>
+                                        <?php
+                                    } else {
+                                        $arqAnexado = 'block';
+                                    }
+                                    ?>
+                                </form>
                             </div>
                         </div>
-                        <!-- Exibir arquivos -->
-                        <div class="form-group" style="display: <?= $arqAnexado ?>">
-                            <div class="col-md-12">
-                                <table class='table table-responsive table-condensed table-striped text-center table-bordered'>
-                                    <thead class="bg-success">
-                                    <tr class='list_menu' style="font-weight: bold; height: 50px;">
-                                        <td>Tipo de arquivo</td>
-                                        <td>Nome do arquivo</td>
-                                        <td width="15%">Data do envio</td>
-                                        <td width='13%'>Status</td>
-                                        <td width='20%'>Observação</td>
-                                        <td></td>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php
-                                    $sql = "SELECT *
+                    </div>
+                    <!-- Exibir arquivos -->
+                    <div class="form-group" style="display: <?= $arqAnexado ?>">
+                        <div class="col-md-12">
+                            <table class='table table-responsive table-condensed table-striped text-center table-bordered'>
+                                <thead class="bg-success">
+                                <tr class='list_menu' style="font-weight: bold; height: 50px;">
+                                    <td>Tipo de arquivo</td>
+                                    <td>Nome do arquivo</td>
+                                    <td width="15%">Data do envio</td>
+                                    <td width='13%'>Status</td>
+                                    <td width='20%'>Observação</td>
+                                    <td></td>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <?php
+                                $sql = "SELECT *
                                         FROM lista_documento as list
                                         INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
                                         WHERE arq.idPessoa = '$idIncentivador'
                                         AND list.idListaDocumento IN (55,56)
                                         AND arq.idTipo = '$tipoPessoa'
                                         AND arq.publicado = '1'";
-                                    $query = mysqli_query($con, $sql);
-                                    $linhas = mysqli_num_rows($query);
+                                $query = mysqli_query($con, $sql);
+                                $linhas = mysqli_num_rows($query);
 
-                                    while ($arquivo = mysqli_fetch_array($query)) {
-                                        $queryStatusDoc = "SELECT idStatusDocumento FROM upload_arquivo WHERE idUploadArquivo = '" . $arquivo['idUploadArquivo'] . "'";
-                                        $send = mysqli_query($con, $queryStatusDoc);
-                                        $row = mysqli_fetch_array($send);
+                                while ($arquivo = mysqli_fetch_array($query)) {
+                                    $queryStatusDoc = "SELECT idStatusDocumento FROM upload_arquivo WHERE idUploadArquivo = '" . $arquivo['idUploadArquivo'] . "'";
+                                    $send = mysqli_query($con, $queryStatusDoc);
+                                    $row = mysqli_fetch_array($send);
 
-                                        $idStatus = $row['idStatusDocumento']; // == '' ? 'Em análise' : $row['idStatusDocumento'];
+                                    $idStatus = $row['idStatusDocumento']; // == '' ? 'Em análise' : $row['idStatusDocumento'];
 
-                                        switch ($idStatus) {
-                                            case '':
-                                                $status = "Em análise";
-                                                $cor = "orange";
-                                                break;
-                                            case 1:
-                                                $status = "Aceito";
-                                                $cor = "green";
-                                                break;
-                                            case 3:
-                                                $status = "Negado";
-                                                $cor = "red";
-                                                break;
-                                        }
+                                    switch ($idStatus) {
+                                        case '':
+                                            $status = "Em análise";
+                                            $cor = "orange";
+                                            break;
+                                        case 1:
+                                            $status = "Aceito";
+                                            $cor = "green";
+                                            break;
+                                        case 3:
+                                            $status = "Negado";
+                                            $cor = "red";
+                                            break;
+                                    }
 
-                                        echo "<tr>
+                                    echo "<tr>
                                                 <td class='list_description'>(" . $arquivo['documento'] . ")</td>
                                                 <td class='list_description'><a href='../uploadsdocs/" . $arquivo['arquivo'] . "' target='_blank'>" . mb_strimwidth($arquivo['arquivo'], 15, 25, "...") . "</a></td>
                                                 <td class='list_description'>" . exibirDataBr($arquivo['dataEnvio']) . "</td>";
 
-                                        echo "<td class='list_description text-center'>                                   
+                                    echo "<td class='list_description text-center'>                                   
                                                     <input class='form-control text-center' style='color: $cor; width: 100px; margin-left: 18px;' type='text' value='$status' disabled>
                                                 </td>";
-                                        echo "<td class='list_description text-center'>                                   
+                                    echo "<td class='list_description text-center'>                                   
                                                     <input class='form-control text-center' type='text' value='" . $arquivo['observacoes'] . "' disabled>
                                                 </td>";
-                                        $queryOBS = "SELECT observacoes FROM upload_arquivo WHERE idUploadArquivo = '" . $arquivo['idUploadArquivo'] . "'";
-                                        $send = mysqli_query($con, $queryOBS);
-                                        $row = mysqli_fetch_array($send);
-                                        echo "
+                                    $queryOBS = "SELECT observacoes FROM upload_arquivo WHERE idUploadArquivo = '" . $arquivo['idUploadArquivo'] . "'";
+                                    $send = mysqli_query($con, $queryOBS);
+                                    $row = mysqli_fetch_array($send);
+                                    echo "
                                                 <td class='list_description'>
                                                     <form id='apagarArq' method='POST' action='?perfil=includes/incentivador_etapa9_verificaData'>
                                                         <input type='hidden' name='idPessoa' value='$idIncentivador' />
@@ -377,15 +370,14 @@ $etapa = $etapaArray['etapa'];
                                                         <button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Remover Arquivo?' data-message='Deseja realmente excluir o arquivo " . $arquivo['documento'] . "?'>Remover
                                                         </button>
                                                     </form></td>";
-                                    }
+                                }
 
-                                    ?>
-                                    </tbody>
-                                </table>
-                            </div>
+                                ?>
+                                </tbody>
+                            </table>
                         </div>
-                        <!-- Fim do exibir arquivo -->
                     </div>
+                    <!-- Fim do exibir arquivo -->
                 </div>
                 <!-- Confirmação de Exclusão -->
                 <div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel"
@@ -417,16 +409,20 @@ $etapa = $etapaArray['etapa'];
 <script>
     function mostrarDiv(divId) {
         if ($('#' + divId).is(':visible')) {
-            $('#' + divId).slideUp();
-            $('#etapa10').animate({"height": 200}, "slow");
+            $('#' + divId).hide();
+            $('.table-parcelas').find('tr').each(function () {
+                $(this).show();
+            });
             // $('#icon_' + divId).html("<span class='glyphicon glyphicon-chevron-right'></span>");
         } else {
-            $('#' + divId).slideDown('slow');
-            $('#etapa10').animate({
-                opacity: '0.5',
-                height: '50px',
-                fontSize: '3em'
-            }, "slow");
+            $('#' + divId).show();
+            var count = 0;
+            $('.table-parcelas').find('tr').each(function () {
+                count++;
+                if (count > 2) {
+                    $(this).hide();
+                }
+            });
             // $('#icon_' + divId).html("<span class='glyphicon glyphicon-chevron-down'></span>");
         }
     }
