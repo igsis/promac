@@ -86,9 +86,10 @@ if (isset($_POST["enviar"])) {
                             if ($query) {
                                 if ($y == 55) {
                                     $sqlUpdateParcelas = "UPDATE parcelas_incentivo SET comprovante_deposito = 0 WHERE idProjeto = '$idProjeto' AND idIncentivador = '$idIncentivador' AND tipoPessoa = '$tipoPessoa' AND numero_parcela = $parcelaAtual";
-                                    mysqli_query($con, $sqlUpdateParcelasl);
+                                    mysqli_query($con, $sqlUpdateParcelas);
                                 } else {
                                     $sqlUpdateParcelas = "UPDATE parcelas_incentivo SET extrato_conta_projeto = 0 WHERE idProjeto = '$idProjeto' AND idIncentivador = '$idIncentivador' AND tipoPessoa = '$tipoPessoa' AND numero_parcela = $parcelaAtual";
+                                    mysqli_query($con, $sqlUpdateParcelas);
                                 }
                                 $mensagem = "<font color='#01DF3A'><strong>Arquivo(s) recebido(s) com sucesso!</strong></font>";
                                 gravarLog($sql_insere_arquivo);
@@ -123,29 +124,15 @@ if (isset($_POST['apagar'])) {
 
 $etapa11 = "none";
 
-$botaoSolicitar = "<button class='btn' style='background-color: white; color: green;'
-                        onmouseover=\"$(this).css('background-color', '#f5f5f5'); $(this).css('font-style', 'italic')\"
-                        onmouseout=\"$(this).css('background-color', 'white'); $(this).css('font-style', '')\"
-                        onclick=\"mostrarDiv('etapa11')\">
-                        <span class='glyphicon glyphicon-arrow-left'
-                              style='font-size: 13px;'></span>
-                    &nbsp;Solicitar autorização de depósito desta parcela
-                </button>";
-
-$offSetTabela = "col-md-offset-2";
 
 if (verificaArquivosExistentesIncentivador($idIncentivador, 55) && verificaArquivosExistentesIncentivador($idIncentivador, 56)) {
     $uploadArq = 'none';
     $arqAnexado = 'block';
     $etapa11 = 'block';
-
     $sqlEtapa = "UPDATE etapas_incentivo SET etapa = 11 WHERE idProjeto = '$idProjeto' AND idIncentivador = '$idIncentivador' AND tipoPessoa = '$tipoPessoa'";
     /*$sqlUpdateParcelas = "UPDATE parcelas_incentivo SET comprovante_deposito = 0, extrato_conta_projeto = 0 WHERE idProjeto = '$idProjeto' AND idIncentivador = '$idIncentivador' AND tipoPessoa = '$tipoPessoa' AND numero_parcela = $parcelaAtual";*/
 
     if (mysqli_query($con, $sqlEtapa)) {
-        $botaoSolicitar = "<b class='text-warning'><i>Autorização de depósito da parcela solicitada. <br>
-                            <span class='glyphicon glyphicon-info-sign text-warning' style='margin-left: 30px;font-size: 17px; float: left;  margin-top: -8px;'></span> </i><i style='margin-left: -50px;'> 
-                                  Acompanhe a análise da SMC pelo sistema. </i></b>";
         $mensagem = '';
 
     }
@@ -167,7 +154,6 @@ $etapa = $etapaArray['etapa'];
 
 
 ?>
-
 
 <section id="list_items" class="home-section bg-white">
     <div class="container"><?php include "menu_interno_pf.php"; ?>
@@ -229,12 +215,23 @@ $etapa = $etapaArray['etapa'];
                                         class="list_description"><?= dinheiroParaBr($parcela['valor']) ?></td>
                                     <?php
                                     if ($parcela['comprovante_deposito'] == '' && $parcela['extrato_conta_projeto'] == '' && $x == 1){
+                                        $botaoSolicitar = "<button class='btn' style='background-color: white; color: green;'
+                                                                onmouseover=\"$(this).css('background-color', '#f5f5f5'); $(this).css('font-style', 'italic')\"
+                                                                onmouseout=\"$(this).css('background-color', 'white'); $(this).css('font-style', '')\"
+                                                                onclick=\"mostrarDiv('etapa11')\">
+                                                                <span class='glyphicon glyphicon-arrow-left'
+                                                                      style='font-size: 13px;'></span>
+                                                            &nbsp;Solicitar autorização de depósito desta parcela
+                                                        </button>";
                                         $parcelaSolicitar = $i;
                                         $x = 0;
                                     } elseif ($parcela['comprovante_deposito'] == 0 && $parcela['extrato_conta_projeto'] == 0 && $x == 1) {
+                                        $botaoSolicitar = "<b class='text-warning'><i>Autorização de depósito da parcela solicitada. <br>
+                                                                <span class='glyphicon glyphicon-info-sign text-warning' style='margin-left: 30px;font-size: 17px; float: left;  margin-top: -8px;'></span> </i><i style='margin-left: -50px;'> 
+                                                              Acompanhe a análise da SMC pelo sistema. </i></b>";
                                         $parcelaSolicitar = $i;
                                         $x = 0;
-                                    } elseif ($parcela['comprovante_deposito'] == 0 && $parcela['extrato_conta_projeto'] == 0 && $x == 1)
+                                    }
                                     if ($parcelaSolicitar == $i):
                                         ?>
                                         <td style="border: none; vertical-align: middle;" class="list_description">
