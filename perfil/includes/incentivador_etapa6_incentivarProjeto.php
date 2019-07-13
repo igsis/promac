@@ -1,6 +1,7 @@
 <?php
 $con = bancoMysqli();
 $idIncentivador = $_SESSION['idUser'];
+$idIncentivadorProjeto = $_SESSION['idIncentivadorProjeto'];
 $tipoPessoa = $_POST['tipoPessoa'] ?? $_GET['tipoPessoa'];
 $gerarContrato = 0;
 $qtadeParcelas = 0;
@@ -12,32 +13,19 @@ if (isset($_POST['incentivar_projeto']) || isset($_POST['editar'])) {
 
     if (isset($_POST['incentivar_projeto'])) {
 
-        $sql_incentivar = "INSERT INTO incentivador_projeto (idIncentivador, 
-                                                              tipoPessoa, 
-                                                              idProjeto, 
-                                                              valor_aportado) 
-                                                        VALUES 
-                                                              ('$idIncentivador',
-                                                              '$tipoPessoa',
-                                                              '$idProjeto',
-                                                              '$valor')";
+        $sql_incentivar = "UPDATE incentivador_projeto SET idProjeto = '$idProjeto',
+                                                            valor_aportado = '$valor', 
+                                                            etapa = 6
+                                                        WHERE 
+                                                           idIncentivadorProjeto = '$idIncentivadorProjeto'";
 
         if (mysqli_query($con, $sql_incentivar)) {
-            $sqlEtapa = "UPDATE etapas_incentivo SET 
-                                                     idProjeto = '$idProjeto', 
-                                                     etapa = 6 
-                                                 WHERE 
-                                                     tipoPessoa = '$tipoPessoa' 
-                                                 AND idIncentivador = '$idIncentivador'";
-
             $etapa = 6;
-
-            mysqli_query($con, $sqlEtapa);
         }
     }
 
     if (isset($_POST['editarValor'])) {
-        $sql_incentivar = "UPDATE incentivador_projeto SET valor_aportado = '$valor' WHERE idIncentivador = '$idIncentivador' AND tipoPessoa = '$tipoPessoa' AND idProjeto = '$idProjeto'";
+        $sql_incentivar = "UPDATE incentivador_projeto SET valor_aportado = '$valor' WHERE idIncentivadorProjeto = '$idIncentivadorProjeto'";
 
         if (mysqli_query($con, $sql_incentivar)) {
             $mensagem = "<font color='#01DF3A'><strong>Valor de aportamento alterado com sucesso!</strong></font>";
@@ -45,14 +33,7 @@ if (isset($_POST['incentivar_projeto']) || isset($_POST['editar'])) {
     }
 }
 
-$sqlProjeto = "SELECT * FROM incentivador_projeto WHERE idIncentivador = $idIncentivador AND tipoPessoa = $tipoPessoa";
-
-if ($query = mysqli_query($con, $sqlProjeto)) {
-    $incentivador_projeto = mysqli_fetch_array($query);
-
-} else {
-    echo $sqlProjeto;
-}
+$incentivador_projeto = recuperaDados('incentivador_projeto', 'idIncentivadorProjeto', $idIncentivadorProjeto);
 
 $idProjeto = $incentivador_projeto['idProjeto'];
 $valor = $incentivador_projeto['valor_aportado'];
@@ -61,7 +42,7 @@ $impostoRegistrado = $incentivador_projeto['imposto'] ?? '';
 $editalRegistrado = $incentivador_projeto['edital'] ?? '';
 
 if (isset($_GET['retornando'])) {
-    $sqlEtapa = "UPDATE etapas_incentivo SET 
+    $sqlEtapa = "UPDATE incentivador_projeto SET 
                                              idProjeto = '$idProjeto', 
                                              etapa = 6 
                                          WHERE 

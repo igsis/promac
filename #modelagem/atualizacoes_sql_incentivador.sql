@@ -270,7 +270,55 @@ ADD extrato_conta_projeto TINYINT(1) NULL AFTER comprovante_deposito;
 * 12/07/2019
 */ 
 
-INSERT INTO etapa_projeto (idEtapaProjeto, etapaProjeto, ordem, idStatus) VALUES (35, 'Projetos que solicitaram autorização de depósito', 32, 0);
+INSERT INTO etapa_projeto (idEtapaProjeto, etapaProjeto, ordem, idStatus) 
+		VALUES (35, 'Projetos que solicitaram autorização de depósito', 32, 0);
+                
+                
+                
+ALTER TABLE `promac`.`parcelas_incentivo` 
+DROP COLUMN `idIncentivador`,
+DROP COLUMN `tipoPessoa`,
+DROP COLUMN `idProjeto`,
+ADD COLUMN `idIncentivadorProjeto` INT(11) NULL COMMENT '' AFTER `id`,
+ADD INDEX `parcela_incentivadorProjetoId_idx` (`idIncentivadorProjeto` ASC)  COMMENT '';
+
+ALTER TABLE `promac`.`parcelas_incentivo` 
+ADD CONSTRAINT `parcela_incentivadorProjetoId`
+  FOREIGN KEY (`idIncentivadorProjeto`)
+  REFERENCES `promac`.`incentivador_projeto` (`idIncentivadorProjeto`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+
+ALTER TABLE `promac`.`incentivador_projeto` 
+CHANGE COLUMN `tipoPessoa` `tipoPessoa` TINYINT(1) NOT NULL COMMENT '' AFTER `idIncentivadorProjeto`,
+CHANGE COLUMN `idIncentivador` `idPessoa` INT(11) NOT NULL COMMENT '' ,
+ADD COLUMN `etapa` TINYINT(2) NULL COMMENT '' AFTER `idProjeto`;
+
+
+ALTER TABLE `promac`.`etapas_incentivo` 
+DROP COLUMN `idProjeto`,
+DROP COLUMN `idIncentivador`,
+DROP COLUMN `tipoPessoa`,
+CHANGE COLUMN `id` `id` TINYINT(2) NOT NULL COMMENT '' ,
+CHANGE COLUMN `etapa` `etapa` VARCHAR(45) NOT NULL COMMENT '' ;
+
+UPDATE `promac`.`etapas_incentivo` SET `id`='1', `etapa`='Incentivar Projeto' WHERE `id`='4';
+UPDATE `promac`.`etapas_incentivo` SET `id`='2', `etapa`='Inserir certidoes de regularidade fiscal' WHERE `id`='5';
+INSERT INTO `promac`.`etapas_incentivo` (`id`, `etapa`) VALUES ('3', 'status da analise de regularidade');
+INSERT INTO `promac`.`etapas_incentivo` (`id`, `etapa`) VALUES ('4', 'projeto a ser incentivado');
+INSERT INTO `promac`.`etapas_incentivo` (`id`, `etapa`) VALUES ('5', 'quando ira aportar no projeto');
+INSERT INTO `promac`.`etapas_incentivo` (`id`, `etapa`) VALUES ('6', 'informacoes do contrato');
+INSERT INTO `promac`.`etapas_incentivo` (`id`, `etapa`) VALUES ('7', 'impressao do contrato');
+INSERT INTO `promac`.`etapas_incentivo` (`id`, `etapa`) VALUES ('8', 'upload do contrato assinado');
+INSERT INTO `promac`.`etapas_incentivo` (`id`, `etapa`) VALUES ('9', 'recebimento do contrato pela SMC');
+INSERT INTO `promac`.`etapas_incentivo` (`id`, `etapa`) VALUES ('10', 'solicitar autorizacao de deposito por parcela');
+INSERT INTO `promac`.`etapas_incentivo` (`id`, `etapa`) VALUES ('11', 'upload dos documentos de deposito');
+INSERT INTO `promac`.`etapas_incentivo` (`id`, `etapa`) VALUES ('12', 'inserir DAMSP/Guia de IPTU');
+INSERT INTO `promac`.`etapas_incentivo` (`id`, `etapa`) VALUES ('13', 'enviou tudo');
+
+
+ALTER TABLE `promac`.`incentivador_projeto` 
+CHANGE COLUMN `etapa` `etapa` TINYINT(2) NULL DEFAULT NULL COMMENT '' AFTER `idPessoa`;
 
 /*
 * FIM -> Tanair 

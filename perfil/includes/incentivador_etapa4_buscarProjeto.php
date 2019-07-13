@@ -2,6 +2,7 @@
 $con = bancoMysqli();
 $idIncentivador = $_SESSION['idUser'];
 $tipoPessoa = $_GET['tipoPessoa'] ?? $_POST['tipoPessoa'];
+$idIncentivadorProjeto = $_SESSION['idIncentivadorProjeto'];
 
 $buscaProjeto = isset($_POST['procurar']) ? 1 : 0;
 $displayForm = 'block';
@@ -10,27 +11,18 @@ $displayBotao = 'none';
 if ($tipoPessoa == 4)
 {
     $pf = recuperaDados("incentivador_pessoa_fisica", "idPf", $idIncentivador);
-
-    $sqlEtapa = "SELECT etapa FROM etapas_incentivo WHERE idIncentivador = '$idIncentivador' AND tipoPessoa = '$tipoPessoa'";
-    $queryEtapa = mysqli_query($con, $sqlEtapa);
-    $etapaArray = mysqli_fetch_assoc($queryEtapa);
-
-
     $liberado = $pf['liberado'];
-    $etapa = $etapaArray['etapa'];
+
 }
 elseif ($tipoPessoa == 5)
 {
     $pj = recuperaDados("incentivador_pessoa_juridica", "idPj", $idIncentivador);
-
-    $sqlEtapa = "SELECT etapa FROM etapas_incentivo WHERE idIncentivador = '$idIncentivador' AND tipoPessoa = '$tipoPessoa'";
-    $queryEtapa = mysqli_query($con, $sqlEtapa);
-    $etapaArray = mysqli_fetch_assoc($queryEtapa);
-
-
     $liberado = $pj['liberado'];
-    $etapa = $etapaArray['etapa'];
 }
+
+$incentivadorProjeto = recuperaDados('incentivador_projeto', 'idIncentivadorProjeto', $idIncentivadorProjeto);
+
+$etapa = $incentivadorProjeto['etapa'];
 
 
 switch ($liberado) {

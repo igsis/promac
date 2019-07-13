@@ -117,7 +117,8 @@ $pj = recuperaDados("incentivador_pessoa_juridica", "idPj", $idPj);
                             if ($arqsEnviados == 6) {
                                 echo "
                                       <form method='POST' action='?perfil=includes/incentivadorPJ_etapa3_visualiza_docs' enctype='multipart/form-data'>
-                                      <input type='hidden' name='idPj' value='$idPj'>                                   
+                                      <input type='hidden' name='idPj' value='$idPj'>
+                                      <input type='hidden' name='idIncentivadorProjeto' value='$idIncentivadorProjeto'>                                    
                                           <input type='submit' name='enviarSMC' class='btn btn-theme btn-lg btn-block'
                                                value='Enviar à SMC'>                                     
                                         

@@ -4,6 +4,21 @@ $tipoPessoa = '4';
 $idPf = $_POST['idPf'];
 $pf = recuperaDados("incentivador_pessoa_fisica", "idPf", $idPf);
 
+$sqlIncentivar = "SELECT idIncentivadorProjeto FROM incentivador_projeto 
+                        WHERE tipoPessoa = '$tipoPessoa' 
+                          AND idPessoa = '$idPf' 
+                          AND publicado = 1 
+                          AND (etapa = 2 OR etapa = 3)";
+
+$queryIncentivar = mysqli_query($con, $sqlIncentivar);
+
+if (mysqli_num_rows($queryIncentivar) > 0) {
+    $arr = mysqli_fetch_assoc($queryIncentivar);
+    $_SESSION['idIncentivadorProjeto'] = $arr['idIncentivadorProjeto'];
+    $idIncentivadorProjeto = $_SESSION['idIncentivadorProjeto'];
+}
+
+
 if (isset($_POST['atualizar'])) {
     // // array com os inputs
     $dados = $_POST['dado'];
@@ -34,7 +49,7 @@ if (isset($_POST['nota'])) {
         if ($id != 0) {
             $dateNow = date('Y-m-d H:i:s');
             $nota = addslashes($_POST['nota']);
-            $sql_nota = "INSERT INTO notas (idPessoa, idTipo, data, nota, interna) VALUES ('$idPf', '4', '$dateNow', '$nota', '1')";
+            $sql_nota = "INSERT INTO notas (idPessoa, idTipo, data, nota, interna) VALUES ('$idPf', '3', '$dateNow', '$nota', '1')";
             if (mysqli_query($con, $sql_nota)) {
                 $mensagem = "<br><font color='#01DF3A'><strong>Nota inserida com sucesso!</strong></font>";
                 gravarLog($sql_nota);
@@ -48,7 +63,7 @@ if (isset($_POST['nota'])) {
 
 if (isset($_POST['apto'])) {
     $sql = "UPDATE incentivador_pessoa_fisica SET liberado = '5' WHERE idPf = $idPf";
-    $sql_etapa = "UPDATE etapas_incentivo SET etapa = 4 WHERE idIncentivador = $idPf AND tipoPessoa = 4";
+    $sql_etapa = "UPDATE incentivador_projeto SET etapa = 4 WHERE idIncentivadorProjeto = $idIncentivadorProjeto";
     $apto = mysqli_query($con, $sql);
     $prox_etapa = mysqli_query($con, $sql_etapa);
 
@@ -71,7 +86,7 @@ if (isset($_POST['apto'])) {
 
 if (isset($_POST['inapto'])) {
     $sql = "UPDATE incentivador_pessoa_fisica SET liberado = 6 WHERE idPf = '$idPf'";
-    $sql_etapa = "UPDATE etapas_incentivo SET etapa = 3 WHERE idIncentivador = $idPf AND tipoPessoa = 3";
+    $sql_etapa = "UPDATE incentivador_projeto SET etapa = 3 WHERE idIncentivadorProjeto = $idIncentivadorProjeto";
 
     if (mysqli_query($con, $sql)) {
         if (isset($mensagem)) {
@@ -100,7 +115,7 @@ function listaArquivosPessoaEditorr($idPessoa, $tipoPessoa)
 			INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
 			WHERE arq.idPessoa = '$idPessoa'
 			AND arq.idListaDocumento IN (39, 40, 41, 42, 43, 54)
-			AND arq.idTipo = '$tipoPessoa'
+			AND arq.idTipo = '3'
 			AND arq.publicado = '1'";
     $query = mysqli_query($con, $sql);
     $linhas = mysqli_num_rows($query);
@@ -184,7 +199,7 @@ function listaArquivosPessoaEditorr($idPessoa, $tipoPessoa)
                     </div>
                     <br>
                     <?php
-                        listaArquivosPessoaEditorr($pf['idPf'], $tipoPessoa);
+                        listaArquivosPessoaEditorr($pf['idPf'], 3);
                     ?>
                 </div>
                 <div class="container">

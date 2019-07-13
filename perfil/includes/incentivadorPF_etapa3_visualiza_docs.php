@@ -1,11 +1,12 @@
 <?php
 $con = bancoMysqli();
 $idPf = $_SESSION['idUser'];
+$idIncentivadorProjeto = $_SESSION['idIncentivadorProjeto'];
 $tipoPessoa = '4';
 
 if (isset($_POST['enviarSMC'])) {
     $sqlLiberado = "UPDATE incentivador_pessoa_fisica SET liberado = 4 WHERE idPf = $idPf";
-    $sqlEtapa = "UPDATE etapas_incentivo SET etapa = 2 WHERE idIncentivador = $idPf";
+    $sqlEtapa = "UPDATE incentivador_projeto SET etapa = 2 WHERE idIncentivadorProjeto = $idIncentivadorProjeto";
 
     if (mysqli_query($con, $sqlLiberado) && mysqli_query($con, $sqlEtapa)) {
         $mensagem = "<font color='#01DF3A'><strong>Suas certidões de regularidade fiscal foram enviadas à SMC!</strong></font>";
@@ -15,10 +16,7 @@ if (isset($_POST['enviarSMC'])) {
 }
 
 $pf = recuperaDados("incentivador_pessoa_fisica", "idPf", $idPf);
-$etapaArray = recuperaDados("etapas_incentivo", "idIncentivador", $idPf);
-
 $liberado = $pf['liberado'];
-$etapa = $etapaArray['etapa'];
 
 switch ($liberado) {
     case '4':
@@ -34,7 +32,6 @@ switch ($liberado) {
         $cor_status = "danger";
         break;
 }
-
 
 
 if (isset($_POST["enviar"])) {
@@ -80,7 +77,7 @@ if (isset($_POST["enviar"])) {
                     if (in_array($ext, $allowedExts)) //Pergunta se a extensão do arquivo, está presente no array das extensões permitidas
                     {
                         if (move_uploaded_file($nome_temporario, $dir . $new_name)) {
-                            $sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('$tipoPessoa', '$idPf', '$y', '$new_name', '$hoje', '1'); ";
+                            $sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('3', '$idPf', '$y', '$new_name', '$hoje', '1'); ";
                             $query = mysqli_query($con, $sql_insere_arquivo);
 
                             if ($query) {
@@ -113,6 +110,9 @@ if (isset($_POST['apagar'])) {
         $mensagem = "<font color='#FF0000'><strong>Erro ao apagar arquivo!</strong></font>";
     }
 }
+
+
+
 
 ?>
 
@@ -165,7 +165,7 @@ if (isset($_POST['apagar'])) {
                                         INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
                                         WHERE arq.idPessoa = '$idPf'
                                         AND list.idListaDocumento IN (39, 40, 41, 42, 43, 54)
-                                        AND arq.idTipo = '$tipoPessoa'
+                                        AND arq.idTipo = '3'
                                         AND arq.publicado = '1'";
                             $query = mysqli_query($con, $sql);
                             $linhas = mysqli_num_rows($query);
@@ -252,7 +252,7 @@ if (isset($_POST['apagar'])) {
                     <div class="form-group">
                         <div class="table-responsive list_info"><h6>Arquivo(s) Negado(s)</h6>
                             <?php
-                            listaArquivosPessoa($idPf, $tipoPessoa, "includes/incentivadorPF_etapa3_visualiza_docs", $negados, 'table-striped');
+                            listaArquivosPessoa($idPf, 3, "includes/incentivadorPF_etapa3_visualiza_docs", $negados, 'table-striped');
                             ?>
                         </div>
                     </div>

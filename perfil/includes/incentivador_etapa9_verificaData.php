@@ -115,6 +115,13 @@ if (isset($_POST['apagar'])) {
     $idArquivo = $_POST['apagar'];
     $sql_apagar_arquivo = "UPDATE upload_arquivo SET publicado = 0 WHERE idUploadArquivo = '$idArquivo'";
     if (mysqli_query($con, $sql_apagar_arquivo)) {
+        $idListaDoc = $_POST['idListaDocumento'];
+        if ($idListaDoc == 55) {
+            $doc = "comprovante_deposito";
+        } else {
+            $doc = "extrato_conta_projeto";
+        }
+        $sqlParcela = "UPDATE parcelas_incentivo SET $doc = NULL WHERE idProjeto = '$idProjeto' AND idIncentivador = '$idIncentivador' AND tipoPessoa = '$tipoPessoa' AND numero_parcela = $parcelaAtual";
         $mensagem = "<font color='#01DF3A'><strong>Arquivo apagado com sucesso!</strong></font>";
         gravarLog($sql_apagar_arquivo);
     } else {
@@ -186,14 +193,14 @@ $etapa = $etapaArray['etapa'];
                 <div class="row" id="etapa10">
                     <div class="col-md-12">
                         <h6><b>10 - Solicite a autorização de depósito</b></h6>
-                        <div class="col-md-offset-1 col-md-10 form-group">
+                        <div class="col-md-offset-2 col-md-8 form-group">
                             <table class="table bg-white text-center table-hover table-responsive table-condensed table-bordered table-parcelas">
                                 <thead class="bg-success">
                                 <tr class="list_menu" style="font-weight: bold;">
-                                    <td>Parcela</td>
-                                    <td>Data</td>
-                                    <td>Valor</td>
-                                    <td width="50%">Ação</td>
+                                    <td width="5%">Parcela</td>
+                                    <td width="15%">Data</td>
+                                    <td width="15">Valor</td>
+                                    <td width="60%">Ação</td>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -212,7 +219,7 @@ $etapa = $etapaArray['etapa'];
                                     <td style="vertical-align: middle;"
                                         class="list_description"><?= exibirDataBr($parcela['data_pagamento']) ?></td>
                                     <td style="vertical-align: middle;"
-                                        class="list_description"><?= dinheiroParaBr($parcela['valor']) ?></td>
+                                        class="list_description">R$ <?= dinheiroParaBr($parcela['valor']) ?></td>
                                     <?php
                                     if ($parcela['comprovante_deposito'] == '' && $parcela['extrato_conta_projeto'] == '' && $x == 1){
                                         $botaoSolicitar = "<button class='btn' style='background-color: white; color: green;'

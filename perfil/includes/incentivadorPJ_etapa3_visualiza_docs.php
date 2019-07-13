@@ -1,11 +1,12 @@
 <?php
 $con = bancoMysqli();
 $idPj = $_SESSION['idUser'];
+$idIncentivadorProjeto = $_SESSION['idIncentivadorProjeto'];
 $tipoPessoa = '5';
 
 if (isset($_POST['enviarSMC'])) {
     $sqlLiberado = "UPDATE incentivador_pessoa_juridica SET liberado = 4 WHERE idPj = $idPj";
-    $sqlEtapa = "UPDATE etapas_incentivo SET etapa = 2 WHERE idIncentivador = $idPj";
+    $sqlEtapa = "UPDATE incentivador_projeto SET etapa = 2 WHERE idIncentivadorProjeto = $idIncentivadorProjeto";
 
     if (mysqli_query($con, $sqlLiberado) && mysqli_query($con, $sqlEtapa)) {
         $mensagem = "<font color='#01DF3A'><strong>Suas certidões de regularidade fiscal foram enviadas à SMC!</strong></font>";

@@ -1,31 +1,27 @@
 <?php
-
 $con = bancoMysqli();
 $idPf = $_SESSION['idUser'];
 $tipoPessoa = 4;
 
 $pf = recuperaDados("incentivador_pessoa_fisica", "idPf", $idPf);
 
-$sqlProject = "SELECT idProjeto FROM etapas_incentivo WHERE tipoPessoa = '$tipoPessoa' AND idIncentivador = '$idPf'";
-$queryProject = mysqli_query($con, $sqlProject);
-$arr = mysqli_fetch_assoc($queryProject);
-$idProjeto = $arr['idProjeto'];
+$sqlIncentivar = "SELECT idIncentivadorProjeto, idProjeto, etapa FROM incentivador_projeto WHERE tipoPessoa = '$tipoPessoa' AND idPessoa = '$idPf' AND publicado = 1 AND etapa != 13";
+$queryIncentivar = mysqli_query($con, $sqlIncentivar);
+$arr = mysqli_fetch_assoc($queryIncentivar);
 
-if($idProjeto != '') {
-    $condicaoProjeto = "idProjeto = $idProjeto";
-    //$idProjeto = $idProjeto;
-} else {
-    $condicaoProjeto = "idProjeto IS NULL";
-    //$idProjeto = 'IS NULL';
+if (mysqli_num_rows($queryIncentivar) > 0) {
+    $_SESSION['idIncentivadorProjeto'] = $arr['idIncentivadorProjeto'];
+    $idProjeto = $arr['idProjeto'];
+
+    if($idProjeto != '') {
+        $condicaoProjeto = "idProjeto = $idProjeto";
+    } else {
+        $condicaoProjeto = "idProjeto IS NULL";
+    }
 }
 
-$sqlEtapa = "SELECT etapa FROM etapas_incentivo WHERE $condicaoProjeto AND idIncentivador = '$idPf' AND tipoPessoa = '$tipoPessoa'";
-$queryEtapa = mysqli_query($con, $sqlEtapa);
-$etapaArray = mysqli_fetch_assoc($queryEtapa);
-$etapa = $etapaArray['etapa'];
-
+$etapa = $arr['etapa'];
 $liberado = $pf['liberado'];
-$etapa = $etapaArray['etapa'];
 
 switch ($liberado) {
     case '4':
