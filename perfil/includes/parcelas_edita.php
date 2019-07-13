@@ -64,7 +64,7 @@ if ($nums < $parcelas) {
         $valor = dinheiroDeBr($arrayValor[$i]);
         $dataPagamento = exibirDataMysql($arrayDatas[$i]);
 
-        $sqlUpdate = "UPDATE parcelas_incentivo SET valor = '$valor', data_pagamento = '$dataPagamento' WHEREidIncentivadorProjeto = '$idIncentivadorProjeto' AND numero_parcela = $i";
+        $sqlUpdate = "UPDATE parcelas_incentivo SET valor = '$valor', data_pagamento = '$dataPagamento' WHERE idIncentivadorProjeto = '$idIncentivadorProjeto' AND numero_parcela = $i";
 
         if (mysqli_query($con, $sqlUpdate)) {
             gravarLog($sqlUpdate);

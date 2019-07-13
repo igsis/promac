@@ -67,12 +67,6 @@ if (isset($_POST['gravarInfos'])) {
     }
 }
 
-if (((isset($qtadeParcelas) && $qtadeParcelas != 0) && (isset($impostoRegistrado) && $impostoRegistrado != '') && (isset($editalRegistrado) && $editalRegistrado != '')) || $gerarContrato == 1) {
-    $gerarContrato = 1;
-    $mensagem = "<div class='alert alert-success'>
-                    <small><strong>Verifique atentamente as informações inseridas, se estiverem corretas avance para a próxima etapa utilizando o botão de avançar ao final página.</strong></small>
-                 </div>";
-}
 
 
 //verificando parcelas
@@ -92,9 +86,6 @@ if ($numRows > 0) {
     $queryIP = mysqli_query($con, $sqlIP);
     $infos = mysqli_fetch_assoc($queryIP);
     $data_recebimento = new DateTime($infos['data_recebimento_carta']);
-
-
-
 }
 
 
@@ -103,12 +94,20 @@ $today = new DateTime();
 if (isset($data_pagamento)) {
     if ($data_recebimento->diff($data_pagamento)->days < 15) {
         $gerarContrato = 0;
-        $mensagem = "<p class='text-warning'>O intervalo entre a data de pagamento da primeira parcela (" . exibirDataBr($parcelas['data_pagamento']) . ") e da data de recebimento pela SMC (" . exibirDataBr($infos['data_recebimento_carta']) . ") é menor que 15 dias.</p><p class='text-danger'>LEMBRE-SE O recebimento da Carta de Incentivo original na SMC deve ocorrer antes de 15 dias do vencimento do tributo a ser utilizado para incentivo do projeto cultural. ";
+        $mensagem = "<p class='text-warning'>O intervalo entre a data de pagamento da primeira parcela (" . exibirDataBr($parcelas['data_pagamento']) . ") e da data de recebimento pela SMC (" . exibirDataBr($infos['data_recebimento_carta']) . ") é menor que 15 dias.</p>";
     } elseif ($today > $data_pagamento) {
         $gerarContrato = 0;
-        $mensagem = "<p class='text-warning'>A data de pagamento da primeira parcela é anterior ao dia de hoje.</p><p class='text-danger'>LEMBRE-SE O recebimento da Carta de Incentivo original na SMC deve ocorrer antes de 15 dias do vencimento do tributo a ser utilizado para incentivo do projeto cultural. ";
+        $mensagem = "<p class='text-warning'>A data de pagamento da primeira parcela é anterior ao dia de hoje.</p> ";
     }
 }
+
+if (((isset($qtadeParcelas) && $qtadeParcelas != 0) && (isset($impostoRegistrado) && $impostoRegistrado != '') && (isset($editalRegistrado) && $editalRegistrado != '')) || $gerarContrato == 1) {
+    $gerarContrato = 1;
+    $mensagem = "<div class='alert alert-success'>
+                    <small><strong>Verifique atentamente as informações inseridas, se estiverem corretas avance para a próxima etapa utilizando o botão de avançar ao final página.</strong></small>
+                 </div>";
+}
+
 
 
 ?>
@@ -142,16 +141,24 @@ if (isset($data_pagamento)) {
                 }
 
                 ?>
+                <h5><p class='alert alert-warning'>LEMBRE-SE O recebimento da Carta de Incentivo original na SMC deve ocorrer antes de 15 dias do vencimento do tributo a ser utilizado para incentivo do projeto cultural. </h5>
 
-                <div class="well">
+
+                <div class="etapa5">
                     <form method="POST" action="?perfil=includes/incentivador_etapa6_incentivarProjeto"
                           enctype="multipart/form-data">
                         <div class="form-group">
-                            <h6 class="col-md-12"><b>5 - Quanto você deseja aportar no projeto (valor total)?</b></h6>
+                            <!--<h6 class="col-md-12"><b>5 - Quanto você deseja aportar no projeto (valor total)?</b></h6>-->
                             <div class="row">
                                 <div class="col-md-3 text-center" style="margin-left: 38%;">
                                     <label for="valor_aportado">
                                         <div class="input-group">
+                                            <div class="input-group-btn">
+                                                <button type="submit" class="btn btn-default" name="editarValor"
+                                                        style="font-size: 20px">
+                                                    <span class="glyphicon glyphicon-usd"></span>
+                                                </button>
+                                            </div>
                                             <input type="text" name="valor_aportado"
                                                    onkeypress="return(moeda(this, '.', ',', event))"
                                                    class="form-control"
@@ -174,7 +181,7 @@ if (isset($data_pagamento)) {
                     </form>
                 </div>
 
-                <div class="well ">
+                <div class="etapa6">
                     <form method="POST" class="form-group"
                           action="?perfil=includes/incentivador_etapa6_incentivarProjeto" enctype="multipart/form-data">
                         <h6 class="col-md-12"><b>6 - Preencha as informações abaixo para gerar o contrato de
@@ -249,11 +256,10 @@ if (isset($data_pagamento)) {
                         </div>
 
                     </form>
-                    <hr>
+                    <br>
                     <h6>Cronograma</h6>
                     <?php
                     if ($qtadeParcelas != 0) {
-
                         ?>
                         <div class="col-md-offset-4 col-md-6 form-group">
                             <table class="table bg-white text-center table-hover table-responsive table-condensed table-bordered">
@@ -673,12 +679,18 @@ if (isset($data_pagamento)) {
         } else {
 
             var parcelas = $("#numero_parcelas").val();
-            var arrayData = [];
-            var arrayValor = [];
+
+            var datas = new Array(1);
+            var valores = new Array(1);
 
             for (var i = 1; i <= parcelas; i++) {
-                arrayData [i] = $("input[name='modal_data[" + i + "]']").val();
-                arrayValor [i] = $("input[name='valor[" + i + "]']").val();
+                $("input[name='modal_data[" + i + "]']").each(function () {
+                    datas.push($(this).val());
+                });
+
+                $("input[name='valor[" + i + "]']").each(function () {
+                    valores.push($(this).val());
+                });
             }
 
             var newButtons = "<button type='button' class='btn btn-secondary' data-dismiss='modal'>Fechar</button>" + "<button type='button' class='btn btn-primary' name='editar' id='editarModal'>Editar</button>";
@@ -687,8 +699,8 @@ if (isset($data_pagamento)) {
 
             $.post('?perfil=includes/parcelas_cadastro', {
                 parcelas: parcelas,
-                arrayValor: arrayValor,
-                arrayData: arrayData,
+                valores: valores,
+                datas: datas,
                 idIncentivadorProjeto: idIncentivadorProjeto
             })
                 .done(function () {
@@ -699,8 +711,8 @@ if (isset($data_pagamento)) {
                     for (var count = 0; count < parcelas; count++) {
                         html += template({
                             count: count + 1, // para sincronizar com o array vindo do banco
-                            valor: arrayValor[count],
-                            date: arrayData[count],
+                            valor: valores[count],
+                            date: datas[count],
                         });
                     }
 

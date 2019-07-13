@@ -1,23 +1,19 @@
 <?php
 $con = bancoMysqli();
 $idIncentivador = $_SESSION['idUser'];
+$idIncentivadorProjeto = $_SESSION['idIncentivadorProjeto'];
 $tipoPessoa = $_POST['tipoPessoa'] ?? $_GET['tipoPessoa'];
+
+$incentivador_projeto = recuperaDados('incentivador_projeto', 'idIncentivadorProjeto', $idIncentivadorProjeto);
 
 if (isset($_POST['idProjeto'])) {
     $idProjeto = $_POST['idProjeto'];
 
 } else {
-    $sqlProject = "SELECT idProjeto FROM etapas_incentivo WHERE tipoPessoa = '$tipoPessoa' AND idIncentivador = '$idIncentivador' AND (etapa = 7 OR etapa = 8)";
-    $queryProject = mysqli_query($con, $sqlProject);
-    $arr = mysqli_fetch_assoc($queryProject);
-    $idProjeto = $arr['idProjeto'];
+    $idProjeto = $incentivador_projeto['idProjeto'];
 }
 
-
-$sqlEtapa = "SELECT etapa FROM etapas_incentivo WHERE idProjeto = '$idProjeto' AND idIncentivador = '$idIncentivador' AND tipoPessoa = '$tipoPessoa'";
-$queryEtapa = mysqli_query($con, $sqlEtapa);
-$etapaArray = mysqli_fetch_assoc($queryEtapa);
-$etapa = $etapaArray['etapa'];
+$etapa = $incentivador_projeto['etapa'];
 
 if ($etapa == 8) {
     $etapa8 = 'block';
@@ -29,17 +25,16 @@ if ($etapa == 8) {
 
 
 if (isset($_POST['avancar_etapa7'])) {
-    $sqlEtapa = "UPDATE etapas_incentivo SET etapa = 7 WHERE idProjeto = '$idProjeto' AND tipoPessoa = '$tipoPessoa' AND idIncentivador = '$idIncentivador'";
+    $sqlEtapa = "UPDATE incentivador_projeto SET etapa = 7 WHERE idIncentivadorProjeto = '$idIncentivadorProjeto'";
     mysqli_query($con, $sqlEtapa);
 }
 
 $printed = "<script> document.write(printed); </script>";
 
 if (isset($printed)) {
-    $sqlEtapa = "UPDATE etapas_incentivo SET etapa = 8 WHERE idProjeto = '$idProjeto' AND tipoPessoa = '$tipoPessoa' AND idIncentivador = '$idIncentivador'";
+    $sqlEtapa = "UPDATE etapas_incentivo SET etapa = 8 WHERE idIncentivadorProjeto = '$idIncentivadorProjeto'";
     mysqli_query($con, $sqlEtapa);
 }
-
 
 $arqAnexado = "none";
 $enviarArqs = "block";
@@ -229,7 +224,7 @@ if (verificaArquivosExistentesIncentivador($idIncentivador, 18)) {
                                             $envio = $con->query($query);
                                             $row = $envio->fetch_array(MYSQLI_ASSOC);
 
-                                            if (!verificaArquivosExistentesIncentivador($idPf, $row['idListaDocumento'])) {
+                                            if (!verificaArquivosExistentesIncentivador($idPf, $row['idListaDocumento'], 3)) {
                                                 $documento = (object)
                                                 [
                                                     'nomeDocumento' => $arq['documento'],
@@ -293,7 +288,7 @@ if (verificaArquivosExistentesIncentivador($idIncentivador, 18)) {
                                         INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
                                         WHERE arq.idPessoa = '$idIncentivador'
                                         AND list.idListaDocumento IN (18)
-                                        AND arq.idTipo = '$tipoPessoa'
+                                        AND arq.idTipo = '3'
                                         AND arq.publicado = '1'";
                                     $query = mysqli_query($con, $sql);
                                     $linhas = mysqli_num_rows($query);
