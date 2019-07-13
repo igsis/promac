@@ -3,14 +3,13 @@ $con = bancoMysqli();
 $conn = bancoPDO();
 
 $idIncentivador = $_SESSION['idUser'];
-$idProjeto = $_POST['idProjeto'];
-$tipoPessoa = $_POST['tipoPessoa'];
+$idIncentivadorProjeto = $_POST['idIncentivadorProjeto'];
 
 $parcelas = $_POST['parcelas'] ?? NULL;
 $arrayValor = $_POST['valores'] ?? [];
 $arrayDatas = $_POST['datas'] ?? [];
 
-$sqlVerifica = "SELECT id FROM parcelas_incentivo WHERE tipoPessoa = '$tipoPessoa' AND idIncentivador = '$idIncentivador' AND idProjeto = '$idProjeto'";
+$sqlVerifica = "SELECT id FROM parcelas_incentivo WHERE idIncentivadorProjeto = '$idIncentivadorProjeto'";
 $queryVerifica = mysqli_query($con, $sqlVerifica);
 $nums = mysqli_num_rows($queryVerifica);
 
@@ -19,7 +18,7 @@ if ($nums < $parcelas) {
         $valor = dinheiroDeBr($arrayValor[$i]);
         $dataPagamento = exibirDataMysql($arrayDatas[$i]);
 
-        $sqlUpdate = "UPDATE parcelas_incentivo SET valor = '$valor', data_pagamento = '$dataPagamento' WHERE tipoPessoa = '$tipoPessoa' AND idIncentivador = '$idIncentivador' AND idProjeto = '$idProjeto' AND numero_parcela = $i";
+        $sqlUpdate = "UPDATE parcelas_incentivo SET valor = '$valor', data_pagamento = '$dataPagamento' WHERE idIncentivadorProjeto = '$idIncentivadorProjeto' AND numero_parcela = $i";
 
         if (mysqli_query($con, $sqlUpdate)) {
             gravarLog($sqlUpdate);
@@ -37,12 +36,12 @@ if ($nums < $parcelas) {
         $valor = dinheiroDeBr($arrayValor[$count]);
         $dataPagamento = exibirDataMysql($arrayDatas[$count]);
 
-        $sqlInsert = "INSERT INTO parcelas_incentivo (idProjeto, tipoPessoa, idIncentivador, numero_parcela, valor, data_pagamento, publicado) 
-                                    VALUES ('$idProjeto', '$tipoPessoa', '$idIncentivador', '$count', '$valor', '$dataPagamento', 1)";
+        $sqlInsert = "INSERT INTO parcelas_incentivo (idIncentivadorProjeto, numero_parcela, valor, data_pagamento, publicado) 
+                                    VALUES ('$idIncentivadorProjeto', '$count', '$valor', '$dataPagamento', 1)";
 
         if (mysqli_query($con, $sqlInsert)) {
 
-            $sqlUpdate = "UPDATE incentivador_projeto SET numero_parcelas = '$parcelas' WHERE tipoPessoa = '$tipoPessoa' AND idIncentivador = '$idIncentivador' AND idProjeto = '$idProjeto'";
+            $sqlUpdate = "UPDATE incentivador_projeto SET numero_parcelas = '$parcelas' WHERE idIncentivadorProjeto = '$idIncentivadorProjeto'";
 
             if (mysqli_query($con, $sqlUpdate)) {
                 gravarLog($sqlInsert);
@@ -65,7 +64,7 @@ if ($nums < $parcelas) {
         $valor = dinheiroDeBr($arrayValor[$i]);
         $dataPagamento = exibirDataMysql($arrayDatas[$i]);
 
-        $sqlUpdate = "UPDATE parcelas_incentivo SET valor = '$valor', data_pagamento = '$dataPagamento' WHERE tipoPessoa = '$tipoPessoa' AND idIncentivador = '$idIncentivador' AND idProjeto = '$idProjeto' AND numero_parcela = $i";
+        $sqlUpdate = "UPDATE parcelas_incentivo SET valor = '$valor', data_pagamento = '$dataPagamento' WHEREidIncentivadorProjeto = '$idIncentivadorProjeto' AND numero_parcela = $i";
 
         if (mysqli_query($con, $sqlUpdate)) {
             gravarLog($sqlUpdate);
@@ -80,10 +79,10 @@ if ($nums < $parcelas) {
         $valor = dinheiroDeBr($arrayValor[$i]);
         $dataPagamento = exibirDataMysql($arrayDatas[$i]);
 
-        $sqlDelete = "DELETE FROM parcelas_incentivo WHERE tipoPessoa = '$tipoPessoa' AND idIncentivador = '$idIncentivador' AND idProjeto = '$idProjeto' AND numero_parcela = $count";
+        $sqlDelete = "DELETE FROM parcelas_incentivo WHERE idIncentivadorProjeto = '$idIncentivadorProjeto' AND numero_parcela = $count";
 
         if (mysqli_query($con, $sqlDelete)) {
-            $sqlUpdate = "UPDATE incentivador_projeto SET numero_parcelas = '$parcelas' WHERE tipoPessoa = '$tipoPessoa' AND idIncentivador = '$idIncentivador' AND idProjeto = '$idProjeto'";
+            $sqlUpdate = "UPDATE incentivador_projeto SET numero_parcelas = '$parcelas' WHERE idIncentivadorProjeto = '$idIncentivadorProjeto'";
 
             if (mysqli_query($con, $sqlUpdate)) {
                 gravarLog($sqlDelete);
@@ -103,7 +102,7 @@ if ($nums < $parcelas) {
         $valor = dinheiroDeBr($arrayValor[$i]);
         $dataPagamento = exibirDataMysql($arrayDatas[$i]);
 
-        $sqlUpdate = "UPDATE parcelas_incentivo SET valor = '$valor', data_pagamento = '$dataPagamento' WHERE tipoPessoa = '$tipoPessoa' AND idIncentivador = '$idIncentivador' AND idProjeto = '$idProjeto' AND numero_parcela = $i";
+        $sqlUpdate = "UPDATE parcelas_incentivo SET valor = '$valor', data_pagamento = '$dataPagamento' WHERE idIncentivadorProjeto = '$idIncentivadorProjeto' AND numero_parcela = $i";
 
         if (mysqli_query($con, $sqlUpdate)) {
             gravarLog($sqlUpdate);

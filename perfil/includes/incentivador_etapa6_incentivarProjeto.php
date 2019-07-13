@@ -47,24 +47,12 @@ if (isset($_GET['retornando'])) {
                                              etapa = 6 
                                          WHERE 
                                              tipoPessoa = '$tipoPessoa' 
-                                         AND idIncentivador = '$idIncentivador'";
+                                         AND idPessoa = '$idIncentivador'";
 
     $etapa = 6;
 
     mysqli_query($con, $sqlEtapa);
 }
-
-
-
-//verificando parcelas
-$sqlParcelas = "SELECT * FROM parcelas_incentivo WHERE idProjeto = '$idProjeto' AND tipoPessoa = '$tipoPessoa' AND idIncentivador = '$idIncentivador'";
-$queryParcelas = mysqli_query($con, $sqlParcelas);
-$numRows = mysqli_num_rows($queryParcelas);
-
-if ($numRows > 0) {
-    $qtadeParcelas = $incentivador_projeto['numero_parcelas'];
-}
-
 
 if (isset($_POST['gravarInfos'])) {
     $edital = $_POST['edital'];
@@ -72,9 +60,7 @@ if (isset($_POST['gravarInfos'])) {
 
     $sqlInfos = "UPDATE incentivador_projeto SET edital = '$edital', 
                                                  imposto = '$imposto'
-                                             WHERE idIncentivador = '$idIncentivador' 
-                                               AND tipoPessoa = '$tipoPessoa' 
-                                               AND idProjeto = '$idProjeto'";
+                                             WHERE idIncentivadorProjeto = '$idIncentivadorProjeto'";
 
     if (mysqli_query($con, $sqlInfos) && $qtadeParcelas != 0) {
         $gerarContrato = 1;
@@ -88,43 +74,40 @@ if (((isset($qtadeParcelas) && $qtadeParcelas != 0) && (isset($impostoRegistrado
                  </div>";
 }
 
-$sqlIP = "SELECT * FROM incentivador_projeto WHERE idProjeto = '$idProjeto' AND idIncentivador = '$idIncentivador' AND tipoPessoa = '$tipoPessoa'";
-$queryIP = mysqli_query($con, $sqlIP);
-$infos = mysqli_fetch_assoc($queryIP);
-$data_recebimento = new DateTime($infos['data_recebimento_carta']);
+
+//verificando parcelas
+$sqlParcelas = "SELECT * FROM parcelas_incentivo WHERE idIncentivadorProjeto = '$idIncentivadorProjeto'";
+$queryParcelas = mysqli_query($con, $sqlParcelas);
+$numRows = mysqli_num_rows($queryParcelas);
+
+if ($numRows > 0) {
+    $qtadeParcelas = $incentivador_projeto['numero_parcelas'];
+
+    $sqlUltimaParcela = "SELECT * FROM parcelas_incentivo WHERE idIncentivadorProjeto = '$idIncentivadorProjeto' ORDER BY 'numero_parcela' ASC LIMIT 1";
+    $queryUltima = mysqli_query($con, $sqlUltimaParcela);
+    $parcelas = mysqli_fetch_assoc($queryUltima);
+    $data_pagamento = new DateTime($parcelas['data_pagamento']);
+
+    $sqlIP = "SELECT * FROM incentivador_projeto WHERE idIncentivadorProjeto = '$idIncentivadorProjeto'";
+    $queryIP = mysqli_query($con, $sqlIP);
+    $infos = mysqli_fetch_assoc($queryIP);
+    $data_recebimento = new DateTime($infos['data_recebimento_carta']);
 
 
-$sqlUltimaParcela = "SELECT * FROM parcelas_incentivo WHERE idProjeto = '$idProjeto' AND idIncentivador = '$idIncentivador' AND tipoPessoa = '$tipoPessoa' ORDER BY 'numero_parcela' ASC LIMIT 1";
-$queryUltima = mysqli_query($con, $sqlUltimaParcela);
-$parcelas = mysqli_fetch_assoc($queryUltima);
-$data_pagamento = new DateTime($parcelas['data_pagamento']);
 
-//echo $sqlUltimaParcela;
+}
 
-/*$intervalo = $data_pagamento->diff($data_recebimento);
-
-echo $intervalo->d;
-
-if ($intervalo->d < 15) {
-    $mensagem = "<div class='alert alert-danger' style='color: red'>
-                    <strong>PRAZO EXCEDIDO!</strong><br>
-                    O recebimento da Carta de Incentivo original na SMC deve ocorrer antes de 15 dias do vencimento do tributo a ser utilizado para incentivo do projeto cultural.
-                    <br>Exigimos esse prazo para que a Secretaria possa executar o procedimento necessário para o abatimento do tributo.
-                    <br>Você retornou a etapa 6, por favor, preencha novamente a Carta de Incentivo com a data atualizada e repita os passos seguintes.
-                </div>";
-
-    $gerarContrato = 0;
-
-}*/
 
 $today = new DateTime();
 
-if ($data_recebimento->diff($data_pagamento)->days < 15) {
-    $gerarContrato = 0;
-    $mensagem = "<p class='text-warning'>O intervalo entre a data de pagamento da primeira parcela (".exibirDataBr($parcelas['data_pagamento']).") e da data de recebimento pela SMC (".exibirDataBr($infos['data_recebimento_carta']) .") é menor que 15 dias.</p><p class='text-danger'>LEMBRE-SE O recebimento da Carta de Incentivo original na SMC deve ocorrer antes de 15 dias do vencimento do tributo a ser utilizado para incentivo do projeto cultural. ";
-} elseif ($today > $data_pagamento) {
-    $gerarContrato = 0;
-    $mensagem = "<p class='text-warning'>A data de pagamento da primeira parcela é anterior ao dia de hoje.</p><p class='text-danger'>LEMBRE-SE O recebimento da Carta de Incentivo original na SMC deve ocorrer antes de 15 dias do vencimento do tributo a ser utilizado para incentivo do projeto cultural. ";
+if (isset($data_pagamento)) {
+    if ($data_recebimento->diff($data_pagamento)->days < 15) {
+        $gerarContrato = 0;
+        $mensagem = "<p class='text-warning'>O intervalo entre a data de pagamento da primeira parcela (" . exibirDataBr($parcelas['data_pagamento']) . ") e da data de recebimento pela SMC (" . exibirDataBr($infos['data_recebimento_carta']) . ") é menor que 15 dias.</p><p class='text-danger'>LEMBRE-SE O recebimento da Carta de Incentivo original na SMC deve ocorrer antes de 15 dias do vencimento do tributo a ser utilizado para incentivo do projeto cultural. ";
+    } elseif ($today > $data_pagamento) {
+        $gerarContrato = 0;
+        $mensagem = "<p class='text-warning'>A data de pagamento da primeira parcela é anterior ao dia de hoje.</p><p class='text-danger'>LEMBRE-SE O recebimento da Carta de Incentivo original na SMC deve ocorrer antes de 15 dias do vencimento do tributo a ser utilizado para incentivo do projeto cultural. ";
+    }
 }
 
 
@@ -584,7 +567,6 @@ if ($data_recebimento->diff($data_pagamento)->days < 15) {
 
         } else {
 
-
             if (parseInt(parcelasSelected) < parseInt(parcelasSalvas)) {
                 swal("Haviam  " + parcelasSalvas + " parcelas nesse pedido!", "Número de parcelas selecionadas menor que quantidade de parcelas salvas, ao edita-lás as demais seram excluídas!", "warning");
             }
@@ -675,8 +657,8 @@ if ($data_recebimento->diff($data_pagamento)->days < 15) {
 
     var salvarModal = function () {
 
-        let idProjeto = "<?php echo $idProjeto ?>";
-        let tipoPessoa = "<?php echo $tipoPessoa ?>";
+        let idIncentivadorProjeto = "<?=$idIncentivadorProjeto?>";
+
 
         var count = 0;
 
@@ -707,8 +689,7 @@ if ($data_recebimento->diff($data_pagamento)->days < 15) {
                 parcelas: parcelas,
                 arrayValor: arrayValor,
                 arrayData: arrayData,
-                idProjeto: idProjeto,
-                tipoPessoa: tipoPessoa
+                idIncentivadorProjeto: idIncentivadorProjeto
             })
                 .done(function () {
                     var source = document.getElementById("templateParcela").innerHTML;
@@ -740,8 +721,7 @@ if ($data_recebimento->diff($data_pagamento)->days < 15) {
 
     var editarModal = function () {
 
-        let idProjeto = "<?php echo $idProjeto ?>";
-        let tipoPessoa = "<?php echo $tipoPessoa ?>";
+        let idIncentivadorProjeto = "<?=$idIncentivadorProjeto?>";
 
         var count = 0;
         $("#formParcela input").each(function () {
@@ -779,8 +759,7 @@ if ($data_recebimento->diff($data_pagamento)->days < 15) {
                     parcelas: parcelas,
                     valores: valores,
                     datas: datas,
-                    idProjeto: idProjeto,
-                    tipoPessoa: tipoPessoa
+                    idIncentivadorProjeto: idIncentivadorProjeto
                 },
             })
                 .done(function () {
