@@ -24,8 +24,6 @@ $queryEtapa = mysqli_query($con, $sqlEtapa);
 $etapaArray = mysqli_fetch_assoc($queryEtapa);
 $etapa = $etapaArray['etapa'];
 
-echo $sqlEtapa;
-
 $liberado = $pf['liberado'];
 $etapa = $etapaArray['etapa'];
 
@@ -101,6 +99,7 @@ switch ($etapa) {
 
     case '9':
     case '10':
+    case '11':
         echo "<script>location.href = '?perfil=includes/incentivador_etapa9_verificaData&tipoPessoa=$tipoPessoa'</script>";
         break;
 

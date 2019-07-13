@@ -7,7 +7,7 @@ if (isset($_POST['idProjeto'])) {
     $idProjeto = $_POST['idProjeto'];
 
 } else {
-    $sqlProject = "SELECT idProjeto FROM etapas_incentivo WHERE tipoPessoa = '$tipoPessoa' AND idIncentivador = '$idIncentivador' AND (etapa = 9 || etapa = 10)";
+    $sqlProject = "SELECT idProjeto FROM etapas_incentivo WHERE tipoPessoa = '$tipoPessoa' AND idIncentivador = '$idIncentivador' AND (etapa = 9 || etapa = 10 || etapa = 11)";
     $queryProject = mysqli_query($con, $sqlProject);
     $arr = mysqli_fetch_assoc($queryProject);
     $idProjeto = $arr['idProjeto'];
@@ -53,7 +53,7 @@ if ($intervalo->days < 15) {
 }
 
 if (isset($_POST["enviar"])) {
-
+    $parcelaAtual = $_POST['parcelaSolicitar'];
     $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '3' AND idListaDocumento IN (55,56)";
     $query_arquivos = mysqli_query($con, $sql_arquivos);
     while ($arq = mysqli_fetch_array($query_arquivos)) {
@@ -84,6 +84,12 @@ if (isset($_POST["enviar"])) {
                             $sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('$tipoPessoa', '$idPf', '$y', '$new_name', '$hoje', '1'); ";
                             $query = mysqli_query($con, $sql_insere_arquivo);
                             if ($query) {
+                                if ($y == 55) {
+                                    $sqlUpdateParcelas = "UPDATE parcelas_incentivo SET comprovante_deposito = 0 WHERE idProjeto = '$idProjeto' AND idIncentivador = '$idIncentivador' AND tipoPessoa = '$tipoPessoa' AND numero_parcela = $parcelaAtual";
+                                    mysqli_query($con, $sqlUpdateParcelasl);
+                                } else {
+                                    $sqlUpdateParcelas = "UPDATE parcelas_incentivo SET extrato_conta_projeto = 0 WHERE idProjeto = '$idProjeto' AND idIncentivador = '$idIncentivador' AND tipoPessoa = '$tipoPessoa' AND numero_parcela = $parcelaAtual";
+                                }
                                 $mensagem = "<font color='#01DF3A'><strong>Arquivo(s) recebido(s) com sucesso!</strong></font>";
                                 gravarLog($sql_insere_arquivo);
                                 $arqAnexado = "block";
@@ -132,9 +138,17 @@ if (verificaArquivosExistentesIncentivador($idIncentivador, 55) && verificaArqui
     $uploadArq = 'none';
     $arqAnexado = 'block';
     $etapa11 = 'block';
-    $botaoSolicitar = "<b class='text-warning'><i>Autorização de depósito da parcela solicitada. <br><span class='glyphicon glyphicon-info-sign text-warning'
-                                  style='margin-left: 30px;font-size: 17px; float: left;  margin-top: -8px;'></span> </i><i style='margin-left: -50px;'> Acompanhe a análise da SMC pelo sistema. </i></b>";
-    $offSetTabela = 'col-md-offset-4';
+
+    $sqlEtapa = "UPDATE etapas_incentivo SET etapa = 11 WHERE idProjeto = '$idProjeto' AND idIncentivador = '$idIncentivador' AND tipoPessoa = '$tipoPessoa'";
+    /*$sqlUpdateParcelas = "UPDATE parcelas_incentivo SET comprovante_deposito = 0, extrato_conta_projeto = 0 WHERE idProjeto = '$idProjeto' AND idIncentivador = '$idIncentivador' AND tipoPessoa = '$tipoPessoa' AND numero_parcela = $parcelaAtual";*/
+
+    if (mysqli_query($con, $sqlEtapa)) {
+        $botaoSolicitar = "<b class='text-warning'><i>Autorização de depósito da parcela solicitada. <br>
+                            <span class='glyphicon glyphicon-info-sign text-warning' style='margin-left: 30px;font-size: 17px; float: left;  margin-top: -8px;'></span> </i><i style='margin-left: -50px;'> 
+                                  Acompanhe a análise da SMC pelo sistema. </i></b>";
+        $mensagem = '';
+
+    }
 
 } elseif (verificaArquivosExistentesIncentivador($idIncentivador, 55) || verificaArquivosExistentesIncentivador($idIncentivador, 56)) {
     $uploadArq = 'block';
@@ -176,6 +190,10 @@ $etapa = $etapaArray['etapa'];
                     if (isset($mensagem)) {
                         echo "<h5>" . $mensagem . "</h5>";
                     }
+                    $projeto = recuperaDados('projeto', 'idProjeto', $idProjeto);
+                    $nomeProjeto = $projeto['nomeProjeto'];
+                        echo "<h4 class='text-info'>Voce esta incentivando o projeto: $nomeProjeto</h4>";
+
                     ?>
                 </div>
                 <hr width="50%">
@@ -198,11 +216,11 @@ $etapa = $etapaArray['etapa'];
                                 $sqlParcelas = "SELECT * FROM parcelas_incentivo WHERE idProjeto = '$idProjeto' AND tipoPessoa = '$tipoPessoa' AND idIncentivador = '$idIncentivador'";
                                 $queryParcelas = mysqli_query($con, $sqlParcelas);
                                 $numRows = mysqli_num_rows($queryParcelas);
-                                $i = 0;
-
+                                $i = 1;
+                                $x = 1;
                                 while ($parcela = mysqli_fetch_array($queryParcelas)) {
-                                    ?>
-                                    <tr style="height: 45px;" id="linhasTabela">
+                                ?>
+                                <tr style="height: 45px;" id="linhasTabela">
                                     <td style="vertical-align: middle;"
                                         class="list_description"><?= $parcela['numero_parcela'] ?></td>
                                     <td style="vertical-align: middle;"
@@ -210,10 +228,17 @@ $etapa = $etapaArray['etapa'];
                                     <td style="vertical-align: middle;"
                                         class="list_description"><?= dinheiroParaBr($parcela['valor']) ?></td>
                                     <?php
-                                    if ($parcela['comprovante_deposito'] == '' && $parcela['extrato_conta_projeto'] == '' && $i == 0):
+                                    if ($parcela['comprovante_deposito'] == '' && $parcela['extrato_conta_projeto'] == '' && $x == 1){
+                                        $parcelaSolicitar = $i;
+                                        $x = 0;
+                                    } elseif ($parcela['comprovante_deposito'] == 0 && $parcela['extrato_conta_projeto'] == 0 && $x == 1) {
+                                        $parcelaSolicitar = $i;
+                                        $x = 0;
+                                    } elseif ($parcela['comprovante_deposito'] == 0 && $parcela['extrato_conta_projeto'] == 0 && $x == 1)
+                                    if ($parcelaSolicitar == $i):
                                         ?>
                                         <td style="border: none; vertical-align: middle;" class="list_description">
-                                            <?= $spanAviso . $botaoSolicitar ?>
+                                            <?= $botaoSolicitar ?>
                                         </td>
                                         </tr>
                                     <?php
@@ -283,6 +308,7 @@ $etapa = $etapaArray['etapa'];
                                         </table>
                                         <input type="hidden" name="idPessoa" value="<?php echo $idPf; ?>"/>
                                         <input type="hidden" name="tipoPessoa" value="<?php echo $tipoPessoa; ?>"/>
+                                        <input type="hidden" name="parcelaSolicitar" value="<?php echo $parcelaSolicitar; ?>"/>
                                         <input type="submit" name="enviar" class="btn btn-theme"
                                                value='upload'>
                                         <?php
