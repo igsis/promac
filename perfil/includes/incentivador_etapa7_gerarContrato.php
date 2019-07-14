@@ -67,7 +67,7 @@ if (isset($_POST["enviar"])) {
                     if (in_array($ext, $allowedExts)) //Pergunta se a extensão do arquivo, está presente no array das extensões permitidas
                     {
                         if (move_uploaded_file($nome_temporario, $dir . $new_name)) {
-                            $sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('$tipoPessoa', '$idPf', '$y', '$new_name', '$hoje', '1'); ";
+                            $sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('3', '$idPf', '$y', '$new_name', '$hoje', '1'); ";
                             $query = mysqli_query($con, $sql_insere_arquivo);
                             if ($query) {
                                 $mensagem = "<font color='#01DF3A'><strong>Arquivo(s) recebido(s) com sucesso!</strong></font>";
@@ -167,6 +167,8 @@ if (verificaArquivosExistentesIncentivador($idIncentivador, 18)) {
 
                         <div class="row">
                             <form action="../pdf/pdf_incentivar_projeto.php" method="post" class="form-group">
+                                <input type="hidden" name="idIncentivadorProjeto" value="<?=$idIncentivadorProjeto?>">
+                                <input type="hidden" name="idProjeto" value="<?=$idProjeto?>">
                                 <div class='col-md-12'>
                                     <button type="button" onclick="loadOtherPage()"
                                             class="btn btn-theme">CLIQUE AQUI PARA GERAR PDF DA CARTA DE
@@ -187,6 +189,7 @@ if (verificaArquivosExistentesIncentivador($idIncentivador, 18)) {
                             </div>
                             <div class="col-md-2">
                                 <form action="../pdf/pdf_incentivar_projeto.php" method="post" class="form-group">
+                                    <input type="hidden" name="idIncentivadorProjeto" value="<?=$idIncentivadorProjeto?>">
                                     <button type="button" onclick="loadOtherPage()" class="btn btn-theme"
                                             style="margin-top: 5px;"><span class="glyphicon glyphicon-download"></span> </button>
                                     <br/>
@@ -389,10 +392,11 @@ if (verificaArquivosExistentesIncentivador($idIncentivador, 18)) {
         let idProjeto = "<?=$idProjeto?>";
         let tipoPessoa = "<?=$tipoPessoa?>";
         let idIncentivador = "<?=$idIncentivador?>";
+        let idIncentivadorProjeto = "<?=$idIncentivadorProjeto?>";
 
         console.log("idProjeto" + idProjeto);
 
-        let link = "../pdf/pdf_incentivar_projeto.php?tipoPessoa=" + tipoPessoa + "&idPessoa=" + idIncentivador + "&idProjeto=" + idProjeto + "";
+        let link = "../pdf/pdf_incentivar_projeto.php?tipoPessoa=" + tipoPessoa + "&idPessoa=" + idIncentivador + "&idProjeto=" + idProjeto + "&idIncentivadorProjeto=" + idIncentivadorProjeto;
 
         $("<iframe>")                             // create a new iframe element
             .hide()                               // make it invisible

@@ -5,10 +5,10 @@ require_once("../funcoes/funcoesGerais.php");
 //CONEXÃO COM BANCO DE DADOS
 
 $con = bancoMysqli();
-
-$idIncentivador = $_GET['idPessoa'];
 $idProjeto = $_GET['idProjeto'];
 $tipoPessoa = $_GET['tipoPessoa'];
+$idIncentivador = $_GET['idPessoa'];
+$idIncentivadorProjeto = $_GET['idIncentivadorProjeto'];
 
 $ano = date('Y');
 
@@ -22,9 +22,7 @@ if ($tipoPessoa == "4") {
     $rep = recuperaDados("representante_legal", "idRepresentanteLegal", $pj['idRepresentanteLegal']);
 }
 
-$sqlIncentivar = "SELECT * FROM incentivador_projeto WHERE idIncentivador = '$idIncentivador' AND tipoPessoa = '$tipoPessoa' AND idProjeto = '$idProjeto'";
-$queryIncentivar = mysqli_query($con, $sqlIncentivar);
-$infoIncentivar = mysqli_fetch_assoc($queryIncentivar);
+$infoIncentivar = recuperaDados('incentivador_projeto', 'idIncentivadorProjeto', $idIncentivadorProjeto);
 
 
 ?>
@@ -130,7 +128,7 @@ $infoIncentivar = mysqli_fetch_assoc($queryIncentivar);
                 </thead>
                 <tbody>
                 <?php
-                $sqlParcelas = "SELECT * FROM parcelas_incentivo WHERE idProjeto = '$idProjeto' AND tipoPessoa = '$tipoPessoa' AND idIncentivador = '$idIncentivador'";
+                $sqlParcelas = "SELECT * FROM parcelas_incentivo WHERE idIncentivadorProjeto = '$idIncentivadorProjeto'";
                 $queryParcelas = mysqli_query($con, $sqlParcelas);
                 while ($parcela = mysqli_fetch_array($queryParcelas)) {
                     ?>
