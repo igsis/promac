@@ -841,14 +841,13 @@ $numCartas = mysqli_num_rows($queryContratos);
 <?php
 
 $sqlAutorizacaoDeposito = "SELECT p.nomeProjeto, p.tipoPessoa AS ProjetoTipoPessoa, pf.nome, razaoSocial, I_P.tipoPessoa AS incentivadorTipoPessoa 
-                                FROM etapas_incentivo AS E_I
-                                INNER JOIN projeto AS p ON p.idProjeto = E_I.idProjeto
+                                FROM incentivador_projeto AS I_P
+                                INNER JOIN projeto AS p ON p.idProjeto = I_P.idProjeto
                                 LEFT JOIN pessoa_fisica AS pf ON p.idPf = pf.idPf
                                 LEFT JOIN pessoa_juridica AS pj ON p.idPj = pj.idPj
-                                RIGHT JOIN incentivador_projeto AS I_P ON p.idProjeto = I_P.idProjeto 
-                                WHERE E_I.etapa = 11 AND p.publicado = 1";
+                                WHERE I_P.etapa = 11 AND p.publicado = 1";
 
-echo $sqlAutorizacaoDeposito;
+//echo $sqlAutorizacaoDeposito;
 $queryAutorizacaoDeposito  = mysqli_query($con, $sqlAutorizacaoDeposito);
 $numAutorizacaoDeposito = mysqli_num_rows($queryAutorizacaoDeposito);
 

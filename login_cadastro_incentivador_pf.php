@@ -45,6 +45,7 @@ if(isset($_POST['cadastraNovoPf']))
 				else
 				{
 					$mensagem = "<font color='#FF0000'><strong>Erro ao cadastrar. Tente novamente.</strong></font>";
+					echo $sql_senha;
 				}
 			}
 			else
