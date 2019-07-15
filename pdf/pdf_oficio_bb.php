@@ -105,7 +105,7 @@ $pdf->Cell(170,$l,utf8_decode("Em São Paulo, ".$cabecalho),0,0,'C');
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 11);
-$pdf->Image('../visual/images/assinatura_tati.jpg',60,230,90);
+$pdf->Image('../visual/images/Assinatura_PaulaRocha.png',60,230,90);
 
 $pdf->Ln();
 $pdf->Ln();
