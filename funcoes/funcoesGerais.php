@@ -3622,7 +3622,7 @@ function segundaEstrofeContrato ($idIncentivador, $tipoPessoa) {
 
 }
 
-function modalInformacoesAdicionais() {
+function modalInformacoesAdicionais($url, $tipoPessoa) {
     $estadosCivis = ['Solteiro', 'Casado', 'Separado', 'Divorciado', 'Viúvo'];
     echo "<div class='modal fade' id='infosAdd' role='dialog' aria-labelledby='infosAdd'
          aria-hidden='true'>
@@ -3633,7 +3633,7 @@ function modalInformacoesAdicionais() {
                     </button>
                     <h4 class='modal-title'>Informacoes Adicionais</h4>
                 </div>
-                <form action='' method='post' class='form-group'>
+                <form action='$url' method='post' class='form-group'>
                 <div class='modal-body'>
                     <div class='row'>
                         <div class='col-md-offset-2 col-md-4'>
@@ -3655,6 +3655,7 @@ function modalInformacoesAdicionais() {
                             </select>
                         </div>
                     </div>
+                    <br>
                     <div class='row'>
                         <div class='form-group'>
                             <div class='col-md-offset-2 col-md-8'>
@@ -3667,7 +3668,8 @@ function modalInformacoesAdicionais() {
 
                     <div class='modal-footer'>
                         <button type='button' class='btn btn-default' data-dismiss='modal'>Cancelar</button>
-                        <button type='submit' class='btn btn-success' name='incentivar_projeto'>Prosseguir</button>
+                        <input type='hidden' name='tipoPessoa' value='$tipoPessoa'>
+                        <button type='submit' class='btn btn-success' name='infosAdd'>Gravar</button>
                     </div>
                 </form>
 

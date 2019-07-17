@@ -6,21 +6,21 @@ $tipoPessoa = $_POST['tipoPessoa'] ?? $_GET['tipoPessoa'];
 
 $incentivador_projeto = recuperaDados('incentivador_projeto', 'idIncentivadorProjeto', $idIncentivadorProjeto);
 
+$etapa = $incentivador_projeto['etapa'];
+
+if ($etapa == 8) {
+    $etapa8 = 'block';
+    $etapa7 = 'none';
+} else {
+    $etapa8 = 'none';
+    $etapa7 = 'block';
+}
+
 if (isset($_POST['idProjeto'])) {
     $idProjeto = $_POST['idProjeto'];
 
 } else {
     $idProjeto = $incentivador_projeto['idProjeto'];
-}
-
-if ($tipoPessoa == 4) {
-    $incentivador = recuperaDados("incentivador_pessoa_fisica", "idPf", $idIncentivador);
-    //echo "teste " . $incentivador['profissao'];
-    if ($incentivador['profissao'] == '' || $incentivador['estado_civil'] == '') {
-        echo $incentivador['profissao'];
-        $dontPrint = 1;
-        $incentivador = 1;
-    }
 }
 
 $projeto = recuperaDados("projeto", "idProjeto", $idProjeto);
@@ -33,23 +33,50 @@ if ($projeto['tipoPessoa'] == 1) {
     }
 }
 
+if ($tipoPessoa == 4) {
+    $incentivador = recuperaDados("incentivador_pessoa_fisica", "idPf", $idIncentivador);
+    //echo "teste " . $incentivador['profissao'];
+    if ($incentivador['profissao'] == '' || $incentivador['estado_civil'] == '') {
+        echo $incentivador['profissao'];
+        $dontPrint = 1;
+        $incentivador = 1;
+    }
+}
+
 if (isset($dontPrint)) {
-    if ($incentivador = 1) {
-        $mensagem = "Faltam informacoes do incentivador para gerar o contrato, adicione-as para continuar";
+    if ($incentivador == 1) {
+        $mensagem = "<font color='#FF0000'><strong>Faltam informacoes do incentivador para gerar o contrato, adicione-as para continuar</strong></font>";
         $infosMissing = 1;
+        $etapa7 = 'none';
+    } elseif ($proponente == 1) {
+        $mensagem = "<font color='#FF0000'><strong>Faltam informacoes do proponente desse projeto para gerar o contrato, ele sera avisado em seu proximo login no sistema.</strong></font>";
+        $infosPropMissing = 1;
+        $etapa7 = 'none';
+    } elseif ($incentivador == 1 && $proponente == 1) {
+        $mensagem = "<font color='#FF0000'><strong>Faltam informacoes do proponente desse projeto para gerar o contrato, ele sera avisado em seu proximo login no sistema.</strong></font>";
+        $infosBothMissing = 1;
+        $etapa7 = 'none';
+    }
+}
+
+if (isset($_POST['infosAdd'])) {
+    $estado_civil = $_POST['estadoCivil'];
+    $profissao = $_POST['profissao'];
+    $nacionalidade_id = $_POST['nacionalidade'];
+
+    $sqlInfos = "UPDATE incentivador_pessoa_fisica SET profissao = '$profissao', 
+                                                       estado_civil = '$estado_civil',
+                                                       nacionalidade_id = '$nacionalidade_id'
+                                                  WHERE idPf = '$idIncentivador'";
+
+    if (mysqli_query($con, $sqlInfos)) {
+        $mensagem = "<font color='#01DF3A'><strong>Informacoes atualizadas com sucesso! <br> Aguarde ate que a SMC aceite seus dados.</strong></font>";
+    } else {
+        echo $sqlInfos;
     }
 
 }
 
-$etapa = $incentivador_projeto['etapa'];
-
-if ($etapa == 8) {
-    $etapa8 = 'block';
-    $etapa7 = 'none';
-} else {
-    $etapa8 = 'none';
-    $etapa7 = 'block';
-}
 
 if (isset($_POST['avancar_etapa7'])) {
     $sqlEtapa = "UPDATE incentivador_projeto SET etapa = 7 WHERE idIncentivadorProjeto = '$idIncentivadorProjeto'";
@@ -166,10 +193,10 @@ if (verificaArquivosExistentesIncentivador($idIncentivador, 18)) {
                     echo "<h5>" . $mensagem . "</h5>";
                 }
 
-                if ($infosMissing == 1):
+                if (isset($infosMissing)):
                 ?>
 
-                <button class='btn btn-warning' type='button' data-id='<?=$idIncentivador?>' data-toggle='modal' data-target='#infosAdd'>Adicionar informacoes adiconais
+                <button class='btn btn-warning' type='button' data-id='<?=$idIncentivador?>' data-toggle='modal' data-target='#infosAdd'>Preencher informacoes adicionais
                 </button>
 
                 <?php
@@ -387,7 +414,7 @@ if (verificaArquivosExistentesIncentivador($idIncentivador, 18)) {
                 </div>
             </div>
 
-            <?php modalInformacoesAdicionais();  ?>
+            <?php modalInformacoesAdicionais('?perfil=includes/incentivador_etapa7_gerarContrato', $tipoPessoa);  ?>
 
             <!-- Confirmação de Exclusão -->
             <div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel"
