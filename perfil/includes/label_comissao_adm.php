@@ -12,9 +12,8 @@
     while($array = mysqli_fetch_array($query)){
         if ($array['idTipo'] == 9){
             $parecer = 1;
-
+            break;
         } else {
-
             $parecer = 0;
         }
     }

@@ -3,17 +3,7 @@
 $con = bancoMysqli();
 $idUsuario = $_SESSION['idUser'];
 $tipoPessoa = $_SESSION['tipoPessoa'];
-if ($tipoPessoa == "1")
-{
-	$pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 
-	$nacionalidade = recuperaDados("nacionalidades", "id", $pf['nacionalidade_id']);
-
-}
-else
-{
-	$pj = recuperaDados("pessoa_juridica","idPj",$idUsuario);
-}
 $alterar = 0;
 
 function listaArquivosPessoaSApagar($idPessoa,$tipoPessoa,$pagina)
@@ -56,6 +46,37 @@ function listaArquivosPessoaSApagar($idPessoa,$tipoPessoa,$pagina)
 	}
 }
 
+if (isset($_POST['infosAdd'])) {
+    $estado_civil = $_POST['estadoCivil'];
+    $profissao = $_POST['profissao'];
+    $nacionalidade_id = $_POST['nacionalidade'];
+
+    $sqlInfos = "UPDATE pessoa_fisica SET profissao = '$profissao', 
+                                                       estado_civil = '$estado_civil',
+                                                       nacionalidade_id = '$nacionalidade_id'
+                                                  WHERE idPf = '$idPf'";
+
+    if (mysqli_query($con, $sqlInfos)) {
+        $mensagem = "<div class='alert alert-success'><strong>Informações adicionadas com sucesso!</strong></div>";
+    } else {
+        echo $sqlInfos;
+    }
+
+}
+
+if ($tipoPessoa == "1")
+{
+    $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
+
+    $nacionalidade = recuperaDados("nacionalidades", "id", $pf['nacionalidade_id']);
+
+}
+else
+{
+    $pj = recuperaDados("pessoa_juridica","idPj",$idUsuario);
+}
+
+
 ?>
 <section id="list_items" class="home-section bg-white">
 	<div class="container">
@@ -76,6 +97,19 @@ function listaArquivosPessoaSApagar($idPessoa,$tipoPessoa,$pagina)
 		<?php
 	 	if ($tipoPessoa == "1") // Se Pessoa Fisica
 		{
+            echo isset($mensagem) ? $mensagem : '';
+
+            if ($pf['profissao'] == '' || $pf['estado_civil'] == '') {
+                    echo "<div>
+                            <div class='alert alert-danger'>
+                                <strong>Atenção!</strong> <br> Aindam faltam algumas informações necessárias para que seu projeto possa ser incentivado, preencho-os clicando no botão abaixo. <br> <b>Preencha os dados com atenção pois os mesmos não vão ser facilmente alterados!</b> </div>
+                            <button class='btn btn-warning' type='button' data-id='<?=$idPf?>' data-toggle='modal' data-target='#infosAdd'>Preencher informações adicionais
+                            </button>            
+                      </div>
+                      
+                      <hr width='50%'>";
+                echo modalInformacoesAdicionais('', 1);
+            }
 
 		?>
 			<div class='well'>

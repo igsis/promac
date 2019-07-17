@@ -170,7 +170,7 @@ for ($i = 0; $i < count($urlPf); $i++) {
                        <a onclick="location.href='index_pf.php?perfil=projeto_13'" href=""><br /><small>Mídias Sociais</small></a>
                     </li>
                     <li class="<?php echo isset($acionar21) ? $acionar21 : 'clickable'; ?>">
-                        <a onclick="location.href='index_pf.php?perfil=infos_adicionais_pf'" href=""><br /><small>Informações para Incentivo</small></a>
+                        <a onclick="location.href='index_pf.php?perfil=infos_adicionais_pf'" href=""><br /><small>Contas do Projeto</small></a>
                     </li>
                     <li class="<?php echo isset($acionar17) ? $acionar17 : 'clickable'; ?>">
                         <a onclick="location.href='index_pf.php?perfil=finalProjeto'" href=""><br /><small>Concluir Inscrição</small></a>

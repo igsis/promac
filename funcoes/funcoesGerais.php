@@ -2699,7 +2699,8 @@ function retornaProjeto($tipoPessoa, $id)
   
   if($tipoPessoa == 1):    
     $query =  "SELECT 
-               nomeProjeto
+               nomeProjeto,
+               idProjeto               
              FROM 
                projeto AS proj  
   			  WHERE proj.publicado = 1
@@ -2755,13 +2756,18 @@ function retornaUf($cep){
   
   $conexao = bancoMysqliCep();
     
-  $resultado = mysqli_query($conexao, 
-     "CALL  pr_busca_uf('$cep');"); 
+  if ($resultado = mysqli_query($conexao,
+     "CALL  pr_busca_uf('$cep');")) {
 
-  $uf = mysqli_fetch_array($resultado);  
-  
-  return array_unique($uf);  			  
+      $uf = mysqli_fetch_array($resultado);
+
+      return array_unique($uf);
+  } else {
+      echo "CALL  pr_busca_uf('$cep')";
+  }
 }
+
+
 
 function configuraEndereco($addresses)
 {
@@ -3660,7 +3666,7 @@ function modalInformacoesAdicionais($url, $tipoPessoa) {
                         <div class='form-group'>
                             <div class='col-md-offset-2 col-md-8'>
                                 <label>Profissão</label>
-                                <input class='form-control' type='text' name='profissao' placeholder='Exs.: Desenvolvedora, Dentista, Médico, Professor, etc...  ' value='' style='text-align: center;'>
+                                <input class='form-control' type='text' name='profissao' placeholder='Exs.: Dentista, Médico, Professora, etc...  ' value='' style='text-align: center;'>
                             </div>
                         </div>
                     </div>

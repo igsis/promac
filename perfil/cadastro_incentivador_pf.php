@@ -150,6 +150,40 @@ if ($pf['liberado'] >= 3) {
                                        value="<?= (!empty($pf['email'])) ? $pf['email'] : "" ?>">
                             </div>
                         </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-4">
+                                <label>Estado Civil</label>
+                                <select name="estadoCivil" class="form-control">
+                                    <option value="">Selecione...</option>
+                                    <?php
+                                    $estadosCivis = ['Solteiro', 'Casado', 'Separado', 'Divorciado', 'Viúvo'];
+                                    $estadoCivil = isset($estadoCivil) ? $estadoCivil : '';
+
+                                    foreach ($estadosCivis as $estado) {
+                                        if ($estado == $estadoCivil) {
+                                            echo "<option value='$estadoCivil' selected> $estadoCivil </option>";
+                                        } else {
+                                            echo "<option value='$estado'> $estado </option>";
+                                        }
+                                    }
+
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Nacionalidade</label>
+                                <select name="nacionalidade" class="form-control">
+                                    <option value="">Selecione...</option>
+                                    <?php echo geraOpcao("nacionalidades", $nacionalidade ?? ''); ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-8">
+                                <label>Profissão</label>
+                                <input class="form-control" type="text" name="profissao" placeholder="Exs.: Desenvolvedora, Dentista, Médico, Professor, etc...  " value="<?php $profissao ?? '' ?>" style="text-align: center;">
+                            </div>
+                        </div>
 
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-6"><strong>Telefone :</strong><br/>

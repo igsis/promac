@@ -88,7 +88,7 @@ foreach ($etapas as $texto => $etapa) {
                                 <td> <?= recuperaDados('etapa_projeto', 'idEtapaProjeto', $campo['idEtapaProjeto'])['etapaProjeto'] ?> </td>
 
                             <?php
-                                if ($i == 0)
+                                if ($i != 0)
                                 {
                                     ?>
                                     <td class='list_description'>
@@ -149,7 +149,7 @@ foreach ($etapas as $texto => $etapa) {
                 $i = 0;
                 while ($campo = mysqli_fetch_array($queryProjetoVerificado))
                 {
-                    if ($i < 10)
+                    if ($i < 15)
                     {
                     $idComissao = $campo ['idComissao'];
                     $idProjeto = $campo['idProjeto'];

@@ -76,7 +76,24 @@
             </tr>
             <?php
         }
+
+        if ($projeto['contaCaptacao'] != ''):
         ?>
+            <tr class="text-center">
+                <td colspan="3"><strong>Conta Captação:</strong>
+                    <?php echo isset($projeto['contaCaptacao']) ? $projeto['contaCaptacao'] : null; ?>
+                </td>
+            </tr>
+            <tr class="text-center">
+                <td colspan="3"><strong>Conta Movimentação:</strong>
+                    <?php echo isset($projeto['contaMovimentacao']) ? $projeto['contaMovimentacao'] : null; ?>
+                </td>
+            </tr>
+
+        <?php
+        endif;
+        ?>
+
     </table>
     <div class="well">
         <p align="justify"><strong>Nome do projeto:</strong> <?php echo $projeto['nomeProjeto']; ?></p>
