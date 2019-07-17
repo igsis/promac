@@ -22,6 +22,12 @@ if ($tipoPessoa == "4") {
     $rep = recuperaDados("representante_legal", "idRepresentanteLegal", $pj['idRepresentanteLegal']);
 }
 
+if (isset($pf)){
+    if ($pf['estado_civil'] == '' || $pf['profissao'] == '') {
+        $dontPrint = 1;
+    }
+}
+
 $infoIncentivar = recuperaDados('incentivador_projeto', 'idIncentivadorProjeto', $idIncentivadorProjeto);
 
 
@@ -43,9 +49,6 @@ $infoIncentivar = recuperaDados('incentivador_projeto', 'idIncentivadorProjeto',
             window.print();
         });
 
-        $(window).bind('beforeunload', function() {
-            alert("certeza qeu gostaria de fechar a pag");
-        });
 
 /*        $(function () {
             window.print();

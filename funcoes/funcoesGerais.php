@@ -3622,6 +3622,61 @@ function segundaEstrofeContrato ($idIncentivador, $tipoPessoa) {
 
 }
 
+function modalInformacoesAdicionais() {
+    $estadosCivis = ['Solteiro', 'Casado', 'Separado', 'Divorciado', 'Viúvo'];
+    echo "<div class='modal fade' id='infosAdd' role='dialog' aria-labelledby='infosAdd'
+         aria-hidden='true'>
+        <div class='modal-dialog'>
+            <div class='modal-content'>
+                <div class='modal-header'>
+                    <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;
+                    </button>
+                    <h4 class='modal-title'>Informacoes Adicionais</h4>
+                </div>
+                <form action='' method='post' class='form-group'>
+                <div class='modal-body'>
+                    <div class='row'>
+                        <div class='col-md-offset-2 col-md-4'>
+                            <label>Estado Civil</label>
+                            <select name='estadoCivil' class='form-control'>
+                                <option value=''>Selecione...</option> ";
+                                foreach ($estadosCivis as $estado) {
+                                    echo "<option value='$estado'> $estado </option>";
+                                }
+                                echo "
+                            </select>
+                        </div>
+                        <div class='col-md-4'>
+                            <label>Nacionalidade</label>
+                            <select name='nacionalidade' class='form-control'>
+                                <option value=''>Selecione...</option>";
+                                 echo geraOpcao('nacionalidades', '');
+                                 echo "                                                                  
+                            </select>
+                        </div>
+                    </div>
+                    <div class='row'>
+                        <div class='form-group'>
+                            <div class='col-md-offset-2 col-md-8'>
+                                <label>Profissão</label>
+                                <input class='form-control' type='text' name='profissao' placeholder='Exs.: Desenvolvedora, Dentista, Médico, Professor, etc...  ' value='' style='text-align: center;'>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                    <div class='modal-footer'>
+                        <button type='button' class='btn btn-default' data-dismiss='modal'>Cancelar</button>
+                        <button type='submit' class='btn btn-success' name='incentivar_projeto'>Prosseguir</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>";
+
+}
+
 
 
 

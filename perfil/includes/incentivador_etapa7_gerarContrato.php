@@ -13,6 +13,34 @@ if (isset($_POST['idProjeto'])) {
     $idProjeto = $incentivador_projeto['idProjeto'];
 }
 
+if ($tipoPessoa == 4) {
+    $incentivador = recuperaDados("incentivador_pessoa_fisica", "idPf", $idIncentivador);
+    //echo "teste " . $incentivador['profissao'];
+    if ($incentivador['profissao'] == '' || $incentivador['estado_civil'] == '') {
+        echo $incentivador['profissao'];
+        $dontPrint = 1;
+        $incentivador = 1;
+    }
+}
+
+$projeto = recuperaDados("projeto", "idProjeto", $idProjeto);
+
+if ($projeto['tipoPessoa'] == 1) {
+    $pf = recuperaDados("pessoa_fisica", "idPf", $projeto['idPf']);
+    if ($pf['estado_civil'] == '' || $pf['profissao'] == '') {
+        $dontPrint = 1;
+        $proponente = 1;
+    }
+}
+
+if (isset($dontPrint)) {
+    if ($incentivador = 1) {
+        $mensagem = "Faltam informacoes do incentivador para gerar o contrato, adicione-as para continuar";
+        $infosMissing = 1;
+    }
+
+}
+
 $etapa = $incentivador_projeto['etapa'];
 
 if ($etapa == 8) {
@@ -23,16 +51,8 @@ if ($etapa == 8) {
     $etapa7 = 'block';
 }
 
-
 if (isset($_POST['avancar_etapa7'])) {
     $sqlEtapa = "UPDATE incentivador_projeto SET etapa = 7 WHERE idIncentivadorProjeto = '$idIncentivadorProjeto'";
-    mysqli_query($con, $sqlEtapa);
-}
-
-$printed = "<script> document.write(printed); </script>";
-
-if (isset($printed)) {
-    $sqlEtapa = "UPDATE etapas_incentivo SET etapa = 8 WHERE idIncentivadorProjeto = '$idIncentivadorProjeto'";
     mysqli_query($con, $sqlEtapa);
 }
 
@@ -146,6 +166,14 @@ if (verificaArquivosExistentesIncentivador($idIncentivador, 18)) {
                     echo "<h5>" . $mensagem . "</h5>";
                 }
 
+                if ($infosMissing == 1):
+                ?>
+
+                <button class='btn btn-warning' type='button' data-id='<?=$idIncentivador?>' data-toggle='modal' data-target='#infosAdd'>Adicionar informacoes adiconais
+                </button>
+
+                <?php
+                endif;
                 ?>
               
                 <div id="etapa7" style="display: <?= $etapa7 ?>">
@@ -359,6 +387,8 @@ if (verificaArquivosExistentesIncentivador($idIncentivador, 18)) {
                 </div>
             </div>
 
+            <?php modalInformacoesAdicionais();  ?>
+
             <!-- Confirmação de Exclusão -->
             <div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel"
                  aria-hidden="true">
@@ -394,22 +424,33 @@ if (verificaArquivosExistentesIncentivador($idIncentivador, 18)) {
         let idIncentivador = "<?=$idIncentivador?>";
         let idIncentivadorProjeto = "<?=$idIncentivadorProjeto?>";
 
-        console.log("idProjeto" + idProjeto);
+        let dontPrint = "<?= isset($dontPrint) ? $dontPrint : '' ?>";
 
         let link = "../pdf/pdf_incentivar_projeto.php?tipoPessoa=" + tipoPessoa + "&idPessoa=" + idIncentivador + "&idProjeto=" + idProjeto + "&idIncentivadorProjeto=" + idIncentivadorProjeto;
 
-        $("<iframe>")                             // create a new iframe element
-            .hide()                               // make it invisible
-            .attr("src", link) // point the iframe to the page you want to print
-            .appendTo("body");                    // add iframe to the DOM to cause it to load the page
+        if (dontPrint == 1) {
+            swal("O contrato nao pode ser gerado!", "Faltam informacoes necessarias nao preenchidas pelo proponente desse projeto.", "error");
+        } else {
 
-        let printed = 1;
+            $("<iframe>")                             // create a new iframe element
+                .hide()                               // make it invisible
+                .attr("src", link) // point the iframe to the page you want to print
+                .appendTo("body");                    // add iframe to the DOM to cause it to load the page
 
-        if (printed == 1 || envioArq == 'block') {
-            $('#etapa8').show();
-            $('#etapa7').hide();
+            let printed = 1;
+
+            if (printed == 1 || envioArq == 'block') {
+                $('#etapa8').show();
+                $('#etapa7').hide();
+            }
         }
+
     };
+
+    if (envioArq == 'block') {
+        $('#etapa8').show();
+        $('#etapa7').hide();
+    }
 
 
 </script>
