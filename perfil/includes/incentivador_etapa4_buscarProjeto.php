@@ -44,7 +44,7 @@ switch ($liberado) {
 if (isset($_POST['procurar'])) {
     $projeto = addslashes($_POST['projeto']);
 
-    $sqlBusca = "SELECT * FROM projeto LEFT JOIN exposicao_marca as marca ON marca.id = projeto.idExposicaoMarca WHERE nomeProjeto like '%$projeto%' ORDER BY nomeProjeto";
+    $sqlBusca = "SELECT * FROM projeto LEFT JOIN exposicao_marca as marca ON marca.id = projeto.idExposicaoMarca WHERE nomeProjeto like '%$projeto%' AND publicado = 1 ORDER BY nomeProjeto ";
 
     if ($query = mysqli_query($con, $sqlBusca)) {
         $linhas = mysqli_num_rows($query);

@@ -45,17 +45,15 @@ if ($tipoPessoa == 4) {
 
 if (isset($dontPrint)) {
     if ($incentivador == 1) {
-        $mensagem = "<font color='#FF0000'><strong>Faltam informacoes do incentivador para gerar o contrato, adicione-as para continuar</strong></font>";
+        $mensagem = "<font color='#FF0000'><strong>Faltam informações do incentivador para gerar o contrato, adicione-as para continuar!  <br> <b>Preencha os dados com atenção pois os mesmos não vão ser facilmente alterados!</strong></font>";
         $infosMissing = 1;
         $etapa7 = 'none';
+        $etapa8 = 'none';
     } elseif ($proponente == 1) {
-        $mensagem = "<font color='#FF0000'><strong>Faltam informacoes do proponente desse projeto para gerar o contrato, ele sera avisado em seu proximo login no sistema.</strong></font>";
+        $mensagem = "<font color='#FF0000'><strong>Faltam informações do proponente desse projeto para gerar o contrato, ele sera avisado em seu proximo login no sistema.</strong></font>";
         $infosPropMissing = 1;
         $etapa7 = 'none';
-    } elseif ($incentivador == 1 && $proponente == 1) {
-        $mensagem = "<font color='#FF0000'><strong>Faltam informacoes do proponente desse projeto para gerar o contrato, ele sera avisado em seu proximo login no sistema.</strong></font>";
-        $infosBothMissing = 1;
-        $etapa7 = 'none';
+        $etapa8 = 'none';
     }
 }
 
@@ -70,7 +68,8 @@ if (isset($_POST['infosAdd'])) {
                                                   WHERE idPf = '$idIncentivador'";
 
     if (mysqli_query($con, $sqlInfos)) {
-        $mensagem = "<font color='#01DF3A'><strong>Informacoes atualizadas com sucesso! <br> Aguarde ate que a SMC aceite seus dados.</strong></font>";
+        $mensagem = "<font color='#01DF3A'><strong>Informações atualizadas com sucesso!</strong></font>";
+        $etapa7 = 'block';
     } else {
         echo $sqlInfos;
     }
@@ -87,7 +86,7 @@ $arqAnexado = "none";
 $enviarArqs = "block";
 
 if (isset($_POST["enviar"])) {
-    if (!verificaArquivosExistentesIncentivador($idIncentivador, 18)) {
+    if (!verificaArquivosExistentesIncentivador($idIncentivador, 18, 3)) {
         $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '3' AND idListaDocumento IN (18)";
         $query_arquivos = mysqli_query($con, $sql_arquivos);
         while ($arq = mysqli_fetch_array($query_arquivos)) {
@@ -134,6 +133,8 @@ if (isset($_POST["enviar"])) {
         }
     } else {
         echo "<script> swal('Você já anexou uma carta de incentivo, aguarde pelas proximas etapas', '', 'warning') </script>";
+        $etapa7 = 'none';
+        $etapa8 = 'block';
     }
 }
 
@@ -151,7 +152,7 @@ if (isset($_POST['apagar'])) {
 }
 
 
-if (verificaArquivosExistentesIncentivador($idIncentivador, 18)) {
+if (verificaArquivosExistentesIncentivador($idIncentivador, 18, 3)) {
     $uploadArq = 'none';
     $arqAnexado = 'block';
 } else {
