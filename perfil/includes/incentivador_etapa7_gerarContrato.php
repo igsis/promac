@@ -87,7 +87,7 @@ $arqAnexado = "none";
 $enviarArqs = "block";
 
 if (isset($_POST["enviar"])) {
-    if (!verificaArquivosExistentesIncentivador($idIncentivadorProjeto, 18, 3)) {
+    if (!verificaArquivosExistentesIncentivador($idIncentivadorProjeto, 18, 3, 2019)) {
         $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '3' AND idListaDocumento IN (18)";
         $query_arquivos = mysqli_query($con, $sql_arquivos);
         while ($arq = mysqli_fetch_array($query_arquivos)) {
