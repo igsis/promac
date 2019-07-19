@@ -2730,8 +2730,7 @@ function retornaProjeto($tipoPessoa, $id)
   
   if($tipoPessoa == 1):    
     $query =  "SELECT 
-               nomeProjeto,
-               idProjeto               
+               nomeProjeto         
              FROM 
                projeto AS proj  
   			  WHERE proj.publicado = 1

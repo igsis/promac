@@ -43,12 +43,30 @@ if (isset($_POST['cancelar'])){
 
 }
 
+if (isset($_POST['infosContas'])) {
+    $contaCaptacao = $_POST['captacao'];
+    $contaMovimentacao = $_POST['movimentacao'];
+    $idProjeto = $_POST['idProjeto'];
+
+    $sqlUpdateProjeto = "UPDATE projeto SET contaCaptacao = '$contaCaptacao', 
+                                            contaMovimentacao = '$contaMovimentacao'
+                                        WHERE idProjeto = '$idProjeto'";
+
+    if (mysqli_query($con, $sqlUpdateProjeto)) {
+        $mensagem = "<font color='#01DF3A'><strong>Contas do projeto adicionadas com sucesso!</strong></font>";
+    } else {
+        echo $sqlUpdateProjeto;
+    }
+}
+
+
 ?>
 <section id="list_items" class="home-section bg-white">
 	<div class="container"><?php include '../perfil/includes/menu_interno_pj.php'; ?>
 		<div class="form-group">
 
 			<h4>Projeto</h4>
+            <h5><?php if (isset($mensagem)) {echo $mensagem;}; ?></h5>
             <!-- Início Lista Projetos Cancelados pela SMC -->
             <?php
             $sql_cancelados = "SELECT distinct prj.idProjeto, nomeProjeto, protocolo, acao, observacao, data FROM projeto AS prj 
@@ -112,7 +130,6 @@ if (isset($_POST['cancelar'])){
                                 </div>
                             </div>
                             <?php
-
                         } else {
                             ?>
                             <div class="alert alert-danger">
@@ -177,6 +194,19 @@ if (isset($_POST['cancelar'])){
 									<tbody>";
 									while($campo = mysqli_fetch_array($query))
 									{
+                                        if ($campo['idEtapaProjeto'] != 1) {
+                                            if ($campo['contaCaptacao'] == '' || $campo['contaMovimentacao'] == '') {
+                                                echo "<div class='alert alert-danger'>
+                                                            <strong>Atenção!</strong> <br> Faltam algumas informações necessárias para que seu projeto possa ser incentivado, preencha-as clicando no botão abaixo. <br> <b>Preencha os dados com atenção pois os mesmos não vão ser facilmente alterados!</b> </div>
+                                                        <button class='btn btn-warning' type='button' data-id='" . $campo['idProjeto'] ."' data-toggle='modal' data-target='#infosContas'>Preencher informações adicionais
+                                                        </button>
+                                                        <hr width='50%'>
+                                                        ";
+
+                                                $infosConta = 1;
+                                            }
+                                        }
+
 										$area = recuperaDados("area_atuacao","idArea",$campo['idAreaAtuacao']);
 										echo "<tr>";
 										echo "<td class='list_description'>".$campo['nomeProjeto']."</td>";
@@ -207,7 +237,7 @@ if (isset($_POST['cancelar'])){
 											<td class='list_description'>
 												<form method='POST' action='?perfil=projeto_visualizacao'>
 													<input type='hidden' name='carregar' value='".$campo['idProjeto']."' />
-													<input type ='submit' class='btn btn-theme btn-block' value='visualizar'>
+													<input type ='submit' class='btn btn-theme btn-block' id='buttonVisualizar' value='visualizar'>
 												</form>
 											</td>";
 										}
@@ -257,6 +287,67 @@ if (isset($_POST['cancelar'])){
 				</div>
 			</div>
 		<!-- Fim Confirmação de Exclusão -->
+
+    <!-- INICIO MODAL INFORMAÇÕES DE CONTA DO PROJETO -->
+    <div class='modal fade' id='infosContas' role='dialog' aria-labelledby='infosContas'
+         aria-hidden='true'>
+        <div class='modal-dialog'>
+            <div class='modal-content'>
+                <div class='modal-header'>
+                    <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;
+                    </button>
+                    <h4 class='modal-title'>Informações das contas do projeto</h4>
+                </div>
+                <form action='' method='post' class='form-group' id="formInfosContas">
+                    <div class='modal-body'>
+                        <div class='row'>
+                            <div class='form-group'>
+                                <div class='col-md-offset-2 col-md-8'>
+                                    <label>Conta Captação</label>
+                                    <input class='form-control' type='text' name='captacao' placeholder='Banco do Brasil – Ag 0453-3 CC 60777-7' value='' style='text-align: center;'>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class='row'>
+                            <div class='form-group'>
+                                <div class='col-md-offset-2 col-md-8'>
+                                    <label>Conta Movimentação</label>
+                                    <input class='form-control' type='text' name='movimentacao' placeholder='Banco do Brasil – Ag 0453-3 CC 60777-7' value='' style='text-align: center;'>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class='modal-footer'>
+                        <button type='button' class='btn btn-default' data-dismiss='modal'>Cancelar</button>
+                        <input type='hidden' name='idProjeto'>
+                        <button type='submit' class='btn btn-success' name='infosContas'>Gravar</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <!-- FIM MODAL INFORMAÇÕES DE CONTA DO PROJETO -->
 		
 	</div>
 </section>
+
+<script type="text/javascript">
+    let infosConta = "<?=isset($infosConta) ? $infosConta : 0?>";
+
+    if (infosConta == 1) {
+        $('#buttonVisualizar').attr('disabled', true);
+        swal("O botão será habilitado quando as informações forem inseridas no sistema!", '', 'warning');
+    }
+
+
+    $('#infosContas').on('show.bs.modal', function (e) {
+        let idProjeto = $(e.relatedTarget).attr('data-id');
+
+        $(this).find('#formInfosContas input[name="idProjeto"]').attr('value', idProjeto);
+
+    });
+
+</script>

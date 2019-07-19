@@ -146,23 +146,6 @@ if (isset($_POST['infosContas'])) {
 
                         }
                     } else {
-                        $infosProjeto = recuperaDados("projeto", "idProjeto", $projeto[1]);
-
-                        if ($infosProjeto['idEtapaProjeto'] != 1) {
-                            if ($infosProjeto['contaCaptacao'] == '' || $infosProjeto['contaMovimentacao'] == '') {
-                                echo "<div class='alert alert-danger'>
-                                        <strong>Atenção!</strong> <br> Faltam algumas informações necessárias para que seu projeto possa ser incentivado, preencha-as clicando no botão abaixo. <br> <b>Preencha os dados com atenção pois os mesmos não vão ser facilmente alterados!</b> </div>
-                                    <button class='btn btn-warning' type='button' data-id='" . $projeto[1] ."' data-toggle='modal' data-target='#infosContas'>Preencher informações adicionais
-                                    </button>
-                                    <hr width='50%'>
-                                    ";
-
-                                $infosConta = 1;
-                            }
-                        }
-
-
-                        //print_r($projeto);
                         ?>
                         <div class="alert alert-danger">
                             <p>Você possui o projeto <b><?= $numProjeto ?></b> em andamento. Este é o seu limite.</p>
@@ -203,6 +186,20 @@ if (isset($_POST['infosContas'])) {
                                 </thead>
                                 <tbody>";
                         while ($campo = mysqli_fetch_array($query)) {
+
+                            if ($campo['idEtapaProjeto'] != 1) {
+                                if ($campo['contaCaptacao'] == '' || $campo['contaMovimentacao'] == '') {
+                                    echo "<div class='alert alert-danger'>
+                                        <strong>Atenção!</strong> <br> Faltam algumas informações necessárias para que seu projeto possa ser incentivado, preencha-as clicando no botão abaixo. <br> <b>Preencha os dados com atenção pois os mesmos não vão ser facilmente alterados!</b> </div>
+                                    <button class='btn btn-warning' type='button' data-id='" . $campo['idProjeto'] ."' data-toggle='modal' data-target='#infosContas'>Preencher informações adicionais
+                                    </button>
+                                    <hr width='50%'>
+                                    ";
+
+                                    $infosConta = 1;
+                                }
+                            }
+
                             $area = recuperaDados("area_atuacao", "idArea", $campo['idAreaAtuacao']);
                             echo "<tr>";
                             echo "<td class='list_description'>" . $campo['nomeProjeto'] . "</td>";
@@ -326,8 +323,6 @@ if (isset($_POST['infosContas'])) {
         $('#buttonVisualizar').attr('disabled', true);
         alert("O botão será habilitado quando as informações forem inseridas no sistema!");
     }
-
-
 
     $('#infosContas').on('show.bs.modal', function (e) {
         let idProjeto = $(e.relatedTarget).attr('data-id');
