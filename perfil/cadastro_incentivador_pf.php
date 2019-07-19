@@ -163,7 +163,7 @@ if ($pf['liberado'] >= 3) {
                                     <option value="">Selecione...</option>
                                     <?php
                                     $estadosCivis = ['Solteiro', 'Casado', 'Separado', 'Divorciado', 'Viúvo'];
-                                    $estadoCivil = $pf['estado_civil'] ?? '';
+                                    $estadoCivil = $pf['estado_civil'] != '' ? $pf['estado_civil'] : '';
 
                                     foreach ($estadosCivis as $estado) {
                                         if ($estado == $estadoCivil) {
@@ -180,14 +180,14 @@ if ($pf['liberado'] >= 3) {
                                 <label>Nacionalidade</label>
                                 <select name="nacionalidade" class="form-control">
                                     <option value="">Selecione...</option>
-                                    <?php echo geraOpcao("nacionalidades", $pf['nacionalide_id'] ?? ''); ?>
+                                    <?php echo geraOpcao("nacionalidades", $pf['nacionalide_id']); ?>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-8">
                                 <label>Profissão</label>
-                                <input class="form-control" type="text" name="profissao" placeholder="Exs.: Desenvolvedora, Dentista, Médico, Professor, etc...  " value="<?php $pf['profissao'] != '' ? $pf['profissao'] : '' ?>" style="text-align: center;">
+                                <input class="form-control" type="text" name="profissao" placeholder="Exs.: Desenvolvedora, Dentista, Médico, Professor, etc...  " value="<?= $pf['profissao'] != '' ? $pf['profissao'] : '' ?>" style="text-align: center;">
                             </div>
                         </div>
 
