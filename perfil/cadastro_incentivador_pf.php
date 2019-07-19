@@ -34,7 +34,7 @@ if (isset($_POST['cadastraNovoPf']) and $_POST['numero']):
     $CEP = $_POST['cep'];
     $Numero = $_POST['numero'];
     $Complemento = addslashes($_POST['complemento']);
-    $estadoCivil = $_POST['estado_civil'];
+    $estadoCivil = $_POST['estadoCivil'];
     $nacionalidade = $_POST['nacionalidade'];
     $profissao = $_POST['profissao'];
 
