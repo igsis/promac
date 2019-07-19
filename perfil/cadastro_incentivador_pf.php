@@ -180,7 +180,7 @@ if ($pf['liberado'] >= 3) {
                                 <label>Nacionalidade</label>
                                 <select name="nacionalidade" class="form-control">
                                     <option value="">Selecione...</option>
-                                    <?php echo geraOpcao("nacionalidades", $pf['nacionalide_id']); ?>
+                                    <?php geraOpcao("nacionalidades", $pf['nacionalide_id']); ?>
                                 </select>
                             </div>
                         </div>
