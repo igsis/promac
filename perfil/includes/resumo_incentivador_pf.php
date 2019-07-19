@@ -18,6 +18,8 @@
 					Conclua sua inscrição ao final da página para enviar suas informações à Secretaria Municipal de Cultura.
 				</div>";
 		}
+
+    $nacionalidade = recuperaDados("nacionalidades", "id", $pf['nacionalidade_id']);
 	?>
 </div>
 <div class="page-header">
@@ -37,6 +39,9 @@
 	<p align="justify"><strong>Bairro:</strong> <?php echo $pf['bairro']; ?></p>
 	<p align="justify"><strong>Cidade:</strong> <?php echo $pf['cidade']; ?></p>
 	<p align="justify"><strong>Estado:</strong> <?php echo $pf['estado']; ?></p>
+    <p align='justify'><strong>Nacionalidade:</strong> <?php echo isset($pf['nacionalidade_id']) ? $nacionalidade['nacionalidade'] : null; ?></p>
+    <p align='justify'><strong>Profissão:</strong> <?php echo isset($pf['profissao']) ? $pf['profissao'] : null; ?></p>
+    <p align='justify'><strong>Estado Civil:</strong> <?php echo isset($pf['estado_civil']) ? $pf['estado_civil'] : null; ?></p>
 </div>
 
 <div class="table-responsive list_info"><h6>Arquivo(s) de Pessoa Física(s)</h6>

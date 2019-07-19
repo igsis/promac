@@ -210,6 +210,8 @@ if(isset($_POST['nota']))
 }
 
 $pf = recuperaDados("incentivador_pessoa_fisica","idPf",$idPf);
+
+$nacionalidade = recuperaDados("nacionalidades", "id", $pf['nacionalidade_id']);
 ?>
 <section id="list_items" class="home-section bg-white">
 	<div class="container"><?php include 'includes/menu_smc.php'; ?>
@@ -243,6 +245,9 @@ $pf = recuperaDados("incentivador_pessoa_fisica","idPf",$idPf);
 			<p align="justify"><strong>Cidade:</strong> <?php echo isset($pf['cidade']) ? $pf['cidade'] : null; ?></p>
 			<p align="justify"><strong>Estado:</strong> <?php echo isset($pf['estado']) ? $pf['estado'] : null; ?></p>
 			<p align="justify"><strong>CEP:</strong> <?php echo isset($pf['cep']) ? $pf['cep'] : null; ?></p>
+            <p align='justify'><strong>Nacionalidade:</strong> <?php echo isset($pf['nacionalidade_id']) ? $nacionalidade['nacionalidade'] : null; ?></p>
+            <p align='justify'><strong>Profissão:</strong> <?php echo isset($pf['profissao']) ? $pf['profissao'] : null; ?></p>
+            <p align='justify'><strong>Estado Civil:</strong> <?php echo isset($pf['estado_civil']) ? $pf['estado_civil'] : null; ?></p>
 			<p align="justify"><strong>Data da Inscrição:</strong> <?php echo isset($pf['dataInscricao']) ? exibirDataHoraBr($pf['dataInscricao']) : null; ?></p>
 		 </div>
 		 <div class="table-responsive list_info"><h6>Arquivo(s) de Pessoa Física</h6>

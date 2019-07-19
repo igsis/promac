@@ -34,6 +34,9 @@ if (isset($_POST['cadastraNovoPf']) and $_POST['numero']):
     $CEP = $_POST['cep'];
     $Numero = $_POST['numero'];
     $Complemento = addslashes($_POST['complemento']);
+    $estadoCivil = $_POST['estado_civil'];
+    $nacionalidade = $_POST['nacionalidade'];
+    $profissao = $_POST['profissao'];
 
     $validar = array(
         $_POST['Endereco'],
@@ -57,6 +60,9 @@ if (isset($_POST['cadastraNovoPf']) and $_POST['numero']):
 	`cep` = '$CEP',
 	`numero` = '$Numero',
 	`complemento` = '$Complemento',
+    `estado_civil` = '$estadoCivil',
+    `nacionalidade_id` = '$nacionalidade',
+    `profissao` = '$profissao',
 	`alteradoPor` = '$userIn'
   WHERE `idPf` = '$idPf'";
 
@@ -157,7 +163,7 @@ if ($pf['liberado'] >= 3) {
                                     <option value="">Selecione...</option>
                                     <?php
                                     $estadosCivis = ['Solteiro', 'Casado', 'Separado', 'Divorciado', 'Viúvo'];
-                                    $estadoCivil = isset($estadoCivil) ? $estadoCivil : '';
+                                    $estadoCivil = $pf['estado_civil'] ?? '';
 
                                     foreach ($estadosCivis as $estado) {
                                         if ($estado == $estadoCivil) {
@@ -174,14 +180,14 @@ if ($pf['liberado'] >= 3) {
                                 <label>Nacionalidade</label>
                                 <select name="nacionalidade" class="form-control">
                                     <option value="">Selecione...</option>
-                                    <?php echo geraOpcao("nacionalidades", $nacionalidade ?? ''); ?>
+                                    <?php echo geraOpcao("nacionalidades", $pf['nacionalide_id'] ?? ''); ?>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-8">
                                 <label>Profissão</label>
-                                <input class="form-control" type="text" name="profissao" placeholder="Exs.: Desenvolvedora, Dentista, Médico, Professor, etc...  " value="<?php $profissao ?? '' ?>" style="text-align: center;">
+                                <input class="form-control" type="text" name="profissao" placeholder="Exs.: Desenvolvedora, Dentista, Médico, Professor, etc...  " value="<?php $pf['profissao'] != '' ? $pf['profissao'] : '' ?>" style="text-align: center;">
                             </div>
                         </div>
 
