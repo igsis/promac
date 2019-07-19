@@ -30,6 +30,23 @@
             ?>
     </table>
     <br/>
+
+    <ul class='list-group'>
+        <li class='list-group-item list-group-item-success'><strong>SOLICITAÇÕES DO PROPONENTE JÁ ANALISADAS</strong></li>
+    </ul>
+    <table class='table table-condensed'>
+        <thead>
+            <tr class='list_menu'>
+                <td>Tipo de arquivo</td>
+                <td>Data de Envio</td>
+            </tr>
+        </thead>
+        <tbody>
+        <?php listaAnexosAnalisadosProjetoSMC($idProjeto, 3, "smc_detalhes_projeto"); ?>
+        </tbody>
+    </table>
+
+    <br/>
     <table class='table table-condensed'>
         <ul class='list-group'>
             <li class='list-group-item list-group-item-success'><strong>HISTÓRICO DO PARECERISTA</strong></li>

@@ -136,6 +136,15 @@ $link = $consulta->fetch()['linkAgendamento'];
                                         </ul>
                                     </div>
                                 </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-8">
+                                        <ul class='list-group'>
+                                            <li class='list-group-item list-group-item-success'><strong>Solicitações de alteração analisadas pela SMC</strong></li>
+                                            <li class='list-group-item'><?php listaAnexosProjetoSMC($idProjeto, 3, "", 2); ?></li>
+                                        </ul>
+                                    </div>
+                                </div>
                             <?php } ?>
 
                             <div class="form-group">
