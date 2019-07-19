@@ -70,6 +70,7 @@ if (isset($_POST['infosAdd'])) {
     if (mysqli_query($con, $sqlInfos)) {
         $mensagem = "<font color='#01DF3A'><strong>Informações atualizadas com sucesso!</strong></font>";
         $etapa7 = 'block';
+        unset($infosMissing);
     } else {
         echo $sqlInfos;
     }
@@ -116,7 +117,7 @@ if (isset($_POST["enviar"])) {
                             $sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('3', '$idPf', '$y', '$new_name', '$hoje', '1'); ";
                             $query = mysqli_query($con, $sql_insere_arquivo);
                             if ($query) {
-                                $mensagem = "<font color='#01DF3A'><strong>Arquivo(s) recebido(s) com sucesso!</strong></font>";
+                                $mensagem = "<font color='#01DF3A'><strong>Arquivo recebido com sucesso!</strong></font>";
                                 gravarLog($sql_insere_arquivo);
                                 $arqAnexado = "block";
                             } else {
