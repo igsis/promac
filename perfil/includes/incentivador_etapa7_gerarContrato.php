@@ -153,7 +153,7 @@ if (isset($_POST['apagar'])) {
 }
 
 
-if (verificaArquivosExistentesIncentivador($idIncentivadorProjeto, 18, 3)) {
+if (verificaArquivosExistentesIncentivador($idIncentivadorProjeto, 18, 3, 2019)) {
     $uploadArq = 'none';
     $arqAnexado = 'block';
 } else {
@@ -284,7 +284,7 @@ if (verificaArquivosExistentesIncentivador($idIncentivadorProjeto, 18, 3)) {
                                             $envio = $con->query($query);
                                             $row = $envio->fetch_array(MYSQLI_ASSOC);
 
-                                            if (!verificaArquivosExistentesIncentivador($idIncentivadorProjeto, $row['idListaDocumento'], 3)) {
+                                            if (!verificaArquivosExistentesIncentivador($idIncentivadorProjeto, $row['idListaDocumento'], 3, 2019)) {
                                                 $documento = (object)
                                                 [
                                                     'nomeDocumento' => $arq['documento'],
@@ -343,15 +343,21 @@ if (verificaArquivosExistentesIncentivador($idIncentivadorProjeto, 18, 3)) {
                                     </thead>
                                     <tbody>
                                     <?php
+                                    $ano = date('Y');
                                     $sql = "SELECT *
                                         FROM lista_documento as list
                                         INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
                                         WHERE arq.idPessoa = '$idIncentivadorProjeto'
                                         AND list.idListaDocumento IN (18)
                                         AND arq.idTipo = '3'
-                                        AND arq.publicado = '1'";
+                                        AND arq.publicado = '1'
+                                        AND arq.dataEnvio LIKE '2019%'";
                                     $query = mysqli_query($con, $sql);
                                     $linhas = mysqli_num_rows($query);
+
+                                    if ($linhas == 0) {
+                                        $arqAnexado = 'none';
+                                    }
 
                                     while ($arquivo = mysqli_fetch_array($query)) {
                                         $queryStatusDoc = "SELECT idStatusDocumento FROM upload_arquivo WHERE idUploadArquivo = '" . $arquivo['idUploadArquivo'] . "'";
