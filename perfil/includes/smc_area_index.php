@@ -767,25 +767,29 @@ $numCartas = mysqli_num_rows($queryContratos);
                                 <tbody>";
 
                 while ($campo = mysqli_fetch_array($queryContratos)) {
-                    $idPessoa = $campo['idPessoa'];
-                    if ($campo['idTipo'] == 4) {
+                    $idIncentivadorProjeto = $campo['idPessoa'];
+
+                    $sqlIncentivador = "SELECT I_P.valor_aportado, I_P.edital, I_P.imposto, I_P.tipoPessoa, I_P.idPessoa, P.nomeProjeto, P.idProjeto, parcelas.data_pagamento 
+                                            FROM incentivador_projeto AS I_P 
+                                            INNER JOIN projeto AS P ON I_P.idProjeto = P.idProjeto
+                                            INNER JOIN parcelas_incentivo AS parcelas ON parcelas.idIncentivadorProjeto = I_P.idIncentivadorProjeto
+                                            WHERE I_P.idIncentivadorProjeto = '$idIncentivadorProjeto' AND I_P.publicado = 1
+                                            ORDER BY parcelas.data_pagamento limit 1";
+
+                    if (!$queryIncentivar = mysqli_query($con, $sqlIncentivador)) {
+                        echo $sqlIncentivador;
+                    }
+                    $infos = mysqli_fetch_assoc($queryIncentivar);
+                    $idPessoa = $infos['idPessoa'];
+
+                    if ($infos['tipoPessoa'] == 4) {
                         $incentivador = recuperaDados("incentivador_pessoa_fisica", "idPf", $idPessoa);
                         $docPessoa = $incentivador['cpf'];
-                    } elseif ($campo['idTipo'] == 5) {
+                    } elseif ($infos['tipoPessoa'] == 5) {
                         $incentivador = recuperaDados("incentivador_pessoa_juridica", "idPj", $idPessoa);
                         $docPessoa = $incentivador['cnpj'];
                     }
 
-                    $sqlIncentivador = "SELECT I_P.valor_aportado, I_P.edital, I_P.imposto, P.nomeProjeto, P.idProjeto, parcelas.data_pagamento 
-                                            FROM incentivador_projeto AS I_P 
-                                            INNER JOIN projeto AS P ON I_P.idProjeto = P.idProjeto
-                                            INNER JOIN parcelas_incentivo AS parcelas ON parcelas.idProjeto = I_P.idProjeto AND parcelas.idIncentivador = I_P.idIncentivador
-                                            INNER JOIN  AS parcelas ON parcelas.idProjeto = I_P.idProjeto AND parcelas.idIncentivador = I_P.idIncentivador
-                                            WHERE I_P.idIncentivador = '$idPessoa' AND I_P.tipoPessoa = '" . $campo['idTipo'] . "' AND I_P.publicado = 1
-                                            ORDER BY parcelas.data_pagamento limit 1";
-
-                    $queryIncentivar = mysqli_query($con, $sqlIncentivador);
-                    $infos = mysqli_fetch_assoc($queryIncentivar);
 
                     echo "<tr> 
                             <form method='POST' action=''>";

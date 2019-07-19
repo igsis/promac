@@ -87,7 +87,7 @@ $arqAnexado = "none";
 $enviarArqs = "block";
 
 if (isset($_POST["enviar"])) {
-    if (!verificaArquivosExistentesIncentivador($idIncentivador, 18, 3)) {
+    if (!verificaArquivosExistentesIncentivador($idIncentivadorProjeto, 18, 3)) {
         $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '3' AND idListaDocumento IN (18)";
         $query_arquivos = mysqli_query($con, $sql_arquivos);
         while ($arq = mysqli_fetch_array($query_arquivos)) {
@@ -114,7 +114,7 @@ if (isset($_POST["enviar"])) {
                     if (in_array($ext, $allowedExts)) //Pergunta se a extensão do arquivo, está presente no array das extensões permitidas
                     {
                         if (move_uploaded_file($nome_temporario, $dir . $new_name)) {
-                            $sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('3', '$idPf', '$y', '$new_name', '$hoje', '1'); ";
+                            $sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('3', '$idIncentivadorProjeto', '$y', '$new_name', '$hoje', '1'); ";
                             $query = mysqli_query($con, $sql_insere_arquivo);
                             if ($query) {
                                 $mensagem = "<font color='#01DF3A'><strong>Arquivo recebido com sucesso!</strong></font>";
@@ -153,7 +153,7 @@ if (isset($_POST['apagar'])) {
 }
 
 
-if (verificaArquivosExistentesIncentivador($idIncentivador, 18, 3)) {
+if (verificaArquivosExistentesIncentivador($idIncentivadorProjeto, 18, 3)) {
     $uploadArq = 'none';
     $arqAnexado = 'block';
 } else {
@@ -284,7 +284,7 @@ if (verificaArquivosExistentesIncentivador($idIncentivador, 18, 3)) {
                                             $envio = $con->query($query);
                                             $row = $envio->fetch_array(MYSQLI_ASSOC);
 
-                                            if (!verificaArquivosExistentesIncentivador($idPf, $row['idListaDocumento'], 3)) {
+                                            if (!verificaArquivosExistentesIncentivador($idIncentivadorProjeto, $row['idListaDocumento'], 3)) {
                                                 $documento = (object)
                                                 [
                                                     'nomeDocumento' => $arq['documento'],
@@ -346,7 +346,7 @@ if (verificaArquivosExistentesIncentivador($idIncentivador, 18, 3)) {
                                     $sql = "SELECT *
                                         FROM lista_documento as list
                                         INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
-                                        WHERE arq.idPessoa = '$idIncentivador'
+                                        WHERE arq.idPessoa = '$idIncentivadorProjeto'
                                         AND list.idListaDocumento IN (18)
                                         AND arq.idTipo = '3'
                                         AND arq.publicado = '1'";
