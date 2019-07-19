@@ -70,7 +70,7 @@ if (isset($_POST['gravarAnaliseCarta'])) {
     $status = $_POST['statusDoc'];
     $data = exibirDataMysql($_POST['dataRecebimento']);
     $idArquivo = $_POST['idArquivo'];
-    $idPessoa = $_POST['idPessoa'];
+    $idIncentivadorProjeto = $_POST['idIncentivadorProjeto'];
     $idProjeto = $_POST['idProjeto'];
     $tipoPessoa = $_POST['tipoPessoa'];
     $obs = $_POST['observacao'] ?? null;
@@ -81,15 +81,15 @@ if (isset($_POST['gravarAnaliseCarta'])) {
     $sqlAtualiza = "UPDATE upload_arquivo SET idStatusDocumento = $status, observacoes = '$obs' WHERE idUploadArquivo = '$idArquivo'";
 
     if (mysqli_query($con, $sqlAtualiza)) {
-        $sqlData = "UPDATE incentivador_projeto SET data_recebimento_carta = '$data' WHERE idIncentivador = '$idPessoa' AND tipoPessoa = '$tipoPessoa' AND idProjeto = '$idProjeto'";
+        $sqlData = "UPDATE incentivador_projeto SET data_recebimento_carta = '$data' WHERE idIncentivadorProjeto = '$idIncentivadorProjeto'";
 
         if (mysqli_query($con, $sqlData)) {
 
             if ($status == 1) {
-                $sqlEtapa = "UPDATE etapas_incentivo SET etapa = 9 WHERE idIncentivador = '$idPessoa' AND tipoPessoa = '$tipoPessoa' AND idProjeto = '$idProjeto'";
+                $sqlEtapa = "UPDATE etapas_incentivo SET etapa = 9 WHERE WHERE idIncentivadorProjeto = '$idIncentivadorProjeto'";
 
             } else {
-                $sqlEtapa = "UPDATE etapas_incentivo SET etapa = 8 WHERE idIncentivador = '$idPessoa' AND tipoPessoa = '$tipoPessoa' AND idProjeto = '$idProjeto'";
+                $sqlEtapa = "UPDATE etapas_incentivo SET etapa = 8 WHERE WHERE idIncentivadorProjeto = '$idIncentivadorProjeto'";
                 $mensagem = "<span style='color: #FFA500; '><strong>A análise foi gravada com sucesso, o usuario será notificado sua carta foi negada e permanecerá na etapa de envio da mesma.</strong></span>";
             }
 
@@ -822,7 +822,7 @@ $numCartas = mysqli_num_rows($queryContratos);
                                                     <input type='hidden' name='idProjeto' value='" . $infos['idProjeto'] . "' />
                                                     <input type='hidden' name='tipoPessoa' value='" . $campo ['idTipo'] . "' />
                                                     <!-- <input type ='submit' name='gravarAnaliseCarta' class='btn btn-theme btn-block' value='Gravar'> -->
-                                                     <input type='button' name='cartaIncentivo' data-idPessoa='" . $campo['idPessoa'] . "' data-idArquivo='" . $campo['idUploadArquivo'] . "'
+                                                     <input type='button' name='cartaIncentivo' data-idIncentivadorProjeto='$idIncentivadorProjeto' data-idArquivo='" . $campo['idUploadArquivo'] . "'
                                                       data-idProjeto='" . $infos['idProjeto'] . "' data-tipoPessoa='" . $campo['idTipo'] . "' data-primeiraParcela='" . $infos['data_pagamento'] . "' 
                                                       class='btn btn-theme' data-toggle='modal' data-target='#cartaIncentivo' value='Análise' > 
                                                 </form>
@@ -911,7 +911,7 @@ $numAutorizacaoDeposito = mysqli_num_rows($queryAutorizacaoDeposito);
                     $sqlIncentivador = "SELECT I_P.valor_aportado, I_P.edital, I_P.imposto, P.nomeProjeto, P.idProjeto, parcelas.data_pagamento 
                                             FROM incentivador_projeto AS I_P 
                                             INNER JOIN projeto AS P ON I_P.idProjeto = P.idProjeto
-                                            INNER JOIN parcelas_incentivo AS parcelas ON parcelas.idProjeto = I_P.idProjeto AND parcelas.idIncentivador = I_P.idIncentivador
+                                            INNER JOIN parcelas_incentivo AS parcelas ON parcelas.idIncentivadorProjeto = I_P.idIncentivadorProjeto
                                             WHERE I_P.idIncentivador = '$idPessoa' AND I_P.tipoPessoa = '" . $campo['idTipo'] . "' AND I_P.publicado = 1
                                             ORDER BY parcelas.data_pagamento limit 1";
 
@@ -1078,7 +1078,7 @@ $numAutorizacaoDeposito = mysqli_num_rows($queryAutorizacaoDeposito);
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
-                        <input type='hidden' name='idPessoa' value=''/>
+                        <input type='hidden' name='idIncentivadorProjeto' value=''/>
                         <input type='hidden' name='idArquivo' value=''/>
                         <input type='hidden' name='idProjeto' value=''/>
                         <input type='hidden' name='tipoPessoa' value=''/>
@@ -1121,13 +1121,13 @@ $numAutorizacaoDeposito = mysqli_num_rows($queryAutorizacaoDeposito);
     });
 
     $('#cartaIncentivo').on('show.bs.modal', function (e) {
-        let idPessoa = $(e.relatedTarget).attr('data-idPessoa');
+        let idIncentivadorProjeto = $(e.relatedTarget).attr('data-idIncentivadorProjeto');
         let idArquivo = $(e.relatedTarget).attr('data-idArquivo');
         let idProjeto = $(e.relatedTarget).attr('data-idProjeto');
         let tipoPessoa = $(e.relatedTarget).attr('data-tipoPessoa');
         let first = $(e.relatedTarget).attr('data-primeiraParcela');
 
-        $(this).find('#formCartaIncentivo input[name="idPessoa"]').attr('value', idPessoa);
+        $(this).find('#formCartaIncentivo input[name="idIncentivadorProjeto"]').attr('value', idIncentivadorProjeto);
         $(this).find('#formCartaIncentivo input[name="idArquivo"]').attr('value', idArquivo);
         $(this).find('#formCartaIncentivo input[name="idProjeto"]').attr('value', idProjeto);
         $(this).find('#formCartaIncentivo input[name="tipoPessoa"]').attr('value', tipoPessoa);
