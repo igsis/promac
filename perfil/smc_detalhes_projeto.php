@@ -174,6 +174,12 @@ if(isset($_POST['aprovaProjeto']))
             $mensagem = "<font color='#01DF3A'><strong>Aprovado com sucesso!</strong></font>";
             gravarLog($sql_historico);
             gravarLog($sql_reprova);
+            if ($idEtapaNova == 16) {
+                $sqlConsultaArquivoAlteracao = "SELECT * FROM upload_arquivo WHERE idPessoa = '$idProjeto' AND idListaDocumento = '47' ORDER BY dataEnvio DESC LIMIT 0,1";
+                $arquivoAlteracao = $con->query($sqlConsultaArquivoAlteracao)->fetch_array();
+                $idArquivoAlteracao = $arquivoAlteracao['idUploadArquivo'];
+                $con->query("UPDATE upload_arquivo SET publicado = '2' WHERE idUploadArquivo = $idArquivoAlteracao");
+            }
         } else {
             $mensagem = "<font color='#FF0000'><strong>Erro ao aprovar! Tente novamente.</strong></font>";
         }
@@ -224,6 +230,14 @@ if(isset($_POST['reprovaProjeto']))
             $mensagem = "<font color='#01DF3A'><strong>Reaprovado com sucesso!</strong></font>";
             gravarLog($sql_historico);
             gravarLog($sql_reprova);
+
+            if ($idEtapaNova == 17) {
+                $sqlConsultaArquivoAlteracao = "SELECT * FROM upload_arquivo WHERE idPessoa = '$idProjeto' AND idListaDocumento = '47' ORDER BY dataEnvio DESC LIMIT 0,1";
+                $arquivoAlteracao = $con->query($sqlConsultaArquivoAlteracao)->fetch_array();
+                $idArquivoAlteracao = $arquivoAlteracao['idUploadArquivo'];
+                $con->query("UPDATE upload_arquivo SET publicado = '2' WHERE idUploadArquivo = $idArquivoAlteracao");
+            }
+
         } else {
             $mensagem = "<font color='#FF0000'><strong>Erro ao reaprovar! Tente novamente.</strong></font>";
         }

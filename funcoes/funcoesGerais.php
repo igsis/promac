@@ -1341,7 +1341,7 @@ function listaAnexosProjeto($idPessoa,$tipoPessoa,$idArquivo)
     }
 }
 
-function listaAnexosProjetoSMC($idProjeto,$tipoPessoa,$pagina)
+function listaAnexosProjetoSMC($idProjeto,$tipoPessoa,$pagina,$publicado = 1)
 {
     $con = bancoMysqli();
     $sql = "SELECT *
@@ -1349,7 +1349,7 @@ function listaAnexosProjetoSMC($idProjeto,$tipoPessoa,$pagina)
 			INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
 			WHERE arq.idPessoa = '$idProjeto'
 			AND arq.idTipo = '$tipoPessoa'
-			AND arq.publicado = '1' AND list.idListaDocumento IN (39,40,41,42,43,44,46,47,52,53) ";
+			AND arq.publicado = '$publicado' AND list.idListaDocumento IN (39,40,41,42,43,44,46,47,52,53) ";
     $query = mysqli_query($con,$sql);
     $linhas = mysqli_num_rows($query);
 
@@ -1382,6 +1382,37 @@ function listaAnexosProjetoSMC($idProjeto,$tipoPessoa,$pagina)
     else
     {
         echo "<p>Não há arquivo(s) inserido(s).<p/><br/>";
+    }
+}
+
+function listaAnexosAnalisadosProjetoSMC($idProjeto,$tipoPessoa,$pagina)
+{
+    $con = bancoMysqli();
+    $sql = "SELECT *
+			FROM lista_documento as list
+			INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
+			WHERE arq.idPessoa = '$idProjeto'
+			AND arq.idTipo = '$tipoPessoa'
+			AND arq.publicado = '2' AND list.idListaDocumento IN (39,40,41,42,43,44,46,47,52,53) ";
+    $query = mysqli_query($con,$sql);
+    $linhas = mysqli_num_rows($query);
+
+    if ($linhas > 0)
+    {
+        while($arquivo = mysqli_fetch_array($query))
+        {
+            echo "<tr>";
+            echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['documento'], 0 ,100,"..." )."</a></td>";
+            echo "<td class='list_description'>".exibirDataBr($arquivo['dataEnvio'])."</td>";
+            echo "</tr>";
+        }
+        echo "
+		</tbody>
+		</table>";
+    }
+    else
+    {
+        echo "<tr><td>Não há registros disponíveis.</td></tr>";
     }
 }
 
