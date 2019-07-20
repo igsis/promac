@@ -1,25 +1,26 @@
 <?php
 $con = bancoMysqli();
 $idIncentivador = $_SESSION['idUser'];
+$idIncentivadorProjeto = $_SESSION['idIncentivadorProjeto'];
 $tipoPessoa = $_POST['tipoPessoa'] ?? $_GET['tipoPessoa'];
 
 if (isset($_POST['idProjeto'])) {
     $idProjeto = $_POST['idProjeto'];
 
 } else {
-    $sqlProject = "SELECT idProjeto FROM etapas_incentivo WHERE tipoPessoa = '$tipoPessoa' AND idIncentivador = '$idIncentivador' AND (etapa = 9 || etapa = 10 || etapa = 11)";
+    $sqlProject = "SELECT idProjeto FROM incentivador_projeto WHERE idIncentivadorProjeto = '$idIncentivadorProjeto' AND (etapa = 9 || etapa = 10 || etapa = 11)";
     $queryProject = mysqli_query($con, $sqlProject);
     $arr = mysqli_fetch_assoc($queryProject);
     $idProjeto = $arr['idProjeto'];
 }
 
-$sqlIP = "SELECT * FROM incentivador_projeto WHERE idProjeto = '$idProjeto' AND idIncentivador = '$idIncentivador' AND tipoPessoa = '$tipoPessoa'";
+$sqlIP = "SELECT * FROM incentivador_projeto WHERE idIncentivadorProjeto = '$idIncentivadorProjeto'";
 $queryIP = mysqli_query($con, $sqlIP);
 $infos = mysqli_fetch_assoc($queryIP);
 $data_recebimento = new DateTime($infos['data_recebimento_carta']);
 
 
-$sqlUltimaParcela = "SELECT * FROM parcelas_incentivo WHERE idProjeto = '$idProjeto' AND idIncentivador = '$idIncentivador' AND tipoPessoa = '$tipoPessoa' ORDER BY 'numero_parcela' ASC LIMIT 1";
+$sqlUltimaParcela = "SELECT * FROM parcelas_incentivo WHERE idIncentivadorProjeto = '$idIncentivadorProjeto' ORDER BY 'numero_parcela' ASC LIMIT 1";
 $queryUltima = mysqli_query($con, $sqlUltimaParcela);
 $parcelas = mysqli_fetch_assoc($queryUltima);
 $data_pagamento = new DateTime($parcelas['data_pagamento']);
@@ -43,7 +44,7 @@ if ($intervalo->days < 15) {
 
 } else {
 
-    $sqlEtapa = "UPDATE etapas_incentivo SET etapa = 10 WHERE idProjeto = '$idProjeto' AND idIncentivador = '$idIncentivador' AND tipoPessoa = '$tipoPessoa'";
+    $sqlEtapa = "UPDATE incentivador_projeto SET etapa = 10 WHERE idProjeto = '$idProjeto' AND idIncentivador = '$idIncentivador' AND tipoPessoa = '$tipoPessoa'";
     if (mysqli_query($con, $sqlEtapa)) {
         $mensagem = "<div class='text-success'>
                     <strong>Certo!</strong><br>
@@ -154,7 +155,7 @@ if (verificaArquivosExistentesIncentivador($idIncentivador, 55) && verificaArqui
 }
 
 
-$sqlEtapa = "SELECT etapa FROM etapas_incentivo WHERE idProjeto = '$idProjeto' AND idIncentivador = '$idIncentivador' AND tipoPessoa = '$tipoPessoa'";
+$sqlEtapa = "SELECT etapa FROM incentivador_projeto WHERE idIncentivadorProjeto = '$idIncentivadorProjeto'";
 $queryEtapa = mysqli_query($con, $sqlEtapa);
 $etapaArray = mysqli_fetch_assoc($queryEtapa);
 $etapa = $etapaArray['etapa'];

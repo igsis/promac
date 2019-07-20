@@ -86,12 +86,12 @@ if (isset($_POST['gravarAnaliseCarta'])) {
         if (mysqli_query($con, $sqlData)) {
 
             if ($status == 1) {
-                $sqlEtapa = "UPDATE etapas_incentivo SET etapa = 9 WHERE idIncentivadorProjeto = '$idIncentivadorProjeto'";
+                $sqlEtapa = "UPDATE incentivador_projeto SET etapa = 9 WHERE idIncentivadorProjeto = '$idIncentivadorProjeto'";
                 mysqli_query($con, $sqlEtapa);
                 $mensagem = "<span style='color: #01DF3A;'><strong>Análise gravada com sucesso!</strong></span>";
 
             } else {
-                $sqlEtapa = "UPDATE etapas_incentivo SET etapa = 8 WHERE idIncentivadorProjeto = '$idIncentivadorProjeto'";
+                $sqlEtapa = "UPDATE incentivador_projeto SET etapa = 8 WHERE idIncentivadorProjeto = '$idIncentivadorProjeto'";
                 mysqli_query($con, $sqlEtapa);
                 $mensagem = "<span style='color: #FFA500; '><strong>A análise foi gravada com sucesso, o usuario será notificado sua carta foi negada e permanecerá na etapa de envio da mesma.</strong></span>";
             }
