@@ -840,12 +840,7 @@ $numCartas = mysqli_num_rows($queryContratos);
 
 <?php
 
-$sqlAutorizacaoDeposito = "SELECT p.nomeProjeto, p.tipoPessoa AS ProjetoTipoPessoa, pf.nome, razaoSocial, I_P.tipoPessoa AS incentivadorTipoPessoa 
-                                FROM incentivador_projeto AS I_P
-                                INNER JOIN projeto AS p ON p.idProjeto = I_P.idProjeto
-                                LEFT JOIN pessoa_fisica AS pf ON p.idPf = pf.idPf
-                                LEFT JOIN pessoa_juridica AS pj ON p.idPj = pj.idPj
-                                WHERE I_P.etapa = 11 AND p.publicado = 1";
+$sqlAutorizacaoDeposito = "SELECT * FROM incentivador_projeto WHERE etapa = 11 AND p.publicado = 1";
 
 //echo $sqlAutorizacaoDeposito;
 $queryAutorizacaoDeposito  = mysqli_query($con, $sqlAutorizacaoDeposito);
@@ -890,35 +885,36 @@ $numAutorizacaoDeposito = mysqli_num_rows($queryAutorizacaoDeposito);
                                 <tbody>";
 
                 while ($campo = mysqli_fetch_array($queryAutorizacaoDeposito)) {
-                    if ($campo['ProjetoTipoPessoa'] == 1) {
-                        $idPessoa = $campo['idPf'];
+                    $projeto = recuperaDados('projeto', 'idProjeto', $campo['idProjeto']);
+                    if ($projeto['tipoPessoa'] == 1) {
+                        $idPessoa = $projeto['idPf'];
                         $pf = recuperaDados("pessoa_fisica", "idPf", $idPessoa);
-                    } elseif ($campo['ProjetoTipoPessoa'] == 2) {
-                        $idPessoa = $campo['idPj'];
+                    } elseif ($campo['tipoPessoa'] == 2) {
+                        $idPessoa = $projeto['idPj'];
                         $pj = recuperaDados("pessoa_juridica", "idPj", $idPessoa);
                     }
 
-                    if ($campo['incentivadorTipoPessoa'] == 4) {
-                        $incentivador = recuperaDados('incentivador_pessoa_fisica', 'idPf', $campo['idIncentivador']);
-                    } elseif ($campo['incentivadorTipoPessoa'] == 5) {
-                        $incentivador = recuperaDados('incentivador_pessoa_juridica', 'idPj', $campo['idIncentivador']);
+                    if ($campo['tipoPessoa'] == 4) {
+                        $incentivador = recuperaDados('incentivador_pessoa_fisica', 'idPf', $campo['idPessoa']);
+                    } elseif ($campo['tipoPessoa'] == 5) {
+                        $incentivador = recuperaDados('incentivador_pessoa_juridica', 'idPj', $campo['idPessoa']);
                     }
 
-                    $sqlIncentivador = "SELECT I_P.valor_aportado, I_P.edital, I_P.imposto, P.nomeProjeto, P.idProjeto, parcelas.data_pagamento 
-                                            FROM incentivador_projeto AS I_P 
-                                            INNER JOIN projeto AS P ON I_P.idProjeto = P.idProjeto
-                                            INNER JOIN parcelas_incentivo AS parcelas ON parcelas.idIncentivadorProjeto = I_P.idIncentivadorProjeto
-                                            WHERE I_P.idIncentivador = '$idPessoa' AND I_P.tipoPessoa = '" . $campo['idTipo'] . "' AND I_P.publicado = 1
-                                            ORDER BY parcelas.data_pagamento limit 1";
+                    $sqlIncentivadorProjeto = "SELECT I_P.valor_aportado, I_P.edital, I_P.imposto, parcelas.data_pagamento, parcelas.valor 
+                                                FROM incentivador_projeto AS I_P 
+                                                INNER JOIN parcelas_incentivo AS parcelas ON parcelas.idIncentivadorProjeto = I_P.idIncentivadorProjeto
+                                                WHERE I_P.idIncentivadorProjeto = '" . $campo['idIncentivadorProjeto'] ."' AND I_P.publicado = 1
+                                                ORDER BY parcelas.data_pagamento limit 1";
 
-                    $queryIncentivar = mysqli_query($con, $sqlIncentivador);
+                    $queryIncentivar = mysqli_query($con, $sqlIncentivadorProjeto);
                     $infos = mysqli_fetch_assoc($queryIncentivar);
+
 
                     echo "<tr> 
                             <form method='POST' action=''>";
                     echo "<td class='list_description'>"  . $campo['nomeProjeto'] . "</td>";
                     echo "<td class='list_description'>"  . isset($incentivador['nome']) ? $incentivador['nome'] : $incentivador['razaoSocial'] . "</td>";
-                    echo "<td class='list_description'> $docPessoa </td>";
+                    echo "<td class='list_description'>". $incentivadorp ."</td>";
                     echo "<td class='list_description'>" . $infos['nomeProjeto'] . "</td>";
                     echo "<td class='list_description'><a href='../uploadsdocs/" . $campo['arquivo'] . "' target='_blank'>" . mb_strimwidth($campo['arquivo'], 15, 25, "...") . "</a></td>";
 

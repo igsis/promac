@@ -121,6 +121,7 @@ if (isset($_POST['apagar'])) {
             $doc = "extrato_conta_projeto";
         }
         $sqlParcela = "UPDATE parcelas_incentivo SET $doc = NULL WHERE idIncentivadorProjeto = '$idIncentivadorProjeto' AND numero_parcela = $parcelaAtual";
+        mysqli_query($con, $sqlParcela);
         $mensagem = "<font color='#01DF3A'><strong>Arquivo apagado com sucesso!</strong></font>";
         gravarLog($sql_apagar_arquivo);
     } else {
