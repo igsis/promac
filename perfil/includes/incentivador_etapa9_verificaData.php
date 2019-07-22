@@ -55,12 +55,11 @@ if (isset($_POST["enviar"])) {
     $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '3' AND idListaDocumento IN (55,56)";
     $query_arquivos = mysqli_query($con, $sql_arquivos);
     while ($arq = mysqli_fetch_array($query_arquivos)) {
-        if (!verificaArquivosExistentesIncentivador($idIncentivadorProjeto, $arq['idListaDocumento'])) {
+        if (!verificaArquivosExistentesIncentivador($idIncentivadorProjeto, $arq['idListaDocumento'], '', '', 1)) {
             $y = $arq['idListaDocumento'];
             $x = $arq['sigla'];
             $nome_arquivo = isset($_FILES['arquivo']['name'][$x]) ? $_FILES['arquivo']['name'][$x] : null;
             $f_size = isset($_FILES['arquivo']['size'][$x]) ? $_FILES['arquivo']['size'][$x] : null;
-
             //Extensões permitidas
             $ext = array("PDF", "pdf");
 
@@ -133,27 +132,48 @@ if (isset($_POST['apagar'])) {
 
 $etapa11 = "none";
 
+$sqlConsultaArqs = "SELECT * FROM upload_arquivo WHERE idPessoa = '$idIncentivadorProjeto' AND idListaDocumento IN (55, 56) AND publicado = '1'";
+$queryConsulta = mysqli_query($con, $sqlConsultaArqs);
 
-if (verificaArquivosExistentesIncentivador($idIncentivadorProjeto, 55) && verificaArquivosExistentesIncentivador($idIncentivadorProjeto, 56)) {
-    $uploadArq = 'none';
-    $arqAnexado = 'block';
-    $etapa11 = 'block';
-    $sqlEtapa = "UPDATE incentivador_projeto SET etapa = 11 WHERE idIncentivadorProjeto = '$idIncentivadorProjeto'";
-    /*$sqlUpdateParcelas = "UPDATE parcelas_incentivo SET comprovante_deposito = 0, extrato_conta_projeto = 0 WHERE idProjeto = '$idProjeto' AND idIncentivador = '$idIncentivador' AND tipoPessoa = '$tipoPessoa' AND numero_parcela = $parcelaAtual";*/
-
-    if (mysqli_query($con, $sqlEtapa)) {
-        $mensagem = '';
+if (mysqli_num_rows($queryConsulta) > 0) {
+    while ($arqs = mysqli_fetch_array($queryConsulta)) {
+        if ($arqs['idStatusDocumento'] == 1) {
+            $arqsAceitos = 1;
+        } elseif ($arqs['idStatusDocumento'] == '') {
+            $uploadArq = 'block';
+            $arqAnexado = 'block';
+            $etapa11 = 'block';
+        }
     }
 
-} elseif (verificaArquivosExistentesIncentivador($idIncentivadorProjeto, 55) || verificaArquivosExistentesIncentivador($idIncentivadorProjeto, 56)) {
-    $uploadArq = 'block';
-    $arqAnexado = 'block';
-    $etapa11 = 'block';
 } else {
     $uploadArq = 'block';
     $arqAnexado = 'none';
 }
 
+/*
+if (verificaArquivosExistentesIncentivador($idIncentivadorProjeto, 55, '','', 1) && verificaArquivosExistentesIncentivador($idIncentivadorProjeto, 56, '', '', 1)) {
+    $uploadArq = 'none';
+    $arqAnexado = 'block';
+    $etapa11 = 'block';
+    $sqlEtapa = "UPDATE incentivador_projeto SET etapa = 11 WHERE idIncentivadorProjeto = '$idIncentivadorProjeto'";
+    /*$sqlUpdateParcelas = "UPDATE parcelas_incentivo SET comprovante_deposito = 0, extrato_conta_projeto = 0 WHERE idProjeto = '$idProjeto' AND idIncentivador = '$idIncentivador' AND tipoPessoa = '$tipoPessoa' AND numero_parcela = $parcelaAtual";
+
+    if (mysqli_query($con, $sqlEtapa)) {
+        $mensagem = '';
+    }
+
+} elseif (verificaArquivosExistentesIncentivador($idIncentivadorProjeto, 55, '','', 1) || verificaArquivosExistentesIncentivador($idIncentivadorProjeto, 56, '', '', 1)) {
+    echo "teste";
+    $uploadArq = 'block';
+    $arqAnexado = 'block';
+    $etapa11 = 'block';
+} else {
+    echo "caiu no else";
+    $uploadArq = 'block';
+    $arqAnexado = 'none';
+}
+*/
 
 $sqlEtapa = "SELECT etapa FROM incentivador_projeto WHERE idIncentivadorProjeto = '$idIncentivadorProjeto'";
 $queryEtapa = mysqli_query($con, $sqlEtapa);
@@ -186,7 +206,7 @@ $etapa = $etapaArray['etapa'];
                     }
                     $projeto = recuperaDados('projeto', 'idProjeto', $idProjeto);
                     $nomeProjeto = $projeto['nomeProjeto'];
-                        echo "<h4 class='text-info'>Voce esta incentivando o projeto: $nomeProjeto</h4>";
+                        echo "<h4 class='text-info'>Você está incentivando o projeto: $nomeProjeto</h4>";
 
                     ?>
                 </div>
@@ -287,7 +307,7 @@ $etapa = $etapaArray['etapa'];
                                         $envio = $con->query($query);
                                         $row = $envio->fetch_array(MYSQLI_ASSOC);
 
-                                        if (!verificaArquivosExistentesIncentivador($idIncentivadorProjeto, $row['idListaDocumento'], 3)) {
+                                        if (!verificaArquivosExistentesIncentivador($idIncentivadorProjeto, $row['idListaDocumento'], 3, '', 1)) {
                                             $documento = (object)
                                             [
                                                 'nomeDocumento' => $arq['documento'],
@@ -356,12 +376,17 @@ $etapa = $etapaArray['etapa'];
                                 $query = mysqli_query($con, $sql);
                                 $linhas = mysqli_num_rows($query);
 
+                                //echo $sql;
+
                                 while ($arquivo = mysqli_fetch_array($query)) {
                                     $queryStatusDoc = "SELECT idStatusDocumento FROM upload_arquivo WHERE idUploadArquivo = '" . $arquivo['idUploadArquivo'] . "'";
                                     $send = mysqli_query($con, $queryStatusDoc);
                                     $row = mysqli_fetch_array($send);
 
                                     $idStatus = $row['idStatusDocumento']; // == '' ? 'Em análise' : $row['idStatusDocumento'];
+
+                                    $btnRemover = "<button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Remover Arquivo?' data-message='Deseja realmente excluir o arquivo " . $arquivo['documento'] . "?'>Remover
+                                                        </button>";
 
                                     switch ($idStatus) {
                                         case '':
@@ -371,6 +396,7 @@ $etapa = $etapaArray['etapa'];
                                         case 1:
                                             $status = "Aceito";
                                             $cor = "green";
+                                            $btnRemover = "<button class='text-center' type='button'><span style='font-size: 17px;' class='glyphicon glyphicon-ok text-success'></span><i></i> <b style='color: white'>Concedido</b></button>";
                                             break;
                                         case 3:
                                             $status = "Negado";
@@ -400,8 +426,7 @@ $etapa = $etapaArray['etapa'];
                                                         <input type='hidden' name='apagar' value='" . $arquivo['idUploadArquivo'] . "' />
                                                         <input type='hidden' name='idListaDocumento' value='" . $arquivo['idListaDocumento'] . "' />
                                                         <input type='hidden' name='parcelaAtual' value='$parcelaSolicitar' />
-                                                        <button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Remover Arquivo?' data-message='Deseja realmente excluir o arquivo " . $arquivo['documento'] . "?'>Remover
-                                                        </button>
+                                                        $btnRemover
                                                     </form></td>";
                                 }
 
@@ -441,6 +466,8 @@ $etapa = $etapaArray['etapa'];
 
 <script>
     function mostrarDiv(divId) {
+        let parcelaAtual = "<?=$parcelaSolicitar?>";
+
         if ($('#' + divId).is(':visible')) {
             $('#' + divId).hide();
             $('#textSolicitar').html('Solicitar autorização de depósito desta parcela');
@@ -456,7 +483,8 @@ $etapa = $etapaArray['etapa'];
             var count = 0;
             $('.table-parcelas').find('tr').each(function () {
                 count++;
-                if (count > 2) {
+                console.log(parcelaAtual);
+                if (count > parcelaAtual + 1) {
                     $(this).hide();
                 }
             });
