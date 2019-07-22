@@ -15,14 +15,6 @@ if (isset($_POST['atualizar'])) {
         $query = "UPDATE upload_arquivo SET idStatusDocumento = '" . $dado['status'] . "', observacoes = '$observacao' WHERE idUploadArquivo = '" . $dado['idArquivo'] . "' ";
         $envia = mysqli_query($con, $query);
 
-        if ($dado['idListaDocumento'] == 55) {
-            $doc = "comprovante_deposito";
-            $sqlUpdate = "UPDATE parcelas_incentivo SET comprovante_deposito = '". $dado['status']."' ";
-        } else {
-            $doc = "extrato_conta_projeto";
-            $sqlUpdate = "UPDATE parcelas_incentivo SET extrato_conta_projeto = '". $dado['status']."'";
-        }
-
         if ($envia) {
             $mensagem = "<font color='#01DF3A'><strong>Os status dos arquivos foram atualizados com sucesso!</strong></font>";
             gravarLog($query);
@@ -246,29 +238,28 @@ function listaArquivosPessoaEditorr($idPessoa, $tipoPessoa)
                     }
 
                     $sqlIncentivadorProjeto = "SELECT I_P.valor_aportado, I_P.edital, I_P.imposto, 
-                                                    parcelas.data_pagamento, parcelas.valor, parcelas.numero_parcela, parcelas.data_solicitacao_autorizacao AS data_solicita,
-                                                    parcelas.comprovante_deposito AS compDeposito, parcelas.extrato_conta_projeto AS extrato
-                                                            FROM incentivador_projeto AS I_P 
-                                                            INNER JOIN parcelas_incentivo AS parcelas ON parcelas.idIncentivadorProjeto = I_P.idIncentivadorProjeto 
-                                                            WHERE I_P.idIncentivadorProjeto = '" . $campo['idIncentivadorProjeto'] . "' AND I_P.publicado = 1
-                                                            ORDER BY parcelas.data_solicitacao_autorizacao DESC";
+                                                    parcelas.data_pagamento, parcelas.valor, parcelas.numero_parcela, parcelas.data_solicitacao_autorizacao AS data_solicita, parcelas.status_solicitacao
+                                                    FROM incentivador_projeto AS I_P 
+                                                    INNER JOIN parcelas_incentivo AS parcelas ON parcelas.idIncentivadorProjeto = I_P.idIncentivadorProjeto 
+                                                    WHERE I_P.idIncentivadorProjeto = '" . $campo['idIncentivadorProjeto'] . "' AND I_P.publicado = 1
+                                                    ORDER BY parcelas.data_solicitacao_autorizacao DESC";
 
                     $queryIncentivar = mysqli_query($con, $sqlIncentivadorProjeto);
 
                     $valorConcedido = 0;
 
                     while ($infos = mysqli_fetch_array($queryIncentivar)) {
-                        if ($infos['compDeposito'] == 1 && $infos['extrato'] == 1) {
+                        if ($infos['status_solicitacao'] == 1) {
                             $status = "<button class='text-center'><span style='font-size: 17px;' class='glyphicon glyphicon-ok text-success'></span><i></i> <b style='color: white'>Concedida</b></button>";
 
                             $valorConcedido += $infos['valor'];
 
-                        } elseif ($infos['compDeposito'] == 0 && $infos['extrato'] == 0) {
+                        } elseif ($infos['status_solicitacao'] == 0) {
                             $status = " <input type='hidden' name='idProjeto'
                                                        value='" . $campo['idProjeto'] . "'/>
-                                                <input type='submit' class='btn btn-success btn-block'
+                                                <input type='submit' class='btn btn-success btn-block' name='conceder'
                                                        value='Conceder'>
-                                                       <input type='submit' class='btn btn-danger btn-block'
+                                                       <input type='submit' class='btn btn-danger btn-block' name='negar'
                                                        value='Negar'>";
                             $break = 1;
                         }

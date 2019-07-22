@@ -1,7 +1,13 @@
 <?php
 $con = bancoMysqli();
 $idProjeto = isset($_POST['idProjeto']) ? $_POST['idProjeto'] : null;
-$idIncentivadorProjeto = isset($_POST['idIncentivadorProjeto']) ? $_POST['idIncentivadorProjeto'] : '';
+
+if (isset($_POST['idIncentivadorProjeto'])) {
+    $_SESSION['idIncentivadorProjeto'] = $_POST['idIncentivadorProjeto'];
+    $idIncentivadorProjeto = $_SESSION['idIncentivadorProjeto'];
+} elseif (isset($_SESSION['idIncentivadorProjeto'])) {
+    $idIncentivadorProjeto = $_SESSION['idIncentivadorProjeto'];
+}
 
 if($idProjeto == null)
 {

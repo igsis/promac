@@ -902,7 +902,8 @@ $numAutorizacaoDeposito = mysqli_num_rows($queryAutorizacaoDeposito);
 
                     $sqlIncentivadorProjeto = "SELECT I_P.valor_aportado, I_P.edital, I_P.imposto, parcelas.data_pagamento, parcelas.valor, parcelas.numero_parcela, parcelas.data_solicitacao_autorizacao AS data_solicita
                                                 FROM incentivador_projeto AS I_P 
-                                                INNER JOIN parcelas_incentivo AS parcelas ON parcelas.idIncentivadorProjeto = I_P.idIncentivadorProjeto AND parcelas.comprovante_deposito = 0 AND parcelas.extrato_conta_projeto = 0                                            
+                                                INNER JOIN parcelas_incentivo AS parcelas 
+                                                ON parcelas.idIncentivadorProjeto = I_P.idIncentivadorProjeto AND parcelas.status_solicitacao = 0
                                                 WHERE I_P.idIncentivadorProjeto = '" . $campo['idIncentivadorProjeto'] ."' AND I_P.publicado = 1
                                                 ORDER BY parcelas.data_solicitacao_autorizacao DESC";
 
