@@ -239,6 +239,11 @@ $etapa = $etapaArray['etapa'];
                                                               Acompanhe a análise da SMC pelo sistema. </i></b>";
                                         $parcelaSolicitar = $i;
                                         $x = 0;
+                                    } elseif ($parcela['status_solicitacao'] == 1) {
+                                        $botaoSolicitar = "<b><i><span class='glyphicon glyphicon-ok text-success' style='font-size: 17px;'></span> </i><i> 
+                                                             Autorização de depósito da parcela concedida pela SMC. </i></b>";
+                                        $parcelaSolicitar = $i;
+
                                     }
                                     if ($parcelaSolicitar == $i):
                                         ?>

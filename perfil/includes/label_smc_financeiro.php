@@ -25,6 +25,32 @@ if (isset($_POST['atualizar'])) {
     }
 }
 
+if (isset($_POST['conceder'])) {
+    $idIncentivadorProjeto = $_POST['idIncentivadorProjeto'];
+    $parcelaAtual = $_POST['parcelaAtual'];
+
+    $sqlUpdate = "UPDATE parcelas_incentivo SET status_solicitacao = 1 WHERE idIncentivadorProjeto = '$idIncentivadorProjeto' AND numero_parcela = '$parcelaAtual'";
+
+    if (mysqli_query($con, $sqlUpdate)) {
+        $mensagem = "<font color='#01DF3A'><strong>O status da solicitação foi atualizado para concedido!</strong></font>";
+    } else {
+        echo $sqlUpdate;
+    }
+}
+
+if (isset($_POST['negar'])) {
+    $idIncentivadorProjeto = $_POST['idIncentivadorProjeto'];
+    $parcelaAtual = $_POST['parcelaAtual'];
+
+    $sqlUpdate = "UPDATE parcelas_incentivo SET status_solicitacao = 3 WHERE idIncentivadorProjeto = '$idIncentivadorProjeto' AND numero_parcela = '$parcelaAtual'";
+
+    if (mysqli_query($con, $sqlUpdate)) {
+        $mensagem = "<font color='#01DF3A'><strong>O status da solicitação foi atualizado para negado!</strong></font>";
+    } else {
+        echo $sqlUpdate;
+    }
+}
+
 
 
 function listaArquivosPessoaEditorr($idPessoa, $tipoPessoa)
@@ -254,26 +280,28 @@ function listaArquivosPessoaEditorr($idPessoa, $tipoPessoa)
 
                             $valorConcedido += $infos['valor'];
 
-                        } elseif ($infos['status_solicitacao'] == 0) {
-                            $status = " <input type='hidden' name='idProjeto'
-                                                       value='" . $campo['idProjeto'] . "'/>
+                        } elseif ($infos['status_solicitacao'] === 0) {
+                            $status = " <input type='hidden' name='idIncentivadorProjeto'
+                                                       value='" . $campo['idIncentivadorProjeto'] . "'/>
+                                                       <input type='hidden' name='parcelaAtual'
+                                                       value='" . $infos['numero_parcela'] . "'/>
                                                 <input type='submit' class='btn btn-success btn-block' name='conceder'
                                                        value='Conceder'>
                                                        <input type='submit' class='btn btn-danger btn-block' name='negar'
                                                        value='Negar'>";
                             $break = 1;
+                        } elseif ($infos['status_solicitacao'] == '') {
+                            $status = '';
                         }
 
                         $valorTotalIncentivo = $infos['valor_aportado'];
                         $valorAautorizar = $infos['valor_aportado'] - $valorConcedido;
 
-                        // echo $sqlIncentivadorProjeto;
-
                         $proponente = isset($pf['nome']) ? $pf['nome'] : $pj['razaoSocial'];
                         $nomeIncentivador = isset($incentivador['nome']) ? $incentivador['nome'] : $incentivador['razaoSocial'];
 
                         echo "<tr> 
-                            <form method='POST' action='?perfil=smc_detalhes_projeto'>";
+                            <form method='POST' action=''>";
                         echo "<td class='list_description'>" . $projeto['nomeProjeto'] . "</td>";
                         echo "<td class='list_description'> $proponente </td>";
                         echo "<td class='list_description'> $nomeIncentivador </td>";
@@ -289,7 +317,7 @@ function listaArquivosPessoaEditorr($idPessoa, $tipoPessoa)
                                             </td>";
                         //  echo "<tr  style='display: none;' class='list_description' id='obs'><td></td><td></td><td class='list_description text-center'><b>Observações </b></td><td class='list_description' colspan='2'><textarea class='form-control' type='text' id='observacao'></textarea></td></tr>";
 
-                        if ($break == 1) {
+                        if (isset($break)) {
                             break;
                         }
 
