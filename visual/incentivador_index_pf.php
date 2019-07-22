@@ -6,6 +6,7 @@ error_reporting(E_ALL);
 //define a session como 60 min
 session_cache_expire(60);
 
+date_default_timezone_set('America/Sao_Paulo');
 
 //carrega as funcoes gerais
 require "../funcoes/funcoesConecta.php";

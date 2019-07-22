@@ -840,7 +840,7 @@ $numCartas = mysqli_num_rows($queryContratos);
 
 <?php
 
-$sqlAutorizacaoDeposito = "SELECT * FROM incentivador_projeto WHERE etapa = 11 AND p.publicado = 1";
+$sqlAutorizacaoDeposito = "SELECT * FROM incentivador_projeto WHERE etapa = 11 AND publicado = 1";
 
 //echo $sqlAutorizacaoDeposito;
 $queryAutorizacaoDeposito  = mysqli_query($con, $sqlAutorizacaoDeposito);
@@ -877,8 +877,8 @@ $numAutorizacaoDeposito = mysqli_num_rows($queryAutorizacaoDeposito);
                                         <td>Incentivador</td>
                                         <td>Parcela</td>
                                         <td>Valor</td>
-                                        <td>Data do Vencimento do Tributo</td>
-                                        <td>Data da solicitacao da Autorizacao</td>                                     
+                                        <td width='13%'>Data do Vencimento do Tributo</td>
+                                        <td width='12%'>Data da solicitacao da Autorizacao</td>                                     
                                         <td width='10%'></td>
                                     </tr>
                                 </thead>
@@ -900,51 +900,40 @@ $numAutorizacaoDeposito = mysqli_num_rows($queryAutorizacaoDeposito);
                         $incentivador = recuperaDados('incentivador_pessoa_juridica', 'idPj', $campo['idPessoa']);
                     }
 
-                    $sqlIncentivadorProjeto = "SELECT I_P.valor_aportado, I_P.edital, I_P.imposto, parcelas.data_pagamento, parcelas.valor 
+                    $sqlIncentivadorProjeto = "SELECT I_P.valor_aportado, I_P.edital, I_P.imposto, parcelas.data_pagamento, parcelas.valor, parcelas.numero_parcela, upDocs.dataEnvio 
                                                 FROM incentivador_projeto AS I_P 
-                                                INNER JOIN parcelas_incentivo AS parcelas ON parcelas.idIncentivadorProjeto = I_P.idIncentivadorProjeto
+                                                INNER JOIN parcelas_incentivo AS parcelas ON parcelas.idIncentivadorProjeto = I_P.idIncentivadorProjeto AND parcelas.comprovante_deposito = 0 AND parcelas.extrato_conta_projeto = 0
+                                                INNER JOIN upload_arquivo AS upDocs ON I_P.idIncentivadorProjeto = upDocs.idPessoa AND idListaDocumento IN (55,56) AND upDocs.publicado = 1
                                                 WHERE I_P.idIncentivadorProjeto = '" . $campo['idIncentivadorProjeto'] ."' AND I_P.publicado = 1
-                                                ORDER BY parcelas.data_pagamento limit 1";
+                                                ORDER BY upDocs.dataEnvio DESC LIMIT 1";
 
                     $queryIncentivar = mysqli_query($con, $sqlIncentivadorProjeto);
                     $infos = mysqli_fetch_assoc($queryIncentivar);
 
+                    $proponente = isset($pf['nome']) ? $pf['nome'] : $pj['razaoSocial'];
+                    $nomeIncentivador = isset($incentivador['nome']) ? $incentivador['nome'] : $incentivador['razaoSocial'];
+
+                    //print_r($infos);
+
 
                     echo "<tr> 
                             <form method='POST' action=''>";
-                    echo "<td class='list_description'>"  . $campo['nomeProjeto'] . "</td>";
-                    echo "<td class='list_description'>"  . isset($incentivador['nome']) ? $incentivador['nome'] : $incentivador['razaoSocial'] . "</td>";
-                    echo "<td class='list_description'>". $incentivadorp ."</td>";
-                    echo "<td class='list_description'>" . $infos['nomeProjeto'] . "</td>";
-                    echo "<td class='list_description'><a href='../uploadsdocs/" . $campo['arquivo'] . "' target='_blank'>" . mb_strimwidth($campo['arquivo'], 15, 25, "...") . "</a></td>";
-
-                    //$queryy = ";
-                    $send = mysqli_query($con, "SELECT idStatusDocumento FROM upload_arquivo WHERE idUploadArquivo = '" . $campo['idUploadArquivo'] . "'");
-                    $row = mysqli_fetch_array($send);
-
-                    /* echo "<td class='list_description'>
-                             <select class='colorindo' name='statusDoc' id='statusOpt' value='teste'>";
-                     echo "<option value=''>Selecione</option>";
-                     geraOpcao('status_documento', $row['idStatusDocumento']);
-                     echo " </select>
-                         </td>";*/
-
+                    echo "<td class='list_description'>"  . $projeto['nomeProjeto'] . "</td>";
+                    echo "<td class='list_description'>$proponente</td>";
+                    echo "<td class='list_description'>$nomeIncentivador</td>";
+                    echo "<td class='list_description'>"  . $infos['numero_parcela'] . "ª</td>";
+                    echo "<td class='list_description'>R$ " . dinheiroParaBr($infos['valor']) . "</td>";
                     echo "<td class='list_description'>" . exibirDataBr($infos['data_pagamento']) . "</td>";
-                    echo "<td class='list_description'>" . $infos['edital'] . "</td>";
-
-                    //echo "<td class='list_description'><input type='text' name='dataRecebimento' class='form-control datepicker' value='$today'>  </td>";
-                    echo "<td class='list_description'>" . $infos['imposto'] . " </td>";
+                    echo "<td class='list_description'>" . exibirDataBr($infos['dataEnvio']) . "</td>";
 
                     echo "
                                             <td class='list_description'>                                                
-                                                    <input type='hidden' name='idPessoa' value='" . $campo['idPessoa'] . "' />
-                                                    <input type='hidden' name='idArquivo' value='" . $campo['idUploadArquivo'] . "' />                                                   
-                                                    <input type='hidden' name='idProjeto' value='" . $infos['idProjeto'] . "' />
-                                                    <input type='hidden' name='tipoPessoa' value='" . $campo ['idTipo'] . "' />
-                                                    <!-- <input type ='submit' name='gravarAnaliseCarta' class='btn btn-theme btn-block' value='Gravar'> -->
-                                                     <input type='button' name='cartaIncentivo' data-idPessoa='" . $campo['idPessoa'] . "' data-idArquivo='" . $campo['idUploadArquivo'] . "'
-                                                      data-idProjeto='" . $infos['idProjeto'] . "' data-tipoPessoa='" . $campo['idTipo'] . "' data-primeiraParcela='" . $infos['data_pagamento'] . "' 
-                                                      class='btn btn-theme' data-toggle='modal' data-target='#cartaIncentivo' value='Análise' > 
+                                                    <input type='hidden' name='idPessoa' value='" . $campo['idPessoa'] . "' />                                                 
+                                                   
+                                                    <!--  <input type='hidden' name='idProjeto' value='' />
+                                                    <input type='hidden' name='tipoPessoa' value='' /> 
+                                                    <input type ='submit' name='gravarAnaliseCarta' class='btn btn-theme btn-block' value='Gravar'> -->
+                                                     <input type='button' name='cartaIncentivo' class='btn btn-theme'  value='Visualizar' > 
                                                 </form>
                                             </td>";
                     //  echo "<tr  style='display: none;' class='list_description' id='obs'><td></td><td></td><td class='list_description text-center'><b>Observações </b></td><td class='list_description' colspan='2'><textarea class='form-control' type='text' id='observacao'></textarea></td></tr>";
