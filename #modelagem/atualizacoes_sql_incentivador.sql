@@ -325,5 +325,19 @@ CHANGE COLUMN `etapa` `etapa` TINYINT(2) NULL DEFAULT NULL COMMENT '' AFTER `idP
 * 12/07/2019
 */
 
+/*
+* Inicio -> Tanair 
+* 21/07/2019 
+*/
+
+ALTER TABLE `promac`.`parcelas_incentivo` 
+ADD COLUMN `data_solicitacao_autorizacao` DATE NULL COMMENT '' AFTER `extrato_conta_projeto`;
+
+
+/*
+* FIM -> Tanair 
+* 21/07/2019 
+*/
+
 
 

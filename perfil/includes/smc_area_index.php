@@ -917,7 +917,7 @@ $numAutorizacaoDeposito = mysqli_num_rows($queryAutorizacaoDeposito);
 
 
                     echo "<tr> 
-                            <form method='POST' action=''>";
+                            <form method='POST' action='?perfil=smc_detalhes_projeto'>";
                     echo "<td class='list_description'>"  . $projeto['nomeProjeto'] . "</td>";
                     echo "<td class='list_description'>$proponente</td>";
                     echo "<td class='list_description'>$nomeIncentivador</td>";
@@ -926,14 +926,12 @@ $numAutorizacaoDeposito = mysqli_num_rows($queryAutorizacaoDeposito);
                     echo "<td class='list_description'>" . exibirDataBr($infos['data_pagamento']) . "</td>";
                     echo "<td class='list_description'>" . exibirDataBr($infos['dataEnvio']) . "</td>";
 
-                    echo "
-                                            <td class='list_description'>                                                
-                                                    <input type='hidden' name='idPessoa' value='" . $campo['idPessoa'] . "' />                                                 
-                                                   
-                                                    <!--  <input type='hidden' name='idProjeto' value='' />
-                                                    <input type='hidden' name='tipoPessoa' value='' /> 
-                                                    <input type ='submit' name='gravarAnaliseCarta' class='btn btn-theme btn-block' value='Gravar'> -->
-                                                     <input type='button' name='cartaIncentivo' class='btn btn-theme'  value='Visualizar' > 
+                    echo " 
+                                            <td class='list_description'>                                     
+                                                <input type='hidden' name='idProjeto' value='".$campo['idProjeto'] ."'/>
+                                                <input type='hidden' name='idIncentivadorProjeto' value='".$campo['idIncentivadorProjeto'] ."'/>
+                                                <input type='submit' class='btn btn-theme btn-block'
+                                                       value='Visualizar'>
                                                 </form>
                                             </td>";
                     //  echo "<tr  style='display: none;' class='list_description' id='obs'><td></td><td></td><td class='list_description text-center'><b>Observações </b></td><td class='list_description' colspan='2'><textarea class='form-control' type='text' id='observacao'></textarea></td></tr>";

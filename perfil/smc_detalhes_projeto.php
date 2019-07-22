@@ -1,7 +1,7 @@
 <?php
 $con = bancoMysqli();
-
 $idProjeto = isset($_POST['idProjeto']) ? $_POST['idProjeto'] : null;
+$idIncentivadorProjeto = isset($_POST['idIncentivadorProjeto']) ? $_POST['idIncentivadorProjeto'] : '';
 
 if($idProjeto == null)
 {

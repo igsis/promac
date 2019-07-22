@@ -79,75 +79,116 @@
     </div>
 </form>
 
+
+    <div class="form-group">
+        <h4>Solicitações de Autorização de Depósito </h4>
+    </div>
 <?php
-    $sql = "SELECT * FROM incentivador_projeto WHERE idProjeto = '$idProjeto' AND publicado = '1'";
+    $sql = "SELECT * FROM incentivador_projeto WHERE idIncentivadorProjeto = '$idIncentivadorProjeto' AND publicado = '1'";
     $query = mysqli_query($con, $sql);
     $num = mysqli_num_rows($query);
-    if($num > 0) 
+    if($num > 0)
         { ?>
-        <div class="table-responsive list_info">
-            <table class='table table-condensed'>
-                <thead>
-                    <tr class='list_menu'>
-                        <td>Incentivador</td>
-                        <td>Documento</td>
-                        <td></td>
-                    </tr>
-                </thead>
-    <tbody>
-            <?php while ($linha = mysqli_fetch_array($query)) {
-                    if($linha['tipoPessoa'] == 4)
-                        {
-                            $incentivadorPF = "incentivador_pessoa_fisica";
-                            $pf = recuperaDados($incentivadorPF, 'idPf', $linha['idIncentivador']);
-                            $incentivadorProjeto = $linha['idIncentivadorProjeto'];
-                        }
-                    else
-                        {
-                            $incentivadorPJ = "incentivador_pessoa_juridica";
-                            $pj = recuperaDados($incentivadorPJ, 'idPj', $linha['idIncentivador']);
-                            $incentivadorProjeto = $linha['idIncentivadorProjeto'];
-                        }
-            ?>
-        <tr>
-            <td class="list_description">
-                <?=($linha['tipoPessoa'] == 4 ? $pf['nome'] : $pj['razaoSocial'])?>
-            </td>
-            <td class="list_description">
-                <?=($linha['tipoPessoa'] == 4 ? $pf['cpf'] : $pj['cnpj'])?>
-            </td>
-            <td>
-                <form method='POST' action='?perfil=smc_detalhes_projeto&idFF=<?=$idP?>'>
-                    <?php echo "<input type='hidden' name='IIP' value='".$linha['idIncentivadorProjeto']."'>";
-                        echo "<input type='hidden' name='IDP' value='$idProjeto'>"; ?>
-                        <input type="hidden" name="removerIncentivador" value="<?php $linha['idIncentivadorProjeto']; ?>">
-                        <button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-message="<?=$linha['tipoPessoa'] == 4 ? $pf['nome'] : $pj['razaoSocial']?>">Remover</button>
-                </form>
-            </td>
-        </tr>
+            <div class="row" id="">
+                <div class="col-md-12">
+                    <div class="table-responsive list_info">
+                        <?php
+                            $today = date("d/m/Y");
+                            echo "
+                            <table class='table table-condensed table-hover text-center' id='cartaDeIncentivo'>
+                                <thead>
+                                    <tr class='list_menu'>
+                                        <td>Projeto</td>
+                                        <td>Proponente</td>
+                                        <td>Incentivador</td>
+                                        <td>Parcela</td>
+                                        <td width='10%'>Valor</td>
+                                        <td>Data do Vencimento do Tributo</td>
+                                        <td>Data da solicitacao da Autorizacao</td>                                     
+                                        <td width='10%'></td>
+                                    </tr>
+                                </thead>
+                                <tbody>";
 
-        <div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Deseja remover o icentivador do projeto?</h4>
-                    </div>
-            <div class="modal-body">
-                 <p>a</p>
-            </div>
-                <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-danger" id="confirm">Remover</button>
+                            while ($campo = mysqli_fetch_array($query)) {
+                                $projeto = recuperaDados('projeto', 'idProjeto', $campo['idProjeto']);
+                                if ($projeto['tipoPessoa'] == 1) {
+                                    $idPessoa = $projeto['idPf'];
+                                    $pf = recuperaDados("pessoa_fisica", "idPf", $idPessoa);
+                                } elseif ($campo['tipoPessoa'] == 2) {
+                                    $idPessoa = $projeto['idPj'];
+                                    $pj = recuperaDados("pessoa_juridica", "idPj", $idPessoa);
+                                }
+
+                                if ($campo['tipoPessoa'] == 4) {
+                                    $incentivador = recuperaDados('incentivador_pessoa_fisica', 'idPf', $campo['idPessoa']);
+                                } elseif ($campo['tipoPessoa'] == 5) {
+                                    $incentivador = recuperaDados('incentivador_pessoa_juridica', 'idPj', $campo['idPessoa']);
+                                }
+
+                                $sqlIncentivadorProjeto = "SELECT I_P.valor_aportado, I_P.edital, I_P.imposto, parcelas.data_pagamento, parcelas.valor, parcelas.numero_parcela, parcelas.comprovante_deposito, parcelas.extrato_conta_projeto, upDocs.dataEnvio 
+                                                FROM incentivador_projeto AS I_P 
+                                                INNER JOIN parcelas_incentivo AS parcelas ON parcelas.idIncentivadorProjeto = I_P.idIncentivadorProjeto 
+                                                INNER JOIN upload_arquivo AS upDocs ON I_P.idIncentivadorProjeto = upDocs.idPessoa AND idListaDocumento IN (55,56) AND upDocs.publicado = 1
+                                                WHERE I_P.idIncentivadorProjeto = '" . $campo['idIncentivadorProjeto'] ."' AND I_P.publicado = 1
+                                                ORDER BY upDocs.dataEnvio DESC LIMIT 1";
+
+                                $queryIncentivar = mysqli_query($con, $sqlIncentivadorProjeto);
+                                $infos = mysqli_fetch_assoc($queryIncentivar);
+
+                                $proponente = isset($pf['nome']) ? $pf['nome'] : $pj['razaoSocial'];
+                                $nomeIncentivador = isset($incentivador['nome']) ? $incentivador['nome'] : $incentivador['razaoSocial'];
+
+                                echo "<tr> 
+                            <form method='POST' action='?perfil=smc_detalhes_projeto'>";
+                                echo "<td class='list_description'>"  . $projeto['nomeProjeto'] . "</td>";
+                                echo "<td class='list_description'> $proponente </td>";
+                                echo "<td class='list_description'> $nomeIncentivador </td>";
+                                echo "<td class='list_description'>"  . $infos['numero_parcela'] . "ª</td>";
+                                echo "<td class='list_description'>R$ " . dinheiroParaBr($infos['valor']) . "</td>";
+                                echo "<td class='list_description'>" . exibirDataBr($infos['data_pagamento']) . "</td>";
+                                echo "<td class='list_description'>" . exibirDataBr($infos['dataEnvio']) . "</td>";
+
+                                if ($infos['comprovante_deposito'] == 1 && $infos['extrato'] == 1) {
+                                    $valorConcedido = $in
+                                }
+
+                                echo " 
+                                            <td class='list_description'>                                     
+                                                <input type='hidden' name='idProjeto'
+                                                       value='".$campo['idProjeto'] ."'/>
+                                                <input type='submit' class='btn btn-success btn-block'
+                                                       value='Conceder'>
+                                                       <input type='submit' class='btn btn-danger btn-block'
+                                                       value='Negar'>
+                                                </form>
+                                            </td>";
+                                //  echo "<tr  style='display: none;' class='list_description' id='obs'><td></td><td></td><td class='list_description text-center'><b>Observações </b></td><td class='list_description' colspan='2'><textarea class='form-control' type='text' id='observacao'></textarea></td></tr>";
+
+                            }
+                            echo "</tr>";
+                            echo "</tbody>
+                                </table>";
+                        ?>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <?php } ?>
-    </tbody>
-</table>
-</div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive list_info">
+                        <table class="table table-condensed">
+                            <tr>
+                                <td>Valor Total das Autorizações Concedidas</td>
+                                <td>Valor Previsto de Incentivo (soma das Cartas de Incentivo)</td>
+                                <td>Valor restante a ser autorizado</td>
+
+                            </tr>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
 
 <?php }
 else {
