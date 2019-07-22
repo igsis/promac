@@ -900,12 +900,11 @@ $numAutorizacaoDeposito = mysqli_num_rows($queryAutorizacaoDeposito);
                         $incentivador = recuperaDados('incentivador_pessoa_juridica', 'idPj', $campo['idPessoa']);
                     }
 
-                    $sqlIncentivadorProjeto = "SELECT I_P.valor_aportado, I_P.edital, I_P.imposto, parcelas.data_pagamento, parcelas.valor, parcelas.numero_parcela, upDocs.dataEnvio 
+                    $sqlIncentivadorProjeto = "SELECT I_P.valor_aportado, I_P.edital, I_P.imposto, parcelas.data_pagamento, parcelas.valor, parcelas.numero_parcela, parcelas.data_solicitacao_autorizacao AS data_solicita
                                                 FROM incentivador_projeto AS I_P 
-                                                INNER JOIN parcelas_incentivo AS parcelas ON parcelas.idIncentivadorProjeto = I_P.idIncentivadorProjeto AND parcelas.comprovante_deposito = 0 AND parcelas.extrato_conta_projeto = 0
-                                                INNER JOIN upload_arquivo AS upDocs ON I_P.idIncentivadorProjeto = upDocs.idPessoa AND idListaDocumento IN (55,56) AND upDocs.publicado = 1
+                                                INNER JOIN parcelas_incentivo AS parcelas ON parcelas.idIncentivadorProjeto = I_P.idIncentivadorProjeto AND parcelas.comprovante_deposito = 0 AND parcelas.extrato_conta_projeto = 0                                            
                                                 WHERE I_P.idIncentivadorProjeto = '" . $campo['idIncentivadorProjeto'] ."' AND I_P.publicado = 1
-                                                ORDER BY upDocs.dataEnvio DESC LIMIT 1";
+                                                ORDER BY parcelas.data_solicitacao_autorizacao DESC";
 
                     $queryIncentivar = mysqli_query($con, $sqlIncentivadorProjeto);
                     $infos = mysqli_fetch_assoc($queryIncentivar);
@@ -924,7 +923,7 @@ $numAutorizacaoDeposito = mysqli_num_rows($queryAutorizacaoDeposito);
                     echo "<td class='list_description'>"  . $infos['numero_parcela'] . "ª</td>";
                     echo "<td class='list_description'>R$ " . dinheiroParaBr($infos['valor']) . "</td>";
                     echo "<td class='list_description'>" . exibirDataBr($infos['data_pagamento']) . "</td>";
-                    echo "<td class='list_description'>" . exibirDataBr($infos['dataEnvio']) . "</td>";
+                    echo "<td class='list_description'>" . exibirDataBr($infos['data_solicita']) . "</td>";
 
                     echo " 
                                             <td class='list_description'>                                     

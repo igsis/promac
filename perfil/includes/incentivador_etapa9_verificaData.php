@@ -82,11 +82,12 @@ if (isset($_POST["enviar"])) {
                             $sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('3', '$idIncentivadorProjeto', '$y', '$new_name', '$hoje', '1'); ";
                             $query = mysqli_query($con, $sql_insere_arquivo);
                             if ($query) {
+                                $idUploadDoc = recuperaUltimo('upload_arquivo');
                                 if ($y == 55) {
-                                    $sqlUpdateParcelas = "UPDATE parcelas_incentivo SET comprovante_deposito = 0 WHERE idIncentivadorProjeto = '$idIncentivadorProjeto' AND numero_parcela = $parcelaAtual";
+                                    $sqlUpdateParcelas = "UPDATE parcelas_incentivo SET comprovante_deposito = $idUploadDoc WHERE idIncentivadorProjeto = '$idIncentivadorProjeto' AND numero_parcela = $parcelaAtual";
                                     mysqli_query($con, $sqlUpdateParcelas);
                                 } else {
-                                    $sqlUpdateParcelas = "UPDATE parcelas_incentivo SET extrato_conta_projeto = 0 WHERE idIncentivadorProjeto = '$idIncentivadorProjeto' AND numero_parcela = $parcelaAtual";
+                                    $sqlUpdateParcelas = "UPDATE parcelas_incentivo SET extrato_conta_projeto = $idUploadDoc WHERE idIncentivadorProjeto = '$idIncentivadorProjeto' AND numero_parcela = $parcelaAtual";
                                     mysqli_query($con, $sqlUpdateParcelas);
                                 }
                                 $mensagem = "<font color='#01DF3A'><strong>Arquivo(s) recebido(s) com sucesso!</strong></font>";
@@ -140,8 +141,11 @@ if (verificaArquivosExistentesIncentivador($idIncentivadorProjeto, 55) && verifi
     /*$sqlUpdateParcelas = "UPDATE parcelas_incentivo SET comprovante_deposito = 0, extrato_conta_projeto = 0 WHERE idProjeto = '$idProjeto' AND idIncentivador = '$idIncentivador' AND tipoPessoa = '$tipoPessoa' AND numero_parcela = $parcelaAtual";*/
 
     if (mysqli_query($con, $sqlEtapa)) {
-        $mensagem = '';
-
+        $today = date('Y-m-d');
+        $sqlDataSolicitacao = "UPDATE parcelas_incentivo SET data_solicitacao_autorizacao = '$today' WHERE idIncentivadorProjeto = '$idIncentivadorProjeto' AND extrato_conta_projeto = 0 AND comprovante_deposito = 0";
+        if (mysqli_query($con, $sqlDataSolicitacao)) {
+            $mensagem = '';
+        }
     }
 
 } elseif (verificaArquivosExistentesIncentivador($idIncentivadorProjeto, 55) || verificaArquivosExistentesIncentivador($idIncentivadorProjeto, 56)) {
@@ -221,7 +225,7 @@ $etapa = $etapaArray['etapa'];
                                     <td style="vertical-align: middle;"
                                         class="list_description">R$ <?= dinheiroParaBr($parcela['valor']) ?></td>
                                     <?php
-                                    if (($parcela['comprovante_deposito'] == '' && $parcela['extrato_conta_projeto'] == '' || $parcela['comprovante_deposito'] == 0 && $parcela['extrato_conta_projeto'] == '' || $parcela['comprovante_deposito'] == '' && $parcela['extrato_conta_projeto'] == 0) && $x == 1){
+                                    if (($parcela['comprovante_deposito'] != '' && $parcela['extrato_conta_projeto'] != '' || $parcela['comprovante_deposito'] != '' && $parcela['extrato_conta_projeto'] == '' || $parcela['comprovante_deposito'] == '' && $parcela['extrato_conta_projeto'] != '') && $x == 1){
                                         $botaoSolicitar = "<button class='btn' style='background-color: white; color: green;'
                                                                 onmouseover=\"$(this).css('background-color', '#f5f5f5'); $(this).css('font-style', 'italic')\"
                                                                 onmouseout=\"$(this).css('background-color', 'white'); $(this).css('font-style', '')\"

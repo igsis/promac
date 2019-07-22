@@ -333,6 +333,15 @@ CHANGE COLUMN `etapa` `etapa` TINYINT(2) NULL DEFAULT NULL COMMENT '' AFTER `idP
 ALTER TABLE `promac`.`parcelas_incentivo` 
 ADD COLUMN `data_solicitacao_autorizacao` DATE NULL COMMENT '' AFTER `extrato_conta_projeto`;
 
+ALTER TABLE `promac`.`parcelas_incentivo` 
+CHANGE COLUMN `comprovante_deposito` `comprovante_deposito` INT(11) NULL DEFAULT NULL COMMENT '' ,
+CHANGE COLUMN `extrato_conta_projeto` `extrato_conta_projeto` INT(11) NULL DEFAULT NULL COMMENT '' ;
+
+ALTER TABLE `promac`.`parcelas_incentivo` 
+ADD COLUMN `status_solicitacao` TINYINT(1) NULL COMMENT '' AFTER `data_solicitacao_autorizacao`;
+
+
+
 
 /*
 * FIM -> Tanair 

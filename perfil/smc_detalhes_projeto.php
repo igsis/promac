@@ -614,7 +614,6 @@ $status = recuperaDados("etapa_status","idStatus",$projeto['idStatus']);
 
 $comissao = recuperaDados("pessoa_fisica","idPf",$projeto['idComissao']);
 ?>
-
 <section id="list_items" class="home-section bg-white">
     <div class="container">
         <?php include 'includes/menu_smc.php'; ?>
@@ -673,3 +672,5 @@ $comissao = recuperaDados("pessoa_fisica","idPf",$projeto['idComissao']);
         </div>
     </div>
 </section>
+
+
