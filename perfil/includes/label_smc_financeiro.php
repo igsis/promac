@@ -268,20 +268,26 @@ function listaArquivosPessoaEditorr($idPessoa, $tipoPessoa)
                                                     FROM incentivador_projeto AS I_P 
                                                     INNER JOIN parcelas_incentivo AS parcelas ON parcelas.idIncentivadorProjeto = I_P.idIncentivadorProjeto 
                                                     WHERE I_P.idIncentivadorProjeto = '" . $campo['idIncentivadorProjeto'] . "' AND I_P.publicado = 1
-                                                    ORDER BY parcelas.data_solicitacao_autorizacao DESC";
+                                                    ORDER BY parcelas.numero_parcela ASC";
 
                     $queryIncentivar = mysqli_query($con, $sqlIncentivadorProjeto);
 
                     $valorConcedido = 0;
 
+                    //echo $sqlIncentivadorProjeto;
+
                     while ($infos = mysqli_fetch_array($queryIncentivar)) {
+                        //print_r($infos);
+
                         if ($infos['status_solicitacao'] == 1) {
-                            $status = "<button class='text-center'><span style='font-size: 17px;' class='glyphicon glyphicon-ok text-success'></span><i></i> <b style='color: white'>Concedida</b></button>";
+                            $btnStatus = "<button class='text-center' type='button' style='background-color: gray; color: white'><span style='font-size: 17px; color: #01DF3A' class='glyphicon glyphicon-ok'></span><i></i> <b>Concedida</b></button>";
 
                             $valorConcedido += $infos['valor'];
 
-                        } elseif ($infos['status_solicitacao'] === 0) {
-                            $status = " <input type='hidden' name='idIncentivadorProjeto'
+                        } elseif ($infos['status_solicitacao'] == '') {
+                            $btnStatus = '';
+                        } elseif ($infos['status_solicitacao'] == 0) {
+                            $btnStatus = " <input type='hidden' name='idIncentivadorProjeto'
                                                        value='" . $campo['idIncentivadorProjeto'] . "'/>
                                                        <input type='hidden' name='parcelaAtual'
                                                        value='" . $infos['numero_parcela'] . "'/>
@@ -290,8 +296,6 @@ function listaArquivosPessoaEditorr($idPessoa, $tipoPessoa)
                                                        <input type='submit' class='btn btn-danger btn-block' name='negar'
                                                        value='Negar'>";
                             $break = 1;
-                        } elseif ($infos['status_solicitacao'] == '') {
-                            $status = '';
                         }
 
                         $valorTotalIncentivo = $infos['valor_aportado'];
@@ -299,6 +303,8 @@ function listaArquivosPessoaEditorr($idPessoa, $tipoPessoa)
 
                         $proponente = isset($pf['nome']) ? $pf['nome'] : $pj['razaoSocial'];
                         $nomeIncentivador = isset($incentivador['nome']) ? $incentivador['nome'] : $incentivador['razaoSocial'];
+
+                        $dataSolicita = $infos['data_solicita'] != '' ? exibirDataBr($infos['data_solicita']) : 'Nao solicitado';
 
                         echo "<tr> 
                             <form method='POST' action=''>";
@@ -308,15 +314,13 @@ function listaArquivosPessoaEditorr($idPessoa, $tipoPessoa)
                         echo "<td class='list_description'>" . $infos['numero_parcela'] . "ª</td>";
                         echo "<td class='list_description'>R$ " . dinheiroParaBr($infos['valor']) . "</td>";
                         echo "<td class='list_description'>" . exibirDataBr($infos['data_pagamento']) . "</td>";
-                        echo "<td class='list_description'>" . exibirDataBr($infos['data_solicita']) . "</td>";
+                        echo "<td class='list_description'>$dataSolicita</td>";
 
                         echo " 
                                             <td class='list_description'>                                     
-                                                $status
+                                                $btnStatus
                                                 </form>
                                             </td>";
-                        //  echo "<tr  style='display: none;' class='list_description' id='obs'><td></td><td></td><td class='list_description text-center'><b>Observações </b></td><td class='list_description' colspan='2'><textarea class='form-control' type='text' id='observacao'></textarea></td></tr>";
-
                         if (isset($break)) {
                             break;
                         }

@@ -134,17 +134,28 @@ $etapa11 = "none";
 
 $sqlConsultaArqs = "SELECT * FROM upload_arquivo WHERE idPessoa = '$idIncentivadorProjeto' AND idListaDocumento IN (55, 56) AND publicado = '1'";
 $queryConsulta = mysqli_query($con, $sqlConsultaArqs);
+$numArqs = mysqli_num_rows($queryConsulta);
 
-if (mysqli_num_rows($queryConsulta) > 0) {
+if ($numArqs > 0) {
+    $count = 2;
     while ($arqs = mysqli_fetch_array($queryConsulta)) {
-        if ($arqs['idStatusDocumento'] == 1) {
-            $arqsAceitos = 1;
-        } elseif ($arqs['idStatusDocumento'] == '') {
-            $uploadArq = 'block';
-            $arqAnexado = 'block';
-            $etapa11 = 'block';
+        if ($arqs['idStatusDocumento'] == '' || $arqs['idStatusDocumento'] == 3) {
+            $sqlEtapa = "UPDATE incentivador_projeto SET etapa = 11 WHERE idIncentivadorProjeto = '$idIncentivadorProjeto'";
+            if (mysqli_query($con, $sqlEtapa)) {
+                $uploadArq = 'block';
+                $arqAnexado = 'block';
+                $etapa11 = 'block';
+            }
+            $count -= 1;
         }
+        echo $count;
     }
+
+    if ($count == 0) {
+        $uploadArq = 'none';
+    }
+
+
 
 } else {
     $uploadArq = 'block';
@@ -264,6 +275,11 @@ $etapa = $etapaArray['etapa'];
                                                              Autorização de depósito da parcela concedida pela SMC. </i></b>";
                                         $parcelaSolicitar = $i;
 
+                                    } elseif ($parcela['status_solicitacao'] == 3) {
+                                        $botaoSolicitar = "<b><i><span class='glyphicon glyphicon-remove text-danger' style='font-size: 17px;'></span> </i><i> 
+                                                             Autorização de depósito da parcela negada pela SMC. </i></b>";
+                                        $parcelaSolicitar = $i;
+                                        $x = 0;
                                     }
                                     if ($parcelaSolicitar == $i):
                                         ?>
@@ -307,7 +323,13 @@ $etapa = $etapaArray['etapa'];
                                         $envio = $con->query($query);
                                         $row = $envio->fetch_array(MYSQLI_ASSOC);
 
-                                        if (!verificaArquivosExistentesIncentivador($idIncentivadorProjeto, $row['idListaDocumento'], 3, '', 1)) {
+                                        $idDoc = $row['idListaDocumento'];
+
+                                        $sqlVerifica = "SELECT * FROM upload_arquivo WHERE idPessoa = '$idIncentivadorProjeto' AND idListaDocumento = $idDoc AND publicado = '1' AND (idStatusDocumento IS NULL OR idStatusDocumento = 3)";
+                                        $queryVerifica = mysqli_query($con, $sqlVerifica);
+                                        $num = mysqli_num_rows($queryVerifica);
+
+                                        if ($num == 0) {
                                             $documento = (object)
                                             [
                                                 'nomeDocumento' => $arq['documento'],
@@ -385,18 +407,19 @@ $etapa = $etapaArray['etapa'];
 
                                     $idStatus = $row['idStatusDocumento']; // == '' ? 'Em análise' : $row['idStatusDocumento'];
 
-                                    $btnRemover = "<button class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Remover Arquivo?' data-message='Deseja realmente excluir o arquivo " . $arquivo['documento'] . "?'>Remover
+                                    $btnRemover = "<button class='btn btn-danger' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Remover Arquivo?' data-message='Deseja realmente excluir o arquivo " . $arquivo['documento'] . "?'>Remover
                                                         </button>";
 
                                     switch ($idStatus) {
                                         case '':
                                             $status = "Em análise";
                                             $cor = "orange";
+                                            $btnRemover = "<button class='text-center' type='button' style='background: gray'><span style='font-size: 17px; color: #ec971f  ' class='glyphicon glyphicon-question-sign'></span>&nbsp;&nbsp;<b style='color: white'>Aguarde</b></button>";
                                             break;
                                         case 1:
                                             $status = "Aceito";
                                             $cor = "green";
-                                            $btnRemover = "<button class='text-center' type='button'><span style='font-size: 17px;' class='glyphicon glyphicon-ok text-success'></span><i></i> <b style='color: white'>Concedido</b></button>";
+                                            $btnRemover = "<button class='text-center' type='button' style='background: gray'><span style='font-size: 17px; color: #01DF3A' class='glyphicon glyphicon-ok'></span>&nbsp;&nbsp;<b style='color: white'>Aceito</b></button>";
                                             break;
                                         case 3:
                                             $status = "Negado";
@@ -481,14 +504,19 @@ $etapa = $etapaArray['etapa'];
             $('#textSolicitar').html('Exibir parcelas');
             $('#spanSolicitar').removeClass('glyphicon-arrow-left').addClass('glyphicon-arrow-down');
             var count = 0;
+            var numTr = 0;
+            $('.table-parcelas').find('tr').each(function () {
+                numTr += 1;
+            });
+
+            console.log(numTr);
             $('.table-parcelas').find('tr').each(function () {
                 count++;
-                console.log(parcelaAtual);
-                if (count > parcelaAtual + 1) {
+                console.log(parcelaAtual - 1);
+                if (count > numTr - 1) {
                     $(this).hide();
                 }
             });
-            // $('#icon_' + divId).html("<span class='glyphicon glyphicon-chevron-down'></span>");
         }
     }
 </script>

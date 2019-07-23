@@ -2118,7 +2118,7 @@ function verificaArquivosExistentesPF($idPessoa,$idDocumento)
 	}
 }
 
-function verificaArquivosExistentesIncentivador($idPessoa,$idDocumento, $idTipo = '', $ano = '')
+function verificaArquivosExistentesIncentivador($idPessoa,$idDocumento, $idTipo = '', $ano = '', $status = '')
 {
 	$con = bancoMysqli();
 
@@ -2134,7 +2134,13 @@ function verificaArquivosExistentesIncentivador($idPessoa,$idDocumento, $idTipo 
         $filtroAno = '';
     }
 
-	$verificacaoArquivo = "SELECT arquivo FROM upload_arquivo WHERE idPessoa = '$idPessoa' AND idListaDocumento = '$idDocumento' AND publicado = '1' $filtroTipo $filtroAno";
+    if ($status != '') {
+        $filtroStatus = "AND idStatusDocumento != $status";
+    } else {
+        $filtroStatus = '';
+    }
+
+	$verificacaoArquivo = "SELECT arquivo FROM upload_arquivo WHERE idPessoa = '$idPessoa' AND idListaDocumento = '$idDocumento' AND publicado = '1' $filtroTipo $filtroAno $filtroStatus";
 	$envio = mysqli_query($con, $verificacaoArquivo);
 	if (mysqli_num_rows($envio) > 0) {
 		return true;
