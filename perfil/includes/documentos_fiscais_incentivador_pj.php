@@ -75,7 +75,7 @@ $pj = recuperaDados("incentivador_pessoa_juridica", "idPj", $idPj);
     <?php include '../includes/menu_interno_pj.php' ?>
         <ul class="nav nav-tabs">
             <li class="nav active"><a href="#admIncentivador" data-toggle="tab">Administrativo</a></li>
-            <li class="nav"><a href="#resumo" data-toggle="tab">Resumo do projeto</a></li>
+            <li class="nav"><a href="#resumo" data-toggle="tab">Resumo do cadastro</a></li>
         </ul>
         <div class="tab-content">
             <div class="tab-pane fade in active" id="admIncentivador">

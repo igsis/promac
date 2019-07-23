@@ -123,7 +123,7 @@ if (((isset($qtadeParcelas) && $qtadeParcelas != 0) && (isset($impostoRegistrado
     <div class="container"><?php include "menu_interno_pf.php"; ?>
         <ul class="nav nav-tabs">
             <li class="nav active"><a href="#admIncentivador" data-toggle="tab">Administrativo</a></li>
-            <li class="nav"><a href="#resumo" data-toggle="tab">Resumo do projeto</a></li>
+            <li class="nav"><a href="#resumo" data-toggle="tab">Resumo do cadastro</a></li>
         </ul>
         <div class="tab-content">
             <div class="tab-pane fade" id="resumo">
