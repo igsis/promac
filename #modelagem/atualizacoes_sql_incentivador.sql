@@ -349,4 +349,21 @@ ADD COLUMN `status_solicitacao` TINYINT(1) NULL COMMENT '' AFTER `data_solicitac
 */
 
 
+/*
+* Início -> Tanair
+* 23/07/2019 
+*/ 
 
+
+INSERT INTO `lista_documento` (`idListaDocumento`, `idTipoUpload`, `documento`, `sigla`, `publicado`) 
+VALUES ('57', '3', 'DAMSP/Guia de IPTU', 'damsp', '1');
+
+
+ALTER TABLE `incentivador_projeto` ADD `valor_damsp` DECIMAL(8,2) NULL DEFAULT NULL AFTER `data_recebimento_carta`;
+
+
+
+/* 
+* FIM -> Tanair
+* 23/07/2019
+*/ 

@@ -99,6 +99,10 @@ switch ($etapa) {
         echo "<script>location.href = '?perfil=includes/incentivador_etapa9_verificaData&tipoPessoa=$tipoPessoa'</script>";
         break;
 
+    case '12':
+        echo "<script>location.href = '?perfil=includes/incentivador_etapa12_DAMSP&tipoPessoa=$tipoPessoa'</script>";
+        break;
+
 }
 
 ?>

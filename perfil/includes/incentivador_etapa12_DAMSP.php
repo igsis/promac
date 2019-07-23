@@ -4,58 +4,41 @@ $idIncentivador = $_SESSION['idUser'];
 $idIncentivadorProjeto = $_SESSION['idIncentivadorProjeto'];
 $tipoPessoa = $_POST['tipoPessoa'] ?? $_GET['tipoPessoa'];
 
+
+if (isset($_POST['avancar_etapa12'])) {
+    $sqlEtapa = "UPDATE incentivador_projeto SET etapa = 12 WHERE idIncentivadorProjeto = '$idIncentivadorProjeto'";
+    mysqli_query($con, $sqlEtapa);
+}
+
+
 if (isset($_POST['idProjeto'])) {
     $idProjeto = $_POST['idProjeto'];
 
 } else {
-    $sqlProject = "SELECT idProjeto FROM incentivador_projeto WHERE idIncentivadorProjeto = '$idIncentivadorProjeto' AND (etapa = 9 || etapa = 10 || etapa = 11)";
+    $sqlProject = "SELECT idProjeto FROM incentivador_projeto WHERE idIncentivadorProjeto = '$idIncentivadorProjeto' AND (etapa = 12)";
     $queryProject = mysqli_query($con, $sqlProject);
     $arr = mysqli_fetch_assoc($queryProject);
     $idProjeto = $arr['idProjeto'];
 }
 
-$sqlIP = "SELECT * FROM incentivador_projeto WHERE idIncentivadorProjeto = '$idIncentivadorProjeto'";
-$queryIP = mysqli_query($con, $sqlIP);
-$infos = mysqli_fetch_assoc($queryIP);
-$data_recebimento = new DateTime($infos['data_recebimento_carta']);
+if (isset($_POST['editarValorDAMSP'])) {
+    $valorDAM = dinheiroDeBr($_POST['valor_DAMSP']);
+    $sqlUp = "UPDATE incentivador_projeto SET valor_damsp = '$valorDAM' WHERE idIncentivadorProjeto = '$idIncentivadorProjeto'";
 
-
-$sqlUltimaParcela = "SELECT * FROM parcelas_incentivo WHERE idIncentivadorProjeto = '$idIncentivadorProjeto' ORDER BY 'numero_parcela' ASC LIMIT 1";
-$queryUltima = mysqli_query($con, $sqlUltimaParcela);
-$parcelas = mysqli_fetch_assoc($queryUltima);
-$data_pagamento = new DateTime($parcelas['data_pagamento']);
-
-//echo $sqlUltimaParcela;
-
-$intervalo = $data_pagamento->diff($data_recebimento);
-
-if ($intervalo->days < 15) {
-    $mensagem = "<div style='color: red'>
-                        <strong>PRAZO EXCEDIDO!</strong><br>
-                        O recebimento da Carta de Incentivo original na SMC deve ocorrer antes de 15 dias do vencimento do tributo a ser utilizado para incentivo do projeto cultural. 
-                        <br>Exigimos esse prazo para que a Secretaria possa executar o procedimento necessário para o abatimento do tributo. <hr width='30%'>
-                        <a href='?perfil=includes/incentivador_etapa6_incentivarProjeto&tipoPessoa=$tipoPessoa&retornando=etapa6'>
-                        <button class='btn btn-danger'>Por favor, retorne ao item 6 e preencha novamente a Carta de Incentivo com a data atualizada e repita os passos seguintes.</button></a>
-                    </div>";
-
-    $prazoExcedido = 1;
-
-} else {
-    $sqlEtapa = "UPDATE incentivador_projeto SET etapa = 10 WHERE idIncentivadorProjeto = '$idIncentivadorProjeto'";
-    if (mysqli_query($con, $sqlEtapa)) {
-        $mensagem = "<div class='text-success'>
-                    <strong>Certo!</strong><br>
-                    Como recebemos a Carta de Incentivo original com mais de 15 dias de antecedência para o vencimento do tributo da 1ª parcela do aporte, podemos prosseguir com o procedimento de incentivo.
-                </div>";
+    if (mysqli_query($con, $sqlUp)) {
+        $mensagem = "<font color='#01DF3A'><strong>Valor atualizado com sucesso!</strong></font>";
+    } else {
+        echo "erro : " . $sqlUp;
     }
 }
 
+
+
 if (isset($_POST["enviar"])) {
-    $parcelaAtual = $_POST['parcelaSolicitar'];
-    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '3' AND idListaDocumento IN (55,56)";
+    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '3' AND idListaDocumento IN (57)";
     $query_arquivos = mysqli_query($con, $sql_arquivos);
     while ($arq = mysqli_fetch_array($query_arquivos)) {
-        if (!verificaArquivosExistentesIncentivador($idIncentivadorProjeto, $arq['idListaDocumento'], '', '', 1)) {
+        if (!verificaArquivosExistentesIncentivador($idIncentivadorProjeto, $arq['idListaDocumento'])) {
             $y = $arq['idListaDocumento'];
             $x = $arq['sigla'];
             $nome_arquivo = isset($_FILES['arquivo']['name'][$x]) ? $_FILES['arquivo']['name'][$x] : null;
@@ -130,29 +113,21 @@ if (isset($_POST['apagar'])) {
     }
 }
 
-$etapa11 = "none";
-
-$sqlConsultaArqs = "SELECT * FROM upload_arquivo WHERE idPessoa = '$idIncentivadorProjeto' AND idListaDocumento IN (55, 56) AND publicado = '1'";
+$sqlConsultaArqs = "SELECT * FROM upload_arquivo WHERE idPessoa = '$idIncentivadorProjeto' AND idListaDocumento IN (57) AND publicado = '1'";
 $queryConsulta = mysqli_query($con, $sqlConsultaArqs);
 $numArqs = mysqli_num_rows($queryConsulta);
 
 if ($numArqs > 0) {
     $mensagem = '';
-    $count = 2;
     while ($arqs = mysqli_fetch_array($queryConsulta)) {
         if ($arqs['idStatusDocumento'] == '' || $arqs['idStatusDocumento'] == 3) {
-            $sqlEtapa = "UPDATE incentivador_projeto SET etapa = 11 WHERE idIncentivadorProjeto = '$idIncentivadorProjeto'";
+            $sqlEtapa = "UPDATE incentivador_projeto SET etapa = 12 WHERE idIncentivadorProjeto = '$idIncentivadorProjeto'";
             if (mysqli_query($con, $sqlEtapa)) {
-                $uploadArq = 'block';
+                $uploadArq = 'none';
                 $arqAnexado = 'block';
                 $etapa11 = 'block';
             }
-            $count -= 1;
         }
-    }
-
-    if ($count == 0) {
-        $uploadArq = 'none';
     }
 
 
@@ -162,12 +137,10 @@ if ($numArqs > 0) {
     $arqAnexado = 'none';
 }
 
+$incentivadorProjeto = recuperaDados("incentivador_projeto", 'idIncentivadorProjeto', $idIncentivadorProjeto);
+$etapa = $incentivadorProjeto['etapa'];
 
-$sqlEtapa = "SELECT etapa FROM incentivador_projeto WHERE idIncentivadorProjeto = '$idIncentivadorProjeto'";
-$queryEtapa = mysqli_query($con, $sqlEtapa);
-$etapaArray = mysqli_fetch_assoc($queryEtapa);
-$etapa = $etapaArray['etapa'];
-
+$valorDAM = $incentivadorProjeto['valor_damsp'] != '' ? dinheiroParaBr($incentivadorProjeto['valor_damsp']) : '';
 
 ?>
 
@@ -194,124 +167,40 @@ $etapa = $etapaArray['etapa'];
                     }
                     $projeto = recuperaDados('projeto', 'idProjeto', $idProjeto);
                     $nomeProjeto = $projeto['nomeProjeto'];
-                        echo "<h4 class='text-info'>Você está incentivando o projeto: $nomeProjeto</h4>";
+                    echo "<h4 class='text-info'>Você está incentivando o projeto: $nomeProjeto</h4>";
 
                     ?>
                 </div>
                 <hr width="50%">
-                <div class="row" id="etapa10">
-                    <div class="col-md-12">
-                        <h6><b>10 - Solicite a autorização de depósito</b></h6>
-                        <div class="col-md-offset-2 col-md-8 form-group">
-                            <table class="table bg-white text-center table-hover table-responsive table-condensed table-bordered table-parcelas">
-                                <thead class="bg-success">
-                                <tr class="list_menu" style="font-weight: bold;">
-                                    <td width="5%">Parcela</td>
-                                    <td width="15%">Data</td>
-                                    <td width="15">Valor</td>
-                                    <td width="60%">Ação</td>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <?php
-                                //verificando parcelas
-                                $sqlParcelas = "SELECT * FROM parcelas_incentivo WHERE idIncentivadorProjeto = '$idIncentivadorProjeto'";
-                                $queryParcelas = mysqli_query($con, $sqlParcelas);
-                                $numParcelas = mysqli_num_rows($queryParcelas);
-                                $concedidas = 0;
-                                $i = 1;
-                                $x = 1;
-                                while ($parcela = mysqli_fetch_array($queryParcelas)) {
-                                ?>
-                                <tr style="height: 45px;" id="linhasTabela">
-                                    <td style="vertical-align: middle;"
-                                        class="list_description"><?= $parcela['numero_parcela'] ?></td>
-                                    <td style="vertical-align: middle;"
-                                        class="list_description"><?= exibirDataBr($parcela['data_pagamento']) ?></td>
-                                    <td style="vertical-align: middle;"
-                                        class="list_description">R$ <?= dinheiroParaBr($parcela['valor']) ?></td>
-                                    <?php
-                                    if (($parcela['comprovante_deposito'] == '' && $parcela['extrato_conta_projeto'] == '' || $parcela['comprovante_deposito'] != '' && $parcela['extrato_conta_projeto'] == '' || $parcela['comprovante_deposito'] == '' && $parcela['extrato_conta_projeto'] != '') && $x == 1){
-                                        $botaoSolicitar = "<button class='btn' style='background-color: white; color: green;'
-                                                                onmouseover=\"$(this).css('background-color', '#f5f5f5'); $(this).css('font-style', 'italic')\"
-                                                                onmouseout=\"$(this).css('background-color', 'white'); $(this).css('font-style', '')\"
-                                                                onclick=\"mostrarDiv('etapa11')\">
-                                                                <span class='glyphicon glyphicon-arrow-left'
-                                                                      style='font-size: 13px;' id='spanSolicitar'></span>
-                                                            &nbsp;<b id='textSolicitar'>Solicitar autorização de depósito desta parcela</b>
-                                                        </button>";
-                                        $parcelaSolicitar = $i;
-                                        $x = 0;
-                                    } elseif ($parcela['status_solicitacao'] == 0 && $x == 1) {
-                                        $botaoSolicitar = "<b class='text-warning'><i>Autorização de depósito da parcela solicitada. <br>
-                                                                <span class='glyphicon glyphicon-info-sign text-warning' style='margin-left: 30px;font-size: 17px; float: left;  margin-top: -8px;'></span> </i><i style='margin-left: -50px;'> 
-                                                              Acompanhe a análise da SMC pelo sistema. </i></b>";
-                                        $parcelaSolicitar = $i;
-                                        $x = 0;
-                                    } elseif ($parcela['status_solicitacao'] == 1) {
-                                        $botaoSolicitar = "<b><i><span class='glyphicon glyphicon-ok text-success' style='font-size: 17px;'></span> </i><i> 
-                                                             Autorização de depósito da parcela concedida pela SMC. </i></b>";
-                                        $parcelaSolicitar = $i;
-                                        $concedidas += 1;
 
-                                    } elseif ($parcela['status_solicitacao'] == 3) {
-                                        $botaoSolicitar = "<b><i><span class='glyphicon glyphicon-remove text-danger' style='font-size: 17px;'></span> </i><i> 
-                                                             Autorização de depósito da parcela negada pela SMC. </i></b>";
-                                        $parcelaSolicitar = $i;
-                                        $x = 0;
-                                    }
-                                    if ($parcelaSolicitar == $i):
-                                        ?>
-                                        <td style="border: none; vertical-align: middle;" class="list_description">
-                                            <?= $botaoSolicitar ?>
-                                        </td>
-                                        </tr>
-                                    <?php
-                                    else:
-                                        echo "<td style='border: none;'></td>";
-                                    endif;
-                                    $i++;
-                                }
-                                ?>
-
-                                </tbody>
-                            </table>
+                <div class="row" id="etapa12" style="display: <?= $etapa11 ?>">
+                    <h6><b>12 - Insira a sua DAMSP/Guia de IPTU: </b></h6>
+                    <form method="POST" action="?perfil=includes/incentivador_etapa12_DAMSP" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-md-3 text-center" style="margin-left: 37%;">
+                            <label for="valorDAMSP">a) Qual o valor total da sua DAMSP?
+                                <div class="input-group">
+                                    <input type="text" name="valor_DAMSP"
+                                           onkeypress="return(moeda(this, '.', ',', event))"
+                                           class="form-control" placeholder="Ex.: R$ 100.000,00" value="<?= $valorDAM ?? ''?>">
+                                    <div class="input-group-btn">
+                                        <button type="submit" class="btn btn-default" name="editarValorDAMSP"
+                                                style="font-size: 20px">
+                                            <span class="glyphicon glyphicon-edit"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </label>
                         </div>
-                        <br>
                     </div>
-                </div>
-
-                <?php
-                if ($numParcelas - $concedidas == 0):
-
-                    ?>
-
-                    <form action='?perfil=includes/incentivador_etapa12_DAMSP' class='form-group'
-                          method='post'>
-                        <div class='col-md-12'>
-                            <input type='hidden' name='tipoPessoa' value='<?= $tipoPessoa ?>'>
-                            <input type='hidden' name='idProjeto' value='<?= $idProjeto ?>'>
-                            <button type='submit' name='avancar_etapa12' id="avancar_etapa12" class='btn btn-theme pull-right'>
-                                Avançar
-                            </button>
-                        </div>
-                    </form>
-
-                <?php
-                endif;
-                ?>
-                <div class="row" id="etapa11" style="display: <?= $etapa11 ?>">
-                    <h6><b>11- Faça o upload dos documentos que comprovam que o aporte foi realizado na conta do
-                            projeto: </b></h6><br>
+                        <br>
                     <div class="form-group" id="uploadDocs" style="display: <?= $uploadArq ?>">
-                        <div class="col-md-offset-1 col-md-10">
+                        <div class="col-md-7 text-center" style="margin-left: 20%;">
                             <div class="table-responsive list_info">
-                                <h6>Upload do comprovante de depósito e extrato da conta</h6>
-                                <form method="POST" action="?perfil=includes/incentivador_etapa9_verificaData"
-                                      enctype="multipart/form-data">
+                                <h6>Upload de arquivos</h6>
                                     <?php
                                     $documentos = [];
-                                    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '3' AND idListaDocumento IN (55, 56)";
+                                    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '3' AND idListaDocumento IN (57)";
                                     $query_arquivos = mysqli_query($con, $sql_arquivos);
                                     while ($arq = mysqli_fetch_array($query_arquivos)) {
                                         $doc = $arq['documento'];
@@ -337,7 +226,7 @@ $etapa = $etapaArray['etapa'];
 
                                     if ($documentos) {
                                         ?>
-                                        <table class='table table-condensed table-striped'>
+                                        <table class='table table-condensed table-striped text-center'>
                                             <thead class="bg-success">
                                             <tr class='list_menu'>
                                                 <td>Tipo de Arquivo</td>
@@ -349,16 +238,14 @@ $etapa = $etapaArray['etapa'];
                                             foreach ($documentos as $documento) {
                                                 echo "<tr>";
                                                 echo "<td class='list_description'><label>" . $documento->nomeDocumento . "</label></td>";
-                                                echo "<td class='list_description'><input type='file' name='arquivo[$documento->sigla]'></td>";
+                                                echo "<td class='list_description pull-right'><input type='file' name='arquivo[$documento->sigla]'></td>";
                                                 echo "<tr>";
                                             }
                                             ?>
                                         </table>
                                         <input type="hidden" name="idPessoa" value="<?php echo $idPf; ?>"/>
                                         <input type="hidden" name="tipoPessoa" value="<?php echo $tipoPessoa; ?>"/>
-                                        <input type="hidden" name="parcelaSolicitar" value="<?php echo $parcelaSolicitar; ?>"/>
-                                        <input type="submit" name="enviar" class="btn btn-theme"
-                                               value='upload'>
+                                        <input type="submit" name="enviar" class="btn btn-theme" value='upload'>
                                         <?php
                                     } else {
                                         $arqAnexado = 'block';
@@ -388,7 +275,7 @@ $etapa = $etapaArray['etapa'];
                                         FROM lista_documento as list
                                         INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
                                         WHERE arq.idPessoa = '$idIncentivadorProjeto'
-                                        AND list.idListaDocumento IN (55,56)
+                                        AND list.idListaDocumento IN (57)
                                         AND arq.idTipo = '3'
                                         AND arq.publicado = '1'";
                                 $query = mysqli_query($con, $sql);
@@ -439,12 +326,11 @@ $etapa = $etapaArray['etapa'];
                                     $row = mysqli_fetch_array($send);
                                     echo "
                                                 <td class='list_description'>
-                                                    <form id='apagarArq' method='POST' action='?perfil=includes/incentivador_etapa9_verificaData'>
+                                                    <form id='apagarArq' method='POST' action='?perfil=includes/incentivador_etapa12_DAMSP'>
                                                         <input type='hidden' name='idPessoa' value='$idIncentivador' />
                                                         <input type='hidden' name='tipoPessoa' value='" . $tipoPessoa . "' />
                                                         <input type='hidden' name='apagar' value='" . $arquivo['idUploadArquivo'] . "' />
                                                         <input type='hidden' name='idListaDocumento' value='" . $arquivo['idListaDocumento'] . "' />
-                                                        <input type='hidden' name='parcelaAtual' value='$parcelaSolicitar' />
                                                         $btnRemover
                                                     </form></td>";
                                 }
@@ -481,47 +367,3 @@ $etapa = $etapaArray['etapa'];
         </div>
     </div>
 </section>
-
-
-<script>
-    function mostrarDiv(divId) {
-        let parcelaAtual = "<?=$parcelaSolicitar?>";
-
-        if ($('#' + divId).is(':visible')) {
-            $('#' + divId).hide();
-            $('#textSolicitar').html('Solicitar autorização de depósito desta parcela');
-            $('#spanSolicitar').removeClass('glyphicon-arrow-down').addClass('glyphicon-arrow-left');
-            $('.table-parcelas').find('tr').each(function () {
-                $(this).show();
-            });
-            // $('#icon_' + divId).html("<span class='glyphicon glyphicon-chevron-right'></span>");
-        } else {
-            $('#' + divId).show();
-            $('#textSolicitar').html('Exibir parcelas');
-            $('#spanSolicitar').removeClass('glyphicon-arrow-left').addClass('glyphicon-arrow-down');
-            var count = 1;
-            var numTr = 0;
-            $('.table-parcelas').find('tr').each(function () {
-                numTr += 1;
-            });
-
-            console.log(numTr);
-            $('.table-parcelas').find('tr').each(function () {
-                count++;
-                console.log(parcelaAtual - 1);
-                if (count > parcelaAtual + 1 ) {
-                    $(this).hide();
-                }
-            });
-        }
-    }
-</script>
-
-<script>
-
-    let prazo = "<?=$prazoExcedido?>";
-
-    if (prazo == 1) {
-        $('#etapa10').hide();
-    }
-</script>
