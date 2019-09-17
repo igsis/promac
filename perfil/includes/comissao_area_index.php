@@ -83,23 +83,17 @@ foreach ($etapas as $texto => $etapa) {
                                 <td class='list_description'><?= mb_strimwidth($campo['areaAtuacao'], 0, 38, "...") ?></td>
                                 <td class='list_description'><?=$campo['comissao']?></td>
                                 <td> <?= recuperaDados('etapa_projeto', 'idEtapaProjeto', $campo['idEtapaProjeto'])['etapaProjeto'] ?> </td>
-
-                            <?php
-                                if ($i != 0)
-                                {
-                                    ?>
-                                    <td class='list_description'>
-                                        <form method='POST'
-                                              action='<?= ($pf['idNivelAcesso'] == 2) ? "?perfil=smc_detalhes_projeto" : "?perfil=comissao_detalhes_projeto" ?>'>
-                                            <input type='hidden' name='idProjeto'
-                                                   value='<?= $campo['idProjeto'] ?>'/>
-                                            <input type='submit' class='btn btn-theme btn-block' value='Visualizar'>
-                                        </form>
-                                    </td>
-                                    <?php
-                                }
-                            echo "</tr>";
-                            $i++;
+                                <td class='list_description'>
+                                    <form method='POST'
+                                          action='<?= ($pf['idNivelAcesso'] == 2) ? "?perfil=smc_detalhes_projeto" : "?perfil=comissao_detalhes_projeto" ?>'>
+                                        <input type='hidden' name='idProjeto'
+                                               value='<?= $campo['idProjeto'] ?>'/>
+                                        <input type='submit' class='btn btn-theme btn-block' value='Visualizar'>
+                                    </form>
+                                </td>
+                            </tr>
+                        <?php
+                        $i++;
                         }
                     echo "</table>";
                 }
@@ -127,24 +121,21 @@ foreach ($etapas as $texto => $etapa) {
             if($numVerificado > 0)
             {
             ?>
-
-            <table class='table table-condensed'>
-                <thead>
-                <tr class='list_menu'>
-                    <td>Protocolo (nº ISP)</td>
-                    <td>Nome do Projeto</td>
-                    <td>Proponente</td>
-                    <td>Documento</td>
-                    <td>Área de Atuação</td>
-                    <td>Parecerista</td>
-                    <td>Projetos com Etapa</td>
-                </tr>
-                </thead>
-                <?php
-                $i = 0;
-                while ($campo = mysqli_fetch_array($queryProjetoVerificado))
-                {
-                    if ($i < 15)
+                <table class='table table-condensed'>
+                    <thead>
+                    <tr class='list_menu'>
+                        <td>Protocolo (nº ISP)</td>
+                        <td>Nome do Projeto</td>
+                        <td>Proponente</td>
+                        <td>Documento</td>
+                        <td>Área de Atuação</td>
+                        <td>Parecerista</td>
+                        <td>Projetos com Etapa</td>
+                    </tr>
+                    </thead>
+                    <?php
+                    $i = 0;
+                    while ($campo = mysqli_fetch_array($queryProjetoVerificado))
                     {
 
                         $idComissao = $campo ['idComissao'];
