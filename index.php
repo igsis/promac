@@ -21,8 +21,20 @@ $tipoPessoa = '6';
 		<script src="visual/js/modernizr.custom.js"></script>
 		<script src="visual/js/jquery-1.9.1.js"></script>
 		<script src="visual/js/jquery-ui.js"></script>
+        <script src="visual/js/sweetalert.min.js"></script>
+        <link href="visual/css/sweetalert.css" rel="stylesheet" type="text/css"/>
 	</head>
 	<body>
+    <script>
+        function alerta()
+        {
+            swal({   title: "Atenção!",
+                text: "Novo manual de uso da marca. Confira no regulamento.",
+                timer: 10000,
+                confirmButtonColor:	"#5b6533",
+                showConfirmButton: true });}
+        window.onload = alerta();
+    </script>
 		<div id="bar">
 			<p id="p-bar"><img src="visual/images/logo_cultura_h.png" />&nbsp;</p>
 		</div>
