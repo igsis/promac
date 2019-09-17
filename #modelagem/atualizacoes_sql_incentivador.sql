@@ -1,6 +1,6 @@
 ﻿
 INSERT INTO promac.lista_documento (idListaDocumento, idTipoUpload, documento, sigla, publicado) 
-VALUES ('54', '3', 'Comprovante de que o incentivador n�o pertence �s listas de Empresas Apenadas', 'apenadas', 1);
+VALUES ('54', '3', 'Comprovante de que o incentivador não pertence as listas de Empresas Apenadas', 'apenadas', 1);
 
 /*  LEGENDA */
 /* liberado 4 = em analise
