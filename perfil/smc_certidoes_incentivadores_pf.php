@@ -18,7 +18,6 @@ if (mysqli_num_rows($queryIncentivar) > 0) {
     $idIncentivadorProjeto = $_SESSION['idIncentivadorProjeto'];
 }
 
-
 if (isset($_POST['atualizar'])) {
     // // array com os inputs
     $dados = $_POST['dado'];

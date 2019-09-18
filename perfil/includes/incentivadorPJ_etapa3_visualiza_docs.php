@@ -16,11 +16,7 @@ if (isset($_POST['enviarSMC'])) {
 }
 
 $pj = recuperaDados("incentivador_pessoa_juridica", "idPj", $idPj);
-$etapaArray = recuperaDados("etapas_incentivo", "idIncentivador", $idPj);
-
 $liberado = $pj['liberado'];
-$etapa = $etapaArray['etapa'];
-
 
 switch ($liberado) {
     case '4':

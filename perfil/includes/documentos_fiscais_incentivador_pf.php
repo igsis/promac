@@ -8,14 +8,12 @@ if (isset($_POST['iniciar_incentivo'])) {
     if (mysqli_query($con, $sqlEtapa)) {
         $_SESSION['idIncentivadorProjeto'] = recuperaUltimo("incentivador_projeto");
         $idIncentivadorProjeto = $_SESSION['idIncentivadorProjeto'];
-        echo $_SESSION['idIncentivadorProjeto'];
         $mensagemInicial = "<font color='#01DF3A'><strong>Você iniciou o processo de incentivar um projeto.<br>Por favor, siga as etapas seguintes preenchendo corretamente todas as informações solicitadas.</strong></font>";
     } else {
         echo $sqlEtapa;
     }
 } else {
     $idIncentivadorProjeto = $_SESSION['idIncentivadorProjeto'];
-    echo $_SESSION['idIncentivadorProjeto'];
 }
 
 if (isset($_POST["enviar"])) {
@@ -165,16 +163,20 @@ foreach ($docs as $doc) {
                                 $query_arquivos = mysqli_query($con, $sql_arquivos);
                                 while ($arq = mysqli_fetch_array($query_arquivos)) {
                                     $doc = $arq['documento'];
-                                    $idListaDoc = $arq['idListaDocumento'];
+                                    $query = "SELECT idListaDocumento FROM lista_documento WHERE documento='$doc' AND publicado='1' AND idTipoUpload='3'";
+                                    $envio = $con->query($query);
+                                    $row = $envio->fetch_array(MYSQLI_ASSOC);
 
-                                    if (!verificaArquivosExistentesIncentivador($idPf, $idListaDoc, 3)) {
+                                    if(verificaArquivosExistentesIncentivador($idPf,$row['idListaDocumento'])){
+                                        echo '<div class="alert alert-success">O arquivo ' . $doc . ' já foi enviado.</div>';
+                                    }
+                                    else{
                                         $documento = (object)
                                         [
-                                            'nomeDocumento' => $arq['documento'],
-                                            'sigla' => $arq['sigla']
+                                            'nomeDocumento'	=>	$arq['documento'],
+                                            'sigla' 		=>	 $arq['sigla']
                                         ];
                                         array_push($documentos, $documento);
-
                                     }
                                 }
 

@@ -4,6 +4,20 @@ $tipoPessoa = '5';
 $idPj = $_POST['idPj'];
 $pj = recuperaDados("incentivador_pessoa_juridica", "idPj", $idPj);
 
+$sqlIncentivar = "SELECT idIncentivadorProjeto FROM incentivador_projeto 
+                        WHERE tipoPessoa = '$tipoPessoa' 
+                          AND idPessoa = '$idPj' 
+                          AND publicado = 1 
+                          AND (etapa = 2 OR etapa = 3)";
+
+$queryIncentivar = mysqli_query($con, $sqlIncentivar);
+
+if (mysqli_num_rows($queryIncentivar) > 0) {
+    $arr = mysqli_fetch_assoc($queryIncentivar);
+    $_SESSION['idIncentivadorProjeto'] = $arr['idIncentivadorProjeto'];
+    $idIncentivadorProjeto = $_SESSION['idIncentivadorProjeto'];
+}
+
 if (isset($_POST['atualizar'])) {
     // // array com os inputs
     $dados = $_POST['dado'];
@@ -47,7 +61,7 @@ if (isset($_POST['nota'])) {
 
 if (isset($_POST['apto'])) {
     $sql = "UPDATE incentivador_pessoa_juridica SET liberado = '5' WHERE idPj = $idPj";
-    $sql_etapa = "UPDATE etapas_incentivo SET etapa = 4 WHERE idIncentivador = $idPj AND tipoPessoa = '$tipoPessoa'";
+    $sql_etapa = "UPDATE incentivador_projeto SET etapa = 4 WHERE idIncentivadorProjeto = $idIncentivadorProjeto";
     $apto = mysqli_query($con, $sql);
     $prox_etapa = mysqli_query($con, $sql_etapa);
 

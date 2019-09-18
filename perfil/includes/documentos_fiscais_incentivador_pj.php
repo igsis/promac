@@ -4,12 +4,16 @@ $idPj = $_SESSION['idUser'];
 $tipoPessoa = '5';
 
 if (isset($_POST['iniciar_incentivo'])) {
-    $sqlEtapa = "INSERT INTO etapas_incentivo (tipoPessoa, idIncentivador, etapa) VALUES ($tipoPessoa, $idPj, 1)";
+    $sqlEtapa = "INSERT INTO incentivador_projeto (tipoPessoa, idPessoa, etapa) VALUES ($tipoPessoa, $idPj, 1)";
     if (mysqli_query($con, $sqlEtapa)) {
+        $idIncentivadorProjeto = $_SESSION['idIncentivadorProjeto'] = $con->insert_id;
         $mensagemInicial = "<font color='#01DF3A'><strong>Você iniciou o processo de incentivar um projeto.<br>Por favor, siga as etapas seguintes preenchendo corretamente todas as informações solicitadas.</strong></font>";
+    } else {
+        echo $sqlEtapa;
     }
+} else {
+    $idIncentivadorProjeto = $_SESSION['idIncentivadorProjeto'];
 }
-
 if (isset($_POST["enviar"])) {
     $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '3' AND idListaDocumento IN (39, 40, 41, 42, 43, 54)";
     $query_arquivos = mysqli_query($con, $sql_arquivos);
@@ -72,7 +76,7 @@ $pj = recuperaDados("incentivador_pessoa_juridica", "idPj", $idPj);
 ?>
 <section id="list_items" class="home-section bg-white">
     <div class="container">
-    <?php include '../includes/menu_interno_pj.php' ?>
+    <?php include '../perfil/includes/menu_interno_pj.php' ?>
         <ul class="nav nav-tabs">
             <li class="nav active"><a href="#admIncentivador" data-toggle="tab">Administrativo</a></li>
             <li class="nav"><a href="#resumo" data-toggle="tab">Resumo do cadastro</a></li>
@@ -85,7 +89,7 @@ $pj = recuperaDados("incentivador_pessoa_juridica", "idPj", $idPj);
                 <?php
                 echo "<br><div class='alert alert-warning'>
 	                    <strong>Aviso!</strong> Seus dados já foram aceitos, portanto, não podem ser alterados.</div>";
-                include '../includes/resumo_dados_incentivador_pj.php';
+                include '../perfil/includes/resumo_dados_incentivador_pj.php';
                 ?>
             </div>
         </div>
@@ -144,11 +148,14 @@ $pj = recuperaDados("incentivador_pessoa_juridica", "idPj", $idPj);
                                     $envio = $con->query($query);
                                     $row = $envio->fetch_array(MYSQLI_ASSOC);
 
-                                    if (!verificaArquivosExistentesIncentivador($idPj, $row['idListaDocumento'])) {
+                                    if(verificaArquivosExistentesIncentivador($idPj,$row['idListaDocumento'])){
+                                        echo '<div class="alert alert-success">O arquivo ' . $doc . ' já foi enviado.</div>';
+                                    }
+                                    else{
                                         $documento = (object)
                                         [
-                                            'nomeDocumento' => $arq['documento'],
-                                            'sigla' => $arq['sigla']
+                                            'nomeDocumento'	=>	$arq['documento'],
+                                            'sigla' 		=>	 $arq['sigla']
                                         ];
                                         array_push($documentos, $documento);
                                     }
