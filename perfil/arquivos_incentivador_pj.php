@@ -1,11 +1,11 @@
 <?php
 $con = bancoMysqli();
 $idPj = $_SESSION['idUser'];
-$tipoPessoa = '4';
+$tipoPessoa = '5';
 
 if(isset($_POST["enviar"]))
 {
-	$sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '4'";
+	$sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '5'";
 	$query_arquivos = mysqli_query($con,$sql_arquivos);
 	while($arq = mysqli_fetch_array($query_arquivos))
 	{
@@ -116,7 +116,7 @@ $pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
 								while($arq = mysqli_fetch_array($query_arquivos))
 								{
 									$doc = $arq['documento'];
-									$query = "SELECT idListaDocumento FROM lista_documento WHERE documento='$doc' AND publicado='1' AND idTipoUpload='4'";
+									$query = "SELECT idListaDocumento FROM lista_documento WHERE documento='$doc' AND publicado='1' AND idTipoUpload='5'";
 									$envio = $con->query($query);
 									$row = $envio->fetch_array(MYSQLI_ASSOC);
 

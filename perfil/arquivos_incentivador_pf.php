@@ -1,7 +1,7 @@
 <?php
 $con = bancoMysqli();
 $idPf = $_SESSION['idUser'];
-$tipoPessoa = '3';
+$tipoPessoa = '4';
 
 if(isset($_POST["enviar"]))
 {
