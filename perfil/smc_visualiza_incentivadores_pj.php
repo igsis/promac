@@ -114,8 +114,12 @@ if(isset($_POST['atualizar']))
         $envio = mysqli_query($con, $QueryPJ);
         gravarLog($QueryPJ);
 	}else {
-		$QueryPJ = "UPDATE incentivador_pessoa_juridica SET liberado='1' WHERE idPj = '".$dados[0]['idPessoa']."'";
-		$envio = mysqli_query($con, $QueryPJ);
+        if ($liberado <= 3) {
+		    $QueryPJ = "UPDATE incentivador_pessoa_juridica SET liberado='1' WHERE idPj = '".$dados[0]['idPessoa']."'";
+        } else {
+            $QueryPJ = "UPDATE incentivador_pessoa_juridica SET liberado='5' WHERE idPj = '".$dados[0]['idPessoa']."'";
+        }
+            $envio = mysqli_query($con, $QueryPJ);
         gravarLog($QueryPJ);
 	}
 
