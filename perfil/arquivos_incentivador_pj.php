@@ -110,28 +110,43 @@ $pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
 						<div class="table-responsive list_info"><h6>Upload de Arquivo(s) Somente em PDF</h6>
 						<form method="POST" action="?perfil=arquivos_incentivador_pj" enctype="multipart/form-data">
 							<?php
-								$documentos = [];
-								$sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa'";
-								$query_arquivos = mysqli_query($con,$sql_arquivos);									
-								while($arq = mysqli_fetch_array($query_arquivos))
-								{
-									$doc = $arq['documento'];
-									$query = "SELECT idListaDocumento FROM lista_documento WHERE documento='$doc' AND publicado='1' AND idTipoUpload='5'";
-									$envio = $con->query($query);
-									$row = $envio->fetch_array(MYSQLI_ASSOC);
+                                $documentos = [];
+                                if ($pj['imposto'] == 1)
+                                {
+                                    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND idListaDocumento NOT IN (35) AND publicado = '1'";
+                                }
+                                elseif ($pj['imposto'] == 2)
+                                {
+                                    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND idListaDocumento NOT IN (53) AND publicado = '1'";
+                                }
+                                elseif ($pj['imposto'] == 3)
+                                {
+                                    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND publicado = '1'";
+                                }
+                                else
+                                {
+                                    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND idListaDocumento NOT IN (35, 53) AND publicado = '1'";
+                                }
+                                $query_arquivos = mysqli_query($con,$sql_arquivos);
+                                while($arq = mysqli_fetch_array($query_arquivos))
+                                {
+                                    $doc = $arq['documento'];
+                                    $query = "SELECT idListaDocumento FROM lista_documento WHERE documento='$doc' AND publicado='1' AND idTipoUpload='5'";
+                                    $envio = $con->query($query);
+                                    $row = $envio->fetch_array(MYSQLI_ASSOC);
 
-									if(verificaArquivosExistentesIncentivador($idPj,$row['idListaDocumento'])){
-										echo '<div class="alert alert-success">O arquivo ' . $doc . ' já foi enviado.</div>';
-									}
-									else{ 											
-										$documento = (object) 
-										[
-											'nomeDocumento'	=>	$arq['documento'],
-											'sigla' 		=>	 $arq['sigla']
-										];
-										array_push($documentos, $documento);									
-									}
-								}
+                                    if(verificaArquivosExistentesIncentivador($idPj,$row['idListaDocumento'])){
+                                        echo '<div class="alert alert-success">O arquivo ' . $doc . ' já foi enviado.</div>';
+                                    }
+                                    else{
+                                        $documento = (object)
+                                        [
+                                            'nomeDocumento'	=>	$arq['documento'],
+                                            'sigla' 		=>	 $arq['sigla']
+                                        ];
+                                        array_push($documentos, $documento);
+                                    }
+                                }
 
 								if ($documentos)
 								{							

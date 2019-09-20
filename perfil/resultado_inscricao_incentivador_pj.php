@@ -295,7 +295,7 @@ if(isset($_POST['apagar']))
                         if($numRow == 8)
                         {
 				    */
-				    $qtdDocumentos = ($pj['imposto'] == 3 ? 10 : 9);
+				    $qtdDocumentos = ($pj['imposto'] == 3 ? 9 : 8);
 				    switch ($pj['imposto']) {
                         case 1:
                             $query_valida = "SELECT * FROM upload_arquivo WHERE idPessoa = '$idPj' AND publicado = 1 AND idTipo = 5 AND idListaDocumento NOT IN (35) AND publicado = '1'";
