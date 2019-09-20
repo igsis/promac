@@ -163,6 +163,7 @@ if (isset($_POST['apagar'])) {
 
                             switch ($idStatus) {
                             case '':
+                            case 0:
                                 $status = "Em análise";
                                 $cor = "orange";
                                 break;
