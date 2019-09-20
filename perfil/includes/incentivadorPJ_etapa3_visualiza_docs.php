@@ -31,6 +31,10 @@ switch ($liberado) {
         $statusIncentivador = "INAPTO - Incentivador possui irregularidades fiscais, não estando apto para incentivar projetos do <b>PROMAC</b>. <br> Regularize suas pendências para que possamos dar continuidade ao processo de incentivo fiscal";
         $cor_status = "danger";
         break;
+    default:
+        $statusIncentivador = "Status da Análise de Regularidade Fiscal do Incentivador: Em análise";
+        $cor_status = "warning";
+        break;
 }
 
 if (isset($_POST["enviar"])) {
