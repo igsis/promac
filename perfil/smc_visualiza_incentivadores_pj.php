@@ -101,7 +101,7 @@ if(isset($_POST['atualizar']))
 		}
 	}
 
-    $liberado = $con->query("SELECT liberado FROM incentivador_pessoa_juridica WHERE idPj = '{$dados[0]['idPessoa']}'")->fetch_assoc();
+    $liberado = $con->query("SELECT liberado FROM incentivador_pessoa_juridica WHERE idPj = '{$dados[0]['idPessoa']}'")->fetch_assoc()['liberado'];
 
 	# Verifica se tem algum status reprovado ou complemetação
 	if ((in_array('2',$totStatus)) || in_array('3',$totStatus))
