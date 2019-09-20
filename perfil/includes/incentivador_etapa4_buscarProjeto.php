@@ -74,7 +74,7 @@ if (isset($_POST['procurar'])) {
                 <?php
                 echo "<br><div class='alert alert-warning'>
                                 <strong>Aviso!</strong> Seus dados já foram aceitos, portanto, não podem ser alterados.</div>";
-                include 'resumo_dados_incentivador_pf.php';
+                include $tipoPessoa == 4 ? 'resumo_dados_incentivador_pf.php' : 'resumo_dados_incentivador_pj.php';
                 ?>
             </div>
             <div class="tab-pane fade in active" id="admIncentivador">

@@ -100,11 +100,18 @@ if(isset($_POST['atualizar']))
 	 		$count ++;
 		}
 	}
+
+    $liberado = $con->query("SELECT liberado FROM incentivador_pessoa_juridica WHERE idPj = '{$dados[0]['idPessoa']}'")->fetch_assoc();
+
 	# Verifica se tem algum status reprovado ou complemetação
 	if ((in_array('2',$totStatus)) || in_array('3',$totStatus))
 	{
-		$QueryPJ = "UPDATE incentivador_pessoa_juridica SET liberado='2' WHERE idPj = '".$dados[0]['idPessoa']."'";
-		$envio = mysqli_query($con, $QueryPJ);
+	    if ($liberado <= 3) {
+            $QueryPJ = "UPDATE incentivador_pessoa_juridica SET liberado='2' WHERE idPj = '" . $dados[0]['idPessoa'] . "'";
+        } else {
+            $QueryPJ = "UPDATE incentivador_pessoa_juridica SET liberado='6' WHERE idPj = '" . $dados[0]['idPessoa'] . "'";
+        }
+        $envio = mysqli_query($con, $QueryPJ);
         gravarLog($QueryPJ);
 	}else {
 		$QueryPJ = "UPDATE incentivador_pessoa_juridica SET liberado='1' WHERE idPj = '".$dados[0]['idPessoa']."'";
@@ -209,6 +216,66 @@ if(isset($_POST['nota']))
     }
 }
 
+if (isset($_POST['apto']) || isset($_POST['inapto'])){
+    $sqlIncentivar = "SELECT idIncentivadorProjeto FROM incentivador_projeto 
+                        WHERE tipoPessoa = '$tipoPessoa' 
+                          AND idPessoa = '$idPj' 
+                          AND publicado = 1 
+                          AND (etapa = 2 OR etapa = 3)";
+
+    $queryIncentivar = mysqli_query($con, $sqlIncentivar);
+
+    if (mysqli_num_rows($queryIncentivar) > 0) {
+        $arr = mysqli_fetch_assoc($queryIncentivar);
+        $_SESSION['idIncentivadorProjeto'] = $arr['idIncentivadorProjeto'];
+        $idIncentivadorProjeto = $_SESSION['idIncentivadorProjeto'];
+    }
+
+    if (isset($_POST['apto'])) {
+        $sql = "UPDATE incentivador_pessoa_juridica SET liberado = '5' WHERE idPj = $idPj";
+        $sql_etapa = "UPDATE incentivador_projeto SET etapa = 4 WHERE idIncentivadorProjeto = $idIncentivadorProjeto";
+        $apto = mysqli_query($con, $sql);
+        $prox_etapa = mysqli_query($con, $sql_etapa);
+
+        if ($apto && $prox_etapa) {
+            if (isset($mensagem)) {
+                $mensagem .= "<br><font color='#01DF3A'><strong>Incentivador classificado como APTO!</strong></font>";
+            } else {
+                $mensagem = "<br><font color='#01DF3A'><strong>Incentivador classificado como APTO!</strong></font>";
+            }
+            gravarLog($sql);
+        } else {
+            if (isset($mensagem)) {
+                $mensagem .= "<br><font color='#FF0000'><strong>Erro ao deixar o incentivador APTO! Tente novamente.</strong></font>";
+            } else {
+                $mensagem = "<br><font color='#FF0000'><strong>Erro ao deixar o incentivador APTO! Tente novamente.</strong></font>";
+            }
+
+        }
+    }
+    if (isset($_POST['inapto'])) {
+        $sql = "UPDATE incentivador_pessoa_juridica SET liberado = 6 WHERE idPj = '$idPj'";
+        $sql_etapa = "UPDATE incentivador_projeto SET etapa = 3 WHERE idIncentivadorProjeto = $idIncentivadorProjeto";
+        $inapto = mysqli_query($con, $sql);
+        $prox_etapa = mysqli_query($con, $sql_etapa);
+
+        if ($inapto && $prox_etapa) {
+            if (isset($mensagem)) {
+                $mensagem .= "<br><font color='#01DF3A'><strong>Incentivador classificado como INAPTO!</strong></font>";
+            } else {
+                $mensagem = "<br><font color='#01DF3A'><strong>Incentivador classificado como <b style='color: red'>INAPTO!</b></strong></font>";
+            }
+            gravarLog($sql);
+        } else {
+            if (isset($mensagem)) {
+                $mensagem .= "<br><font color='#FF0000'><strong>Erro ao deixar o incentivador INAPTO! Tente novamente.</strong></font>";
+            } else {
+                $mensagem = "<br><font color='#FF0000'><strong>Erro ao deixar o incentivador INAPTO! Tente novamente.</strong></font>";
+            }
+        }
+    }
+}
+
 $pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
 ?>
 
@@ -274,7 +341,7 @@ $pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
 	</div>
 
     <?php
-	if($pj['liberado'] !=3)
+	if($pj['liberado'] == 1 || $pj['liberado'] == 2)
 	{
     ?>
         <div class="container">
@@ -310,7 +377,44 @@ $pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
         </div>
     <?php
     }
-	if($pj['liberado'] == 3)
+	elseif ($pj['liberado'] == 4 || $pj['liberado'] == 6)
+    {
+    ?>
+        <div class="container">
+            <div class='col-md-offset-2 col-md-8'>
+                <div class='form-group'>
+                    <ul class='list-group'>
+                        <li class='list-group-item list-group-item-success'>Notas</li>
+                        <?php listaNota($idPj, 3, 1) ?>
+                    </ul>
+                </div>
+            </div>
+            <form method="POST" action="?perfil=smc_visualiza_incentivadores_pj&idPj=<?=$idPj?>" class="form-horizontal"
+                  role="form">
+                <div class='row'>
+                    <div class='form-group'>
+                        <div class='col-md-offset-2 col-md-8'><label>Notas</label><br/>
+                            <input type='text' class='form-control' name='nota'>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class='col-md-offset-4 col-md-2'>
+                        <!-- Button para ativar modal -->
+                        <input type='hidden' name='idPj' value='<?php echo $pj['idPj'] ?>'/>
+                        <input type='submit' name='inapto' value='INAPTO'
+                               class='btn btn-danger btn-lg btn-block'>
+                    </div>
+                    <div class='col-md-2'>
+                        <input type='hidden' name='idPj' value='<?php echo $pj['idPj'] ?>'/>
+                        <input type='submit' name='apto' value='APTO' class='btn btn-success btn-lg btn-block'>
+                    </div>
+                </div>
+            </form>
+        </div>
+    <?php
+    }
+	elseif($pj['liberado'] == 3 || $pj['liberado'] == 5)
 	{
 	?>
         <div class="container">
