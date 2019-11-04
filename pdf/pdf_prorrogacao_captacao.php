@@ -40,6 +40,17 @@ $idPf = $row['idPf'];
 $idPj = $row['idPj'];
 $idAreaAtuacao = $row['idAreaAtuacao'];
 
+$sqlHistEtapa = "SELECT * FROM historico_etapa WHERE idProjeto = '$idProjeto' AND idEtapaProjeto = 5 AND data < '2020-01-01 00:00:00'";
+$queryHistEtapa = mysqli_query($con, $sqlHistEtapa);
+$numRowHist = mysqli_num_rows($queryHistEtapa);
+$nomeCoordenadora = "Paula Carolina Rocha de Oliveira";
+$dataCoordenadoria = "31 de dezembro de 2020";
+
+if ($numRowHist > 0){
+    $nomeCoordenadora = "Tatiana Solimeo";
+    $dataCoordenadoria = "31 de dezembro de 2019";
+}
+
 if($tipoPessoa == 1) {
     $sql_pf = "SELECT * FROM pessoa_fisica WHERE idPf = '$idPf'";
     $query_pf = mysqli_query($con, $sql_pf);
@@ -91,7 +102,7 @@ $pdf->Ln();
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','', 11);
-$pdf->MultiCell(170,$l,utf8_decode("A SECRETARIA MUNICIPAL DE CULTURA representada pela Sr.ª Coordenadora Tatiana Solimeo, nos termos da Portaria nº 69/2018-SMC-G e do Decreto, nº 58.041 de 20 de Dezembro de 2017 DECLARA o projeto especificado abaixo APROVADO, no valor de R$ $valorAprovado estando seu proponente apto a pleitear o incentivo fiscal, previsto na Lei nº 15.948 de 26 de Dezembro de 2013, até o limite final do benefício fiscal concedido, sendo prorrogado conforme solicitação motivada pelo proponente, com validade até 31 de dezembro de 2019, não sendo passível de nova prorrogação."));
+$pdf->MultiCell(170,$l,utf8_decode("A SECRETARIA MUNICIPAL DE CULTURA representada pela Sr.ª Coordenadora ". $nomeCoordenadora .", nos termos da Portaria nº 69/2018-SMC-G e do Decreto, nº 58.041 de 20 de Dezembro de 2017 DECLARA o projeto especificado abaixo APROVADO, no valor de R$ $valorAprovado estando seu proponente apto a pleitear o incentivo fiscal, previsto na Lei nº 15.948 de 26 de Dezembro de 2013, até o limite final do benefício fiscal concedido, sendo prorrogado conforme solicitação motivada pelo proponente, com validade até ". $dataCoordenadoria .", não sendo passível de nova prorrogação."));
 
 $pdf->ln();
 
