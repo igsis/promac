@@ -40,7 +40,7 @@ $idPf = $row['idPf'];
 $idPj = $row['idPj'];
 $idAreaAtuacao = $row['idAreaAtuacao'];
 
-$sqlHistEtapa = "SELECT * FROM historico_etapa WHERE idProjeto = '$idProjeto' AND idEtapaProjeto = 5 AND data < '2020-01-01 00:00:00'";
+$sqlHistEtapa = "SELECT * FROM historico_etapa WHERE idProjeto = '$idProjeto' AND idEtapaProjeto = 5 AND data < '2019-01-01 00:00:00'";
 $queryHistEtapa = mysqli_query($con, $sqlHistEtapa);
 $numRowHist = mysqli_num_rows($queryHistEtapa);
 $nomeCoordenadora = "Paula Carolina Rocha de Oliveira";
