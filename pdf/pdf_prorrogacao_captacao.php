@@ -95,7 +95,7 @@ $pdf->ln();
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','', 16);
-$pdf->Cell(170,9,utf8_decode("AUTORIZAÇÃO DE CAPTAÇÃO"),0,1,'C');
+$pdf->Cell(170,9,utf8_decode("AUTORIZAÇÃO DE PRORROGAÇÃO DE CAPTAÇÃO"),0,1,'C');
 
 $pdf->Ln();
 $pdf->Ln();

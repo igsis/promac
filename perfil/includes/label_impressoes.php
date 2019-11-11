@@ -16,7 +16,7 @@
             </tr>
             <tr>
                 <td>
-                    <strong>Certificado de Captação</strong>
+                    <strong>Autorização de Captação</strong>
                 </td>
                 <td>
                     <form method="POST" target="_blank" action="../pdf/pdf_certificado_captacao.php" class="form-horizontal" role="form">
@@ -36,7 +36,7 @@
             </tr>
             <tr>
                 <td>
-                    <strong>Prorrogação de Captação</strong>
+                    <strong>Autorização de Prorrogação de Captação</strong>
                 </td>
                 <td>
                     <form method="POST" target="_blank" action="../pdf/pdf_prorrogacao_captacao.php" class="form-horizontal" role="form">
