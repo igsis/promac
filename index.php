@@ -40,16 +40,19 @@ $tipoPessoa = '6';
 		</div>
 		<p>&nbsp;</p>
 		<p>&nbsp;</p>
-		<p>&nbsp;</p>
 		<section id="list_items" class="home-section bg-white">
 			<div class="container">
 				<div class="row">
-					<div class="col-md-12">
-                        <img src="visual/images/logo_promac_colorido_pq.png" align="right" hspace="20" />
-						<h4>Pro-Mac - Programa Municipal de Apoio a Projetos Culturais</h4>
+					<div class="col-md-9" align="left">
+                        <h4>Pro-Mac - Programa Municipal de Apoio a Projetos Culturais</h4>
                         <br/>
                     </div>
+                    <div class="col-md-3">
+                        <img src="visual/images/pin_promac_pq.png" align="right"  />
+                    </div>
+                </div>
 
+                <div class="row">
                     <div class="col-md-4">
                         <form>
                             <button class='btn btn-theme btn-md btn-block' type='button' data-toggle='modal' data-target='#regulamento' >Normativos</button>
@@ -78,7 +81,7 @@ $tipoPessoa = '6';
 						    <strong>Inscrição de projeto:</strong> lançamento de edital previsto para janeiro de 2020.
                         </p>
 
-						<p align="justify">O proponente deverá inscrever-se no link abaixo e após habilitação poderá inscrever o projeto.</p>
+						<p align="justify">O proponente deverá inscrever-se no botão ao lado e após habilitação poderá inscrever o projeto.</p>
 
 						<p align="justify">Para saber como participar, clique em <button class='btn btn-theme btn-sm' type='button' data-toggle='modal' data-target='#regulamento' style="border-radius: 10px;">Normativos</button> e se inscreva no link abaixo.</p>
 
@@ -165,12 +168,18 @@ $tipoPessoa = '6';
                                         <br/>
                                     </div>
                                     <br/>
-                                    <form method="POST" action="login_pf.php" class="form-horizontal" role="form">
-                                        <button type="submit" class="btn btn-theme btn-md btn-block" style="border-radius: 30px;">Pessoa Física</button>
-                                    </form>
-                                    <form method="POST" action="login_pj.php" class="form-horizontal" role="form">
-                                        <button type="submit" class="btn btn-theme btn-md btn-block" style="border-radius: 30px;">Pessoa Jurídica</button>
-                                    </form>
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <form method="POST" action="login_pf.php" class="form-horizontal" role="form">
+                                                <button type="submit" class="btn btn-theme btn-md btn-block" style="border-radius: 10px;">Pessoa Física</button>
+                                            </form>
+                                        </div>
+                                        <div class="col-md-offset-2 col-md-5">
+                                            <form method="POST" action="login_pj.php" class="form-horizontal" role="form">
+                                                <button type="submit" class="btn btn-theme btn-md btn-block" style="border-radius: 10px;">Pessoa Jurídica</button>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
@@ -195,12 +204,18 @@ $tipoPessoa = '6';
                                         <br/>
                                     </div>
                                     <br/>
-                                    <form method="POST" action="login_incentivador_pf.php" class="form-horizontal" role="form">
-                                        <button type="submit" class="btn btn-theme btn-md btn-block" style="border-radius: 30px;">Pessoa Física</button>
-                                    </form>
-                                    <form method="POST" action="login_incentivador_pj.php" class="form-horizontal" role="form">
-                                        <button type="submit" class="btn btn-theme btn-md btn-block" style="border-radius: 30px;">Pessoa Jurídica</button>
-                                    </form>
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <form method="POST" action="login_incentivador_pf.php" class="form-horizontal" role="form">
+                                                <button type="submit" class="btn btn-theme btn-md btn-block" style="border-radius: 10px;">Pessoa Física</button>
+                                            </form>
+                                        </div>
+                                        <div class="col-md-offset-2 col-md-5">
+                                            <form method="POST" action="login_incentivador_pj.php" class="form-horizontal" role="form">
+                                                <button type="submit" class="btn btn-theme btn-md btn-block" style="border-radius: 10px;">Pessoa Jurídica</button>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
