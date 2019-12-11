@@ -55,7 +55,7 @@ $tipoPessoa = '6';
                             <button class='btn btn-theme btn-md btn-block' type='button' data-toggle='modal' data-target='#regulamento' >Normativos</button>
                         </form>
                         <form method="POST" action="analise_projeto.php" class="form-horizontal" role="form">
-                            <button class='btn btn-theme btn-md btn-block' type='submit'>Confira a análise do seu projeto aqui</button>
+                            <button class='btn btn-theme btn-md btn-block' type='submit'>Confira a análise <br/>do seu projeto aqui</button>
                         </form>
                         <form method="POST" action="visual/index.php" class="form-horizontal" role="form">
                             <input type="hidden" name="consulta" value="1">
@@ -80,7 +80,7 @@ $tipoPessoa = '6';
 
 						<p align="justify">O proponente deverá inscrever-se no link abaixo e após habilitação poderá inscrever o projeto.</p>
 
-						<p align="justify">Para saber como participar, clique em <button class='btn btn-theme btn-md' type='button' data-toggle='modal' data-target='#regulamento' style="border-radius: 30px;">Normativos</button> e se inscreva no link abaixo.</p>
+						<p align="justify">Para saber como participar, clique em <button class='btn btn-theme btn-sm' type='button' data-toggle='modal' data-target='#regulamento' style="border-radius: 10px;">Normativos</button> e se inscreva no link abaixo.</p>
 
 						<p>&nbsp;</p>
                     </div>
