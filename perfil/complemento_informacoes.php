@@ -180,7 +180,7 @@ if(isset($_POST['apagar']))
         swal({   title: "Atenção!",
             text: "Certifique-se que sua documentação está correta antes do envio.",
             timer: 10000,
-            confirmButtonColor:	"#5b6533",
+            confirmButtonColor:	"#000000",
             showConfirmButton: true });}
     window.onload = alerta();
 </script>
