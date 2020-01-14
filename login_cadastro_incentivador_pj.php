@@ -13,7 +13,7 @@ if(isset($_POST['cadastraNovoPj']))
 		$mensagem = "<font color='#FF0000'><strong>Por favor, preencha todos os campos.</strong></font>";
 	}
         elseif($_POST['email']){
-                $verifica = $con->quero("SELECT email FROM incentivador_pessoa_juridica WHERE email = '$email'");
+                $verifica = $con->query("SELECT email FROM incentivador_pessoa_juridica WHERE email = '$email'");
                         if($verifica != NULL){
                                $mensagem = "<font color='#FF0000'><strong>O e-mail informado existe em outro cadastro. Utilize outro e-mail para prosseguir.</strong></font>";
                         }
