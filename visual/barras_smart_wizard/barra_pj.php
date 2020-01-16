@@ -13,6 +13,7 @@ $urlPj = array(
     3 => '/promac/visual/index_pj.php?perfil=representante_pj',
     4 => '/promac/visual/index_pj.php?perfil=representante_pj_resultado_busca',
     5 => '/promac/visual/index_pj.php?perfil=representante_pj_cadastro',
+    //6 => '/visual/index_pj.php?perfil=informacoes_adicionais',
     6 => '/promac/visual/index_pj.php?perfil=arquivos_pj',
     7 => '/promac/visual/index_pj.php?perfil=projeto_pj', // projeto
     8 => '/promac/visual/index_pj.php?perfil=projeto_visualizacao', // projeto
