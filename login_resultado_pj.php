@@ -77,7 +77,7 @@ else
 	$busca = $_POST['busca'];
 	include "visual/cabecalho_index.php";
 ?>
-    <h5 class="alert alert-danger">Pessoa Jurídica não pode ser orgão público nem MEI.</h5>
+    <h5 class="alert alert-danger">Pessoa Jurídica não pode ser orgão público.</h5>
 
 	<section id="contact" class="home-section bg-white">
 		<div class="container">
