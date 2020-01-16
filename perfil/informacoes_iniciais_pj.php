@@ -39,6 +39,7 @@ if(isset($_POST['atualizarJuridica']) and $_POST['numero'] and empty($endereço)
 	$Numero = $_POST['numero'];
 	$Complemento = $_POST['complemento'];
 	$cooperativa = $_POST['cooperativa'];
+	$mei = $_POST['mei'];
 		
 		$validar = array(
 			$_POST['Endereco'],
@@ -64,6 +65,7 @@ if(isset($_POST['atualizarJuridica']) and $_POST['numero'] and empty($endereço)
 	`numero` = '$Numero',
 	`complemento` = '$Complemento',
 	`cooperativa` = '$cooperativa',
+    `mei` = '$mei',
 	`alteradoPor` = '$usuarioLogado'
 	WHERE `idPj` = '$idPj'";
 
@@ -332,7 +334,7 @@ else
 						</div>
 					</div>
 					<div class="form-group">
-						<div class="col-md-offset-2 col-md-8"><strong>É cooperativa? *:</strong><br/>
+						<div class="col-md-offset-2 col-md-6"><strong>É cooperativa? *:</strong><br/>
                             <select class="form-control" name="cooperativa">
                                 <?php
                                 $tipos = ['Não', 'Sim'];
@@ -344,6 +346,18 @@ else
                                 <?php endforeach ?>
                             </select>
 						</div>
+                        <div class="col-md-6"><strong>É MEI? *:</strong><br/>
+                            <select class="form-control" name="mei">
+                                <?php
+                                $tipos = ['Não', 'Sim'];
+                                foreach($tipos as $chave => $tipo):
+                                    $selected = $pj['mei'] == $chave ?
+                                        "selected='selected'" : "";
+                                    ?>
+                                    <option value="<?=$chave?>" <?=$selected?>>	<?=$tipo?> </option>
+                                <?php endforeach ?>
+                            </select>
+                        </div>
 						<div class="col-md-6">
 						</div>
 					</div>
