@@ -95,7 +95,7 @@ for ($i = 0; $i < count($urlPf); $i++) {
                 <?php
                     if ($pf['liberado'] != 3) {
                 ?>
-                <li class="<?php echo isset($ativa22) ? $ativa22 : 'clickable'; ?>">
+                <li class="<?php echo isset($acionar21) ? $acionar21 : 'clickable'; ?>">
                     <a onclick="location.href='index_pf.php?perfil=informacoes_adicionais'" href=""><br /><small>Informações Adicionais</small></a>
                 </li>
                 <li class="<?php echo isset($acionar2) ? $acionar2 : 'clickable'; ?>">

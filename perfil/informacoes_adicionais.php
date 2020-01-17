@@ -60,26 +60,13 @@ if(empty($adicional)){
                         <div class="col-md-offset-2 col-md-6"><strong>Com qual gênero você se identifica? *</strong><br/>
                             <select class="form-control" name="genero" required>
                                 <option value="">Selecione...</option>
-                                <?php
-                                $tipos = [1 => 'Feminino', 2 => 'Masculino', 3 => 'Nenhuma das opções'];
-                                foreach($tipos as $chave => $tipo):
-                                    $selected = $adicional['genero'] == $chave ? "selected='selected'" : "";
-                                    ?>
-                                    <option value="<?=$chave?>" <?=$selected?>>	<?=$tipo?> </option>
-                                <?php endforeach ?>
+                                <?php geraOpcao('generos', $adicional['genero']); ?>
                             </select>
                         </div>
                         <div class="col-md-6"><strong>A sua cor ou raça é: *</strong><br/>
                             <select class="form-control" name="etnia" required>
                                 <option value="">Selecione...</option>
-                                <?php
-                                $tipos = [1 => 'Branca', 2 => 'Preta', 3 => 'Amarela', 4 => 'Parda', 5 => 'Indígena'];
-                                foreach($tipos as $chave => $tipo):
-                                    $selected = $adicional['etnia'] == $chave ?
-                                        "selected='selected'" : "";
-                                    ?>
-                                    <option value="<?=$chave?>" <?=$selected?>>	<?=$tipo?> </option>
-                                <?php endforeach ?>
+                                <?php geraOpcao('etnias', $adicional['etnia']); ?>
                             </select>
                         </div>
                     </div>
