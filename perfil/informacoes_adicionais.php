@@ -2,28 +2,37 @@
 $con = bancoMysqli();
 
 $pessoa_id = $_SESSION['idUser'];
-$tipo_pessoa_id = 2;
+$tipo_pessoa_id = $_SESSION['tipoPessoa'];
 
 if(isset($_POST['cadastra']) || isset($_POST['edita'])){
     $genero = $_POST['genero'];
     $etnia = $_POST['etnia'];
     $lei_incentivo = $_POST['lei_incentivo'];
-    $nome_lei = addslashes($_POST['nome_lei']) ?? NULL;
+    $nome_lei = (isset($_POST['nome_lei'])) ? "'".addslashes($_POST['nome_lei'])."'" : "NULL" ;
 }
 
 if(isset($_POST['cadastra'])){
-    $cadastra = "INSERT INTO pessoa_informacao_adicional (tipo_pessoa_id, pessoa_id, genero, etnia, lei_incentivo, nome_lei) VALUES ('$tipo_pessoa_id', '$pessoa_id', '$genero', '$etnia', '$lei_incentivo', '$nome_lei')";
+    $cadastra = "INSERT INTO pessoa_informacao_adicional (tipo_pessoa_id, pessoa_id, genero, etnia, lei_incentivo, nome_lei)
+                 VALUES ('$tipo_pessoa_id', '$pessoa_id', '$genero', '$etnia', '$lei_incentivo', $nome_lei)";
     if(mysqli_query($con,$cadastra)){
         $mensagem = "<span style='color:#01DF3A'><strong>Gravado com sucesso!</strong></span>";
+        gravarLog($cadastra);
     } else{
         $mensagem = "<span style='color:#ff2100'><strong>Erro ao gravar!</strong></span>".$cadastra;
     }
 }
 
 if(isset($_POST['edita'])){
-    $edita = $con->query("UPDATE pessoa_informacao_adicional SET genero = '$genero', etnia = '$etnia', lei_incentivo = '$lei_incentivo', nome_lei = '$nome_lei' WHERE tipo_pessoa_id = '$tipo_pessoa_id' AND pessoa_id = '$pessoa_id'");
+    $sqlEdita = "UPDATE pessoa_informacao_adicional SET
+                    genero = '$genero',
+                    etnia = '$etnia',
+                    lei_incentivo = '$lei_incentivo',
+                    nome_lei = $nome_lei
+                 WHERE tipo_pessoa_id = '$tipo_pessoa_id' AND pessoa_id = '$pessoa_id'";
+    $edita = $con->query($sqlEdita);
     if($edita){
         $mensagem = "<span style='color:#01DF3A'><strong>Gravado com sucesso!</strong></span>";
+        gravarLog($sqlEdita);
     } else{
         $mensagem = "<span style='color:#ff2100'><strong>Erro ao gravar!</strong></span>";
     }
@@ -52,10 +61,9 @@ if(empty($adicional)){
                             <select class="form-control" name="genero" required>
                                 <option value="">Selecione...</option>
                                 <?php
-                                $tipos = ['Feminino', 'Masculino', 'Nenhuma das opções'];
+                                $tipos = [1 => 'Feminino', 2 => 'Masculino', 3 => 'Nenhuma das opções'];
                                 foreach($tipos as $chave => $tipo):
-                                    $selected = $adicional['genero'] == $chave ?
-                                        "selected='selected'" : "";
+                                    $selected = $adicional['genero'] == $chave ? "selected='selected'" : "";
                                     ?>
                                     <option value="<?=$chave?>" <?=$selected?>>	<?=$tipo?> </option>
                                 <?php endforeach ?>
@@ -65,7 +73,7 @@ if(empty($adicional)){
                             <select class="form-control" name="etnia" required>
                                 <option value="">Selecione...</option>
                                 <?php
-                                $tipos = ['Branca', 'Preta', 'Amarela', 'Parda', 'Indígena'];
+                                $tipos = [1 => 'Branca', 2 => 'Preta', 3 => 'Amarela', 4 => 'Parda', 5 => 'Indígena'];
                                 foreach($tipos as $chave => $tipo):
                                     $selected = $adicional['etnia'] == $chave ?
                                         "selected='selected'" : "";
@@ -93,14 +101,14 @@ if(empty($adicional)){
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-8">
                             <label for="nome_lei">Qual? </label> <br>
-                            <input type="text" id="nome_lei" name="nome_lei" maxlength="80" <?php if($botao == "edita") echo "value='".$adicional['nome_lei']."'" ?>>
+                            <input class="form-control" type="text" id="nome_lei" name="nome_lei" maxlength="80" <?php if($botao == "edita") echo "value='".$adicional['nome_lei']."'" ?>>
                         </div>
                     </div>
 
                     <!-- Botão para Gravar -->
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-8">
-                            <input type="hidden" name="<?= $botao ?>" value="<?php echo $idPj ?>">
+                            <input type="hidden" name="<?= $botao ?>" value="<?= $pessoa_id ?>">
                             <input type="submit" value="GRAVAR" class="btn btn-theme btn-lg btn-block">
                         </div>
                     </div>
@@ -121,11 +129,12 @@ if(empty($adicional)){
             $('#nome_lei')
                 .attr('disabled', true)
                 .attr('required', false)
+            $('#nome_lei').val("");
         }
     }
 
     //EXECUTA TUDO
-    $('.fomento').on('change', verificaLei);
+    $('.lei_incentivo').on('change', verificaLei);
 
     $(document).ready(function () {
         verificaLei();
