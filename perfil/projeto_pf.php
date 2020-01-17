@@ -154,6 +154,12 @@ $dadosAdicionais = retornaDadosAdicionais($idPf, $tipoPessoa)
 
             <div class="col-md-offset-1 col-md-10">
                 <div class="table-responsive list_info">
+                    <?php if (!$dadosAdicionais): ?>
+                        <div class="alert alert-danger">
+                            Você já completou seus dados de cadastro? O PROMAC quer saber algumas coisas de você! Retorne ao menu
+                            <strong>"Informações Adicionais"</strong> e complete seu cadastro. Após completar o cadastro, retorne aqui no campo de inscrição de projetos normalmente”
+                        </div>
+                    <?php endif; ?>
                     <?php
                     $sql = "SELECT * FROM projeto
 										WHERE publicado > 0 AND idPf ='$idPf' AND tipoPessoa = 1
