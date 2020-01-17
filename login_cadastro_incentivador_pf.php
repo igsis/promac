@@ -8,57 +8,43 @@ if(isset($_POST['cadastraNovoPf']))
 {
 	$email = $_POST['email'];
 	$nome = addslashes($_POST['nome']);
-	if($email == '' OR $nome == '')
-	{
+	if($email == '' OR $nome == '') {
 		$mensagem = "<font color='#FF0000'><strong>Por favor, preencha todos os campos.</strong></font>";
-	}
-        elseif($_POST['email']){
-                $verifica = $con->query("SELECT email FROM incentivador_pessoa_fisica WHERE email = '$email'");
-                        if($verifica != NULL){
-                               $mensagem = "<font color='#FF0000'><strong>O e-mail informado existe em outro cadastro. Utilize outro e-mail para prosseguir.</strong></font>";
-                        }
+	} else {
+        $verificaEmail = $con->query("SELECT email FROM incentivador_pessoa_fisica WHERE email = '$email'")->num_rows;
+        if ($verificaEmail != 0) {
+            $mensagem = "<font color='#FF0000'><strong>O e-mail informado existe em outro cadastro. Utilize outro e-mail para prosseguir.</strong></font>";
+        } else {
+            if(($_POST['senha01'] != "") AND (strlen($_POST['senha01']) >= 5)) {
+                if($_POST['senha01'] == $_POST['senha02']) {
+                    $senha01 = md5($_POST['senha01']);
+                    $login = $_POST['cpf'];
+                    $dataAtualizacao = date("Y-m-d");
+                    $idFraseSeguranca = $_POST['idFraseSeguranca'];
+                    $respostaFrase = $_POST['respostaFrase'];
+                    $sql_senha = "INSERT INTO `incentivador_pessoa_fisica`(nome, cpf, email, senha, idFraseSeguranca, respostaFrase) VALUES ('$nome', '$login', '$email', '$senha01', '$idFraseSeguranca', '$respostaFrase')";
+                    $query_senha = mysqli_query($con,$sql_senha);
+                    $sql_select = "SELECT * FROM incentivador_pessoa_fisica WHERE cpf = '$login'";
+                    $query_select = mysqli_query($con,$sql_select);
+                    $sql_array = mysqli_fetch_array($query_select);
+                    $idPessoaFisica = $sql_array['idPf'];
+                    if($query_senha) {
+                        $mensagem = "<font color='#01DF3A'><strong>Usuário cadastrado com sucesso! Aguarde que você será redirecionado para a página de login.</strong></font>";
+                        gravarLog($sql_senha);
+                         echo "<script type=\"text/javascript\">
+                              window.setTimeout(\"location.href='login_incentivador_pf.php';\", 4000);
+                            </script>";
+                    } else {
+                        $mensagem = "<font color='#FF0000'><strong>Erro ao cadastrar. Tente novamente.</strong></font>";
+                    }
+                } else {
+                    // caso não tenha digitado 2 vezes
+                    $mensagem = "<font color='#FF0000'><strong>As senhas não conferem. Tente novamente.</strong></font>";
+                }
+            } else {
+                $mensagem = "<font color='#FF0000'><strong>A senha não pode estar em branco e deve conter mais de 5 caracteres. </strong></font>";
+            }
         }
-	else
-	{
-		//verifica se há um post
-		if(($_POST['senha01'] != "") AND (strlen($_POST['senha01']) >= 5))
-		{
-			if($_POST['senha01'] == $_POST['senha02'])
-			{
-				$senha01 = md5($_POST['senha01']);
-				$login = $_POST['cpf'];
-				$dataAtualizacao = date("Y-m-d");
-				$idFraseSeguranca = $_POST['idFraseSeguranca'];
-				$respostaFrase = $_POST['respostaFrase'];
-				$sql_senha = "INSERT INTO `incentivador_pessoa_fisica`(nome, cpf, email, senha, idFraseSeguranca, respostaFrase) VALUES ('$nome', '$login', '$email', '$senha01', '$idFraseSeguranca', '$respostaFrase')";
-				$query_senha = mysqli_query($con,$sql_senha);
-				$sql_select = "SELECT * FROM incentivador_pessoa_fisica WHERE cpf = '$login'";
-				$query_select = mysqli_query($con,$sql_select);
-				$sql_array = mysqli_fetch_array($query_select);
-				$idPessoaFisica = $sql_array['idPf'];
-				if($query_senha)
-				{
-					$mensagem = "<font color='#01DF3A'><strong>Usuário cadastrado com sucesso! Aguarde que você será redirecionado para a página de login.</strong></font>";
-					gravarLog($sql_senha);
-					 echo "<script type=\"text/javascript\">
-						  window.setTimeout(\"location.href='login_incentivador_pf.php';\", 4000);
-						</script>";
-				}
-				else
-				{
-					$mensagem = "<font color='#FF0000'><strong>Erro ao cadastrar. Tente novamente.</strong></font>";
-				}
-			}
-			else
-			{
-				// caso não tenha digitado 2 vezes
-				$mensagem = "<font color='#FF0000'><strong>As senhas não conferem. Tente novamente.</strong></font>";
-			}
-		}
-		else
-		{
-			$mensagem = "<font color='#FF0000'><strong>A senha não pode estar em branco e deve conter mais de 5 caracteres. </strong></font>";
-		}
 	}
 }
 ?>

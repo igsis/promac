@@ -6,6 +6,7 @@ $pf   = recuperaDados("pessoa_fisica","idPf",$idPf);
 $idProj   = isset($_SESSION['idProjeto'])?$_SESSION['idProjeto']:null;
 $proj = recuperaDados("projeto","idProjeto",$idProj); // Para verificar status
 
+$dadosAdicionais = retornaDadosAdicionais($idPf, $_SESSION['tipoPessoa']);
 
 $urlPf = array(
     27 => '/promac/visual/index_pf.php?secao=perfil',
@@ -37,7 +38,8 @@ $urlPf = array(
     25 => '/promac/visual/index_pf.php?perfil=finalProjeto',
     26 => '/promac/visual/index_pf.php?perfil=informacoes_administrativas',
     28 => '/promac/visual/index_pf.php?perfil=projeto_8', // Passo 8
-    29 => '/promac/visual/index_pf.php?perfil=resultado_inscricao_pf'
+    29 => '/promac/visual/index_pf.php?perfil=resultado_inscricao_pf',
+    30 => '/promac/visual/index_pf.php?perfil=informacoes_adicionais',
 );
 for ($i = 0; $i < count($urlPf); $i++) {
     if ($uri == $urlPf[$i]) {
@@ -77,6 +79,8 @@ for ($i = 0; $i < count($urlPf); $i++) {
             $acionar19 = 'active loading';
         }elseif ($i == 29){ // passo 8
             $acionar20 = 'active loading';
+        }elseif ($i == 30){ // informações adicionais
+            $acionar21 = 'active loading';
         }
 
 ?>
@@ -89,6 +93,11 @@ for ($i = 0; $i < count($urlPf); $i++) {
                 <li class="<?php echo isset($acionar1) ? $acionar1 : 'clickable'; ?>">
                     <a onclick="location.href='index_pf.php?perfil=informacoes_iniciais_pf'" href=""><br /><small>Proponente</small></a>
                 </li>
+                <?php if ($pf['liberado'] != 3 || $dadosAdicionais == false): ?>
+                    <li class="<?php echo isset($acionar21) ? $acionar21 : 'clickable'; ?>">
+                        <a onclick="location.href='index_pf.php?perfil=informacoes_adicionais'" href=""><br /><small>Informações Adicionais</small></a>
+                    </li>
+                <?php endif; ?>
                 <?php
                     if ($pf['liberado'] != 3) {
                 ?>
