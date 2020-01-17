@@ -6,6 +6,8 @@ $pj   = recuperaDados("pessoa_juridica","idPj",$idPj);
 $idProj = isset($_SESSION['idProjeto'])?$_SESSION['idProjeto']:null;
 $proj   = recuperaDados("projeto","idProjeto",$idProj); // Para verificar status
 
+$dadosAdicionais = retornaDadosAdicionais($idPj, $_SESSION['tipoPessoa']);
+
 $urlPj = array(
     0 => '/promac/visual/index_pj.php?secao=perfil',
     1 => '/promac/visual/index_pj.php',
@@ -104,12 +106,15 @@ for ($i = 0; $i < count($urlPj); $i++) {
                 <li class="<?php echo isset($ativa2) ? $ativa2 : 'clickable'; ?>">
                     <a onclick="location.href='index_pj.php?perfil=representante_pj'" href=""><br /><small>Representante Legal</small></a>
                 </li>
-                <?php if ($pj['idRepresentanteLegal'] != 0) { ?>
-                    <li class="<?php echo isset($ativa22) ? $ativa22 : 'clickable'; ?>">
-                        <a onclick="location.href='index_pj.php?perfil=informacoes_adicionais'" href=""><br /><small>Informações Adicionais do Representante Legal</small></a>
-                    </li>
-                <?php } ?>
+                <?php if ($pj['liberado'] != 3 || $dadosAdicionais == false): ?>
+                    <?php if ($pj['idRepresentanteLegal'] != 0) : ?>
+                        <li class="<?php echo isset($ativa22) ? $ativa22 : 'clickable'; ?>">
+                            <a onclick="location.href='index_pj.php?perfil=informacoes_adicionais'" href=""><br /><small>Informações Adicionais do Representante Legal</small></a>
+                        </li>
+                    <?php endif; ?>
+                <?php endif; ?>
                 <?php if ($pj['liberado'] != 3) { ?>
+
                     <li class="<?php echo isset($ativa3) ? $ativa3 : 'clickable'; ?>">
                         <a onclick="location.href='index_pj.php?perfil=arquivos_pj'" href=""><br /><small>Documentos do Proponente</small></a>
                     </li>
@@ -133,7 +138,7 @@ for ($i = 0; $i < count($urlPj); $i++) {
                 <?php
                     if ($proj['idEtapaProjeto'] == 1)
                     {
-                ?> 
+                ?>
                 <?php
                     if ($idProj == true) {
                 ?>
@@ -144,7 +149,7 @@ for ($i = 0; $i < count($urlPj); $i++) {
                     }else {
                         break;
                     }
-                ?>       
+                ?>
                 <li class="<?php echo isset($ativa8) ? $ativa8 : 'clickable'; ?>">
                    <a onclick="location.href='index_pj.php?perfil=projeto_3'" href=""><br /><small>Resumo e Currículo</small></a>
                 </li>

@@ -3541,6 +3541,12 @@ function limiteEnvioProjetos()
 
 function retornaDadosAdicionais($idPessoa, $tipoPessoa) {
     $con = bancoMysqli();
+
+    if ($tipoPessoa == 2) {
+        $pj = recuperaDados('pessoa_juridica', 'idPj', $idPessoa);
+        $idPessoa = $pj['idRepresentanteLegal'];
+    }
+
     $sql = "SELECT g.genero, e.etnia, lei_incentivo, nome_lei FROM pessoa_informacao_adicional AS pia
             INNER JOIN generos AS g ON pia.genero = g.id
             INNER JOIN etnias AS e ON pia.etnia = e.id

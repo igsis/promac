@@ -4,6 +4,13 @@ $con = bancoMysqli();
 $pessoa_id = $_SESSION['idUser'];
 $tipo_pessoa_id = $_SESSION['tipoPessoa'];
 
+if ($tipo_pessoa_id == 1) {
+    $pessoa_id = $_SESSION['idUser'];
+} else {
+    $pj = recuperaDados('pessoa_juridica', 'idPj', $_SESSION['idUser']);
+    $pessoa_id = $pj['idRepresentanteLegal'];
+}
+
 if(isset($_POST['cadastra']) || isset($_POST['edita'])){
     $genero = $_POST['genero'];
     $etnia = $_POST['etnia'];
