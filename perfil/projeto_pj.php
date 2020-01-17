@@ -43,6 +43,8 @@ if (isset($_POST['cancelar'])){
 
 }
 
+$dadosAdicionais = retornaDadosAdicionais($idPj, $tipoPessoa)
+
 ?>
 <section id="list_items" class="home-section bg-white">
 	<div class="container"><?php include '../perfil/includes/menu_interno_pj.php'; ?>
@@ -106,8 +108,18 @@ if (isset($_POST['cancelar'])){
                                 <div class="col-md-offset-2 col-md-8">
                                     <form class="form-horizontal" role="form"
                                           action="  ?perfil=projeto_novo" method="post">
-                                        <input type="submit" value="Inscrever Projeto"
+                                        <?php if (!$dadosAdicionais): ?>
+                                            <div class="alert alert-danger">
+                                                Você já completou seus dados de cadastro? O PROMAC quer saber algumas coisas de você! Retorne ao menu
+                                                <strong>"Informações Adicionais do Representante Legal"</strong> e complete seu cadastro. Após completar o cadastro, retorne aqui no campo de inscrição de projetos normalmente”
+                                            </div>
+                                            <div class="tooltip-wrapper disabled" data-title="Complete seu cadastro com as Informações Adicionais">
+                                                <button class="btn btn-theme btn-lg btn-block" disabled>Inscrever Projeto</button>
+                                            </div>
+                                        <?php else: ?>
+                                            <input type="submit" value="Inscrever Projeto"
                                                class="btn btn-theme btn-lg btn-block">
+                                        <?php endif; ?>
                                     </form>
                                 </div>
                             </div>
@@ -260,3 +272,9 @@ if (isset($_POST['cancelar'])){
 		
 	</div>
 </section>
+
+<script>
+    $(function() {
+        $('.tooltip-wrapper').tooltip({position: "bottom"});
+    });
+</script>
