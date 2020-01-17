@@ -37,7 +37,8 @@ $urlPf = array(
     25 => '/promac/visual/index_pf.php?perfil=finalProjeto',
     26 => '/promac/visual/index_pf.php?perfil=informacoes_administrativas',
     28 => '/promac/visual/index_pf.php?perfil=projeto_8', // Passo 8
-    29 => '/promac/visual/index_pf.php?perfil=resultado_inscricao_pf'
+    29 => '/promac/visual/index_pf.php?perfil=resultado_inscricao_pf',
+    30 => '/promac/visual/index_pf.php?perfil=informacoes_adicionais',
 );
 for ($i = 0; $i < count($urlPf); $i++) {
     if ($uri == $urlPf[$i]) {
@@ -77,6 +78,8 @@ for ($i = 0; $i < count($urlPf); $i++) {
             $acionar19 = 'active loading';
         }elseif ($i == 29){ // passo 8
             $acionar20 = 'active loading';
+        }elseif ($i == 30){ // informações adicionais
+            $acionar21 = 'active loading';
         }
 
 ?>
@@ -92,6 +95,9 @@ for ($i = 0; $i < count($urlPf); $i++) {
                 <?php
                     if ($pf['liberado'] != 3) {
                 ?>
+                <li class="<?php echo isset($ativa22) ? $ativa22 : 'clickable'; ?>">
+                    <a onclick="location.href='index_pf.php?perfil=informacoes_adicionais'" href=""><br /><small>Informações Adicionais</small></a>
+                </li>
                 <li class="<?php echo isset($acionar2) ? $acionar2 : 'clickable'; ?>">
                    <a onclick="location.href='index_pf.php?perfil=arquivos_pf'" href=""><br /><small>Documentos do Proponente</small></a>
                 </li>
