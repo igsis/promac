@@ -62,6 +62,7 @@ if(isset($_POST['novoPj'])) //tipoePessoa = 2
 	$idPj = $_SESSION['idUser'];
 	$nomeProjeto = addslashes($_POST['nomeProjeto']);
 	$idAreaAtuacao = $_POST['idAreaAtuacao'];
+	$tags = $_POST['tags'];
     if(isset($_POST['segmento'])){
         $segmento = $_POST['segmento'];
     }else{
@@ -85,45 +86,45 @@ if(isset($_POST['novoPj'])) //tipoePessoa = 2
 		WHERE `idProjeto` = '$idProjeto'";
 	if(mysqli_query($con,$sql_insere_projeto))
 	{
-        $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '7'";
-        $query_arquivos = mysqli_query($con,$sql_arquivos);
-        while($arq = mysqli_fetch_array($query_arquivos))
-        {
-            $y = $arq['idListaDocumento'];
-            $x = $arq['sigla'];
-            $nome_arquivo = isset($_FILES['arquivo']['name'][$x]) ? $_FILES['arquivo']['name'][$x] : null;
-            $f_size = isset($_FILES['arquivo']['size'][$x]) ? $_FILES['arquivo']['size'][$x] : null;
+        if (count($_FILES) > 0) {
+            $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '7'";
+            $query_arquivos = mysqli_query($con,$sql_arquivos);
+            while ($arq = mysqli_fetch_array($query_arquivos)) {
+                $y = $arq['idListaDocumento'];
+                $x = $arq['sigla'];
+                $nome_arquivo = isset($_FILES['arquivo']['name'][$x]) ? $_FILES['arquivo']['name'][$x] : null;
+                $f_size = isset($_FILES['arquivo']['size'][$x]) ? $_FILES['arquivo']['size'][$x] : null;
 
-            if($f_size > 5242880) // 5MB em bytes
-            {
-                $mensagem = "<font color='#FF0000'><strong>Erro! Tamanho de arquivo excedido! Tamanho máximo permitido: 05 MB.</strong></font>";
-            }
-            else
-            {
-                if($nome_arquivo != "")
+                if ($f_size > 5242880) // 5MB em bytes
                 {
-                    $nome_temporario = $_FILES['arquivo']['tmp_name'][$x];
-                    $new_name = date("YmdHis")."_".semAcento($nome_arquivo); //Definindo um novo nome para o arquivo
-                    $hoje = date("Y-m-d H:i:s");
-                    $dir = '../uploadsdocs/'; //Diretório para uploads
+                    $mensagem = "<font color='#FF0000'><strong>Erro! Tamanho de arquivo excedido! Tamanho máximo permitido: 05 MB.</strong></font>";
+                } else {
+                    if ($nome_arquivo != "") {
+                        $nome_temporario = $_FILES['arquivo']['tmp_name'][$x];
+                        $new_name = date("YmdHis") . "_" . semAcento($nome_arquivo); //Definindo um novo nome para o arquivo
+                        $hoje = date("Y-m-d H:i:s");
+                        $dir = '../uploadsdocs/'; //Diretório para uploads
 
-                    if (move_uploaded_file($nome_temporario, $dir . $new_name)) {
-                        $sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('7', '$idProjeto', '$y', '$new_name', '$hoje', '1'); ";
-                        $query = mysqli_query($con, $sql_insere_arquivo);
-                        if ($query) {
-                            $mensagem = "<font color='#01DF3A'><strong>Arquivo recebido com sucesso!</strong></font>";
-                            gravarLog($sql_insere_arquivo);
+                        if (move_uploaded_file($nome_temporario, $dir . $new_name)) {
+                            $sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('7', '$idProjeto', '$y', '$new_name', '$hoje', '1'); ";
+                            $query = mysqli_query($con, $sql_insere_arquivo);
+                            if ($query) {
+                                $mensagem = "<font color='#01DF3A'><strong>Arquivo recebido com sucesso!</strong></font>";
+                                gravarLog($sql_insere_arquivo);
+                            } else {
+                                $mensagem = "<font color='#FF0000'><strong>Erro ao gravar no banco.</strong></font>";
+                            }
                         } else {
-                            $mensagem = "<font color='#FF0000'><strong>Erro ao gravar no banco.</strong></font>";
+                            $mensagem = "<font color='#FF0000'><strong>Erro no upload! Tente novamente.</strong></font>";
                         }
-                    } else {
-                        $mensagem = "<font color='#FF0000'><strong>Erro no upload! Tente novamente.</strong></font>";
                     }
                 }
             }
         }
 
-		$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso!</strong></font>";
+        atualizaRelacionamento('projeto_tag', 'projeto_id', $idProjeto, 'tag_id', $tags);
+
+        $mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso!</strong></font>";
 		gravarLog($sql_insere_projeto);
 	}
 	else
@@ -141,6 +142,7 @@ if(isset($_POST['insereAtuacao']))
 	$idPf = $_SESSION['idUser'];
 	$nomeProjeto = $_POST['nomeProjeto'];
 	$idAreaAtuacao = $_POST['idAreaAtuacao'];
+	$tags = isset($_POST['tags']) ? $_POST['tags'] : "";
 	$sql_insere_projeto = "UPDATE projeto SET
 		nomeProjeto = '$nomeProjeto',
 		idAreaAtuacao = '$idAreaAtuacao',
@@ -148,43 +150,43 @@ if(isset($_POST['insereAtuacao']))
 		WHERE idProjeto = '$idProjeto'";
 	if(mysqli_query($con,$sql_insere_projeto))
 	{
-        $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '7'";
-        $query_arquivos = mysqli_query($con,$sql_arquivos);
-        while($arq = mysqli_fetch_array($query_arquivos))
-        {
-            $y = $arq['idListaDocumento'];
-            $x = $arq['sigla'];
-            $nome_arquivo = isset($_FILES['arquivo']['name'][$x]) ? $_FILES['arquivo']['name'][$x] : null;
-            $f_size = isset($_FILES['arquivo']['size'][$x]) ? $_FILES['arquivo']['size'][$x] : null;
+        if (count($_FILES) > 0) {
+            $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '7'";
+            $query_arquivos = mysqli_query($con,$sql_arquivos);
+            while ($arq = mysqli_fetch_array($query_arquivos)) {
+                $y = $arq['idListaDocumento'];
+                $x = $arq['sigla'];
+                $nome_arquivo = isset($_FILES['arquivo']['name'][$x]) ? $_FILES['arquivo']['name'][$x] : null;
+                $f_size = isset($_FILES['arquivo']['size'][$x]) ? $_FILES['arquivo']['size'][$x] : null;
 
-            if($f_size > 5242880) // 5MB em bytes
-            {
-                $mensagem = "<font color='#FF0000'><strong>Erro! Tamanho de arquivo excedido! Tamanho máximo permitido: 05 MB.</strong></font>";
-            }
-            else
-            {
-                if($nome_arquivo != "")
+                if ($f_size > 5242880) // 5MB em bytes
                 {
-                    $nome_temporario = $_FILES['arquivo']['tmp_name'][$x];
-                    $new_name = date("YmdHis")."_".semAcento($nome_arquivo); //Definindo um novo nome para o arquivo
-                    $hoje = date("Y-m-d H:i:s");
-                    $dir = '../uploadsdocs/'; //Diretório para uploads
+                    $mensagem = "<font color='#FF0000'><strong>Erro! Tamanho de arquivo excedido! Tamanho máximo permitido: 05 MB.</strong></font>";
+                } else {
+                    if ($nome_arquivo != "") {
+                        $nome_temporario = $_FILES['arquivo']['tmp_name'][$x];
+                        $new_name = date("YmdHis") . "_" . semAcento($nome_arquivo); //Definindo um novo nome para o arquivo
+                        $hoje = date("Y-m-d H:i:s");
+                        $dir = '../uploadsdocs/'; //Diretório para uploads
 
-                    if (move_uploaded_file($nome_temporario, $dir . $new_name)) {
-                        $sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('7', '$idProjeto', '$y', '$new_name', '$hoje', '1'); ";
-                        $query = mysqli_query($con, $sql_insere_arquivo);
-                        if ($query) {
-                            $mensagem = "<font color='#01DF3A'><strong>Arquivo recebido com sucesso!</strong></font>";
-                            gravarLog($sql_insere_arquivo);
+                        if (move_uploaded_file($nome_temporario, $dir . $new_name)) {
+                            $sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('7', '$idProjeto', '$y', '$new_name', '$hoje', '1'); ";
+                            $query = mysqli_query($con, $sql_insere_arquivo);
+                            if ($query) {
+                                $mensagem = "<font color='#01DF3A'><strong>Arquivo recebido com sucesso!</strong></font>";
+                                gravarLog($sql_insere_arquivo);
+                            } else {
+                                $mensagem = "<font color='#FF0000'><strong>Erro ao gravar no banco.</strong></font>";
+                            }
                         } else {
-                            $mensagem = "<font color='#FF0000'><strong>Erro ao gravar no banco.</strong></font>";
+                            $mensagem = "<font color='#FF0000'><strong>Erro no upload! Tente novamente.</strong></font>";
                         }
-                    } else {
-                        $mensagem = "<font color='#FF0000'><strong>Erro no upload! Tente novamente.</strong></font>";
                     }
                 }
             }
         }
+
+        atualizaRelacionamento('projeto_tag', 'projeto_id', $idProjeto, 'tag_id', $tags);
 
 		$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso!</strong></font>";
 		gravarLog($sql_insere_projeto);
@@ -272,6 +274,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
                                     <div class="form-group">
                                         <div class="col-md-offset-2 col-md-8">
                                             <?php if (verificaArquivosExistentesPF($idProjeto, 58)): ?>
+                                                <label>Foto do Projeto *</label>
                                                 <?php exibeFotoProjeto($idProjeto, '7', 'projeto_edicao') ?>
                                             <?php else: ?>
                                                 <label>Foto do Projeto *</label>
@@ -280,6 +283,16 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
                                                 </div>
                                                 <input type="file" name="arquivo[foto_proj]" required>
                                             <?php endif; ?>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-8">
+                                            <label>Tags do Projeto *</label>
+                                            <div class="alert alert-warning">
+                                                Escolha até 3 (três) tags que você considera que tem mais relação com seu projeto. As tags são uma nova maneira de ajudar a identificar o seu projeto para além da linguagem ou segmento do qual ele faz parte.  Escolha, no máximo, 3 (três) palavras-chave.
+                                            </div>
+                                            <?php geraCheckbox('tags', 'projeto_tag', 'projeto_id', $idProjeto); ?>
                                         </div>
                                     </div>
 
@@ -322,6 +335,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
                                     <div class="form-group">
                                         <div class="col-md-offset-2 col-md-8">
                                             <?php if (verificaArquivosExistentesPF($idProjeto, 58)): ?>
+                                                <label>Foto do Projeto *</label>
                                                 <?php exibeFotoProjeto($idProjeto, '7', 'projeto_edicao') ?>
                                             <?php else: ?>
                                                 <label>Foto do Projeto *</label>
@@ -330,6 +344,16 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
                                                 </div>
                                                 <input type="file" name="arquivo[foto_proj]" required>
                                             <?php endif; ?>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-8">
+                                            <label>Tags do Projeto *</label>
+                                            <div class="alert alert-warning">
+                                                Escolha até 3 (três) tags que você considera que tem mais relação com seu projeto. As tags são uma nova maneira de ajudar a identificar o seu projeto para além da linguagem ou segmento do qual ele faz parte.  Escolha, no máximo, 3 (três) palavras-chave.
+                                            </div>
+                                            <?php geraCheckbox('tags', 'projeto_tag', 'projeto_id', $idProjeto); ?>
                                         </div>
                                     </div>
 
@@ -417,4 +441,31 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
         let idArquivo = $(this).attr('data-id');
         $('#idArquivo').attr('value', idArquivo)
     })
+
+    function travaCheckbox() {
+        let checkboxes = $('input:checkbox');
+        let qtdChecked = $('input:checkbox:checked').length;
+        console.log(checkboxes);
+        console.log(qtdChecked);
+
+        // if (qtdChecked == 3) {
+        //
+        // }
+
+        if (qtdChecked == 3){
+            for (let x = 0; x < checkboxes.length; x++) {
+                if (!checkboxes[x].checked) {
+                    checkboxes[x].disabled = true;
+                }
+            }
+        } else {
+            for (let x = 0; x < checkboxes.length; x++) {
+                checkboxes[x].disabled = false;
+            }
+        }
+    }
+
+    $('.tags').click(travaCheckbox);
+
+    $(document).ready(travaCheckbox);
 </script>
