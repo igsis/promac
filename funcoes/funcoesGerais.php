@@ -3559,5 +3559,164 @@ function retornaDadosAdicionais($idPessoa, $tipoPessoa) {
     }
 }
 
+function in_array_r($needle, $haystack, $strict = false) {
+    foreach ($haystack as $item) {
+        if (($strict ? $item === $needle : $item == $needle) || (is_array($item) && in_array_r($needle, $item, $strict))) {
+            return true;
+        }
+    }
+    return false;
+}
+
+/**
+ * <p>Transforma os registros de uma tabela em inputs tipo checkbox,
+ * ajustados em duas colunas</p>
+ * @param string $tabela
+ * <p>Tabela para qual os registros deve ser os checkboxes.
+ * <strong>Importante:</strong> o valor desta variável será
+ * o valor do atributo <i>name</i> dos inputs</p>
+ * @param string $tabelaRelacionamento
+ * <p>Tabela de relacionamento onde deve procurar os valores
+ * já cadastrados para determinado Evento / Atração</p>
+ * @param string $colunaEntidadeForte
+ * <p>Nome da coluna que representa a <strong>entidade forte</strong> na tabela de relacionamento</p>
+ * @param null|int $idEntidadeForte [opcional]
+ * <p>ID da entidade forte. <b>NULL</b> por padrão, quando informado,
+ * busca os registros na tabela de relacionamento</p>
+ * @param bool $publicado [opcional]
+ * <p><b>FALSE</b> por padrão. Quando <b>TRUE</b>,
+ * adiciona a clausula <i>"WHERE publicado = 1"
+ * na listagem dos registros do checkbox</i></p>
+ */
+function geraCheckbox($tabela, $tabelaRelacionamento, $colunaEntidadeForte, $idEntidadeForte = null, $publicado = false) {
+    $con = bancoMysqli();
+    $publicado = $publicado ? "WHERE publicado = '1'" : "";
+    $sql = "SELECT * FROM $tabela $publicado ORDER BY 2";
+    $consulta = $con->query($sql);
+
+    // Parte do relacionamento
+    $sqlConsultaRelacionamento = "SELECT * FROM $tabelaRelacionamento WHERE $colunaEntidadeForte = '$idEntidadeForte'";
+    $relacionamentos = $con->query($sqlConsultaRelacionamento)->fetch_all(MYSQLI_ASSOC);
+
+    foreach ($consulta->fetch_all(MYSQLI_NUM) as $checkbox) {
+        foreach ($relacionamentos as $key => $item) {
+            if (isset($item[$colunaEntidadeForte])) {
+                unset($relacionamentos[$key][$colunaEntidadeForte]);
+            }
+        }
+        ?>
+        <div class='checkbox-grid-2'>
+            <div class='checkbox'>
+                <label>
+                    <input class='<?=$tabela?>' type='checkbox' name='<?=$tabela?>[]'
+                       value='<?=$checkbox[0]?>' <?=in_array_r($checkbox[0], $relacionamentos) ? "checked" : ""?>
+                       data-check="<?=$checkbox[1]?>"> <?=$checkbox[1]?>
+                </label>
+            </div>
+        </div>
+        <?php
+    }
+}
+
+/**
+ * Verifica a tabela de relacionamento passada e atualiza conforme os dados informados
+ * @param string $tabela <p>Nome da tabela de relacionamento</p>
+ * @param string $entidadeForte <p>Nome da coluna que representa a entidade forte <i>(tabela principal)</i></p>
+ * @param int $idEntidadeForte <p>ID da entidade forte</p>
+ * @param string $entidadeFraca <p>Nome da coluna que representa a entidade fraca <i>(tabela auxiliar)</i></p>
+ * @param int|array $idsEntidadeFraca <p>Array com os IDs da entidade fraca</p>
+ * @return bool
+ */
+function atualizaRelacionamento($tabela, $entidadeForte, $idEntidadeForte, $entidadeFraca, $idsEntidadeFraca) {
+    $con = bancoMysqli();
+    /* Consulta a tabela de relacionamento
+    para verificar se existe algum registro
+    para a entidade forte informada */
+    $sqlConsultaRelacionamento = "SELECT $entidadeFraca FROM $tabela WHERE $entidadeForte = '$idEntidadeForte'";
+    $relacionamento = $con->query($sqlConsultaRelacionamento);
+
+    /* Se não existe nenhum registro,apenas insere um para cada id de entidade fraca */
+    if ($relacionamento->num_rows == 0) {
+        /* Verifica se o ID da entidade fraca está em um array */
+        if (is_array($idsEntidadeFraca)) {
+            foreach ($idsEntidadeFraca as $checkbox) {
+                $dadosInsert = [
+                    $entidadeForte => $idEntidadeForte,
+                    $entidadeFraca => $checkbox
+                ];
+                $sqlInsert = "INSERT INTO $tabela (".implode(', ', array_keys($dadosInsert)).") VALUES (".implode(', ', $dadosInsert).")";
+                $insert = $con->query($sqlInsert);
+                if (!$insert) {
+                    return false;
+                }
+            }
+        } else {
+            $dadosInsert = [
+                $entidadeForte => $idEntidadeForte,
+                $entidadeFraca => $idsEntidadeFraca
+            ];
+            $sqlInsert = "INSERT INTO $tabela (".implode(', ', array_keys($dadosInsert)).") VALUES (".implode(', ', $dadosInsert).")";
+            $insert = $con->query($sqlInsert);
+            if (!$insert) {
+                return false;
+            }
+        }
+        return true;
+    } else {
+//        $relacionamentos = $relacionamento->fetchAll(PDO::FETCH_COLUMN);
+        $queryRelacionamentos = $relacionamento->fetch_all(MYSQLI_ASSOC);
+        foreach ($queryRelacionamentos as $valor) {
+            $relacionamentos[] = $valor[$entidadeFraca];
+        }
+        /* Se existe registros, primeiro, verifica se
+        na tabela existe algum que não tenha sido
+        passado nos IDs da entidade fraca.
+        Cada registro que não possui ID passado é excluído */
+        if (is_array($idsEntidadeFraca)) {
+            foreach ($relacionamentos as $item) {
+                if (!in_array($item, $idsEntidadeFraca)) {
+                    $delete = $con->query("DELETE FROM $tabela WHERE $entidadeForte = '$idEntidadeForte' AND $entidadeFraca = $item");
+                    if (!$delete) {
+                        return false;
+                    }
+                }
+            }
+
+            /* Após excluir os registros que não possuem ID passado,
+            verifica se dos IDs informados, existe algum que não
+            tenha registro. Caso sim, insere um novo */
+            foreach ($idsEntidadeFraca as $checkbox) {
+                if (!in_array($checkbox, $relacionamentos)) {
+                    $dadosInsert = [
+                        $entidadeForte => $idEntidadeForte,
+                        $entidadeFraca => $checkbox
+                    ];
+                    $sqlInsertNovo = "INSERT INTO $tabela (".implode(', ', array_keys($dadosInsert)).") VALUES (".implode(', ', $dadosInsert).")";
+                    $insertNovo = $con->query($sqlInsertNovo);
+                    if (!$insertNovo) {
+                        return false;
+                    }
+                }
+            }
+        } else {
+            if (!in_array($idsEntidadeFraca, $relacionamentos)) {
+                $delete = $con->query("DELETE FROM $tabela WHERE $entidadeForte = '$idEntidadeForte'");
+                if (!$delete) {
+                    return false;
+                }
+                $dadosInsert = [
+                    $entidadeForte => $idEntidadeForte,
+                    $entidadeFraca => $idsEntidadeFraca
+                ];
+                $sqlInsert = "INSERT INTO $tabela (".implode(', ', array_keys($dadosInsert)).") VALUES (".implode(', ', $dadosInsert).")";
+                $insert = $con->query($sqlInsert);
+                if (!$insert) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+}
 
 ?>

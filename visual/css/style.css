@@ -698,3 +698,8 @@ input[type=checkbox].css-checkbox {
   color: blue;
 
 }
+
+.checkbox-grid-2 {
+	float: left;
+	width: 50%;
+}
