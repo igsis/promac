@@ -1,7 +1,50 @@
 <?php
 $con = bancoMysqli();
 //[Procedure mySql para trigger de update]
-pr_atualizaCampos(); 
+pr_atualizaCampos();
+
+function exibeFotoProjeto($idPessoa,$tipoPessoa,$pagina)
+{
+    $con = bancoMysqli();
+    $sql = "SELECT *
+			FROM lista_documento as list
+			INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
+			WHERE arq.idPessoa = '$idPessoa'
+			AND arq.idTipo = '$tipoPessoa'
+			AND arq.publicado = '1'";
+    $query = mysqli_query($con,$sql);
+    $linhas = mysqli_num_rows($query);
+
+    if ($linhas > 0)
+    {
+        echo "
+		<table class='table table-condensed'>
+			<thead>
+				<tr class='list_menu'>
+					<td>Tipo de arquivo</td>
+					<td>Nome do arquivo</td>
+					<td width='15%'></td>
+				</tr>
+			</thead>
+			<tbody>";
+        while($arquivo = mysqli_fetch_array($query))
+        {
+            echo "<tr>";
+            echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
+            echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
+            echo "<td class='list_description'><button class='btn btn-theme' type='button' id='btnRemover' data-toggle='modal' data-target='#confirmApagar' data-id='{$arquivo['idUploadArquivo']}'>Remover
+								</button></td>";
+            echo "</tr>";
+        }
+        echo "
+		</tbody>
+		</table>";
+    }
+    else
+    {
+        echo "<p>Não há arquivo(s) inserido(s).<p/><br/>";
+    }
+}
 
 
 if(isset($_POST['carregar']))
@@ -152,6 +195,22 @@ if(isset($_POST['insereAtuacao']))
 	}
 }
 
+if(isset($_POST['apagar']))
+{
+    $idArquivo = $_POST['apagar'];
+    $sql_apagar_arquivo = "UPDATE upload_arquivo SET publicado = 0 WHERE idUploadArquivo = '$idArquivo'";
+    if(mysqli_query($con,$sql_apagar_arquivo))
+    {
+        $mensagem = "<font color='#01DF3A'><strong>Arquivo apagado com sucesso!</strong></font>";
+        gravarLog($sql_apagar_arquivo);
+    }
+    else
+    {
+        $mensagem = "<font color='#FF0000'><strong>Erro ao apagar arquivo!</strong></font>";
+    }
+}
+
+
 $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 ?>
     <section id="list_items" class="home-section bg-white">
@@ -213,10 +272,13 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
                                     <div class="form-group">
                                         <div class="col-md-offset-2 col-md-8">
                                             <?php if (verificaArquivosExistentesPF($idProjeto, 58)): ?>
-                                                <div class="alert alert-success">A Foto do Projeto já foi enviada</div>
+                                                <?php exibeFotoProjeto($idProjeto, '7', 'projeto_edicao') ?>
                                             <?php else: ?>
                                                 <label>Foto do Projeto *</label>
-                                                <input type="file" name="arquivo[foto_proj]">
+                                                <div class="alert alert-warning">
+                                                    Aqui você deverá colocar uma foto para representar o projeto. O PROMAC está aprimorando seus mecanismos de busca e identificação dos projetos, por isso precisamos de uma imagem boa do seu projeto para deixá-lo mais ilustrativo para quem for consultá-lo. Se o projeto nunca tiver sido executado, você poderá colocar uma foto do artista ou do grupo em questão, ou de algum ensaio, ou mesmo uma imagem indiretamente relacionada ao projeto. O importante é que seja uma imagem representativa da ideia que você gostaria de expor com sua proposta e que você tenha direito de usar a foto.
+                                                </div>
+                                                <input type="file" name="arquivo[foto_proj]" required>
                                             <?php endif; ?>
                                         </div>
                                     </div>
@@ -260,10 +322,13 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
                                     <div class="form-group">
                                         <div class="col-md-offset-2 col-md-8">
                                             <?php if (verificaArquivosExistentesPF($idProjeto, 58)): ?>
-                                                <div class="alert alert-success">A Foto do Projeto já foi enviada</div>
+                                                <?php exibeFotoProjeto($idProjeto, '7', 'projeto_edicao') ?>
                                             <?php else: ?>
                                                 <label>Foto do Projeto *</label>
-                                                <input type="file" name="arquivo[foto_proj]">
+                                                <div class="alert alert-warning">
+                                                    Aqui você deverá colocar uma foto para representar o projeto. O PROMAC está aprimorando seus mecanismos de busca e identificação dos projetos, por isso precisamos de uma imagem boa do seu projeto para deixá-lo mais ilustrativo para quem for consultá-lo. Se o projeto nunca tiver sido executado, você poderá colocar uma foto do artista ou do grupo em questão, ou de algum ensaio, ou mesmo uma imagem indiretamente relacionada ao projeto. O importante é que seja uma imagem representativa da ideia que você gostaria de expor com sua proposta e que você tenha direito de usar a foto.
+                                                </div>
+                                                <input type="file" name="arquivo[foto_proj]" required>
                                             <?php endif; ?>
                                         </div>
                                     </div>
@@ -319,4 +384,37 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
                     </div>
                 </div>
         </div>
+        <!-- Confirmação de Exclusão -->
+        <div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Excluir Arquivo?</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Deseja realmente excluir esta foto do projeto??</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
+                        <form id='apagarArq' method='POST' action='?perfil=projeto_edicao'>
+                            <input type='hidden' name='idPessoa' value='<?=$idProjeto?>' />
+                            <input type='hidden' name='tipoPessoa' value='7' />
+                            <input type='hidden' name='apagar' id="idArquivo" value='' />
+                            <button class='btn btn-theme' type='submit' data-toggle='modal'
+                                    data-target='#confirmApagar' data-title='Remover Arquivo?'
+                                    data-message='Deseja realmente excluir esta foto do projeto?'>Remover
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Fim Confirmação de Exclusão -->
     </section>
+<script>
+    $('#btnRemover').click(function () {
+        let idArquivo = $(this).attr('data-id');
+        $('#idArquivo').attr('value', idArquivo)
+    })
+</script>

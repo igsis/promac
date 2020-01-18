@@ -194,7 +194,10 @@ if(isset($_POST['insereAtuacao']))
                                 <div class="form-group">
                                     <div class="col-md-offset-2 col-md-8">
                                         <label>Foto do Projeto *</label>
-                                        <input type="file" name="arquivo[foto_proj]">
+                                        <div class="alert alert-warning">
+                                            Aqui você deverá colocar uma foto para representar o projeto. O PROMAC está aprimorando seus mecanismos de busca e identificação dos projetos, por isso precisamos de uma imagem boa do seu projeto para deixá-lo mais ilustrativo para quem for consultá-lo. Se o projeto nunca tiver sido executado, você poderá colocar uma foto do artista ou do grupo em questão, ou de algum ensaio, ou mesmo uma imagem indiretamente relacionada ao projeto. O importante é que seja uma imagem representativa da ideia que você gostaria de expor com sua proposta e que você tenha direito de usar a foto.
+                                        </div>
+                                        <input type="file" name="arquivo[foto_proj]" required>
                                     </div>
                                 </div>
 
@@ -231,7 +234,10 @@ if(isset($_POST['insereAtuacao']))
                                     <div class="form-group">
                                         <div class="col-md-offset-2 col-md-8">
                                             <label>Foto do Projeto *</label>
-                                            <input type="file" name="arquivo[foto_proj]">
+                                            <div class="alert alert-warning">
+                                                Aqui você deverá colocar uma foto para representar o projeto. O PROMAC está aprimorando seus mecanismos de busca e identificação dos projetos, por isso precisamos de uma imagem boa do seu projeto para deixá-lo mais ilustrativo para quem for consultá-lo. Se o projeto nunca tiver sido executado, você poderá colocar uma foto do artista ou do grupo em questão, ou de algum ensaio, ou mesmo uma imagem indiretamente relacionada ao projeto. O importante é que seja uma imagem representativa da ideia que você gostaria de expor com sua proposta e que você tenha direito de usar a foto.
+                                            </div>
+                                            <input type="file" name="arquivo[foto_proj]" required>
                                         </div>
                                     </div>
 
@@ -269,7 +275,10 @@ if(isset($_POST['insereAtuacao']))
                                         <div class="form-group">
                                             <div class="col-md-offset-2 col-md-8">
                                                 <label>Foto do Projeto *</label>
-                                                <input type="file" name="arquivo[foto_proj]">
+                                                <div class="alert alert-warning">
+                                                    Aqui você deverá colocar uma foto para representar o projeto. O PROMAC está aprimorando seus mecanismos de busca e identificação dos projetos, por isso precisamos de uma imagem boa do seu projeto para deixá-lo mais ilustrativo para quem for consultá-lo. Se o projeto nunca tiver sido executado, você poderá colocar uma foto do artista ou do grupo em questão, ou de algum ensaio, ou mesmo uma imagem indiretamente relacionada ao projeto. O importante é que seja uma imagem representativa da ideia que você gostaria de expor com sua proposta e que você tenha direito de usar a foto.
+                                                </div>
+                                                <input type="file" name="arquivo[foto_proj]" required>
                                             </div>
                                         </div>
 
