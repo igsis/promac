@@ -147,7 +147,7 @@ for ($i = 0; $i < count($urlPf); $i++) {
                        <a onclick="location.href='index_pf.php?perfil=projeto_5'" href=""><br /><small>Justificativa e Objetivo</small></a>
                     </li>
                     <li class="<?php echo isset($acionar10) ? $acionar10 : 'clickable'; ?>">
-                        <a onclick="location.href='index_pf.php?perfil=projeto_6'" href=""><br /><small>Metodologia e Contrapartida</small></a>
+                        <a onclick="location.href='index_pf.php?perfil=projeto_6'" href=""><br /><small>Sobre o acesso do público ao projeto</small></a>
                     </li>
                     <li class="<?php echo isset($acionar11) ? $acionar11 : 'clickable'; ?>">
                         <a onclick="location.href='index_pf.php?perfil=local'" href=""><br /><small>Local</small></a>
