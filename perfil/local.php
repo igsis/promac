@@ -85,6 +85,13 @@ if(isset($_POST['apagaLocal']))
 			<div class="col-md-offset-1 col-md-10">
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
+                        <p align="justify">Atenção! Essa é uma das partes fundamentais do seu projeto, pois está diretamente ligada ao “selo de renúncia fiscal” que seu projeto irá receber da Comissão Julgadora de Projetos. Após aprovação, não será possível fazer alterações de local que impliquem em alteração do “selo de renúncia fiscal”, conforme explicado em Edital. Sendo assim, planeje bem os locais das suas ações. Estude o mapa do Anexo I do Edital para entender em quais faixas de renúncia fiscal os distritos se encontram. As atividades devem ser similares ou equivalentes para serem consideradas igualmente para o cálculo da renúncia fiscal.</p>
+                        <p align="justify">Como colocado no Art. 50 do Decreto nº 59.119/2019, que traz nova regulamentação ao PROMAC, os projetos culturais serão aprovados com renúncias fiscais de acordo com o seguinte enquadramento:</p>
+                        <ul class="list-group">
+                            <li class="list-group-item">100% (cem por cento) de renúncia fiscal: para projetos que realizem, pelo menos, 51% (cinquenta e um por cento) das atividades culturais na Faixa 1;</li>
+                            <li class="list-group-item">85% (oitenta e cinco por cento) de renúncia fiscal: para projetos que realizem, pelo menos, 51% (cinquenta por cento) das atividades culturais na Faixa 2;</li>
+                            <li class="list-group-item">70% (setenta por cento) de renúncia fiscal: para projetos que realizem, pelo menos, 51% (cinquenta e um por cento) das atividades culturais na Faixa 3.</li>
+                        </ul>
 						<form class="form-horizontal" role="form" action="?perfil=local_novo" method="post">
 							<input type="submit" value="Inserir novo local" class="btn btn-theme btn-lg btn-block">
 						</form>
