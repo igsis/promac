@@ -1,4 +1,5 @@
 <?php
+$url = 'http://' . $_SERVER['HTTP_HOST'] . '/promac/include/api_distrito_faixa.php';
 $con = bancoMysqli();
 $idProjeto = $_SESSION['idProjeto'];
 
@@ -72,6 +73,25 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
                         </div>
                     </div>
 
+                    <div class="form-group row">
+                        <div class="col-md-offset-1 col-md-5">
+                            <label for="distrito">Distrito *</label>
+                            <select class="form-control" name="distrito" id="distrito">
+                                <option value="">Selecione uma opção...</option>
+                                <?php geraOpcao('distrito', ''); ?>
+                            </select>
+                        </div>
+                        <div class="col-md-5">
+                            <label for="distrito">Faixa *</label>
+                            <select class="form-control" name="faixa" id="faixa" readonly>
+                                <option value="">Selecione uma opção...</option>
+                                <option value="1">Faixa 1</option>
+                                <option value="2">Faixa 2</option>
+                                <option value="3">Faixa 3</option>
+                            </select>
+                        </div>
+                    </div>
+
 					<div class="form-group">
 						<div class="col-md-offset-1 col-md-10">
 							<input type="submit" name="insereLocal" class="btn btn-theme btn-lg btn-block" value="Inserir">
@@ -84,3 +104,22 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 	</div>
 </section>
 <script src="../include/cep_api.js"></script>
+<script>
+    const url = `<?=$url?>`;
+
+    $('#faixa').on('mousedown', function(e) {
+        e.preventDefault();
+        this.blur();
+        window.focus();
+    });
+
+    $('#distrito').change(function () {
+        let distrito = $('#distrito option:selected').val();
+
+        fetch(`${url}?distrito=${distrito}`)
+            .then(response => response.json())
+            .then(faixa => {
+                $(`#faixa option[value=${faixa}]`).attr('selected', true)
+            })
+    })
+</script>
