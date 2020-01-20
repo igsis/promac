@@ -4,14 +4,12 @@ $idProjeto = $_SESSION['idProjeto'];
 
 if(isset($_POST['insere']))
 {
-	$metodologia = addslashes($_POST['metodologia']);
 	$contrapartida = addslashes($_POST['contrapartida']);
 	$ingresso = addslashes($_POST['ingresso']);
 	$democratizacao = addslashes($_POST['democratizacao']);
 	$acessibilidade = addslashes($_POST['acessibilidade']);
 
 	$sql_insere = "UPDATE projeto SET
-		metodologia = '$metodologia',
 		contrapartida = '$contrapartida',
 		ingresso = '$ingresso',
 		democratizacao = '$democratizacao',
@@ -51,14 +49,6 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
 				<form method="POST" action="?perfil=projeto_6" class="form-horizontal" role="form">
-
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-8">
-							<label>Plano de Trabalho</label>
-                            <p align="justify">Aqui você deverá elencar de forma organizada as atividades a serem desenvolvidas para atingir cada objetivo específico elencado no item Objetivos a serem alcançados com o projeto, quanto tempo levará para executar cada uma delas e qual produto será entregue para confirmar a execução. O plano de trabalho ajuda você a se organizar quanto ao que deve fazer para realizar seu projeto e ajuda SMC a entender o que será realizado e entregue. O modelo de Plano de Trabalho se encontra no Anexo VII do Edital do PROMAC 2020</p>
-							<textarea name="metodologia" class="form-control" rows="10" required><?php echo $projeto['metodologia'] ?></textarea>
-						</div>
-					</div>
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
@@ -110,7 +100,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Atenção aos limites!!</h4>
+                    <h4 class="modal-title">Sobre contrapartida</h4>
                 </div>
                 <div class="modal-body" style="text-align: left;">
                     <p align="justify">Você deverá oferecer atividades que ofereçam acesso ao seu projeto a mais pessoas e a diferentes públicos, principalmente pessoas em situação de vulnerabilidade social.</p>

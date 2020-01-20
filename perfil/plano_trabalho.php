@@ -4,7 +4,7 @@ $idProjeto = $_SESSION['idProjeto'];
 
 function recuperaPlanos($idProjeto) {
     $con = bancoMysqli();
-    $queryPlano = $con->query("SELECT * FROM plano_trabalhos WHERE projeto_id = '$idProjeto'");
+    $queryPlano = $con->query("SELECT * FROM plano_trabalhos WHERE projeto_id = '$idProjeto' AND publicado = '1'");
     if ($queryPlano->num_rows > 0) {
         $planos = $queryPlano->fetch_all(MYSQLI_ASSOC);
         foreach ($planos as $plano) { ?>
@@ -19,6 +19,13 @@ function recuperaPlanos($idProjeto) {
                         <input class="btn btn-theme" type="submit" name="edita" value="Editar">
                     </td>
                 </form>
+                    <td>
+                        <form method="POST" action="?perfil=plano_trabalho" role="form">
+                            <input type="hidden" name="apaga" value="<?= $plano['id'] ?>">
+                            <button class='btn btn-theme' type='button' data-toggle='modal'
+                                    data-target='#confirmApagar' data-title="Remover plano cadastrado?" data-message="Deseja realmente remover este plano?">Remover</button>
+                        </form>
+                    </td>
             </tr>
         <?php
         }
@@ -74,6 +81,23 @@ if (isset($_POST['edita'])) {
     }
 }
 
+if (isset($_POST['apaga'])) {
+    $plano_id = $_POST['apaga'];
+
+    $sql_remove = "UPDATE plano_trabalhos SET 
+                    publicado = '0'
+                    WHERE id = '$plano_id'";
+    if(mysqli_query($con,$sql_remove))
+    {
+        $mensagem = "<font color='#01DF3A'><strong>Removido com sucesso!</strong></font>";
+        gravarLog($sql_remove);
+    }
+    else
+    {
+        $mensagem = "<font color='#FF0000'><strong>Erro ao gravar! Tente novamente.</strong></font>";
+    }
+}
+
 ?>
 <section id="list_items" class="home-section bg-white">
     <div class="container">
@@ -113,14 +137,15 @@ if (isset($_POST['edita'])) {
                 <br>
                 <h4>Planos cadastrados</h4>
 
-                <table class="table table-condensed">
+                <table class="table table-condensed table-responsive">
                     <thead>
                     <tr>
                         <th>Objetivo Específico</th>
                         <th>Atividade</th>
                         <th>Produto a ser apresentado</th>
-                        <th>Prazo</th>
-                        <th width="15%"></th>
+                        <th width="15%">Prazo</th>
+                        <th width="10%"></th>
+                        <th width="10%"></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -130,7 +155,7 @@ if (isset($_POST['edita'])) {
             </div>
         </div>
 	</div>
-    <!-- Inicio Modal Informações Orçamento -->
+    <!-- Inicio Modal Adiciona Plano -->
     <div class="modal fade" id="novoPlano" role="dialog" aria-labelledby="novoPlanoLabel"
          aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -168,5 +193,25 @@ if (isset($_POST['edita'])) {
             </div>
         </div>
     </div>
-    <!-- Fim Modal Informações Orçamento -->
+    <!-- Fim Modal Adiciona Plano -->
+
+    <div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">
+                        <p>Remover?</p>
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <p>Certeza?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="confirm">Remover</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
