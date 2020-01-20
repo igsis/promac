@@ -45,7 +45,8 @@ $urlPj = array(
     33 => '/promac/visual/index_pj.php?perfil=informacoes_administrativas',
     34 => '/promac/visual/index_pj.php?perfil=cooperativa_resultado_busca', // Empresa
     35 => '/promac/visual/index_pj.php?perfil=resultado_inscricao_pj', // Resultado Inscrição
-    36 => '/promac/visual/index_pj.php?perfil=informacoes_adicionais' // Informações Adicionais Representante Legal
+    36 => '/promac/visual/index_pj.php?perfil=informacoes_adicionais', // Informações Adicionais Representante Legal
+    37 => '/promac/visual/index_pj.php?perfil=plano_trabalho' // Informações Adicionais Representante Legal
 );
 
 for ($i = 0; $i < count($urlPj); $i++) {
@@ -90,6 +91,8 @@ for ($i = 0; $i < count($urlPj); $i++) {
             $ativa21 = 'active loading'; 
         }elseif ($i == 36) {
             $ativa22 = 'active loading';
+        }elseif ($i == 37) { // Plano de Trabalho
+            $ativa23 = 'active loading';
         }
 
 ?>
@@ -160,6 +163,9 @@ for ($i = 0; $i < count($urlPj); $i++) {
                 </li>
                 <li class="<?php echo isset($ativa10) ? $ativa10 : 'clickable'; ?>">
                    <a onclick="location.href='index_pj.php?perfil=projeto_5'" href=""><br /><small>Justificativa e Objetivo</small></a>
+                </li>
+                <li class="<?php echo isset($ativa23) ? $ativa23 : 'clickable'; ?>">
+                   <a onclick="location.href='index_pj.php?perfil=plano_trabalho'" href=""><br /><small>Plano de Trabalho</small></a>
                 </li>
                 <li class="<?php echo isset($ativa11) ? $ativa11 : 'clickable'; ?>">
                    <a onclick="location.href='index_pj.php?perfil=projeto_6'" href=""><br /><small>Sobre o acesso do público ao projeto</small></a>
