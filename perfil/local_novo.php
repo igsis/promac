@@ -1,7 +1,8 @@
 <?php
-$url = 'http://' . $_SERVER['HTTP_HOST'] . '/promac/include/api_distrito_faixa.php';
 $con = bancoMysqli();
 $idProjeto = $_SESSION['idProjeto'];
+
+$distritos = $con->query("SELECT * FROM distrito")->fetch_all(MYSQLI_ASSOC);
 
 $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 ?>
@@ -76,9 +77,13 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
                     <div class="form-group row">
                         <div class="col-md-offset-1 col-md-5">
                             <label for="distrito">Distrito *</label>
-                            <select class="form-control" name="distrito" id="distrito">
+                            <select class="form-control" name="distrito" id="distrito" required>
                                 <option value="">Selecione uma opção...</option>
-                                <?php geraOpcao('distrito', ''); ?>
+                                <?php foreach ($distritos as $distrito): ?>
+                                    <option value="<?=$distrito['idDistrito']?>" data-faixa="<?=$distrito['faixa']?>">
+                                        <?=$distrito['distrito']?>
+                                    </option>
+                                <?php endforeach; ?>
                             </select>
                         </div>
                         <div class="col-md-5">
@@ -105,21 +110,13 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 </section>
 <script src="../include/cep_api.js"></script>
 <script>
-    const url = `<?=$url?>`;
-
     $('#faixa').on('mousedown', function(e) {
         e.preventDefault();
-        this.blur();
-        window.focus();
     });
 
     $('#distrito').change(function () {
-        let distrito = $('#distrito option:selected').val();
-
-        fetch(`${url}?distrito=${distrito}`)
-            .then(response => response.json())
-            .then(faixa => {
-                $(`#faixa option[value=${faixa}]`).attr('selected', true)
-            })
-    })
+        let faixa = $('#distrito option:selected').attr('data-faixa');
+        $('#faixa option').removeAttr('selected');
+        $(`#faixa`).val(faixa);
+    });
 </script>
