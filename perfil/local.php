@@ -20,7 +20,7 @@ if(isset($_POST['insereLocal']) || isset($_POST['editaLocal'])) {
 
 if(isset($_POST['insereLocal']))
 {
-	$sql_insere_local = "INSERT INTO locais_realizacao(idProjeto, local, estimativaPublico, logradouro, numero, complemento, bairro, cidade, estado, cep, idDistrito, publicado) VALUES ('$idProjeto', '$local', '$estimativaPublico', '$logradouro', '$numero', '$complemento', '$bairro', '$cidade', '$uf', '$distrito', '$cep', 1)";
+	$sql_insere_local = "INSERT INTO locais_realizacao(idProjeto, local, estimativaPublico, logradouro, numero, complemento, bairro, cidade, estado, cep, idDistrito, publicado) VALUES ('$idProjeto', '$local', '$estimativaPublico', '$logradouro', '$numero', '$complemento', '$bairro', '$cidade', '$uf', '$cep', '$distrito', 1)";
 
 	if(mysqli_query($con,$sql_insere_local))
 	{

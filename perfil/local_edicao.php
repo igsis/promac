@@ -80,7 +80,9 @@ $local = recuperaDados("locais_realizacao", "idLocaisRealizacao", $idLocaisReali
                             <select class="form-control" name="distrito" id="distrito" required>
                                 <option value="">Selecione uma opção...</option>
                                 <?php foreach ($distritos as $distrito): ?>
-                                    <option value="<?=$distrito['idDistrito']?>" data-faixa="<?=$distrito['faixa']?>">
+                                    <option value="<?=$distrito['idDistrito']?>"
+                                            data-faixa="<?=$distrito['faixa']?>"
+                                            <?=$local['idDistrito'] == $distrito['idDistrito'] ? "selected" : ""?>>
                                         <?=$distrito['distrito']?>
                                     </option>
                                 <?php endforeach; ?>
@@ -111,13 +113,17 @@ $local = recuperaDados("locais_realizacao", "idLocaisRealizacao", $idLocaisReali
 </section>
 <script src="../include/cep_api.js"></script>
 <script>
+    function selecionaFaixa() {
+        let faixa = $('#distrito option:selected').attr('data-faixa');
+        $('#faixa option').removeAttr('selected');
+        $(`#faixa`).val(faixa);
+    }
+
     $('#faixa').on('mousedown', function(e) {
         e.preventDefault();
     });
 
-    $('#distrito').change(function () {
-        let faixa = $('#distrito option:selected').attr('data-faixa');
-        $('#faixa option').removeAttr('selected');
-        $(`#faixa`).val(faixa);
-    });
+    $('#distrito').change(selecionaFaixa);
+
+    $(document).ready(selecionaFaixa);
 </script>

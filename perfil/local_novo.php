@@ -110,13 +110,15 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 </section>
 <script src="../include/cep_api.js"></script>
 <script>
+    function selecionaFaixa() {
+        let faixa = $('#distrito option:selected').attr('data-faixa');
+        $('#faixa option').removeAttr('selected');
+        $(`#faixa`).val(faixa);
+    }
+
     $('#faixa').on('mousedown', function(e) {
         e.preventDefault();
     });
 
-    $('#distrito').change(function () {
-        let faixa = $('#distrito option:selected').attr('data-faixa');
-        $('#faixa option').removeAttr('selected');
-        $(`#faixa`).val(faixa);
-    });
+    $('#distrito').change(selecionaFaixa);
 </script>
