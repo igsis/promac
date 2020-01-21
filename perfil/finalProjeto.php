@@ -124,7 +124,7 @@ if ($projeto['idEtapaProjeto'] == 6)
                             <th>Prazo</th>
                         </tr>
                         <?php
-                        $sql = "SELECT * FROM plano_trabalhos
+                        $sql = "SELECT * FROM planos
 								WHERE publicado = '1' AND projeto_id = {$projeto['idProjeto']}";
                         $query = mysqli_query($con, $sql);
                         while ($plano = mysqli_fetch_assoc($query)):

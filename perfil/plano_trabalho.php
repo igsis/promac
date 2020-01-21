@@ -4,7 +4,7 @@ $idProjeto = $_SESSION['idProjeto'];
 
 function recuperaPlanos($idProjeto) {
     $con = bancoMysqli();
-    $queryPlano = $con->query("SELECT * FROM plano_trabalhos WHERE projeto_id = '$idProjeto' AND publicado = '1'");
+    $queryPlano = $con->query("SELECT * FROM planos WHERE projeto_id = '$idProjeto' AND publicado = '1'");
     if ($queryPlano->num_rows > 0) {
         $planos = $queryPlano->fetch_all(MYSQLI_ASSOC);
         foreach ($planos as $plano) { ?>
@@ -37,15 +37,14 @@ function recuperaPlanos($idProjeto) {
     }
 }
 
-if(isset($_POST['insere']))
+if(isset($_POST['inserePlano']))
 {
 	$objetivo = addslashes($_POST['objetivo']);
 	$atividade = addslashes($_POST['atividade']);
 	$produto = addslashes($_POST['produto']);
 	$prazo = addslashes($_POST['prazo']);
 
-	$sql_insere = "INSERT INTO plano_trabalhos (projeto_id, objetivo_especifico, atividade, produto, prazo)
-                    VALUES ('$idProjeto', '$objetivo', '$atividade', '$produto', '$prazo')";
+	$sql_insere = "INSERT INTO planos (projeto_id, objetivo_especifico) VALUES ('$idProjeto', '$objetivo')";
 	if(mysqli_query($con,$sql_insere))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso!</strong></font>";
@@ -57,18 +56,15 @@ if(isset($_POST['insere']))
 	}
 }
 
-if (isset($_POST['edita'])) {
+if (isset($_POST['editaPlano'])) {
     $plano_id = $_POST['plano_id'];
     $objetivo = addslashes($_POST['objetivo']);
     $atividade = addslashes($_POST['atividade']);
     $produto = addslashes($_POST['produto']);
     $prazo = addslashes($_POST['prazo']);
 
-    $sql_insere = "UPDATE plano_trabalhos SET 
-                    objetivo_especifico = '$objetivo',
-                    atividade = '$atividade',
-                    produto = '$produto',
-                    prazo = '$prazo'
+    $sql_insere = "UPDATE planos SET 
+                    objetivo_especifico = '$objetivo'
                     WHERE id = '$plano_id'";
     if(mysqli_query($con,$sql_insere))
     {
@@ -81,10 +77,10 @@ if (isset($_POST['edita'])) {
     }
 }
 
-if (isset($_POST['apaga'])) {
+if (isset($_POST['apagaPlano'])) {
     $plano_id = $_POST['apaga'];
 
-    $sql_remove = "UPDATE plano_trabalhos SET 
+    $sql_remove = "UPDATE planos SET 
                     publicado = '0'
                     WHERE id = '$plano_id'";
     if(mysqli_query($con,$sql_remove))
@@ -133,29 +129,68 @@ if (isset($_POST['apaga'])) {
 		</div>
 
         <div class="row">
-            <div class="col-md-offset-1 col-md-10">
-                <br>
-                <h4>Planos cadastrados</h4>
+            <br>
+            <h4>Planos cadastrados</h4>
 
-                <table class="table table-condensed table-responsive">
-                    <thead>
-                    <tr>
-                        <th>Objetivo Específico</th>
-                        <th>Atividade</th>
-                        <th>Produto a ser apresentado</th>
-                        <th width="15%">Prazo</th>
-                        <th width="10%"></th>
-                        <th width="10%"></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                        <?php recuperaPlanos($idProjeto); ?>
-                    </tbody>
-                </table>
-            </div>
+            <table class="table table-condensed table-responsive table-bordered">
+                <thead>
+                <tr>
+                    <th>Objetivo Específico</th>
+                    <th>Atividade</th>
+                    <th>Responsável</th>
+                    <th>Produto</th>
+                    <th width="15%">Prazo</th>
+                    <th width="10%"></th>
+                    <th width="10%"></th>
+                    <th width="10%"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td rowspan="2" style="vertical-align: middle">Objetivo 1</textarea></td>
+                    <td>b</textarea></td>
+                    <td></textarea></td>
+                    <td>c</textarea></td>
+                    <td>d</td>
+                    <td>
+                        <input type="hidden" name="plano_id" value="">
+                        <input class="btn btn-theme" type="submit" name="editaAtividade" value="Editar Atividade">
+                    </td>
+                    <td>
+                        <button class='btn btn-theme' type='button'
+                                onclick="exibeModalApagar('#apagarPlanoAtividade', 'Atividade 1', '1', 'apagaAtividade')">
+                            Remover Atividade
+                        </button>
+                    </td>
+                    <td rowspan="2" style="vertical-align: middle">
+                        <form method="POST" action="?perfil=plano_trabalho" role="form">
+                            <input type="hidden" name="apagaAtividade" value="">
+                            <button class='btn btn-theme' type='button'
+                            onclick="exibeModalApagar('#apagarPlanoAtividade', 'Plano Objetivo', '1', 'apagaPlano')">Remover Plano
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                <tr>
+                    <td>b</textarea></td>
+                    <td></textarea></td>
+                    <td>c</textarea></td>
+                    <td>d</td>
+                    <td>
+                        <input type="hidden" name="plano_id" value="">
+                        <input class="btn btn-theme" type="submit" name="editaAtividade" value="Editar Atividade">
+                    </td>
+                    <td>
+                        <button class='btn btn-theme' type='button' onclick="exibeModalApagar('#apagarPlanoAtividade', 'Atividade 2', '2', 'apagaAtividade')">Remover Atividade
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
 	</div>
-    <!-- Inicio Modal Adiciona Plano -->
+
+    <!-- Inicio Modal Adiciona / Edita Plano -->
     <div class="modal fade" id="novoPlano" role="dialog" aria-labelledby="novoPlanoLabel"
          aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -193,9 +228,49 @@ if (isset($_POST['apaga'])) {
             </div>
         </div>
     </div>
-    <!-- Fim Modal Adiciona Plano -->
+    <!-- Fim Modal Adiciona / Edita Plano -->
 
-    <div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel" aria-hidden="true">
+    <!-- Inicio Modal Adiciona / Edita Atividade -->
+    <div class="modal fade" id="novoPlano" role="dialog" aria-labelledby="novoPlanoLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Inserir novo Plano de Trabalho</h4>
+                </div>
+                <form method="POST" action="?perfil=plano_trabalho" role="form">
+                    <div class="modal-body" style="text-align: left;">
+                        <table class="table table-condensed">
+                            <thead>
+                            <tr>
+                                <th>Objetivo Específico</th>
+                                <th>Atividade</th>
+                                <th>Produto a ser apresentado</th>
+                                <th>Prazo</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td><textarea name="objetivo" class="form-control" rows="5" required></textarea></td>
+                                <td><textarea name="atividade" class="form-control" rows="5" required></textarea></td>
+                                <td><textarea name="produto" class="form-control" rows="5" required></textarea></td>
+                                <td><input class="form-control" type="text" name="prazo"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" name="insere" class="btn btn-theme">Gravar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Fim Modal Adiciona / Edita Atividade -->
+
+    <div class="modal fade" id="apagarPlanoAtividade" role="dialog" aria-labelledby="apagarPlanoAtividadeLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -208,10 +283,22 @@ if (isset($_POST['apaga'])) {
                     <p>Certeza?</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-danger" id="confirm">Remover</button>
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
+                    <form method="POST" action="?perfil=plano_trabalho" role="form">
+                        <input type="hidden" name="id" value="">
+                        <button type="submit" name="" class="btn btn-danger" id="confirmApagar">Remover</button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 </section>
+<script>
+    function exibeModalApagar(modal, nomeAtividade, id, nameBtn) {
+        $(modal).find('.modal-title p').text('Remover Atividade: '+ nomeAtividade);
+        $(modal).find('.modal-footer input').attr('value', id);
+        $(modal).find('.modal-body p').text('Tem certeza que deseja remover a atividade "'+ nomeAtividade + '"?');
+        $(modal).find('#confirmApagar').attr('name', nameBtn);
+        $(modal).modal();
+    }
+</script>
