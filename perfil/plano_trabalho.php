@@ -31,7 +31,7 @@ function recuperaPlanos($idProjeto) {
         }
     } else { ?>
         <tr>
-            <td colspan="5" class="text-center"><div class="alert alert-info">Não há registros cadastrados</div></td>
+            <td colspan="6" class="text-center"><div class="alert alert-info">Não há registros cadastrados</div></td>
         </tr>
     <?php
     }
