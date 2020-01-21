@@ -1,5 +1,18 @@
 <?php
 
+function recuperaTags($idProjeto) {
+    $con = bancoMysqli();
+    $sqlTags = "SELECT t.tag FROM projeto_tag AS pt
+                INNER JOIN tags AS t ON pt.tag_id = t.id
+                WHERE pt.projeto_id = '$idProjeto'";
+    $queryTags = $con->query($sqlTags)->fetch_all(MYSQLI_ASSOC);
+    foreach ($queryTags as $tag) {
+        $tags[] = $tag['tag'];
+    }
+
+    return $tags;
+}
+
 $con = bancoMysqli();
 $idUsuario = $_SESSION['idUser'];
 $idProjeto = $_SESSION['idProjeto'];
@@ -14,6 +27,8 @@ $video = recuperaDados("projeto", "idProjeto", $idProjeto);
 $marca = recuperaDados("exposicao_marca", "id", $projeto['idExposicaoMarca']);
 $v = array($video['video1'], $video['video2'], $video['video3']);
 
+$tags = recuperaTags($idProjeto);
+
 if ($tipoPessoa == "1") {
     $pf = recuperaDados("pessoa_fisica", "idPf", $idPf);
 } else {
@@ -21,10 +36,8 @@ if ($tipoPessoa == "1") {
 }
 $alterar = 0;
 
-
 if ($projeto['idEtapaProjeto'] == 6)
     $alterar = 1;
-
 ?>
 <section id="list_items" class="home-section bg-white">
     <div class="container">
@@ -69,23 +82,63 @@ if ($projeto['idEtapaProjeto'] == 6)
             <p align="justify"><strong>Área de atuação:</strong> <?php echo $area['areaAtuacao'] ?></p>
             <p align="justify"><strong>Resumo do projeto:</strong> <?php echo isset($projeto['resumoProjeto']) ? $projeto['resumoProjeto'] : null; ?>
             </p>
+            <p align="justify"><strong>Tags:</strong> <?= implode("; ", $tags) ?></p>
             <p align="justify">
                 <strong>Currículo:</strong> <?php echo isset($projeto['curriculo']) ? $projeto['curriculo'] : null; ?>
             </p>
             <p align="justify">
-                <strong>Descrição do objeto e atividades:</strong> <?php echo isset($projeto['descricao']) ? $projeto['descricao'] : null; ?>
+                <strong>Descrição do objeto cultural e atividades propostas:</strong> <?php echo isset($projeto['descricao']) ? $projeto['descricao'] : null; ?>
+            </p>
+            <p align="justify">
+                <strong>Objetivos Gerais:</strong> <?php echo isset($projeto['objetivo']) ? $projeto['objetivo'] : null; ?>
+            </p>
+            <p align="justify">
+                <strong>Objetivo Específico:</strong> <?php echo isset($projeto['objetivoEspecifico']) ? $projeto['objetivoEspecifico'] : null; ?>
             </p>
             <p align="justify">
                 <strong>Justificativa do projeto:</strong> <?php echo isset($projeto['justificativa']) ? $projeto['justificativa'] : null; ?>
             </p>
             <p align="justify">
-                <strong>Objetivos e metas:</strong> <?php echo isset($projeto['objetivo']) ? $projeto['objetivo'] : null; ?></p>
-            <p align="justify">
-                <strong>Metodologia:</strong> <?php echo isset($projeto['metodologia']) ? $projeto['metodologia'] : null; ?>
-            </p>
-            <p align="justify">
                 <strong>Contrapartida:</strong> <?php echo isset($projeto['contrapartida']) ? $projeto['contrapartida'] : null; ?>
             </p>
+            <p align="justify">
+                <strong>Ingresso e forma de acesso:</strong> <?php echo isset($projeto['ingresso']) ? $projeto['ingresso'] : null; ?>
+            </p>
+            <p align="justify">
+                <strong>Democratização de acesso :</strong> <?php echo isset($projeto['democratizacao']) ? $projeto['democratizacao'] : null; ?>
+            </p>
+            <p align="justify">
+                <strong>Acessibilidade:</strong> <?php echo isset($projeto['acessibilidade']) ? $projeto['acessibilidade'] : null; ?>
+            </p>
+        </div>
+
+        <div class="well">
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-success"><b>Plano de Trabalho</b></li>
+                <li class="list-group-item">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>Objetivo Específico</th>
+                            <th>Atividade</th>
+                            <th>Produto a ser apresentado</th>
+                            <th>Prazo</th>
+                        </tr>
+                        <?php
+                        $sql = "SELECT * FROM plano_trabalhos
+								WHERE publicado = '1' AND projeto_id = {$projeto['idProjeto']}";
+                        $query = mysqli_query($con, $sql);
+                        while ($plano = mysqli_fetch_assoc($query)):
+                        ?>
+                            <tr>
+                                <td><?= $plano['objetivo_especifico'] ?> </td>
+                                <td><?= $plano['atividade'] ?> </td>
+                                <td><?= $plano['produto'] ?> </td>
+                                <td><?= $plano['prazo'] ?> </td>
+                            </tr>
+                        <?php endwhile; ?>
+                    </table>
+                </li>
+            </ul>
         </div>
 
         <div class="well">
@@ -97,10 +150,12 @@ if ($projeto['idEtapaProjeto'] == 6)
                             <th>Local</th>
                             <th>Público estimado</th>
                             <th>Endereço</th>
+                            <th>Distrito</th>
                         </tr>
                         <?php
-                        $sql = "SELECT * FROM locais_realizacao
-								WHERE publicado = 1 AND idProjeto = " . $projeto['idProjeto'] . "";
+                        $sql = "SELECT lr.*, d.distrito FROM locais_realizacao AS lr
+                                LEFT JOIN distrito d on lr.idDistrito = d.idDistrito
+								WHERE lr.publicado = 1 AND lr.idProjeto = '{$projeto['idProjeto']}'";
                         $query = mysqli_query($con, $sql);
                         while ($campo = mysqli_fetch_array($query)) {
                             $zona = recuperaDados("zona", "idZona", $campo['idZona']);
@@ -108,6 +163,7 @@ if ($projeto['idEtapaProjeto'] == 6)
                             echo "<td>" . $campo['local'] . "</td>";
                             echo "<td>" . $campo['estimativaPublico'] . "</td>";
                             echo "<td>" . $campo['logradouro'] . ", ".$campo['numero']." ".$campo['complemento']." ".$campo['bairro'].", ".$campo['cidade']." - ".$campo['estado'].", CEP ".$campo['cep']."</td>";
+                            echo "<td>" . $campo['distrito']."</td>";
                             echo "</tr>";
                         }
                         ?>
@@ -316,6 +372,7 @@ if ($projeto['idEtapaProjeto'] == 6)
 
         <div class="well">
             <ul class="list-group">
+                <li class="list-group-item"><?php exibirArquivos(7, $idProjeto); ?></li>
                 <li class="list-group-item"><?php exibirArquivos(3, $idProjeto); ?></li>
             </ul>
         </div>
