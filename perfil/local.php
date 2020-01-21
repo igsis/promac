@@ -14,12 +14,13 @@ if(isset($_POST['insereLocal']) || isset($_POST['editaLocal'])) {
     $bairro = addslashes($_POST['bairro']);
     $cidade = addslashes($_POST['cidade']);
     $uf = $_POST['uf'];
+    $distrito = $_POST['distrito'];
 }
 
 
 if(isset($_POST['insereLocal']))
 {
-	$sql_insere_local = "INSERT INTO locais_realizacao(idProjeto, local, estimativaPublico, logradouro, numero, complemento, bairro, cidade, estado, cep, publicado) VALUES ('$idProjeto', '$local', '$estimativaPublico', '$logradouro', '$numero', '$complemento', '$bairro', '$cidade', '$uf', '$cep', 1)";
+	$sql_insere_local = "INSERT INTO locais_realizacao(idProjeto, local, estimativaPublico, logradouro, numero, complemento, bairro, cidade, estado, cep, idDistrito, publicado) VALUES ('$idProjeto', '$local', '$estimativaPublico', '$logradouro', '$numero', '$complemento', '$bairro', '$cidade', '$uf', '$distrito', '$cep', 1)";
 
 	if(mysqli_query($con,$sql_insere_local))
 	{
@@ -45,6 +46,7 @@ if(isset($_POST['editaLocal']))
     bairro = '$bairro',
     cidade = '$cidade',
     estado= '$uf',
+    idDistrito= '$distrito',
 	`alteradoPor` = '$usuarioLogado'
 	WHERE idLocaisRealizacao = '$idLocaisRealizacao'";
 	if(mysqli_query($con,$sql_edita_local))
