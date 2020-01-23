@@ -116,27 +116,7 @@ if ($projeto['idEtapaProjeto'] == 6)
             <ul class="list-group">
                 <li class="list-group-item list-group-item-success"><b>Plano de Trabalho</b></li>
                 <li class="list-group-item">
-                    <table class="table table-bordered">
-                        <tr>
-                            <th>Objetivo Específico</th>
-                            <th>Atividade</th>
-                            <th>Produto a ser apresentado</th>
-                            <th>Prazo</th>
-                        </tr>
-                        <?php
-                        $sql = "SELECT * FROM planos
-								WHERE publicado = '1' AND projeto_id = {$projeto['idProjeto']}";
-                        $query = mysqli_query($con, $sql);
-                        while ($plano = mysqli_fetch_assoc($query)):
-                        ?>
-                            <tr>
-                                <td><?= $plano['objetivo_especifico'] ?> </td>
-                                <td><?= $plano['atividade'] ?> </td>
-                                <td><?= $plano['produto'] ?> </td>
-                                <td><?= $plano['prazo'] ?> </td>
-                            </tr>
-                        <?php endwhile; ?>
-                    </table>
+                    <?php recuperaPlanos($projeto['idProjeto']); ?>
                 </li>
             </ul>
         </div>
@@ -151,9 +131,10 @@ if ($projeto['idEtapaProjeto'] == 6)
                             <th>Público estimado</th>
                             <th>Endereço</th>
                             <th>Distrito</th>
+                            <th>Faixa</th>
                         </tr>
                         <?php
-                        $sql = "SELECT lr.*, d.distrito FROM locais_realizacao AS lr
+                        $sql = "SELECT lr.*, d.distrito, d.faixa FROM locais_realizacao AS lr
                                 LEFT JOIN distrito d on lr.idDistrito = d.idDistrito
 								WHERE lr.publicado = 1 AND lr.idProjeto = '{$projeto['idProjeto']}'";
                         $query = mysqli_query($con, $sql);
@@ -164,6 +145,7 @@ if ($projeto['idEtapaProjeto'] == 6)
                             echo "<td>" . $campo['estimativaPublico'] . "</td>";
                             echo "<td>" . $campo['logradouro'] . ", ".$campo['numero']." ".$campo['complemento']." ".$campo['bairro'].", ".$campo['cidade']." - ".$campo['estado'].", CEP ".$campo['cep']."</td>";
                             echo "<td>" . $campo['distrito']."</td>";
+                            echo "<td> Faixa " . $campo['faixa']."</td>";
                             echo "</tr>";
                         }
                         ?>

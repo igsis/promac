@@ -3719,4 +3719,143 @@ function atualizaRelacionamento($tabela, $entidadeForte, $idEntidadeForte, $enti
     }
 }
 
+/**
+ * <p>Função responsável por recuperar os planos e atividades cadastrados em Banco de Dados</p>
+ * <p>Cria uma <i>table</i> onde cada plano gera uma linha e para cada atividade deste plano,
+ * linhas são mescladas com a primeira coluna</p>
+ * @param int $idProjeto
+ * @param bool $edicao [opcional]
+ * <p>Default <i>FALSE</i> - Quando <i>TRUE</i>, habilita os botões de inserção e remoção de atividades</p>
+ */
+function recuperaPlanos($idProjeto, $edicao = false) {
+    $con = bancoMysqli();
+    $queryPlano = $con->query("SELECT * FROM planos WHERE projeto_id = '$idProjeto' AND publicado = '1'");
+    if ($queryPlano->num_rows > 0) {
+        $style = "style='width: 100%'";
+        ?>
+        <table class="table-condensed table-responsive table-bordered" <?=$edicao ? "" : $style?>>
+            <thead>
+            <tr>
+                <th>Objetivo Específico</th>
+                <th>Atividade</th>
+                <th>Responsável</th>
+                <th>Produto</th>
+                <th width="15%">Prazo</th>
+                <?php if ($edicao): ?>
+                    <th width="10%" colspan="3" class="text-center">Ações</th>
+                <?php endif ?>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            $planos = $queryPlano->fetch_all(MYSQLI_ASSOC);
+            foreach ($planos as $plano) {
+                $queryAtividades = $con->query("SELECT * FROM plano_atividades WHERE plano_id = '{$plano['id']}' AND publicado = '1'");
+                $numAtividades = $queryAtividades->num_rows;
+                if ($numAtividades > 0) {
+                    $rowspan = "rowspan='$numAtividades'";
+                    $atividades = $queryAtividades->fetch_all(MYSQLI_ASSOC);
+                } else {
+                    $rowspan = "";
+                    $atividades = [];
+                }
+                ?>
+                <tr>
+                    <td <?=$rowspan?> class="objetivo"><?=$plano['objetivo_especifico']?></td>
+                    <?php if ($numAtividades > 0): ?>
+                        <td class="atividade"><?= $atividades[0]['atividade'] ?></td>
+                        <td class="responsavel"><?= $atividades[0]['responsavel'] ?></td>
+                        <td class="produto"><?= $atividades[0]['produto'] ?></td>
+                        <td class="prazo"><?= $atividades[0]['prazo'] ?></td>
+                        <?php if ($edicao): ?>
+                            <td>
+                                <button class="btn btn-sm btn-theme" data-toggle="modal" data-target="#novaAtividade"
+                                        data-btn="editaAtividade" data-id="<?= $atividades[0]['id'] ?>">
+                                    Editar Atividade
+                                </button>
+                            </td>
+                            <td>
+                                <button class='btn btn-sm btn-theme' type='button'
+                                        onclick="modalApagar(
+                                                '#apagarPlanoAtividade',
+                                                '<?= $atividades[0]['atividade'] ?>',
+                                                '<?= $atividades[0]['id'] ?>',
+                                                'apagaAtividade')">Remover Atividade
+                                </button>
+                            </td>
+                        <?php endif;
+                        unset($atividades[0]);
+                    else: ?>
+                        <td colspan="6" class="text-center">Nenhuma Atividade Cadastrada</td>
+                    <?php endif;
+                    if ($edicao): ?>
+                        <td <?= $rowspan ?> class="text-center">
+                            <button class='btn btn-theme form-control' type='button' data-toggle="modal"
+                                    data-target="#novaAtividade" data-id="<?= $plano['id'] ?>">
+                                Adicionar Atividade
+                            </button>
+
+                            <button class='btn btn-theme mar-top10 form-control' type='button'
+                                    onclick="modalApagar(
+                                            '#apagarPlanoAtividade',
+                                            '<?= $plano['objetivo_especifico'] ?>',
+                                            '<?= $plano['id'] ?>', 'apagaObjetivo')
+                                            ">
+                                Remover Objetivo
+                            </button>
+
+                            <button class='btn btn-theme mar-top10 form-control' data-toggle="modal"
+                                    data-target="#novoObjetivo" data-btn="editaObjetivo" data-id="<?= $plano['id'] ?>">
+                                Editar Objetivo
+                            </button>
+                        </td>
+                    <?php endif; ?>
+                </tr>
+                <?php
+                if ($numAtividades > 0 && count($atividades) >= 1):
+                    foreach ($atividades as $atividade) {
+                        ?>
+                        <tr>
+                            <td class="atividade"><?=$atividade['atividade']?></td>
+                            <td class="responsavel"><?=$atividade['responsavel']?></td>
+                            <td class="produto"><?=$atividade['produto']?></td>
+                            <td class="prazo"><?=$atividade['prazo']?></td>
+                            <?php if ($edicao): ?>
+                                <td>
+                                    <button class="btn btn-sm btn-theme" data-toggle="modal" data-target="#novaAtividade"
+                                            data-btn="editaAtividade" data-id="<?= $atividade['id'] ?>">
+                                        Editar Atividade
+                                    </button>
+                                </td>
+                                <td>
+                                    <button class='btn btn-sm btn-theme' type='button'
+                                            onclick="modalApagar(
+                                                    '#apagarPlanoAtividade',
+                                                    '<?= $atividade['atividade'] ?>',
+                                                    '<?= $atividade['id'] ?>',
+                                                    'apagaAtividade')">Remover Atividade
+                                    </button>
+                                </td>
+                            <?php endif; ?>
+                        </tr>
+                        <?php
+                    }
+                endif;
+            }
+            ?>
+            </tbody>
+        </table>
+        <?php
+    } else {
+        if ($edicao): ?>
+            <div class="col-md-offset-2 col-md-8">
+                <div class="alert alert-info">Não há registros cadastrados</div>
+            </div>
+        <?php else: ?>
+            <div class="alert alert-info">Não há registros cadastrados</div>
+        <?php endif;
+    }
+}
+
+
 ?>
