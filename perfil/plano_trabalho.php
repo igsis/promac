@@ -25,13 +25,15 @@ function recuperaPlanos($idProjeto) {
             $queryAtividades = $con->query("SELECT * FROM plano_atividades WHERE plano_id = '{$plano['id']}' AND publicado = '1'");
             $numAtividades = $queryAtividades->num_rows;
             if ($numAtividades > 0) {
+                $rowspan = "rowspan='$numAtividades'";
                 $atividades = $queryAtividades->fetch_all(MYSQLI_ASSOC);
             } else {
+                $rowspan = "";
                 $atividades = [];
             }
             ?>
             <tr>
-                <td rowspan="0" class="objetivo"><?=$plano['objetivo_especifico']?></td>
+                <td <?=$rowspan?> class="objetivo"><?=$plano['objetivo_especifico']?></td>
                 <?php if ($numAtividades > 0):
                     ?>
                     <td class="atividade"><?= $atividades[0]['atividade'] ?></td>
@@ -58,14 +60,18 @@ function recuperaPlanos($idProjeto) {
                 else: ?>
                     <td colspan="6" class="text-center">Nenhuma Atividade Cadastrada</td>
                 <?php endif; ?>
-                <td rowspan="0" class="text-center">
+                <td <?=$rowspan?> class="text-center">
                     <button class='btn btn-theme form-control' type='button' data-toggle="modal"
                             data-target="#novaAtividade" data-id="<?=$plano['id']?>">
                         Adicionar Atividade
                     </button>
 
                     <button class='btn btn-theme mar-top10 form-control' type='button'
-                            onclick="modalApagar('#apagarPlanoAtividade', '<?=$plano['objetivo_especifico']?>', '<?=$plano['id']?>', 'apagaPlano')">
+                            onclick="modalApagar(
+                                '#apagarPlanoAtividade',
+                                '<?=$plano['objetivo_especifico']?>',
+                                '<?=$plano['id']?>', 'apagaObjetivo')
+                            ">
                         Remover Objetivo
                     </button>
 
