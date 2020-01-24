@@ -61,7 +61,12 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-8">
                             <label>Ingresso e forma de acesso</label>
-                            <p align="justify">Aqui você deverá colocar quanto custará o ingresso para o público do seu projeto (gratuito ou preço popular) e de que maneira o público terá acesso ao projeto. Serão realizadas inscrições prévias? Serão distribuídos ingressos antes do evento? Serão vendidos ingressos em pontos de venda? Em caso de preço popular, deverá indicar quanto irá cobrar.</p>
+                            <p align="justify">
+                                Aqui você deverá colocar de qual forma o público do seu projeto terá acesso ao projeto.
+                                Serão realizadas inscrições prévias? Serão distribuídos ingressos antes do evento?
+                                Serão vendidos ingressos em pontos de venda? Em caso de preço popular, deverá indicar
+                                quanto irá cobrar.
+                            </p>
                             <textarea name="ingresso" class="form-control" rows="10" required><?php echo $projeto['ingresso'] ?></textarea>
                         </div>
                     </div>
