@@ -2130,7 +2130,11 @@ function retornaCamposObrigatoriosPf($idProjeto)
 			   
 			   INNER JOIN 
   			     orcamento AS orca 
-  			   ON orca.idProjeto = proj.idProjeto 
+  			   ON orca.idProjeto = proj.idProjeto
+  			   
+  			   INNER JOIN
+  			   	material_divulgacao AS materialD
+  			   ON materialD.projeto_id = proj.idProjeto 
   			   
   			   WHERE loc_rea.publicado = 1
   			   AND  ficha_t.publicado = 1
@@ -2207,7 +2211,8 @@ function retornaCamposObrigatoriosPj($idProjeto)
 	             proj.objetivo AS justificativaObjetoMetas, 
 	             proj.contrapartida AS MetodologiaContrapartida, 
 	             proj.metodologia AS MetodologiaContrapartidaDescricao,	             
-	             proj.publicoAlvo AS publicoAlvo,	             
+	             proj.publicoAlvo AS publicoAlvo,
+	             materialD.veiculo_divulgacao AS veiculoDivulgacao,	             
 	             proj.inicioCronograma AS inicioConogramaProjeto, 
 	             proj.fimCronograma AS fimConogramaProjeto,  
 	             loc_rea.local AS local, 
@@ -2256,6 +2261,10 @@ function retornaCamposObrigatoriosPj($idProjeto)
 			   INNER JOIN 
   			     orcamento AS orca 
   			   ON orca.idProjeto = proj.idProjeto  
+  			   
+  			   INNER JOIN
+  			    	material_divulgacao AS materialD
+  			   ON materialD.projeto_id = proj.idProjeto
   			   
   			   WHERE loc_rea.publicado = 1
   			   AND  ficha_t.publicado = 1
