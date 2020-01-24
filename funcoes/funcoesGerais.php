@@ -3861,6 +3861,9 @@ function recuperaPlanos($idProjeto, $edicao = false) {
     }
 }
 
+/**
+ * @param int $idProjeto
+ */
 function recuperaTabelaOrcamento($idProjeto) {
     $con = bancoMysqli();
     ?>
