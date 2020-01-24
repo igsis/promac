@@ -225,45 +225,7 @@ if ($projeto['idEtapaProjeto'] == 6)
             <ul class="list-group">
                 <li class="list-group-item list-group-item-success"><b>Orçamento</b></li>
                 <li class="list-group-item">
-                    <table class="table table-bordered">
-                        <tr>
-                            <?php
-                            for ($i = 1; $i <= 8; $i++) {
-                                $sql_etapa = "SELECT idEtapa FROM orcamento
-                                        WHERE publicado > 0 AND idProjeto ='$idProjeto' AND idEtapa = '$i'
-                                        ORDER BY idOrcamento";
-                                $query_etapa = mysqli_query($con, $sql_etapa);
-                                $lista = mysqli_fetch_array($query_etapa);
-
-                                $etapa = recuperaDados("etapa", "idEtapa", $lista['idEtapa']);
-                                echo "<td><strong>" . $etapa['etapa'] . ":</strong>";
-                            }
-                            ?>
-                        </tr>
-                        <tr>
-                            <?php
-                            for ($i = 1; $i <= 8; $i++) {
-                                $sql_etapa = "SELECT SUM(valorTotal) AS tot FROM orcamento
-                                        WHERE publicado > 0 AND idProjeto ='$idProjeto' AND idEtapa = '$i'
-                                        ORDER BY idOrcamento";
-                                $query_etapa = mysqli_query($con, $sql_etapa);
-                                $lista = mysqli_fetch_array($query_etapa);
-
-                                echo "<td>R$ " . dinheiroParaBr($lista['tot']) . "</td>";
-                            }
-                            ?>
-                        </tr>
-                        <tr>
-                            <?php
-                            $sql_total = "SELECT SUM(valorTotal) AS tot FROM orcamento
-                                    WHERE publicado > 0 AND idProjeto ='$idProjeto'
-                                    ORDER BY idOrcamento";
-                            $query_total = mysqli_query($con, $sql_total);
-                            $total = mysqli_fetch_array($query_total);
-                            echo "<td colspan='8'><strong>TOTAL: R$ " . dinheiroParaBr($total['tot']) . "</strong></td>";
-                            ?>
-                        </tr>
-                    </table>
+                    <?php recuperaTabelaOrcamento($idProjeto); ?>
                 </li>
                 <li class="list-group-item">
                     <table class="table table-bordered">
@@ -282,10 +244,10 @@ if ($projeto['idEtapaProjeto'] == 6)
                                 ORDER BY idEtapa";
                         $query = mysqli_query($con, $sql);
                         while ($campo = mysqli_fetch_array($query)) {
-                            $etapa = recuperaDados("etapa", "idEtapa", $campo['idEtapa']);
+                            $despesa = recuperaDados("grupo_despesas", "id", $campo['grupo_despesas_id']);
                             $medida = recuperaDados("unidade_medida", "idUnidadeMedida", $campo['idUnidadeMedida']);
                             echo "<tr>";
-                            echo "<td class='list_description'>" . $etapa['etapa'] . "</td>";
+                            echo "<td class='list_description'>" . $despesa['despesa'] . "</td>";
                             echo "<td class='list_description'>" . $campo['descricao'] . "</td>";
                             echo "<td class='list_description'>" . $campo['quantidade'] . "</td>";
                             echo "<td class='list_description'>" . $medida['unidadeMedida'] . "</td>";

@@ -13,10 +13,10 @@ if (isset($_POST['insereOrcamento']) || isset($_POST['editaOrcamento'])) {
 
 if (isset($_POST['insereOrcamento'])) {
     $observacoes = addslashes($_POST['obs']);
-    $idEtapa = $_POST['idEtapa'];
+    $idDespesa = $_POST['idDespesa'];
     $idUnidadeMedida = $_POST['idUnidadeMedida'];
 
-    $sql_insere = "INSERT INTO `orcamento`(`idProjeto`, `idEtapa`, `descricao`, `quantidade`, `idUnidadeMedida`, `quantidadeUnidade`, `valorUnitario`, `valorTotal`, `observacoes`, `publicado`) VALUES ('$idProjeto', '$idEtapa', '$descricao', '$quantidade', '$idUnidadeMedida', '$quantidadeUnidade', '$valorUnitario', '$valorTotal', '$observacoes','1')";
+    $sql_insere = "INSERT INTO `orcamento`(`idProjeto`, `grupo_despesas_id`, `descricao`, `quantidade`, `idUnidadeMedida`, `quantidadeUnidade`, `valorUnitario`, `valorTotal`, `observacoes`, `publicado`) VALUES ('$idProjeto', '$idDespesa', '$descricao', '$quantidade', '$idUnidadeMedida', '$quantidadeUnidade', '$valorUnitario', '$valorTotal', '$observacoes','1')";
 
     if (mysqli_query($con, $sql_insere)) {
         $mensagem = "<font color='#01DF3A'><strong>Inserido com sucesso! Utilize o menu para avançar.</strong></font>";
@@ -27,14 +27,14 @@ if (isset($_POST['insereOrcamento'])) {
 }
 
 if (isset($_POST['editaOrcamento'])) {
-    $etapas = $_POST['idEtapa'];
+    $despesas = $_POST['idDespesa'];
     $und_medida = $_POST['idUnidadeMedida'];
     $observacoes = $_POST['observacoes'];
     $idOrcamento = $_POST['editaOrcamento'];
     $quantidadeUnidade = $_POST['quantidadeUnidade'];
 
     $sql_edita = "UPDATE orcamento SET
-	idEtapa = '$etapas',
+	grupo_despesas_id = '$despesas',
 	descricao = '$descricao',
 	quantidade = '$quantidade',
 	idUnidadeMedida = $und_medida,
@@ -125,45 +125,7 @@ if(isset($_POST['insereOrcamento']) || isset($_POST['editaOrcamento'])) {
                 <ul class="list-group">
                     <li class="list-group-item list-group-item-success"><b>Resumo</b></li>
                     <li class="list-group-item">
-                        <table class="table table-bordered">
-                            <tr>
-                                <?php
-                                for ($i = 1; $i <= 8; $i++) {
-                                    $sql_etapa = "SELECT idEtapa FROM orcamento
-										WHERE publicado > 0 AND idProjeto ='$idProjeto' AND idEtapa = '$i'
-										ORDER BY idOrcamento";
-                                    $query_etapa = mysqli_query($con, $sql_etapa);
-                                    $lista = mysqli_fetch_array($query_etapa);
-
-                                    $etapa = recuperaDados("etapa", "idEtapa", $lista['idEtapa']);
-                                    echo "<td><strong>" . $etapa['etapa'] . ":</strong>";
-                                }
-                                ?>
-                            </tr>
-                            <tr>
-                                <?php
-                                for ($i = 1; $i <= 8; $i++) {
-                                    $sql_etapa = "SELECT SUM(valorTotal) AS tot FROM orcamento
-										WHERE publicado > 0 AND idProjeto ='$idProjeto' AND idEtapa = '$i'
-										ORDER BY idOrcamento";
-                                    $query_etapa = mysqli_query($con, $sql_etapa);
-                                    $lista = mysqli_fetch_array($query_etapa);
-
-                                    echo "<td>R$ " . dinheiroParaBr($lista['tot']) . "</td>";
-                                }
-                                ?>
-                            </tr>
-                            <tr>
-                                <?php
-                                $sql_total = "SELECT SUM(valorTotal) AS tot FROM orcamento
-											WHERE publicado > 0 AND idProjeto ='$idProjeto'
-											ORDER BY idOrcamento";
-                                $query_total = mysqli_query($con, $sql_total);
-                                $total = mysqli_fetch_array($query_total);
-                                echo "<td colspan='8'><strong>TOTAL: R$ " . dinheiroParaBr($total['tot']) . "</strong></td>";
-                                ?>
-                            </tr>
-                        </table>
+                        <?php recuperaTabelaOrcamento($idProjeto); ?>
                     </li>
                 </ul>
                 <!-- Fim Resumo Orçamento -->
@@ -177,12 +139,12 @@ if(isset($_POST['insereOrcamento']) || isset($_POST['editaOrcamento'])) {
 
                     <div class="row">
                         <div class="form-group">
-                            <div class="col-md-1">
-                                <br/><strong>Etapa *</strong>
-                                <select class="form-control" name="idEtapa">
+                            <div class="col-md-3">
+                                <br/><strong>Grupos de despesa *</strong>
+                                <select class="form-control" name="idDespesa">
 
                                     <option value="0"></option>
-                                    <?php echo geraOpcao("etapa", "") ?>
+                                    <?php echo geraOpcao("grupo_despesas", "") ?>
                                 </select>
                             </div>
 
@@ -203,7 +165,7 @@ if(isset($_POST['insereOrcamento']) || isset($_POST['editaOrcamento'])) {
                                 </select>
                             </div>
 
-                            <div class="col-md-4"><strong>Observação
+                            <div class="col-md-2"><strong>Observação
                                     <font size="-2"><br>da unidade de medida </font></strong>
                                 <input type="text" class="form-control" name="obs">
                             </div>
@@ -241,7 +203,7 @@ if(isset($_POST['insereOrcamento']) || isset($_POST['editaOrcamento'])) {
                     <?php
                     $sql = "SELECT * FROM orcamento
 							WHERE publicado > 0 AND idProjeto ='$idProjeto'
-							ORDER BY idEtapa";
+							ORDER BY grupo_despesas_id";
                     $query = mysqli_query($con, $sql);
                     $num = mysqli_num_rows($query);
                     if ($num > 0) {
@@ -265,10 +227,10 @@ if(isset($_POST['insereOrcamento']) || isset($_POST['editaOrcamento'])) {
 								</thead>
 								<tbody>";
                         while ($campo = mysqli_fetch_array($query)) {
-                            $etapa = recuperaDados("etapa", "idEtapa", $campo['idEtapa']);
+                            $despesa = recuperaDados("grupo_despesas", "id", $campo['grupo_despesas_id']);
                             $medida = recuperaDados("unidade_medida", "idUnidadeMedida", $campo['idUnidadeMedida']);
                             echo "<tr>";
-                            echo "<td class='list_description'>" . $etapa['etapa']. "</td>";
+                            echo "<td class='list_description'>" . $despesa['despesa']. "</td>";
                             echo "<td class='list_description'>" . $campo['observacoesEtapa'] . "</td>";
 
                             echo "<td class='list_description'>" . $campo['descricao'] . "</td>";
@@ -281,7 +243,7 @@ if(isset($_POST['insereOrcamento']) || isset($_POST['editaOrcamento'])) {
                             echo "<td class='list_description'>
 											<form method='POST' action='?perfil=orcamento'>
 												<input type='hidden' name='apagaOrcamento' value='" . $campo['idOrcamento'] . "' />
-												<button style='margin-top: 13px' class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Excluir Etapa?' data-message='Deseja realmente excluir a etapa " . $etapa['etapa'] . "?'>Remover</button>
+												<button style='margin-top: 13px' class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Excluir Etapa?' data-message='Deseja realmente excluir a etapa " . $despesa['despesa'] . "?'>Remover</button>
 											</form>
 										</td>";
                             echo "</tr>";
