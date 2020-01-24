@@ -298,7 +298,7 @@ if ($projeto['idEtapaProjeto'] == 6)
                 </li>
             </ul>
         </div>
-
+<!--
         <div class="well">
             <p align="justify"><strong>Valor total do projeto:</strong> R$ <?php echo dinheiroParaBr($projeto['valorProjeto']) ?></p>
             <p align="justify"><strong>Valor do Incentivo solicitado no Pro-Mac:</strong> R$ <?php echo dinheiroParaBr($projeto['valorIncentivo']); ?><p>
@@ -306,7 +306,7 @@ if ($projeto['idEtapaProjeto'] == 6)
             <p align="justify"><strong>Descrição da exposição da marca:</strong> <?= $marca['exposicao_marca']; ?></p>
             <p align="justify"><strong>Indicação do valor do ingresso:</strong> <?= $projeto['indicacaoIngresso']; ?></p>
         </div>
-
+-->
         <div class="well" align="left">
             <ul class="list-group">
                 <li class="list-group-item list-group-item-success"><b>Mídias sociais</b></li>
