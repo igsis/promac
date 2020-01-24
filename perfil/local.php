@@ -103,7 +103,7 @@ if(isset($_POST['apagaLocal']))
 			<div class="form-group">
 				<div class="col-md-offset-2 col-md-8"><br></div>
 			</div>
-			<div class="col-md-offset-1 col-md-10">
+			<div class="col-md-12">
 				<div class="table-responsive list_info">
 				<?php
 					$sql = "SELECT * FROM locais_realizacao
@@ -123,6 +123,8 @@ if(isset($_POST['apagaLocal']))
 										<td>Cidade</td>
 										<td>Estado</td>
 										<td>CEP</td>
+										<td>Distrito</td>
+										<td>Faixa</td>
 										<td width='10%'></td>
 										<td width='10%'></td>
 									</tr>
@@ -130,6 +132,7 @@ if(isset($_POST['apagaLocal']))
 								<tbody>";
 								while($campo = mysqli_fetch_array($query))
 								{
+								    $distrito = recuperaDados('distrito', 'idDistrito', $campo['idDistrito']);
 									echo "<tr>";
 									echo "<td class='list_description'>".$campo['local']."</td>";
 									echo "<td class='list_description'>".$campo['estimativaPublico']."</td>";
@@ -138,6 +141,8 @@ if(isset($_POST['apagaLocal']))
 									echo "<td class='list_description'>".$campo['cidade']."</td>";
 									echo "<td class='list_description'>".$campo['estado']."</td>";
 									echo "<td class='list_description'>".$campo['cep']."</td>";
+									echo "<td class='list_description'>".$distrito['distrito']."</td>";
+									echo "<td class='list_description'> Faixa ".$distrito['faixa']."</td>";
 									echo "<td class='list_description'>
 											<form method='POST' action='?perfil=local_edicao'>
 												<input type='hidden' name='editarLocal' value='".$campo['idLocaisRealizacao']."' />
