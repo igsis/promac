@@ -163,7 +163,7 @@ for ($i = 0; $i < count($urlPj); $i++) {
                    <a onclick="location.href='index_pj.php?perfil=local'" href=""><br /><small>Local</small></a>
                 </li>
                 <li class="<?php echo isset($ativa20) ? $ativa20 : 'clickable'; ?>">
-                   <a onclick="location.href='index_pj.php?perfil=projeto_8'" href=""><br /><small>Público Alvo e Plano de Divulgação</small></a>
+                   <a onclick="location.href='index_pj.php?perfil=projeto_8'" href=""><br /><small>Público Alvo e Material de Divulgação</small></a>
                 </li>
                 <li class="<?php echo isset($ativa13) ? $ativa13 : 'clickable'; ?>">
                    <a onclick="location.href='index_pj.php?perfil=ficha_tecnica'" href=""><br /><small>Ficha Técnica</small></a>

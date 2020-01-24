@@ -161,7 +161,7 @@ for ($i = 0; $i < count($urlPf); $i++) {
                 </ul> <!-- Barra linha 2 -->
                 <ul>
                     <li class="<?php echo isset($acionar19) ? $acionar19 : 'clickable'; ?>">
-                       <a onclick="location.href='index_pf.php?perfil=projeto_8'" href=""><br /><small>Público Alvo e Plano de Divulgação</small></a>
+                       <a onclick="location.href='index_pf.php?perfil=projeto_8'" href=""><br /><small>Público Alvo e Material de Divulgação</small></a>
                     </li>
                     <li class="<?php echo isset($acionar12) ? $acionar12 : 'clickable'; ?>">
                        <a onclick="location.href='index_pf.php?perfil=ficha_tecnica'" href=""><br /><small>Ficha Técnica</small></a>
