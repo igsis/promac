@@ -168,6 +168,7 @@ if ($projeto['idEtapaProjeto'] == 6)
                             <th>Nome</th>
                             <th>CPF</th>
                             <th>Função</th>
+                            <th>Curriculo resumido</th>
                         </tr>
                         <?php
                         $sql = "SELECT * FROM ficha_tecnica
@@ -178,6 +179,7 @@ if ($projeto['idEtapaProjeto'] == 6)
                             echo "<td class='list_description'>" . $campo['nome'] . "</td>";
                             echo "<td class='list_description'>" . $campo['cpf'] . "</td>";
                             echo "<td class='list_description'>" . $campo['funcao'] . "</td>";
+                            echo "<td class='list_description'>" . $campo['curriculo'] . "</td>";
                             echo "</tr>";
                         } ?>
                     </table>
