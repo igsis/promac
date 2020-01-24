@@ -105,8 +105,19 @@ if(isset($_POST['insereOrcamento']) || isset($_POST['editaOrcamento'])) {
                     echo $mensagem;
                 }; ?></h5>
         </div>
+        <div class="well">
+            O orçamento descritivo do projeto deve ser apresentado dividido por grupos de despesa e indicando os
+            itens e valores a serem gastos em cada um deles. Você pode prever itens de despesa de acordo com a
+            realidade do seu projeto, mas é importante que isso esteja justificado ao longo do projeto ou na
+            planilha complementar de orçamento em anexo. Por exemplo, se você vai produzir um documentário e não
+            inclui equipamentos no seu orçamento, deve deixar claro de que forma terá equipamentos para realizar as
+            atividades propostas. Por isso, em caso de projetos que tenham mais de uma fonte de recursos, ou seja,
+            não sejam feitos com recursos apenas do PROMAC, é imprescindível que seja anexada a planilha completa do
+            projeto em campo específico
+        </div>
         <div class="table-responsive list_info">
-            <h8><strong>Observação:</strong> Caso o projeto contemple outras fontes de recurso, poderá enviar uma
+            <h8>
+                <strong>Observação:</strong> Caso o projeto contemple outras fontes de recurso, poderá enviar uma
                 planilha orçamentária completa em formato PDF na etapa ANEXOS (campo de upload <strong>Planilha
                     Orçamentária Complementar</strong>).
             </h8>
