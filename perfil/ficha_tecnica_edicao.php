@@ -43,6 +43,13 @@ $fichaTecnica = recuperaDados("ficha_tecnica", "idFichaTecnica", $idFichaTecnica
 						</div>
 					</div>
 
+                    <div class="col-md-offset-2 col-md-8">
+                        <div class="form-group">
+                            <label>Currículo Resumido do Profissional *</label><br/>
+                            <textarea class="form-control" name="curriculo" class="form-control" rows="5" required><?php echo $fichaTecnica['curriculo'] ?></textarea>
+                        </div>
+                    </div>
+
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<input type="hidden" name="editaFicha" value="<?php echo $idFichaTecnica ?>">
