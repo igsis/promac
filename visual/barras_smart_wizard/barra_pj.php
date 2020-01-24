@@ -142,17 +142,6 @@ for ($i = 0; $i < count($urlPj); $i++) {
                     if ($proj['idEtapaProjeto'] == 1)
                     {
                 ?>
-                <?php
-                    if ($idProj == true) {
-                ?>
-                <li class="<?php echo isset($ativa7) ? $ativa7 : 'clickable'; ?>">
-                   <a onclick="location.href='index_pj.php?perfil=projeto_2'" href=""><br /><small>Valores Enquadramento</small></a>
-                </li>
-                <?php
-                    }else {
-                        break;
-                    }
-                ?>
                 <li class="<?php echo isset($ativa8) ? $ativa8 : 'clickable'; ?>">
                    <a onclick="location.href='index_pj.php?perfil=projeto_3'" href=""><br /><small>Resumo e Currículo</small></a>
                 </li>
