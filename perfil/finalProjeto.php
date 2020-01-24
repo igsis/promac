@@ -23,6 +23,11 @@ $projeto = recuperaDados("projeto", "idProjeto", $idProjeto);
 $area = recuperaDados("area_atuacao", "idArea", $projeto['idAreaAtuacao']);
 $renuncia = recuperaDados("renuncia_fiscal", "idRenuncia", $projeto['idRenunciaFiscal']);
 $cronograma = recuperaDados("cronograma", "idCronograma", $projeto['idCronograma']);
+if ($cronograma){
+    $tempoTotal = $cronograma['preProducao'] + $cronograma['producao'] + $cronograma['posProducao'];
+} else {
+    $tempoTotal = 0;
+}
 $video = recuperaDados("projeto", "idProjeto", $idProjeto);
 $marca = recuperaDados("exposicao_marca", "id", $projeto['idExposicaoMarca']);
 $v = array($video['video1'], $video['video2'], $video['video3']);
@@ -200,18 +205,16 @@ if ($projeto['idEtapaProjeto'] == 6)
                 <li class="list-group-item">
                     <table class="table table-bordered">
                         <tr>
-                            <td><strong>Captação de recursos:</strong></td>
                             <td><strong>Pré-Produção:</strong></td>
                             <td><strong>Produção:</strong></td>
                             <td><strong>Pós-Produção:</strong></td>
-                            <td><strong>Prestação de Contas:</strong></td>
+                            <td><strong>Total em Meses da Execução:</strong></td>
                         </tr>
                         <tr>
-                            <td class='list_description exibir'><?= $cronograma['captacaoRecurso'] ?? '' ?></td>
                             <td class='list_description exibir'><?= $cronograma['preProducao'] ?? '' ?></td>
                             <td class='list_description exibir'><?= $cronograma['producao'] ?? '' ?></td>
                             <td class='list_description exibir'><?= $cronograma['posProducao'] ?? '' ?></td>
-                            <td class='list_description exibir'><?= $cronograma['prestacaoContas'] ?? '' ?></td>
+                            <td class='list_description exibir'><?= $cronograma['totalExecucao'] ?? '' ?></td>
                         </tr>
                     </table>
                 </li>
