@@ -115,7 +115,7 @@ $projeto = recuperaDados("projeto", "idProjeto", $idProjeto);
                     <br>
                     <h4>Material de divulgação cadastrados</h4>
 
-                        <?php recuperaMaterial($idProjeto) ?>
+                        <?php recuperaMaterial($idProjeto,true) ?>
                 </div>
             </div>
         </div>

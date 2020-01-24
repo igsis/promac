@@ -161,7 +161,7 @@ if ($projeto['idEtapaProjeto'] == 6)
 
         <div class="well">
             <p align="justify"><strong>Público alvo:</strong> <?php echo isset($projeto['publicoAlvo']) ? $projeto['publicoAlvo'] : null; ?></p>
-            <p align="justify"><strong>Plano de divulgação:</strong> <?php echo isset($projeto['planoDivulgacao']) ? $projeto['planoDivulgacao'] : null; ?></p>
+            <p align="justify"><strong>Plano de divulgação:</strong> <?php recuperaMaterial($idProjeto); ?></p>
         </div>
 
         <div class="well">
