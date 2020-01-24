@@ -13,11 +13,10 @@ if (isset($_POST['insereOrcamento']) || isset($_POST['editaOrcamento'])) {
 
 if (isset($_POST['insereOrcamento'])) {
     $observacoes = addslashes($_POST['obs']);
-    $observacoesEtapa = addslashes($_POST['obsEtapa']);
     $idEtapa = $_POST['idEtapa'];
     $idUnidadeMedida = $_POST['idUnidadeMedida'];
 
-    $sql_insere = "INSERT INTO `orcamento`(`idProjeto`, `idEtapa`, `observacoesEtapa`, `descricao`, `quantidade`, `idUnidadeMedida`, `quantidadeUnidade`, `valorUnitario`, `valorTotal`, `observacoes`, `publicado`) VALUES ('$idProjeto', '$idEtapa', '$observacoesEtapa','$descricao', '$quantidade', '$idUnidadeMedida', '$quantidadeUnidade', '$valorUnitario', '$valorTotal', '$observacoes','1')";
+    $sql_insere = "INSERT INTO `orcamento`(`idProjeto`, `idEtapa`, `descricao`, `quantidade`, `idUnidadeMedida`, `quantidadeUnidade`, `valorUnitario`, `valorTotal`, `observacoes`, `publicado`) VALUES ('$idProjeto', '$idEtapa', '$descricao', '$quantidade', '$idUnidadeMedida', '$quantidadeUnidade', '$valorUnitario', '$valorTotal', '$observacoes','1')";
 
     if (mysqli_query($con, $sql_insere)) {
         $mensagem = "<font color='#01DF3A'><strong>Inserido com sucesso! Utilize o menu para avançar.</strong></font>";
@@ -29,7 +28,6 @@ if (isset($_POST['insereOrcamento'])) {
 
 if (isset($_POST['editaOrcamento'])) {
     $etapas = $_POST['idEtapa'];
-    $obs_etapa = $_POST['observacoesEtapa'];
     $und_medida = $_POST['idUnidadeMedida'];
     $observacoes = $_POST['observacoes'];
     $idOrcamento = $_POST['editaOrcamento'];
@@ -37,7 +35,6 @@ if (isset($_POST['editaOrcamento'])) {
 
     $sql_edita = "UPDATE orcamento SET
 	idEtapa = '$etapas',
-	observacoesEtapa = '$obs_etapa',
 	descricao = '$descricao',
 	quantidade = '$quantidade',
 	idUnidadeMedida = $und_medida,
@@ -117,9 +114,9 @@ if(isset($_POST['insereOrcamento']) || isset($_POST['editaOrcamento'])) {
         </div>
         <div class="table-responsive list_info">
             <h8>
-                <strong>Observação:</strong> Caso o projeto contemple outras fontes de recurso, poderá enviar uma
-                planilha orçamentária completa em formato PDF na etapa ANEXOS (campo de upload <strong>Planilha
-                    Orçamentária Complementar</strong>).
+                <strong>Observação:</strong> Se houver outras fontes de recursos do projeto além do PROMAC, anexe a
+                planilha do projeto completo (em formato PDF na etapa ANEXOS, campo de upload <strong>Planilha Completa
+                do Projeto</strong>), indicando com qual fonte de recurso cada rubrica ser.
             </h8>
         </div>
         <div class="row">
@@ -181,17 +178,12 @@ if(isset($_POST['insereOrcamento']) || isset($_POST['editaOrcamento'])) {
                     <div class="row">
                         <div class="form-group">
                             <div class="col-md-1">
-                                <br/><strong>Etapa* </strong>
+                                <br/><strong>Etapa *</strong>
                                 <select class="form-control" name="idEtapa">
 
                                     <option value="0"></option>
                                     <?php echo geraOpcao("etapa", "") ?>
                                 </select>
-                            </div>
-
-                            <div class="col-md-2"><strong>Observação
-                                    <font size="-2"><br>da etapa </font></strong>
-                                <input type="text" class="form-control" name="obsEtapa">
                             </div>
 
                             <div class="col-md-2"><br/><strong>Descrição *</strong>
@@ -211,7 +203,7 @@ if(isset($_POST['insereOrcamento']) || isset($_POST['editaOrcamento'])) {
                                 </select>
                             </div>
 
-                            <div class="col-md-2"><strong>Observação
+                            <div class="col-md-4"><strong>Observação
                                     <font size="-2"><br>da unidade de medida </font></strong>
                                 <input type="text" class="form-control" name="obs">
                             </div>
