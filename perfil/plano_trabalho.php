@@ -151,7 +151,13 @@ if (isset($_POST['apagaAtividade'])) {
 
                 <div class="col-md-offset-2 col-md-8">
                     <label>Plano de Trabalho</label>
-                    <div class="well">Aqui você deverá elencar de forma organizada as atividades a serem desenvolvidas para atingir cada objetivo específico elencado no item Objetivos a serem alcançados com o projeto, quanto tempo levará para executar cada uma delas e qual produto será entregue para confirmar a execução. O plano de trabalho ajuda você a se organizar quanto ao que deve fazer para realizar seu projeto e ajuda SMC a entender o que será realizado e entregue. O modelo de Plano de Trabalho se encontra no Anexo VII do Edital do PROMAC 2020</div>
+                    <div class="well">
+                        As atividades devem dialogar com os objetivos específicos do projeto, ou seja, você deve
+                        descrever as atividades que serão executadas para que o objetivo específico seja alcançado.
+                        O produto indica o resultado da atividade realizada, o material ou documentação que será
+                        apresentado como comprovação da realização da atividade. A etapa deve indicar em qual fase do
+                        projeto se realizará a atividade (fase de pré-produção, produção ou pós-produção).
+                    </div>
                 </div>
 
                 <div class="col-md-offset-2 col-md-8">
