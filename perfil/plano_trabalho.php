@@ -70,10 +70,10 @@ if(isset($_POST['insereAtividade']))
     $atividade = addslashes($_POST['atividade']);
     $responsavel = addslashes($_POST['responsavel']);
     $produto = addslashes($_POST['produto']);
-    $prazo = addslashes($_POST['prazo']);
+    $etapa = addslashes($_POST['etapa']);
 
-    $sql_insere = "INSERT INTO plano_atividades (plano_id, atividade, responsavel, produto, prazo)
-                    VALUES ('$objetivo_id', '$atividade', '$responsavel', '$produto', '$prazo')";
+    $sql_insere = "INSERT INTO plano_atividades (plano_id, atividade, responsavel, produto, etapa_planos_id)
+                    VALUES ('$objetivo_id', '$atividade', '$responsavel', '$produto', '$etapa')";
     if(mysqli_query($con,$sql_insere))
     {
         $mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso!</strong></font>";
@@ -91,13 +91,13 @@ if(isset($_POST['editaAtividade']))
     $atividade = addslashes($_POST['atividade']);
     $responsavel = addslashes($_POST['responsavel']);
     $produto = addslashes($_POST['produto']);
-    $prazo = addslashes($_POST['prazo']);
+    $etapa = addslashes($_POST['etapa']);
 
     $sql_insere = "UPDATE plano_atividades SET
                     atividade = '$atividade',
                     responsavel = '$responsavel',
                     produto = '$produto',
-                    prazo = '$prazo'
+                    etapa_planos_id = '$etapa'
                     WHERE id = '$atividade_id'";
     if(mysqli_query($con,$sql_insere))
     {
@@ -223,7 +223,10 @@ if (isset($_POST['apagaAtividade'])) {
 
                         <div class="form-group">
                             <label for="prazo">Prazo</label>
-                            <input name="prazo" class="form-control" type="text" id="prazo" required>
+                            <select class="form-control" name="etapa" id="etapa" required>
+                                <option value="">Selecione uma opção...</option>
+                                <?php geraOpcao('etapa_planos', ''); ?>
+                            </select>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -280,11 +283,14 @@ if (isset($_POST['apagaAtividade'])) {
     }
 
     $('#novaAtividade').on('show.bs.modal', function (e) {
-        let classes = ['atividade', 'responsavel', 'produto', 'prazo'];
+        let classes = ['atividade', 'responsavel', 'produto'];
         let btnName = $(e.relatedTarget).data('btn');
+        let etapa = $(e.relatedTarget).data('etapa');
         let id = $(e.relatedTarget).data('id');
         if (btnName === "editaAtividade") {
-            atividadeEdita(classes, id, $(e.relatedTarget))
+            atividadeEdita(classes, id, $(e.relatedTarget));
+            $('#etapa option').removeAttr('selected');
+            $('#etapa').val(etapa);
         } else {
             jQuery.each(classes, function (key, val) {
                 $('#novaAtividade').find('#'+val).val("");

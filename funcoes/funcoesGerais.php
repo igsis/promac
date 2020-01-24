@@ -3740,7 +3740,7 @@ function recuperaPlanos($idProjeto, $edicao = false) {
                 <th>Atividade</th>
                 <th>Responsável</th>
                 <th>Produto</th>
-                <th width="15%">Prazo</th>
+                <th width="15%">Etapa</th>
                 <?php if ($edicao): ?>
                     <th width="10%" colspan="3" class="text-center">Ações</th>
                 <?php endif ?>
@@ -3755,6 +3755,7 @@ function recuperaPlanos($idProjeto, $edicao = false) {
                 if ($numAtividades > 0) {
                     $rowspan = "rowspan='$numAtividades'";
                     $atividades = $queryAtividades->fetch_all(MYSQLI_ASSOC);
+                    $etapa = recuperaDados('etapa_planos', 'id', $atividades[0]['etapa_planos_id'])['etapa'];
                 } else {
                     $rowspan = "";
                     $atividades = [];
@@ -3766,11 +3767,12 @@ function recuperaPlanos($idProjeto, $edicao = false) {
                         <td class="atividade"><?= $atividades[0]['atividade'] ?></td>
                         <td class="responsavel"><?= $atividades[0]['responsavel'] ?></td>
                         <td class="produto"><?= $atividades[0]['produto'] ?></td>
-                        <td class="prazo"><?= $atividades[0]['prazo'] ?></td>
+                        <td class="etapa"><?= $etapa ?></td>
                         <?php if ($edicao): ?>
                             <td>
                                 <button class="btn btn-sm btn-theme" data-toggle="modal" data-target="#novaAtividade"
-                                        data-btn="editaAtividade" data-id="<?= $atividades[0]['id'] ?>">
+                                        data-btn="editaAtividade" data-etapa="<?=$atividades[0]['etapa_planos_id']?>"
+                                        data-id="<?= $atividades[0]['id'] ?>">
                                     Editar Atividade
                                 </button>
                             </td>
@@ -3814,16 +3816,18 @@ function recuperaPlanos($idProjeto, $edicao = false) {
                 <?php
                 if ($numAtividades > 0 && count($atividades) >= 1):
                     foreach ($atividades as $atividade) {
+                        $etapa = recuperaDados('etapa_planos', 'id', $atividade['etapa_planos_id'])['etapa'];
                         ?>
                         <tr>
                             <td class="atividade"><?=$atividade['atividade']?></td>
                             <td class="responsavel"><?=$atividade['responsavel']?></td>
                             <td class="produto"><?=$atividade['produto']?></td>
-                            <td class="prazo"><?=$atividade['prazo']?></td>
+                            <td class="etapa"><?=$etapa?></td>
                             <?php if ($edicao): ?>
                                 <td>
                                     <button class="btn btn-sm btn-theme" data-toggle="modal" data-target="#novaAtividade"
-                                            data-btn="editaAtividade" data-id="<?= $atividade['id'] ?>">
+                                            data-btn="editaAtividade" data-etapa="<?=$atividade['etapa_planos_id']?>"
+                                            data-id="<?= $atividade['id'] ?>">
                                         Editar Atividade
                                     </button>
                                 </td>
