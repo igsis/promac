@@ -1,7 +1,59 @@
 <?php
+
+function exibePlanilhaCompleta($idPessoa,$idListaDocumento,$pagina)
+{
+    $con = bancoMysqli();
+    $sql = "SELECT *
+			FROM lista_documento as list
+			INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
+			WHERE arq.idPessoa = '$idPessoa'
+			AND arq.idListaDocumento = '$idListaDocumento'
+			AND arq.publicado = '1'";
+    $query = mysqli_query($con,$sql);
+    $linhas = mysqli_num_rows($query);
+
+    if ($linhas > 0)
+    {
+        echo "
+		<table class='table table-condensed'>
+			<thead>
+				<tr class='list_menu'>
+					<td>Tipo de arquivo</td>
+					<td>Nome do arquivo</td>
+					<td width='15%'></td>
+				</tr>
+			</thead>
+			<tbody>";
+        while($arquivo = mysqli_fetch_array($query))
+        {
+            echo "<tr>";
+            echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
+            echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
+            echo "<td class='list_description'>
+                    <input type='hidden' name='apagar' value='{$arquivo['idUploadArquivo']}'>
+                    <button class='btn btn-theme' type='button' id='btnRemover' data-toggle='modal' data-target='#confirmApagar' data-message='Deseja realmente remover o arquivo?'>Remover
+								</button></td>";
+            echo "</tr>";
+        }
+        echo "
+		</tbody>
+		</table>";
+    }
+    else
+    {
+        echo "<p>Não há arquivo(s) inserido(s).<p/><br/>";
+    }
+}
+
 $con = bancoMysqli();
 $idProjeto = $_SESSION['idProjeto'];
 $usuarioLogado = pegaUsuarioLogado();
+
+$tipoPessoa = '3';
+
+// Gerar documentos
+$server = "http://".$_SERVER['SERVER_NAME']."/promac";
+$http = $server."/pdf/";
 
 if (isset($_POST['insereOrcamento']) || isset($_POST['editaOrcamento'])) {
     $descricao = addslashes($_POST['descricao']);
@@ -81,6 +133,80 @@ if(isset($_POST['insereOrcamento']) || isset($_POST['editaOrcamento'])) {
     }
 }
 
+if(isset($_POST["enviar"]))
+{
+    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '3' AND idListaDocumento = 38";
+    $query_arquivos = mysqli_query($con,$sql_arquivos);
+    while($arq = mysqli_fetch_array($query_arquivos))
+    {
+        $y = $arq['idListaDocumento'];
+        $x = $arq['sigla'];
+        $nome_arquivo = isset($_FILES['arquivo']['name'][$x]) ? $_FILES['arquivo']['name'][$x] : null;
+        $f_size = isset($_FILES['arquivo']['size'][$x]) ? $_FILES['arquivo']['size'][$x] : null;
+
+        //Extensões permitidas
+        $ext = array("PDF","pdf");
+
+        if($f_size > 5242880) // 5MB em bytes
+        {
+            $mensagem = "<font color='#FF0000'><strong>Erro! Tamanho de arquivo excedido! Tamanho máximo permitido: 05 MB.</strong></font>";
+        }
+        else
+        {
+            if($nome_arquivo != "")
+            {
+                $nome_temporario = $_FILES['arquivo']['tmp_name'][$x];
+                $new_name = date("YmdHis")."_".semAcento($nome_arquivo); //Definindo um novo nome para o arquivo
+                $hoje = date("Y-m-d H:i:s");
+                $dir = '../uploadsdocs/'; //Diretório para uploads
+                $allowedExts = array(".pdf", ".PDF"); //Extensões permitidas
+                $ext = strtolower(substr($nome_arquivo,-4));
+
+                if(in_array($ext, $allowedExts)) //Pergunta se a extensão do arquivo, está presente no array das extensões permitidas
+                {
+                    if(move_uploaded_file($nome_temporario, $dir.$new_name))
+                    {
+                        $sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('3', '$idProjeto', '$y', '$new_name', '$hoje', '1'); ";
+                        $query = mysqli_query($con,$sql_insere_arquivo);
+                        if($query)
+                        {
+                            $mensagem = "<font color='#01DF3A'><strong>Arquivo recebido com sucesso!</strong></font>";
+                            gravarLog($sql_insere_arquivo);
+                        }
+                        else
+                        {
+                            $mensagem = "<font color='#FF0000'><strong>Erro ao gravar no banco.</strong></font>";
+                        }
+                    }
+                    else
+                    {
+                        $mensagem = "<font color='#FF0000'><strong>Erro no upload! Tente novamente.</strong></font>";
+                    }
+                }
+                else
+                {
+                    $mensagem = "<font color='#FF0000'><strong>Erro no upload! Anexar documentos somente no formato PDF.</strong></font>";
+                }
+            }
+        }
+    }
+}
+
+if(isset($_POST['apagar']))
+{
+    $idArquivo = $_POST['apagar'];
+    $sql_apagar_arquivo = "UPDATE upload_arquivo SET publicado = 0 WHERE idUploadArquivo = '$idArquivo'";
+    if(mysqli_query($con,$sql_apagar_arquivo))
+    {
+        $mensagem = "<font color='#01DF3A'><strong>Arquivo apagado com sucesso!</strong></font>";
+        gravarLog($sql_apagar_arquivo);
+    }
+    else
+    {
+        $mensagem = "<font color='#FF0000'><strong>Erro ao apagar arquivo!</strong></font>";
+    }
+}
+
 ?>
 <section id="list_items" class="home-section bg-white">
     <div class="container">
@@ -112,13 +238,42 @@ if(isset($_POST['insereOrcamento']) || isset($_POST['editaOrcamento'])) {
             não sejam feitos com recursos apenas do PROMAC, é imprescindível que seja anexada a planilha completa do
             projeto em campo específico
         </div>
-        <div class="table-responsive list_info">
-            <h8>
-                <strong>Observação:</strong> Se houver outras fontes de recursos do projeto além do PROMAC, anexe a
-                planilha do projeto completo (em formato PDF na etapa ANEXOS, campo de upload <strong>Planilha Completa
-                do Projeto</strong>), indicando com qual fonte de recurso cada rubrica ser.
-            </h8>
+
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-12">
+                    <div class="table-responsive list_info">
+                        <h6>Upload de Arquivo(s) Somente em PDF com tamanho máximo de 5MB.</h6>
+                        <div class="well">
+                            se houver outras fontes de recursos do projeto além do PROMAC, anexe a planilha do projeto completo, indicando com qual fonte de recurso cada rubrica ser
+                        </div>
+                        <div class="col-md-offset-2 col-md-8">
+                            <form method="POST" action="?perfil=orcamento" class="form-horizontal" role="form"
+                                  enctype="multipart/form-data">
+                                <?php if (verificaArquivosExistentesPF($idProjeto, 38)): ?>
+                                    <label>Planilha completa do projeto</label>
+                                    <?php exibePlanilhaCompleta($idProjeto, '38', 'projeto_edicao') ?>
+                                <?php else: ?>
+                                    <div class="form-group">
+                                        <label>Planilha completa do projeto</label>
+                                        <input class="form-control" type="file" name="arquivo[planorc]" required>
+                                    </div>
+
+
+                                    <div class="form-group"><input type="hidden" name="idPessoa"
+                                                                   value="<?php echo $idProjeto; ?>"/>
+                                        <input type="hidden" name="tipoPessoa" value="<?php echo $tipoPessoa; ?>"/>
+                                        <input type="submit" name="enviar" class="btn btn-theme btn-lg btn-block"
+                                               value='Enviar'>
+                                    </div>
+                                <?php endif; ?>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+
         <div class="row">
             <div class="col-md-12">
                 <!-- Início Resumo Orçamento -->
@@ -212,7 +367,6 @@ if(isset($_POST['insereOrcamento']) || isset($_POST['editaOrcamento'])) {
 								<thead>
 									<tr class='list_menu'>
 										<td width='20%'>Etapa</td>
-										<td>Observações etapa</td>
 										<td width='30%'>Descrição</td>
 										<td width='10%'>Qtde</td>
 										<td width='10%'>Unid. Med.</td>
@@ -231,8 +385,6 @@ if(isset($_POST['insereOrcamento']) || isset($_POST['editaOrcamento'])) {
                             $medida = recuperaDados("unidade_medida", "idUnidadeMedida", $campo['idUnidadeMedida']);
                             echo "<tr>";
                             echo "<td class='list_description'>" . $despesa['despesa']. "</td>";
-                            echo "<td class='list_description'>" . $campo['observacoesEtapa'] . "</td>";
-
                             echo "<td class='list_description'>" . $campo['descricao'] . "</td>";
                             echo "<td class='list_description'>" . $campo['quantidade'] . "</td>";
                             echo "<td class='list_description'>" . $medida['unidadeMedida'] . "</td>";
