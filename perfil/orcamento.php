@@ -1,7 +1,59 @@
 <?php
+
+function exibePlanilhaCompleta($idPessoa,$idListaDocumento,$pagina)
+{
+    $con = bancoMysqli();
+    $sql = "SELECT *
+			FROM lista_documento as list
+			INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
+			WHERE arq.idPessoa = '$idPessoa'
+			AND arq.idListaDocumento = '$idListaDocumento'
+			AND arq.publicado = '1'";
+    $query = mysqli_query($con,$sql);
+    $linhas = mysqli_num_rows($query);
+
+    if ($linhas > 0)
+    {
+        echo "
+		<table class='table table-condensed'>
+			<thead>
+				<tr class='list_menu'>
+					<td>Tipo de arquivo</td>
+					<td>Nome do arquivo</td>
+					<td width='15%'></td>
+				</tr>
+			</thead>
+			<tbody>";
+        while($arquivo = mysqli_fetch_array($query))
+        {
+            echo "<tr>";
+            echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
+            echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
+            echo "<td class='list_description'>
+                    <input type='hidden' name='apagar' value='{$arquivo['idUploadArquivo']}'>
+                    <button class='btn btn-theme' type='button' id='btnRemover' data-toggle='modal' data-target='#confirmApagar' data-message='Deseja realmente remover o arquivo?'>Remover
+								</button></td>";
+            echo "</tr>";
+        }
+        echo "
+		</tbody>
+		</table>";
+    }
+    else
+    {
+        echo "<p>Não há arquivo(s) inserido(s).<p/><br/>";
+    }
+}
+
 $con = bancoMysqli();
 $idProjeto = $_SESSION['idProjeto'];
 $usuarioLogado = pegaUsuarioLogado();
+
+$tipoPessoa = '3';
+
+// Gerar documentos
+$server = "http://".$_SERVER['SERVER_NAME']."/promac";
+$http = $server."/pdf/";
 
 if (isset($_POST['insereOrcamento']) || isset($_POST['editaOrcamento'])) {
     $descricao = addslashes($_POST['descricao']);
@@ -13,11 +65,10 @@ if (isset($_POST['insereOrcamento']) || isset($_POST['editaOrcamento'])) {
 
 if (isset($_POST['insereOrcamento'])) {
     $observacoes = addslashes($_POST['obs']);
-    $observacoesEtapa = addslashes($_POST['obsEtapa']);
-    $idEtapa = $_POST['idEtapa'];
+    $idDespesa = $_POST['idDespesa'];
     $idUnidadeMedida = $_POST['idUnidadeMedida'];
 
-    $sql_insere = "INSERT INTO `orcamento`(`idProjeto`, `idEtapa`, `observacoesEtapa`, `descricao`, `quantidade`, `idUnidadeMedida`, `quantidadeUnidade`, `valorUnitario`, `valorTotal`, `observacoes`, `publicado`) VALUES ('$idProjeto', '$idEtapa', '$observacoesEtapa','$descricao', '$quantidade', '$idUnidadeMedida', '$quantidadeUnidade', '$valorUnitario', '$valorTotal', '$observacoes','1')";
+    $sql_insere = "INSERT INTO `orcamento`(`idProjeto`, `grupo_despesas_id`, `descricao`, `quantidade`, `idUnidadeMedida`, `quantidadeUnidade`, `valorUnitario`, `valorTotal`, `observacoes`, `publicado`) VALUES ('$idProjeto', '$idDespesa', '$descricao', '$quantidade', '$idUnidadeMedida', '$quantidadeUnidade', '$valorUnitario', '$valorTotal', '$observacoes','1')";
 
     if (mysqli_query($con, $sql_insere)) {
         $mensagem = "<font color='#01DF3A'><strong>Inserido com sucesso! Utilize o menu para avançar.</strong></font>";
@@ -28,16 +79,14 @@ if (isset($_POST['insereOrcamento'])) {
 }
 
 if (isset($_POST['editaOrcamento'])) {
-    $etapas = $_POST['idEtapa'];
-    $obs_etapa = $_POST['observacoesEtapa'];
+    $despesas = $_POST['idDespesa'];
     $und_medida = $_POST['idUnidadeMedida'];
     $observacoes = $_POST['observacoes'];
     $idOrcamento = $_POST['editaOrcamento'];
     $quantidadeUnidade = $_POST['quantidadeUnidade'];
 
     $sql_edita = "UPDATE orcamento SET
-	idEtapa = '$etapas',
-	observacoesEtapa = '$obs_etapa',
+	grupo_despesas_id = '$despesas',
 	descricao = '$descricao',
 	quantidade = '$quantidade',
 	idUnidadeMedida = $und_medida,
@@ -84,6 +133,80 @@ if(isset($_POST['insereOrcamento']) || isset($_POST['editaOrcamento'])) {
     }
 }
 
+if(isset($_POST["enviar"]))
+{
+    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '3' AND idListaDocumento = 38";
+    $query_arquivos = mysqli_query($con,$sql_arquivos);
+    while($arq = mysqli_fetch_array($query_arquivos))
+    {
+        $y = $arq['idListaDocumento'];
+        $x = $arq['sigla'];
+        $nome_arquivo = isset($_FILES['arquivo']['name'][$x]) ? $_FILES['arquivo']['name'][$x] : null;
+        $f_size = isset($_FILES['arquivo']['size'][$x]) ? $_FILES['arquivo']['size'][$x] : null;
+
+        //Extensões permitidas
+        $ext = array("PDF","pdf");
+
+        if($f_size > 5242880) // 5MB em bytes
+        {
+            $mensagem = "<font color='#FF0000'><strong>Erro! Tamanho de arquivo excedido! Tamanho máximo permitido: 05 MB.</strong></font>";
+        }
+        else
+        {
+            if($nome_arquivo != "")
+            {
+                $nome_temporario = $_FILES['arquivo']['tmp_name'][$x];
+                $new_name = date("YmdHis")."_".semAcento($nome_arquivo); //Definindo um novo nome para o arquivo
+                $hoje = date("Y-m-d H:i:s");
+                $dir = '../uploadsdocs/'; //Diretório para uploads
+                $allowedExts = array(".pdf", ".PDF"); //Extensões permitidas
+                $ext = strtolower(substr($nome_arquivo,-4));
+
+                if(in_array($ext, $allowedExts)) //Pergunta se a extensão do arquivo, está presente no array das extensões permitidas
+                {
+                    if(move_uploaded_file($nome_temporario, $dir.$new_name))
+                    {
+                        $sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('3', '$idProjeto', '$y', '$new_name', '$hoje', '1'); ";
+                        $query = mysqli_query($con,$sql_insere_arquivo);
+                        if($query)
+                        {
+                            $mensagem = "<font color='#01DF3A'><strong>Arquivo recebido com sucesso!</strong></font>";
+                            gravarLog($sql_insere_arquivo);
+                        }
+                        else
+                        {
+                            $mensagem = "<font color='#FF0000'><strong>Erro ao gravar no banco.</strong></font>";
+                        }
+                    }
+                    else
+                    {
+                        $mensagem = "<font color='#FF0000'><strong>Erro no upload! Tente novamente.</strong></font>";
+                    }
+                }
+                else
+                {
+                    $mensagem = "<font color='#FF0000'><strong>Erro no upload! Anexar documentos somente no formato PDF.</strong></font>";
+                }
+            }
+        }
+    }
+}
+
+if(isset($_POST['apagar']))
+{
+    $idArquivo = $_POST['apagar'];
+    $sql_apagar_arquivo = "UPDATE upload_arquivo SET publicado = 0 WHERE idUploadArquivo = '$idArquivo'";
+    if(mysqli_query($con,$sql_apagar_arquivo))
+    {
+        $mensagem = "<font color='#01DF3A'><strong>Arquivo apagado com sucesso!</strong></font>";
+        gravarLog($sql_apagar_arquivo);
+    }
+    else
+    {
+        $mensagem = "<font color='#FF0000'><strong>Erro ao apagar arquivo!</strong></font>";
+    }
+}
+
 ?>
 <section id="list_items" class="home-section bg-white">
     <div class="container">
@@ -105,57 +228,59 @@ if(isset($_POST['insereOrcamento']) || isset($_POST['editaOrcamento'])) {
                     echo $mensagem;
                 }; ?></h5>
         </div>
-        <div class="table-responsive list_info">
-            <h8><strong>Observação:</strong> Caso o projeto contemple outras fontes de recurso, poderá enviar uma
-                planilha orçamentária completa em formato PDF na etapa ANEXOS (campo de upload <strong>Planilha
-                    Orçamentária Complementar</strong>).
-            </h8>
+        <div class="well">
+            O orçamento descritivo do projeto deve ser apresentado dividido por grupos de despesa e indicando os
+            itens e valores a serem gastos em cada um deles. Você pode prever itens de despesa de acordo com a
+            realidade do seu projeto, mas é importante que isso esteja justificado ao longo do projeto ou na
+            planilha complementar de orçamento em anexo. Por exemplo, se você vai produzir um documentário e não
+            inclui equipamentos no seu orçamento, deve deixar claro de que forma terá equipamentos para realizar as
+            atividades propostas. Por isso, em caso de projetos que tenham mais de uma fonte de recursos, ou seja,
+            não sejam feitos com recursos apenas do PROMAC, é imprescindível que seja anexada a planilha completa do
+            projeto em campo específico
         </div>
+
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-12">
+                    <div class="table-responsive list_info">
+                        <h6>Upload de Arquivo(s) Somente em PDF com tamanho máximo de 5MB.</h6>
+                        <div class="well">
+                            se houver outras fontes de recursos do projeto além do PROMAC, anexe a planilha do projeto completo, indicando com qual fonte de recurso cada rubrica ser
+                        </div>
+                        <div class="col-md-offset-2 col-md-8">
+                            <form method="POST" action="?perfil=orcamento" class="form-horizontal" role="form"
+                                  enctype="multipart/form-data">
+                                <?php if (verificaArquivosExistentesPF($idProjeto, 38)): ?>
+                                    <label>Planilha completa do projeto</label>
+                                    <?php exibePlanilhaCompleta($idProjeto, '38', 'projeto_edicao') ?>
+                                <?php else: ?>
+                                    <div class="form-group">
+                                        <label>Planilha completa do projeto</label>
+                                        <input class="form-control" type="file" name="arquivo[planorc]" required>
+                                    </div>
+
+
+                                    <div class="form-group"><input type="hidden" name="idPessoa"
+                                                                   value="<?php echo $idProjeto; ?>"/>
+                                        <input type="hidden" name="tipoPessoa" value="<?php echo $tipoPessoa; ?>"/>
+                                        <input type="submit" name="enviar" class="btn btn-theme btn-lg btn-block"
+                                               value='Enviar'>
+                                    </div>
+                                <?php endif; ?>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-md-12">
                 <!-- Início Resumo Orçamento -->
                 <ul class="list-group">
                     <li class="list-group-item list-group-item-success"><b>Resumo</b></li>
                     <li class="list-group-item">
-                        <table class="table table-bordered">
-                            <tr>
-                                <?php
-                                for ($i = 1; $i <= 8; $i++) {
-                                    $sql_etapa = "SELECT idEtapa FROM orcamento
-										WHERE publicado > 0 AND idProjeto ='$idProjeto' AND idEtapa = '$i'
-										ORDER BY idOrcamento";
-                                    $query_etapa = mysqli_query($con, $sql_etapa);
-                                    $lista = mysqli_fetch_array($query_etapa);
-
-                                    $etapa = recuperaDados("etapa", "idEtapa", $lista['idEtapa']);
-                                    echo "<td><strong>" . $etapa['etapa'] . ":</strong>";
-                                }
-                                ?>
-                            </tr>
-                            <tr>
-                                <?php
-                                for ($i = 1; $i <= 8; $i++) {
-                                    $sql_etapa = "SELECT SUM(valorTotal) AS tot FROM orcamento
-										WHERE publicado > 0 AND idProjeto ='$idProjeto' AND idEtapa = '$i'
-										ORDER BY idOrcamento";
-                                    $query_etapa = mysqli_query($con, $sql_etapa);
-                                    $lista = mysqli_fetch_array($query_etapa);
-
-                                    echo "<td>R$ " . dinheiroParaBr($lista['tot']) . "</td>";
-                                }
-                                ?>
-                            </tr>
-                            <tr>
-                                <?php
-                                $sql_total = "SELECT SUM(valorTotal) AS tot FROM orcamento
-											WHERE publicado > 0 AND idProjeto ='$idProjeto'
-											ORDER BY idOrcamento";
-                                $query_total = mysqli_query($con, $sql_total);
-                                $total = mysqli_fetch_array($query_total);
-                                echo "<td colspan='8'><strong>TOTAL: R$ " . dinheiroParaBr($total['tot']) . "</strong></td>";
-                                ?>
-                            </tr>
-                        </table>
+                        <?php recuperaTabelaOrcamento($idProjeto); ?>
                     </li>
                 </ul>
                 <!-- Fim Resumo Orçamento -->
@@ -169,18 +294,13 @@ if(isset($_POST['insereOrcamento']) || isset($_POST['editaOrcamento'])) {
 
                     <div class="row">
                         <div class="form-group">
-                            <div class="col-md-1">
-                                <br/><strong>Etapa* </strong>
-                                <select class="form-control" name="idEtapa">
+                            <div class="col-md-3">
+                                <br/><strong>Grupos de despesa *</strong>
+                                <select class="form-control" name="idDespesa">
 
                                     <option value="0"></option>
-                                    <?php echo geraOpcao("etapa", "") ?>
+                                    <?php echo geraOpcao("grupo_despesas", "") ?>
                                 </select>
-                            </div>
-
-                            <div class="col-md-2"><strong>Observação
-                                    <font size="-2"><br>da etapa </font></strong>
-                                <input type="text" class="form-control" name="obsEtapa">
                             </div>
 
                             <div class="col-md-2"><br/><strong>Descrição *</strong>
@@ -238,7 +358,7 @@ if(isset($_POST['insereOrcamento']) || isset($_POST['editaOrcamento'])) {
                     <?php
                     $sql = "SELECT * FROM orcamento
 							WHERE publicado > 0 AND idProjeto ='$idProjeto'
-							ORDER BY idEtapa";
+							ORDER BY grupo_despesas_id";
                     $query = mysqli_query($con, $sql);
                     $num = mysqli_num_rows($query);
                     if ($num > 0) {
@@ -247,7 +367,6 @@ if(isset($_POST['insereOrcamento']) || isset($_POST['editaOrcamento'])) {
 								<thead>
 									<tr class='list_menu'>
 										<td width='20%'>Etapa</td>
-										<td>Observações etapa</td>
 										<td width='30%'>Descrição</td>
 										<td width='10%'>Qtde</td>
 										<td width='10%'>Unid. Med.</td>
@@ -262,12 +381,10 @@ if(isset($_POST['insereOrcamento']) || isset($_POST['editaOrcamento'])) {
 								</thead>
 								<tbody>";
                         while ($campo = mysqli_fetch_array($query)) {
-                            $etapa = recuperaDados("etapa", "idEtapa", $campo['idEtapa']);
+                            $despesa = recuperaDados("grupo_despesas", "id", $campo['grupo_despesas_id']);
                             $medida = recuperaDados("unidade_medida", "idUnidadeMedida", $campo['idUnidadeMedida']);
                             echo "<tr>";
-                            echo "<td class='list_description'>" . $etapa['etapa']. "</td>";
-                            echo "<td class='list_description'>" . $campo['observacoesEtapa'] . "</td>";
-
+                            echo "<td class='list_description'>" . $despesa['despesa']. "</td>";
                             echo "<td class='list_description'>" . $campo['descricao'] . "</td>";
                             echo "<td class='list_description'>" . $campo['quantidade'] . "</td>";
                             echo "<td class='list_description'>" . $medida['unidadeMedida'] . "</td>";
@@ -278,7 +395,7 @@ if(isset($_POST['insereOrcamento']) || isset($_POST['editaOrcamento'])) {
                             echo "<td class='list_description'>
 											<form method='POST' action='?perfil=orcamento'>
 												<input type='hidden' name='apagaOrcamento' value='" . $campo['idOrcamento'] . "' />
-												<button style='margin-top: 13px' class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Excluir Etapa?' data-message='Deseja realmente excluir a etapa " . $etapa['etapa'] . "?'>Remover</button>
+												<button style='margin-top: 13px' class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Excluir Etapa?' data-message='Deseja realmente excluir a etapa " . $despesa['despesa'] . "?'>Remover</button>
 											</form>
 										</td>";
                             echo "</tr>";

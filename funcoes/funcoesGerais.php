@@ -3861,5 +3861,49 @@ function recuperaPlanos($idProjeto, $edicao = false) {
     }
 }
 
+function recuperaTabelaOrcamento($idProjeto) {
+    $con = bancoMysqli();
+    ?>
+    <table class="table table-bordered">
+        <tr>
+            <?php
+            $colunas = $con->query("SELECT * FROM grupo_despesas")->num_rows;
+            for ($i = 1; $i <= $colunas; $i++) {
+                $sql_etapa = "SELECT grupo_despesas_id FROM orcamento
+                    WHERE publicado > 0 AND idProjeto ='$idProjeto' AND grupo_despesas_id = '$i'
+                    ORDER BY idOrcamento";
+                $query_etapa = mysqli_query($con, $sql_etapa);
+                $lista = mysqli_fetch_array($query_etapa);
 
+                $despesa = recuperaDados("grupo_despesas", "id", $lista['grupo_despesas_id']);
+                echo "<td><strong>" . $despesa['despesa'] . ":</strong>";
+            }
+            ?>
+        </tr>
+        <tr>
+            <?php
+            for ($i = 1; $i <= $colunas; $i++) {
+                $sql_etapa = "SELECT SUM(valorTotal) AS tot FROM orcamento
+                    WHERE publicado > 0 AND idProjeto ='$idProjeto' AND grupo_despesas_id = '$i'
+                    ORDER BY idOrcamento";
+                $query_etapa = mysqli_query($con, $sql_etapa);
+                $lista = mysqli_fetch_array($query_etapa);
+
+                echo "<td>R$ " . dinheiroParaBr($lista['tot']) . "</td>";
+            }
+            ?>
+        </tr>
+        <tr>
+            <?php
+            $sql_total = "SELECT SUM(valorTotal) AS tot FROM orcamento
+                        WHERE publicado > 0 AND idProjeto ='$idProjeto'
+                        ORDER BY idOrcamento";
+            $query_total = mysqli_query($con, $sql_total);
+            $total = mysqli_fetch_array($query_total);
+            echo "<td colspan='$colunas'><strong>TOTAL: R$ " . dinheiroParaBr($total['tot']) . "</strong></td>";
+            ?>
+        </tr>
+    </table>
+    <?php
+}
 ?>
