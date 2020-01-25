@@ -8,6 +8,7 @@ if(isset($_POST['insereFicha']))
 	$nome = addslashes($_POST['nome']);
 	$cpf = $_POST['cpf'];
 	$funcao = addslashes($_POST['funcao']);
+	$curriculo = trim(addslashes($_POST['curriculo']));
 
 
 		$validacao = validaCPF($_POST['cpf']);
@@ -26,7 +27,7 @@ if(isset($_POST['insereFicha']))
 			$res = mysqli_query($con,$pesquisa_ficha);
 			// ------------------------ //
 
-			$sql_insere_nome = "INSERT INTO `ficha_tecnica`(`idProjeto`, `nome`, `cpf`, `funcao`, `publicado`) VALUES ('$idProjeto', '$nome', '$cpf', '$funcao', 1)";
+			$sql_insere_nome = "INSERT INTO `ficha_tecnica`(`idProjeto`, `nome`, `cpf`, `funcao`, `curriculo`, `publicado`) VALUES ('$idProjeto', '$nome', '$cpf', '$funcao', '$curriculo', 1)";
 
 			if($res->num_rows >= 1)
 			{
@@ -47,14 +48,16 @@ if(isset($_POST['insereFicha']))
 if(isset($_POST['editaFicha']))
 {
 	$idFichaTecnica = $_POST['editaFicha'];
-	$nome = $_POST['nome'];
+	$nome = addslashes($_POST['nome']);
 	$cpf = $_POST['cpf'];
-	$funcao = $_POST['funcao'];
+	$funcao = addslashes($_POST['funcao']);
+	$curriculo = trim(addslashes($_POST['curriculo']));
 
 	$sql_edita_ficha = "UPDATE `ficha_tecnica` SET
 	`nome`= '$nome',
 	`cpf`= '$cpf',
 	`funcao`= '$funcao',
+	`curriculo`= '$curriculo',
 	`AlteradoPor` = '$usuarioLogado'
 	WHERE idFichaTecnica = '$idFichaTecnica'";
 	if(mysqli_query($con,$sql_edita_ficha))
@@ -132,6 +135,7 @@ if(isset($_POST['apagaFicha']))
 										<td>Nome</td>
 										<td>CPF</td>
 										<td>Função</td>
+										<td width='15%'>Currículo Resumido</td>
 										<td width='10%'></td>
 										<td width='10%'></td>
 									</tr>
@@ -143,6 +147,7 @@ if(isset($_POST['apagaFicha']))
 									echo "<td class='list_description'>".$campo['nome']."</td>";
 									echo "<td class='list_description'>".$campo['cpf']."</td>";
 									echo "<td class='list_description'>".$campo['funcao']."</td>";
+									echo "<td class='list_description'>".mb_strimwidth($campo['curriculo'], 0 ,30,"..." )."</td>";
 									echo "<td class='list_description'>
 											<form method='POST' action='?perfil=ficha_tecnica_edicao'>
 												<input type='hidden' name='editaFicha' value='".$campo['idFichaTecnica']."' />

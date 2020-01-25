@@ -2,6 +2,8 @@
 $con = bancoMysqli();
 $idProjeto = $_SESSION['idProjeto'];
 
+$distritos = $con->query("SELECT * FROM distrito")->fetch_all(MYSQLI_ASSOC);
+
 $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 ?>
 <script language="JavaScript" >
@@ -72,6 +74,29 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
                         </div>
                     </div>
 
+                    <div class="form-group row">
+                        <div class="col-md-offset-1 col-md-5">
+                            <label for="distrito">Distrito *</label>
+                            <select class="form-control" name="distrito" id="distrito" required>
+                                <option value="">Selecione uma opção...</option>
+                                <?php foreach ($distritos as $distrito): ?>
+                                    <option value="<?=$distrito['idDistrito']?>" data-faixa="<?=$distrito['faixa']?>">
+                                        <?=$distrito['distrito']?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="col-md-5">
+                            <label for="distrito">Faixa *</label>
+                            <select class="form-control" name="faixa" id="faixa" readonly>
+                                <option value="">Selecione uma opção...</option>
+                                <option value="1">Faixa 1</option>
+                                <option value="2">Faixa 2</option>
+                                <option value="3">Faixa 3</option>
+                            </select>
+                        </div>
+                    </div>
+
 					<div class="form-group">
 						<div class="col-md-offset-1 col-md-10">
 							<input type="submit" name="insereLocal" class="btn btn-theme btn-lg btn-block" value="Inserir">
@@ -84,3 +109,16 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 	</div>
 </section>
 <script src="../include/cep_api.js"></script>
+<script>
+    function selecionaFaixa() {
+        let faixa = $('#distrito option:selected').attr('data-faixa');
+        $('#faixa option').removeAttr('selected');
+        $(`#faixa`).val(faixa);
+    }
+
+    $('#faixa').on('mousedown', function(e) {
+        e.preventDefault();
+    });
+
+    $('#distrito').change(selecionaFaixa);
+</script>

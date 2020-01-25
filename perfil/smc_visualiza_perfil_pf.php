@@ -256,6 +256,21 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 			<p align="justify"><strong>Estado:</strong> <?php echo isset($pf['estado']) ? $pf['estado'] : null; ?></p>
 			<p align="justify"><strong>CEP:</strong> <?php echo isset($pf['cep']) ? $pf['cep'] : null; ?></p>
 			<p align="justify"><strong>Data da Inscrição:</strong> <?php echo isset($pf['dataInscricao']) ? exibirDataHoraBr($pf['dataInscricao']) : null; ?></p>
+
+            <?php
+            $dados = retornaDadosAdicionais($pf['idPf'], 1);
+            if ($dados) {
+            ?>
+                <div class="text-center"><h5>Informações Adicionais</h5></div>
+                <p align="justify"><strong>Gênero:</strong> <?= $dados['genero'] ?></p>
+                <p align="justify"><strong>Cor / Raça:</strong> <?= $dados['etnia'] ?></p>
+                <p align="justify"><strong>Participou de outras leis de incentivo à cultura?:</strong> <?= $dados['lei_incentivo'] == 1 ? "Sim" : "Não" ?></p>
+                <?php if($dados['lei_incentivo'] == 1) { ?>
+                    <p align="justify"><strong>Qual:</strong> <?= $dados['nome_lei'] ?></p>
+                <?php } ?>
+            <?php } else { ?>
+                <div class="alert alert-danger"><strong>Informações Adicionais ainda não cadastradas</strong></div>
+            <?php } ?>
 		 </div>
 		 <div class="table-responsive list_info"><h6>Arquivo(s) de Pessoa Física</h6>
 		<?php

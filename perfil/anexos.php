@@ -26,7 +26,7 @@ function listaArquivosProjetoRemover($idPessoa,$tipoPessoa,$pagina)
 			INNER JOIN upload_arquivo as arq ON arq.idListaDocumento = list.idListaDocumento
 			WHERE arq.idPessoa = '$idPessoa'
 			AND arq.idTipo = '$tipoPessoa'
-			AND list.idListaDocumento IN (18,19,20,21,22,23,38)
+			AND list.idListaDocumento IN (18,19,20,22,23)
 			AND arq.publicado = '1'";
 	$query = mysqli_query($con,$sql);
 	$linhas = mysqli_num_rows($query);
@@ -185,7 +185,7 @@ if(isset($_POST['apagar']))
 									<td></td>
 								</tr>
 								<?php
-								  $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '3' AND idListaDocumento IN (18,19,20,21,22,23,38)";
+								  $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '3' AND idListaDocumento IN (18,19,20,22,23)";
 									$query_arquivos = mysqli_query($con,$sql_arquivos);
 									while($arq = mysqli_fetch_array($query_arquivos))
 									{

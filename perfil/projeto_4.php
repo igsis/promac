@@ -47,8 +47,8 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
-							<label>Descrição do objeto e atividades*</label>
-							<p align="justify">Considerando a realidade no qual está inserido, devendo ser demonstrado o nexo entre essa realidade e as atividades ou projetos e metas a serem atingidas.</p>
+							<label>Descrição do objeto cultural e atividades propostas *</label>
+							<p align="justify">Aqui você deverá descrever com mais detalhes o que será desenvolvido no seu projeto e quais serão as atividades oferecidas ao público.</p>
 							<textarea name="descricao" class="form-control" rows="25" required><?php echo $projeto['descricao'] ?></textarea>
 						</div>
 					</div>

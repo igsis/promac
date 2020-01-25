@@ -102,6 +102,20 @@ function listaArquivosPessoaSApagar($idPessoa,$tipoPessoa,$pagina)
 					}
 				?>
 				</p>
+                <?php
+                $dados = retornaDadosAdicionais($pf['idPf'], 1);
+                if ($dados) {
+                    ?>
+                    <div class="text-center"><h5>Informações Adicionais</h5></div>
+                    <p align="justify"><strong>Gênero:</strong> <?= $dados['genero'] ?></p>
+                    <p align="justify"><strong>Cor / Raça:</strong> <?= $dados['etnia'] ?></p>
+                    <p align="justify"><strong>Participou de outras leis de incentivo à cultura?:</strong> <?= $dados['lei_incentivo'] == 1 ? "Sim" : "Não" ?></p>
+                    <?php if($dados['lei_incentivo'] == 1) { ?>
+                        <p align="justify"><strong>Qual:</strong> <?= $dados['nome_lei'] ?></p>
+                    <?php } ?>
+                <?php } else { ?>
+                    <div class="alert alert-danger"><strong>Informações Adicionais ainda não cadastradas</strong></div>
+                <?php } ?>
 			</div>
 		<?php
 		}
@@ -135,6 +149,7 @@ function listaArquivosPessoaSApagar($idPessoa,$tipoPessoa,$pagina)
 					}
 				?>
 				</p>
+
 			</div>
 		<?php
 		}

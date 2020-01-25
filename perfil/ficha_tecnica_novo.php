@@ -42,6 +42,13 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 						</div>
 					</div>
 
+                    <div class="col-md-offset-2 col-md-8">
+                        <div class="form-group">
+                            <label>Currículo Resumido do Profissional *</label><br/>
+                            <textarea class="form-control" name="curriculo" class="form-control" rows="5" required></textarea>
+                        </div>
+                    </div>
+
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<input type="submit" name="insereFicha" class="btn btn-theme btn-lg btn-block" value="Inserir">

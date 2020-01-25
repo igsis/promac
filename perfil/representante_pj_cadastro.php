@@ -86,7 +86,8 @@ if(isset($_POST['insereRepresentante']))
 	{
 		$mensagem = "<font color='#01DF3A'><strong>Inserido com sucesso!</strong></font>";
 		gravarLog($sql_representante1_empresa);
-	}
+        echo "<script>window.location = '?perfil=representante_pj_cadastro';</script>";
+    }
 	else
 	{
 		$mensagem = "<font color='#FF0000'><strong>Erro ao inserir representante.</strong></font>";

@@ -32,16 +32,14 @@ if(isset($_POST['insere']))
 
 if(isset($_POST['insereCronograma']))
 {
-	$captacaoRecurso = $_POST['captacaoRecurso'];
 	$preProducao = $_POST['preProducao'];
 	$producao = $_POST['producao'];
 	$posProducao = $_POST['posProducao'];
-	$prestacaoContas = $_POST['prestacaoContas'];
+    $tempoTotal = $_POST['preProducao'] + $_POST['producao'] + $_POST['posProducao'];
 
+	if($preProducao != null &&  $producao != null && $posProducao != null){
 
-	if($captacaoRecurso != null  && $preProducao != null &&  $producao != null && $posProducao != null && $prestacaoContas != null){
-
-		$sql_insere_cronograma = "INSERT INTO `cronograma`(captacaoRecurso, preProducao, producao, posProducao, prestacaoContas) VALUES ('$captacaoRecurso', '$preProducao', '$producao', '$posProducao', '$prestacaoContas')";
+		$sql_insere_cronograma = "INSERT INTO `cronograma`(preProducao, producao, posProducao, totalExecucao) VALUES ('$preProducao', '$producao', '$posProducao', '$tempoTotal')";
 
 		if(mysqli_query($con,$sql_insere_cronograma))
 		{
@@ -75,19 +73,16 @@ $idCronograma = $projeto['idCronograma'];
 
 if(isset($_POST['editaCronograma']))
 {
-	$captacaoRecurso = $_POST['captacaoRecurso'];
 	$preProducao = $_POST['preProducao'];
 	$producao = $_POST['producao'];
 	$posProducao = $_POST['posProducao'];
-	$prestacaoContas = $_POST['prestacaoContas'];
-
-	if($captacaoRecurso != '0'  && $preProducao != '0' &&  $producao != '0' && $posProducao != '0' && $prestacaoContas != '0'){
+    $tempoTotal = $_POST['preProducao'] + $_POST['producao'] + $_POST['posProducao'];
+	if($preProducao != '0' &&  $producao != '0' && $posProducao != '0'){
 		$sql_edita_cronograma = "UPDATE `cronograma` SET
-		captacaoRecurso = '$captacaoRecurso',
 		preProducao = '$preProducao',
 		producao = '$producao',
 		posProducao = '$posProducao',
-		prestacaoContas = '$prestacaoContas',
+		totalExecucao = '$tempoTotal',
 		alteradoPor = '$usuarioLogado'
 		WHERE idCronograma = '$idCronograma'";
 		if(mysqli_query($con,$sql_edita_cronograma))
@@ -129,6 +124,18 @@ $cronograma = recuperaDados("cronograma","idCronograma",$idCronograma);
 		<div class="form-group">
 			<h4>Cronograma</h4>
 			<h5 id="mensagem"><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
+            <div class="col-md-offset-1 col-md-10">
+                <div class="well">
+                    O cronograma deve ser pensado em meses, divididos nas etapas de Pré-Produção, Produção e
+                    Pós-Produção. Deve englobar as atividades especificadas no Plano de Trabalho de maneira mais
+                    localizada no tempo. As etapas não deverão ser simultâneas no seu planejamento, ou seja, uma etapa
+                    apenas começa após o término da anterior. Assim, o total de meses necessários para a execução do seu
+                    projeto será a somatória dos meses de cada etapa. Legalmente, o cronograma começará a correr a
+                    partir da data da emissão da Autorização de Movimentação de Recursos. Você não deverá incluir no
+                    cronograma o período de captação de recursos, que é incerto, nem o período para entregar a prestação
+                    de contas, que tem um prazo de entrega automático após o término do projeto.
+                </div>
+            </div>
 		</div>
 		
 		<div class="row">
@@ -172,30 +179,7 @@ $cronograma = recuperaDados("cronograma","idCronograma",$idCronograma);
 								</div>
 							</div>
 
-							<div class="form-group">
-								<div class="col-md-offset-2 col-md-6">
-									<label>Captação de recursos *</label>
-								</div>
-								<div class="col-md-6">
-									<div class="row">
-										<div class="col-sm-1">
-											<a class="menos"><span class="glyphicon glyphicon-minus"></span></a>
-										</div>
-										<div class="col-sm-8">
-											<div class="progress">
-												<div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:0%">0 Mês
-												</div>
-												<input type="hidden" name="captacaoRecurso" class="form-control" maxlength="50" placeholder="DD/MM/AA a DD/MM/AA" required value="<?= ($cronograma['captacaoRecurso'] != "") ? $cronograma['captacaoRecurso'] : "" ?>">
-											</div>
-										</div>
-										<div class="col-sm-1">
-											<a class="mais"><span class="glyphicon glyphicon-plus"></span></a>
-										</div>
-									</div>																											
-								</div>
-							</div>
-
-							<div class="form-group">
+                            <div class="form-group">
 								<div class="col-md-offset-2 col-md-6">
 									<label>Pré-Produção *</label>
 								</div>
@@ -265,29 +249,6 @@ $cronograma = recuperaDados("cronograma","idCronograma",$idCronograma);
 							</div>
 
 							<div class="form-group">
-								<div class="col-md-offset-2 col-md-6">
-									<label>Prestação de Contas *</label>
-								</div>
-								<div class="col-md-6">
-									<div class="row">
-										<div class="col-sm-1">
-											<a class="menos"><span class="glyphicon glyphicon-minus"></span></a>
-										</div>
-										<div class="col-sm-8">
-											<div class="progress">
-												<div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:0%">0 Mês
-												</div>
-												<input type="hidden" name="prestacaoContas" class="form-control" maxlength="50" placeholder="DD/MM/AA a DD/MM/AA" required value="<?= ($cronograma['prestacaoContas'] != "") ? $cronograma['prestacaoContas'] : "" ?>">
-											</div>
-										</div>
-										<div class="col-sm-1">
-											<a class="mais"><span class="glyphicon glyphicon-plus"></span></a>
-										</div>
-									</div>											
-								</div>
-							</div>
-
-							<div class="form-group">
 								<div class="col-md-offset-2 col-md-8">
 									<?php 
 										if($idCronograma){
@@ -317,10 +278,6 @@ $cronograma = recuperaDados("cronograma","idCronograma",$idCronograma);
 								<td class='list_description'>MÊS (Período)</td>
 							</tr>
 							<tr>
-								<td class='list_description'>Captação de recursos</td>
-								<td class='list_description exibir'><?= $cronograma['captacaoRecurso'] ?? '' ?></td>
-							</tr>
-							<tr>
 								<td class='list_description'>Pré-Produção</td>
 								<td class='list_description exibir'><?= $cronograma['preProducao'] ?? '' ?></td>
 							</tr>
@@ -332,10 +289,10 @@ $cronograma = recuperaDados("cronograma","idCronograma",$idCronograma);
 								<td class='list_description'>Pós-Produção</td>
 								<td class='list_description exibir'><?= $cronograma['posProducao'] ?? '' ?></td>
 							</tr>
-							<tr>
-								<td class='list_description'>Prestação de Contas</td>
-								<td class='list_description exibir'><?= $cronograma['prestacaoContas'] ?? '' ?></td>
-							</tr>
+                            <tr>
+                                <td class='list_description'><strong>Total em Meses da Execução:</strong></td>
+                                <td class='list_description exibir'><?= $cronograma['totalExecucao'] ?? '' ?></td>
+                            </tr>
 						</tbody>
 					</table>
 				</div>	

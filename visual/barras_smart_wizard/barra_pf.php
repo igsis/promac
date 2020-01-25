@@ -6,6 +6,7 @@ $pf   = recuperaDados("pessoa_fisica","idPf",$idPf);
 $idProj   = isset($_SESSION['idProjeto'])?$_SESSION['idProjeto']:null;
 $proj = recuperaDados("projeto","idProjeto",$idProj); // Para verificar status
 
+$dadosAdicionais = retornaDadosAdicionais($idPf, $_SESSION['tipoPessoa']);
 
 $urlPf = array(
     27 => '/promac/visual/index_pf.php?secao=perfil',
@@ -37,7 +38,10 @@ $urlPf = array(
     25 => '/promac/visual/index_pf.php?perfil=finalProjeto',
     26 => '/promac/visual/index_pf.php?perfil=informacoes_administrativas',
     28 => '/promac/visual/index_pf.php?perfil=projeto_8', // Passo 8
-    29 => '/promac/visual/index_pf.php?perfil=resultado_inscricao_pf'
+    29 => '/promac/visual/index_pf.php?perfil=resultado_inscricao_pf',
+    30 => '/promac/visual/index_pf.php?perfil=informacoes_adicionais',
+    31 => '/promac/visual/index_pf.php?perfil=plano_trabalho',
+    32 => '/promac/visual/index_pf.php?perfil=postos_trabalho',
 );
 for ($i = 0; $i < count($urlPf); $i++) {
     if ($uri == $urlPf[$i]) {
@@ -77,6 +81,12 @@ for ($i = 0; $i < count($urlPf); $i++) {
             $acionar19 = 'active loading';
         }elseif ($i == 29){ // passo 8
             $acionar20 = 'active loading';
+        }elseif ($i == 30){ // informações adicionais
+            $acionar21 = 'active loading';
+        }elseif ($i == 31){ // Plano de Trabalho
+            $acionar22 = 'active loading';
+        }elseif ($i == 32){ // Postos de Trabalho
+            $acionar23 = 'active loading';
         }
 
 ?>
@@ -89,6 +99,11 @@ for ($i = 0; $i < count($urlPf); $i++) {
                 <li class="<?php echo isset($acionar1) ? $acionar1 : 'clickable'; ?>">
                     <a onclick="location.href='index_pf.php?perfil=informacoes_iniciais_pf'" href=""><br /><small>Proponente</small></a>
                 </li>
+                <?php if ($pf['liberado'] != 3 || $dadosAdicionais == false): ?>
+                    <li class="<?php echo isset($acionar21) ? $acionar21 : 'clickable'; ?>">
+                        <a onclick="location.href='index_pf.php?perfil=informacoes_adicionais'" href=""><br /><small>Informações Adicionais</small></a>
+                    </li>
+                <?php endif; ?>
                 <?php
                     if ($pf['liberado'] != 3) {
                 ?>
@@ -132,13 +147,16 @@ for ($i = 0; $i < count($urlPf); $i++) {
                     ?>
 
                     <li class="<?php echo isset($acionar8) ? $acionar8 : 'clickable'; ?>">
-                       <a onclick="location.href='index_pf.php?perfil=projeto_4'" href=""><br /><small>Objeto</small></a>
+                       <a onclick="location.href='index_pf.php?perfil=projeto_4'" href=""><br /><small>Descrição do Objeto</small></a>
                     </li>
                     <li class="<?php echo isset($acionar9) ? $acionar9 : 'clickable'; ?>">
                        <a onclick="location.href='index_pf.php?perfil=projeto_5'" href=""><br /><small>Justificativa e Objetivo</small></a>
                     </li>
+                    <li class="<?php echo isset($acionar22) ? $acionar22 : 'clickable'; ?>">
+                       <a onclick="location.href='index_pf.php?perfil=plano_trabalho'" href=""><br /><small>Plano de Trabalho</small></a>
+                    </li>
                     <li class="<?php echo isset($acionar10) ? $acionar10 : 'clickable'; ?>">
-                        <a onclick="location.href='index_pf.php?perfil=projeto_6'" href=""><br /><small>Metodologia e Contrapartida</small></a>
+                        <a onclick="location.href='index_pf.php?perfil=projeto_6'" href=""><br /><small>Sobre o acesso do público ao projeto</small></a>
                     </li>
                     <li class="<?php echo isset($acionar11) ? $acionar11 : 'clickable'; ?>">
                         <a onclick="location.href='index_pf.php?perfil=local'" href=""><br /><small>Local</small></a>
@@ -146,7 +164,7 @@ for ($i = 0; $i < count($urlPf); $i++) {
                 </ul> <!-- Barra linha 2 -->
                 <ul>
                     <li class="<?php echo isset($acionar19) ? $acionar19 : 'clickable'; ?>">
-                       <a onclick="location.href='index_pf.php?perfil=projeto_8'" href=""><br /><small>Público Alvo e Plano de Divulgação</small></a>
+                       <a onclick="location.href='index_pf.php?perfil=projeto_8'" href=""><br /><small>Público Alvo e Material de Divulgação</small></a>
                     </li>
                     <li class="<?php echo isset($acionar12) ? $acionar12 : 'clickable'; ?>">
                        <a onclick="location.href='index_pf.php?perfil=ficha_tecnica'" href=""><br /><small>Ficha Técnica</small></a>
@@ -154,11 +172,11 @@ for ($i = 0; $i < count($urlPf); $i++) {
                     <li class="<?php echo isset($acionar13) ? $acionar13 : 'clickable'; ?>">
                        <a onclick="location.href='index_pf.php?perfil=cronograma'" href=""><br /><small>Cronograma</small></a>
                     </li>
+                    <li class="<?php echo isset($acionar23) ? $acionar23 : 'clickable'; ?>">
+                        <a onclick="location.href='index_pf.php?perfil=postos_trabalho'" href=""><br /><small>Postos de Trabalho</small></a>
+                    </li>
                     <li class="<?php echo isset($acionar14) ? $acionar14 : 'clickable'; ?>">
                        <a onclick="location.href='index_pf.php?perfil=orcamento'" href=""><br /><small>Orçamento</small></a>
-                    </li>
-                    <li class="<?php echo isset($acionar6) ? $acionar6 : 'clickable'; ?>">
-                        <a onclick="location.href='index_pf.php?perfil=projeto_2'" href=""><br /><small>Valores Enquadramento</small></a>
                     </li>
                     <li class="<?php echo isset($acionar15) ? $acionar15 : 'clickable'; ?>">
                        <a onclick="location.href='index_pf.php?perfil=anexos'" href=""><br /><small>Anexos</small></a>
