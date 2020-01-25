@@ -41,6 +41,7 @@ $urlPf = array(
     29 => '/promac/visual/index_pf.php?perfil=resultado_inscricao_pf',
     30 => '/promac/visual/index_pf.php?perfil=informacoes_adicionais',
     31 => '/promac/visual/index_pf.php?perfil=plano_trabalho',
+    32 => '/promac/visual/index_pf.php?perfil=postos_trabalho',
 );
 for ($i = 0; $i < count($urlPf); $i++) {
     if ($uri == $urlPf[$i]) {
@@ -84,6 +85,8 @@ for ($i = 0; $i < count($urlPf); $i++) {
             $acionar21 = 'active loading';
         }elseif ($i == 31){ // Plano de Trabalho
             $acionar22 = 'active loading';
+        }elseif ($i == 32){ // Postos de Trabalho
+            $acionar23 = 'active loading';
         }
 
 ?>
@@ -168,6 +171,9 @@ for ($i = 0; $i < count($urlPf); $i++) {
                     </li>
                     <li class="<?php echo isset($acionar13) ? $acionar13 : 'clickable'; ?>">
                        <a onclick="location.href='index_pf.php?perfil=cronograma'" href=""><br /><small>Cronograma</small></a>
+                    </li>
+                    <li class="<?php echo isset($acionar23) ? $acionar23 : 'clickable'; ?>">
+                        <a onclick="location.href='index_pf.php?perfil=postos_trabalho'" href=""><br /><small>Postos de Trabalho</small></a>
                     </li>
                     <li class="<?php echo isset($acionar14) ? $acionar14 : 'clickable'; ?>">
                        <a onclick="location.href='index_pf.php?perfil=orcamento'" href=""><br /><small>Orçamento</small></a>
