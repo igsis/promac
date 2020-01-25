@@ -10,8 +10,7 @@ if(isset($_POST['insere']) || isset($_POST['edita'])) {
 
 if(isset($_POST['insere'])){
     $insere = "INSERT INTO postos_trabalho (idProjeto, quantidade, media_meses, media_valor) VALUES ('$idProjeto', '$quantidade', '$media_meses', '$media_valor')";
-    $sql_insere = $con->query($insere);
-    if(mysqli_query($con,$sql_insere)) {
+    if($con->query($insere)) {
         $mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso! Utilize o menu para avançar.</strong></font>";
         gravarLog($insere);
     }
@@ -22,8 +21,7 @@ if(isset($_POST['insere'])){
 
 if(isset($_POST['edita'])){
     $edita = "UPDATE postos_trabalho SET quantidade = '$quantidade', media_meses = '$media_meses', media_valor = '$media_valor' WHERE idProjeto = '$idProjeto'";
-    $sql_edita = $con->query($edita);
-    if(mysqli_query($con,$sql_edita)) {
+    if($con->query($edita)) {
         $mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso! Utilize o menu para avançar.</strong></font>";
         gravarLog($edita);
     }
@@ -69,7 +67,7 @@ if (isset($postos['id'])){
 
                         <div class="form-group">
                             <div class="col-md-12">
-                                <label>a) Quantos postos de trabalho diretos o seu projeto gera, ainda que temporariamente? <input type="number" name="quantidade" maxlength="4" class="form-control" value="<?php echo isset($postos['quantidade']) ?? null ?>" /></label>
+                                <label>a) Quantos postos de trabalho diretos o seu projeto gera, ainda que temporariamente? <input type="number" name="quantidade" maxlength="4" class="form-control" value="<?= $postos['quantidade'] ?? null ?>" /></label>
                                 <div class="well">
                                     <p>Aqui, você deverá considerar os postos de trabalho que são criados e pagos pelo projeto, ou seja, quantas “vagas” o projeto gera diretamente.</p>
                                     <p>Exemplo: Se são necessários 5 produtores, 1 diretor, 1 assistente de direção, 1 figurinista, 1 operador de som e 1 operador de luz para execução de seu projeto, quer dizer que são gerados 10 postos de trabalho pelo seu projeto.</p>
