@@ -3806,7 +3806,7 @@ function recuperaMaterial($idProjeto, $edicao = false)
         } else {
         ?>
         <div class="row">
-            <span class="text-center"> Nenhum material de divulgação cadastrado. <?= $idProjeto ?></span>
+            <span class="text-center"> Nenhum material de divulgação cadastrado.</span>
         </div>
         <?php
     }
