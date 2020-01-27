@@ -47,7 +47,7 @@ $tipoPessoa = '6';
                         <h4>Pro-Mac - Programa Municipal de Apoio a Projetos Culturais</h4>
                     </div>
                     <div class="col-md-3">
-                        <img src="visual/images/pin_promac.png" align="right"  />
+                        <img src="visual/images/pin_promac_negativo.png" align="right"  />
                     </div>
                 </div>
                 <div class="row">
