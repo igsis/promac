@@ -29,7 +29,7 @@ $tipoPessoa = '6';
         function alerta()
         {
             swal({   title: "Atenção!",
-                text: "Novo Decreto de regulamentação do PROMAC. Confira no botão NORMATIVOS",
+                text: "EDITAL PROMAC 2020 está com inscrições abertas para projetos culturais! Confira no botão NORMATIVOS!",
                 timer: 10000,
                 confirmButtonColor:	"#000000",
                 showConfirmButton: true });}
@@ -81,7 +81,7 @@ $tipoPessoa = '6';
 						<p align="justify">
                             <strong>Cadastro de proponente:</strong> aberta o ano todo.<br/>
                             <strong>Cadastro de incentivador:</strong> aberta o ano todo.<br/>
-						    <strong>Inscrição de projeto:</strong> lançamento de edital previsto para janeiro de 2020.
+						    <strong>Inscrição de projeto:</strong> abertas de 9h de 27/01/2020 às 18h de 27/04/2020. Confira o novo Edital no botão Normativos ao lado.
                         </p>
 
 						<p align="justify">O proponente deverá inscrever-se no botão ao lado e após habilitação poderá inscrever o projeto.</p>
@@ -144,7 +144,7 @@ $tipoPessoa = '6';
                                     <div class="well">
                                         <h6>Edital</h6>
                                         <ul class="list-group">
-                                            <li class="list-group-item"><a href="pdf/edital_promac.pdf" target="_blank">Edital de Abertura</a></li>
+                                            <li class="list-group-item"><a href="pdf/Edital_PROMAC_2020.pdf" target="_blank">EDITAL PROMAC 2020</a></li>
                                         </ul>
                                     </div>
                                 </div>
