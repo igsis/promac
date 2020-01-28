@@ -68,13 +68,7 @@ if(isset($_POST['novoPj'])) //tipoePessoa = 2
 
         $mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso! Aguarde...</strong></font>";
 		gravarLog($sql_insere_projeto);
-        if($idAreaAtuacao == 22){
-            echo "<meta HTTP-EQUIV='refresh' CONTENT='0.5;URL=?perfil=projeto_edicao'>";
-        }else{
-            echo "<meta HTTP-EQUIV='refresh' CONTENT='0.5;URL=?perfil=projeto_2'>";  
-        }
-
-		
+        echo "<meta HTTP-EQUIV='refresh' CONTENT='0.5;URL=?perfil=projeto_edicao'>";
 	}
 	else
 	{
