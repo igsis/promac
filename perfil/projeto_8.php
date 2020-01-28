@@ -3,10 +3,10 @@ $con = bancoMysqli();
 $idProjeto = $_SESSION['idProjeto'];
 
 if (isset($_POST['insere'])) {
-    $publicoAlvo = addslashes($_POST['publicoAlvo']);
+    $planoDivulgacao = addslashes($_POST['planoDivulgacao']);
 
     $sql_insere = "UPDATE projeto SET
-		publicoAlvo = '$publicoAlvo'
+		planoDivulgacao = '$planoDivulgacao'
 		WHERE idProjeto = '$idProjeto'";
     if (mysqli_query($con, $sql_insere)) {
         $mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso!</strong></font>";
@@ -93,9 +93,9 @@ $projeto = recuperaDados("projeto", "idProjeto", $idProjeto);
 
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-8">
-                            <label>Público alvo *</label>
-                            <textarea name="publicoAlvo" class="form-control" rows="10"
-                                      required><?php echo $projeto['publicoAlvo'] ?></textarea>
+                            <label>Plano de Divulgação *</label>
+                            <textarea name="planoDivulgacao" class="form-control" rows="10"
+                                      required><?php echo $projeto['planoDivulgacao'] ?></textarea>
                         </div>
                     </div>
                     <div class="form-group">
