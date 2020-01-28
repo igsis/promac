@@ -54,11 +54,11 @@ if (isset($postos['id'])){
     	?>
             <div class="form-group">
                 <h4>Cadastro de Projeto</h4>
-                <ul class="list-group">
-                    <li class="list-group-item list-group-item-warning">
-                        <strong>O valor do incentivo é igual ao valor do orçamento preenchido na tela de orçamento.<br/>O valor total do projeto pode ser igual ao valor solicitado ao Pro-Mac ou maior, incluindo recursos oriundos de outras fontes.</strong><br/>
-                    </li>
-                </ul>
+<!--                <ul class="list-group">-->
+<!--                    <li class="list-group-item list-group-item-warning">-->
+<!--                        <strong>O valor do incentivo é igual ao valor do orçamento preenchido na tela de orçamento.<br/>O valor total do projeto pode ser igual ao valor solicitado ao Pro-Mac ou maior, incluindo recursos oriundos de outras fontes.</strong><br/>-->
+<!--                    </li>-->
+<!--                </ul>-->
                 <p><strong><?php if(isset($mensagem)){echo $mensagem;} ?></strong></p>
             </div>
             <div class="row">
