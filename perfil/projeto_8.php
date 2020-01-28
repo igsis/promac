@@ -3,10 +3,10 @@ $con = bancoMysqli();
 $idProjeto = $_SESSION['idProjeto'];
 
 if (isset($_POST['insere'])) {
-    $publicoAlvo = addslashes($_POST['publicoAlvo']);
+    $planoDivulgacao = addslashes($_POST['planoDivulgacao']);
 
     $sql_insere = "UPDATE projeto SET
-		publicoAlvo = '$publicoAlvo'
+		planoDivulgacao = '$planoDivulgacao'
 		WHERE idProjeto = '$idProjeto'";
     if (mysqli_query($con, $sql_insere)) {
         $mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso!</strong></font>";
@@ -19,12 +19,13 @@ if (isset($_POST['insere'])) {
 if (isset($_POST['materialDivulgacao'])){
     $materialDivulgacao = $_POST['material_divulgacao'];
     $quantidade = $_POST['quantidade'];
+    $formato = $_POST['formato'];
     $veiculoDivulgacao = $_POST['veiculo_divulgacao'];
     $id = $_POST['idMaterial'];
     if ($id == 0) {
         $queryInsert = "INSERT INTO 
-                    material_divulgacao (material_divulgacao, quantidade,veiculo_divulgacao,projeto_id,publicado) 
-                    VALUES ('$materialDivulgacao','$quantidade','$veiculoDivulgacao','$idProjeto','1')";
+                    material_divulgacao (material_divulgacao, quantidade, formato,veiculo_divulgacao,projeto_id,publicado) 
+                    VALUES ('$materialDivulgacao','$quantidade','$formato','$veiculoDivulgacao','$idProjeto','1')";
         if(mysqli_query($con,$queryInsert))
         {
             $mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso!</strong></font>";
@@ -37,7 +38,7 @@ if (isset($_POST['materialDivulgacao'])){
     }else{
         $queryUpdate = "UPDATE material_divulgacao 
                         SET material_divulgacao ='$materialDivulgacao', quantidade = '$quantidade', 
-                        veiculo_divulgacao = '$veiculoDivulgacao' WHERE idMaterial = '$id'";
+                        veiculo_divulgacao = '$veiculoDivulgacao', formato = '$formato' WHERE idMaterial = '$id'";
         if(mysqli_query($con,$queryUpdate))
         {
             $mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso!</strong></font>";
@@ -93,9 +94,9 @@ $projeto = recuperaDados("projeto", "idProjeto", $idProjeto);
 
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-8">
-                            <label>Público alvo *</label>
-                            <textarea name="publicoAlvo" class="form-control" rows="10"
-                                      required><?php echo $projeto['publicoAlvo'] ?></textarea>
+                            <label>Plano de Divulgação *</label>
+                            <textarea name="planoDivulgacao" class="form-control" rows="10"
+                                      required><?php echo $projeto['planoDivulgacao'] ?></textarea>
                         </div>
                     </div>
                     <div class="form-group">
@@ -153,6 +154,14 @@ $projeto = recuperaDados("projeto", "idProjeto", $idProjeto);
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
+                                <label for="formato">Formato</label>
+                                <input type="text"  name="formato" class="form-control" id="formato" maxlength="180" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
                                 <label for="quantidade">Veiculo de divulgação</label>
                                 <input type="text" name="veiculo_divulgacao" class="form-control" id="veiculo_divulgacao" required maxlength="180">
                             </div>
@@ -203,18 +212,20 @@ $projeto = recuperaDados("projeto", "idProjeto", $idProjeto);
         let tr = td.parentNode;
 
         //pegando dados do input idMat que está hidden dentro da tr de Ações
-        let idTela = document.querySelector('#idMat').value;
+        let idTela = tr.querySelector('#idMat').value;
 
-        //colocar os calores no modal
+        //colocar os valores no modal
         document.querySelector('#idMaterial').value = idTela;
         document.querySelector('#material_divulgacao').value = tr.children[0].textContent;
         document.querySelector('#quantidade').value = tr.children[1].textContent;
-        document.querySelector('#veiculo_divulgacao').value = tr.children[2].textContent;
+        document.querySelector('#formato').value = tr.children[2].textContent;
+        document.querySelector('#veiculo_divulgacao').value = tr.children[3].textContent;
     })
 
     document.querySelector('#btnNovoMaterial').addEventListener("click",function () {
         document.querySelector('#idMaterial').value = 0;
         document.querySelector('#material_divulgacao').value = "";
+        document.querySelector('#formato').value = "";
         document.querySelector('#quantidade').value = "";
         document.querySelector('#veiculo_divulgacao').value = "";
     })

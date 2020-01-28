@@ -54,11 +54,11 @@ if (isset($postos['id'])){
     	?>
             <div class="form-group">
                 <h4>Cadastro de Projeto</h4>
-                <ul class="list-group">
-                    <li class="list-group-item list-group-item-warning">
-                        <strong>O valor do incentivo é igual ao valor do orçamento preenchido na tela de orçamento.<br/>O valor total do projeto pode ser igual ao valor solicitado ao Pro-Mac ou maior, incluindo recursos oriundos de outras fontes.</strong><br/>
-                    </li>
-                </ul>
+<!--                <ul class="list-group">-->
+<!--                    <li class="list-group-item list-group-item-warning">-->
+<!--                        <strong>O valor do incentivo é igual ao valor do orçamento preenchido na tela de orçamento.<br/>O valor total do projeto pode ser igual ao valor solicitado ao Pro-Mac ou maior, incluindo recursos oriundos de outras fontes.</strong><br/>-->
+<!--                    </li>-->
+<!--                </ul>-->
                 <p><strong><?php if(isset($mensagem)){echo $mensagem;} ?></strong></p>
             </div>
             <div class="row">
@@ -78,7 +78,7 @@ if (isset($postos['id'])){
                         <div class="form-group">
                             <div class="col-md-12">
                                 <label>b) Qual a média, em meses, de tempo de contratação de cada posto de trabalho?
-                                <input type="number" name="media_meses" class="form-control" value="<?= $postos['media_meses'] ?? null ?>" /></label>
+                                <input type="text" id="val_2dec" name="media_meses" class="form-control" value="<?= $postos['media_meses'] ?? null ?>" maxlength="2" "/></label>
                                 <div class="well">
                                     <p>Aqui, você deverá considerar a somatória dos meses de contratação de cada posto de trabalho gerado e dividir pelo número de postos de trabalho informado acima.</p>
                                     <p>Exemplo: Se os 5 produtores são contratados por 5 meses para a execução do seu projeto, o diretor por 6 meses, o assistente de direção, o figurinista, o operador de som e o operador de luz por 4 meses cada, você teria a seguinte conta: Produtores: 5x5 = 25; Diretor: 1x6 = 6; Assistente de Direção, Figurinista, Operador de Som e Operador de Luz: 4x4 = 16. Total de 47 meses de trabalho (25 + 6 + 16 ) contratados pelo seu projeto. Divididos por 10 postos de trabalho, você tem a média de 4,7 meses de trabalho para cada posto de trabalho gerado.</p>

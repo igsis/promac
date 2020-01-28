@@ -16,13 +16,20 @@
     $('#valor,#valor1,#valor2,#valor3,#valor01,#valor_individual,#duracao')
       .maskMoney({thousands:'.', decimal:',', allowZero:true, suffix: ''});
   });
+
   $(function(){
 	$("#CEP").mask("99999-999");
   });
   
   $(function(){
 	$( ".processo" ).mask("9999.9999/9999999-9");
-  });  
+  });
+
+  $(function() {
+      $('#val_2dec')
+          .maskMoney({thousands:'.', decimal:',', allowZero:true, suffix: '',precision: 1});
+  });
+
     
 </script>
 

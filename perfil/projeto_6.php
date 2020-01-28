@@ -8,12 +8,14 @@ if(isset($_POST['insere']))
 	$ingresso = addslashes($_POST['ingresso']);
 	$democratizacao = addslashes($_POST['democratizacao']);
 	$acessibilidade = addslashes($_POST['acessibilidade']);
+	$publicoAlvo = addslashes($_POST['publicoAlvo']);
 
 	$sql_insere = "UPDATE projeto SET
 		contrapartida = '$contrapartida',
 		ingresso = '$ingresso',
 		democratizacao = '$democratizacao',
-		acessibilidade = '$acessibilidade'
+		acessibilidade = '$acessibilidade',
+		publicoAlvo = '$publicoAlvo'
 		WHERE idProjeto = '$idProjeto'";
 	if(mysqli_query($con,$sql_insere))
 	{
@@ -49,7 +51,13 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
 				<form method="POST" action="?perfil=projeto_6" class="form-horizontal" role="form">
-
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-8">
+                            <label>Público de Alvo *</label>
+                            <textarea name="publicoAlvo" class="form-control" rows="10"
+                                      required><?php echo $projeto['publicoAlvo'] ?></textarea>
+                        </div>
+                    </div>
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<label>Contrapartida * <button class='btn btn-default' type='button' data-toggle='modal' data-target='#infoContrapartida'
