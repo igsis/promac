@@ -287,6 +287,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
                                                     ou mesmo uma imagem indiretamente relacionada ao projeto. O importante é que
                                                     seja uma imagem representativa da ideia que você gostaria de expor com sua
                                                     proposta e que você tenha direito de usar a foto. <br>
+                                                    <strong>São aceitos apenas imagens no formato .JPG e .PNG</strong><br>
                                                     <strong>Tamanho Máximo: 5Mb</strong>
                                                 </div>
                                                 <input type="file" name="arquivo[foto_proj]" required>
@@ -356,6 +357,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
                                                     ou mesmo uma imagem indiretamente relacionada ao projeto. O importante é que
                                                     seja uma imagem representativa da ideia que você gostaria de expor com sua
                                                     proposta e que você tenha direito de usar a foto. <br>
+                                                    <strong>São aceitos apenas imagens no formato .JPG e .PNG</strong><br>
                                                     <strong>Tamanho Máximo: 5Mb</strong>
                                                 </div>
                                                 <input type="file" name="arquivo[foto_proj]" required>
