@@ -93,11 +93,10 @@ $dadosAdicionais = retornaDadosAdicionais($idPj, $tipoPessoa)
 			$numProjetos = (int) $qtd[0];
 
 			$projetos = formataDados(retornaProjeto($tipoPessoa, $idPj));
-
 			if ($pj['liberado'] == 3)
 			{
-                if(($statusProjeto == 1) || (($pj['idPj'] == 156 || $pj['idPj'] == 938) && $dateNow < '2018-11-21 18:01:00')) {
-                    $sql = "SELECT idAreaAtuacao AS area FROM projeto WHERE idPj = '$idPj' AND publicado = 1 AND idAreaAtuacao = 22;";
+                if ($statusProjeto == 1) {
+                    $sql = "SELECT idAreaAtuacao AS area FROM projeto WHERE idPj = '$idPj' AND publicado = 1 AND idAreaAtuacao = 22 AND idStatus != 6;";
                     $query = mysqli_query($con,$sql);
                     $num = mysqli_num_rows($query);
                     if ($num < 1) {

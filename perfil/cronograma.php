@@ -140,28 +140,7 @@ $cronograma = recuperaDados("cronograma","idCronograma",$idCronograma);
 		
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
-				<form method="POST" id="formCronograma" action="?perfil=cronograma" class="form-horizontal" role="form">
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-3"><label>Data estimada de início do projeto</label>
-							<input type="date" name="inicioCronograma" minlength=10 maxlength="10" class="form-control" placeholder= "DD/MM/AA" required value="<?= ($projeto['inicioCronograma'] != "") ? $projeto['inicioCronograma'] : "" ?>">
-						</div>
-						<div class="col-md-offset-2 col-md-3"><label>Data estimada do final do projeto</label>
-							<input type="date" name="fimCronograma" minlength=10 maxlength="10" class="form-control" placeholder="DD/MM/AA" required value="<?= ($projeto['fimCronograma'] != "") ? $projeto['fimCronograma'] : "" ?>">
-						</div>
-					</div>
 
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-8">
-							<input type="submit" name="insere" class="btn btn-theme btn-lg btn-block" value="Gravar">
-						</div>
-					</div>
-				</form>
-
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8"><br/></div>
-				</div>
-
-	
 				<div class="row">
 					<div class=" col-md-12">
 

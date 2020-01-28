@@ -46,7 +46,8 @@ $urlPj = array(
     34 => '/promac/visual/index_pj.php?perfil=cooperativa_resultado_busca', // Empresa
     35 => '/promac/visual/index_pj.php?perfil=resultado_inscricao_pj', // Resultado Inscrição
     36 => '/promac/visual/index_pj.php?perfil=informacoes_adicionais', // Informações Adicionais Representante Legal
-    37 => '/promac/visual/index_pj.php?perfil=plano_trabalho' // Informações Adicionais Representante Legal
+    37 => '/promac/visual/index_pj.php?perfil=plano_trabalho', // Informações Adicionais Representante Legal
+    38 => '/promac/visual/index_pj.php?perfil=postos_trabalho'
 );
 
 for ($i = 0; $i < count($urlPj); $i++) {
@@ -93,8 +94,9 @@ for ($i = 0; $i < count($urlPj); $i++) {
             $ativa22 = 'active loading';
         }elseif ($i == 37) { // Plano de Trabalho
             $ativa23 = 'active loading';
+        }elseif ($i == 38) { // Plano de Trabalho
+            $ativa24 = 'active loading';
         }
-
 ?>
 
  <!-- Pessoa Física -->
@@ -163,13 +165,16 @@ for ($i = 0; $i < count($urlPj); $i++) {
                    <a onclick="location.href='index_pj.php?perfil=local'" href=""><br /><small>Local</small></a>
                 </li>
                 <li class="<?php echo isset($ativa20) ? $ativa20 : 'clickable'; ?>">
-                   <a onclick="location.href='index_pj.php?perfil=projeto_8'" href=""><br /><small>Público Alvo e Plano de Divulgação</small></a>
+                   <a onclick="location.href='index_pj.php?perfil=projeto_8'" href=""><br /><small>Público Alvo e Material de Divulgação</small></a>
                 </li>
                 <li class="<?php echo isset($ativa13) ? $ativa13 : 'clickable'; ?>">
                    <a onclick="location.href='index_pj.php?perfil=ficha_tecnica'" href=""><br /><small>Ficha Técnica</small></a>
                 </li>
                 <li class="<?php echo isset($ativa14) ? $ativa14 : 'clickable'; ?>">
                    <a onclick="location.href='index_pj.php?perfil=cronograma'" href=""><br /><small>Cronograma</small></a>
+                </li>
+                <li class="<?php echo isset($ativa24) ? $ativa24 : 'clickable'; ?>">
+                    <a onclick="location.href='index_pj.php?perfil=postos_trabalho'" href=""><br /><small>Postos de Trabalho</small></a>
                 </li>
             </ul> <!-- Barra linha 3 -->
             <ul>                
