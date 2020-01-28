@@ -1,21 +1,17 @@
 
 <footer>
-	<div class="container">
-		<table width="100%">
-			<tr>
-				<td width="20%"><img src="images/pin_promac_pq.png" align="left"/></td>
-				<td align="center"><font color="#ccc">2018 @ Pro-Mac - Programa Municipal de Apoio a Projetos Culturais<br/>Secretaria Municipal de Cultura<br/>Prefeitura de São Paulo</font></td><td align="right"><font color="#ccc"><b>Contato:</b><br/><i class="fa fa-phone-square"></i> (11) 3397-0002 das 13h às 17h<br/><i class="fa fa-envelope"></i> Dúvidas: promac@prefeitura.sp.gov.br</font></td>
-			</tr>
-		</table>
-	</div>
-	<div class="container">
-		<table width="100%">
-			<tr>
-				<td><font color="#ccc" size="1"><br/><i>Supervisão de Tecnologia da Informação - Programação e Desenvolvimento</i></font></td>
-				<td align="right"><font color="#ccc" size="1"><i>Versão 0.1</i></font></td>
-			</tr>
-		</table>
-	</div>
+    <div class="container">
+        <table width="100%">
+            <tr>
+                <td><font color="#ccc"><i class="fa fa-phone-square"></i> <b>Contato:</b><br/>(11) 3397-0002 das 13h às 17h<br/><i class="fa fa-envelope"></i> Dúvidas: <br>Sobre cadastros: cadastrospromac@prefeitura.sp.gov.br<br>Sobre projetos: projetospromac@prefeitura.sp.gov.br<br>Geral: promac@prefeitura.sp.gov.br</font></td>
+                <td align="center"><font color="#ccc">2018 @ Pro-Mac - Programa Municipal de Apoio a Projetos Culturais<br/>Secretaria Municipal de Cultura<br/>Prefeitura de São Paulo</font></td>
+                <td width="20%"><img src="images/pin_promac_pq.png" align="right"/></td>
+            </tr>
+            <tr>
+                <td colspan="3" align="center"><font color="#ccc" size="1"><br/><i>Supervisão de Tecnologia da Informação - Sistemas de Informação</i></font></td>
+            </tr>
+        </table>
+    </div>
 	<div class="container">
 		<div class="col-md-12">
 			<?php

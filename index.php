@@ -90,17 +90,6 @@ $tipoPessoa = '6';
 
 						<p>&nbsp;</p>
                     </div>
-
-                    <div class="col-md-12">
-                        <div class="well">
-                            <br/>
-                            <h6><span style="color: red; ">ATENÇÃO! INFORMAÇÃO SOBRE AS CARTAS DE INCENTIVO EM FILA DE ESPERA</span></h6>
-                            <p><span style="color: red; ">As Cartas de Incentivo entregues na Secretaria Municipal da Cultura e protocoladas em fila de espera após o esgotamento dos recursos do PROMAC expirarão no final deste exercício fiscal e não servirão para dar alguma prioridade para a captação do incentivo fiscal de projetos em 2020. Como a fila de espera tinha o objetivo de organizar uma possível chegada de recursos extras ao PROMAC ainda em 2019, que não ocorreu e não ocorrerá até dia 31 de dezembro de 2019, ela se torna inócua ao final deste exercício fiscal, já que não existe mais a possibilidade de que essa vinda de recursos extras aconteça. Os documentos protocolados, portanto, se tornam inválidos, uma vez que preveem datas de aporte passadas e não tem mais objetivo.</span></p>
-                            <p><span style="color: red; ">Acompanhem aqui nesta página, nas redes oficiais na Secretaria Municipal da Cultura e na mídia em geral mais noticias sobre o PROMAC em 2020.</span></p>
-                            <br/>
-                        </div>
-                    </div>
-
 						
                     <!-- Inicio Modal Regulamento -->
                     <div class="modal fade" id="regulamento" role="dialog" aria-labelledby="regulamentoLabel" aria-hidden="true">
@@ -234,18 +223,13 @@ $tipoPessoa = '6';
 			<div class="container">
 				<table width="100%">
 					<tr>
-						<td width="20%"><img src="visual/images/pin_promac_pq.png" align="left"/></td>
+                        <td><font color="#ccc"><i class="fa fa-phone-square"></i> <b>Contato:</b><br/>(11) 3397-0002 das 13h às 17h<br/><i class="fa fa-envelope"></i> Dúvidas: <br>Sobre cadastros: cadastrospromac@prefeitura.sp.gov.br<br>Sobre projetos: projetospromac@prefeitura.sp.gov.br<br>Geral: promac@prefeitura.sp.gov.br</font></td>
 						<td align="center"><font color="#ccc">2018 @ Pro-Mac - Programa Municipal de Apoio a Projetos Culturais<br/>Secretaria Municipal de Cultura<br/>Prefeitura de São Paulo</font></td>
-						<td align="right"><font color="#ccc"><b>Contato:</b><br/><i class="fa fa-phone-square"></i> (11) 3397-0002 das 13h às 17h<br/><i class="fa fa-envelope"></i> Dúvidas: promac@prefeitura.sp.gov.br</font></td>
+                        <td width="20%"><img src="visual/images/pin_promac_pq.png" align="right"/></td>
 					</tr>
-				</table>
-			</div>
-			<div class="container">
-				<table width="100%">
-					<tr>
-						<td><font color="#ccc" size="1"><br/><i>Supervisão de Tecnologia da Informação - Programação e Desenvolvimento</i></font></td>
-						<td align="right"><font color="#ccc" size="1"><i>Versão 0.1</i></font></td>
-					</tr>
+                    <tr>
+                        <td colspan="3" align="center"><font color="#ccc" size="1"><br/><i>Supervisão de Tecnologia da Informação - Sistemas de Informação</i></font></td>
+                    </tr>
 				</table>
 			</div>
 			<script src="visual/js/bootstrap.min.js"></script>
