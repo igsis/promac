@@ -41,7 +41,7 @@ if(isset($_POST['liberar'])){
     $sql = "UPDATE liberacao_projeto SET situacaoAtual = 1, descricaoSituacao = 'LIBERADO', data = '$data'";
     if(mysqli_query($con,$sql))
     {
-        $mensagem = "<span style=\"color: #01DF3A; \"><strong>As incrições para novos projetos seram liberadas no dia " . exibirDataBr($data)."</strong></span>";
+        $mensagem = "<span style=\"color: #01DF3A; \"><strong>As incrições para novos projetos seram liberadas no dia " . exibirDataBr($data).". Lembre-se de informar o Ano do Edital no menu lateral em 'Gerenciamento do sistema' > 'Escolher Ano do Edita Ativo'</strong></span>";
         gravarLog($sql);
     }
     else
