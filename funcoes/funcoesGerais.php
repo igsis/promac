@@ -2490,6 +2490,8 @@ function retornaQtdProjetos($tipoPessoa, $id)
 {
     $conexao = bancoMysqli();
 
+    $editalAtivo = recuperaDados("liberacao_projeto","idStatus",1)['edital'];
+
     if ($tipoPessoa == 1) {
         $query = "SELECT 
                     count(idProjeto)
@@ -2497,6 +2499,7 @@ function retornaQtdProjetos($tipoPessoa, $id)
                     projeto AS proj  
                     WHERE proj.publicado = 1
                     AND proj.idStatus != 6
+                    AND proj.edital = '$editalAtivo'
                     AND   proj.idPf = '$id'";
     } elseif ($tipoPessoa == 2) {
         $query = "SELECT 
@@ -2509,6 +2512,7 @@ function retornaQtdProjetos($tipoPessoa, $id)
                     WHERE proj.publicado = 1
                     AND proj.idStatus != 6
                     AND   pj.cooperativa = 0
+                    AND proj.edital = '$editalAtivo'
                     AND   proj.idPj = '$id'";
     }
     $resultado = mysqli_query($conexao, $query);
@@ -2522,6 +2526,8 @@ function retornaProjeto($tipoPessoa, $id)
     $documentos = [];
     $conexao = bancoMysqli();
 
+    $editalAtivo = recuperaDados("liberacao_projeto","idStatus",1)['edital'];
+
     if ($tipoPessoa == 1):
         $query = "SELECT 
                nomeProjeto
@@ -2529,6 +2535,7 @@ function retornaProjeto($tipoPessoa, $id)
                projeto AS proj  
   			  WHERE proj.publicado = 1
   			  AND proj.idStatus != 6
+              AND proj.edital = '$editalAtivo'
   			  AND   proj.idPf = '$id'";
 
         $resultado = mysqli_query($conexao, $query);
@@ -2543,6 +2550,7 @@ function retornaProjeto($tipoPessoa, $id)
                projeto AS proj  
   			  WHERE proj.publicado = 1
   			  AND proj.idStatus != 6
+  			  AND proj.edital = '$editalAtivo'
   			  AND   proj.idPj = '$id'";
 
         $resultado = mysqli_query($conexao, $query);

@@ -3,6 +3,8 @@ $con = bancoMysqli();
 unset($_SESSION['idProjeto']);
 $tipoPessoa = '2';
 
+$editalAtivo = recuperaDados("liberacao_projeto","idStatus",1)['edital'];
+
 $idPj = $_SESSION['idUser'];
 $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 $statusProjeto = recuperaStatus();
@@ -96,7 +98,7 @@ $dadosAdicionais = retornaDadosAdicionais($idPj, $tipoPessoa)
 			if ($pj['liberado'] == 3)
 			{
                 if ($statusProjeto == 1) {
-                    $sql = "SELECT idAreaAtuacao AS area FROM projeto WHERE idPj = '$idPj' AND publicado = 1 AND idAreaAtuacao = 22 AND idStatus != 6;";
+                    $sql = "SELECT idAreaAtuacao AS area FROM projeto WHERE idPj = '$idPj' AND publicado = 1 AND idAreaAtuacao = 22 AND idStatus != 6 AND edital = '$editalAtivo'";
                     $query = mysqli_query($con,$sql);
                     $num = mysqli_num_rows($query);
                     if ($num < 1) {
