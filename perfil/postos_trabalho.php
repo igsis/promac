@@ -4,7 +4,7 @@ $idProjeto = $_SESSION['idProjeto'];
 
 if(isset($_POST['insere']) || isset($_POST['edita'])) {
     $quantidade = $_POST['quantidade'];
-    $media_meses = $_POST['media_meses'];
+    $media_meses = dinheiroDeBr($_POST['media_meses']);
     $media_valor = dinheiroDeBr($_POST['media_valor']);
 }
 
