@@ -450,11 +450,21 @@ if(isset($_POST['editarReserva'])){
 if($projeto['tipoPessoa'] == 1)
 {
     $pf = recuperaDados("pessoa_fisica","idPf",$projeto['idPf']);
+    $sqlInfosAdicionais = "SELECT g.genero, e.etnia, pia.lei_incentivo, pia.nome_lei FROM pessoa_informacao_adicional AS pia
+                            INNER JOIN generos AS g ON pia.genero = g.id
+                            INNER JOIN etnias AS e ON pia.etnia = e.id
+                            WHERE tipo_pessoa_id = 1 AND pessoa_id = '{$pf['idPf']}'";
+    $infoAdicionais = $con->query($sqlInfosAdicionais)->fetch_assoc();
 }
 else
 {
     $pj = recuperaDados("pessoa_juridica","idPj",$projeto['idPj']);
     $representante = recuperaDados("representante_legal","idRepresentanteLegal",$pj['idRepresentanteLegal']);
+    $sqlInfosAdicionais = "SELECT g.genero, e.etnia, pia.lei_incentivo, pia.nome_lei FROM pessoa_informacao_adicional AS pia
+                            INNER JOIN generos AS g ON pia.genero = g.id
+                            INNER JOIN etnias AS e ON pia.etnia = e.id
+                            WHERE tipo_pessoa_id = 2 AND pessoa_id = '{$pj['idRepresentanteLegal']}'";
+    $infoAdicionais = $con->query($sqlInfosAdicionais)->fetch_assoc();
 }
 
 if(isset($_POST['editarParecer'])){

@@ -97,6 +97,35 @@
                 <?= isset($representante['email']) ? $representante['email'] : ''; ?>
             </td>
         </tr>
+        <tr>
+            <td colspan="2">
+                <strong>E-mail:</strong>
+                <?= isset($representante['email']) ? $representante['email'] : ''; ?>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Genero:</strong>
+                <?= isset($representante) ? $infoAdicionais['genero'] : '' ?>
+            </td>
+            <td>
+                <strong>Etnia:</strong>
+                <?= isset($representante) ? $infoAdicionais['etnia'] : '' ?>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <strong>Já participa de algum projeto de lei? Se sim, qual? </strong>
+                <?php if (isset($representante)) {
+                    if ($infoAdicionais['lei_incentivo'] == 1) {
+                        echo $infoAdicionais['nome_lei'];
+                    } else {
+                        echo "Não";
+                    }
+                }
+                ?>
+            </td>
+        </tr>
     </table>
     <li class="list-group-item list-group-item-success"><b>Arquivos da Pessoa Jurídica</b></li>
     <li class="list-group-item">
