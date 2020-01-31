@@ -3765,6 +3765,7 @@ function recuperaMaterial($idProjeto, $edicao = false)
     <tr>
         <th>Material de Divulgação</th>
         <th>Quantidade</th>
+        <th>Formato</th>
         <th>Onde será veiculado/divulgado</th>
         <?php
         if ($edicao):
@@ -3783,6 +3784,7 @@ function recuperaMaterial($idProjeto, $edicao = false)
                 <tr>
                     <td><?= $material['material_divulgacao'] ?></td>
                     <td><?= $material['quantidade'] ?></td>
+                    <td><?= $material['formato'] ?></td>
                     <td><?= $material['veiculo_divulgacao'] ?></td>
                     <?php
                 if ($edicao):

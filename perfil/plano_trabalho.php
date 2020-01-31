@@ -228,7 +228,7 @@ if (isset($_POST['apagaAtividade'])) {
                         </div>
 
                         <div class="form-group">
-                            <label for="prazo">Prazo</label>
+                            <label for="prazo">Etapa</label>
                             <select class="form-control" name="etapa" id="etapa" required>
                                 <option value="">Selecione uma opção...</option>
                                 <?php geraOpcao('etapa_planos', ''); ?>
