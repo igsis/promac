@@ -2361,7 +2361,7 @@ function retornaArquivosObrigatorios($tipoPessoa)
                doc.idListaDocumento                         
              FROM 
                lista_documento AS doc  
-  			  WHERE doc.idListaDocumento IN (20, 21)
+  			  WHERE doc.idListaDocumento IN (20)
   			  AND doc.idTipoUpload = 3";
 
     $resultado = mysqli_query($conexao, $query);
