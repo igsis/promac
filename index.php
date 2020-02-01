@@ -90,10 +90,6 @@ $tipoPessoa = '6';
 
 						<p>&nbsp;</p>
                     </div>
-
-                    <div class="danger">
-                        <p align="justify">"A plataforma PROMAC, exepcionalmente, não receberá inscrições de projetos culturais nos dias 1 e 2 de fevereiro de 2020, devido a necessidade de manutenção no sistema. Agradecemos a compreensão de todos."</p>
-                    </div>
 						
                     <!-- Inicio Modal Regulamento -->
                     <div class="modal fade" id="regulamento" role="dialog" aria-labelledby="regulamentoLabel" aria-hidden="true">
