@@ -89,6 +89,7 @@ $tipoPessoa = '6';
 						<p align="justify">Para saber como participar, clique em <button class='btn btn-theme btn-sm' type='button' data-toggle='modal' data-target='#regulamento' style="border-radius: 10px;">Normativos</button> e se inscreva no link abaixo.</p>
 
 						<p>&nbsp;</p>
+
                     </div>
 						
                     <!-- Inicio Modal Regulamento -->
@@ -217,6 +218,11 @@ $tipoPessoa = '6';
                     </div>
                     <!-- Fim Modal Incentivador -->
 				</div>
+                <div class="row">
+                    <div class="alert-danger">
+                        <p align="center">A plataforma PROMAC, exepcionalmente, não receberá inscrições de projetos culturais nos dias 1 e 2 de fevereiro de 2020, devido a necessidade de manutenção no sistema. Agradecemos a compreensão de todos.</p>
+                    </div>
+                </div>
 			</div>
 		</section>
 		<footer>
