@@ -2313,7 +2313,8 @@ function retornaDocumentosObrigatoriosProponente($tipoPessoa, $id = null)
     $listaDocumentos = [
         'doc.idListaDocumento <> 27',
         'doc.idListaDocumento <> 10',
-        'doc.idListaDocumento <> 16'
+        'doc.idListaDocumento <> 16',
+        'doc.idListaDocumento <> 20',
     ];
 
     if ($tipoPessoa == 2) {
