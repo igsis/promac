@@ -33,7 +33,7 @@ function arquivosObrigatorios($tipoPessoa, $tipoDoc, $idUser, $idProjeto)
 
     elseif ($tipoDoc == 'anexo'):
 //        $docObrig = formataDados(retornaArquivosObrigatorios($tipoPessoa));
-        $docObrig = "";
+        $docObrig = [];
 
         $docCarregados = formataDados(retornaAnexosCarregados($idProjeto));
 
