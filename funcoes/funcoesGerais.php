@@ -2100,7 +2100,7 @@ function retornaCamposObrigatoriosPf($idProjeto)
   				 ficha_t.funcao AS funcaoFichaTecnica,  				
   				 crono.captacaoRecurso AS recursoConograma, 
   				 crono.preProducao AS preProducaoConograma, 
-  				 crono.producao AS producaoCornograma, 
+  				 crono.producao AS producaoCronograma, 
   				 crono.posProducao AS posProducaoConograma, 
   				 crono.prestacaoContas AS ContasConograma,
   			     orca.descricao AS 'descricaoOrcamento',
