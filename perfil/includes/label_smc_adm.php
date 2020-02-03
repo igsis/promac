@@ -195,7 +195,7 @@
                 </div>
                 <div class="col-md-4"><label>Porcentagem Renúncia</label><br/>
                     <select class="form-control" name="idRenunciaFiscal">
-                        <?php echo geraOpcao("renuncia_fiscal",$projeto['idRenunciaFiscal']) ?>
+                        <?php echo geraOpcao("renuncia_fiscal",$projeto['idRenunciaFiscal'], true) ?>
                     </select>
                 </div>
             </div>
