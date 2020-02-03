@@ -3823,4 +3823,17 @@ function recuperaMaterial($idProjeto, $edicao = false)
 
 }
 
+function recuperaTags($idProjeto)
+{
+    $con = bancoMysqli();
+    $sqlTags = "SELECT t.tag FROM projeto_tag AS pt
+                INNER JOIN tags AS t ON pt.tag_id = t.id
+                WHERE pt.projeto_id = '$idProjeto'";
+    $queryTags = $con->query($sqlTags)->fetch_all(MYSQLI_ASSOC);
+    foreach ($queryTags as $tag) {
+        $tags[] = $tag['tag'];
+    }
+
+    return $tags;
+}
 ?>
