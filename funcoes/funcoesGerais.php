@@ -368,10 +368,15 @@ function gravarLogSenha($log, $idUsuario)
     $mysqli->query($sql);
 }
 
-function geraOpcao($tabela, $select)
+function geraOpcao($tabela, $select, $publicado = false)
 {
+    if ($publicado) {
+        $publicado = "WHERE publicado = '1'";
+    } else {
+        $publicado = "";
+    }
     //gera os options de um select
-    $sql = "SELECT * FROM $tabela ORDER BY 2";
+    $sql = "SELECT * FROM $tabela $publicado ORDER BY 2";
 
     $con = bancoMysqli();
     $query = mysqli_query($con, $sql);

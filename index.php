@@ -218,11 +218,6 @@ $tipoPessoa = '6';
                     </div>
                     <!-- Fim Modal Incentivador -->
 				</div>
-                <div class="row">
-                    <div class="alert-danger">
-                        <p align="center">A plataforma PROMAC, exepcionalmente, não receberá inscrições de projetos culturais nos dias 1 e 2 de fevereiro de 2020, devido a necessidade de manutenção no sistema. Agradecemos a compreensão de todos.</p>
-                    </div>
-                </div>
 			</div>
 		</section>
 		<footer>
