@@ -387,8 +387,8 @@ function geraOpcao($tabela, $select)
 function geraAreaAtuacao($tabela, $tipo, $select)
 {
     //gera os options de um select
-    $sql = "SELECT * FROM $tabela WHERE tipo IN ($tipo) ORDER BY 2";
-
+//    $sql = "SELECT * FROM $tabela WHERE tipo IN ($tipo) ORDER BY 2";
+    $sql = "SELECT * FROM $tabela ORDER BY 2";
     $con = bancoMysqli();
     $query = mysqli_query($con, $sql);
     while ($option = mysqli_fetch_row($query)) {
