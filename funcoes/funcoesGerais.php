@@ -2314,7 +2314,6 @@ function retornaDocumentosObrigatoriosProponente($tipoPessoa, $id = null)
         'doc.idListaDocumento <> 27',
         'doc.idListaDocumento <> 10',
         'doc.idListaDocumento <> 16',
-        'doc.idListaDocumento <> 20',
     ];
 
     if ($tipoPessoa == 2) {
