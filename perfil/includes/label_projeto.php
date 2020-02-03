@@ -170,7 +170,7 @@ if ($id == 1) {
             <strong>Plano de Divulgação:</strong> <?php echo isset($projeto['planoDivulgacao']) ? $projeto['planoDivulgacao'] : null; ?>
         </p>
         <ul class="list-group">
-            <li class="list-group-item list-group-item-success"><b>Plano de Trabalho</b></li>
+            <li class="list-group-item list-group-item-success"><b>Plano de divulgação</b></li>
             <li class="list-group-item">
                 <?php recuperaMaterial($idProjeto); ?>
             </li>
@@ -236,11 +236,11 @@ if ($id == 1) {
             <li class="list-group-item">
                 <table class="table table-bordered">
                     <tr>
-                        <td width='25%'><strong>Etapa</strong></td>
+                        <td width='25%'><strong>Grupo de Despesa</strong></td>
                         <td><strong>Descrição</strong></td>
                         <td width='5%'><strong>Qtde</strong></td>
                         <td width='5%'><strong>Unid. Med.</strong></td>
-                        <td width='5%'><strong>Qtde Unid.</strong></td>
+                        <td width='5%'><strong>Ocorrências</strong></td>
                         <td><strong>Valor Unit.</strong></td>
                         <td><strong>Valor Total</strong></td>
                     </tr>

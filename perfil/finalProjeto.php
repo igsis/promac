@@ -236,11 +236,11 @@ if ($projeto['idEtapaProjeto'] == 6)
                 <li class="list-group-item">
                     <table class="table table-bordered">
                         <tr>
-                            <td width='25%'><strong>Etapa</strong></td>
+                            <td width='25%'><strong>Grupo de Despesa</strong></td>
                             <td><strong>Descrição</strong></td>
                             <td width='5%'><strong>Qtde</strong></td>
                             <td width='5%'><strong>Unid. Med.</strong></td>
-                            <td width='5%'><strong>Qtde Unid.</strong></td>
+                            <td width='5%'><strong>Ocorrências</strong></td>
                             <td><strong>Valor Unit.</strong></td>
                             <td><strong>Valor Total</strong></td>
                         </tr>
