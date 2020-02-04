@@ -161,7 +161,7 @@ if ($id == 1) {
             <strong>Democratização de acesso:</strong> <?php echo isset($projeto['democratizacao']) ? $projeto['democratizacao'] : null; ?>
         </p>
         <p align="justify">
-            <strong>Acessibilidade:</strong> <?php echo isset($projeto['Acessibilidade']) ? $projeto['Acessibilidade'] : null; ?>
+            <strong>Acessibilidade:</strong> <?php echo isset($projeto['acessibilidade']) ? $projeto['acessibilidade'] : null; ?>
         </p>
     </div>
 
