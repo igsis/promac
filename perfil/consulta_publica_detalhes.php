@@ -241,33 +241,33 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                 <li class="list-group-item list-group-item-success"><b>Cronograma</b></li>
                                 <li class="list-group-item">
                                     <table class="table table-bordered">
-                                        <tr>
+                                        <!--<tr>
                                             <td><strong>Início do cronograma:</strong>
-                                                <?php echo exibirDataBr($projeto['inicioCronograma']) ?>
+                                                <?php /*echo exibirDataBr($projeto['inicioCronograma']) */?>
                                             </td>
                                             <td><strong>Fim do cronograma:</strong>
-                                                <?php echo exibirDataBr($projeto['fimCronograma']) ?>
+                                                <?php /*echo exibirDataBr($projeto['fimCronograma']) */?>
                                             </td>
-                                        </tr>
+                                        </tr>-->
                                         <tr>
                                             <td><strong>Captação de recursos:</strong>
-                                                <?php echo $cronograma['captacaoRecurso'] ?>
+                                                <?php echo $cronograma['captacaoRecurso'] ?> mes(es)
                                             </td>
                                             <td><strong>Pré-Produção:</strong>
-                                                <?php echo $cronograma['preProducao'] ?>
+                                                <?php echo $cronograma['preProducao'] ?> mes(es)
                                             </td>
                                         </tr>
                                         <tr>
                                             <td><strong>Produção:</strong>
-                                                <?php echo $cronograma['producao'] ?>
+                                                <?php echo $cronograma['producao'] ?> mes(es)
                                             </td>
                                             <td><strong>Pós-Produção:</strong>
-                                                <?php echo $cronograma['posProducao'] ?>
+                                                <?php echo $cronograma['posProducao'] ?> mes(es)
                                             </td>
                                         </tr>
                                         <tr>
                                             <td colspan="2"><strong>Prestação de Contas:</strong>
-                                                <?php echo $cronograma['prestacaoContas'] ?>
+                                                <?php echo $cronograma['prestacaoContas'] ?> mes(es)
                                             </td>
                                         </tr>
                                     </table>
@@ -292,11 +292,11 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                 <li class="list-group-item">
                                     <table class="table table-bordered">
                                         <tr>
-                                            <td width='25%'><strong>Etapa</strong></td>
+                                            <td width='25%'><strong>Grupo de Defesa</strong></td>
                                             <td><strong>Descrição</strong></td>
                                             <td width='5%'><strong>Qtde</strong></td>
                                             <td width='5%'><strong>Unid. Med.</strong></td>
-                                            <td width='5%'><strong>Qtde Unid.</strong></td>
+                                            <td width='5%'><strong>Ocorrências</strong></td>
                                             <td><strong>Valor Unit.</strong></td>
                                             <td><strong>Valor Total</strong></td>
                                         </tr>
