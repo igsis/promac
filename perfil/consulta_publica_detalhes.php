@@ -173,11 +173,6 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="3"><strong>Metodologia:</strong>
-                                        <?php echo isset($projeto['metodologia']) ? $projeto['metodologia'] : null; ?>
-                                    </td>
-                                </tr>
-                                <tr>
                                     <td colspan="3"><strong>Contrapartida:</strong>
                                         <?php echo isset($projeto['contrapartida']) ? $projeto['contrapartida'] : null; ?>
                                     </td>
