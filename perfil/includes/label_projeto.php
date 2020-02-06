@@ -54,7 +54,6 @@ if ($id == 1) {
             <?php } ?>
         </tr>
         <tr>
-            <?= $projeto['valorProjeto'] ?>
             <td><strong>Valor do projeto:</strong>R$
                 <?php
                 if (isset($projeto['valorProjeto']) &&  $projeto['valorProjeto'] > 0){
