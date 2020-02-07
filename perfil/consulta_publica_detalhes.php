@@ -97,11 +97,14 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                     <?php } ?>
                                 </tr>
                                 <tr>
-                                    <td><strong>Valor do projeto:</strong> R$
-                                        <?php echo
-                                        dinheiroParabr(isset($projeto['valorProjeto'])
-                                            ? $projeto['valorProjeto']
-                                            : ''); ?>
+                                    <td><strong>Valor do projeto:</strong>R$
+                                        <?php
+                                        if (isset($projeto['valorProjeto']) &&  $projeto['valorProjeto'] > 0){
+                                            echo dinheiroParabr(isset($projeto['valorProjeto']) ? $projeto['valorProjeto'] : '');
+                                        }else{
+                                            echo dinheiroParaBr(isset($projeto['valorIncentivo']) ? $projeto['valorIncentivo']: '');
+                                        }
+                                        ?>
                                     </td>
                                     <td><strong>Valor do incentivo:</strong> R$
                                         <?php echo

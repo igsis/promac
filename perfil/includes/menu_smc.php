@@ -38,6 +38,9 @@
 			<li><a href="?perfil=fazenda">Fazenda</a></li>
             <li><a href="#">Gerenciamento do sistema</a>
                 <ul class="dl-submenu">
+                    <?php if ($_SESSION['idUser'] == 1): ?>
+                        <li><a href="?perfil=ajuste_valor">Executar Script de Valor</a></li>
+                    <?php endif ?>
                     <li><a href="?perfil=smc_area_atuacao">Área atuação</a></li>
                     <li><a href="?perfil=smc_agendamento_cadastro">Cadastro Link Agendamento</a></li>
                     <li><a href="?perfil=smc_gerenciar_projeto">Liberar/Bloquear projetos</a></li>
