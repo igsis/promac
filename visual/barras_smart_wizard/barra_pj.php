@@ -6,7 +6,8 @@ $pj   = recuperaDados("pessoa_juridica","idPj",$idPj);
 $idProj = isset($_SESSION['idProjeto'])?$_SESSION['idProjeto']:null;
 $proj   = recuperaDados("projeto","idProjeto",$idProj); // Para verificar status
 
-$dadosAdicionais = retornaDadosAdicionais($idPj, $_SESSION['tipoPessoa']);
+$tipoP = $_SESSION['tipoPessoa'] ?? "";
+$dadosAdicionais = retornaDadosAdicionais($idPj, $tipoP);
 
 $urlPj = array(
     0 => '/promac/visual/index_pj.php?secao=perfil',

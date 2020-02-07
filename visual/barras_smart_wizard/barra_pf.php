@@ -6,7 +6,8 @@ $pf   = recuperaDados("pessoa_fisica","idPf",$idPf);
 $idProj   = isset($_SESSION['idProjeto'])?$_SESSION['idProjeto']:null;
 $proj = recuperaDados("projeto","idProjeto",$idProj); // Para verificar status
 
-$dadosAdicionais = retornaDadosAdicionais($idPf, $_SESSION['tipoPessoa']);
+$tipoP = $_SESSION['tipoPessoa'] ?? "";
+$dadosAdicionais = retornaDadosAdicionais($idPf, $tipoP);
 
 $urlPf = array(
     27 => '/promac/visual/index_pf.php?secao=perfil',

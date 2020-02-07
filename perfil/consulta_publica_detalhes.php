@@ -275,24 +275,13 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                             </ul>
                             <ul class="list-group">
                                 <li class="list-group-item list-group-item-success"><b>Orçamento</b></li>
-                                <?php
-                                for ($i = 1; $i <= 7; $i++) {
-                                    $sql_etapa = "SELECT idEtapa, SUM(valorTotal) AS tot FROM orcamento WHERE publicado > 0 AND idProjeto ='$idProjeto' AND idEtapa = '$i' ORDER BY idOrcamento";
-                                    $query_etapa = mysqli_query($con, $sql_etapa);
-                                    $lista = mysqli_fetch_array($query_etapa);
-
-                                    $etapa = recuperaDados("etapa", "idEtapa", $lista['idEtapa']);
-                                    echo  isset($etapa['etapa']) ? "<li class='list-group-item'><strong>" . $etapa['etapa']. ":</strong> R$ " . dinheiroParaBr($lista['tot']) . "</li>" : null;
-                                }
-                                $sql_total = "SELECT SUM(valorTotal) AS tot FROM orcamento WHERE publicado > 0 AND idProjeto ='$idProjeto' ORDER BY idOrcamento";
-                                $query_total = mysqli_query($con, $sql_total);
-                                $total = mysqli_fetch_array($query_total);
-                                echo "<li class='list-group-item'><strong>TOTAL:</strong> R$ " . dinheiroParaBr($total['tot']) . "</li>";
-                                ?>
+                                <li class="list-group-item">
+                                    <?php recuperaTabelaOrcamento($idProjeto); ?>
+                                </li>
                                 <li class="list-group-item">
                                     <table class="table table-bordered">
                                         <tr>
-                                            <td width='25%'><strong>Grupo de Defesa</strong></td>
+                                            <td width='25%'><strong>Grupo de Despesa</strong></td>
                                             <td><strong>Descrição</strong></td>
                                             <td width='5%'><strong>Qtde</strong></td>
                                             <td width='5%'><strong>Unid. Med.</strong></td>
@@ -301,13 +290,15 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                             <td><strong>Valor Total</strong></td>
                                         </tr>
                                         <?php
-                                        $sql = "SELECT * FROM orcamento WHERE publicado > 0 AND idProjeto ='$idProjeto' ORDER BY idEtapa";
+                                        $sql = "SELECT * FROM orcamento
+                                WHERE publicado > 0 AND idProjeto ='$idProjeto'
+                                ORDER BY idEtapa";
                                         $query = mysqli_query($con, $sql);
                                         while ($campo = mysqli_fetch_array($query)) {
-                                            $etapa = recuperaDados("etapa", "idEtapa", $campo['idEtapa']);
+                                            $despesa = recuperaDados("grupo_despesas", "id", $campo['grupo_despesas_id']);
                                             $medida = recuperaDados("unidade_medida", "idUnidadeMedida", $campo['idUnidadeMedida']);
                                             echo "<tr>";
-                                            echo "<td class='list_description'>" . $etapa['etapa'] . "</td>";
+                                            echo "<td class='list_description'>" . $despesa['despesa'] . "</td>";
                                             echo "<td class='list_description'>" . $campo['descricao'] . "</td>";
                                             echo "<td class='list_description'>" . $campo['quantidade'] . "</td>";
                                             echo "<td class='list_description'>" . $medida['unidadeMedida'] . "</td>";
