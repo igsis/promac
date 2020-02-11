@@ -218,6 +218,16 @@ $tipoPessoa = '6';
                     </div>
                     <!-- Fim Modal Incentivador -->
 				</div>
+                <div class="row">
+                    <div class="alert alert-danger">
+                        A captação de recursos de 2020 para projetos aprovados no PROMAC ainda não está aberta, dado que
+                        o orçamento para tal fim ainda não está liberado. A Secretaria Municipal da Cultura pede para
+                        que os contribuintes incentivadores interessados em destinar recursos para projetos culturais
+                        aguardem a liberação do orçamento para então trazerem os Contratos de Incentivo no PROMAC. Não
+                        serão recebidos Contratos de Incentivo antes da liberação do orçamento, fato que será comunicado
+                        neste site, no Diário Oficial da Cidade e nas redes oficiais da SMC
+                    </div>
+                </div>
 			</div>
 		</section>
 		<footer>
