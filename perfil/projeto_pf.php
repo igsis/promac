@@ -125,7 +125,7 @@ $dadosAdicionais = retornaDadosAdicionais($idPf, $tipoPessoa)
                                             <button class="btn btn-theme btn-lg btn-block" disabled>Inscrever Projeto</button>
                                         </div>
                                     <?php else: ?>
-                                        <input type="submit" value="Inscrever Projeto"
+                                        <input type="submit" value="Finalizar e Enviar Projeto"
                                                class="btn btn-theme btn-lg btn-block">
                                     <?php endif; ?>
                                 </form>
