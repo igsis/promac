@@ -450,7 +450,7 @@ if ($projeto['idEtapaProjeto'] == 6)
                 <button id="inptEnviar" class="btn btn-theme btn-lg" type="button" data-toggle="modal"
                         data-target="#confirmApagar" data-title="Inscrever Projeto?"
                         data-message="Deseja realmente inscrever o projeto <?= $projeto['nomeProjeto'] ?>? Após o envio não será possível editá-lo."
-                        style="display: none;">Inscrever Projeto
+                        style="display: none;">Finalizar e Enviar Projeto
                 </button>
 
                 <!-- <input type="hidden" value="Inscrever Projeto" id="inptEnviar"
