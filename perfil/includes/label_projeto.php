@@ -54,7 +54,7 @@ if ($id == 1) {
             <?php } ?>
         </tr>
         <tr>
-            <td><strong>Valor do projeto:</strong>R$
+            <td colspan="2"><strong>Valor do projeto:</strong>R$
                 <?php
                 if (isset($projeto['valorProjeto']) &&  $projeto['valorProjeto'] > 0){
                     echo dinheiroParabr(isset($projeto['valorProjeto']) ? $projeto['valorProjeto'] : '');
@@ -62,12 +62,6 @@ if ($id == 1) {
                     echo dinheiroParaBr(isset($projeto['valorIncentivo']) ? $projeto['valorIncentivo']: '');
                 }
                     ?>
-            </td>
-            <td><strong>Valor do incentivo:</strong> R$
-                <?php echo
-                dinheiroParabr(isset($projeto['valorIncentivo'])
-                    ? $projeto['valorIncentivo']
-                    : null); ?>
             </td>
             <td><strong>Renúncia Fiscal:</strong>
                 <?php echo $renuncia['renunciaFiscal'] ?>
