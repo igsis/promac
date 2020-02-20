@@ -292,24 +292,24 @@ $cronograma = recuperaDados("cronograma","idCronograma",$idCronograma);
 
 	const quantidadeMes = (val) => {
 
-		if((val / 6.25) == 1) // meio
+		if((val / 5) == 1) // meio
 		{ 
 			return `Metade de um mês`
 		}
-		else if((val / 6.25) == 2) // um 
+		else if((val / 5) == 2) // um
 		{ 
-			return `${(val / 12.5)} Mês`
+			return `${(val / 10)} Mês`
 		}
-		else if((val / 6.25) == 3) 	// um e meio
+		else if((val / 5) == 3) 	// um e meio
 		{ 
-			return `${parseInt(val / 12.5)} Mês e Meio`
+			return `${parseInt(val / 10)} Mês e Meio`
 		}
-		else if((val / 6.25) % 2 == 0) 	// par meses
+		else if((val / 5) % 2 == 0) 	// par meses
 		{ 
-			return `${(val / 12.5)} Meses`
+			return `${(val / 10)} Meses`
 		}
 		else{				// meses e meio
-			return `${parseInt(val / 12.5)} Meses e Meio`
+			return `${parseInt(val / 10)} Meses e Meio`
 		}
 	}
 
@@ -317,8 +317,8 @@ $cronograma = recuperaDados("cronograma","idCronograma",$idCronograma);
 		let val = parseFloat(item.value)
 		if(!isNaN(val)){
 			elemento = item.parentNode.children[0]
-			elemento.style.width = ((val / .5) * 6.25) + `%`
-			elemento.innerHTML = quantidadeMes(parseFloat((val / .5) * 6.25)) // exibe qtd de meses
+			elemento.style.width = ((val / .5) * 5) + `%`
+			elemento.innerHTML = quantidadeMes(parseFloat((val / .5) * 5)) // exibe qtd de meses
 		}
 	}					
 
@@ -330,20 +330,21 @@ $cronograma = recuperaDados("cronograma","idCronograma",$idCronograma);
 	const menos = (barra) => {
 		let val = barra.style.width.replace('%','')
 		if(val > '0'){
-			val = (parseFloat(val) - parseFloat('6.25%'))
+			val = (parseFloat(val) - parseFloat('5%'))
 			barra.style.width = `${val}%`
 			barra.innerHTML = quantidadeMes(val)
-			barra.parentNode.children[1].value = (val / 12.50) // insere no value do input						
+			barra.parentNode.children[1].value = (val / 10) // insere no value do input
 		}
 	}
 
 	const mais = (barra) => {
 		let val = barra.style.width.replace('%','')
+        console.log(val)
 		if(val < parseFloat('100')){
-			val = (parseFloat(val) + parseFloat('6.25%'))
+			val = (parseFloat(val) + parseFloat('5%'))
 			barra.style.width = `${val}%`
 			barra.innerHTML = quantidadeMes(val)
-			barra.parentNode.children[1].value = (val / 12.50) // insere no value do input							
+			barra.parentNode.children[1].value = (val / 10) // insere no value do input
 		}
 	}				
 
@@ -362,7 +363,7 @@ $cronograma = recuperaDados("cronograma","idCronograma",$idCronograma);
 	}
 
 	for(let etapa of listaEtapas){	
-		etapa.innerHTML = quantidadeMes(parseFloat((etapa.innerHTML / .5) * 6.25))
+		etapa.innerHTML = quantidadeMes(parseFloat((etapa.innerHTML / .5) * 5))
 	}
 
 </script>
