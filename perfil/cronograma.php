@@ -291,7 +291,6 @@ $cronograma = recuperaDados("cronograma","idCronograma",$idCronograma);
 
 
 	const quantidadeMes = (val) => {
-
 		if((val / 5) == 1) // meio
 		{ 
 			return `Metade de um mês`
@@ -302,7 +301,7 @@ $cronograma = recuperaDados("cronograma","idCronograma",$idCronograma);
 		}
 		else if((val / 5) == 3) 	// um e meio
 		{ 
-			return `${parseInt(val / 10)} Mês e Meio`
+			return `${parseInt(val / 10)} Mês e Meio`;
 		}
 		else if((val / 5) % 2 == 0) 	// par meses
 		{ 
@@ -339,7 +338,6 @@ $cronograma = recuperaDados("cronograma","idCronograma",$idCronograma);
 
 	const mais = (barra) => {
 		let val = barra.style.width.replace('%','')
-        console.log(val)
 		if(val < parseFloat('100')){
 			val = (parseFloat(val) + parseFloat('5%'))
 			barra.style.width = `${val}%`
