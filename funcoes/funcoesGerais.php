@@ -1927,10 +1927,10 @@ function geraProtocolo($id)
     return $date . $preencheZeros;
 }
 
-function verificaArquivosExistentesPF($idPessoa, $idDocumento)
+function verificaArquivosExistentesPF($idPessoa, $idDocumento, $tipo = 1)
 {
     $con = bancoMysqli();
-    $verificacaoArquivo = "SELECT arquivo FROM upload_arquivo WHERE idTipo = 1 AND idPessoa = '$idPessoa' AND idListaDocumento = '$idDocumento' AND publicado = '1'";
+    $verificacaoArquivo = "SELECT arquivo FROM upload_arquivo WHERE idTipo = '$tipo' AND idPessoa = '$idPessoa' AND idListaDocumento = '$idDocumento' AND publicado = '1'";
     $envio = mysqli_query($con, $verificacaoArquivo);
     if (mysqli_num_rows($envio) > 0) {
         return true;

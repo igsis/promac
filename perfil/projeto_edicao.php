@@ -273,7 +273,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 
                                     <div class="form-group">
                                         <div class="col-md-offset-2 col-md-8">
-                                            <?php if (verificaArquivosExistentesPF($idProjeto, 58)): ?>
+                                            <?php if (verificaArquivosExistentesPF($idProjeto, 58, 7)): ?>
                                                 <label>Foto do Projeto *</label>
                                                 <?php exibeFotoProjeto($idProjeto, '7', 'projeto_edicao') ?>
                                             <?php else: ?>
@@ -343,7 +343,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 
                                     <div class="form-group">
                                         <div class="col-md-offset-2 col-md-8">
-                                            <?php if (verificaArquivosExistentesPF($idProjeto, 58)): ?>
+                                            <?php if (verificaArquivosExistentesPF($idProjeto, 58, 7)): ?>
                                                 <label>Foto do Projeto *</label>
                                                 <?php exibeFotoProjeto($idProjeto, '7', 'projeto_edicao') ?>
                                             <?php else: ?>
