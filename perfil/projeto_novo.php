@@ -206,7 +206,7 @@ if(isset($_POST['insereAtuacao']))
                                         proposta e que você tenha direito de usar a foto. <br>
                                         <strong>Tamanho Máximo: 5Mb</strong>
                                     </div>
-                                    <input type="file" name="arquivo[foto_proj]" required>
+                                    <input type="file" name="arquivo[foto_proj]" accept="image/*" required>
                                 </div>
                             </div>
 
@@ -264,7 +264,7 @@ if(isset($_POST['insereAtuacao']))
                                             proposta e que você tenha direito de usar a foto. <br>
                                             <strong>Tamanho Máximo: 5Mb</strong>
                                         </div>
-                                        <input type="file" name="arquivo[foto_proj]" required>
+                                        <input type="file" name="arquivo[foto_proj]" accept="image/*" required>
                                     </div>
                                 </div>
 
@@ -323,7 +323,7 @@ if(isset($_POST['insereAtuacao']))
                                     proposta e que você tenha direito de usar a foto. <br>
                                     <strong>Tamanho Máximo: 5Mb</strong>
                                 </div>
-                                <input class="form-control" type="file" name="arquivo[foto_proj]" required>
+                                <input class="form-control" type="file" name="arquivo[foto_proj]" accept="image/*" required>
                             </div>
                         </div>
 
