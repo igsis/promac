@@ -130,7 +130,7 @@ $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 									$envio = $con->query($query);
 									$row = $envio->fetch_array(MYSQLI_ASSOC);
 
-									if(verificaArquivosExistentesPF($idPj,$row['idListaDocumento'])){
+									if(verificaArquivosExistentesPF($idPj,$row['idListaDocumento'], 2)){
 										echo '<div class="alert alert-success">O arquivo ' . $doc . ' já foi enviado.</div>';
 									}
 									else{ 

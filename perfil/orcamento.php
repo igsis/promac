@@ -250,7 +250,7 @@ if(isset($_POST['apagar']))
                         <div class="col-md-offset-2 col-md-8">
                             <form method="POST" action="?perfil=orcamento" class="form-horizontal" role="form"
                                   enctype="multipart/form-data">
-                                <?php if (verificaArquivosExistentesPF($idProjeto, 38)): ?>
+                                <?php if (verificaArquivosExistentesPF($idProjeto, 38, 3)): ?>
                                     <label>Planilha completa do projeto</label>
                                     <?php exibePlanilhaCompleta($idProjeto, '38', 'projeto_edicao') ?>
                                 <?php else: ?>
