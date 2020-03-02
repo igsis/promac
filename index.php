@@ -106,6 +106,7 @@ $tipoPessoa = '6';
                                         <ul class="list-group">
                                             <li class="list-group-item"><a href="pdf/Lei_ProMac.pdf" target="_blank">Lei</a></li>
                                             <li class="list-group-item"><a href="pdf/Novo_Decreto_ProMac.pdf" target="_blank">Novo Decreto</a></li>
+                                            <li class="list-group-item"><a href="pdf/Retificação_Art31_Decreto.pdf" target="_blank">Retificação do inciso III do Art. 31 do Novo Decreto</a></li>
                                             <li class="list-group-item"><a href="pdf/Decreto_ProMac.pdf" target="_blank">Decreto Revogado</a></li>
                                             <li class="list-group-item"><a href="pdf/AlteracaoDecreto_ProMac.pdf" target="_blank">Alteração de Decreto Revogada</a></li>
                                             <li class="list-group-item"><a href="pdf/Portaria_publicado.pdf">Portaria de Procedimentos Revogada</a></li>
