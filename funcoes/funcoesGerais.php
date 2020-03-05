@@ -2256,7 +2256,7 @@ function retornaCamposObrigatoriosPj($idProjeto)
   			   ON orca.idProjeto = proj.idProjeto  
   			   
   			   INNER JOIN
-  			    	material_divulgacao AS materialD
+  			    	(SELECT * FROM material_divulgacao WHERE publicado = '1') AS materialD
   			   ON materialD.projeto_id = proj.idProjeto
   			   
   			   WHERE loc_rea.publicado = 1
