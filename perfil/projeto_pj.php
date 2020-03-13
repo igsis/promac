@@ -101,7 +101,7 @@ $dadosAdicionais = retornaDadosAdicionais($idPj, $tipoPessoa)
                     $sql = "SELECT idAreaAtuacao AS area FROM projeto WHERE idPj = '$idPj' AND publicado = 1 AND idAreaAtuacao = 22 AND idStatus != 6 AND edital = '$editalAtivo'";
                     $query = mysqli_query($con,$sql);
                     $num = mysqli_num_rows($query);
-                    if ($num < 1) {
+//                    if ($num < 1) {
                         if ($numProjetos <= 1) {
 
                             ?>
@@ -140,20 +140,20 @@ $dadosAdicionais = retornaDadosAdicionais($idPj, $tipoPessoa)
                             </div>
                             <?php
                         }
-                    }else{
-                        ?>
-                        <div class="alert alert-danger">
-                            <p>Você possui um projeto anual em andamento:<b>
-                                    <?php
-                                    foreach ($projetos as $key => $value):
-                                        echo $value . ',';
-                                    endforeach;
-                                    ?>
-                                </b>este é o seu limite.
-                            </p>
-                        </div>
-                        <?php
-                    }
+//                    }else{
+//                        ?>
+<!--                        <div class="alert alert-danger">-->
+<!--                            <p>Você possui um projeto anual em andamento:<b>-->
+<!--                                    --><?php
+//                                    foreach ($projetos as $key => $value):
+//                                        echo $value . ',';
+//                                    endforeach;
+//                                    ?>
+<!--                                </b>este é o seu limite.-->
+<!--                            </p>-->
+<!--                        </div>-->
+<!--                        --><?php
+//                    }
                 } else { ?>
                     <div class='alert alert-warning'>
                         <strong>Aviso: </strong>O cadastro de novos projetos está desabilitado temporariamente pela SMC.
