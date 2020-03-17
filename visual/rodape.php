@@ -27,6 +27,8 @@
 	</div>
 </footer>
 
+<!-- Ion Slider -->
+<script src="dist/ion-rangeslider/js/ion.rangeSlider.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/jquery.smooth-scroll.min.js"></script>
 <script src="js/jquery.dlmenu.js"></script>

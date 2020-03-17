@@ -1531,7 +1531,11 @@ function listaArquivosPessoaObs($idPessoa, $tipoPessoa)
             $row = mysqli_fetch_array($send);
             $statusDoc = recuperaDados("status_documento", "idStatusDocumento", $row['idStatusDocumento']);
 
-            echo "<td class='list_description'>" . $statusDoc['status'] . "</td>";
+            if ($statusDoc != null) {
+                echo "<td class='list_description'>" . $statusDoc['status'] . "</td>";
+            } else {
+                echo "<td class='list_description'></td>";
+            }
             $queryOBS = "SELECT observacoes FROM upload_arquivo WHERE idUploadArquivo = '" . $arquivo['idUploadArquivo'] . "'";
             $send = mysqli_query($con, $queryOBS);
             $row = mysqli_fetch_array($send);
@@ -1580,7 +1584,11 @@ function exibirArquivos($tipoPessoa, $idPessoa)
         $send = mysqli_query($con, $queryy);
         $row = mysqli_fetch_array($send);
         $statusDoc = recuperaDados("status_documento", "idStatusDocumento", $row['idStatusDocumento']);
-        echo "<td class='list_description'>" . $statusDoc['status'] . "</td>";
+        if ($statusDoc != null) {
+            echo "<td class='list_description'>" . $statusDoc['status'] . "</td>";
+        } else {
+            echo "<td class='list_description'></td>";
+        }
         echo "<td class='list_description'>" . $arquivo['observacoes'] . "</td>";
         echo "</tr>";
     }
@@ -3721,8 +3729,12 @@ function recuperaTabelaOrcamento($idProjeto)
                 $query_etapa = mysqli_query($con, $sql_etapa);
                 $lista = mysqli_fetch_array($query_etapa);
 
-                $despesa = recuperaDados("grupo_despesas", "id", $lista['grupo_despesas_id']);
-                echo "<td><strong>" . $despesa['despesa'] . ":</strong>";
+                if ($lista == null) {
+                    echo "<td><strong></strong>";
+                } else {
+                    $despesa = recuperaDados("grupo_despesas", "id", $lista['grupo_despesas_id']);
+                    echo "<td><strong>" . $despesa['despesa'] . ":</strong>";
+                }
             }
             ?>
         </tr>

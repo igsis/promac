@@ -163,22 +163,10 @@ $cronograma = recuperaDados("cronograma","idCronograma",$idCronograma);
 									<label>Pré-Produção *</label>
 								</div>
 								<div class="col-md-6">
-									<div class="row">
-										<div class="col-sm-1">
-											<a class="menos"><span class="glyphicon glyphicon-minus"></span></a>
-										</div>
-										<div class="col-sm-8">
-											<div class="progress">
-												<div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:0%">0 Mês
-												</div>
-												<input type="hidden" name="preProducao" class="form-control" maxlength="50" placeholder="DD/MM/AA a DD/MM/AA" required value="<?= ($cronograma['preProducao'] != "") ? $cronograma['preProducao'] : "" ?>">
-											</div>
-										</div>
-										<div class="col-sm-1">
-											<a class="mais"><span class="glyphicon glyphicon-plus"></span></a>
-										</div>
-									</div>																				
-								</div>
+
+                                    <input class="slider" type="text" name="preProducao" value="<?= $cronograma['preProducao'] ?? "" ?>">
+
+                                </div>
 							</div>
 
 							<div class="form-group">
@@ -186,21 +174,7 @@ $cronograma = recuperaDados("cronograma","idCronograma",$idCronograma);
 									<label>Produção *</label>
 								</div>
 								<div class="col-md-6">
-									<div class="row">
-										<div class="col-sm-1">
-											<a class="menos"><span class="glyphicon glyphicon-minus"></span></a>
-										</div>
-										<div class="col-sm-8">
-											<div class="progress">
-												<div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:0%">0 Mês
-												</div>
-												<input type="hidden" name="producao" class="form-control" maxlength="50" placeholder="DD/MM/AA a DD/MM/AA" required value="<?= ($cronograma['producao'] != "") ? $cronograma['producao'] : "" ?>">
-											</div>
-										</div>
-										<div class="col-sm-1">
-											<a class="mais"><span class="glyphicon glyphicon-plus"></span></a>
-										</div>
-									</div>																			
+                                    <input class="slider" type="text" name="producao" value="<?= $cronograma['producao'] ?? "" ?>">
 								</div>
 							</div>
 
@@ -209,21 +183,7 @@ $cronograma = recuperaDados("cronograma","idCronograma",$idCronograma);
 									<label>Pós-Produção *</label>
 								</div>
 								<div class="col-md-6">
-									<div class="row">
-										<div class="col-sm-1">
-											<a class="menos"><span class="glyphicon glyphicon-minus"></span></a>
-										</div>
-										<div class="col-sm-8">
-											<div class="progress">
-												<div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:0%">0 Mês
-												</div>
-												<input type="hidden" name="posProducao" class="form-control" maxlength="50" placeholder="DD/MM/AA a DD/MM/AA" required value="<?= ($cronograma['posProducao'] != "") ? $cronograma['posProducao'] : "" ?>">
-											</div>
-										</div>
-										<div class="col-sm-1">
-											<a class="mais"><span class="glyphicon glyphicon-plus"></span></a>
-										</div>
-									</div>																				
+                                    <input class="slider" type="text" name="posProducao" value="<?= $cronograma['posProducao'] ?? "" ?>">
 								</div>
 							</div>
 
@@ -282,86 +242,86 @@ $cronograma = recuperaDados("cronograma","idCronograma",$idCronograma);
 
 <script>
 
-	let btnsMenos = document.querySelectorAll('.menos') // pega todos os buttons .menos
-	let btnsMais = document.querySelectorAll('.mais') // pega todos os buttons .mais
-	let captacaoRecurso = document.querySelector('#captacaoRecurso')					
-	let etapas = document.querySelectorAll('.progress input')
-	let btnInserir = document.querySelector('input[name="insereCronograma"]')
-	let listaEtapas = document.querySelectorAll('.exibir') // lista
+    let btnsMenos = document.querySelectorAll('.menos') // pega todos os buttons .menos
+    let btnsMais = document.querySelectorAll('.mais') // pega todos os buttons .mais
+    let captacaoRecurso = document.querySelector('#captacaoRecurso')
+    let etapas = document.querySelectorAll('.progress input')
+    let btnInserir = document.querySelector('input[name="insereCronograma"]')
+    let listaEtapas = document.querySelectorAll('.exibir') // lista
 
 
-	const quantidadeMes = (val) => {
-		if((val / 5) == 1) // meio
-		{ 
-			return `Metade de um mês`
-		}
-		else if((val / 5) == 2) // um
-		{ 
-			return `${(val / 10)} Mês`
-		}
-		else if((val / 5) == 3) 	// um e meio
-		{ 
-			return `${parseInt(val / 10)} Mês e Meio`;
-		}
-		else if((val / 5) % 2 == 0) 	// par meses
-		{ 
-			return `${(val / 10)} Meses`
-		}
-		else{				// meses e meio
-			return `${parseInt(val / 10)} Meses e Meio`
-		}
-	}
+    const quantidadeMes = (val) => {
+        if((val / 5) == 1) // meio
+        {
+            return `Metade de um mês`
+        }
+        else if((val / 5) == 2) // um
+        {
+            return `${(val / 10)} Mês`
+        }
+        else if((val / 5) == 3) 	// um e meio
+        {
+            return `${parseInt(val / 10)} Mês e Meio`;
+        }
+        else if((val / 5) % 2 == 0) 	// par meses
+        {
+            return `${(val / 10)} Meses`
+        }
+        else{				// meses e meio
+            return `${parseInt(val / 10)} Meses e Meio`
+        }
+    }
 
-	const preencher = (item) => {
-		let val = parseFloat(item.value)
-		if(!isNaN(val)){
-			elemento = item.parentNode.children[0]
-			elemento.style.width = ((val / .5) * 5) + `%`
-			elemento.innerHTML = quantidadeMes(parseFloat((val / .5) * 5)) // exibe qtd de meses
-		}
-	}					
+    const preencher = (item) => {
+        let val = parseFloat(item.value)
+        if(!isNaN(val)){
+            elemento = item.parentNode.children[0]
+            elemento.style.width = ((val / .5) * 5) + `%`
+            elemento.innerHTML = quantidadeMes(parseFloat((val / .5) * 5)) // exibe qtd de meses
+        }
+    }
 
-	for(let etapa of etapas){
-		
-		preencher(etapa)
-	}				
+    for(let etapa of etapas){
 
-	const menos = (barra) => {
-		let val = barra.style.width.replace('%','')
-		if(val > '0'){
-			val = (parseFloat(val) - parseFloat('5%'))
-			barra.style.width = `${val}%`
-			barra.innerHTML = quantidadeMes(val)
-			barra.parentNode.children[1].value = (val / 10) // insere no value do input
-		}
-	}
+        preencher(etapa)
+    }
 
-	const mais = (barra) => {
-		let val = barra.style.width.replace('%','')
-		if(val < parseFloat('100')){
-			val = (parseFloat(val) + parseFloat('5%'))
-			barra.style.width = `${val}%`
-			barra.innerHTML = quantidadeMes(val)
-			barra.parentNode.children[1].value = (val / 10) // insere no value do input
-		}
-	}				
+    const menos = (barra) => {
+        let val = barra.style.width.replace('%','')
+        if(val > '0'){
+            val = (parseFloat(val) - parseFloat('5%'))
+            barra.style.width = `${val}%`
+            barra.innerHTML = quantidadeMes(val)
+            barra.parentNode.children[1].value = (val / 10) // insere no value do input
+        }
+    }
 
-	for(let btn of btnsMenos){
-		btn.addEventListener('click', () => {
-			let barra = btn.parentNode.parentNode.children[1].querySelector('.progress .progress-bar')			
-			menos(barra)
-		})
-	}
+    const mais = (barra) => {
+        let val = barra.style.width.replace('%','')
+        if(val < parseFloat('100')){
+            val = (parseFloat(val) + parseFloat('5%'))
+            barra.style.width = `${val}%`
+            barra.innerHTML = quantidadeMes(val)
+            barra.parentNode.children[1].value = (val / 10) // insere no value do input
+        }
+    }
 
-	for(let btn of btnsMais){
-		btn.addEventListener('click', () => {		
-			let barra = btn.parentNode.parentNode.children[1].querySelector('.progress .progress-bar')								
-			mais(barra)
-		})
-	}
+    for(let btn of btnsMenos){
+        btn.addEventListener('click', () => {
+            let barra = btn.parentNode.parentNode.children[1].querySelector('.progress .progress-bar')
+            menos(barra)
+        })
+    }
 
-	for(let etapa of listaEtapas){	
-		etapa.innerHTML = quantidadeMes(parseFloat((etapa.innerHTML / .5) * 5))
-	}
+    for(let btn of btnsMais){
+        btn.addEventListener('click', () => {
+            let barra = btn.parentNode.parentNode.children[1].querySelector('.progress .progress-bar')
+            mais(barra)
+        })
+    }
+
+    for(let etapa of listaEtapas){
+        etapa.innerHTML = quantidadeMes(parseFloat((etapa.innerHTML / .5) * 5))
+    }
 
 </script>

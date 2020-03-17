@@ -132,7 +132,7 @@ for ($i = 0; $i < count($urlPf); $i++) {
                    <a onclick="location.href='index_pf.php?perfil=projeto_pf'" href=""><br /><small>Projeto</small></a>
                 </li>
                 <?php
-                    if ($proj['idEtapaProjeto'] == 1)
+                    if ($proj != null &&    $proj['idEtapaProjeto'] == 1)
                     {
                     ?>
                     <?php
