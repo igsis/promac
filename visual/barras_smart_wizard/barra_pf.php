@@ -1,4 +1,7 @@
 <?php
+if ($_GET['perfil'] == "projeto_pf") {
+    unset($_SESSION['idProjeto']);
+}
 # Barra pf
 $con  = bancoMysqli();
 $idPf = $_SESSION['idUser'];
