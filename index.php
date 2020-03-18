@@ -91,7 +91,7 @@ $tipoPessoa = '6';
 						<p>&nbsp;</p>
 
                     </div>
-						
+
                     <!-- Inicio Modal Regulamento -->
                     <div class="modal fade" id="regulamento" role="dialog" aria-labelledby="regulamentoLabel" aria-hidden="true">
                         <div class="modal-dialog">
@@ -219,6 +219,9 @@ $tipoPessoa = '6';
                     </div>
                     <!-- Fim Modal Incentivador -->
 				</div>
+                <div class="row">
+                    <div class="alert alert-success"><p class="text-warning">Devido às medidas de prevenção ao avanço do COVID-19, o atendimento do PROMAC da SMC está funcionando apenas pelos emails listados no rodapé desta página. Contamos com a compreensão de todos.</p></div>
+                </div>
                 <div class="row">
                     <div class="alert alert-danger">
                         A captação de recursos de 2020 para projetos aprovados no PROMAC ainda não está aberta, dado que
