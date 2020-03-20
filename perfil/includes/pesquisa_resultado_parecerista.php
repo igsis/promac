@@ -7,17 +7,17 @@ foreach ($array_etapa as $idEtapa)
                          hr.idProjeto,
                          p.protocolo,
                          p.nomeProjeto,
-                         hr.idStatus,
+                         p.idEtapaProjeto,
                          s.etapaProjeto,
                          pf.nome AS 'parecerista',
                          hr.dataReuniao,
                          hr.data AS 'dataRegistro'
                         FROM historico_reuniao AS hr
                          INNER JOIN projeto AS p ON p.idProjeto = hr.idProjeto
-                         INNER JOIN etapa_projeto AS s ON s.idEtapaProjeto = hr.idStatus
+                         INNER JOIN etapa_projeto AS s ON s.idEtapaProjeto = p.idEtapaProjeto
                          INNER JOIN pessoa_fisica AS pf ON pf.idPf = hr.idComissao
                         WHERE hr.idComissao = ".$_POST['idComissao']."
-                        AND hr.idStatus = '$idEtapa'";
+                        AND p.idEtapaProjeto = '$idEtapa'";
     $queryHistorico = mysqli_query($con,$sqlHistorico);
     $queryStatus = mysqli_query($con,$sqlStatus);
     $num = mysqli_num_rows($queryHistorico);
