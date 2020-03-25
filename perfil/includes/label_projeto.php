@@ -251,15 +251,17 @@ if ($id == 1) {
                     while ($campo = mysqli_fetch_array($query)) {
                         $despesa = recuperaDados("grupo_despesas", "id", $campo['grupo_despesas_id']);
                         $medida = recuperaDados("unidade_medida", "idUnidadeMedida", $campo['idUnidadeMedida']);
-                        echo "<tr>";
-                        echo "<td class='list_description'>" . $despesa['despesa'] . "</td>";
-                        echo "<td class='list_description'>" . $campo['descricao'] . "</td>";
-                        echo "<td class='list_description'>" . $campo['quantidade'] . "</td>";
-                        echo "<td class='list_description'>" . $medida['unidadeMedida'] . "</td>";
-                        echo "<td class='list_description'>" . $campo['quantidadeUnidade'] . "</td>";
-                        echo "<td class='list_description'>" . dinheiroParaBr($campo['valorUnitario']) . "</td>";
-                        echo "<td class='list_description'>" . dinheiroParaBr($campo['valorTotal']) . "</td>";
-                        echo "</tr>";
+                        ?>
+                        <tr>
+                        <td class='list_description'><?= $despesa['despesa'] ?? '' ?></td>
+                        <td class='list_description'><?= $campo['descricao'] ?? '' ?></td>
+                        <td class='list_description'><?= $campo['quantidade'] ?? '' ?></td>
+                        <td class='list_description'><?= $medida['unidadeMedida'] ?? '' ?></td>
+                        <td class='list_description'><?= $campo['quantidadeUnidade'] ?? '' ?></td>
+                        <td class='list_description'><?= dinheiroParaBr($campo['valorUnitario']) ?? '' ?></td>
+                        <td class='list_description'><?= dinheiroParaBr($campo['valorTotal']) ?? ''?></td>
+                        </tr>
+                        <?php
                     } ?>
                 </table>
             </li>
