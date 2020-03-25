@@ -23,7 +23,7 @@ $numPaginas = ceil($total_geral/$registros);
 $inicio = ($registros*$pagina)-$registros;
 
 //seleciona os itens por página
-$sql_lista = "SELECT hst.idProjeto AS id,protocolo,nomeProjeto,nome,observacao,data,acao 
+$sql_lista = "SELECT hst.idProjeto AS id,protocolo,nomeProjeto,nome,observacao,data,acao
             FROM historico_cancelamento as hst 
             INNER JOIN pessoa_fisica AS usr ON hst.idUsuario = usr.idPf 
             INNER JOIN projeto AS prj ON hst.idProjeto = prj.idProjeto
@@ -59,7 +59,7 @@ $total = mysqli_num_rows($query_lista);
                 {
                     echo "<tr>";
                     echo "<td data-mask = \"0000.00.00/0000000\">".$historico['protocolo']."</td>";
-                    echo "<td>". mb_strimwidth($historico['nomeProjeto'], 0 ,35,"..." )."</td>";
+                    echo "<td><a href='?perfil=cancelado_visualizacao&idProjeto={$historico['id']}'>". mb_strimwidth($historico['nomeProjeto'], 0 ,35,"..." )."</a></td>";
                     echo "<td>".$historico['nome']."</td>";
                     echo "<td>".$historico['observacao']."</td>";
                     echo "<td>".exibirDataHoraBr($historico['data'])."</td>";

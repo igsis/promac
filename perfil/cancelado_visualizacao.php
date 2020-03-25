@@ -2,7 +2,11 @@
 $con = bancoMysqli();
 $conn = bancoPDO();
 
-$idProjeto = $_POST['idProjeto'];
+if (isset($_GET['idProjeto'])) {
+    $idProjeto = $_GET['idProjeto'];
+} else {
+    $idProjeto = $_POST['idProjeto'];
+}
 $projeto = recuperaDados("projeto", "idProjeto", $idProjeto);
 $status = recuperaDados("etapa_status", "idStatus", $projeto['idStatus']);
 $idEtapa = $projeto['idEtapaProjeto'];
@@ -24,6 +28,13 @@ $cronograma = recuperaDados("cronograma", "idCronograma", $projeto['idCronograma
 $video = recuperaDados("projeto", "idProjeto", $idProjeto);
 $v = array($video['video1'], $video['video2'], $video['video3']);
 
+$sql_cancelado = "SELECT hst.idProjeto AS id,protocolo,nomeProjeto,nome,observacao,data,acao
+            FROM historico_cancelamento as hst 
+            INNER JOIN pessoa_fisica AS usr ON hst.idUsuario = usr.idPf 
+            INNER JOIN projeto AS prj ON hst.idProjeto = prj.idProjeto
+            WHERE hst.idProjeto = $idProjeto";
+$historico = $con->query($sql_cancelado)->fetch_assoc();
+
 ?>
 
 
@@ -35,7 +46,15 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                     <div class="tab-content">
                         <section class="content-header">
                             <h3>Resumo do projeto  </h3>
-                            <small class="text-warning">PROJETO CANCELADO</small>
+                            <div class="alert alert-danger">
+                                <strong>PROJETO CANCELADO</strong><br>
+                                <div class="text-left">
+                                    <strong>Responsável pelo Cancelamento: </strong><?= $historico['nome'] ?><br>
+                                    <strong>Motivo: </strong><?= $historico['observacao'] ?><br>
+                                    <strong>Data do Cancelamento: </strong><?= exibirDataHoraBr($historico['data']) ?>
+                                </div>
+                            </div>
+
                         </section>
                         <div role="tabpanel" class="tab-pane fade in active" id="info">
                             <div class="form-group">
