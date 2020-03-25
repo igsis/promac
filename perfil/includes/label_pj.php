@@ -98,12 +98,6 @@
             </td>
         </tr>
         <tr>
-            <td colspan="2">
-                <strong>E-mail:</strong>
-                <?= isset($representante['email']) ? $representante['email'] : ''; ?>
-            </td>
-        </tr>
-        <tr>
             <td>
                 <strong>Genero:</strong>
                 <?= isset($representante) ? $infoAdicionais['genero'] : '' ?>
