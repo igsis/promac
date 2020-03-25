@@ -81,7 +81,7 @@ $tipoPessoa = '6';
 						<p align="justify">
                             <strong>Cadastro de proponente:</strong> aberta o ano todo.<br/>
                             <strong>Cadastro de incentivador:</strong> aberta o ano todo.<br/>
-						    <strong>Inscrição de projeto:</strong> abertas de 9h de 27/01/2020 às 18h de 27/04/2020. Confira o novo Edital no botão Normativos ao lado.
+						    <strong>Inscrição de projeto:</strong> abertas de 9h de 27/01/2020 às 18h de 27/05/2020. Confira o novo Edital no botão Normativos ao lado.
                         </p>
 
 						<p align="justify">O proponente deverá inscrever-se no botão ao lado e após habilitação poderá inscrever o projeto.</p>
@@ -135,7 +135,8 @@ $tipoPessoa = '6';
                                     <div class="well">
                                         <h6>Edital</h6>
                                         <ul class="list-group">
-                                            <li class="list-group-item"><a href="pdf/Edital_PROMAC_2020.pdf" target="_blank">EDITAL PROMAC 2020</a></li>
+                                            <li class="list-group-item"><a href="pdf/Edital_PROMAC_2020.pdf" target="_blank">Edital Promac 2020</a></li>
+                                            <li class="list-group-item"><a href="pdf/Prorrogacao_Pro-Mac_2020.pdf" target="_blank">Prorrogação de Prazo de Inscrição</a></li>
                                         </ul>
                                     </div>
                                 </div>
