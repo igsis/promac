@@ -295,7 +295,7 @@ $link = $consulta->fetch()['linkAgendamento'];
                                     </div>-->
                             <?php
 //                                }
-                            if ($projeto['idStatus'] != 6)
+                            if ($projeto['idStatus'] != 6 && $projeto['idStatus'] != 2)
                             {
                             ?>
                                 <div class="form-group">
