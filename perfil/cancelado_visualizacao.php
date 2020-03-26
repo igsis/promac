@@ -35,6 +35,10 @@ $sql_cancelado = "SELECT hst.idProjeto AS id,protocolo,nomeProjeto,nome,observac
             WHERE hst.idProjeto = $idProjeto";
 $historico = $con->query($sql_cancelado)->fetch_assoc();
 
+if ($historico == null) {
+    echo "<script>window.location = '?perfil=smc_historico_cancelamento';</script>";
+}
+
 ?>
 
 
@@ -194,11 +198,13 @@ $historico = $con->query($sql_cancelado)->fetch_assoc();
                                                 $query = mysqli_query($con, $sql);
                                                 while ($campo = mysqli_fetch_array($query)) {
                                                     $zona = recuperaDados("zona", "idZona", $campo['idZona']);
-                                                    echo "<tr>";
-                                                    echo "<td>" . $campo['local'] . "</td>";
-                                                    echo "<td>" . $campo['estimativaPublico'] . "</td>";
-                                                    echo "<td>" . $zona['zona'] . "</td>";
-                                                    echo "</tr>";
+                                                    ?>
+                                                    <tr>
+                                                    <td><?=$campo['local'] ?? '' ?></td>
+                                                    <td><?=$campo['estimativaPublico'] ?? '' ?></td>
+                                                    <td><?=$zona['zona'] ?? '' ?></td>
+                                                    </tr>
+                                                    <?php
                                                 }
                                                 ?>
                                             </table>
@@ -317,15 +323,17 @@ $historico = $con->query($sql_cancelado)->fetch_assoc();
                                                 while ($campo = mysqli_fetch_array($query)) {
                                                     $etapa = recuperaDados("etapa", "idEtapa", $campo['idEtapa']);
                                                     $medida = recuperaDados("unidade_medida", "idUnidadeMedida", $campo['idUnidadeMedida']);
-                                                    echo "<tr>";
-                                                    echo "<td class='list_description'>" . $etapa['etapa'] . "</td>";
-                                                    echo "<td class='list_description'>" . $campo['descricao'] . "</td>";
-                                                    echo "<td class='list_description'>" . $campo['quantidade'] . "</td>";
-                                                    echo "<td class='list_description'>" . $medida['unidadeMedida'] . "</td>";
-                                                    echo "<td class='list_description'>" . $campo['quantidadeUnidade'] . "</td>";
-                                                    echo "<td class='list_description'>" . dinheiroParaBr($campo['valorUnitario']) . "</td>";
-                                                    echo "<td class='list_description'>" . dinheiroParaBr($campo['valorTotal']) . "</td>";
-                                                    echo "</tr>";
+                                                    ?>
+                                                    <tr>
+                                                    <td class='list_description'><?=$etapa['etapa'] ?? '' ?></td>
+                                                    <td class='list_description'><?=$campo['descricao'] ?? '' ?></td>
+                                                    <td class='list_description'><?=$campo['quantidade'] ?? '' ?></td>
+                                                    <td class='list_description'><?=$medida['unidadeMedida'] ?? '' ?></td>
+                                                    <td class='list_description'><?=$campo['quantidadeUnidade'] ?? '' ?></td>
+                                                    <td class='list_description'><?=dinheiroParaBr($campo['valorUnitario']) ?? '' ?></td>
+                                                    <td class='list_description'><?=dinheiroParaBr($campo['valorTotal']) ?? '' ?></td>
+                                                    </tr>
+                                                    <?php
                                                 } ?>
                                             </table>
                                         </li>
