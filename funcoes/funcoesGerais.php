@@ -3205,6 +3205,7 @@ function uploadArquivo($idProjeto, $tipoPessoa, $pagina, $idListaDocumento, $idT
         echo '<div class="table-responsive list_info">
 				<h6>Parecer Anexado</h6>';
         if ($linhas > 0) {
+            $idParecerista = $con->query("SELECT idComissao FROM projeto WHERE idProjeto = '$idProjeto'")->fetch_assoc()['idComissao'];
             echo "
 		<table class='table table-condensed'>
 			<thead>
@@ -3222,7 +3223,7 @@ function uploadArquivo($idProjeto, $tipoPessoa, $pagina, $idListaDocumento, $idT
                 $data = date_create($arquivo["dataEnvio"]);
                 echo "<td class='list_description'>" . date_format($data, 'd/m/Y') . "</td>";
 
-                if ($arquivo['idStatusDocumento'] == 3) {
+                if ($arquivo['idStatusDocumento'] != 3 && $_SESSION['idUser'] == $idParecerista) {
                     echo "<td class='list_description'>
 								<select name='status' id='statusOpt' disabled>";
                     echo "<option>Selecione</option>";
