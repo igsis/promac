@@ -1215,13 +1215,16 @@ function listaAnexosProjeto($idPessoa, $tipoPessoa, $idArquivo)
 			<thead>
 				<tr class='list_menu'>
 					<td>Tipo de arquivo</td>
+					<td>Nome do arquivo</td>
 					<td width='15%'></td>
 				</tr>
 			</thead>
 			<tbody>";
         while ($arquivo = mysqli_fetch_array($query)) {
             echo "<tr>";
-            echo "<td class='list_description'><a href='../uploadsdocs/" . $arquivo['arquivo'] . "' target='_blank'>" . mb_strimwidth($arquivo['documento'], 15, 25, "...") . "</a></td>";
+            echo "<td>{$arquivo['documento']}</td>";
+            echo "<td>{$arquivo['arquivo']}</td>";
+            echo "<td><a class='btn btn-theme btn-md' href='../uploadsdocs/" . $arquivo['arquivo'] . "' target='_blank'> Visualizar </a></td>";
             echo "</tr>";
         }
         echo "
@@ -2490,7 +2493,7 @@ function retornaQtdProjetos($tipoPessoa, $id)
 {
     $conexao = bancoMysqli();
 
-    $editalAtivo = recuperaDados("liberacao_projeto","idStatus",1)['edital'];
+    $editalAtivo = recuperaDados("liberacao_projeto", "idStatus", 1)['edital'];
 
     if ($tipoPessoa == 1) {
         $query = "SELECT 
@@ -2526,7 +2529,7 @@ function retornaProjeto($tipoPessoa, $id)
     $documentos = [];
     $conexao = bancoMysqli();
 
-    $editalAtivo = recuperaDados("liberacao_projeto","idStatus",1)['edital'];
+    $editalAtivo = recuperaDados("liberacao_projeto", "idStatus", 1)['edital'];
 
     if ($tipoPessoa == 1):
         $query = "SELECT 
@@ -3457,7 +3460,7 @@ function geraCheckbox($tabela, $tabelaRelacionamento, $colunaEntidadeForte, $idE
                 <label>
                     <input class='<?= $tabela ?>' type='checkbox' name='<?= $tabela ?>[]'
                            value='<?= $checkbox[0] ?>'
-                           <?= in_array_r($checkbox[0], $relacionamentos) ? "checked" : "" ?>
+                        <?= in_array_r($checkbox[0], $relacionamentos) ? "checked" : "" ?>
                            data-check="<?= $checkbox[1] ?>"> <?= $checkbox[1] ?>
                 </label>
             </div>
@@ -3773,20 +3776,20 @@ function recuperaMaterial($idProjeto, $edicao = false)
     if ($queryMaterial->num_rows > 0) {
         $style = "style='width: 100%'";
         ?>
-    <table id="tbMaterial" class="table-condensed table-responsive table-bordered" <?= $edicao ? "" : $style ?>>
-        <thead>
-    <tr>
-        <th>Material de Divulgação</th>
-        <th>Quantidade</th>
-        <th>Formato</th>
-        <th>Onde será veiculado/divulgado</th>
-        <?php
-        if ($edicao):
-            ?>
-            <th>Ações</th>
-            <?php
+        <table id="tbMaterial" class="table-condensed table-responsive table-bordered" <?= $edicao ? "" : $style ?>>
+            <thead>
+            <tr>
+                <th>Material de Divulgação</th>
+                <th>Quantidade</th>
+                <th>Formato</th>
+                <th>Onde será veiculado/divulgado</th>
+                <?php
+                if ($edicao):
+                    ?>
+                    <th>Ações</th>
+                <?php
                 endif;
-            ?>
+                ?>
             </tr>
             </thead>
             <tbody>
@@ -3800,25 +3803,25 @@ function recuperaMaterial($idProjeto, $edicao = false)
                     <td><?= $material['formato'] ?></td>
                     <td><?= $material['veiculo_divulgacao'] ?></td>
                     <?php
-                if ($edicao):
-                    ?>
-                    <td>
-                        <input type="hidden" id="idMat" value="<?= $material['idMaterial'] ?>">
-                        <button class="btn btn-theme" type="button" class="btn btn-theme btn-lg btn-block"
-                                data-toggle="modal" data-target="#novoMaterial">Editar
-                        </button>
-                        <button class="btn btn-theme" data-toggle="modal" data-target="#apagarMaterial"
-                                onclick="prrencherModalApagar(<?= $material['idMaterial'] ?>)">Apagar
-                        </button>
-                    </td>
-                <?php endif; ?>
+                    if ($edicao):
+                        ?>
+                        <td>
+                            <input type="hidden" id="idMat" value="<?= $material['idMaterial'] ?>">
+                            <button class="btn btn-theme" type="button" class="btn btn-theme btn-lg btn-block"
+                                    data-toggle="modal" data-target="#novoMaterial">Editar
+                            </button>
+                            <button class="btn btn-theme" data-toggle="modal" data-target="#apagarMaterial"
+                                    onclick="prrencherModalApagar(<?= $material['idMaterial'] ?>)">Apagar
+                            </button>
+                        </td>
+                    <?php endif; ?>
                 </tr>
             <?php }
             ?>
             </tbody>
-            </table>
-            <?php
-        } else {
+        </table>
+        <?php
+    } else {
         ?>
         <div class="row">
             <span class="text-center"> Nenhum material de divulgação cadastrado.</span>
@@ -3841,4 +3844,5 @@ function recuperaTags($idProjeto)
 
     return $tags;
 }
+
 ?>
