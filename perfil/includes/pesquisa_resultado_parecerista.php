@@ -17,7 +17,8 @@ foreach ($array_etapa as $idEtapa)
                          INNER JOIN etapa_projeto AS s ON s.idEtapaProjeto = p.idEtapaProjeto
                          INNER JOIN pessoa_fisica AS pf ON pf.idPf = hr.idComissao
                         WHERE hr.idComissao = ".$_POST['idComissao']."
-                        AND p.idEtapaProjeto = '$idEtapa'";
+                        AND p.idEtapaProjeto = '$idEtapa'
+                        GROUP BY p.nomeProjeto, p.protocolo ";
     $queryHistorico = mysqli_query($con,$sqlHistorico);
     $queryStatus = mysqli_query($con,$sqlStatus);
     $num = mysqli_num_rows($queryHistorico);
