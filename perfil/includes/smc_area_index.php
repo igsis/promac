@@ -769,12 +769,12 @@ $num = mysqli_num_rows($query);
 ?>
 
 <div class="form-group">
-    <h5>Projetos cancelados"</h5>
-    <form method="POST" action="" class="form-horizontal" role="form">
+    <h5>Projetos Cancelados"</h5>
+    <a href="?perfil=smc_projetos_cancelados">
         <button type="submit" class="label label-warning" name="idEtapaProjeto" value="11">
             <span>Total: <?= $num ?></span>
         </button>
-    </form>
+    </a>
 </div>
 <div class="row">
     <div class="col-md-12">
