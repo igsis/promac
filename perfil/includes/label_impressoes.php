@@ -34,22 +34,42 @@
                     </form>
                 </td>
             </tr>
-            <tr>
-                <td>
-                    <strong>Autorização de Prorrogação de Captação</strong>
-                </td>
-                <td>
-                    <form method="POST" target="_blank" action="../pdf/pdf_prorrogacao_captacao.php" class="form-horizontal" role="form">
-                        <button type="submit" style="border-radius: 5px;" class="btn btn-theme btn-sm btn-block" name="idProjeto" value="<?= $idProjeto ?>">Abrir</button>
-                    </form>
-                </td>
-            </tr>
+<!--            <tr>-->
+<!--                <td>-->
+<!--                    <strong>Autorização de Prorrogação de Captação</strong>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <form method="POST" target="_blank" action="../pdf/pdf_prorrogacao_captacao.php" class="form-horizontal" role="form">-->
+<!--                        <button type="submit" style="border-radius: 5px;" class="btn btn-theme btn-sm btn-block" name="idProjeto" value="--><?//= $idProjeto ?><!--">Abrir</button>-->
+<!--                    </form>-->
+<!--                </td>-->
+<!--            </tr>-->
             <tr>
                 <td>
                     <strong>Protocolo de Comparecimento</strong>
                 </td>
                 <td>
                     <form method="POST" target="_blank" action="../pdf/pdf_protocolo_comparecimento.php" class="form-horizontal" role="form">
+                        <button type="submit" style="border-radius: 5px;" class="btn btn-theme btn-sm btn-block" name="idProjeto" value="<?= $idProjeto ?>">Abrir</button>
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Autorização de Captação</strong>
+                </td>
+                <td>
+                    <form method="POST" target="_blank" action="../pdf/pdf_autorizacao_captacao.php" class="form-horizontal" role="form">
+                        <button type="submit" style="border-radius: 5px;" class="btn btn-theme btn-sm btn-block" name="idProjeto" value="<?= $idProjeto ?>">Abrir</button>
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Ofício de Abertura de Conta</strong>
+                </td>
+                <td>
+                    <form method="POST" target="_blank" action="../pdf/pdf_abertura_conta.php" class="form-horizontal" role="form">
                         <button type="submit" style="border-radius: 5px;" class="btn btn-theme btn-sm btn-block" name="idProjeto" value="<?= $idProjeto ?>">Abrir</button>
                     </form>
                 </td>
