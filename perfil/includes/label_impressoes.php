@@ -74,6 +74,16 @@
                     </form>
                 </td>
             </tr>
+            <tr>
+                <td>
+                    <strong>Autorização Única de Depósito</strong>
+                </td>
+                <td>
+                    <form method="POST" target="_blank" action="../pdf/doc_autorizacao_unico_deposito.php" class="form-horizontal" role="form">
+                        <button type="submit" style="border-radius: 5px;" class="btn btn-theme btn-sm btn-block" name="idProjeto" value="<?= $idProjeto ?>">Abrir</button>
+                    </form>
+                </td>
+            </tr>
         </table>
     </div>
 </div>
