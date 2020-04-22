@@ -69,7 +69,7 @@ if ($incentivador_projeto != null){
 }
 
 header("Content-type: application/vnd.ms-word");
-header("Content-Disposition: attachment;Filename=doc_autorizacao_unico_deposito.doc");
+header("Content-Disposition: attachment;Filename=doc_certificado_incentivo.doc");
 setlocale(LC_TIME, 'portuguese');
 date_default_timezone_set('America/Sao_Paulo');
 
@@ -105,14 +105,16 @@ date_default_timezone_set('America/Sao_Paulo');
     </div>
     <br>
     <br>
-    <p align='center'><strong>AUTORIZAÇÃO ÚNICA DE DEPÓSITO</strong></p>
+    <p align='center'><strong>CERTIFICADO DE INCENTIVO</strong></p>
     <br><br>
 
-    <p style="text-align: justify">A Secretaria Municipal de Cultura, representada pelo Programa Municipal de Apoio a Projetos Culturais – Pro-Mac, autoriza o contribuinte incentivador <strong><?= $incentivador_projeto != null ? $nomeIncentivador : 'XXXXXXXXXXXX' ?></strong>, inscrito no CPF/CNPJ sob o nº <strong><?= $incentivador_projeto != null ? $docIncentivador : 'XXXXXXXXXX' ?> </strong>, estando este com a documentação de acordo com o edital Pro-Mac 2020, a efetuar os depósitos dos valores de incentivo fiscal provenientes do imposto <strong>XXX</strong> para o projeto cultural aprovado denominado <strong>“<?= $nomeProjeto ?>”</strong>, conforme fora firmado no Contrato de Incentivo entre o incentivador acima e o proponente <?= $proponente ?>, <b>CNPJ n° <?= $documento ?></b>.</p>
-    <p style="text-align: justify">De acordo com o item 106 do Edital Pro-Mac 2020, reiteramos que é de responsabilidade integral do incentivador o cálculo do valor a ser depositado mensalmente no projeto e que deverá ser levado em conta para a sua definição o limite de abatimento de 20% (vinte por cento) do total do imposto devido no mês.</p>
-    <p style="text-align: justify">Conforme o item 108 do edital Pro-Mac 2020, tanto o <b>comprovante de depósito/transferência</b>, quanto o <b>extrato da conta corrente do projeto</b> deverão ser enviados <b>em conjunto</b> via e-mail para o endereço incentivopromac@prefeitura.sp.gov.br com no mínimo <b>5 (cinco) dias úteis de antecedência da data de vencimento do imposto</b>. O e-mail deverá ter obrigatoriamente como título o padrão abaixo:</p>
-    <p style="text-align: justify"><b>“DEPÓSITO N° X (a depender do número de depósitos que o incentivador já tenha feito para o projeto) – NOME DO INCENTIVADOR + NOME DO PROJETO”.</b></p>
-    <p style="text-align: justify">Caso os documentos mencionados não sejam enviados até o prazo estabelecido, o Núcleo de Incentivo à Cultura da SMC <b>não se responsabilizará pela não realização do abatimento fiscal do imposto no mês desejado</b>, conforme expresso no item 109 do mesmo edital.</p>
+    <p style="text-align: justify">A Secretaria Municipal de Cultura, representada pela Coordenadoria de Incentivo à Cultura, certifica que o incentivador <b>XXXXXXXXXXXXXX</b>, CNPJ <b>XXXXXXXXXXXX</b>, contribuinte do C.C.M. nº XXXXXX, incentivou o projeto cultural abaixo no mês de XXXXXXX por meio do imposto XXX .</p>
+    <p><b>Projeto:</b> <?= $nomeProjeto ?></p>
+    <<p><b></p>Proponente:</b> <?= $proponente ?></p>
+    <p><b>CNPJ:</b> <?= $documento ?></p>
+    <<p><b></p>Valor Depositado:</b></p>
+    <p><b>Selo de Renúncia Fiscal:</b></p>
+    <<p><b></p>Valor deste Certificado de Incentivo (valor a ser abatido):</b></p>
     <br><br>
     <br><br>
     <p></p>
