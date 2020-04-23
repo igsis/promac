@@ -30,7 +30,7 @@ $idProjeto = $_POST['idProjeto'];
 $dateNow = date('Y-m-d');
 $cabecalho = strftime('%d de %B de %Y', strtotime($dateNow));
 
-$queryProjeto = "SELECT protocolo, nomeProjeto, tipoPessoa,idPf,idPj, idAreaAtuacao, valorAprovado FROM projeto WHERE idProjeto = '$idProjeto' AND publicado = 1";
+$queryProjeto = "SELECT protocolo, nomeProjeto, tipoPessoa,idPf,idPj, idAreaAtuacao, valorAprovado,idRenunciaFiscal FROM projeto WHERE idProjeto = '$idProjeto' AND publicado = 1";
 $row = $con->query($queryProjeto)->fetch_assoc();
 $protocolo = $row['protocolo'];
 $nomeProjeto = $row['nomeProjeto'];
@@ -39,6 +39,10 @@ $valorAprovado = number_format($row['valorAprovado'], 2, ',', '.');
 $idPf = $row['idPf'];
 $idPj = $row['idPj'];
 $idAreaAtuacao = $row['idAreaAtuacao'];
+
+$queryRenuncio = "SELECT renunciaFiscal FROM renuncia_fiscal WHERE idRenuncia = {$row['idRenunciaFiscal']}";
+$renun = $con->query($queryRenuncio)->fetch_assoc();
+$renuncia = $renun['renunciaFiscal'];
 
 $sqlHistEtapa = "SELECT * FROM historico_etapa WHERE idProjeto = '$idProjeto' AND idEtapaProjeto = 5 AND data < '2019-01-01 00:00:00'";
 $queryHistEtapa = mysqli_query($con, $sqlHistEtapa);
@@ -128,8 +132,13 @@ $pdf->Cell(26, $l, utf8_decode("LINGUAGEM: "));
 $pdf->SetFont('Arial',null, 11);
 $pdf->MultiCell(0, $l, utf8_decode($areaAtuacao));
 
-$pdf->ln();
+$pdf->SetX($x);
+$pdf->SetFont('Arial','B', 11);
+$pdf->Cell(56, $l, utf8_decode("SELO DE RENÚNCIA FISCAL: "));
+$pdf->SetFont('Arial',null, 11);
+$pdf->MultiCell(0, $l, utf8_decode($renuncia));
 
+$pdf->ln();
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 11);
 $pdf->Cell(30, $l, utf8_decode("PROPONENTE: "));

@@ -94,8 +94,8 @@ $pdf->Cell(170,8,utf8_decode("NÚCLEO DE INCENTIVO À CULTURA (PRO-MAC)"),0,1,'C
 $pdf->ln();
 
 $pdf->SetX($x);
-$pdf->SetFont('Arial','', 16);
-$pdf->Cell(170,9,utf8_decode("OFÍCIO PARA ABERTURA DE CONTA CORRENTE NO BANCO DO BRASIL"),0,1,'C');
+$pdf->SetFont('Arial','', 13);
+$pdf->Cell(170,9,utf8_decode("OFÍCIO PARA ABERTURA DE CONTA CORRENTE NO BANCO DO BRASIL "),0,1,'C');
 
 $pdf->Ln();
 $pdf->Ln();
@@ -108,7 +108,7 @@ $pdf->Ln();
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','', 11);
-$pdf->MultiCell(170,$l,utf8_decode('A Secretaria Municipal de Cultura da Cidade de São Paulo encaminha o proponente $proponente, CPF/CNPJ nº $documento, aprovado com o projeto “'.$nomeProjeto.'” no Programa Municipal de Incentivo à Cultura – Pro-Mac, instituído pela Lei nº 15.948/2013 e regulamentado pelo Decreto nº 59.119/2019, para efetuar a abertura de uma conta corrente dirigida ao projeto cultural supramencionado.'));
+$pdf->MultiCell(170,$l,utf8_decode("A Secretaria Municipal de Cultura da Cidade de São Paulo encaminha o proponente $proponente, CPF/CNPJ nº $documento, aprovado com o projeto ''$nomeProjeto'' no Programa Municipal de Incentivo à Cultura - Pro-Mac, instituído pela Lei nº 15.948/2013 e regulamentado pelo Decreto nº 59.119/2019, para efetuar a abertura de uma conta corrente dirigida ao projeto cultural supramencionado."));
 
 $pdf->ln();
 
