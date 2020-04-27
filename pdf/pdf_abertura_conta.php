@@ -114,7 +114,7 @@ $pdf->ln();
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','', 11);
-$pdf->MultiCell(170,$l,utf8_decode('Tal conta será destinada ao recebimento de recursos financeiros depositados por um ou mais incentivadores e só poderá ser movimentada após ter atingido o montante equivalente a 50% do valor total aprovado do projeto (cabendo ao proponente cumprir esta responsabilidade), bem como ter sido autorizada expressamente por esta pasta mediante a emissão de uma "Autorização de Movimentação de Recursos".'));
+$pdf->MultiCell(170,$l,utf8_decode('Tal conta será destinada ao recebimento de recursos financeiros depositados por um ou mais incentivadores e só poderá ser movimentada após ter atingido o montante equivalente a 50% do valor total aprovado do projeto (cabendo ao proponente cumprir esta responsabilidade), bem como ter sido autorizada expressamente por esta pasta mediante a emissão de uma “Autorização de Movimentação de Recursos”.'));
 
 
 $pdf->ln();

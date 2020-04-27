@@ -6,7 +6,7 @@ session_start();
 
 $con = bancoMysqli();
 
-$idProjeto = $_GET['idProjeto'];
+$idProjeto = $_POST['idProjeto'];
 
 
 setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');

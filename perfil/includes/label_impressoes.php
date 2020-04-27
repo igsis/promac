@@ -48,7 +48,7 @@
                     <strong>Autorização Única de Depósito</strong>
                 </td>
                 <td>
-                    <form method="get" target="_blank" action="../pdf/autorizacao_unica_deposito.doc" class="form-horizontal"
+                    <form method="get" target="_blank" action="../pdf/Autorizacao_unica_deposito.doc" class="form-horizontal"
                           role="form">
                         <button type="submit" style="border-radius: 5px;" class="btn btn-theme btn-sm btn-block"
                                 name="idProjeto">Abrir
