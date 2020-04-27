@@ -225,12 +225,11 @@ $tipoPessoa = '6';
                 </div>
                 <div class="row">
                     <div class="alert alert-danger">
-                        A captação de recursos de 2020 para projetos aprovados no PROMAC ainda não está aberta, dado que
-                        o orçamento para tal fim ainda não está liberado. A Secretaria Municipal da Cultura pede para
-                        que os contribuintes incentivadores interessados em destinar recursos para projetos culturais
-                        aguardem a liberação do orçamento para então trazerem os Contratos de Incentivo no PROMAC. Não
-                        serão recebidos Contratos de Incentivo antes da liberação do orçamento, fato que será comunicado
-                        neste site, no Diário Oficial da Cidade e nas redes oficiais da SMC
+                        <p class="text-justify">Comunicamos que a partir do dia 22 de abril de 2020 está aberto o período de captação de recursos do Pro-Mac para os projetos culturais aprovados. Em conformidade com as medidas tomadas para contenção do avanço da COVID-19, o envio de Contratos de Incentivo (Anexo IV do Edital) e Termos de Responsabilidade de Execução de Projeto Cultural (Anexo V do Edital) se dará exclusivamente por meio eletrônico pelo e-mail incentivopromac@prefeitura.sp.gov.br. O título do e-mail deverá seguir o seguinte padrão: “CONTRATO DE INCENTIVO E TERMO DE RESPONSABILIDADE (NOME DO PROJETO) + (NOMES DOS INCENTIVADORES)”. As vias originais dos respectivos documentos devem ser mantidas para posterior apresentação à SMC caso solicitado.</p>
+
+                        <p class="text-justify">O remetente do e-mail deverá aguardar nossa resposta com um número de protocolo confirmando o recebimento da documentação. Porém, isto não significará que a reserva dos recursos está automaticamente garantida, pois os Contratos de Incentivo serão analisados com base nos critérios (tais como regularidade cadastral e fiscal do proponente e incentivador; forma, conteúdo, prazos e assinaturas do contrato, etc) estabelecidos no edital, contidos nos itens 76 a 124 do edital Pro-Mac 2020. Caso o(s) Contrato(s) de Incentivo venha a ter alguma irregularidade ou inconformidade, informaremos por e-mail e o projeto será automaticamente excluído da fila. Após a correção dos problemas apontados será necessário o envio de toda a documentação novamente.</p>
+
+                        <p>Dúvidas podem ser encaminhadas para o e-mail incentivopromac@prefeitura.sp.gov.br</p>
                     </div>
                 </div>
 			</div>

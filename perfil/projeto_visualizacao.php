@@ -70,7 +70,7 @@ function DiasUteis() {
 
 // Consulta link do google form no banco que é cadastrado pela SMC
 $consulta = $conn->query("SELECT * FROM agendamento");
-$link = $consulta->fetch()['linkAgendamento'];
+$link = $consulta->fetch();
 
 ?>
 
