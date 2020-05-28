@@ -68,7 +68,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-8">
-                            <label>Ingresso e forma de acesso</label>
+                            <label>Ingresso e forma de acesso *</label>
                             <p align="justify">
                                 Aqui você deverá colocar de qual forma o público do seu projeto terá acesso ao projeto.
                                 Serão realizadas inscrições prévias? Serão distribuídos ingressos antes do evento?
@@ -82,7 +82,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-8">
-                            <label>Democratização de acesso</label>
+                            <label>Democratização de acesso *</label>
                             <p align="justify">Ainda que o ingresso do projeto seja de valor baixo ou gratuito, é necessário se pensar em como democratizar o acesso às produções culturais feitas na cidade. A democratização de acesso não tem relação apenas com o preço de uma atividade, mas com a linguagem, com o espaço, com a divulgação, com a formação de público, etc. Pode estar diretamente relacionado com as contrapartidas oferecidas, por exemplo. Tente expor de que forma você considera que seu projeto está atuando no sentido da democratização da cultura.</p>
                             <textarea name="democratizacao" class="form-control" rows="10" required><?php echo $projeto['democratizacao'] ?></textarea>
                         </div>
@@ -90,7 +90,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-8">
-                            <label>Acessibilidade</label>
+                            <label>Acessibilidade *</label>
                             <p align="justify">Você deverá explicar como o projeto buscará ser acessível às pessoas com deficiência. Haverá algum tipo de auxílio no local do projeto? Haverá alguma preocupação com a linguagem dos materiais do projeto e das obras? O espaço físico é apropriado para receber pessoas com deficiências motoras?</p>
                             <textarea name="acessibilidade" class="form-control" rows="10" required><?php echo $projeto['acessibilidade'] ?></textarea>
                         </div>

@@ -12,6 +12,8 @@ $projeto = recuperaDados("projeto", "idProjeto", $idProjeto);
 $area = recuperaDados("area_atuacao", "idArea", $projeto['idAreaAtuacao']);
 $renuncia = recuperaDados("renuncia_fiscal", "idRenuncia", $projeto['idRenunciaFiscal']);
 $cronograma = recuperaDados("cronograma", "idCronograma", $projeto['idCronograma']);
+$postosTrabalho = recuperaDados("postos_trabalho", "idProjeto", $idProjeto);
+
 if ($cronograma) {
     $tempoTotal = $cronograma['preProducao'] + $cronograma['producao'] + $cronograma['posProducao'];
 } else {
@@ -110,6 +112,15 @@ if ($projeto['idEtapaProjeto'] == 6)
             </p>
             <p align="justify">
                 <strong>Acessibilidade:</strong> <?php echo isset($projeto['acessibilidade']) ? $projeto['acessibilidade'] : null; ?>
+            </p>
+            <p align="justify">
+                <strong>Quantos postos de trabalho diretos o seu projeto gera, ainda que temporariamente?</strong> <?php echo isset($postosTrabalho['quantidade']) ? $postosTrabalho['quantidade'] : null; ?>
+            </p>
+            <p align="justify">
+                <strong>Qual a média, em meses, de tempo de contratação de cada posto de trabalho?</strong> <?php echo isset($postosTrabalho['media_meses']) ? "{$postosTrabalho['media_meses']} meses" : null; ?>
+            </p>
+            <p align="justify">
+                <strong>Qual a média, em reais, de remuneração de cada posto de trabalho?</strong> <?php echo isset($postosTrabalho['media_valor']) ? dinheiroParaBr($postosTrabalho['media_valor']) : null; ?>
             </p>
         </div>
 

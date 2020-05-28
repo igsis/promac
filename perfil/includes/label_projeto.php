@@ -2,6 +2,7 @@
 $id = $projeto['tipoPessoa'];
 $idP = $projeto['idProjeto'];
 $tags = recuperaTags($idP);
+$postosTrabalho = recuperaDados("postos_trabalho", "idProjeto", $idP);
 
 if ($id == 1) {
     $idPess = $projeto['idPf'];
@@ -101,6 +102,15 @@ if ($id == 1) {
         </p>
         <p align="justify">
             <strong>Justificativa do projeto:</strong> <?php echo isset($projeto['justificativa']) ? $projeto['justificativa'] : null; ?>
+        </p>
+        <p align="justify">
+            <strong>Quantos postos de trabalho diretos o seu projeto gera, ainda que temporariamente?</strong> <?php echo isset($postosTrabalho['quantidade']) ? $postosTrabalho['quantidade'] : null; ?>
+        </p>
+        <p align="justify">
+            <strong>Qual a média, em meses, de tempo de contratação de cada posto de trabalho?</strong> <?php echo isset($postosTrabalho['media_meses']) ? "{$postosTrabalho['media_meses']} meses" : null; ?>
+        </p>
+        <p align="justify">
+            <strong>Qual a média, em reais, de remuneração de cada posto de trabalho?</strong> <?php echo isset($postosTrabalho['media_valor']) ? "R$ ".dinheiroParaBr($postosTrabalho['media_valor']) : null; ?>
         </p>
     </div>
 
