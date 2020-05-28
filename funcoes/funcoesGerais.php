@@ -3084,14 +3084,14 @@ function pegaUsuarioLogado()
 
         if ($_SESSION['tipoPessoa'] == 1):
             $usuario = $usuarioPf = recuperaDados("pessoa_fisica", "idPf", $_SESSION['idUser']);
-
-            return $usuario['nome'] . ' [ID=' . $usuario['idPf'] . ']';
+            $nome = addslashes($usuario['nome']);
+            return $nome . ' [ID=' . $usuario['idPf'] . ']';
 
         endif;
 
         $usuario = recuperaDados("pessoa_juridica", "idPj", $_SESSION['idUser']);
-
-        return $usuario['razaoSocial'] . ' [ID=' . $usuario['idPj'] . ']';
+        $razaoSocial = addslashes($usuario['razaoSocial']);
+        return $razaoSocial . ' [ID=' . $usuario['idPj'] . ']';
     endif;
 }
 
