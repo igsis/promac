@@ -81,7 +81,7 @@ $tipoPessoa = '6';
 						<p align="justify">
                             <strong>Cadastro de proponente:</strong> aberta o ano todo.<br/>
                             <strong>Cadastro de incentivador:</strong> aberta o ano todo.<br/>
-						    <strong>Inscrição de projeto:</strong> abertas de 9h de 27/01/2020 às 18h de 27/05/2020. Confira o novo Edital no botão Normativos ao lado.
+						    <strong>Inscrição de projeto:</strong> abertas de 9h de 27/01/2020 às 23h59 de 27/06/2020. Confira o novo Edital no botão Normativos ao lado.
                         </p>
 
 						<p align="justify">O proponente deverá inscrever-se no botão ao lado e após habilitação poderá inscrever o projeto.</p>
@@ -114,6 +114,7 @@ $tipoPessoa = '6';
                                             <li class="list-group-item"><a href="pdf/Portaria_SMC_prestacao_contas.pdf">Portarias de prestação de contas</a></li>
                                         </ul>
                                     </div>
+                                    <!--Solicitada remoção deste bloco dia 28/05/2020
                                     <div class="well">
                                         <h6>Documentos para Projetos Aprovados</h6>
                                         <ul class="list-group">
@@ -130,13 +131,14 @@ $tipoPessoa = '6';
                                             <li class="list-group-item"><a href="pdf/Portaria_SMC_prestacao_contas.pdf">Manual de prestação de contas</a></li>
                                             <li class="list-group-item"><a href="pdf/manual_incentivador.pdf">Manual do Incentivador</a></li>
                                         </ul>
-                                    </div>
+                                    </div>-->
 
                                     <div class="well">
                                         <h6>Edital</h6>
                                         <ul class="list-group">
                                             <li class="list-group-item"><a href="pdf/Edital_PROMAC_2020.pdf" target="_blank">Edital Promac 2020</a></li>
                                             <li class="list-group-item"><a href="pdf/Prorrogacao_Pro-Mac_2020.pdf" target="_blank">Prorrogação de Prazo de Inscrição</a></li>
+                                            <li class="list-group-item"><a href="pdf/2° prorrogação de prazo de inscrição de projetos.pdf" target="_blank">2ª Prorrogação de Inscrição de Projetos - Edital PROMAC 2020</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -238,7 +240,7 @@ $tipoPessoa = '6';
 			<div class="container">
 				<table width="100%">
 					<tr>
-                        <td><font color="#ccc"><i class="fa fa-phone-square"></i> <b>Contato:</b><br/>(11) 3397-0002 das 13h às 17h<br/><i class="fa fa-envelope"></i> Dúvidas: <br>Sobre cadastros: cadastrospromac@prefeitura.sp.gov.br<br>Sobre projetos: projetospromac@prefeitura.sp.gov.br<br>Geral: promac@prefeitura.sp.gov.br</font></td>
+                        <td><font color="#ccc"><i class="fa fa-phone-square"></i> Dúvidas: <br>Sobre cadastros: cadastrospromac@prefeitura.sp.gov.br<br>Sobre projetos: projetospromac@prefeitura.sp.gov.br<br>Sobre incentivo e abatimento fiscal: incentivopromac@prefeitura.sp.gov.br<br>Sobre prestação de contas: prestacaocontas@prefeitura.sp.gov.br</font></td>
 						<td align="center"><font color="#ccc">2018 @ Pro-Mac - Programa Municipal de Apoio a Projetos Culturais<br/>Secretaria Municipal de Cultura<br/>Prefeitura de São Paulo</font></td>
                         <td width="20%"><img src="visual/images/pin_promac_pq.png" align="right"/></td>
 					</tr>
