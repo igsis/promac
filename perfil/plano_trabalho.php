@@ -275,7 +275,7 @@ if (isset($_POST['apagaAtividade'])) {
         $(modal).find('.modal-footer input').attr('value', id);
         $(modal).find('.modal-body p').text('Tem certeza que deseja remover "'+ nomeAtividade + '"?');
         $(modal).find('#confirmApagar').attr('name', nameBtn);
-        $(modal).modal();
+        $(modal).modal("show");
     }
 
     function atividadeEdita(classes, id, e) {

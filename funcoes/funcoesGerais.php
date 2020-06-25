@@ -3631,11 +3631,11 @@ function recuperaPlanos($idProjeto, $edicao = false)
                             </td>
                             <td>
                                 <button class='btn btn-sm btn-theme' type='button'
-                                        onclick="modalApagar(
-                                                '#apagarPlanoAtividade',
-                                                '<?= $atividades[0]['atividade'] ?>',
-                                                '<?= $atividades[0]['id'] ?>',
-                                                'apagaAtividade')">Remover Atividade
+                                        onclick=`modalApagar(
+                                                `#apagarPlanoAtividade`,
+                                                `<?= addslashes($atividades[0]['atividade']) ?>`,
+                                                `<?= $atividades[0]['id'] ?>`,
+                                                `apagaAtividade`)'>Remover Atividade
                                 </button>
                             </td>
                         <?php endif;
@@ -3651,11 +3651,11 @@ function recuperaPlanos($idProjeto, $edicao = false)
                             </button>
 
                             <button class='btn btn-theme mar-top10 form-control' type='button'
-                                    onclick="modalApagar(
-                                            '#apagarPlanoAtividade',
-                                            '<?= $plano['objetivo_especifico'] ?>',
-                                            '<?= $plano['id'] ?>', 'apagaObjetivo')
-                                            ">
+                                    onclick=`modalApagar(
+                                            `#apagarPlanoAtividade`,
+                                            `<?= $plano['objetivo_especifico'] ?>`,
+                                            `<?= $plano['id'] ?>`, `apagaObjetivo`)
+                                            '>
                                 Remover Objetivo
                             </button>
 
@@ -3687,11 +3687,11 @@ function recuperaPlanos($idProjeto, $edicao = false)
                                 </td>
                                 <td>
                                     <button class='btn btn-sm btn-theme' type='button'
-                                            onclick="modalApagar(
-                                                    '#apagarPlanoAtividade',
-                                                    '<?= $atividade['atividade'] ?>',
-                                                    '<?= $atividade['id'] ?>',
-                                                    'apagaAtividade')">Remover Atividade
+                                            onclick='modalApagar(
+                                                    `#apagarPlanoAtividade`,
+                                                    `<?= $atividade['atividade'] ?>`,
+                                                    `<?= $atividade['id'] ?>`,
+                                                    `apagaAtividade`)'>Remover Atividade
                                     </button>
                                 </td>
                             <?php endif; ?>
