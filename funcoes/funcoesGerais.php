@@ -3631,7 +3631,7 @@ function recuperaPlanos($idProjeto, $edicao = false)
                             </td>
                             <td>
                                 <button class='btn btn-sm btn-theme' type='button'
-                                        onclick=`modalApagar(
+                                        onclick='modalApagar(
                                                 `#apagarPlanoAtividade`,
                                                 `<?= addslashes($atividades[0]['atividade']) ?>`,
                                                 `<?= $atividades[0]['id'] ?>`,
@@ -3651,7 +3651,7 @@ function recuperaPlanos($idProjeto, $edicao = false)
                             </button>
 
                             <button class='btn btn-theme mar-top10 form-control' type='button'
-                                    onclick=`modalApagar(
+                                    onclick='modalApagar(
                                             `#apagarPlanoAtividade`,
                                             `<?= $plano['objetivo_especifico'] ?>`,
                                             `<?= $plano['id'] ?>`, `apagaObjetivo`)
