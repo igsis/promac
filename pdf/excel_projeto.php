@@ -28,28 +28,17 @@ $objPHPExcel->setActiveSheetIndex(0)
     ->setCellValue('A1', "Nº  de Protocolo")
     ->setCellValue('B1', "Nome do Projeto")
     ->setCellValue('C1', "Resumo do projeto")
-    ->setCellValue('D1', "Local")
-    ->setCellValue('E1', "Estimativa")
-    ->setCellValue('F1', "Logradouro Projeto")
-    ->setCellValue('G1', "Bairro")
-    ->setCellValue('H1', "Cidade")
-    ->setCellValue('I1', "Etapa do Projeto")
-    ->setCellValue('J1', "Orçamento")
-    ->setCellValue('K1', "Status")
-    ->setCellValue('L1', "Ano do Edital")
-    ->setCellValue('M1', "Nome do Proponente")
-    ->setCellValue('N1', "Tipo de Pessoa")
-    ->setCellValue('O1', "Documento (CPF/CNPJ)")
-    ->setCellValue('P1', "E-mail")
-    ->setCellValue('Q1', "Logradouro Proponente")
-    ->setCellValue('R1', "Nº")
-    ->setCellValue('S1', "Complemento")
-    ->setCellValue('T1', "Bairro")
-    ->setCellValue('U1', "Cidade")
-    ->setCellValue('V1', "Estado")
-    ->setCellValue('W1', "CEP")
-    ->setCellValue('X1', "Area de Atuação")
-    ->setCellValue('Y1', "Tags");
+    ->setCellValue('D1', "Distrito")
+    ->setCellValue('E1', "Etapa do Projeto")
+    ->setCellValue('F1', "Orçamento")
+    ->setCellValue('G1', "Status")
+    ->setCellValue('H1', "Ano do Edital")
+    ->setCellValue('I1', "Nome do Proponente")
+    ->setCellValue('J1', "Tipo de Pessoa")
+    ->setCellValue('K1', "Documento (CPF/CNPJ)")
+    ->setCellValue('L1', "E-mail")
+    ->setCellValue('M1', "Area de Atuação")
+    ->setCellValue('N1', "Tags");
 
 
 //Colorir a primeira fila
@@ -125,37 +114,38 @@ function listaLocal($idProjeto)
 {
     $con = bancoMysqli();
 
-    $sql_local = "SELECT idLocaisRealizacao, idProjeto, local, estimativaPublico, logradouro, numero, complemento, bairro, cidade, publicado FROM
-locais_realizacao WHERE idProjeto = '$idProjeto' AND publicado = '1'";
+    $sql_local = "SELECT d.distrito FROM locais_realizacao AS l RIGHT JOIN distrito AS d ON d.idDistrito = l.idDistrito WHERE l.idProjeto = '{$idProjeto}' AND l.publicado = '1' ";
 
     $query_local = mysqli_query($con,$sql_local);
     $num = mysqli_num_rows($query_local);
     if($num > 0)
     {
         $local = "";
-        $estimativa = "";
-        $logradouro = "";
-        $bairro = "";
-        $cidade = "";
+//        $estimativa = "";
+//        $logradouro = "";
+//        $bairro = "";
+//        $cidade = "";
         while($row = mysqli_fetch_array($query_local))
         {
-            $local .= $row['local']."\r";
-            $estimativa .= $row['estimativaPublico']."\r";
-            $logradouro .= $row['logradouro']. ", ".$row['numero']." ".$row['complemento']."\r";
-            $bairro .= $row['bairro']."\r";
-            $cidade .= $row['cidade']."\r";
+            $local .= $row['distrito']."; \r";
+//            $estimativa .= $row['estimativaPublico']."\r";
+//            $logradouro .= $row['logradouro']. ", ".$row['numero']." ".$row['complemento']."\r";
+//            $bairro .= $row['bairro']."\r";
+//            $cidade .= $row['cidade']."\r";
 
             $array = array(
                 "local" => substr($local,0,-1),
-                "estimativa" => substr($estimativa,0,-1),
-                "logradouro" => substr($logradouro,0,-1),
-                "bairro" => substr($bairro,0,-1),
-                "cidade" => substr($cidade,0,-1));
+//                "estimativa" => substr($estimativa,0,-1),
+//                "logradouro" => substr($logradouro,0,-1),
+//                "bairro" => substr($bairro,0,-1),
+//                "cidade" => substr($cidade,0,-1)
+            );
         }
         return $array;
     }
     return false;
 }
+
 
 
 $i = 2; // para começar a gravar os dados na segunda linha
@@ -205,27 +195,16 @@ while ($row = mysqli_fetch_array($query)) {
             ->setCellValue('B' . $i, $row['nomeProjeto'])
             ->setCellValue('C' . $i, $row['resumoProjeto'])
             ->setCellValue('D'.$i, $lista_local ? $lista_local['local']:'')
-            ->setCellValue('E'.$i, $lista_local ? $lista_local['estimativa']: '')
-            ->setCellValue('F'.$i, $lista_local ? $lista_local['logradouro']: '')
-            ->setCellValue('G'.$i, $lista_local ? $lista_local['bairro']: '')
-            ->setCellValue('H'.$i, $lista_local ? $lista_local['cidade']: '')
-            ->setCellValue('I' . $i, $row['etapaProjeto'])
-            ->setCellValue('J' . $i, $row['valorProjeto'])
-            ->setCellValue('K' . $i, $row['status'])
-            ->setCellValue('L' . $i, $row['edital'])
-            ->setCellValue('M' . $i, $proponente)
-            ->setCellValue('N' . $i, $tipo)
-            ->setCellValue('O'.$i, $documento)
-            ->setCellValue('P'.$i, $email)
-            ->setCellValue('Q'.$i, $logradouro)
-            ->setCellValue('R'.$i, $numero)
-            ->setCellValue('S'.$i, $complemento)
-            ->setCellValue('T'.$i, $bairro)
-            ->setCellValue('U'.$i, $cidade)
-            ->setCellValue('V'.$i, $estado)
-            ->setCellValue('W'.$i, $cep)
-            ->setCellValue('X' . $i, $row['areaAtuacao'])
-            ->setCellValue('Y' . $i, $tags);
+            ->setCellValue('E' . $i, $row['etapaProjeto'])
+            ->setCellValue('F' . $i, $row['valorProjeto'])
+            ->setCellValue('G' . $i, $row['status'])
+            ->setCellValue('H' . $i, $row['edital'])
+            ->setCellValue('I' . $i, $proponente)
+            ->setCellValue('J' . $i, $tipo)
+            ->setCellValue('K'.$i, $documento)
+            ->setCellValue('L'.$i, $email)
+            ->setCellValue('M' . $i, $row['areaAtuacao'])
+            ->setCellValue('N' . $i, $tags);
         $i++;
 }
 
