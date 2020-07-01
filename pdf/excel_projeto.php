@@ -116,25 +116,23 @@ function listaLocal($idProjeto)
 
     $sql_local = "SELECT d.distrito FROM locais_realizacao AS l RIGHT JOIN distrito AS d ON d.idDistrito = l.idDistrito WHERE l.idProjeto = '{$idProjeto}' AND l.publicado = '1' ";
 
-    $query_local = mysqli_query($con,$sql_local);
+    $query_local = mysqli_query($con, $sql_local);
     $num = mysqli_num_rows($query_local);
-    if($num > 0)
-    {
+    if ($num > 0) {
         $local = "";
 //        $estimativa = "";
 //        $logradouro = "";
 //        $bairro = "";
 //        $cidade = "";
-        while($row = mysqli_fetch_array($query_local))
-        {
-            $local .= $row['distrito']."; \r";
+        while ($row = mysqli_fetch_array($query_local)) {
+            $local .= $row['distrito'] . "; \r";
 //            $estimativa .= $row['estimativaPublico']."\r";
 //            $logradouro .= $row['logradouro']. ", ".$row['numero']." ".$row['complemento']."\r";
 //            $bairro .= $row['bairro']."\r";
 //            $cidade .= $row['cidade']."\r";
 
             $array = array(
-                "local" => substr($local,0,-1),
+                "local" => substr($local, 0, -1),
 //                "estimativa" => substr($estimativa,0,-1),
 //                "logradouro" => substr($logradouro,0,-1),
 //                "bairro" => substr($bairro,0,-1),
@@ -147,65 +145,70 @@ function listaLocal($idProjeto)
 }
 
 
-
 $i = 2; // para começar a gravar os dados na segunda linha
 while ($row = mysqli_fetch_array($query)) {
-        if ($row['tipoPessoa'] == 2) {
-            $pj = recuperaDados("pessoa_juridica", "idPj", $row['idPj']);
-            $proponente = $pj != null ?$pj['razaoSocial'] : '';
-            $documento = $pj != null ?$pj['cnpj'] : '';
-            $email = $pj != null ?$pj['email'] : '';
-            $logradouro = $pj != null ?$pj['logradouro'] : '';
-            $numero = $pj != null ?$pj['numero'] : '';
-            $complemento = $pj != null ?$pj['complemento'] : '';
-            $bairro = $pj != null ?$pj['bairro'] : '';
-            $cidade = $pj != null ?$pj['cidade'] : '';
-            $estado = $pj != null ?$pj['estado'] : '';
-            $cep = $pj != null ?$pj['cep'] : '';
-        } else {
-            $pf = recuperaDados("pessoa_fisica", "idPf", $row['idPf']);
-            $proponente = $pf != null ? $pf['nome']:'';
-            $documento = $pf != null ? $pf['cpf']:'';
-            $email = $pf != null ? $pf['email']:'';
-            $logradouro = $pf != null ? $pf['logradouro']:'';
-            $numero = $pf != null ? $pf['numero']:'';
-            $complemento = $pf != null ? $pf['complemento']:'';
-            $bairro = $pf != null ? $pf['bairro']:'';
-            $cidade = $pf != null ? $pf['cidade']:'';
-            $estado = $pf != null ? $pf['estado']:'';
-            $cep = $pf != null ? $pf['cep']:'';
-        }
 
-        $tipoPessoa = $row['tipoPessoa'];
-        if ($tipoPessoa == 1) {
-            $tipo = "Física";
-        } else {
-            $tipo = "Jurídica";
-        }
-        $tags = gerarTag($row['idProjeto']);
-        $lista_local = listaLocal($row['idProjeto']);
+    $sql_orc = "SELECT SUM(orc.valorTotal) as valorTotal
+                    FROM orcamento AS orc LEFT JOIN projeto AS pr ON pr.idProjeto = orc.idProjeto
+                    WHERE orc.publicado = '1' AND orc.idProjeto = {$row['idProjeto']}";
+    $query3 = mysqli_query($con, $sql_orc);
+    $orcamento = mysqli_fetch_array($query3);
+    if ($row['tipoPessoa'] == 2) {
+        $pj = recuperaDados("pessoa_juridica", "idPj", $row['idPj']);
+        $proponente = $pj != null ? $pj['razaoSocial'] : '';
+        $documento = $pj != null ? $pj['cnpj'] : '';
+        $email = $pj != null ? $pj['email'] : '';
+        $logradouro = $pj != null ? $pj['logradouro'] : '';
+        $numero = $pj != null ? $pj['numero'] : '';
+        $complemento = $pj != null ? $pj['complemento'] : '';
+        $bairro = $pj != null ? $pj['bairro'] : '';
+        $cidade = $pj != null ? $pj['cidade'] : '';
+        $estado = $pj != null ? $pj['estado'] : '';
+        $cep = $pj != null ? $pj['cep'] : '';
+    } else {
+        $pf = recuperaDados("pessoa_fisica", "idPf", $row['idPf']);
+        $proponente = $pf != null ? $pf['nome'] : '';
+        $documento = $pf != null ? $pf['cpf'] : '';
+        $email = $pf != null ? $pf['email'] : '';
+        $logradouro = $pf != null ? $pf['logradouro'] : '';
+        $numero = $pf != null ? $pf['numero'] : '';
+        $complemento = $pf != null ? $pf['complemento'] : '';
+        $bairro = $pf != null ? $pf['bairro'] : '';
+        $cidade = $pf != null ? $pf['cidade'] : '';
+        $estado = $pf != null ? $pf['estado'] : '';
+        $cep = $pf != null ? $pf['cep'] : '';
+    }
+
+    $tipoPessoa = $row['tipoPessoa'];
+    if ($tipoPessoa == 1) {
+        $tipo = "Física";
+    } else {
+        $tipo = "Jurídica";
+    }
+    $tags = gerarTag($row['idProjeto']);
+    $lista_local = listaLocal($row['idProjeto']);
 
 //            $objPHPExcel->getActiveSheet()->getStyle('A'.$i.'')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
-        $objPHPExcel->getActiveSheet()->getStyle('E' . $i . '')->getNumberFormat()->setFormatCode("#,##0.00");
-        $objPHPExcel->getActiveSheet()->getStyle('F' . $i . '')->getNumberFormat()->setFormatCode("#,##0.00");
+    $objPHPExcel->getActiveSheet()->getStyle('E' . $i . '')->getNumberFormat()->setFormatCode("#,##0.00");
+    $objPHPExcel->getActiveSheet()->getStyle('F' . $i . '')->getNumberFormat()->setFormatCode("#,##0.00");
 
 
-        $objPHPExcel->setActiveSheetIndex(0)
-            ->setCellValue('A' . $i, $row['protocolo'])
-            ->setCellValue('B' . $i, $row['nomeProjeto'])
-            ->setCellValue('C' . $i, $row['resumoProjeto'])
-            ->setCellValue('D'.$i, $lista_local ? $lista_local['local']:'')
-            ->setCellValue('E' . $i, $row['etapaProjeto'])
-            ->setCellValue('F' . $i, $row['valorProjeto'])
-            ->setCellValue('G' . $i, $row['status'])
-            ->setCellValue('H' . $i, $row['edital'])
-            ->setCellValue('I' . $i, $proponente)
-            ->setCellValue('J' . $i, $tipo)
-            ->setCellValue('K'.$i, $documento)
-            ->setCellValue('L'.$i, $email)
-            ->setCellValue('M' . $i, $row['areaAtuacao'])
-            ->setCellValue('N' . $i, $tags);
-        $i++;
+    $objPHPExcel->setActiveSheetIndex(0)
+        ->setCellValue('A' . $i, $row['protocolo'])
+        ->setCellValue('B' . $i, $row['nomeProjeto'])
+        ->setCellValue('C' . $i, $row['resumoProjeto'])
+        ->setCellValue('D' . $i, $lista_local ? $lista_local['local'] : '')
+        ->setCellValue('E' . $i, $row['etapaProjeto'])
+        ->setCellValue('F' . $i, $orcamento['valorTotal'] != null ? $orcamento['valorTotal'] : '')
+        ->setCellValue('G' . $i, $row['status'])
+        ->setCellValue('H' . $i, $row['edital'])
+        ->setCellValue('I' . $i, $proponente)
+        ->setCellValue('J' . $i, $tipo)
+        ->setCellValue('K' . $i, $documento)
+        ->setCellValue('L' . $i, $email)
+        ->setCellValue('M' . $i, $row['areaAtuacao'])
+        ->setCellValue('N' . $i, $tags);
+    $i++;
 }
 
 $objPHPExcel->setActiveSheetIndex(0);
