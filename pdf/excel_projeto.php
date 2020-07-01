@@ -25,17 +25,31 @@ $objPHPExcel->getProperties()->setCategory("Relatório de Projetos");
 
 // Add some data
 $objPHPExcel->setActiveSheetIndex(0)
-    ->setCellValue('A1', 'Nº Protocolo')
-    ->setCellValue('B1', 'Nome do projeto')
-    ->setCellValue('C1', 'Proponente')
-    ->setCellValue('D1', 'Tipo do Proponente')
-    ->setCellValue('E1', 'Área de Atuação')
-    ->setCellValue('F1', 'Tags')
-    ->setCellValue('G1', 'Resumo do Projeto')
-    ->setCellValue('H1', 'Etapa do Projeto')
-    ->setCellValue('I1', 'Status')
-    ->setCellValue('J1', 'Valor do Projeto')
-    ->setCellValue('K1', 'Edital');
+    ->setCellValue('A1', "Nº  de Protocolo")
+    ->setCellValue('B1', "Nome do Projeto")
+    ->setCellValue('C1', "Resumo do projeto")
+    ->setCellValue('D1', "Local")
+    ->setCellValue('E1', "Estimativa")
+    ->setCellValue('F1', "Logradouro Projeto")
+    ->setCellValue('G1', "Bairro")
+    ->setCellValue('H1', "Cidade")
+    ->setCellValue('I1', "Etapa do Projeto")
+    ->setCellValue('J1', "Orçamento")
+    ->setCellValue('K1', "Status")
+    ->setCellValue('L1', "Ano do Edital")
+    ->setCellValue('M1', "Nome do Proponente")
+    ->setCellValue('N1', "Tipo de Pessoa")
+    ->setCellValue('O1', "Documento (CPF/CNPJ)")
+    ->setCellValue('P1', "E-mail")
+    ->setCellValue('Q1', "Logradouro Proponente")
+    ->setCellValue('R1', "Nº")
+    ->setCellValue('S1', "Complemento")
+    ->setCellValue('T1', "Bairro")
+    ->setCellValue('U1', "Cidade")
+    ->setCellValue('V1', "Estado")
+    ->setCellValue('W1', "CEP")
+    ->setCellValue('X1', "Area de Atuação")
+    ->setCellValue('Y1', "Tags");
 
 
 //Colorir a primeira fila
@@ -66,7 +80,20 @@ $objPHPExcel->getActiveSheet()->getColumnDimension('H')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('I')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('J')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('K')->setAutoSize(true);
-$objPHPEx
+$objPHPExcel->getActiveSheet()->getColumnDimension('L')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('M')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('N')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('O')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('P')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('R')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('S')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('T')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('U')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('V')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('W')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('X')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('Y')->setAutoSize(true);
+
 
 //Dados Projeto
 $sql = "SELECT 	pr.idProjeto, pr.protocolo,  pr.nomeProjeto, area.areaAtuacao, pr.valorProjeto,
@@ -93,14 +120,70 @@ function gerarTag($idProjeto)
     return $tags;
 }
 
+//Recupera todos os locais daquele projeto
+function listaLocal($idProjeto)
+{
+    $con = bancoMysqli();
+
+    $sql_local = "SELECT idLocaisRealizacao, idProjeto, local, estimativaPublico, logradouro, numero, complemento, bairro, cidade, publicado FROM
+locais_realizacao WHERE idProjeto = '$idProjeto' AND publicado = '1'";
+
+    $query_local = mysqli_query($con,$sql_local);
+    $num = mysqli_num_rows($query_local);
+    if($num > 0)
+    {
+        $local = "";
+        $estimativa = "";
+        $logradouro = "";
+        $bairro = "";
+        $cidade = "";
+        while($row = mysqli_fetch_array($query_local))
+        {
+            $local .= $row['local']."\r";
+            $estimativa .= $row['estimativaPublico']."\r";
+            $logradouro .= $row['logradouro']. ", ".$row['numero']." ".$row['complemento']."\r";
+            $bairro .= $row['bairro']."\r";
+            $cidade .= $row['cidade']."\r";
+
+            $array = array(
+                "local" => substr($local,0,-1),
+                "estimativa" => substr($estimativa,0,-1),
+                "logradouro" => substr($logradouro,0,-1),
+                "bairro" => substr($bairro,0,-1),
+                "cidade" => substr($cidade,0,-1));
+        }
+        return $array;
+    }
+    return false;
+}
+
+
 $i = 2; // para começar a gravar os dados na segunda linha
 while ($row = mysqli_fetch_array($query)) {
         if ($row['tipoPessoa'] == 2) {
             $pj = recuperaDados("pessoa_juridica", "idPj", $row['idPj']);
-            $proponente = $pj['razaoSocial'];
+            $proponente = $pj != null ?$pj['razaoSocial'] : '';
+            $documento = $pj != null ?$pj['cnpj'] : '';
+            $email = $pj != null ?$pj['email'] : '';
+            $logradouro = $pj != null ?$pj['logradouro'] : '';
+            $numero = $pj != null ?$pj['numero'] : '';
+            $complemento = $pj != null ?$pj['complemento'] : '';
+            $bairro = $pj != null ?$pj['bairro'] : '';
+            $cidade = $pj != null ?$pj['cidade'] : '';
+            $estado = $pj != null ?$pj['estado'] : '';
+            $cep = $pj != null ?$pj['cep'] : '';
         } else {
             $pf = recuperaDados("pessoa_fisica", "idPf", $row['idPf']);
-            $proponente = $pf['nome'];
+            $proponente = $pf != null ? $pf['nome']:'';
+            $documento = $pf != null ? $pf['cpf']:'';
+            $email = $pf != null ? $pf['email']:'';
+            $logradouro = $pf != null ? $pf['logradouro']:'';
+            $numero = $pf != null ? $pf['numero']:'';
+            $complemento = $pf != null ? $pf['complemento']:'';
+            $bairro = $pf != null ? $pf['bairro']:'';
+            $cidade = $pf != null ? $pf['cidade']:'';
+            $estado = $pf != null ? $pf['estado']:'';
+            $cep = $pf != null ? $pf['cep']:'';
         }
 
         $tipoPessoa = $row['tipoPessoa'];
@@ -110,6 +193,7 @@ while ($row = mysqli_fetch_array($query)) {
             $tipo = "Jurídica";
         }
         $tags = gerarTag($row['idProjeto']);
+        $lista_local = listaLocal($row['idProjeto']);
 
 //            $objPHPExcel->getActiveSheet()->getStyle('A'.$i.'')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
         $objPHPExcel->getActiveSheet()->getStyle('E' . $i . '')->getNumberFormat()->setFormatCode("#,##0.00");
@@ -119,15 +203,29 @@ while ($row = mysqli_fetch_array($query)) {
         $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('A' . $i, $row['protocolo'])
             ->setCellValue('B' . $i, $row['nomeProjeto'])
-            ->setCellValue('C' . $i, $proponente)
-            ->setCellValue('D' . $i, $tipo)
-            ->setCellValue('E' . $i, $row['areaAtuacao'])
-            ->setCellValue('F' . $i, $tags)
-            ->setCellValue('G' . $i, $row['resumoProjeto'])
-            ->setCellValue('H' . $i, $row['etapaProjeto'])
-            ->setCellValue('I' . $i, $row['status'])
+            ->setCellValue('C' . $i, $row['resumoProjeto'])
+            ->setCellValue('D'.$i, $lista_local ? $lista_local['local']:'')
+            ->setCellValue('E'.$i, $lista_local ? $lista_local['estimativa']: '')
+            ->setCellValue('F'.$i, $lista_local ? $lista_local['logradouro']: '')
+            ->setCellValue('G'.$i, $lista_local ? $lista_local['bairro']: '')
+            ->setCellValue('H'.$i, $lista_local ? $lista_local['cidade']: '')
+            ->setCellValue('I' . $i, $row['etapaProjeto'])
             ->setCellValue('J' . $i, $row['valorProjeto'])
-            ->setCellValue('K' . $i, $row['edital']);
+            ->setCellValue('K' . $i, $row['status'])
+            ->setCellValue('L' . $i, $row['edital'])
+            ->setCellValue('M' . $i, $proponente)
+            ->setCellValue('N' . $i, $tipo)
+            ->setCellValue('O'.$i, $documento)
+            ->setCellValue('P'.$i, $email)
+            ->setCellValue('Q'.$i, $logradouro)
+            ->setCellValue('R'.$i, $numero)
+            ->setCellValue('S'.$i, $complemento)
+            ->setCellValue('T'.$i, $bairro)
+            ->setCellValue('U'.$i, $cidade)
+            ->setCellValue('V'.$i, $estado)
+            ->setCellValue('W'.$i, $cep)
+            ->setCellValue('X' . $i, $row['areaAtuacao'])
+            ->setCellValue('Y' . $i, $tags);
         $i++;
 }
 
