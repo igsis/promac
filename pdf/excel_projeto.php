@@ -25,20 +25,23 @@ $objPHPExcel->getProperties()->setCategory("Relatório de Projetos");
 
 // Add some data
 $objPHPExcel->setActiveSheetIndex(0)
-    ->setCellValue('A1', "Nº  de Protocolo")
-    ->setCellValue('B1', "Nome do Projeto")
-    ->setCellValue('C1', "Resumo do projeto")
-    ->setCellValue('D1', "Distrito")
-    ->setCellValue('E1', "Etapa do Projeto")
-    ->setCellValue('F1', "Orçamento")
-    ->setCellValue('G1', "Status")
-    ->setCellValue('H1', "Ano do Edital")
+    ->setCellValue('A1', "Ano do Edital")
+    ->setCellValue('B1', "Nº  de Protocolo")
+    ->setCellValue('C1', "Nome do Projeto")
+    ->setCellValue('D1', "Resumo do projeto")
+    ->setCellValue('E1', "Distrito")
+    ->setCellValue('F1', "Etapa do Projeto")
+    ->setCellValue('G1', "Orçamento")
+    ->setCellValue('H1', "Status")
     ->setCellValue('I1', "Nome do Proponente")
     ->setCellValue('J1', "Tipo de Pessoa")
     ->setCellValue('K1', "Documento (CPF/CNPJ)")
     ->setCellValue('L1', "E-mail")
     ->setCellValue('M1', "Area de Atuação")
-    ->setCellValue('N1', "Tags");
+    ->setCellValue('N1', "Tags")
+    ->setCellValue('O1', "POSTO DE TRABALHO")
+    ->setCellValue('P1', "MÉDIA DE REMUNERAÇÃO");
+
 
 
 //Colorir a primeira fila
@@ -88,10 +91,10 @@ $objPHPExcel->getActiveSheet()->getColumnDimension('Y')->setAutoSize(true);
 $sql = "SELECT 	pr.idProjeto, pr.protocolo,  pr.nomeProjeto, area.areaAtuacao, pr.valorProjeto,
         tipoPessoa, idPj, idPf, st.etapaProjeto, pr.idEtapaProjeto, es.status, pr.edital,pr.resumoProjeto,pr.tipoPessoa
          FROM projeto AS pr
-         INNER JOIN etapa_projeto AS st ON pr.idEtapaProjeto = st.idEtapaProjeto
+         LEFT JOIN etapa_projeto AS st ON pr.idEtapaProjeto = st.idEtapaProjeto
          LEFT JOIN etapa_status AS es ON pr.idStatus = es.idStatus
-         INNER JOIN area_atuacao AS area ON pr.idAreaAtuacao = area.idArea
-         WHERE pr.publicado = '1' AND (pr.idPj > 0 OR pr.idPf > 0) ORDER BY pr.edital, pr.protocolo";
+         LEFT JOIN area_atuacao AS area ON pr.idAreaAtuacao = area.idArea
+         WHERE pr.publicado = '1' AND (pr.idPj > 0 OR pr.idPf > 0) AND nomeProjeto NOT LIKE '%TESTE%' ORDER BY pr.edital, pr.protocolo";
 $query = mysqli_query($con, $sql);
 $campo = mysqli_fetch_array($query);
 
@@ -153,6 +156,7 @@ while ($row = mysqli_fetch_array($query)) {
                     WHERE orc.publicado = '1' AND orc.idProjeto = {$row['idProjeto']}";
     $query3 = mysqli_query($con, $sql_orc);
     $orcamento = mysqli_fetch_array($query3);
+
     if ($row['tipoPessoa'] == 2) {
         $pj = recuperaDados("pessoa_juridica", "idPj", $row['idPj']);
         $proponente = $pj != null ? $pj['razaoSocial'] : '';
@@ -187,27 +191,31 @@ while ($row = mysqli_fetch_array($query)) {
     }
     $tags = gerarTag($row['idProjeto']);
     $lista_local = listaLocal($row['idProjeto']);
+    $posto_trabalho = recuperaDados("postos_trabalho","idProjeto",$row['idProjeto']);
 
-//            $objPHPExcel->getActiveSheet()->getStyle('A'.$i.'')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+    $objPHPExcel->getActiveSheet()->getStyle('A'.$i.'')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
     $objPHPExcel->getActiveSheet()->getStyle('E' . $i . '')->getNumberFormat()->setFormatCode("#,##0.00");
     $objPHPExcel->getActiveSheet()->getStyle('F' . $i . '')->getNumberFormat()->setFormatCode("#,##0.00");
 
 
     $objPHPExcel->setActiveSheetIndex(0)
-        ->setCellValue('A' . $i, $row['protocolo'])
-        ->setCellValue('B' . $i, $row['nomeProjeto'])
-        ->setCellValue('C' . $i, $row['resumoProjeto'])
-        ->setCellValue('D' . $i, $lista_local ? $lista_local['local'] : '')
-        ->setCellValue('E' . $i, $row['etapaProjeto'])
-        ->setCellValue('F' . $i, $orcamento['valorTotal'] != null ? $orcamento['valorTotal'] : '')
-        ->setCellValue('G' . $i, $row['status'])
-        ->setCellValue('H' . $i, $row['edital'])
+        ->setCellValue('A' . $i, $row['edital'])
+        ->setCellValue('B' . $i, $row['protocolo'])
+        ->setCellValue('C' . $i, $row['nomeProjeto'])
+        ->setCellValue('D' . $i, $row['resumoProjeto'])
+        ->setCellValue('E' . $i, $lista_local ? $lista_local['local'] : '')
+        ->setCellValue('F' . $i, $row['etapaProjeto'])
+        ->setCellValue('G' . $i, $orcamento['valorTotal'] != null ? dinheiroParaBr($orcamento['valorTotal']) : '')
+        ->setCellValue('H' . $i, $row['status'])
         ->setCellValue('I' . $i, $proponente)
         ->setCellValue('J' . $i, $tipo)
         ->setCellValue('K' . $i, $documento)
         ->setCellValue('L' . $i, $email)
         ->setCellValue('M' . $i, $row['areaAtuacao'])
-        ->setCellValue('N' . $i, $tags);
+        ->setCellValue('N' . $i, $tags)
+        ->setCellValue('O' . $i, $posto_trabalho != null ? $posto_trabalho['quantidade']:'')
+        ->setCellValue('P' . $i, $posto_trabalho != null ? $posto_trabalho['media_valor']:'');
+
     $i++;
 }
 
