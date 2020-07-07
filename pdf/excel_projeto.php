@@ -34,13 +34,15 @@ $objPHPExcel->setActiveSheetIndex(0)
     ->setCellValue('G1', "Orçamento")
     ->setCellValue('H1', "Status")
     ->setCellValue('I1', "Nome do Proponente")
-    ->setCellValue('J1', "Tipo de Pessoa")
-    ->setCellValue('K1', "Documento (CPF/CNPJ)")
-    ->setCellValue('L1', "E-mail")
-    ->setCellValue('M1', "Area de Atuação")
-    ->setCellValue('N1', "Tags")
-    ->setCellValue('O1', "POSTO DE TRABALHO")
-    ->setCellValue('P1', "MÉDIA DE REMUNERAÇÃO");
+    ->setCellValue('J1', "Gênero")
+    ->setCellValue('K1', "Etnia")
+    ->setCellValue('L1', "Tipo de Pessoa")
+    ->setCellValue('M1', "Documento (CPF/CNPJ)")
+    ->setCellValue('N1', "E-mail")
+    ->setCellValue('O1', "Area de Atuação")
+    ->setCellValue('P1', "Tags")
+    ->setCellValue('Q1', "POSTO DE TRABALHO")
+    ->setCellValue('R1', "MÉDIA DE REMUNERAÇÃO");
 
 
 
@@ -186,9 +188,23 @@ while ($row = mysqli_fetch_array($query)) {
     $tipoPessoa = $row['tipoPessoa'];
     if ($tipoPessoa == 1) {
         $tipo = "Física";
+        $sqlTipo = "SELECT ge.genero, et.etnia 
+                    FROM pessoa_informacao_adicional as pi 
+						  LEFT JOIN etnias as et ON pi.etnia = et.id 
+						  LEFT JOIN generos AS ge ON pi.genero = ge.id  
+                    WHERE pi.tipo_pessoa_id = {$tipoPessoa} AND pi.pessoa_id = {$row['idPf']}";
     } else {
         $tipo = "Jurídica";
+        $sqlTipo = "SELECT ge.genero, et.etnia 
+                    FROM pessoa_informacao_adicional as pi 
+						  LEFT JOIN etnias as et ON pi.etnia = et.id 
+						  LEFT JOIN generos AS ge ON pi.genero = ge.id  
+                    WHERE pi.tipo_pessoa_id = {$tipoPessoa} AND pi.pessoa_id = {$row['idPj']}";
     }
+
+    $query4 = mysqli_query($con, $sqlTipo);
+    $infoPessoa = mysqli_fetch_array($query4);
+
     $tags = gerarTag($row['idProjeto']);
     $lista_local = listaLocal($row['idProjeto']);
     $posto_trabalho = recuperaDados("postos_trabalho","idProjeto",$row['idProjeto']);
@@ -208,13 +224,15 @@ while ($row = mysqli_fetch_array($query)) {
         ->setCellValue('G' . $i, $orcamento['valorTotal'] != null ? dinheiroParaBr($orcamento['valorTotal']) : '')
         ->setCellValue('H' . $i, $row['status'])
         ->setCellValue('I' . $i, $proponente)
-        ->setCellValue('J' . $i, $tipo)
-        ->setCellValue('K' . $i, $documento)
-        ->setCellValue('L' . $i, $email)
-        ->setCellValue('M' . $i, $row['areaAtuacao'])
-        ->setCellValue('N' . $i, $tags)
-        ->setCellValue('O' . $i, $posto_trabalho != null ? $posto_trabalho['quantidade']:'')
-        ->setCellValue('P' . $i, $posto_trabalho != null ? $posto_trabalho['media_valor']:'');
+        ->setCellValue('J' . $i, $infoPessoa != null ? $infoPessoa['genero']:'')
+        ->setCellValue('K' . $i, $infoPessoa != null ? $infoPessoa['etnia']: '')
+        ->setCellValue('L' . $i, $tipo)
+        ->setCellValue('M' . $i, $documento)
+        ->setCellValue('N' . $i, $email)
+        ->setCellValue('O' . $i, $row['areaAtuacao'])
+        ->setCellValue('P' . $i, $tags)
+        ->setCellValue('Q' . $i, $posto_trabalho != null ? $posto_trabalho['quantidade']:'')
+        ->setCellValue('R' . $i, $posto_trabalho != null ? dinheiroParaBr($posto_trabalho['media_valor']):'');
 
     $i++;
 }
