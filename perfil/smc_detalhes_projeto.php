@@ -635,6 +635,7 @@ $comissao = recuperaDados("pessoa_fisica","idPf",$projeto['idComissao']);
                         <li class="nav"><a href="#financeiro" data-toggle="tab">Financeiro</a></li>
                         <li class="nav"><a href="#pagamentos" data-toggle="tab">Pagamentos</a></li>
                         <li class="nav"><a href="#historico" data-toggle="tab">Histórico</a></li>
+                        <li class="nav"><a href="#status" data-toggle="tab">Status</a></li>
                     </ul>
                     <div class="tab-content"><br/>
                         <!-- LABEL ADMINISTRATIVO-->
@@ -663,6 +664,9 @@ $comissao = recuperaDados("pessoa_fisica","idPf",$projeto['idComissao']);
 
                         <!-- LABEL FINANCEIRO -->
                         <?php include "includes/label_smc_financeiro.php"; ?>
+
+                        <!-- LABEL STATUS MANUAL -->
+                        <?php include "includes/label_smc_status.php"; ?>
                     </div>
                 </div>
             </div>
