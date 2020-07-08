@@ -38,9 +38,13 @@
 			<li><a href="?perfil=fazenda">Fazenda</a></li>
             <li><a href="#">Gerenciamento do sistema</a>
                 <ul class="dl-submenu">
+                    <?php if ($_SESSION['idUser'] == 1): ?>
+                        <li><a href="?perfil=ajuste_valor">Executar Script de Valor</a></li>
+                    <?php endif ?>
                     <li><a href="?perfil=smc_area_atuacao">Área atuação</a></li>
                     <li><a href="?perfil=smc_agendamento_cadastro">Cadastro Link Agendamento</a></li>
                     <li><a href="?perfil=smc_gerenciar_projeto">Liberar/Bloquear projetos</a></li>
+                    <li><a href="?perfil=smc_gerenciar_edital">Escolher Ano do Edital Ativo</a></li>
                     <li><a href="?perfil=informacoes_iniciais_pf">Módulo Proponente (provisório)</a></li>
                     <li><a href="?perfil=smc_arquivos">Uploads</a></li>
                     <li><a href="#">Usuários</a>

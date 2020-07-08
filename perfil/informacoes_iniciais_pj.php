@@ -40,50 +40,47 @@ if(isset($_POST['atualizarJuridica']) and $_POST['numero'] and empty($endereço)
 	$Complemento = $_POST['complemento'];
 	$cooperativa = $_POST['cooperativa'];
 	$mei = $_POST['mei'];
-		
-		$validar = array(
-			$_POST['Endereco'],
-			$_POST['Bairro'],
-			$_POST['cidade'],
-			$_POST['estado'],
-			$_POST['cep'],
-			$_POST['numero']
-		);
-	
 
+    $validar = array(
+        $_POST['Endereco'],
+        $_POST['Bairro'],
+        $_POST['cidade'],
+        $_POST['estado'],
+        $_POST['cep'],
+        $_POST['numero']
+    );
+    $sql_atualiza_pj = "UPDATE pessoa_juridica SET
+        `razaoSocial` = '$razaoSocial',
+        `telefone` = '$telefone',
+        `celular` = '$celular',
+        `email` = '$email',
+        `logradouro` = '$Endereco',
+        `bairro` = '$Bairro',
+        `cidade` = '$cidade',
+        `estado` = '$estado',
+        `cep` = '$CEP',
+        `numero` = '$Numero',
+        `complemento` = '$Complemento',
+        `cooperativa` = '$cooperativa',
+        `mei` = '$mei',
+        `alteradoPor` = '$usuarioLogado'
+        WHERE `idPj` = '$idPj'";
+    if (mysqli_query($con, $sql_atualiza_pj)) {
 
-	$sql_atualiza_pj = "UPDATE pessoa_juridica SET
-	`razaoSocial` = '$razaoSocial',
-	`telefone` = '$telefone',
-	`celular` = '$celular',
-	`email` = '$email',
-	`logradouro` = '$Endereco',
-	`bairro` = '$Bairro',
-	`cidade` = '$cidade',
-	`estado` = '$estado',
-	`cep` = '$CEP',
-	`numero` = '$Numero',
-	`complemento` = '$Complemento',
-	`cooperativa` = '$cooperativa',
-    `mei` = '$mei',
-	`alteradoPor` = '$usuarioLogado'
-	WHERE `idPj` = '$idPj'";
+        if (in_array(null, $validar)) {
+            $mensagem = "<font color='#ff2100'><strong>Seu cadastro possui campos pendêntes!</strong></font>";
+        } else {
+            $mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso! Utilize o menu para avançar.</strong></font>";
+        }
 
-	if(mysqli_query($con,$sql_atualiza_pj))
-	{
-
-		if(in_array(null, $validar)){
-			$mensagem = "<font color='#ff2100'><strong>Seu cadastro possui campos pendêntes!</strong></font>";
-		}else{
-			$mensagem = "<font color='#01DF3A'><strong>Atualizado com sucesso! Utilize o menu para avançar.</strong></font>";
-		}
-
-		gravarLog($sql_atualiza_pj);
-	}
-	else
-	{
-		$mensagem = "<font color='#FF0000'><strong>Erro ao atualizar! Tente novamente.</strong></font>";
-	}
+        gravarLog($sql_atualiza_pj);
+    } else {
+        if( $con->errno == 1062) {
+            $mensagem = "<font color='#FF0000'><strong>Não foi possível utilizar o email <i>$email</i> pois já pertence a outro cadastro.</strong></font>";
+        } else {
+            $mensagem = "<font color='#FF0000'><strong>Erro ao atualizar! Tente novamente.</strong></font>";
+        }
+    }
 }
 
 if($pj['liberado'] == 3)

@@ -52,6 +52,7 @@ if($nome != '' || $cpf != '')
 			$area = recuperaDados("area_atuacao","idArea",$lista['idAreaAtuacao']);
 			$etapa = recuperaDados("etapa_projeto","idEtapaProjeto",$lista['idEtapaProjeto']);
 			$comissao = recuperaDados("pessoa_fisica","idPf",$lista['idComissao']);
+			$status = recuperaDados("etapa_status","idStatus",$lista['idStatus']);
 			$x[$i]['idProjeto'] = $lista['idProjeto'];
 			$x[$i]['protocolo'] = $lista['protocolo'];
 			$x[$i]['nomeProjeto'] = $lista['nomeProjeto'];
@@ -60,6 +61,7 @@ if($nome != '' || $cpf != '')
 			$x[$i]['areaAtuacao'] = $area['areaAtuacao'];
 			$x[$i]['comissao'] = $comissao['nome'];
 			$x[$i]['etapa'] = $etapa['etapaProjeto'];
+			$x[$i]['status'] = $status['status'];
 			$x[$i]['dataParecerista'] = $lista['dataParecerista'];
 			$idComissao = $lista['idComissao'];
 			$idEtapaProjeto = $lista['idEtapaProjeto'];
@@ -107,6 +109,7 @@ elseif($razaoSocial != '' || $cnpj != '')
 			$area = recuperaDados("area_atuacao","idArea",$lista['idAreaAtuacao']);
             $etapa = recuperaDados("etapa_projeto","idEtapaProjeto",$lista['idEtapaProjeto']);
 			$comissao = recuperaDados("pessoa_fisica","idPf",$lista['idComissao']);
+			$status = recuperaDados("etapa_status","idStatus",$lista['idStatus']);
 			$x[$i]['idProjeto'] = $lista['idProjeto'];
 			$x[$i]['protocolo'] = $lista['protocolo'];
 			$x[$i]['nomeProjeto'] = $lista['nomeProjeto'];
@@ -115,6 +118,7 @@ elseif($razaoSocial != '' || $cnpj != '')
 			$x[$i]['areaAtuacao'] = $area['areaAtuacao'];
 			$x[$i]['comissao'] = $comissao['nome'];
 			$x[$i]['etapa'] = $etapa['etapaProjeto'];
+			$x[$i]['status'] = $status['status'];
             $idComissao = $lista['idComissao'];
             $idEtapaProjeto = $lista['idEtapaProjeto'];
 			$i++;
@@ -190,6 +194,7 @@ else
 			$pf = recuperaDados("pessoa_fisica","idPf",$lista['idPf']);
 			$pj = recuperaDados("pessoa_juridica","idPj",$lista['idPj']);
 			$comissao = recuperaDados("pessoa_fisica","idPf",$lista['idComissao']);
+			$status = recuperaDados("etapa_status","idStatus",$lista['idStatus']);
 			$x[$i]['idProjeto'] = $lista['idProjeto'];
 			$x[$i]['protocolo'] = $lista['protocolo'];
 			$x[$i]['nomeProjeto'] = $lista['nomeProjeto'];
@@ -209,6 +214,7 @@ else
 			$x[$i]['areaAtuacao'] = $area['areaAtuacao'];
 			$x[$i]['comissao'] = $comissao['nome'];
             $x[$i]['etapa'] = $etapa['etapaProjeto'];
+            $x[$i]['status'] = $status['status'];
 			$i++;
 		}
 		$x['num'] = $i;
@@ -245,6 +251,7 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 								<td>Área de Atuação</td>
 								<td>Parecerista</td>
 								<td>Etapa</td>
+								<td>Status</td>
 								<td width='10%'></td>
 							</tr>
 						</thead>
@@ -262,6 +269,7 @@ $mensagem = "Foram encontrados ".$x['num']." resultados";
 								echo "<td class='list_description'>".mb_strimwidth($x[$h]['areaAtuacao'], 0, 38, "...")."</td>";
 								echo "<td class='list_description'>".strstr($x[$h]['comissao'], ' ', true)."</td>";
 								echo "<td class='list_description'>".$x[$h]['etapa']."</td>";
+								echo "<td class='list_description'>".$x[$h]['status']."</td>";
 								echo "<td class='list_description'>
 										<form method='POST' action='?perfil=smc_detalhes_projeto'>
 											<input type='hidden' name='idProjeto' value='".$x[$h]['idProjeto']."' />

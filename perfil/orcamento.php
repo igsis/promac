@@ -121,13 +121,13 @@ if(isset($_POST['insereOrcamento']) || isset($_POST['editaOrcamento'])) {
                 ORDER BY idOrcamento";
     $query_total = mysqli_query($con, $sql_total);
     $total = mysqli_fetch_array($query_total);
-    $valorIncentivo = $total['tot'];
+    $valorProjeto = $total['tot'];
 
-    $sql_incentivo = "UPDATE projeto SET valorIncentivo = '$valorIncentivo' WHERE idProjeto = '$idProjeto'";
-    $query_incentivo = mysqli_query($con, $sql_incentivo);
-    if (mysqli_query($con, $sql_incentivo)) {
+    $sql_projeto = "UPDATE projeto SET valorProjeto = '$valorProjeto' WHERE idProjeto = '$idProjeto'";
+    $query_projeto = mysqli_query($con, $sql_projeto);
+    if (mysqli_query($con, $sql_projeto)) {
         $mensagem .= "<br/><font color='#01DF3A'><strong>Valor total do incentivo atualizado!</strong></font>";
-        gravarLog($sql_incentivo);
+        gravarLog($sql_projeto);
     } else {
         $mensagem .= "<br/><font color='#FF0000'><strong>Erro ao atualizar o valor total do incentivo! Tente novamente.</strong></font>";
     }
@@ -250,7 +250,7 @@ if(isset($_POST['apagar']))
                         <div class="col-md-offset-2 col-md-8">
                             <form method="POST" action="?perfil=orcamento" class="form-horizontal" role="form"
                                   enctype="multipart/form-data">
-                                <?php if (verificaArquivosExistentesPF($idProjeto, 38)): ?>
+                                <?php if (verificaArquivosExistentesPF($idProjeto, 38, 3)): ?>
                                     <label>Planilha completa do projeto</label>
                                     <?php exibePlanilhaCompleta($idProjeto, '38', 'projeto_edicao') ?>
                                 <?php else: ?>

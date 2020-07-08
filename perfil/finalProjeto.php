@@ -1,18 +1,6 @@
 <?php
 
-function recuperaTags($idProjeto)
-{
-    $con = bancoMysqli();
-    $sqlTags = "SELECT t.tag FROM projeto_tag AS pt
-                INNER JOIN tags AS t ON pt.tag_id = t.id
-                WHERE pt.projeto_id = '$idProjeto'";
-    $queryTags = $con->query($sqlTags)->fetch_all(MYSQLI_ASSOC);
-    foreach ($queryTags as $tag) {
-        $tags[] = $tag['tag'];
-    }
 
-    return $tags;
-}
 
 $con = bancoMysqli();
 $idUsuario = $_SESSION['idUser'];
@@ -24,6 +12,8 @@ $projeto = recuperaDados("projeto", "idProjeto", $idProjeto);
 $area = recuperaDados("area_atuacao", "idArea", $projeto['idAreaAtuacao']);
 $renuncia = recuperaDados("renuncia_fiscal", "idRenuncia", $projeto['idRenunciaFiscal']);
 $cronograma = recuperaDados("cronograma", "idCronograma", $projeto['idCronograma']);
+$postosTrabalho = recuperaDados("postos_trabalho", "idProjeto", $idProjeto);
+
 if ($cronograma) {
     $tempoTotal = $cronograma['preProducao'] + $cronograma['producao'] + $cronograma['posProducao'];
 } else {
@@ -122,6 +112,15 @@ if ($projeto['idEtapaProjeto'] == 6)
             </p>
             <p align="justify">
                 <strong>Acessibilidade:</strong> <?php echo isset($projeto['acessibilidade']) ? $projeto['acessibilidade'] : null; ?>
+            </p>
+            <p align="justify">
+                <strong>Quantos postos de trabalho diretos o seu projeto gera, ainda que temporariamente?</strong> <?php echo isset($postosTrabalho['quantidade']) ? $postosTrabalho['quantidade'] : null; ?>
+            </p>
+            <p align="justify">
+                <strong>Qual a média, em meses, de tempo de contratação de cada posto de trabalho?</strong> <?php echo isset($postosTrabalho['media_meses']) ? "{$postosTrabalho['media_meses']} meses" : null; ?>
+            </p>
+            <p align="justify">
+                <strong>Qual a média, em reais, de remuneração de cada posto de trabalho?</strong> <?php echo isset($postosTrabalho['media_valor']) ? dinheiroParaBr($postosTrabalho['media_valor']) : null; ?>
             </p>
         </div>
 
@@ -248,11 +247,11 @@ if ($projeto['idEtapaProjeto'] == 6)
                 <li class="list-group-item">
                     <table class="table table-bordered">
                         <tr>
-                            <td width='25%'><strong>Etapa</strong></td>
+                            <td width='25%'><strong>Grupo de Despesa</strong></td>
                             <td><strong>Descrição</strong></td>
                             <td width='5%'><strong>Qtde</strong></td>
                             <td width='5%'><strong>Unid. Med.</strong></td>
-                            <td width='5%'><strong>Qtde Unid.</strong></td>
+                            <td width='5%'><strong>Ocorrências</strong></td>
                             <td><strong>Valor Unit.</strong></td>
                             <td><strong>Valor Total</strong></td>
                         </tr>
@@ -462,7 +461,7 @@ if ($projeto['idEtapaProjeto'] == 6)
                 <button id="inptEnviar" class="btn btn-theme btn-lg" type="button" data-toggle="modal"
                         data-target="#confirmApagar" data-title="Inscrever Projeto?"
                         data-message="Deseja realmente inscrever o projeto <?= $projeto['nomeProjeto'] ?>? Após o envio não será possível editá-lo."
-                        style="display: none;">Inscrever Projeto
+                        style="display: none;">Finalizar e Enviar Projeto
                 </button>
 
                 <!-- <input type="hidden" value="Inscrever Projeto" id="inptEnviar"

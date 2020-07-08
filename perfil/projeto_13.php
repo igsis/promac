@@ -4,11 +4,11 @@ $idProjeto = $_SESSION['idProjeto'];
 
 if(isset($_POST['insere']))
 {
-	$midia1 = $_POST['midia_social_1'];
-	$midia2 = $_POST['midia_social_2'];
-    $video1 = $_POST['video1'];
-	$video2 = $_POST['video2'];
-	$video3 = $_POST['video3'];
+	$midia1 = addslashes($_POST['midia_social_1']);
+	$midia2 = addslashes($_POST['midia_social_2']);
+    $video1 = addslashes($_POST['video1']);
+	$video2 = addslashes($_POST['video2']);
+	$video3 = addslashes($_POST['video3']);
 
 	$sql_insere = "UPDATE projeto SET
 		midia_social_1 = '$midia1',

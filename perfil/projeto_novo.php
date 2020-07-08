@@ -1,6 +1,8 @@
 <?php
 $con = bancoMysqli();
 
+$editalAtivo = recuperaDados("liberacao_projeto","idStatus",1)['edital'];
+
 if(isset($_POST['novoPj'])) //tipoePessoa = 2
 {
 	$idPj = $_SESSION['idUser'];
@@ -15,7 +17,7 @@ if(isset($_POST['novoPj'])) //tipoePessoa = 2
 	{
 		$contratoGestao = 0;
 	}
-	$sql_insere_projeto = "INSERT INTO projeto (idPj, contratoGestao, tipoPessoa, nomeProjeto, idAreaAtuacao, idEtapaProjeto, publicado) VALUES ('$idPj', '$contratoGestao', 2, '$nomeProjeto', '$idAreaAtuacao', 1, 1)";
+	$sql_insere_projeto = "INSERT INTO projeto (idPj, contratoGestao, tipoPessoa, nomeProjeto, idAreaAtuacao, idEtapaProjeto, publicado, edital) VALUES ('$idPj', '$contratoGestao', 2, '$nomeProjeto', '$idAreaAtuacao', 1, 1, $editalAtivo)";
 	
 	if(mysqli_query($con,$sql_insere_projeto))
 	{
@@ -68,13 +70,7 @@ if(isset($_POST['novoPj'])) //tipoePessoa = 2
 
         $mensagem = "<font color='#01DF3A'><strong>Gravado com sucesso! Aguarde...</strong></font>";
 		gravarLog($sql_insere_projeto);
-        if($idAreaAtuacao == 22){
-            echo "<meta HTTP-EQUIV='refresh' CONTENT='0.5;URL=?perfil=projeto_edicao'>";
-        }else{
-            echo "<meta HTTP-EQUIV='refresh' CONTENT='0.5;URL=?perfil=projeto_2'>";  
-        }
-
-		
+        echo "<meta HTTP-EQUIV='refresh' CONTENT='0.5;URL=?perfil=projeto_edicao'>";
 	}
 	else
 	{
@@ -88,7 +84,7 @@ if(isset($_POST['insereAtuacao']))
 	$idAreaAtuacao = $_POST['idAreaAtuacao'];
 	$nomeProjeto = $_POST['nomeProjeto'];
 	$tags = $_POST['tags'];
-	$sql_insere_projeto = "INSERT INTO projeto (idPf, tipoPessoa, nomeProjeto, idAreaAtuacao, idEtapaProjeto, publicado) VALUES ('$idPf', 1, '$nomeProjeto', '$idAreaAtuacao', 1, 1)";
+	$sql_insere_projeto = "INSERT INTO projeto (idPf, tipoPessoa, nomeProjeto, idAreaAtuacao, idEtapaProjeto, publicado, edital) VALUES ('$idPf', 1, '$nomeProjeto', '$idAreaAtuacao', 1, 1, $editalAtivo)";
 	if(mysqli_query($con,$sql_insere_projeto))
 	{
 		$sql_ultimo = "SELECT idProjeto FROM projeto ORDER BY idProjeto DESC LIMIT 0,1";
@@ -210,7 +206,7 @@ if(isset($_POST['insereAtuacao']))
                                         proposta e que você tenha direito de usar a foto. <br>
                                         <strong>Tamanho Máximo: 5Mb</strong>
                                     </div>
-                                    <input type="file" name="arquivo[foto_proj]" required>
+                                    <input type="file" name="arquivo[foto_proj]" accept="image/*" required>
                                 </div>
                             </div>
 
@@ -268,7 +264,7 @@ if(isset($_POST['insereAtuacao']))
                                             proposta e que você tenha direito de usar a foto. <br>
                                             <strong>Tamanho Máximo: 5Mb</strong>
                                         </div>
-                                        <input type="file" name="arquivo[foto_proj]" required>
+                                        <input type="file" name="arquivo[foto_proj]" accept="image/*" required>
                                     </div>
                                 </div>
 
@@ -308,7 +304,7 @@ if(isset($_POST['insereAtuacao']))
                                 <label>Área de atuação *</label><br/>
                                 <select class="form-control" name="idAreaAtuacao" required>
                                     <option value=""></option>
-                                    <?php echo geraAreaAtuacao("area_atuacao","1","") ?>
+                                    <?php echo geraAreaAtuacao("area_atuacao","2","") ?>
                                 </select>
                             </div>
                         </div>
@@ -327,7 +323,7 @@ if(isset($_POST['insereAtuacao']))
                                     proposta e que você tenha direito de usar a foto. <br>
                                     <strong>Tamanho Máximo: 5Mb</strong>
                                 </div>
-                                <input class="form-control" type="file" name="arquivo[foto_proj]" required>
+                                <input class="form-control" type="file" name="arquivo[foto_proj]" accept="image/*" required>
                             </div>
                         </div>
 

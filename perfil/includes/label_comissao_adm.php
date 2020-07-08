@@ -144,6 +144,10 @@
             $idArquivo = 0;
             $idListaDocumento = 37;
             break;
+        case 14:
+            $idArquivo = 47;
+            $idListaDocumento = 37;
+            break;
         case 19: //Complemento enviado à Comissão
             $idArquivo = 46;
             $idListaDocumento = 49;

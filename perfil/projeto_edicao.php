@@ -273,7 +273,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 
                                     <div class="form-group">
                                         <div class="col-md-offset-2 col-md-8">
-                                            <?php if (verificaArquivosExistentesPF($idProjeto, 58)): ?>
+                                            <?php if (verificaArquivosExistentesPF($idProjeto, 58, 7)): ?>
                                                 <label>Foto do Projeto *</label>
                                                 <?php exibeFotoProjeto($idProjeto, '7', 'projeto_edicao') ?>
                                             <?php else: ?>
@@ -290,7 +290,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
                                                     <strong>São aceitos apenas imagens no formato .JPG e .PNG</strong><br>
                                                     <strong>Tamanho Máximo: 5Mb</strong>
                                                 </div>
-                                                <input type="file" name="arquivo[foto_proj]" required>
+                                                <input type="file" name="arquivo[foto_proj]" accept="image/*" required>
                                             <?php endif; ?>
                                         </div>
                                     </div>
@@ -343,7 +343,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 
                                     <div class="form-group">
                                         <div class="col-md-offset-2 col-md-8">
-                                            <?php if (verificaArquivosExistentesPF($idProjeto, 58)): ?>
+                                            <?php if (verificaArquivosExistentesPF($idProjeto, 58, 7)): ?>
                                                 <label>Foto do Projeto *</label>
                                                 <?php exibeFotoProjeto($idProjeto, '7', 'projeto_edicao') ?>
                                             <?php else: ?>
@@ -360,7 +360,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
                                                     <strong>São aceitos apenas imagens no formato .JPG e .PNG</strong><br>
                                                     <strong>Tamanho Máximo: 5Mb</strong>
                                                 </div>
-                                                <input type="file" name="arquivo[foto_proj]" required>
+                                                <input type="file" name="arquivo[foto_proj]" accept="image/*" required>
                                             <?php endif; ?>
                                         </div>
                                     </div>
@@ -435,7 +435,7 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
                         <h4 class="modal-title">Excluir Arquivo?</h4>
                     </div>
                     <div class="modal-body">
-                        <p>Deseja realmente excluir esta foto do projeto??</p>
+                        <p>Deseja realmente excluir esta foto do projeto?</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>

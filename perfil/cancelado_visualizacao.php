@@ -2,7 +2,11 @@
 $con = bancoMysqli();
 $conn = bancoPDO();
 
-$idProjeto = $_POST['idProjeto'];
+if (isset($_GET['idProjeto'])) {
+    $idProjeto = $_GET['idProjeto'];
+} else {
+    $idProjeto = $_POST['idProjeto'];
+}
 $projeto = recuperaDados("projeto", "idProjeto", $idProjeto);
 $status = recuperaDados("etapa_status", "idStatus", $projeto['idStatus']);
 $idEtapa = $projeto['idEtapaProjeto'];
@@ -24,6 +28,17 @@ $cronograma = recuperaDados("cronograma", "idCronograma", $projeto['idCronograma
 $video = recuperaDados("projeto", "idProjeto", $idProjeto);
 $v = array($video['video1'], $video['video2'], $video['video3']);
 
+$sql_cancelado = "SELECT hst.idProjeto AS id,protocolo,nomeProjeto,nome,observacao,data,acao
+            FROM historico_cancelamento as hst 
+            INNER JOIN pessoa_fisica AS usr ON hst.idUsuario = usr.idPf 
+            INNER JOIN projeto AS prj ON hst.idProjeto = prj.idProjeto
+            WHERE hst.idProjeto = $idProjeto";
+$historico = $con->query($sql_cancelado)->fetch_assoc();
+
+if ($historico == null) {
+    echo "<script>window.location = '?perfil=smc_historico_cancelamento';</script>";
+}
+
 ?>
 
 
@@ -35,7 +50,15 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                     <div class="tab-content">
                         <section class="content-header">
                             <h3>Resumo do projeto  </h3>
-                            <small class="text-warning">PROJETO CANCELADO</small>
+                            <div class="alert alert-danger">
+                                <strong>PROJETO CANCELADO</strong><br>
+                                <div class="text-left">
+                                    <strong>Responsável pelo Cancelamento: </strong><?= $historico['nome'] ?><br>
+                                    <strong>Motivo: </strong><?= $historico['observacao'] ?><br>
+                                    <strong>Data do Cancelamento: </strong><?= exibirDataHoraBr($historico['data']) ?>
+                                </div>
+                            </div>
+
                         </section>
                         <div role="tabpanel" class="tab-pane fade in active" id="info">
                             <div class="form-group">
@@ -175,11 +198,13 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                                 $query = mysqli_query($con, $sql);
                                                 while ($campo = mysqli_fetch_array($query)) {
                                                     $zona = recuperaDados("zona", "idZona", $campo['idZona']);
-                                                    echo "<tr>";
-                                                    echo "<td>" . $campo['local'] . "</td>";
-                                                    echo "<td>" . $campo['estimativaPublico'] . "</td>";
-                                                    echo "<td>" . $zona['zona'] . "</td>";
-                                                    echo "</tr>";
+                                                    ?>
+                                                    <tr>
+                                                    <td><?=$campo['local'] ?? '' ?></td>
+                                                    <td><?=$campo['estimativaPublico'] ?? '' ?></td>
+                                                    <td><?=$zona['zona'] ?? '' ?></td>
+                                                    </tr>
+                                                    <?php
                                                 }
                                                 ?>
                                             </table>
@@ -298,15 +323,17 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                                 while ($campo = mysqli_fetch_array($query)) {
                                                     $etapa = recuperaDados("etapa", "idEtapa", $campo['idEtapa']);
                                                     $medida = recuperaDados("unidade_medida", "idUnidadeMedida", $campo['idUnidadeMedida']);
-                                                    echo "<tr>";
-                                                    echo "<td class='list_description'>" . $etapa['etapa'] . "</td>";
-                                                    echo "<td class='list_description'>" . $campo['descricao'] . "</td>";
-                                                    echo "<td class='list_description'>" . $campo['quantidade'] . "</td>";
-                                                    echo "<td class='list_description'>" . $medida['unidadeMedida'] . "</td>";
-                                                    echo "<td class='list_description'>" . $campo['quantidadeUnidade'] . "</td>";
-                                                    echo "<td class='list_description'>" . dinheiroParaBr($campo['valorUnitario']) . "</td>";
-                                                    echo "<td class='list_description'>" . dinheiroParaBr($campo['valorTotal']) . "</td>";
-                                                    echo "</tr>";
+                                                    ?>
+                                                    <tr>
+                                                    <td class='list_description'><?=$etapa['etapa'] ?? '' ?></td>
+                                                    <td class='list_description'><?=$campo['descricao'] ?? '' ?></td>
+                                                    <td class='list_description'><?=$campo['quantidade'] ?? '' ?></td>
+                                                    <td class='list_description'><?=$medida['unidadeMedida'] ?? '' ?></td>
+                                                    <td class='list_description'><?=$campo['quantidadeUnidade'] ?? '' ?></td>
+                                                    <td class='list_description'><?=dinheiroParaBr($campo['valorUnitario']) ?? '' ?></td>
+                                                    <td class='list_description'><?=dinheiroParaBr($campo['valorTotal']) ?? '' ?></td>
+                                                    </tr>
+                                                    <?php
                                                 } ?>
                                             </table>
                                         </li>

@@ -368,10 +368,15 @@ function gravarLogSenha($log, $idUsuario)
     $mysqli->query($sql);
 }
 
-function geraOpcao($tabela, $select)
+function geraOpcao($tabela, $select, $publicado = false)
 {
+    if ($publicado) {
+        $publicado = "WHERE publicado = '1'";
+    } else {
+        $publicado = "";
+    }
     //gera os options de um select
-    $sql = "SELECT * FROM $tabela ORDER BY 2";
+    $sql = "SELECT * FROM $tabela $publicado ORDER BY 2";
 
     $con = bancoMysqli();
     $query = mysqli_query($con, $sql);
@@ -387,8 +392,8 @@ function geraOpcao($tabela, $select)
 function geraAreaAtuacao($tabela, $tipo, $select)
 {
     //gera os options de um select
-    $sql = "SELECT * FROM $tabela WHERE tipo IN ($tipo) ORDER BY 2";
-
+//    $sql = "SELECT * FROM $tabela WHERE tipo IN ($tipo) ORDER BY 2";
+    $sql = "SELECT * FROM $tabela ORDER BY 2";
     $con = bancoMysqli();
     $query = mysqli_query($con, $sql);
     while ($option = mysqli_fetch_row($query)) {
@@ -1210,13 +1215,16 @@ function listaAnexosProjeto($idPessoa, $tipoPessoa, $idArquivo)
 			<thead>
 				<tr class='list_menu'>
 					<td>Tipo de arquivo</td>
+					<td>Nome do arquivo</td>
 					<td width='15%'></td>
 				</tr>
 			</thead>
 			<tbody>";
         while ($arquivo = mysqli_fetch_array($query)) {
             echo "<tr>";
-            echo "<td class='list_description'><a href='../uploadsdocs/" . $arquivo['arquivo'] . "' target='_blank'>" . mb_strimwidth($arquivo['documento'], 15, 25, "...") . "</a></td>";
+            echo "<td>{$arquivo['documento']}</td>";
+            echo "<td>{$arquivo['arquivo']}</td>";
+            echo "<td><a class='btn btn-theme btn-md' href='../uploadsdocs/" . $arquivo['arquivo'] . "' target='_blank'> Visualizar </a></td>";
             echo "</tr>";
         }
         echo "
@@ -1526,7 +1534,11 @@ function listaArquivosPessoaObs($idPessoa, $tipoPessoa)
             $row = mysqli_fetch_array($send);
             $statusDoc = recuperaDados("status_documento", "idStatusDocumento", $row['idStatusDocumento']);
 
-            echo "<td class='list_description'>" . $statusDoc['status'] . "</td>";
+            if ($statusDoc != null) {
+                echo "<td class='list_description'>" . $statusDoc['status'] . "</td>";
+            } else {
+                echo "<td class='list_description'></td>";
+            }
             $queryOBS = "SELECT observacoes FROM upload_arquivo WHERE idUploadArquivo = '" . $arquivo['idUploadArquivo'] . "'";
             $send = mysqli_query($con, $queryOBS);
             $row = mysqli_fetch_array($send);
@@ -1575,7 +1587,11 @@ function exibirArquivos($tipoPessoa, $idPessoa)
         $send = mysqli_query($con, $queryy);
         $row = mysqli_fetch_array($send);
         $statusDoc = recuperaDados("status_documento", "idStatusDocumento", $row['idStatusDocumento']);
-        echo "<td class='list_description'>" . $statusDoc['status'] . "</td>";
+        if ($statusDoc != null) {
+            echo "<td class='list_description'>" . $statusDoc['status'] . "</td>";
+        } else {
+            echo "<td class='list_description'></td>";
+        }
         echo "<td class='list_description'>" . $arquivo['observacoes'] . "</td>";
         echo "</tr>";
     }
@@ -1922,10 +1938,10 @@ function geraProtocolo($id)
     return $date . $preencheZeros;
 }
 
-function verificaArquivosExistentesPF($idPessoa, $idDocumento)
+function verificaArquivosExistentesPF($idPessoa, $idDocumento, $tipo = 1)
 {
     $con = bancoMysqli();
-    $verificacaoArquivo = "SELECT arquivo FROM upload_arquivo WHERE idPessoa = '$idPessoa' AND idListaDocumento = '$idDocumento' AND publicado = '1'";
+    $verificacaoArquivo = "SELECT arquivo FROM upload_arquivo WHERE idTipo = '$tipo' AND idPessoa = '$idPessoa' AND idListaDocumento = '$idDocumento' AND publicado = '1'";
     $envio = mysqli_query($con, $verificacaoArquivo);
     if (mysqli_num_rows($envio) > 0) {
         return true;
@@ -2073,7 +2089,6 @@ function retornaCamposObrigatoriosPf($idProjeto)
 	             pf.numero AS numeroProponente,	             
 	             proj.idAreaAtuacao AS areaAtuacaoProjeto, 	             
 	             proj.nomeProjeto AS nomeProjeto, 	             	             
-	             proj.idRenunciaFiscal AS ValoresEnquadramentoRenunciaFiscal, 
 	             proj.idExposicaoMarca AS exposicaoMarca, 	  
 	             proj.indicacaoIngresso AS indicacaoIngresso, 	  
 	             proj.resumoProjeto AS resumoCurriculoProjeto, 
@@ -2081,8 +2096,6 @@ function retornaCamposObrigatoriosPf($idProjeto)
 	             proj.descricao AS ObjetoDescricao,
 	             proj.justificativa AS justificativaObjetoProjeto,
 	             proj.objetivo AS justificativaObjetoMetas,
-	             proj.metodologia AS MetodologiaContrapartida, 
-	             proj.contrapartida AS MetodologiaContrapartidaDescricao,
 	             loc_rea.local AS local, 
 	             loc_rea.estimativaPublico AS estimativaLocal, 
 	             loc_rea.logradouro AS logradouro,
@@ -2095,14 +2108,11 @@ function retornaCamposObrigatoriosPf($idProjeto)
 	             ficha_t.nome AS nomeFichaTecnica, 
   				 ficha_t.cpf AS cpfFichaTecnica, 
   				 ficha_t.funcao AS funcaoFichaTecnica,  				
-	             proj.inicioCronograma AS inicioConogramaProjeto, 
-	             proj.fimCronograma AS fimConogramaProjeto,  
   				 crono.captacaoRecurso AS recursoConograma, 
   				 crono.preProducao AS preProducaoConograma, 
-  				 crono.producao AS producaoConograma, 
+  				 crono.producao AS producaoCronograma, 
   				 crono.posProducao AS posProducaoConograma, 
   				 crono.prestacaoContas AS ContasConograma,
-  			     orca.idEtapa AS EtapaOrcamento, 
   			     orca.descricao AS 'descricaoOrcamento',
   			     orca.quantidade AS 'quantidadeOrcamento',
   			     orca.idUnidadeMedida AS 'UnidadeOrcamento',
@@ -2202,19 +2212,14 @@ function retornaCamposObrigatoriosPj($idProjeto)
 	             proj.idAreaAtuacao AS areaAtuacaoProjeto, 
 	             proj.contratoGestao AS contratoGestaoProjeto, 
 	             proj.nomeProjeto AS nomeProjeto, 	             
-	             proj.idRenunciaFiscal AS ValoresEnquadramentoRenunciaFiscal, 
 	             proj.idExposicaoMarca AS ValoresEnquadramentoExposicaoMarca,              
 	             proj.resumoProjeto AS resumoCurriculoProjeto, 
 	             proj.curriculo AS resumoCurriculoCvProponente, 	             
 	             proj.descricao AS ObjetoDescricao,  
 	             proj.justificativa AS justificativaObjetoProjeto, 
 	             proj.objetivo AS justificativaObjetoMetas, 
-	             proj.contrapartida AS MetodologiaContrapartida, 
-	             proj.metodologia AS MetodologiaContrapartidaDescricao,	             
 	             proj.publicoAlvo AS publicoAlvo,
 	             materialD.veiculo_divulgacao AS veiculoDivulgacao,	             
-	             proj.inicioCronograma AS inicioConogramaProjeto, 
-	             proj.fimCronograma AS fimConogramaProjeto,  
 	             loc_rea.local AS local, 
 	             loc_rea.estimativaPublico AS estimativaLocal, 
 	             loc_rea.logradouro AS logradouro,
@@ -2231,7 +2236,6 @@ function retornaCamposObrigatoriosPj($idProjeto)
   				 crono.producao AS producaoConograma, 
   				 crono.posProducao AS posProducaoConograma, 
   				 crono.prestacaoContas AS ContasConograma,
-  			     orca.idEtapa AS EtapaOrcamento, 
   			     orca.descricao AS 'descricaoOrcamento',
   			     orca.quantidade AS 'quantidadeOrcamento',
   			     orca.idUnidadeMedida AS 'UnidadeOrcamento',
@@ -2263,7 +2267,7 @@ function retornaCamposObrigatoriosPj($idProjeto)
   			   ON orca.idProjeto = proj.idProjeto  
   			   
   			   INNER JOIN
-  			    	material_divulgacao AS materialD
+  			    	(SELECT * FROM material_divulgacao WHERE publicado = '1') AS materialD
   			   ON materialD.projeto_id = proj.idProjeto
   			   
   			   WHERE loc_rea.publicado = 1
@@ -2318,7 +2322,6 @@ function retornaDocumentosObrigatoriosProponente($tipoPessoa, $id = null)
     $listaDocumentos = [
         'doc.idListaDocumento <> 27',
         'doc.idListaDocumento <> 10',
-        'doc.idListaDocumento <> 16'
     ];
 
     if ($tipoPessoa == 2) {
@@ -2361,7 +2364,7 @@ function retornaArquivosObrigatorios($tipoPessoa)
                doc.idListaDocumento                         
              FROM 
                lista_documento AS doc  
-  			  WHERE doc.idListaDocumento IN (20, 21)
+  			  WHERE doc.idListaDocumento IN (20)
   			  AND doc.idTipoUpload = 3";
 
     $resultado = mysqli_query($conexao, $query);
@@ -2490,6 +2493,8 @@ function retornaQtdProjetos($tipoPessoa, $id)
 {
     $conexao = bancoMysqli();
 
+    $editalAtivo = recuperaDados("liberacao_projeto", "idStatus", 1)['edital'];
+
     if ($tipoPessoa == 1) {
         $query = "SELECT 
                     count(idProjeto)
@@ -2497,6 +2502,7 @@ function retornaQtdProjetos($tipoPessoa, $id)
                     projeto AS proj  
                     WHERE proj.publicado = 1
                     AND proj.idStatus != 6
+                    AND proj.edital = '$editalAtivo'
                     AND   proj.idPf = '$id'";
     } elseif ($tipoPessoa == 2) {
         $query = "SELECT 
@@ -2509,6 +2515,7 @@ function retornaQtdProjetos($tipoPessoa, $id)
                     WHERE proj.publicado = 1
                     AND proj.idStatus != 6
                     AND   pj.cooperativa = 0
+                    AND proj.edital = '$editalAtivo'
                     AND   proj.idPj = '$id'";
     }
     $resultado = mysqli_query($conexao, $query);
@@ -2522,6 +2529,8 @@ function retornaProjeto($tipoPessoa, $id)
     $documentos = [];
     $conexao = bancoMysqli();
 
+    $editalAtivo = recuperaDados("liberacao_projeto", "idStatus", 1)['edital'];
+
     if ($tipoPessoa == 1):
         $query = "SELECT 
                nomeProjeto
@@ -2529,6 +2538,7 @@ function retornaProjeto($tipoPessoa, $id)
                projeto AS proj  
   			  WHERE proj.publicado = 1
   			  AND proj.idStatus != 6
+              AND proj.edital = '$editalAtivo'
   			  AND   proj.idPf = '$id'";
 
         $resultado = mysqli_query($conexao, $query);
@@ -2543,6 +2553,7 @@ function retornaProjeto($tipoPessoa, $id)
                projeto AS proj  
   			  WHERE proj.publicado = 1
   			  AND proj.idStatus != 6
+  			  AND proj.edital = '$editalAtivo'
   			  AND   proj.idPj = '$id'";
 
         $resultado = mysqli_query($conexao, $query);
@@ -3073,14 +3084,14 @@ function pegaUsuarioLogado()
 
         if ($_SESSION['tipoPessoa'] == 1):
             $usuario = $usuarioPf = recuperaDados("pessoa_fisica", "idPf", $_SESSION['idUser']);
-
-            return $usuario['nome'] . ' [ID=' . $usuario['idPf'] . ']';
+            $nome = addslashes($usuario['nome']);
+            return $nome . ' [ID=' . $usuario['idPf'] . ']';
 
         endif;
 
         $usuario = recuperaDados("pessoa_juridica", "idPj", $_SESSION['idUser']);
-
-        return $usuario['razaoSocial'] . ' [ID=' . $usuario['idPj'] . ']';
+        $razaoSocial = addslashes($usuario['razaoSocial']);
+        return $razaoSocial . ' [ID=' . $usuario['idPj'] . ']';
     endif;
 }
 
@@ -3197,6 +3208,7 @@ function uploadArquivo($idProjeto, $tipoPessoa, $pagina, $idListaDocumento, $idT
         echo '<div class="table-responsive list_info">
 				<h6>Parecer Anexado</h6>';
         if ($linhas > 0) {
+            $idParecerista = $con->query("SELECT idComissao FROM projeto WHERE idProjeto = '$idProjeto'")->fetch_assoc()['idComissao'];
             echo "
 		<table class='table table-condensed'>
 			<thead>
@@ -3214,7 +3226,7 @@ function uploadArquivo($idProjeto, $tipoPessoa, $pagina, $idListaDocumento, $idT
                 $data = date_create($arquivo["dataEnvio"]);
                 echo "<td class='list_description'>" . date_format($data, 'd/m/Y') . "</td>";
 
-                if ($arquivo['idStatusDocumento'] == 3) {
+                if ($arquivo['idStatusDocumento'] != 3 && $_SESSION['idUser'] == $idParecerista) {
                     echo "<td class='list_description'>
 								<select name='status' id='statusOpt' disabled>";
                     echo "<option>Selecione</option>";
@@ -3448,7 +3460,7 @@ function geraCheckbox($tabela, $tabelaRelacionamento, $colunaEntidadeForte, $idE
                 <label>
                     <input class='<?= $tabela ?>' type='checkbox' name='<?= $tabela ?>[]'
                            value='<?= $checkbox[0] ?>'
-                           <?= in_array_r($checkbox[0], $relacionamentos) ? "checked" : "" ?>
+                        <?= in_array_r($checkbox[0], $relacionamentos) ? "checked" : "" ?>
                            data-check="<?= $checkbox[1] ?>"> <?= $checkbox[1] ?>
                 </label>
             </div>
@@ -3619,11 +3631,11 @@ function recuperaPlanos($idProjeto, $edicao = false)
                             </td>
                             <td>
                                 <button class='btn btn-sm btn-theme' type='button'
-                                        onclick="modalApagar(
-                                                '#apagarPlanoAtividade',
-                                                '<?= $atividades[0]['atividade'] ?>',
-                                                '<?= $atividades[0]['id'] ?>',
-                                                'apagaAtividade')">Remover Atividade
+                                        onclick='modalApagar(
+                                                `#apagarPlanoAtividade`,
+                                                `<?= addslashes($atividades[0]['atividade']) ?>`,
+                                                `<?= $atividades[0]['id'] ?>`,
+                                                `apagaAtividade`)'>Remover Atividade
                                 </button>
                             </td>
                         <?php endif;
@@ -3639,11 +3651,11 @@ function recuperaPlanos($idProjeto, $edicao = false)
                             </button>
 
                             <button class='btn btn-theme mar-top10 form-control' type='button'
-                                    onclick="modalApagar(
-                                            '#apagarPlanoAtividade',
-                                            '<?= $plano['objetivo_especifico'] ?>',
-                                            '<?= $plano['id'] ?>', 'apagaObjetivo')
-                                            ">
+                                    onclick='modalApagar(
+                                            `#apagarPlanoAtividade`,
+                                            `<?= $plano['objetivo_especifico'] ?>`,
+                                            `<?= $plano['id'] ?>`, `apagaObjetivo`)
+                                            '>
                                 Remover Objetivo
                             </button>
 
@@ -3675,11 +3687,11 @@ function recuperaPlanos($idProjeto, $edicao = false)
                                 </td>
                                 <td>
                                     <button class='btn btn-sm btn-theme' type='button'
-                                            onclick="modalApagar(
-                                                    '#apagarPlanoAtividade',
-                                                    '<?= $atividade['atividade'] ?>',
-                                                    '<?= $atividade['id'] ?>',
-                                                    'apagaAtividade')">Remover Atividade
+                                            onclick='modalApagar(
+                                                    `#apagarPlanoAtividade`,
+                                                    `<?= $atividade['atividade'] ?>`,
+                                                    `<?= $atividade['id'] ?>`,
+                                                    `apagaAtividade`)'>Remover Atividade
                                     </button>
                                 </td>
                             <?php endif; ?>
@@ -3721,8 +3733,12 @@ function recuperaTabelaOrcamento($idProjeto)
                 $query_etapa = mysqli_query($con, $sql_etapa);
                 $lista = mysqli_fetch_array($query_etapa);
 
-                $despesa = recuperaDados("grupo_despesas", "id", $lista['grupo_despesas_id']);
-                echo "<td><strong>" . $despesa['despesa'] . ":</strong>";
+                if ($lista == null) {
+                    echo "<td><strong></strong>";
+                } else {
+                    $despesa = recuperaDados("grupo_despesas", "id", $lista['grupo_despesas_id']);
+                    echo "<td><strong>" . $despesa['despesa'] . ":</strong>";
+                }
             }
             ?>
         </tr>
@@ -3760,20 +3776,20 @@ function recuperaMaterial($idProjeto, $edicao = false)
     if ($queryMaterial->num_rows > 0) {
         $style = "style='width: 100%'";
         ?>
-    <table id="tbMaterial" class="table-condensed table-responsive table-bordered" <?= $edicao ? "" : $style ?>>
-        <thead>
-    <tr>
-        <th>Material de Divulgação</th>
-        <th>Quantidade</th>
-        <th>Formato</th>
-        <th>Onde será veiculado/divulgado</th>
-        <?php
-        if ($edicao):
-            ?>
-            <th>Ações</th>
-            <?php
+        <table id="tbMaterial" class="table-condensed table-responsive table-bordered" <?= $edicao ? "" : $style ?>>
+            <thead>
+            <tr>
+                <th>Material de Divulgação</th>
+                <th>Quantidade</th>
+                <th>Formato</th>
+                <th>Onde será veiculado/divulgado</th>
+                <?php
+                if ($edicao):
+                    ?>
+                    <th>Ações</th>
+                <?php
                 endif;
-            ?>
+                ?>
             </tr>
             </thead>
             <tbody>
@@ -3787,25 +3803,25 @@ function recuperaMaterial($idProjeto, $edicao = false)
                     <td><?= $material['formato'] ?></td>
                     <td><?= $material['veiculo_divulgacao'] ?></td>
                     <?php
-                if ($edicao):
-                    ?>
-                    <td>
-                        <input type="hidden" id="idMat" value="<?= $material['idMaterial'] ?>">
-                        <button class="btn btn-theme" type="button" class="btn btn-theme btn-lg btn-block"
-                                data-toggle="modal" data-target="#novoMaterial">Editar
-                        </button>
-                        <button class="btn btn-theme" data-toggle="modal" data-target="#apagarMaterial"
-                                onclick="prrencherModalApagar(<?= $material['idMaterial'] ?>)">Apagar
-                        </button>
-                    </td>
-                <?php endif; ?>
+                    if ($edicao):
+                        ?>
+                        <td>
+                            <input type="hidden" id="idMat" value="<?= $material['idMaterial'] ?>">
+                            <button class="btn btn-theme" type="button" class="btn btn-theme btn-lg btn-block"
+                                    data-toggle="modal" data-target="#novoMaterial">Editar
+                            </button>
+                            <button class="btn btn-theme" data-toggle="modal" data-target="#apagarMaterial"
+                                    onclick="prrencherModalApagar(<?= $material['idMaterial'] ?>)">Apagar
+                            </button>
+                        </td>
+                    <?php endif; ?>
                 </tr>
             <?php }
             ?>
             </tbody>
-            </table>
-            <?php
-        } else {
+        </table>
+        <?php
+    } else {
         ?>
         <div class="row">
             <span class="text-center"> Nenhum material de divulgação cadastrado.</span>
@@ -3813,6 +3829,20 @@ function recuperaMaterial($idProjeto, $edicao = false)
         <?php
     }
 
+}
+
+function recuperaTags($idProjeto)
+{
+    $con = bancoMysqli();
+    $sqlTags = "SELECT t.tag FROM projeto_tag AS pt
+                INNER JOIN tags AS t ON pt.tag_id = t.id
+                WHERE pt.projeto_id = '$idProjeto'";
+    $queryTags = $con->query($sqlTags)->fetch_all(MYSQLI_ASSOC);
+    foreach ($queryTags as $tag) {
+        $tags[] = $tag['tag'];
+    }
+
+    return $tags;
 }
 
 ?>

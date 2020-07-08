@@ -1,22 +1,25 @@
+<?php
+$id = $projeto['tipoPessoa'];
+$idP = $projeto['idProjeto'];
+$tags = recuperaTags($idP);
+$postosTrabalho = recuperaDados("postos_trabalho", "idProjeto", $idP);
+
+if ($id == 1) {
+    $idPess = $projeto['idPf'];
+} else if ($id == 2) {
+    $idPess = $projeto['idPj'];
+}
+?>
 <div role="tabpanel" class="tab-pane fade" id="projeto">
     <div class="form-group">
         <div class="col-md-offset-4 col-md-4">
-            <?php
-            $id = $projeto['tipoPessoa'];
-            $idP = $projeto['idProjeto'];
-            if ($id == 1) {
-                $idPess = $projeto['idPf'];
-            } else if ($id == 2) {
-                $idPess = $projeto['idPj'];
-            }
-            ?>
             <a href='<?php echo "../pdf/pdf_teste.php?tipo=$id&projeto=$idP&pessoa=$idPess"; ?>' target='_blank'
                class="btn btn-theme btn-md btn-block"><strong>Gerar Projeto</strong></a><br/>
         </div>
     </div>
 
 
-        <table class="table table-bordered">
+    <table class="table table-bordered">
         <tr>
             <td>
                 <strong>Protocolo (nº ISP):</strong>
@@ -52,15 +55,14 @@
             <?php } ?>
         </tr>
         <tr>
-            <td><strong>Valor do projeto:</strong>R$
-                <?php echo
-                dinheiroParabr(isset($projeto['valorProjeto']) ? $projeto['valorProjeto'] : ''); ?>
-            </td>
-            <td><strong>Valor do incentivo:</strong> R$
-                <?php echo
-                dinheiroParabr(isset($projeto['valorIncentivo'])
-                    ? $projeto['valorIncentivo']
-                    : null); ?>
+            <td colspan="2"><strong>Valor do projeto:</strong>R$
+                <?php
+                if (isset($projeto['valorProjeto']) &&  $projeto['valorProjeto'] > 0){
+                    echo dinheiroParabr(isset($projeto['valorProjeto']) ? $projeto['valorProjeto'] : '');
+                }else{
+                    echo dinheiroParaBr(isset($projeto['valorIncentivo']) ? $projeto['valorIncentivo']: '');
+                }
+                    ?>
             </td>
             <td><strong>Renúncia Fiscal:</strong>
                 <?php echo $renuncia['renunciaFiscal'] ?>
@@ -81,25 +83,44 @@
     <div class="well">
         <p align="justify"><strong>Nome do projeto:</strong> <?php echo $projeto['nomeProjeto']; ?></p>
         <p align="justify"><strong>Área de atuação:</strong> <?php echo $area['areaAtuacao'] ?></p>
-        <p align="justify"><strong>Resumo do projeto:</strong> <?php echo isset($projeto['resumoProjeto']) ? $projeto['resumoProjeto'] : null; ?>
+        <p align="justify"><strong>Tags:</strong> <?= implode("; ", $tags) ?></p>
+
+        <p align="justify">
+            <strong>Resumo do projeto:</strong> <?php echo isset($projeto['resumoProjeto']) ? $projeto['resumoProjeto'] : null; ?>
         </p>
         <p align="justify">
-            <strong>Currículo:</strong> <?php echo isset($projeto['curriculo']) ? $projeto['curriculo'] : null; ?>
+            <strong>Currículo do proponente:</strong> <?php echo isset($projeto['curriculo']) ? $projeto['curriculo'] : null; ?>
         </p>
         <p align="justify">
-            <strong>Descrição do objeto e atividades:</strong> <?php echo isset($projeto['descricao']) ? $projeto['descricao'] : null; ?>
+            <strong>Descrição do objeto cultural e atividades propostas:</strong> <?php echo isset($projeto['descricao']) ? $projeto['descricao'] : null; ?>
+        </p>
+        <p align="justify">
+            <strong>Objetivos Gerais:</strong> <?php echo isset($projeto['objetivo']) ? $projeto['objetivo'] : null; ?>
+        </p>
+        <p align="justify">
+            <strong>Objetivos Específicos:</strong> <?php echo isset($projeto['objetivoEspecifico']) ? $projeto['objetivoEspecifico'] : null; ?>
         </p>
         <p align="justify">
             <strong>Justificativa do projeto:</strong> <?php echo isset($projeto['justificativa']) ? $projeto['justificativa'] : null; ?>
         </p>
         <p align="justify">
-            <strong>Objetivos e metas:</strong> <?php echo isset($projeto['objetivo']) ? $projeto['objetivo'] : null; ?></p>
-        <p align="justify">
-            <strong>Metodologia:</strong> <?php echo isset($projeto['metodologia']) ? $projeto['metodologia'] : null; ?>
+            <strong>Quantos postos de trabalho diretos o seu projeto gera, ainda que temporariamente?</strong> <?php echo isset($postosTrabalho['quantidade']) ? $postosTrabalho['quantidade'] : null; ?>
         </p>
         <p align="justify">
-            <strong>Contrapartida:</strong> <?php echo isset($projeto['contrapartida']) ? $projeto['contrapartida'] : null; ?>
+            <strong>Qual a média, em meses, de tempo de contratação de cada posto de trabalho?</strong> <?php echo isset($postosTrabalho['media_meses']) ? "{$postosTrabalho['media_meses']} meses" : null; ?>
         </p>
+        <p align="justify">
+            <strong>Qual a média, em reais, de remuneração de cada posto de trabalho?</strong> <?php echo isset($postosTrabalho['media_valor']) ? "R$ ".dinheiroParaBr($postosTrabalho['media_valor']) : null; ?>
+        </p>
+    </div>
+
+    <div class="well">
+        <ul class="list-group">
+            <li class="list-group-item list-group-item-success"><b>Plano de Trabalho</b></li>
+            <li class="list-group-item">
+                <?php recuperaPlanos($projeto['idProjeto']); ?>
+            </li>
+        </ul>
     </div>
 
     <div class="well">
@@ -111,17 +132,22 @@
                         <th>Local</th>
                         <th>Público estimado</th>
                         <th>Endereço</th>
+                        <th>Distrito</th>
+                        <th>Faixa</th>
                     </tr>
                     <?php
-                    $sql = "SELECT * FROM locais_realizacao
-								WHERE publicado = 1 AND idProjeto = " . $projeto['idProjeto'] . "";
+                    $sql = "SELECT lr.*, d.distrito, d.faixa FROM locais_realizacao AS lr
+                                LEFT JOIN distrito d on lr.idDistrito = d.idDistrito
+								WHERE lr.publicado = 1 AND lr.idProjeto = '{$projeto['idProjeto']}'";
                     $query = mysqli_query($con, $sql);
                     while ($campo = mysqli_fetch_array($query)) {
                         $zona = recuperaDados("zona", "idZona", $campo['idZona']);
                         echo "<tr>";
                         echo "<td>" . $campo['local'] . "</td>";
                         echo "<td>" . $campo['estimativaPublico'] . "</td>";
-                        echo "<td>" . $campo['logradouro'] . ", ".$campo['numero']." ".$campo['complemento']." ".$campo['bairro'].", ".$campo['cidade']." - ".$campo['estado'].", CEP ".$campo['cep']."</td>";
+                        echo "<td>" . $campo['logradouro'] . ", " . $campo['numero'] . " " . $campo['complemento'] . " " . $campo['bairro'] . ", " . $campo['cidade'] . " - " . $campo['estado'] . ", CEP " . $campo['cep'] . "</td>";
+                        echo "<td>" . $campo['distrito'] . "</td>";
+                        echo "<td> Faixa " . $campo['faixa'] . "</td>";
                         echo "</tr>";
                     }
                     ?>
@@ -131,8 +157,33 @@
     </div>
 
     <div class="well">
-        <p align="justify"><strong>Público alvo:</strong> <?php echo isset($projeto['publicoAlvo']) ? $projeto['publicoAlvo'] : null; ?></p>
-        <p align="justify"><strong>Plano de divulgação:</strong> <?php echo isset($projeto['planoDivulgacao']) ? $projeto['planoDivulgacao'] : null; ?></p>
+        <p align="justify">
+            <strong>Público de Alvo:</strong> <?php echo isset($projeto['publicoAlvo']) ? $projeto['publicoAlvo'] : null; ?>
+        </p>
+        <p align="justify">
+            <strong>Contrapartida:</strong> <?php echo isset($projeto['contrapartida']) ? $projeto['contrapartida'] : null; ?>
+        </p>
+        <p align="justify">
+            <strong>Ingresso e forma de acesso:</strong> <?php echo isset($projeto['ingresso']) ? $projeto['ingresso'] : null; ?>
+        </p>
+        <p align="justify">
+            <strong>Democratização de acesso:</strong> <?php echo isset($projeto['democratizacao']) ? $projeto['democratizacao'] : null; ?>
+        </p>
+        <p align="justify">
+            <strong>Acessibilidade:</strong> <?php echo isset($projeto['acessibilidade']) ? $projeto['acessibilidade'] : null; ?>
+        </p>
+    </div>
+
+    <div class="well">
+        <p align="justify">
+            <strong>Plano de Divulgação:</strong> <?php echo isset($projeto['planoDivulgacao']) ? $projeto['planoDivulgacao'] : null; ?>
+        </p>
+        <ul class="list-group">
+            <li class="list-group-item list-group-item-success"><b>Plano de divulgação</b></li>
+            <li class="list-group-item">
+                <?php recuperaMaterial($idProjeto); ?>
+            </li>
+        </ul>
     </div>
 
     <div class="well">
@@ -144,6 +195,7 @@
                         <th>Nome</th>
                         <th>CPF</th>
                         <th>Função</th>
+                        <th>Curriculo</th>
                     </tr>
                     <?php
                     $sql = "SELECT * FROM ficha_tecnica
@@ -154,6 +206,7 @@
                         echo "<td class='list_description'>" . $campo['nome'] . "</td>";
                         echo "<td class='list_description'>" . $campo['cpf'] . "</td>";
                         echo "<td class='list_description'>" . $campo['funcao'] . "</td>";
+                        echo "<td class='list_description'>" . $campo['curriculo'] . "</td>";
                         echo "</tr>";
                     } ?>
                 </table>
@@ -161,147 +214,42 @@
         </ul>
     </div>
 
-    <?php
-    $data = $projeto['inicioCronograma'];
-    function tipoCronograma($data){
-        $valores = explode('-',$data);
-        if(isset($valores[2]) && is_numeric($valores[2])){
-            if(count($valores) == 3 & checkdate($valores[1],$valores[2],$valores[0])){
-                return true;
-            }
-            else{
-                return false;
-            }
-        }
-    }
-    if(tipoCronograma($data)){
-       ?>
-        <div class="well">
-            <ul class="list-group">
-                <li class="list-group-item list-group-item-success"><b>Cronograma</b></li>
-                <li class="list-group-item">
-                    <table class="table table-bordered">
-                        <tr>
-                            <td><strong>Início do projeto:</strong> <?= isset($projeto['inicioCronograma']) ? exibirDataBr($projeto['inicioCronograma']) : null ?></td>
-                            <td><strong>Fim do projeto:</strong> <?= isset($projeto['fimCronograma']) ?  exibirDataBr($projeto['fimCronograma']) : null ?></td>
-                        </tr>
-                </li>
-                <li class="list-group-item">
-                    <table class="table table-bordered">
-                        <tr>
-                            <td><strong>Captação de recursos:</strong></td>
-                            <td><strong>Pré-Produção:</strong></td>
-                            <td><strong>Produção:</strong></td>
-                            <td><strong>Pós-Produção:</strong></td>
-                            <td><strong>Prestação de Contas:</strong></td>
-                        </tr>
-                        <tr>
-                            <td class='list_description exibir'><?= $cronograma['captacaoRecurso'] ?? '' ?></td>
-                            <td class='list_description exibir'><?= $cronograma['preProducao'] ?? '' ?></td>
-                            <td class='list_description exibir'><?= $cronograma['producao'] ?? '' ?></td>
-                            <td class='list_description exibir'><?= $cronograma['posProducao'] ?? '' ?></td>
-                            <td class='list_description exibir'><?= $cronograma['prestacaoContas'] ?? '' ?></td>
-                        </tr>
-                    </table>
-                </li>
-            </ul>
-        </div>
-    <?php
-    }
-    else{
-        ?>
+    <div class="well">
         <ul class="list-group">
-            <li class="list-group-item list-group-item-success"><b>Cronograma Formato Antigo</b></li>
+            <li class="list-group-item list-group-item-success"><b>Cronograma</b></li>
             <li class="list-group-item">
                 <table class="table table-bordered">
                     <tr>
-                        <td><strong>Início do cronograma:</strong>
-                            <?=$projeto['inicioCronograma'] ?>
-                        </td>
-                        <td><strong>Fim do cronograma:</strong>
-                            <?= $projeto['fimCronograma'] ?>
-                        </td>
+                        <td><strong>Pré-Produção:</strong></td>
+                        <td><strong>Produção:</strong></td>
+                        <td><strong>Pós-Produção:</strong></td>
+                        <td><strong>Total em Meses da Execução:</strong></td>
                     </tr>
                     <tr>
-                        <td><strong>Captação de recursos:</strong>
-                            <?php echo $cronograma['captacaoRecurso'] ?>
-                        </td>
-                        <td><strong>Pré-Produção:</strong>
-                            <?php echo $cronograma['preProducao'] ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><strong>Produção:</strong>
-                            <?php echo $cronograma['producao'] ?>
-                        </td>
-                        <td><strong>Pós-Produção:</strong>
-                            <?php echo $cronograma['posProducao'] ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><strong>Prestação de Contas:</strong>
-                            <?php echo $cronograma['prestacaoContas'] ?>
-                        </td>
+                        <td class='list_description exibir'><?= $cronograma['preProducao'] ?? '' ?></td>
+                        <td class='list_description exibir'><?= $cronograma['producao'] ?? '' ?></td>
+                        <td class='list_description exibir'><?= $cronograma['posProducao'] ?? '' ?></td>
+                        <td class='list_description exibir'><?= $cronograma['totalExecucao'] ?? '' ?></td>
                     </tr>
                 </table>
             </li>
         </ul>
-    <?php
-    }
-    ?>
+    </div>
 
     <div class="well">
         <ul class="list-group">
             <li class="list-group-item list-group-item-success"><b>Orçamento</b></li>
             <li class="list-group-item">
-                <table class="table table-bordered">
-                    <tr>
-                        <?php
-                        for ($i = 1; $i <= 8; $i++) {
-                            $sql_etapa = "SELECT idEtapa FROM orcamento
-                                        WHERE publicado > 0 AND idProjeto ='$idProjeto' AND idEtapa = '$i'
-                                        ORDER BY idOrcamento";
-                            $query_etapa = mysqli_query($con, $sql_etapa);
-                            $lista = mysqli_fetch_array($query_etapa);
-
-                            $etapa = recuperaDados("etapa", "idEtapa", $lista['idEtapa']);
-                            echo "<td><strong>" . $etapa['etapa'] . ":</strong>";
-                        }
-                        ?>
-                    </tr>
-                    <tr>
-                        <?php
-                        for ($i = 1; $i <= 8; $i++) {
-                            $sql_etapa = "SELECT SUM(valorTotal) AS tot FROM orcamento
-                                        WHERE publicado > 0 AND idProjeto ='$idProjeto' AND idEtapa = '$i'
-                                        ORDER BY idOrcamento";
-                            $query_etapa = mysqli_query($con, $sql_etapa);
-                            $lista = mysqli_fetch_array($query_etapa);
-
-                            echo "<td>R$ " . dinheiroParaBr($lista['tot']) . "</td>";
-                        }
-                        ?>
-                    </tr>
-                    <tr>
-                        <?php
-                        $sql_total = "SELECT SUM(valorTotal) AS tot FROM orcamento
-                                    WHERE publicado > 0 AND idProjeto ='$idProjeto'
-                                    ORDER BY idOrcamento";
-                        $query_total = mysqli_query($con, $sql_total);
-                        $total = mysqli_fetch_array($query_total);
-                        echo "<td colspan='8'><strong>TOTAL: R$ " . dinheiroParaBr($total['tot']) . "</strong></td>";
-                        ?>
-                    </tr>
-                </table>
+                <?php recuperaTabelaOrcamento($idProjeto); ?>
             </li>
             <li class="list-group-item">
                 <table class="table table-bordered">
                     <tr>
-                        <td width='25%'><strong>Etapa</strong></td>
+                        <td width='25%'><strong>Grupo de Despesa</strong></td>
                         <td><strong>Descrição</strong></td>
                         <td width='5%'><strong>Qtde</strong></td>
                         <td width='5%'><strong>Unid. Med.</strong></td>
-                        <td width='5%'><strong>Qtde Unid.</strong></td>
+                        <td width='5%'><strong>Ocorrências</strong></td>
                         <td><strong>Valor Unit.</strong></td>
                         <td><strong>Valor Total</strong></td>
                     </tr>
@@ -311,17 +259,19 @@
                                 ORDER BY idEtapa";
                     $query = mysqli_query($con, $sql);
                     while ($campo = mysqli_fetch_array($query)) {
-                        $etapa = recuperaDados("etapa", "idEtapa", $campo['idEtapa']);
+                        $despesa = recuperaDados("grupo_despesas", "id", $campo['grupo_despesas_id']);
                         $medida = recuperaDados("unidade_medida", "idUnidadeMedida", $campo['idUnidadeMedida']);
-                        echo "<tr>";
-                        echo "<td class='list_description'>" . $etapa['etapa'] . "</td>";
-                        echo "<td class='list_description'>" . $campo['descricao'] . "</td>";
-                        echo "<td class='list_description'>" . $campo['quantidade'] . "</td>";
-                        echo "<td class='list_description'>" . $medida['unidadeMedida'] . "</td>";
-                        echo "<td class='list_description'>" . $campo['quantidadeUnidade'] . "</td>";
-                        echo "<td class='list_description'>" . dinheiroParaBr($campo['valorUnitario']) . "</td>";
-                        echo "<td class='list_description'>" . dinheiroParaBr($campo['valorTotal']) . "</td>";
-                        echo "</tr>";
+                        ?>
+                        <tr>
+                        <td class='list_description'><?= $despesa['despesa'] ?? '' ?></td>
+                        <td class='list_description'><?= $campo['descricao'] ?? '' ?></td>
+                        <td class='list_description'><?= $campo['quantidade'] ?? '' ?></td>
+                        <td class='list_description'><?= $medida['unidadeMedida'] ?? '' ?></td>
+                        <td class='list_description'><?= $campo['quantidadeUnidade'] ?? '' ?></td>
+                        <td class='list_description'><?= dinheiroParaBr($campo['valorUnitario']) ?? '' ?></td>
+                        <td class='list_description'><?= dinheiroParaBr($campo['valorTotal']) ?? ''?></td>
+                        </tr>
+                        <?php
                     } ?>
                 </table>
             </li>
@@ -371,6 +321,13 @@
                 }
                 ?>
             </li>
+        </ul>
+    </div>
+
+    <div class="well">
+        <ul class="list-group">
+            <li class="list-group-item list-group-item-success"><b>Foto do Projeto</b></li>
+            <li class="list-group-item"><?php exibirArquivos(7, $idProjeto); ?></li>
         </ul>
     </div>
 

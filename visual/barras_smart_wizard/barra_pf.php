@@ -1,4 +1,9 @@
 <?php
+if (isset($_GET['perfil'])) {
+    if ($_GET['perfil'] == "projeto_pf") {
+        unset($_SESSION['idProjeto']);
+    }
+}
 # Barra pf
 $con  = bancoMysqli();
 $idPf = $_SESSION['idUser'];
@@ -6,7 +11,8 @@ $pf   = recuperaDados("pessoa_fisica","idPf",$idPf);
 $idProj   = isset($_SESSION['idProjeto'])?$_SESSION['idProjeto']:null;
 $proj = recuperaDados("projeto","idProjeto",$idProj); // Para verificar status
 
-$dadosAdicionais = retornaDadosAdicionais($idPf, $_SESSION['tipoPessoa']);
+$tipoP = $_SESSION['tipoPessoa'] ?? "";
+$dadosAdicionais = retornaDadosAdicionais($idPf, $tipoP);
 
 $urlPf = array(
     27 => '/promac/visual/index_pf.php?secao=perfil',
@@ -131,7 +137,7 @@ for ($i = 0; $i < count($urlPf); $i++) {
                    <a onclick="location.href='index_pf.php?perfil=projeto_pf'" href=""><br /><small>Projeto</small></a>
                 </li>
                 <?php
-                    if ($proj['idEtapaProjeto'] == 1)
+                    if ($proj != null &&    $proj['idEtapaProjeto'] == 1)
                     {
                     ?>
                     <?php
@@ -156,7 +162,7 @@ for ($i = 0; $i < count($urlPf); $i++) {
                        <a onclick="location.href='index_pf.php?perfil=plano_trabalho'" href=""><br /><small>Plano de Trabalho</small></a>
                     </li>
                     <li class="<?php echo isset($acionar10) ? $acionar10 : 'clickable'; ?>">
-                        <a onclick="location.href='index_pf.php?perfil=projeto_6'" href=""><br /><small>Sobre o acesso do público ao projeto</small></a>
+                        <a onclick="location.href='index_pf.php?perfil=projeto_6'" href=""><br /><small>Público Alvo e Contrapartida</small></a>
                     </li>
                     <li class="<?php echo isset($acionar11) ? $acionar11 : 'clickable'; ?>">
                         <a onclick="location.href='index_pf.php?perfil=local'" href=""><br /><small>Local</small></a>
@@ -164,7 +170,7 @@ for ($i = 0; $i < count($urlPf); $i++) {
                 </ul> <!-- Barra linha 2 -->
                 <ul>
                     <li class="<?php echo isset($acionar19) ? $acionar19 : 'clickable'; ?>">
-                       <a onclick="location.href='index_pf.php?perfil=projeto_8'" href=""><br /><small>Público Alvo e Material de Divulgação</small></a>
+                       <a onclick="location.href='index_pf.php?perfil=projeto_8'" href=""><br /><small>Material de Divulgação</small></a>
                     </li>
                     <li class="<?php echo isset($acionar12) ? $acionar12 : 'clickable'; ?>">
                        <a onclick="location.href='index_pf.php?perfil=ficha_tecnica'" href=""><br /><small>Ficha Técnica</small></a>

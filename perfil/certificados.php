@@ -234,7 +234,7 @@ if(isset($_POST['apagar']))
 											$envio = $con->query($query);
 											$row = $envio->fetch_array(MYSQLI_ASSOC);
 
-											if(verificaArquivosExistentesPF($idProjeto,$row['idListaDocumento'])){
+											if(verificaArquivosExistentesPF($idProjeto,$row['idListaDocumento'], 3)){
 												echo '<div class="alert alert-success">O arquivo ' . $doc . ' já foi enviado.</div>';
 											}
 											else{ ?>

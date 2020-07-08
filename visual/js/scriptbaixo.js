@@ -33,3 +33,33 @@
         $('.pesquisa').fadeOut(550);
         $('#' + region).fadeIn(550);
     });
+
+//slider Cronograma
+function prettify_mes(n) {
+    if (n == 0) {
+        return n;
+    } else if (n == 0.5) {
+        return "Metade de um mês";
+    } else if (n >= 1) {
+        var num = n.toString().split(".");
+        if (num[0] == "1") {
+            var mes = " mês";
+        } else {
+            var mes = " meses"
+        }
+
+        if (typeof num[1] !== 'undefined') {
+            mes = mes + " e meio";
+        }
+        return num[0] + mes;
+    }
+}
+
+$('.slider').ionRangeSlider({
+    skin    : "square",
+    min     : 0,
+    max     : 18,
+    step    : 0.5,
+    prettify: prettify_mes,
+    hasGrid : true
+});

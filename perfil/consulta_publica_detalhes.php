@@ -97,11 +97,14 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                     <?php } ?>
                                 </tr>
                                 <tr>
-                                    <td><strong>Valor do projeto:</strong> R$
-                                        <?php echo
-                                        dinheiroParabr(isset($projeto['valorProjeto'])
-                                            ? $projeto['valorProjeto']
-                                            : ''); ?>
+                                    <td><strong>Valor do projeto:</strong>R$
+                                        <?php
+                                        if (isset($projeto['valorProjeto']) &&  $projeto['valorProjeto'] > 0){
+                                            echo dinheiroParabr(isset($projeto['valorProjeto']) ? $projeto['valorProjeto'] : '');
+                                        }else{
+                                            echo dinheiroParaBr(isset($projeto['valorIncentivo']) ? $projeto['valorIncentivo']: '');
+                                        }
+                                        ?>
                                     </td>
                                     <td><strong>Valor do incentivo:</strong> R$
                                         <?php echo
@@ -173,11 +176,6 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="3"><strong>Metodologia:</strong>
-                                        <?php echo isset($projeto['metodologia']) ? $projeto['metodologia'] : null; ?>
-                                    </td>
-                                </tr>
-                                <tr>
                                     <td colspan="3"><strong>Contrapartida:</strong>
                                         <?php echo isset($projeto['contrapartida']) ? $projeto['contrapartida'] : null; ?>
                                     </td>
@@ -246,33 +244,33 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                                 <li class="list-group-item list-group-item-success"><b>Cronograma</b></li>
                                 <li class="list-group-item">
                                     <table class="table table-bordered">
-                                        <tr>
+                                        <!--<tr>
                                             <td><strong>Início do cronograma:</strong>
-                                                <?php echo exibirDataBr($projeto['inicioCronograma']) ?>
+                                                <?php /*echo exibirDataBr($projeto['inicioCronograma']) */?>
                                             </td>
                                             <td><strong>Fim do cronograma:</strong>
-                                                <?php echo exibirDataBr($projeto['fimCronograma']) ?>
+                                                <?php /*echo exibirDataBr($projeto['fimCronograma']) */?>
                                             </td>
-                                        </tr>
+                                        </tr>-->
                                         <tr>
                                             <td><strong>Captação de recursos:</strong>
-                                                <?php echo $cronograma['captacaoRecurso'] ?>
+                                                <?php echo $cronograma['captacaoRecurso'] ?> mes(es)
                                             </td>
                                             <td><strong>Pré-Produção:</strong>
-                                                <?php echo $cronograma['preProducao'] ?>
+                                                <?php echo $cronograma['preProducao'] ?> mes(es)
                                             </td>
                                         </tr>
                                         <tr>
                                             <td><strong>Produção:</strong>
-                                                <?php echo $cronograma['producao'] ?>
+                                                <?php echo $cronograma['producao'] ?> mes(es)
                                             </td>
                                             <td><strong>Pós-Produção:</strong>
-                                                <?php echo $cronograma['posProducao'] ?>
+                                                <?php echo $cronograma['posProducao'] ?> mes(es)
                                             </td>
                                         </tr>
                                         <tr>
                                             <td colspan="2"><strong>Prestação de Contas:</strong>
-                                                <?php echo $cronograma['prestacaoContas'] ?>
+                                                <?php echo $cronograma['prestacaoContas'] ?> mes(es)
                                             </td>
                                         </tr>
                                     </table>
@@ -280,39 +278,30 @@ $v = array($video['video1'], $video['video2'], $video['video3']);
                             </ul>
                             <ul class="list-group">
                                 <li class="list-group-item list-group-item-success"><b>Orçamento</b></li>
-                                <?php
-                                for ($i = 1; $i <= 7; $i++) {
-                                    $sql_etapa = "SELECT idEtapa, SUM(valorTotal) AS tot FROM orcamento WHERE publicado > 0 AND idProjeto ='$idProjeto' AND idEtapa = '$i' ORDER BY idOrcamento";
-                                    $query_etapa = mysqli_query($con, $sql_etapa);
-                                    $lista = mysqli_fetch_array($query_etapa);
-
-                                    $etapa = recuperaDados("etapa", "idEtapa", $lista['idEtapa']);
-                                    echo  isset($etapa['etapa']) ? "<li class='list-group-item'><strong>" . $etapa['etapa']. ":</strong> R$ " . dinheiroParaBr($lista['tot']) . "</li>" : null;
-                                }
-                                $sql_total = "SELECT SUM(valorTotal) AS tot FROM orcamento WHERE publicado > 0 AND idProjeto ='$idProjeto' ORDER BY idOrcamento";
-                                $query_total = mysqli_query($con, $sql_total);
-                                $total = mysqli_fetch_array($query_total);
-                                echo "<li class='list-group-item'><strong>TOTAL:</strong> R$ " . dinheiroParaBr($total['tot']) . "</li>";
-                                ?>
+                                <li class="list-group-item">
+                                    <?php recuperaTabelaOrcamento($idProjeto); ?>
+                                </li>
                                 <li class="list-group-item">
                                     <table class="table table-bordered">
                                         <tr>
-                                            <td width='25%'><strong>Etapa</strong></td>
+                                            <td width='25%'><strong>Grupo de Despesa</strong></td>
                                             <td><strong>Descrição</strong></td>
                                             <td width='5%'><strong>Qtde</strong></td>
                                             <td width='5%'><strong>Unid. Med.</strong></td>
-                                            <td width='5%'><strong>Qtde Unid.</strong></td>
+                                            <td width='5%'><strong>Ocorrências</strong></td>
                                             <td><strong>Valor Unit.</strong></td>
                                             <td><strong>Valor Total</strong></td>
                                         </tr>
                                         <?php
-                                        $sql = "SELECT * FROM orcamento WHERE publicado > 0 AND idProjeto ='$idProjeto' ORDER BY idEtapa";
+                                        $sql = "SELECT * FROM orcamento
+                                WHERE publicado > 0 AND idProjeto ='$idProjeto'
+                                ORDER BY idEtapa";
                                         $query = mysqli_query($con, $sql);
                                         while ($campo = mysqli_fetch_array($query)) {
-                                            $etapa = recuperaDados("etapa", "idEtapa", $campo['idEtapa']);
+                                            $despesa = recuperaDados("grupo_despesas", "id", $campo['grupo_despesas_id']);
                                             $medida = recuperaDados("unidade_medida", "idUnidadeMedida", $campo['idUnidadeMedida']);
                                             echo "<tr>";
-                                            echo "<td class='list_description'>" . $etapa['etapa'] . "</td>";
+                                            echo "<td class='list_description'>" . $despesa['despesa'] . "</td>";
                                             echo "<td class='list_description'>" . $campo['descricao'] . "</td>";
                                             echo "<td class='list_description'>" . $campo['quantidade'] . "</td>";
                                             echo "<td class='list_description'>" . $medida['unidadeMedida'] . "</td>";

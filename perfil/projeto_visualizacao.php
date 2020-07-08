@@ -70,7 +70,7 @@ function DiasUteis() {
 
 // Consulta link do google form no banco que é cadastrado pela SMC
 $consulta = $conn->query("SELECT * FROM agendamento");
-$link = $consulta->fetch()['linkAgendamento'];
+$link = $consulta->fetch();
 
 ?>
 
@@ -166,55 +166,55 @@ $link = $consulta->fetch()['linkAgendamento'];
                                 <div class="form-group">
                                     <div class="col-md-offset-2 col-md-8">
 
-                                        <div class="row">
-                                            <div class="form-horizontal col-md-11">
-                                                <a class="btn btn-default btn-block" style="border-radius: 7px;" href="?perfil=certificados&idProjeto=<?= $idProjeto ?>">Anexar Certidões Fiscais</a>                
-                                            </div>                                                                                   
-                                            <button class='btn btn-default' type='button' data-toggle='modal' data-target='#certidaoFiscal' style="border-radius: 30px;">
-                                                <i class="fa fa-question-circle"></i>
-                                            </button>
-                                        </div><br>
+<!--                                        <div class="row">-->
+<!--                                            <div class="form-horizontal col-md-11">-->
+<!--                                                <a class="btn btn-default btn-block" style="border-radius: 7px;" href="?perfil=certificados&idProjeto=--><?//= $idProjeto ?><!--">Anexar Certidões Fiscais</a>                -->
+<!--                                            </div>                                                                                   -->
+<!--                                            <button class='btn btn-default' type='button' data-toggle='modal' data-target='#certidaoFiscal' style="border-radius: 30px;">-->
+<!--                                                <i class="fa fa-question-circle"></i>-->
+<!--                                            </button>-->
+<!--                                        </div><br>-->
 
                                         <?php
                                         $sql_certidoes = "SELECT * FROM upload_arquivo WHERE idPessoa = '$idProjeto' AND idTipo = 3 AND idListaDocumento IN (39,40,41,42) LIMIT 0,1";
                                         $query_certidoes = mysqli_query($con,$sql_certidoes);
                                         $certidoes = mysqli_fetch_array($query_certidoes);
                                         ?>
-                                        <div class="row">
-                                            <form class="form-horizontal col-md-11" role="form"
-                                                  action="../pdf/termo_responsabilidade.php" method="post">
-                                                <input type="hidden" value="<?= $idProjeto ?>" name="idProjeto">
-                                                <button  <?php if($certidoes == NULL) { echo 'disabled';} ?> type="submit" class="btn btn-default btn-block" style="border-radius: 7px;">Imprimir termo de responsabilidade
-                                                </button>
-                                            </form>
-                                            <button class='btn btn-default' type='button' data-toggle='modal' data-target='#termoResponsabilidade' style="border-radius: 30px;"><i class="fa fa-question-circle"></i>
-                                            </button>
-                                        </div>
+<!--                                        <div class="row">-->
+<!--                                            <form class="form-horizontal col-md-11" role="form"-->
+<!--                                                  action="../pdf/termo_responsabilidade.php" method="post">-->
+<!--                                                <input type="hidden" value="--><?//= $idProjeto ?><!--" name="idProjeto">-->
+<!--                                                <button  --><?php //if($certidoes == NULL) { echo 'disabled';} ?><!-- type="submit" class="btn btn-default btn-block" style="border-radius: 7px;">Imprimir termo de responsabilidade-->
+<!--                                                </button>-->
+<!--                                            </form>-->
+<!--                                            <button class='btn btn-default' type='button' data-toggle='modal' data-target='#termoResponsabilidade' style="border-radius: 30px;"><i class="fa fa-question-circle"></i>-->
+<!--                                            </button>-->
+<!--                                        </div>-->
 
-                                        <div class="row">
-                                            <div class="form-horizontal col-md-11">
-                                                <a  <?php if($certidoes == NULL) { echo 'disabled';} ?> class="btn btn-default btn-block" target="_blank" style="border-radius: 7px;" href="<?= $link ?>">Link do agendamento Google Forms</a>
-                                            </div>
-                                        </div><br>
+<!--                                        <div class="row">-->
+<!--                                            <div class="form-horizontal col-md-11">-->
+<!--                                                <a  --><?php //if($certidoes == NULL) { echo 'disabled';} ?><!-- class="btn btn-default btn-block" target="_blank" style="border-radius: 7px;" href="--><?//= $link ?><!--">Link do agendamento Google Forms</a>-->
+<!--                                            </div>-->
+<!--                                        </div><br>-->
 
                                         <?php
                                         $sql_agendamento = "SELECT * FROM projeto_agendamento WHERE idProjeto = '$idProjeto'";
                                         $query_agendamento = mysqli_query($con,$sql_agendamento);
                                         $agendamento = mysqli_fetch_array($query_agendamento);
                                         ?>
-                                        <div class="row">
-                                            <div class="form-horizontal col-md-11" >
-                                                <a <?php if($agendamento == NULL) { echo 'disabled';} ?> style="border-radius: 7px;" class="btn btn-default btn-block" href="../pdf/CARTA_DE_INTENCAO_DE_INCENTIVO.zip">Download modelo da carta de incentivo</a>
-                                            </div>
-                                            <button class='btn btn-default' type='button' data-toggle='modal'
-                                                    data-target='#cartaIntencaoIncentivo' style="border-radius: 30px;">
-                                                <i class="fa fa-question-circle"></i></button>
-                                        </div><br>
+<!--                                        <div class="row">-->
+<!--                                            <div class="form-horizontal col-md-11" >-->
+<!--                                                <a --><?php //if($agendamento == NULL) { echo 'disabled';} ?><!-- style="border-radius: 7px;" class="btn btn-default btn-block" href="../pdf/CARTA_DE_INTENCAO_DE_INCENTIVO.zip">Download modelo da carta de incentivo</a>-->
+<!--                                            </div>-->
+<!--                                            <button class='btn btn-default' type='button' data-toggle='modal'-->
+<!--                                                    data-target='#cartaIntencaoIncentivo' style="border-radius: 30px;">-->
+<!--                                                <i class="fa fa-question-circle"></i></button>-->
+<!--                                        </div><br>-->
 
-                                        <div class="row">
-                                            <div class="form-horizontal col-md-11" >
-                                                <a <?php if($agendamento == NULL) { echo 'disabled';} ?> style="border-radius: 7px;" class="btn btn-default btn-block" href="?perfil=carta_incentivo&idProjeto=<?= $idProjeto ?>">Inserir carta de incentivo</a></div>
-                                        </div><br>
+<!--                                        <div class="row">-->
+<!--                                            <div class="form-horizontal col-md-11" >-->
+<!--                                                <a --><?php //if($agendamento == NULL) { echo 'disabled';} ?><!-- style="border-radius: 7px;" class="btn btn-default btn-block" href="?perfil=carta_incentivo&idProjeto=--><?//= $idProjeto ?><!--">Inserir carta de incentivo</a></div>-->
+<!--                                        </div><br>-->
 
                                     </div>
                                 </div>
@@ -295,7 +295,7 @@ $link = $consulta->fetch()['linkAgendamento'];
                                     </div>-->
                             <?php
 //                                }
-                            if ($projeto['idStatus'] != 6)
+                            if ($projeto['idStatus'] != 6 && $projeto['idStatus'] != 2)
                             {
                             ?>
                                 <div class="form-group">

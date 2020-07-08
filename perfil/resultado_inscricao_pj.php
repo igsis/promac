@@ -199,9 +199,9 @@ endif;
                                 $res = mysqli_fetch_array($resultado);
 
                                 if ($res[0] == 1){
-                                    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND idListaDocumento IN (7,9,16,8,11,12,13,14,15,17,10)";
+                                    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND idListaDocumento IN (7,9,59,8,11,12,13,14,15,17,10)";
                                 }else{
-                                    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND idListaDocumento IN (7,9,16,10,8,11,12,13,14,15)";
+                                    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND idListaDocumento IN (7,9,59,10,8,11,12,13,14,15)";
                                 }
                                 $query_arquivos = mysqli_query($con,$sql_arquivos);
                                 while($arq = mysqli_fetch_array($query_arquivos)) {
@@ -210,7 +210,7 @@ endif;
                                     $envio = $con->query($query);
                                     $row = $envio->fetch_array(MYSQLI_ASSOC);
 
-                                    if(verificaArquivosExistentesPF($idPj,$row['idListaDocumento'])) {
+                                    if(verificaArquivosExistentesPF($idPj,$row['idListaDocumento'], 2)) {
                                         echo '<div class="alert alert-success">O arquivo ' . $doc . ' já foi enviado.</div>';
                                     } else {
 
@@ -326,7 +326,7 @@ endif;
                         $sql_arquivos = "SELECT * FROM upload_arquivo WHERE idTipo = '$tipoPessoa' AND idListaDocumento IN (7,9,8,11,12,13,14,15,17) AND idPessoa = '$idPj' AND publicado = 1";
                         $query_arquivos = mysqli_query($con,$sql_arquivos);
                         $resultado_num = mysqli_num_rows($query_arquivos);
-                            if ($resultado_num == 9) {
+                            if ($resultado_num >= 9) {
                                 ?>
                                 <form class="form-horizontal" role="form" action="?perfil=resultado_inscricao_pj"
                                       method="post">
