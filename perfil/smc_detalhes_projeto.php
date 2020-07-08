@@ -596,6 +596,24 @@ if(isset($_POST['cancelarProjeto'])){
     }
 }
 
+if(isset($_POST['alteraStatus'])){
+    $idEtapa = $_POST['idEtapa'];
+    $idProjeto = $_POST['idProjeto'];
+    $dateNow = date('Y-m-d H:i:s');
+    $sqltStatus = $con->query("SELECT idStatus FROM etapa_projeto WHERE idEtapaProjeto = '$idEtapa'")->fetch_assoc();
+    $updateProjeto = "UPDATE projeto SET idEtapaProjeto = '$idEtapa', idStatus = '{$sqltStatus['idStatus']}' WHERE idProjeto = '$idProjeto'";
+    $queryProjeto = $con->query($updateProjeto);
+    if($queryProjeto){
+        gravarLog($queryProjeto);
+        $sql_historico = $con->query("INSERT INTO historico_etapa (idProjeto, idEtapaProjeto, data) VALUES ('$idProjeto', '$idEtapa', '$dateNow')");
+        $mensagem = "<span style=\"color: #01DF3A; \"><strong>Alterado com sucesso!</strong></span>";
+        gravarLog($sql_historico);
+    }
+    else{
+        $mensagem = "<span style=\"color: #FF0000; \"><strong>Erro ao trocar a etapa do projeto. Tente novamente!</strong></span>";
+    }
+}
+// 1268
 $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 $prazos = recuperaDados("prazos_projeto","idProjeto",$idProjeto);
 $area = recuperaDados("area_atuacao","idArea",$projeto['idAreaAtuacao']);
@@ -627,14 +645,17 @@ $comissao = recuperaDados("pessoa_fisica","idPf",$projeto['idComissao']);
                         <li class="nav"><a href="#impressoes" data-toggle="tab">Impressões</a></li>
                         <li class="nav"><a href="#projeto" data-toggle="tab">Projeto</a></li>
                         <?php if(isset($representante)):?>
-                        <li class="nav"><a href="#J" data-toggle="tab">Pessoa Jurídica</a></li>
+                            <li class="nav"><a href="#J" data-toggle="tab">Pessoa Jurídica</a></li>
                         <?php else: ?>
-                        <li class="nav"><a href="#F" data-toggle="tab">Pessoa Física</a></li>
+                            <li class="nav"><a href="#F" data-toggle="tab">Pessoa Física</a></li>
                         <?php endif ?>
                         <li class="nav"><a href="#prazo" data-toggle="tab">Prazos</a></li>
                         <li class="nav"><a href="#financeiro" data-toggle="tab">Financeiro</a></li>
                         <li class="nav"><a href="#pagamentos" data-toggle="tab">Pagamentos</a></li>
                         <li class="nav"><a href="#historico" data-toggle="tab">Histórico</a></li>
+                        <?php if($_SESSION['idUser'] == 1 || $_SESSION['idUser'] == 363):?>
+                            <li class="nav"><a href="#status" data-toggle="tab"><i class="fa fa-wrench"></i></a></li>
+                        <?php endif ?>
                     </ul>
                     <div class="tab-content"><br/>
                         <!-- LABEL ADMINISTRATIVO-->
@@ -663,6 +684,9 @@ $comissao = recuperaDados("pessoa_fisica","idPf",$projeto['idComissao']);
 
                         <!-- LABEL FINANCEIRO -->
                         <?php include "includes/label_smc_financeiro.php"; ?>
+
+                        <!-- LABEL STATUS MANUAL -->
+                        <?php include "includes/label_smc_status.php"; ?>
                     </div>
                 </div>
             </div>
