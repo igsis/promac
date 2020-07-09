@@ -41,6 +41,9 @@ if (isset($_POST['envioComissao'])) {
         case 25:
             $statusEnvio = 24;
             break;
+        case 37:
+            $statusEnvio = 38;
+            break;
     }
 
 
@@ -327,7 +330,7 @@ if ($pf['idNivelAcesso'] == 2) {
     <?php
 }
 
-$array_status = array(2, 3, 10, 12, 13, 20, 23, 25, 14, 15, 11, 35); //status
+$array_status = array(2, 3, 10, 12, 13, 20, 23, 25, 14, 15, 36, 37, 39, 11, 35); //status
 
 foreach ($array_status as $idStatus) {
     $sqlStatus = "SELECT idEtapaProjeto, etapaProjeto, ordem FROM etapa_projeto WHERE idEtapaProjeto = '$idStatus'";
@@ -376,7 +379,7 @@ foreach ($array_status as $idStatus) {
                         <tr class='list_menu'>
                             <td>Protocolo (nº ISP)</td>
                             <?php
-                            if (($status['idEtapaProjeto'] == 2) || ($status['idEtapaProjeto'] == 13) || ($status['idEtapaProjeto'] == 23) || ($status['idEtapaProjeto'] == 14) || ($status['idEtapaProjeto'] == 10)) {
+                            if (($status['idEtapaProjeto'] == 2) || ($status['idEtapaProjeto'] == 13) || ($status['idEtapaProjeto'] == 23) || ($status['idEtapaProjeto'] == 36) || ($status['idEtapaProjeto'] == 14) || ($status['idEtapaProjeto'] == 10)) {
                                 ?>
                                 <td>Data do envio</td>
                                 <?php
@@ -388,14 +391,14 @@ foreach ($array_status as $idStatus) {
                             <td>Área de Atuação</td>
                             <?= ($status['ordem'] >= 5) ? "<td>Parecerista</td>" : NULL ?>
                             <?php
-                            if (($status['idEtapaProjeto'] == 23) || ($status['idEtapaProjeto'] == 13)) {
+                            if (($status['idEtapaProjeto'] == 23) || ($status['idEtapaProjeto'] == 37) || ($status['idEtapaProjeto'] == 13)) {
                                 ?>
                                 <td>Arquivo</td>
                                 <td>Enviado à</td>
                                 <?php
                             }
                             ?>
-                            <?= ($status['idEtapaProjeto'] == '2' || $status['idEtapaProjeto'] == '13' || $status['idEtapaProjeto'] == '14' || $status['idEtapaProjeto'] == '23') ? "<td></td>" : NULL ?>
+                            <?= ($status['idEtapaProjeto'] == '2' || $status['idEtapaProjeto'] == '13' || $status['idEtapaProjeto'] == '14' || $status['idEtapaProjeto'] == '23'|| ($status['idEtapaProjeto'] == '36')) ? "<td></td>" : NULL ?>
                             <td colspan='2' width='10%'></td>
                         </tr>
                         </thead>
@@ -434,6 +437,11 @@ foreach ($array_status as $idStatus) {
                                         $dataEtapa = new DateTime ($campo['data']);
 
                                         echo "<td class='list_description'>" . date_format($dataEtapa, "d/m/Y H:i:s") . "</td>";
+                                    } elseif ($status['idEtapaProjeto'] == 36) {
+
+                                        $dataEtapa = new DateTime ($campo['data']);
+
+                                        echo "<td class='list_description'>" . date_format($dataEtapa, "d/m/Y H:i:s") . "</td>";
                                     }
                                     ?>
 
@@ -464,6 +472,15 @@ foreach ($array_status as $idStatus) {
 
                                         echo "<td><a href='../uploadsdocs/" . $complemento['arquivo'] . "' target='_blank'>" . mb_strimwidth($complemento['arquivo'], 15, 25, "...") . "</a></td>";
                                         echo "<td>" . $dias->format("%a dias") . "</td>";
+                                    } elseif ($status['idEtapaProjeto'] == 37) {
+                                        $sqlComplemento = "SELECT DISTINCT `arquivo`, `dataEnvio` FROM `upload_arquivo` WHERE `idTipo` = '3' AND `idPessoa` = '" . $campo['idProjeto'] . "' AND `idListaDocumento` = '60' AND `publicado` = '1'";
+                                        $complemento = mysqli_fetch_array(mysqli_query($con, $sqlComplemento));
+                                        $dataEnvio = date_create($complemento['dataEnvio']);
+                                        $dataAtual = date_create(date("Y-m-d"));
+                                        $dias = date_diff($dataEnvio, $dataAtual);
+
+                                        echo "<td><a href='../uploadsdocs/" . $complemento['arquivo'] . "' target='_blank'>" . mb_strimwidth($complemento['arquivo'], 15, 25, "...") . "</a></td>";
+                                        echo "<td>" . $dias->format("%a dias") . "</td>";
                                     }
                                     if ($pf['idNivelAcesso'] == 2) {
                                         if ($campo['idStatus'] != 6) {
@@ -478,7 +495,7 @@ foreach ($array_status as $idStatus) {
                                             </td>
                                             <td class='list_description'>
                                                 <?php
-                                                if ($status['idEtapaProjeto'] == '2' || $status['idEtapaProjeto'] == '13' || $status['idEtapaProjeto'] == '14' || $status['idEtapaProjeto'] == '23') {
+                                                if ($status['idEtapaProjeto'] == '2' || $status['idEtapaProjeto'] == '13' || $status['idEtapaProjeto'] == '14' || $status['idEtapaProjeto'] == '23' || $status['idEtapaProjeto'] == '37') {
                                                     ?>
                                                     <form method="POST" action=''>
                                                         <input type='button' data-id="<?= $campo['idProjeto'] ?>"
@@ -492,7 +509,7 @@ foreach ($array_status as $idStatus) {
                                             </td>
                                             <?php
                                         } elseif ($campo['idStatus'] == 6) {
-                                            if ($status['idEtapaProjeto'] == '2' || $status['idEtapaProjeto'] == '13' || $status['idEtapaProjeto'] == '14' || $status['idEtapaProjeto'] == '23') {
+                                            if ($status['idEtapaProjeto'] == '2' || $status['idEtapaProjeto'] == '13' || $status['idEtapaProjeto'] == '14' || $status['idEtapaProjeto'] == '23' || $status['idEtapaProjeto'] == '36') {
                                                 echo "<td style='color: #942a25;text-align: center;font-weight: bold;'>
                                                 <form method='POST' action='?perfil=cancelado_visualizacao'>
                                                     <input type='hidden' name='idProjeto'
