@@ -1,6 +1,6 @@
 <?php
 
-$array_etapa = array(7, 19, 24, 34); //etapa
+$array_etapa = array(7, 19, 24, 34,38); //etapa
 foreach ($array_etapa as $idEtapaProjeto)
 {
     $sqlEtapaProjeto = "SELECT idEtapaProjeto, etapaProjeto, ordem FROM etapa_projeto WHERE idEtapaProjeto = '$idEtapaProjeto'";
