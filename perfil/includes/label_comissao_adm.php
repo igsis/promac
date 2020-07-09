@@ -62,7 +62,8 @@
             <?php
             if ($projeto['idStatusParecerista'] != '0' AND $projeto['dataReuniao'] != '0000-00-00' AND $parecer == 1) {
                 ?>
-                <div class="col-md-offset-2 col-md-6" align="right"><br/><label>Finalizar projeto e enviar à SMC?</label><br>
+                <div class="col-md-offset-2 col-md-6"
+                     align="right"><br/><label>Finalizar projeto e enviar à SMC?</label><br>
                     <?php echo exibirDataHoraBr($projeto['finalizacaoComissao']) ?>
                 </div>
                 <div class="col-md-2"><br/>
