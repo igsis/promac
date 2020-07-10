@@ -249,7 +249,12 @@ if(isset($_POST['complementaProjeto']))
     $idProjeto = $_POST['idProjeto'];
     $idEtapaProjeto = $_POST['idEtapaProjeto'];
 
-    $idEtapaNova = 12;
+    if($idEtapaProjeto == 10){
+        $idEtapaNova = 12;
+    } elseif ($idEtapaProjeto == 15){
+        $idEtapaNova = 36;
+    }
+
     $etapa = recuperaDados("etapa_projeto","idEtapaProjeto",$idEtapaNova);
     $idStatus = $etapa['idStatus'];
 
