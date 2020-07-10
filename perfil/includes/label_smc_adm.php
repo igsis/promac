@@ -79,10 +79,10 @@
                 ?>
                     <div class="col-md-3">
                         <button class='btn btn btn-success btn-sm btn-block' style="border-radius: 10px;" type='button'
-                                data-toggle='modal' data-target='#confirmAprovar'>Aprovar Projeto
+                                data-toggle='modal' data-target='#confirmAprovar'>Aprovar
                         </button>
                         <button class='btn btn btn-danger btn-sm btn-block' style="border-radius: 10px;" type='button'
-                                data-toggle='modal' data-target='#confirmReprovar'>Reprovar Projeto
+                                data-toggle='modal' data-target='#confirmReprovar'>Reprovar
                         </button>
                         <?php
                         if ($projeto['idEtapaProjeto'] == 10 || $projeto['idEtapaProjeto'] == 15) {
