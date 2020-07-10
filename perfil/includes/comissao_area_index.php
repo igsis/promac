@@ -10,7 +10,7 @@ else
 }
 $etapas = [
     "Novos e com Solicitação de Alteração" => "7, 34",
-    "com Complemento e Recurso" => "19, 24"];
+    "com Complemento e Recurso" => "19, 24, 38"];
 
 $sqlProjetoVerificado = "SELECT idProjeto, nomeProjeto, protocolo,  idComissao, pro.envioComissao, pro.dataParecerista, pro.idStatus, pf.nome, pf.cpf, razaoSocial, cnpj, areaAtuacao, pro.publicado, pfc.nome AS comissao, etapaProjeto, pro.idEtapaProjeto AS idEtapaProjeto 
                     FROM projeto AS pro
