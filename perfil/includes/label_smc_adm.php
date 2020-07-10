@@ -85,7 +85,7 @@
                                 data-toggle='modal' data-target='#confirmReprovar'>Reprovar Projeto
                         </button>
                         <?php
-                        if ($projeto['idEtapaProjeto'] == 10) {
+                        if ($projeto['idEtapaProjeto'] == 10 || $projeto['idEtapaProjeto'] == 15) {
                             ?>
                             <button class='btn btn btn-inverse btn-sm btn-block' style="border-radius: 10px;" type='button'
                                     data-toggle='modal' data-target='#confirmComplemento'>Complemento de Informação
