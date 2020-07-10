@@ -315,9 +315,6 @@ $idStatus = $projeto['idEtapaProjeto'];
                         <?php else: ?>
                             <li class="nav"><a href="#F" data-toggle="tab">Pessoa Física</a></li>
                         <?php endif ?>
-                        <?php if ($_SESSION['idUser'] == 1 || $_SESSION['idUser'] == 363 || $_SESSION['idUser'] == 744): ?>
-                            <li class="nav"><a href="#status" data-toggle="tab"><i class="fa fa-wrench"></i></a></li>
-                        <?php endif ?>
                     </ul>
 
                     <div class="tab-content">
@@ -333,10 +330,7 @@ $idStatus = $projeto['idEtapaProjeto'];
 
                         <!--LABEL PESSOA FISICA-->
                         <?php include "includes/label_pf.php"; ?>
-
-                        <!-- LABEL STATUS MANUAL -->
-                        <?php include "includes/label_smc_status.php"; ?>
-
+                        
                     </div>
                     <!-- class="tab-content" -->
                 </div>
