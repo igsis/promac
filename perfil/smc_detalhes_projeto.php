@@ -653,7 +653,7 @@ $comissao = recuperaDados("pessoa_fisica","idPf",$projeto['idComissao']);
                         <li class="nav"><a href="#financeiro" data-toggle="tab">Financeiro</a></li>
                         <li class="nav"><a href="#pagamentos" data-toggle="tab">Pagamentos</a></li>
                         <li class="nav"><a href="#historico" data-toggle="tab">Histórico</a></li>
-                        <?php if($_SESSION['idUser'] == 1 || $_SESSION['idUser'] == 363 || $_SESSION['idUser'] == 744):?>
+                        <?php if($_SESSION['idUser'] == 1 || $_SESSION['idUser'] == 363 || $_SESSION['idUser'] == 768):?>
                             <li class="nav"><a href="#status" data-toggle="tab"><i class="fa fa-wrench"></i></a></li>
                         <?php endif ?>
                     </ul>
