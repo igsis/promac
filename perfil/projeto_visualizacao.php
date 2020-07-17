@@ -260,9 +260,9 @@ $link = $consulta->fetch();
                             ?>
                                     <div class="form-group">
                                         <div class="col-md-offset-4 col-md-6">
-                                            <form class="form-horizontal" role="form" action="?perfil=complemento_informacoes&idProjeto=<?= $idProjeto ?>"
+                                            <form class="form-horizontal" role="form" action="?perfil=complemento_informacoes&idProjeto=<?= $idProjeto ?>&etapa=<?= $projeto['idEtapaProjeto'] ?>"
                                                   method="post">
-                                                <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;">anexar complemento</button>
+                                                <button type="submit" class="btn btn-success btn-block" style="border-radius: 7px;"><?= $projeto['idEtapaProjeto'] != 36 ? "anexar complemento" : "anexar complemento de alteração" ?></button>
                                             </form>
                                         </div>
                                     </div>

@@ -47,7 +47,7 @@
         ?>
 
         <?php
-        $array_envio_comissao = array(2,10,13,20,14,15,23,25,29,31);
+        $array_envio_comissao = array(2,10,13,20,14,15,23,25,29,31,37,39);
         if(in_array($projeto['idEtapaProjeto'], $array_envio_comissao )) {
         ?>
             <div class="form-group">
@@ -55,7 +55,7 @@
             </div>
             <div class="form-group">
                 <?php
-                $etapas_envio_comissao = array(2,10,13,20,23,25,14,15);
+                $etapas_envio_comissao = array(2,10,13,20,23,25,14,15,37,39);
                 if(in_array($projeto['idEtapaProjeto'],$etapas_envio_comissao)) {
                     ?>
                     <!-- Botão Enviar pra Comissão -->
@@ -74,18 +74,18 @@
                 </div>
                 <!-- Botões Aprova/Reprova/Complemento -->
                 <?php
-                $etapas_finais = array(10,20,25,15);
+                $etapas_finais = array(10,20,25,15,39);
                 if(in_array($projeto['idEtapaProjeto'],$etapas_finais)){
                 ?>
                     <div class="col-md-3">
                         <button class='btn btn btn-success btn-sm btn-block' style="border-radius: 10px;" type='button'
-                                data-toggle='modal' data-target='#confirmAprovar'>Aprovar Projeto
+                                data-toggle='modal' data-target='#confirmAprovar'>Aprovar
                         </button>
                         <button class='btn btn btn-danger btn-sm btn-block' style="border-radius: 10px;" type='button'
-                                data-toggle='modal' data-target='#confirmReprovar'>Reprovar Projeto
+                                data-toggle='modal' data-target='#confirmReprovar'>Reprovar
                         </button>
                         <?php
-                        if ($projeto['idEtapaProjeto'] == 10) {
+                        if ($projeto['idEtapaProjeto'] == 10 || $projeto['idEtapaProjeto'] == 15) {
                             ?>
                             <button class='btn btn btn-inverse btn-sm btn-block' style="border-radius: 10px;" type='button'
                                     data-toggle='modal' data-target='#confirmComplemento'>Complemento de Informação

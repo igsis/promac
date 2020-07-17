@@ -1,6 +1,6 @@
 <?php
 
-$array_etapa = array(7, 19, 24, 34); //etapa
+$array_etapa = array(7, 19, 24, 34, 38); //etapa
 foreach ($array_etapa as $idEtapaProjeto)
 {
     $sqlEtapaProjeto = "SELECT idEtapaProjeto, etapaProjeto, ordem FROM etapa_projeto WHERE idEtapaProjeto = '$idEtapaProjeto'";
@@ -53,7 +53,7 @@ foreach ($array_etapa as $idEtapaProjeto)
                             <td>Documento</td>
                             <td>Área de Atuação</td>
                             <td>Parecerista</td>
-                            <?=($etapa_projeto['idEtapaProjeto'] == 7 || $etapa_projeto['idEtapaProjeto'] == 19 || $etapa_projeto['idEtapaProjeto'] == 24 || $etapa_projeto['idEtapaProjeto'] == 34) ? "<td>Parecerista atribuido à</td>" : "<td></td>" ?>
+                            <?=($etapa_projeto['idEtapaProjeto'] == 7 || $etapa_projeto['idEtapaProjeto'] == 19 || $etapa_projeto['idEtapaProjeto'] == 24 || $etapa_projeto['idEtapaProjeto'] == 34 || $etapa_projeto['idEtapaProjeto'] == 38) ? "<td>Parecerista atribuido à</td>" : "<td></td>" ?>
                             <td width='10%'></td>
                         </tr>
                         </thead>
