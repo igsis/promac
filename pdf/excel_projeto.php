@@ -38,12 +38,13 @@ $objPHPExcel->setActiveSheetIndex(0)
     ->setCellValue('K1', "Etnia")
     ->setCellValue('L1', "Tipo de Pessoa")
     ->setCellValue('M1', "Documento (CPF/CNPJ)")
-    ->setCellValue('N1', "E-mail")
-    ->setCellValue('O1', "Area de Atuação")
-    ->setCellValue('P1', "Tags")
-    ->setCellValue('Q1', "POSTO DE TRABALHO")
-    ->setCellValue('R1', "MÉDIA DE REMUNERAÇÃO");
-
+    ->setCellValue('N1', "Subprefeitura")
+    ->setCellValue('O1', "Distrito")
+    ->setCellValue('P1', "E-mail")
+    ->setCellValue('Q1', "Area de Atuação")
+    ->setCellValue('R1', "Tags")
+    ->setCellValue('S1', "POSTO DE TRABALHO")
+    ->setCellValue('T1', "MÉDIA DE REMUNERAÇÃO");
 
 
 //Colorir a primeira fila
@@ -171,6 +172,10 @@ while ($row = mysqli_fetch_array($query)) {
         $cidade = $pj != null ? $pj['cidade'] : '';
         $estado = $pj != null ? $pj['estado'] : '';
         $cep = $pj != null ? $pj['cep'] : '';
+        if ($pj != null) {
+            $subprefeitura = $pj['idSubprefeitura'] ? recuperaDados('subprefeitura','idSubprefeitura',$pj['idSubprefeitura']) : '';
+            $distrito = $pj['idDistrito'] ? recuperaDados('distrito','idDistrito',$pj['idDistrito']) : '';
+        }
     } else {
         $pf = recuperaDados("pessoa_fisica", "idPf", $row['idPf']);
         $proponente = $pf != null ? $pf['nome'] : '';
@@ -183,6 +188,10 @@ while ($row = mysqli_fetch_array($query)) {
         $cidade = $pf != null ? $pf['cidade'] : '';
         $estado = $pf != null ? $pf['estado'] : '';
         $cep = $pf != null ? $pf['cep'] : '';
+        if ($pf != null){
+            $subprefeitura = $pf['idSubprefeitura'] ? recuperaDados('subprefeitura','idSubprefeitura',$pf['idSubprefeitura']) : '';
+            $distrito = $pf['idDistrito'] ? recuperaDados('distrito','idDistrito',$pf['idDistrito']) : '';
+        }
     }
 
     $tipoPessoa = $row['tipoPessoa'];
@@ -207,9 +216,9 @@ while ($row = mysqli_fetch_array($query)) {
 
     $tags = gerarTag($row['idProjeto']);
     $lista_local = listaLocal($row['idProjeto']);
-    $posto_trabalho = recuperaDados("postos_trabalho","idProjeto",$row['idProjeto']);
+    $posto_trabalho = recuperaDados("postos_trabalho", "idProjeto", $row['idProjeto']);
 
-    $objPHPExcel->getActiveSheet()->getStyle('A'.$i.'')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+    $objPHPExcel->getActiveSheet()->getStyle('A' . $i . '')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
     $objPHPExcel->getActiveSheet()->getStyle('E' . $i . '')->getNumberFormat()->setFormatCode("#,##0.00");
     $objPHPExcel->getActiveSheet()->getStyle('F' . $i . '')->getNumberFormat()->setFormatCode("#,##0.00");
 
@@ -224,15 +233,17 @@ while ($row = mysqli_fetch_array($query)) {
         ->setCellValue('G' . $i, $orcamento['valorTotal'] != null ? dinheiroParaBr($orcamento['valorTotal']) : '')
         ->setCellValue('H' . $i, $row['status'])
         ->setCellValue('I' . $i, $proponente)
-        ->setCellValue('J' . $i, $infoPessoa != null ? $infoPessoa['genero']:'')
-        ->setCellValue('K' . $i, $infoPessoa != null ? $infoPessoa['etnia']: '')
+        ->setCellValue('J' . $i, $infoPessoa != null ? $infoPessoa['genero'] : '')
+        ->setCellValue('K' . $i, $infoPessoa != null ? $infoPessoa['etnia'] : '')
         ->setCellValue('L' . $i, $tipo)
         ->setCellValue('M' . $i, $documento)
-        ->setCellValue('N' . $i, $email)
-        ->setCellValue('O' . $i, $row['areaAtuacao'])
-        ->setCellValue('P' . $i, $tags)
-        ->setCellValue('Q' . $i, $posto_trabalho != null ? $posto_trabalho['quantidade']:'')
-        ->setCellValue('R' . $i, $posto_trabalho != null ? dinheiroParaBr($posto_trabalho['media_valor']):'');
+        ->setCellValue('N' . $i, $subprefeitura ? $subprefeitura['subprefeitura'] : '')
+        ->setCellValue('O' . $i, $distrito ? $distrito['distrito'] : '')
+        ->setCellValue('P' . $i, $email)
+        ->setCellValue('Q' . $i, $row['areaAtuacao'])
+        ->setCellValue('R' . $i, $tags)
+        ->setCellValue('S' . $i, $posto_trabalho != null ? $posto_trabalho['quantidade'] : '')
+        ->setCellValue('T' . $i, $posto_trabalho != null ? dinheiroParaBr($posto_trabalho['media_valor']) : '');
 
     $i++;
 }
