@@ -19,21 +19,20 @@ if (isset($_POST['apagar'])) {
     }
 }
 
-if (isset($_POST['cancelar'])){
+if (isset($_POST['cancelar'])) {
     $idProjeto = $_POST['idProjeto'];
     $dateNow = date('Y-m-d H:i:s');
     $observacao = $_POST['observacao'];
 
     $query = "UPDATE `projeto` SET projeto.idStatus = '6' WHERE idProjeto = '$idProjeto'";
     $historico = "INSERT INTO historico_cancelamento (idProjeto, observacao,idUsuario, data, acao) VALUES ('$idProjeto','$observacao','$idPf','$dateNow',1)";
-    if (mysqli_query($con,$query)){
-        if (mysqli_query($con,$historico)){
+    if (mysqli_query($con, $query)) {
+        if (mysqli_query($con, $historico)) {
             $mensagem = "<font color='#01DF3A'><strong>Projeto cancelado com sucesso!</strong></font>";
-        }
-        else{
+        } else {
             $mensagem = "<font color='#FF0000'><strong>Erro ao cancelar projeto! Tente novamente.</strong></font>";
         }
-    }else{
+    } else {
         $mensagem = "<font color='#FF0000'><strong>Erro ao apagar projeto! Tente novamente.</strong></font>";
     }
 
@@ -48,16 +47,18 @@ $dadosAdicionais = retornaDadosAdicionais($idPf, $tipoPessoa)
             <?php
             if ($pf['liberado'] != NULL) echo "<h4>Projetos</h4>";
             ?>
-            <h5><?php if (isset($mensagem)) {echo $mensagem;}; ?></h5>
+            <h5><?php if (isset($mensagem)) {
+                    echo $mensagem;
+                }; ?></h5>
         </div>
         <!-- Início Lista Projetos Cancelados pela SMC -->
         <?php
         $sql_cancelados = "SELECT distinct prj.idProjeto, nomeProjeto, protocolo, acao, observacao, data FROM projeto AS prj 
                             INNER JOIN historico_cancelamento AS hst ON prj.idProjeto = hst.idProjeto
                             WHERE idPf = '$idPf' AND publicado = 0 AND idStatus = 6";
-        $query_cancelados = mysqli_query($con,$sql_cancelados);
+        $query_cancelados = mysqli_query($con, $sql_cancelados);
         $num = mysqli_num_rows($query_cancelados);
-        if($num > 0){
+        if ($num > 0) {
             echo "<div class='well'>";
             echo "<strong>Há projetos cancelados</strong><br/><br/>";
             echo "<table class='table table-condensed'>
@@ -71,7 +72,7 @@ $dadosAdicionais = retornaDadosAdicionais($idPf, $tipoPessoa)
                                     </tr>
                                 </thead>
                                 <tbody>";
-            while ($cancelados = mysqli_fetch_array($query_cancelados)){
+            while ($cancelados = mysqli_fetch_array($query_cancelados)) {
                 echo "<tr>";
                 echo "<td class='list_description'>" . $cancelados['protocolo'] . "</td>";
                 echo "<td class='list_description'>" . $cancelados['nomeProjeto'] . "</td>";
@@ -88,7 +89,7 @@ $dadosAdicionais = retornaDadosAdicionais($idPf, $tipoPessoa)
         <div class="row">
             <div class="col-md-offset-1 col-md-10">
                 <?php
-                if ($pf['liberado'] == 2 OR $pf['liberado'] == 4 OR $pf['liberado'] == NULL) {
+                if ($pf['liberado'] == 2 or $pf['liberado'] == 4 or $pf['liberado'] == NULL) {
                     echo "<div class='alert alert-warning'>
 				  		<strong></strong>Aguardando preenchimento e envio da Inscrição.
 						</div>";
@@ -118,11 +119,16 @@ $dadosAdicionais = retornaDadosAdicionais($idPf, $tipoPessoa)
                                 <form class="form-horizontal" role="form" action="?perfil=projeto_novo" method="post">
                                     <?php if (!$dadosAdicionais): ?>
                                         <div class="alert alert-danger">
-                                            Você já completou seus dados de cadastro? O PROMAC quer saber algumas coisas de você! Retorne ao menu
-                                            <strong>"Informações Adicionais"</strong> e complete seu cadastro. Após completar o cadastro, retorne aqui no campo de inscrição de projetos normalmente”
+                                            Você já completou seus dados de cadastro? O PROMAC quer saber algumas coisas
+                                            de você! Retorne ao menu
+                                            <strong>"Informações Adicionais"</strong> e complete seu cadastro. Após
+                                            completar o cadastro, retorne aqui no campo de inscrição de projetos
+                                            normalmente”
                                         </div>
-                                        <div class="tooltip-wrapper disabled" data-title="Complete seu cadastro com as Informações Adicionais">
-                                            <button class="btn btn-theme btn-lg btn-block" disabled>Inscrever Projeto</button>
+                                        <div class="tooltip-wrapper disabled"
+                                             data-title="Complete seu cadastro com as Informações Adicionais">
+                                            <button class="btn btn-theme btn-lg btn-block" disabled>Inscrever Projeto
+                                            </button>
                                         </div>
                                     <?php else: ?>
                                         <input type="submit" value="Inscrever Projeto"
@@ -142,7 +148,7 @@ $dadosAdicionais = retornaDadosAdicionais($idPf, $tipoPessoa)
                     <div class='alert alert-warning'>
                         <strong>Aviso: </strong>O cadastro de novos projetos está desabilitado temporariamente pela SMC.
                     </div>
-                <?php
+                    <?php
                 }
                 ?>
                 <!--Fim da validação numero de projetos-->
@@ -161,13 +167,15 @@ $dadosAdicionais = retornaDadosAdicionais($idPf, $tipoPessoa)
                     $query = mysqli_query($con, $sql);
                     $num = mysqli_num_rows($query);
                     if ($num > 0) {
-                        if (!$dadosAdicionais){
-                        ?>
+                        if (!$dadosAdicionais) {
+                            ?>
                             <div class="alert alert-danger">
-                                Você já completou seus dados de cadastro? O PROMAC quer saber algumas coisas de você! Retorne ao menu
-                                <strong>"Informações Adicionais"</strong> e complete seu cadastro. Após completar o cadastro, retorne aqui no campo de inscrição de projetos normalmente”
+                                Você já completou seus dados de cadastro? O PROMAC quer saber algumas coisas de você!
+                                Retorne ao menu
+                                <strong>"Informações Adicionais"</strong> e complete seu cadastro. Após completar o
+                                cadastro, retorne aqui no campo de inscrição de projetos normalmente”
                             </div>
-                    <?php }
+                        <?php }
                         echo "<table class='table table-condensed'>
                                 <thead>
                                     <tr class='list_menu'>
@@ -187,17 +195,17 @@ $dadosAdicionais = retornaDadosAdicionais($idPf, $tipoPessoa)
                             $status = "SELECT etapaProjeto FROM etapa_projeto WHERE idEtapaProjeto='$idCampo'";
                             $envio = mysqli_query($con, $status);
                             $rowStatus = mysqli_fetch_array($envio);
-                            if($campo['idStatus'] == 6){
+                            if ($campo['idStatus'] == 6) {
                                 echo "<td colspan='2' style='color: #942a25;text-align: center;font-weight: bold'>Cancelado </td>";
-                            }
-                            else if ($campo['idEtapaProjeto'] == 1) {
-                                echo "
-                                                    <td class='list_description'>
+                            } else if ($campo['idEtapaProjeto'] == 1) {
+                                if ($statusProjeto == 1) {
+                                    echo "<td class='list_description'>
                                                         <form method='POST' action='?perfil=projeto_edicao'>
                                                             <input type='hidden' name='carregar' value='" . $campo['idProjeto'] . "' />
                                                             <input type ='submit' class='btn btn-theme btn-block' value='carregar'>
                                                         </form>
                                                     </td>";
+                                }
                                 echo "
                                                     <td class='list_description'>
                                                         <form method='POST' action='?perfil=projeto_pf'>
@@ -251,7 +259,7 @@ $dadosAdicionais = retornaDadosAdicionais($idPf, $tipoPessoa)
     </div>
 </section>
 <script>
-    $(function() {
+    $(function () {
         $('.tooltip-wrapper').tooltip({position: "bottom"});
     });
 </script>
