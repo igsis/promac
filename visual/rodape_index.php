@@ -3,7 +3,7 @@
 	<div class="container">
 		<table width="100%">
 			<tr>
-				<td width="20%"><img src="visual/images/pin_promac_pq.png" align="left"/></td>
+<!--				<td width="20%"><img src="visual/images/pin_promac_pq.png" align="left"/></td>-->
 				<td align="center"><font color="#ccc">2018 @ Pro-Mac - Programa Municipal de Apoio a Projetos Culturais<br/>Secretaria Municipal de Cultura<br/>Prefeitura de São Paulo</font></td>
 				<td align="right"><font color="#ccc"><b>Contato:</b><br/><i class="fa fa-phone-square"></i> (11) 3397-0002 das 13h às 17h<br/><i class="fa fa-envelope"></i> Dúvidas: promac@prefeitura.sp.gov.br</font></td>
 			</tr>

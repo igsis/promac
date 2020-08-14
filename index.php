@@ -17,7 +17,7 @@ $tipoPessoa = '6';
 		<link href="visual/color/default.css" rel="stylesheet" media="screen">
 		<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 		<link rel="stylesheet" href="visual/css/font-awesome.min.css">
-		<link rel="icon" type="image/png" sizes="16x16" href="visual/images/favicon.png">
+<!--		<link rel="icon" type="image/png" sizes="16x16" href="visual/images/favicon.png">-->
 		<script src="visual/js/modernizr.custom.js"></script>
 		<script src="visual/js/jquery-1.9.1.js"></script>
 		<script src="visual/js/jquery-ui.js"></script>
@@ -47,7 +47,7 @@ $tipoPessoa = '6';
                         <h4>Pro-Mac - Programa Municipal de Apoio a Projetos Culturais</h4>
                     </div>
                     <div class="col-md-3">
-                        <img src="visual/images/pin_promac_negativo.png" align="right"  />
+<!--                        <img src="visual/images/pin_promac_negativo.png" align="right"  />-->
                     </div>
                 </div>
                 <div class="row">
@@ -242,7 +242,7 @@ $tipoPessoa = '6';
 					<tr>
                         <td><font color="#ccc"><i class="fa fa-phone-square"></i> Dúvidas: <br>Sobre cadastros: cadastrospromac@prefeitura.sp.gov.br<br>Sobre projetos: projetospromac@prefeitura.sp.gov.br<br>Sobre incentivo e abatimento fiscal: incentivopromac@prefeitura.sp.gov.br<br>Sobre prestação de contas: prestacaocontaspromac@prefeitura.sp.gov.br</font></td>
 						<td align="center"><font color="#ccc">2018 @ Pro-Mac - Programa Municipal de Apoio a Projetos Culturais<br/>Secretaria Municipal de Cultura<br/>Prefeitura de São Paulo</font></td>
-                        <td width="20%"><img src="visual/images/pin_promac_pq.png" align="right"/></td>
+<!--                        <td width="20%"><img src="visual/images/pin_promac_pq.png" align="right"/></td>-->
 					</tr>
                     <tr>
                         <td colspan="3" align="center"><font color="#ccc" size="1"><br/><i>Supervisão de Tecnologia da Informação - Sistemas de Informação</i></font></td>
