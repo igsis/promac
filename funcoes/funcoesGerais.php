@@ -1724,12 +1724,14 @@ function exibirSolicitacaoAlteracao($tipoPessoa, $idPessoa)
 				<tr>
 					<td><strong>Tipo de arquivo</strong></td>
 					<td><strong>Nome do arquivo</strong></td>
+					<td><strong>Data de envio</strong></td>
 				</tr>
 		";
         while ($arquivo = mysqli_fetch_array($query)) {
             echo "<tr>";
             echo "<td class='list_description'>" . $arquivo['documento'] . "</td>";
             echo "<td class='list_description'><a href='../uploadsdocs/" . $arquivo['arquivo'] . "' target='_blank'>" . mb_strimwidth($arquivo['arquivo'], 0, 40, "...") . "</a></td>";
+            echo "<td class='list_description'>". exibirDataBr($arquivo['dataEnvio']) ."</td>";
             echo "</tr>";
         }
         echo "</table>";
