@@ -61,7 +61,7 @@ $pdf->Image('../visual/images/brasao.jpg',$x,15,15);
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 16);
-$pdf->Cell(170,9,utf8_decode("PREFEITURA DO MUNICÍCIO DE SÃO PAULO"),0,1,'C');
+$pdf->Cell(170,9,utf8_decode("PREFEITURA DO MUNICÍPIO DE SÃO PAULO"),0,1,'C');
 $pdf->SetX($x);
 $pdf->Cell(170,9,utf8_decode("SECRETARIA MUNICIPAL DE CULTURA"),0,1,'C');
 
