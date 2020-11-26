@@ -29,11 +29,11 @@ $tipoPessoa = '6';
         function alerta()
         {
             swal({   title: "Atenção!",
-                text: "EDITAL PROMAC 2020 está com inscrições abertas para projetos culturais! Confira no botão NORMATIVOS!",
+                text: "EDITAL PROMAC 2021 está com inscrições abertas para projetos culturais! Confira no botão NORMATIVOS!",
                 timer: 10000,
                 confirmButtonColor:	"#000000",
                 showConfirmButton: true });}
-        window.onload = alerta();
+        // window.onload = alerta();
     </script>
 		<div id="bar">
 			<p id="p-bar"><img src="visual/images/logo_cultura_h.png" />&nbsp;</p>
@@ -92,7 +92,7 @@ $tipoPessoa = '6';
 
                     </div>
 
-                    <!-- Inicio Modal Regulamento -->
+                    <!-- Inicio Modal Regulamento  -->
                     <div class="modal fade" id="regulamento" role="dialog" aria-labelledby="regulamentoLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -102,16 +102,13 @@ $tipoPessoa = '6';
                                 </div>
                                 <div class="modal-body" align="left">
                                     <div class="well">
-                                        <h6>Lei / Decreto / Portarias</h6>
+                                        <h6>Normativos Vigentes</h6>
                                         <ul class="list-group">
-                                            <li class="list-group-item"><a href="pdf/Lei_ProMac.pdf" target="_blank">Lei</a></li>
-                                            <li class="list-group-item"><a href="pdf/Novo_Decreto_ProMac.pdf" target="_blank">Novo Decreto</a></li>
-                                            <li class="list-group-item"><a href="pdf/Retificação_Art31_Decreto.pdf" target="_blank">Retificação do inciso III do Art. 31 do Novo Decreto</a></li>
-                                            <li class="list-group-item"><a href="pdf/Decreto_ProMac.pdf" target="_blank">Decreto Revogado</a></li>
-                                            <li class="list-group-item"><a href="pdf/AlteracaoDecreto_ProMac.pdf" target="_blank">Alteração de Decreto Revogada</a></li>
-                                            <li class="list-group-item"><a href="pdf/Portaria_publicado.pdf">Portaria de Procedimentos Revogada</a></li>
-                                            <li class="list-group-item"><a href="pdf/Portaria_SF_procedimentos_contabeis_incentivador.pdf">Portaria de Procedimentos Contábeis – Incentivador</a></li>
-                                            <li class="list-group-item"><a href="pdf/Portaria_SMC_prestacao_contas.pdf">Portarias de prestação de contas</a></li>
+                                            <li class="list-group-item"><a href="pdf/Lei_ProMac.pdf" target="_blank">Lei nº 15.948/2013</a></li>
+                                            <li class="list-group-item"><a href="pdf/Novo_Decreto_ProMac.pdf" target="_blank">Decreto nº 59.119/2019</a></li>
+                                            <li class="list-group-item"><a href="pdf/Retificação_Art31_Decreto.pdf" target="_blank">Retificação do inciso III do Art. 31 do Decreto nº 59.119/2019</a></li>
+                                            <li class="list-group-item"><a href="pdf/Portaria_SF_procedimentos_contabeis_incentivador.pdf">Portaria SF nº 173/2018 - Procedimentos Contábeis</a></li>
+                                            <li class="list-group-item"><a href="pdf/Portaria_SMC_prestacao_contas.pdf">Portaria Conjunta SMC/SF nº 92/2018 - Prestação de Contas</a></li>
                                         </ul>
                                     </div>
                                     <!--Solicitada remoção deste bloco dia 28/05/2020
@@ -132,6 +129,16 @@ $tipoPessoa = '6';
                                             <li class="list-group-item"><a href="pdf/manual_incentivador.pdf">Manual do Incentivador</a></li>
                                         </ul>
                                     </div>-->
+
+                                    <div class="well">
+                                        <h6>Edital</h6>
+                                        <ul class="list-group">
+                                            <li class="list-group-item"><a href="pdf/Edital_PROMAC_2020.pdf" target="_blank">Edital Promac 2020</a></li>
+                                            <li class="list-group-item"><a href="pdf/Prorrogacao_Pro-Mac_2020.pdf" target="_blank">Prorrogação de Prazo de Inscrição</a></li>
+                                            <li class="list-group-item"><a href="pdf/2° prorrogação de prazo de inscrição de projetos.pdf" target="_blank">2ª Prorrogação de Inscrição de Projetos - Edital PROMAC 2020</a></li>
+                                        </ul>
+                                    </div>
+
                                     <div class="well">
                                         <h6>Manuais e Instruções</h6>
                                         <ul class="list-group">
@@ -141,11 +148,11 @@ $tipoPessoa = '6';
                                     </div>
 
                                     <div class="well">
-                                        <h6>Edital</h6>
+                                        <h6>Normativos Revogado</h6>
                                         <ul class="list-group">
-                                            <li class="list-group-item"><a href="pdf/Edital_PROMAC_2020.pdf" target="_blank">Edital Promac 2020</a></li>
-                                            <li class="list-group-item"><a href="pdf/Prorrogacao_Pro-Mac_2020.pdf" target="_blank">Prorrogação de Prazo de Inscrição</a></li>
-                                            <li class="list-group-item"><a href="pdf/2° prorrogação de prazo de inscrição de projetos.pdf" target="_blank">2ª Prorrogação de Inscrição de Projetos - Edital PROMAC 2020</a></li>
+                                            <li class="list-group-item"><a href="pdf/Decreto_ProMac.pdf" target="_blank">Decreto nº 58.041/2017 (Revogado)</a></li>
+                                            <li class="list-group-item"><a href="pdf/AlteracaoDecreto_ProMac.pdf" target="_blank"> Alteração do Decreto nº 58.041/2017 (Revogada)</a></li>
+                                            <li class="list-group-item"><a href="pdf/Portaria_publicado.pdf">Portaria SMC nº 69/2018 - Portaria de Procedimentos (Revogada)</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -156,6 +163,7 @@ $tipoPessoa = '6';
                         </div>
                     </div>
                     <!-- Fim Modal Regulamento -->
+
                     <!-- Inicio Modal Proponente -->
                     <div class="modal fade" id="proponente" role="dialog" aria-labelledby="proponenteLabel" aria-hidden="true">
                         <div class="modal-dialog">
@@ -233,12 +241,19 @@ $tipoPessoa = '6';
                     <div class="alert alert-success"><p class="text-warning">Devido às medidas de prevenção ao avanço do COVID-19, o atendimento do PROMAC da SMC está funcionando apenas pelos emails listados no rodapé desta página. Contamos com a compreensão de todos.</p></div>
                 </div>
                 <div class="row">
-                    <div class="alert alert-danger">
-                        <p class="text-justify">Comunicamos que a partir do dia 22 de abril de 2020 está aberto o período de captação de recursos do Pro-Mac para os projetos culturais aprovados. Em conformidade com as medidas tomadas para contenção do avanço da COVID-19, o envio de Contratos de Incentivo (Anexo IV do Edital) e Termos de Responsabilidade de Execução de Projeto Cultural (Anexo V do Edital) se dará exclusivamente por meio eletrônico pelo e-mail incentivopromac@prefeitura.sp.gov.br. O título do e-mail deverá seguir o seguinte padrão: “CONTRATO DE INCENTIVO E TERMO DE RESPONSABILIDADE (NOME DO PROJETO) + (NOMES DOS INCENTIVADORES)”. As vias originais dos respectivos documentos devem ser mantidas para posterior apresentação à SMC caso solicitado.</p>
-
-                        <p class="text-justify">O remetente do e-mail deverá aguardar nossa resposta com um número de protocolo confirmando o recebimento da documentação. Porém, isto não significará que a reserva dos recursos está automaticamente garantida, pois os Contratos de Incentivo serão analisados com base nos critérios (tais como regularidade cadastral e fiscal do proponente e incentivador; forma, conteúdo, prazos e assinaturas do contrato, etc) estabelecidos no edital, contidos nos itens 76 a 124 do edital Pro-Mac 2020. Caso o(s) Contrato(s) de Incentivo venha a ter alguma irregularidade ou inconformidade, informaremos por e-mail e o projeto será automaticamente excluído da fila. Após a correção dos problemas apontados será necessário o envio de toda a documentação novamente.</p>
-
-                        <p>Dúvidas podem ser encaminhadas para o e-mail incentivopromac@prefeitura.sp.gov.br</p>
+<!--                    <div class="alert alert-danger">-->
+<!--                        <p class="text-justify">Comunicamos que a partir do dia 22 de abril de 2020 está aberto o período de captação de recursos do Pro-Mac para os projetos culturais aprovados. Em conformidade com as medidas tomadas para contenção do avanço da COVID-19, o envio de Contratos de Incentivo (Anexo IV do Edital) e Termos de Responsabilidade de Execução de Projeto Cultural (Anexo V do Edital) se dará exclusivamente por meio eletrônico pelo e-mail incentivopromac@prefeitura.sp.gov.br. O título do e-mail deverá seguir o seguinte padrão: “CONTRATO DE INCENTIVO E TERMO DE RESPONSABILIDADE (NOME DO PROJETO) + (NOMES DOS INCENTIVADORES)”. As vias originais dos respectivos documentos devem ser mantidas para posterior apresentação à SMC caso solicitado.</p>-->
+<!---->
+<!--                        <p class="text-justify">O remetente do e-mail deverá aguardar nossa resposta com um número de protocolo confirmando o recebimento da documentação. Porém, isto não significará que a reserva dos recursos está automaticamente garantida, pois os Contratos de Incentivo serão analisados com base nos critérios (tais como regularidade cadastral e fiscal do proponente e incentivador; forma, conteúdo, prazos e assinaturas do contrato, etc) estabelecidos no edital, contidos nos itens 76 a 124 do edital Pro-Mac 2020. Caso o(s) Contrato(s) de Incentivo venha a ter alguma irregularidade ou inconformidade, informaremos por e-mail e o projeto será automaticamente excluído da fila. Após a correção dos problemas apontados será necessário o envio de toda a documentação novamente.</p>-->
+<!---->
+<!--                        <p>Dúvidas podem ser encaminhadas para o e-mail incentivopromac@prefeitura.sp.gov.br</p>-->
+<!--                    </div>-->
+                    <div class="alert alert-warning">
+                        <p> <strong>ATENÇÃO:</strong> Comunicamos que o PROMAC receberá Contratos de Incentivo para captação de recursos do ano de 2020 até o dia 11/12/2020 (sexta-feira). Esta é a data limite para que o Programa consiga analisar os Contratos e, caso aceitos, consiga processar em tempo hábil os aportes de recursos nos projetos ainda no exercício fiscal de 2020.</p>
+                        <p>Como informado em Edital e no próprio Contrato de Incentivo, os aportes de recursos de Contratos de Incentivo aceitos 2020 devem ser feitos até o final de 2020. Mas o Certificado de Incentivo obtido após a confirmação do aporte ao projeto tem validade de 2 (dois) anos, ou seja, pode ser abatido em até 24 (vinte e quatro) meses após sua emissão, de forma não fracionada (cada Certificado de Incentivo é usado de uma só vez e uma única vez).</p>
+                        <p>O início da captação de recursos do ano de 2021 e o montante destinado ao PROMAC estão em negociação com a Secretaria Municipal da Fazenda e a Câmara Municipal dos Vereadores, dentro do contexto de discussão sobre o orçamento municipal.</p>
+                        <br>
+                        <p>Mais informações sobre o assunto serão publicadas neste site e no Diário Oficial.</p>
                     </div>
                 </div>
 			</div>
