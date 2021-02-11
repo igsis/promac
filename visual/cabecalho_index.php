@@ -5,7 +5,7 @@
 		<link href="visual/css/bootstrap.min.css" rel="stylesheet" media="screen">
 		<link href="visual/css/style.css" rel="stylesheet" media="screen">
 		<link href="visual/color/default.css" rel="stylesheet" media="screen">
-		<link rel="icon" type="image/png" sizes="16x16" href="visual/images/favicon.png">
+<!--		<link rel="icon" type="image/png" sizes="16x16" href="visual/images/favicon.png">-->
 		<script src="visual/js/modernizr.custom.js"></script>
 		<script src="visual/js/jquery-1.9.1.js"></script>
 		<script src="visual/js/jquery.maskedinput.js" type="text/javascript"></script>

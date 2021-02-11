@@ -161,6 +161,12 @@ if(isset($_POST['aprovaProjeto']))
             $idStatus = $etapa['idStatus'];
             $etapaValida = true;
             break;
+        case 39:
+            $idEtapaNova = 40;
+            $etapa = recuperaDados("etapa_projeto","idEtapaProjeto",$idEtapaNova);
+            $idStatus = $etapa['idStatus'];
+            $etapaValida = true;
+            break;
         default:
             $etapaValida = false;
             break;
@@ -211,6 +217,12 @@ if(isset($_POST['reprovaProjeto']))
             $idStatus = $etapa['idStatus'];
             $etapaValida = true;
             break;
+        case 39:
+            $idEtapaNova = 41;
+            $etapa = recuperaDados("etapa_projeto","idEtapaProjeto",$idEtapaNova);
+            $idStatus = $etapa['idStatus'];
+            $etapaValida = true;
+            break;
         default:
             $etapaValida = false;
             break;
@@ -237,7 +249,12 @@ if(isset($_POST['complementaProjeto']))
     $idProjeto = $_POST['idProjeto'];
     $idEtapaProjeto = $_POST['idEtapaProjeto'];
 
-    $idEtapaNova = 12;
+    if($idEtapaProjeto == 10){
+        $idEtapaNova = 12;
+    } elseif ($idEtapaProjeto == 15){
+        $idEtapaNova = 36;
+    }
+
     $etapa = recuperaDados("etapa_projeto","idEtapaProjeto",$idEtapaNova);
     $idStatus = $etapa['idStatus'];
 
@@ -305,6 +322,14 @@ if(isset($_POST['envioComissao']))
             break;
         case 25:
             $etapaProjeto = 24;
+            $etapaValida = true;
+            break;
+        case 37:
+            $etapaProjeto = 38;
+            $etapaValida = true;
+            break;
+        case 39:
+            $etapaProjeto = 38;
             $etapaValida = true;
             break;
         default:
@@ -653,7 +678,7 @@ $comissao = recuperaDados("pessoa_fisica","idPf",$projeto['idComissao']);
                         <li class="nav"><a href="#financeiro" data-toggle="tab">Financeiro</a></li>
                         <li class="nav"><a href="#pagamentos" data-toggle="tab">Pagamentos</a></li>
                         <li class="nav"><a href="#historico" data-toggle="tab">Histórico</a></li>
-                        <?php if($_SESSION['idUser'] == 1 || $_SESSION['idUser'] == 363 || $_SESSION['idUser'] == 744):?>
+                        <?php if($_SESSION['idUser'] == 1 || $_SESSION['idUser'] == 363 || $_SESSION['idUser'] == 768):?>
                             <li class="nav"><a href="#status" data-toggle="tab"><i class="fa fa-wrench"></i></a></li>
                         <?php endif ?>
                     </ul>

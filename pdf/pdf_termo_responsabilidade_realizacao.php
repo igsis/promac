@@ -25,7 +25,7 @@ class PDF extends FPDF
         // Move to the right
         $this->Cell(80);
         // Title
-        $this->Cell(30,8,utf8_decode("PREFEITURA DO MUNICÍCIO DE SÃO PAULO"),0,1,'C');
+        $this->Cell(30,8,utf8_decode("PREFEITURA DO MUNICÍPIO DE SÃO PAULO"),0,1,'C');
         // Move to the right
         $this->Cell(80);
         // Title

@@ -2,6 +2,7 @@
 
 $con = bancoMysqli();
 $idProjeto = $_GET['idProjeto'];
+$idListaDocumento = $_GET['etapa'] != 36 ? 46 : 60;
 $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
 $tipoPessoa = '3';
 
@@ -19,7 +20,7 @@ function pegaStatus($id)
     return $row['status'];
 }
 
-function listaArquivosPessoaSemApagar($idPessoa,$tipoPessoa,$pagina)
+function listaArquivosPessoaSemApagar($idPessoa,$tipoPessoa,$pagina, $idListaDocumento)
 {
     $con = bancoMysqli();
     $sql = "SELECT *
@@ -28,7 +29,7 @@ function listaArquivosPessoaSemApagar($idPessoa,$tipoPessoa,$pagina)
 			WHERE arq.idPessoa = '$idPessoa'
 			AND arq.idTipo = '$tipoPessoa'
 			AND arq.publicado = '1'
-			AND list.idListaDocumento IN (46)";
+			AND list.idListaDocumento IN ($idListaDocumento)";
     $query = mysqli_query($con,$sql);
     $linhas = mysqli_num_rows($query);
 
@@ -74,7 +75,8 @@ function listaArquivosPessoaSemApagar($idPessoa,$tipoPessoa,$pagina)
 
 if(isset($_POST["enviar"]))
 {
-    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '3' AND idListaDocumento IN (46)";
+    $proximaEtapa = $_POST['etapa'] != 36 ? 13 : 37;
+    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '3' AND idListaDocumento IN ($idListaDocumento)";
     $query_arquivos = mysqli_query($con,$sql_arquivos);
     while($arq = mysqli_fetch_array($query_arquivos))
     {
@@ -121,8 +123,8 @@ if(isset($_POST["enviar"]))
                     if(move_uploaded_file($nome_temporario, $dir.$new_name))
                     {
                         $sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('3', '$idProjeto', '$y', '$new_name', '$hoje', '1'); ";
-                        $sql_status = "UPDATE projeto SET idEtapaProjeto = '13', idStatus = 1 WHERE idProjeto = '$idProjeto'";
-                        $sql_historico = "INSERT INTO historico_etapa (idProjeto, idEtapaProjeto, data) VALUES ('$idProjeto', '13', '$hoje')";
+                        $sql_status = "UPDATE projeto SET idEtapaProjeto = '$proximaEtapa', idStatus = 1 WHERE idProjeto = '$idProjeto'";
+                        $sql_historico = "INSERT INTO historico_etapa (idProjeto, idEtapaProjeto, data) VALUES ('$idProjeto', '$proximaEtapa', '$hoje')";
                         $query = mysqli_query($con,$sql_insere_arquivo);
                         $query = mysqli_query($con,$sql_status);
                         $query = mysqli_query($con,$sql_historico);
@@ -211,7 +213,7 @@ if(isset($_POST['apagar']))
                 <div class="form-group">
                     <div class="col-md-12">
                         <div class="table-responsive list_info"><h6>Arquivo Anexado</h6>
-                            <?php listaArquivosPessoaSemApagar($idProjeto,'3',"complemento_informacoes&idProjeto=$idProjeto"); ?>
+                            <?php listaArquivosPessoaSemApagar($idProjeto,'3',"complemento_informacoes&idProjeto=$idProjeto&etapa={$_GET['etapa']}", $idListaDocumento); ?>
                         </div>
                     </div>
                 </div>
@@ -219,14 +221,14 @@ if(isset($_POST['apagar']))
                 <div class="form-group">
                     <div class="col-md-12">
                         <div class="table-responsive list_info"><h6 style="color: red">NESTE CAMPO É PERMITIDO APENAS 1 ARQUIVO EM PFD. CASO PRECISE ENVIAR MAIS DE 1 DOCUMENTO, FAVOR JUNTÁ-LOS EM APENAS 1 PDF.</h6>
-                            <form method="POST" action="?perfil=complemento_informacoes&idProjeto=<?=$idProjeto?>" enctype="multipart/form-data">
+                            <form method="POST" action="?perfil=complemento_informacoes&idProjeto=<?=$idProjeto?>&etapa=<?=$_GET['etapa']?>" enctype="multipart/form-data">
                                 <table class='table table-condensed'>
                                     <tr class='list_menu'>
                                         <td>Tipo de Arquivo</td>
                                         <td></td>
                                     </tr>
                                     <?php
-                                    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '3' AND idListaDocumento IN (46)";
+                                    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '3' AND idListaDocumento IN ($idListaDocumento)";
                                     $query_arquivos = mysqli_query($con,$sql_arquivos);
                                     while($arq = mysqli_fetch_array($query_arquivos))
                                     {
@@ -234,7 +236,7 @@ if(isset($_POST['apagar']))
                                         <tr>
                                             <?php
                                             $doc = $arq['documento'];
-                                            $query = "SELECT idListaDocumento FROM lista_documento WHERE documento='$doc' AND publicado='1' AND idTipoUpload='3' AND idListaDocumento IN (46)";
+                                            $query = "SELECT idListaDocumento FROM lista_documento WHERE documento='$doc' AND publicado='1' AND idTipoUpload='3' AND idListaDocumento IN ($idListaDocumento)";
                                             $envio = $con->query($query);
                                             $row = $envio->fetch_array(MYSQLI_ASSOC);
 
@@ -268,6 +270,7 @@ if(isset($_POST['apagar']))
                                 </table>
                                 <input type="hidden" name="idPessoa" value="<?php echo $idProjeto; ?>"  />
                                 <input type="hidden" name="tipoPessoa" value="<?php echo $tipoPessoa; ?>"  />
+                                <input type="hidden" name="etapa" value="<?php echo $_GET['etapa']; ?>"  />
                                 <input type="submit" name="enviar" class="btn btn-theme btn-lg btn-block" value='Enviar'>
                             </form>
                         </div>
