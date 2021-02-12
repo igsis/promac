@@ -97,11 +97,20 @@ $projeto = recuperaDados("projeto","idProjeto",$idProjeto);
                         </div>
                     </div>
 
-					<div class="form-group">
-						<div class="col-md-offset-1 col-md-10">
-							<input type="submit" name="insereLocal" class="btn btn-theme btn-lg btn-block" value="Inserir">
-						</div>
-					</div>
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <label for="obsLocal">Explicação sobre os locais de realização do projeto: </label>
+                            <textarea name="obsLocal" id="obsLocal" cols="20" rows="5" class="form-control"></textarea>
+                        </div>
+                    </div>
+
+					<div class="row">
+                        <div class="form-group">
+                            <div class="col-md-offset-1 col-md-10">
+                                <input type="submit" name="insereLocal" class="btn btn-theme btn-lg btn-block" value="Inserir">
+                            </div>
+                        </div>
+                    </div>
 				</form>
 
 			</div>

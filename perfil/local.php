@@ -6,6 +6,7 @@ $usuarioLogado = pegaUsuarioLogado();
 
 if(isset($_POST['insereLocal']) || isset($_POST['editaLocal'])) {
     $local = addslashes($_POST['local']);
+    $obsLocal = addslashes($_POST['obsLocal']) ?? NULL;
     $estimativaPublico = $_POST['estimativaPublico'];
     $cep = $_POST['cep'];
     $logradouro = addslashes($_POST['logradouro']);
@@ -20,7 +21,7 @@ if(isset($_POST['insereLocal']) || isset($_POST['editaLocal'])) {
 
 if(isset($_POST['insereLocal']))
 {
-	$sql_insere_local = "INSERT INTO locais_realizacao(idProjeto, local, estimativaPublico, logradouro, numero, complemento, bairro, cidade, estado, cep, idDistrito, publicado) VALUES ('$idProjeto', '$local', '$estimativaPublico', '$logradouro', '$numero', '$complemento', '$bairro', '$cidade', '$uf', '$cep', '$distrito', 1)";
+	$sql_insere_local = "INSERT INTO locais_realizacao(idProjeto, local, estimativaPublico, logradouro, numero, complemento, bairro, cidade, estado, cep, idDistrito, publicado, observacaoLocal) VALUES ('$idProjeto', '$local', '$estimativaPublico', '$logradouro', '$numero', '$complemento', '$bairro', '$cidade', '$uf', '$cep', '$distrito', 1, '$obsLocal')";
 
 	if(mysqli_query($con,$sql_insere_local))
 	{
@@ -47,7 +48,8 @@ if(isset($_POST['editaLocal']))
     cidade = '$cidade',
     estado= '$uf',
     idDistrito= '$distrito',
-	`alteradoPor` = '$usuarioLogado'
+	`alteradoPor` = '$usuarioLogado',
+    `observacaoLocal` = '$obsLocal'                           
 	WHERE idLocaisRealizacao = '$idLocaisRealizacao'";
 	if(mysqli_query($con,$sql_edita_local))
 	{

@@ -23,7 +23,7 @@ if ($id == 1) {
         <tr>
             <td>
                 <strong>Protocolo (nº ISP):</strong>
-                <span data-mask = "0000.00.00/0000000"><?= $projeto['protocolo'] ?></span>
+                <span data-mask="0000.00.00/0000000"><?= $projeto['protocolo'] ?></span>
             </td>
             <td><strong>Tipo:</strong>
                 <?php
@@ -57,12 +57,12 @@ if ($id == 1) {
         <tr>
             <td colspan="2"><strong>Valor do projeto:</strong>R$
                 <?php
-                if (isset($projeto['valorProjeto']) &&  $projeto['valorProjeto'] > 0){
+                if (isset($projeto['valorProjeto']) && $projeto['valorProjeto'] > 0) {
                     echo dinheiroParabr(isset($projeto['valorProjeto']) ? $projeto['valorProjeto'] : '');
-                }else{
-                    echo dinheiroParaBr(isset($projeto['valorIncentivo']) ? $projeto['valorIncentivo']: '');
+                } else {
+                    echo dinheiroParaBr(isset($projeto['valorIncentivo']) ? $projeto['valorIncentivo'] : '');
                 }
-                    ?>
+                ?>
             </td>
             <td><strong>Renúncia Fiscal:</strong>
                 <?php echo $renuncia['renunciaFiscal'] ?>
@@ -86,31 +86,39 @@ if ($id == 1) {
         <p align="justify"><strong>Tags:</strong> <?= implode("; ", $tags) ?></p>
 
         <p align="justify">
-            <strong>Resumo do projeto:</strong> <?php echo isset($projeto['resumoProjeto']) ? $projeto['resumoProjeto'] : null; ?>
+            <strong>Resumo do
+                projeto:</strong> <?php echo isset($projeto['resumoProjeto']) ? $projeto['resumoProjeto'] : null; ?>
         </p>
         <p align="justify">
-            <strong>Currículo do proponente:</strong> <?php echo isset($projeto['curriculo']) ? $projeto['curriculo'] : null; ?>
+            <strong>Currículo do
+                proponente:</strong> <?php echo isset($projeto['curriculo']) ? $projeto['curriculo'] : null; ?>
         </p>
         <p align="justify">
-            <strong>Descrição do objeto cultural e atividades propostas:</strong> <?php echo isset($projeto['descricao']) ? $projeto['descricao'] : null; ?>
+            <strong>Descrição do objeto cultural e atividades
+                propostas:</strong> <?php echo isset($projeto['descricao']) ? $projeto['descricao'] : null; ?>
         </p>
         <p align="justify">
             <strong>Objetivos Gerais:</strong> <?php echo isset($projeto['objetivo']) ? $projeto['objetivo'] : null; ?>
         </p>
         <p align="justify">
-            <strong>Objetivos Específicos:</strong> <?php echo isset($projeto['objetivoEspecifico']) ? $projeto['objetivoEspecifico'] : null; ?>
+            <strong>Objetivos
+                Específicos:</strong> <?php echo isset($projeto['objetivoEspecifico']) ? $projeto['objetivoEspecifico'] : null; ?>
         </p>
         <p align="justify">
-            <strong>Justificativa do projeto:</strong> <?php echo isset($projeto['justificativa']) ? $projeto['justificativa'] : null; ?>
+            <strong>Justificativa do
+                projeto:</strong> <?php echo isset($projeto['justificativa']) ? $projeto['justificativa'] : null; ?>
         </p>
         <p align="justify">
-            <strong>Quantos postos de trabalho diretos o seu projeto gera, ainda que temporariamente?</strong> <?php echo isset($postosTrabalho['quantidade']) ? $postosTrabalho['quantidade'] : null; ?>
+            <strong>Quantos postos de trabalho diretos o seu projeto gera, ainda que
+                temporariamente?</strong> <?php echo isset($postosTrabalho['quantidade']) ? $postosTrabalho['quantidade'] : null; ?>
         </p>
         <p align="justify">
-            <strong>Qual a média, em meses, de tempo de contratação de cada posto de trabalho?</strong> <?php echo isset($postosTrabalho['media_meses']) ? "{$postosTrabalho['media_meses']} meses" : null; ?>
+            <strong>Qual a média, em meses, de tempo de contratação de cada posto de
+                trabalho?</strong> <?php echo isset($postosTrabalho['media_meses']) ? "{$postosTrabalho['media_meses']} meses" : null; ?>
         </p>
         <p align="justify">
-            <strong>Qual a média, em reais, de remuneração de cada posto de trabalho?</strong> <?php echo isset($postosTrabalho['media_valor']) ? "R$ ".dinheiroParaBr($postosTrabalho['media_valor']) : null; ?>
+            <strong>Qual a média, em reais, de remuneração de cada posto de
+                trabalho?</strong> <?php echo isset($postosTrabalho['media_valor']) ? "R$ " . dinheiroParaBr($postosTrabalho['media_valor']) : null; ?>
         </p>
     </div>
 
@@ -134,6 +142,7 @@ if ($id == 1) {
                         <th>Endereço</th>
                         <th>Distrito</th>
                         <th>Faixa</th>
+                        <th>Obs. Local</th>
                     </tr>
                     <?php
                     $sql = "SELECT lr.*, d.distrito, d.faixa FROM locais_realizacao AS lr
@@ -148,7 +157,17 @@ if ($id == 1) {
                         echo "<td>" . $campo['logradouro'] . ", " . $campo['numero'] . " " . $campo['complemento'] . " " . $campo['bairro'] . ", " . $campo['cidade'] . " - " . $campo['estado'] . ", CEP " . $campo['cep'] . "</td>";
                         echo "<td>" . $campo['distrito'] . "</td>";
                         echo "<td> Faixa " . $campo['faixa'] . "</td>";
-                        echo "</tr>";
+                        if ($campo['observacaoLocal'] != ''):
+                        echo "<td>
+                                <button class='btn btn-default' id='btn-info-modal' type='button' data-toggle='modal' 
+                                data-target='#infoObservacao' data-text='" . $campo['observacaoLocal'] . "' style='border-radius: 30px;'>
+                                    <i class='fa fa-info-circle'></i>
+                                </button>
+                              </td>";
+                        else:
+                            echo "<td></td>";
+                        endif;
+                            echo "</tr>";
                     }
                     ?>
                 </table>
@@ -158,16 +177,19 @@ if ($id == 1) {
 
     <div class="well">
         <p align="justify">
-            <strong>Público de Alvo:</strong> <?php echo isset($projeto['publicoAlvo']) ? $projeto['publicoAlvo'] : null; ?>
+            <strong>Público de
+                Alvo:</strong> <?php echo isset($projeto['publicoAlvo']) ? $projeto['publicoAlvo'] : null; ?>
         </p>
         <p align="justify">
             <strong>Contrapartida:</strong> <?php echo isset($projeto['contrapartida']) ? $projeto['contrapartida'] : null; ?>
         </p>
         <p align="justify">
-            <strong>Ingresso e forma de acesso:</strong> <?php echo isset($projeto['ingresso']) ? $projeto['ingresso'] : null; ?>
+            <strong>Ingresso e forma de
+                acesso:</strong> <?php echo isset($projeto['ingresso']) ? $projeto['ingresso'] : null; ?>
         </p>
         <p align="justify">
-            <strong>Democratização de acesso:</strong> <?php echo isset($projeto['democratizacao']) ? $projeto['democratizacao'] : null; ?>
+            <strong>Democratização de
+                acesso:</strong> <?php echo isset($projeto['democratizacao']) ? $projeto['democratizacao'] : null; ?>
         </p>
         <p align="justify">
             <strong>Acessibilidade:</strong> <?php echo isset($projeto['acessibilidade']) ? $projeto['acessibilidade'] : null; ?>
@@ -176,7 +198,8 @@ if ($id == 1) {
 
     <div class="well">
         <p align="justify">
-            <strong>Plano de Divulgação:</strong> <?php echo isset($projeto['planoDivulgacao']) ? $projeto['planoDivulgacao'] : null; ?>
+            <strong>Plano de
+                Divulgação:</strong> <?php echo isset($projeto['planoDivulgacao']) ? $projeto['planoDivulgacao'] : null; ?>
         </p>
         <ul class="list-group">
             <li class="list-group-item list-group-item-success"><b>Plano de divulgação</b></li>
@@ -263,13 +286,13 @@ if ($id == 1) {
                         $medida = recuperaDados("unidade_medida", "idUnidadeMedida", $campo['idUnidadeMedida']);
                         ?>
                         <tr>
-                        <td class='list_description'><?= $despesa['despesa'] ?? '' ?></td>
-                        <td class='list_description'><?= $campo['descricao'] ?? '' ?></td>
-                        <td class='list_description'><?= $campo['quantidade'] ?? '' ?></td>
-                        <td class='list_description'><?= $medida['unidadeMedida'] ?? '' ?></td>
-                        <td class='list_description'><?= $campo['quantidadeUnidade'] ?? '' ?></td>
-                        <td class='list_description'><?= dinheiroParaBr($campo['valorUnitario']) ?? '' ?></td>
-                        <td class='list_description'><?= dinheiroParaBr($campo['valorTotal']) ?? ''?></td>
+                            <td class='list_description'><?= $despesa['despesa'] ?? '' ?></td>
+                            <td class='list_description'><?= $campo['descricao'] ?? '' ?></td>
+                            <td class='list_description'><?= $campo['quantidade'] ?? '' ?></td>
+                            <td class='list_description'><?= $medida['unidadeMedida'] ?? '' ?></td>
+                            <td class='list_description'><?= $campo['quantidadeUnidade'] ?? '' ?></td>
+                            <td class='list_description'><?= dinheiroParaBr($campo['valorUnitario']) ?? '' ?></td>
+                            <td class='list_description'><?= dinheiroParaBr($campo['valorTotal']) ?? '' ?></td>
                         </tr>
                         <?php
                     } ?>
@@ -332,10 +355,10 @@ if ($id == 1) {
     </div>
 
     <?php
-    exibirArquivosProjeto(3,$projeto['idProjeto']);
-    exibirComplemento(3,$projeto['idProjeto']);
-    exibirSolicitacaoAlteracao(3,$projeto['idProjeto']);
-    exibirRecurso(3,$projeto['idProjeto']);
+    exibirArquivosProjeto(3, $projeto['idProjeto']);
+    exibirComplemento(3, $projeto['idProjeto']);
+    exibirSolicitacaoAlteracao(3, $projeto['idProjeto']);
+    exibirRecurso(3, $projeto['idProjeto']);
     ?>
     <table class="table table-bordered">
         <tr>
@@ -349,9 +372,27 @@ if ($id == 1) {
         </tr>
     </table>
     <?php
-    exibirCertificados(3,$projeto['idProjeto']);
+    exibirCertificados(3, $projeto['idProjeto']);
     exibirParecerProponente($projeto['idProjeto']);
     ?>
+</div>
+
+<div class="modal fade" id="infoObservacao" role="dialog" aria-labelledby="infoObservacaoLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Explicação sobre os locais de realização do projeto</h4>
+            </div>
+            <div class="modal-body" style="text-align: left;">
+                <p id="texto-local"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -365,42 +406,43 @@ if ($id == 1) {
 
     const quantidadeMes = (val) => {
 
-        if((val / 6.25) == 1) // meio
+        if ((val / 6.25) == 1) // meio
         {
             return `Metade de um mês`
-        }
-        else if((val / 6.25) == 2) // um
+        } else if ((val / 6.25) == 2) // um
         {
             return `${(val / 12.5)} Mês`
-        }
-        else if((val / 6.25) == 3) 	// um e meio
+        } else if ((val / 6.25) == 3) 	// um e meio
         {
             return `${parseInt(val / 12.5)} Mês e Meio`
-        }
-        else if((val / 6.25) % 2 == 0) 	// par meses
+        } else if ((val / 6.25) % 2 == 0) 	// par meses
         {
             return `${(val / 12.5)} Meses`
-        }
-        else{				// meses e meio
+        } else {				// meses e meio
             return `${parseInt(val / 12.5)} Meses e Meio`
         }
     }
 
     const preencher = (item) => {
         let val = parseFloat(item.value)
-        if(!isNaN(val)){
+        if (!isNaN(val)) {
             elemento = item.parentNode.children[0]
             elemento.style.width = ((val / .5) * 6.25) + `%`
             elemento.innerHTML = quantidadeMes(parseFloat((val / .5) * 6.25)) // exibe qtd de meses
         }
     }
 
-    for(let etapa of etapas){
-
+    for (let etapa of etapas) {
         preencher(etapa)
     }
 
-    for(let etapa of listaEtapas){
+    for (let etapa of listaEtapas) {
         etapa.innerHTML = quantidadeMes(parseFloat((etapa.innerHTML / .5) * 6.25))
     }
+
+    $("#btn-info-modal").click(function (){
+       let content = $(this).data('text');
+       $('#texto-local').text(content);
+    });
+
 </script>

@@ -99,12 +99,21 @@ $local = recuperaDados("locais_realizacao", "idLocaisRealizacao", $idLocaisReali
                         </div>
                     </div>
 
-					<div class="form-group">
-						<div class="col-md-offset-1 col-md-10">
-							<input type="hidden" name="editaLocal" value="<?= $local['idLocaisRealizacao'] ?>">
-							<input type="submit" class="btn btn-theme btn-lg btn-block" value="Gravar">
-						</div>
-					</div>
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <label for="obsLocal">Explicação sobre os locais de realização do projeto: </label>
+                            <textarea name="obsLocal" id="obsLocal" cols="20" rows="5" class="form-control"><?= $local['observacaoLocal'] ?></textarea>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-offset-1 col-md-10">
+                                <input type="hidden" name="editaLocal" value="<?= $local['idLocaisRealizacao'] ?>">
+                                <input type="submit" class="btn btn-theme btn-lg btn-block" value="Gravar">
+                            </div>
+                        </div>
+                    </div>
 				</form>
 
 			</div>
