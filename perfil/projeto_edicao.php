@@ -318,10 +318,9 @@ $projeto = recuperaDados("projeto", "idProjeto", $idProjeto);
                                     pertencentes às Faixas 1 e 2 referidas no artigo 51. "
                                 </div>
                                 <div class="form-group text-left">
-                                    <p><input type="radio" name="avaliaProjeto" value="1"> &nbsp;&nbsp; Sim, desejo que
+                                    <p><input type="radio" name="avaliaProjeto" value="1" <?= $projeto['avaliaProjeto'] ? 'checked' : '' ?> > &nbsp;&nbsp; Sim, desejo que
                                         este projeto seja avaliado sob a perspectiva do Artigo 53.</p>
-                                    <p><input type="radio" name="avaliaProjeto" value="0"> &nbsp;&nbsp; Não, este
-                                        projeto
+                                    <p><input type="radio" name="avaliaProjeto" value="0" <?= !($projeto['avaliaProjeto']) ? 'checked' : '' ?> > &nbsp;&nbsp; Não, este projeto
                                         não se enquadra nesta exceção.</p>
                                 </div>
                             </div>
