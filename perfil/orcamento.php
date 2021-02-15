@@ -239,6 +239,10 @@ if(isset($_POST['apagar']))
             projeto em campo específico
         </div>
 
+        <div class="alert alert-warning">
+            O orçamento deve ser detalhado. Coloque 1 item de despesa por linha do orçamento, não agrupe despesas distintas em uma única linha.
+        </div>
+
         <div class="row">
             <div class="form-group">
                 <div class="col-md-12">
