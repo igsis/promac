@@ -222,9 +222,9 @@ $link = $consulta->fetch();
                             }
                             // ./CASO APROVADO
 
-                            /*Exibir botão de recurso ou de solicitação de alteração*/
-                            if (($projeto['idStatus'] == 3) || ($projeto['idStatus'] == 4)) {
-                                if (($dateNow < DiasUteis()) && (($idEtapa != 26) && ($idEtapa != 27))){
+                            /*Exibir botão de recurso*/
+                            if ($projeto['idStatus'] == 4) {
+                                if (($dateNow < DiasUteis()) && ($idEtapa != 27)){
                                     ?>
                                     <div class="form-group">
                                         <div class="col-md-offset-2 col-md-8">
@@ -237,22 +237,21 @@ $link = $consulta->fetch();
                                     </div>
                                     <?php
                                 }
-                                else
-                                {
-                                    ?>
-                                    <div class="form-group">
-                                        <div class="col-md-offset-2 col-md-8">
-                                            <div class="row">
-                                                <div class="form-horizontal col-md-11" >
-                                                    <a style="border-radius: 7px;" class="btn btn-warning btn-block" href="?perfil=alteracao_projeto&idProjeto=<?= $idProjeto ?>">solicitar alteração do projeto</a>
-                                                </div>
-                                            </div><br>
-                                        </div>
-                                    </div>
-                                    <?php
-                                }
                             }
+
+                            /*Exibir botão de solicitação de alteração*/
+                            if ($projeto['idStatus'] == 3) {
                             ?>
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-8">
+                                        <div class="row">
+                                            <div class="form-horizontal col-md-11" >
+                                                <a style="border-radius: 7px;" class="btn btn-warning btn-block" href="?perfil=alteracao_projeto&idProjeto=<?= $idProjeto ?>">solicitar alteração do projeto</a>
+                                            </div>
+                                        </div><br>
+                                    </div>
+                                </div>
+                            <?php } ?>
 
                             <!-- Botão para anexar complemento de informações -->
                             <?php
