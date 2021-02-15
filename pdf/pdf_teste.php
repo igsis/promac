@@ -235,6 +235,7 @@ else
                 echo "<td>" . $campo['local'] . "</td>";
                 echo "<td>" . $campo['estimativaPublico'] . "</td>";
                 echo "<td>" . $campo['logradouro'] . ", ".$campo['numero']." ".$campo['complemento']." ".$campo['bairro'].", ".$campo['cidade']." - ".$campo['estado'].", CEP ".$campo['cep']."</td>";
+                echo "<td>". $campo['observacaoLocal'] ."</td>";
                 echo "</tr>";
             }
             ?>
