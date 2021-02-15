@@ -84,7 +84,6 @@ if ($id == 1) {
         <p align="justify"><strong>Nome do projeto:</strong> <?php echo $projeto['nomeProjeto']; ?></p>
         <p align="justify"><strong>Área de atuação:</strong> <?php echo $area['areaAtuacao'] ?></p>
         <p align="justify"><strong>Tags:</strong> <?= implode("; ", $tags) ?></p>
-
         <p align="justify">
             <strong>Resumo do
                 projeto:</strong> <?php echo isset($projeto['resumoProjeto']) ? $projeto['resumoProjeto'] : null; ?>
@@ -119,6 +118,10 @@ if ($id == 1) {
         <p align="justify">
             <strong>Qual a média, em reais, de remuneração de cada posto de
                 trabalho?</strong> <?php echo isset($postosTrabalho['media_valor']) ? "R$ " . dinheiroParaBr($postosTrabalho['media_valor']) : null; ?>
+        </p>
+        <p align="justify">
+            <strong>Deseja que o projeto seja avaliado para ser enquadrado na exceção ossibilitada pelo Art.53 do
+                Decreto 59.119/2019?</strong> &nbsp; <?= $projeto['avaliaProjeto'] ? 'Sim' : 'Não' ?>
         </p>
     </div>
 
@@ -158,7 +161,7 @@ if ($id == 1) {
                         echo "<td>" . $campo['distrito'] . "</td>";
                         echo "<td> Faixa " . $campo['faixa'] . "</td>";
                         if ($campo['observacaoLocal'] != ''):
-                        echo "<td>
+                            echo "<td>
                                 <button class='btn btn-default' id='btn-info-modal' type='button' data-toggle='modal' 
                                 data-target='#infoObservacao' data-text='" . $campo['observacaoLocal'] . "' style='border-radius: 30px;'>
                                     <i class='fa fa-info-circle'></i>
@@ -167,7 +170,7 @@ if ($id == 1) {
                         else:
                             echo "<td></td>";
                         endif;
-                            echo "</tr>";
+                        echo "</tr>";
                     }
                     ?>
                 </table>
@@ -440,9 +443,9 @@ if ($id == 1) {
         etapa.innerHTML = quantidadeMes(parseFloat((etapa.innerHTML / .5) * 6.25))
     }
 
-    $("#btn-info-modal").click(function (){
-       let content = $(this).data('text');
-       $('#texto-local').text(content);
+    $("#btn-info-modal").click(function () {
+        let content = $(this).data('text');
+        $('#texto-local').text(content);
     });
 
 </script>
