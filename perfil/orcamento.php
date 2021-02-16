@@ -1,6 +1,6 @@
 <?php
 
-function exibePlanilhaCompleta($idPessoa,$idListaDocumento,$pagina)
+function exibePlanilhaCompleta($idPessoa, $idListaDocumento, $pagina)
 {
     $con = bancoMysqli();
     $sql = "SELECT *
@@ -9,11 +9,10 @@ function exibePlanilhaCompleta($idPessoa,$idListaDocumento,$pagina)
 			WHERE arq.idPessoa = '$idPessoa'
 			AND arq.idListaDocumento = '$idListaDocumento'
 			AND arq.publicado = '1'";
-    $query = mysqli_query($con,$sql);
+    $query = mysqli_query($con, $sql);
     $linhas = mysqli_num_rows($query);
 
-    if ($linhas > 0)
-    {
+    if ($linhas > 0) {
         echo "
 		<table class='table table-condensed'>
 			<thead>
@@ -24,11 +23,10 @@ function exibePlanilhaCompleta($idPessoa,$idListaDocumento,$pagina)
 				</tr>
 			</thead>
 			<tbody>";
-        while($arquivo = mysqli_fetch_array($query))
-        {
+        while ($arquivo = mysqli_fetch_array($query)) {
             echo "<tr>";
-            echo "<td class='list_description'>(".$arquivo['documento'].")</td>";
-            echo "<td class='list_description'><a href='../uploadsdocs/".$arquivo['arquivo']."' target='_blank'>". mb_strimwidth($arquivo['arquivo'], 15 ,25,"..." )."</a></td>";
+            echo "<td class='list_description'>(" . $arquivo['documento'] . ")</td>";
+            echo "<td class='list_description'><a href='../uploadsdocs/" . $arquivo['arquivo'] . "' target='_blank'>" . mb_strimwidth($arquivo['arquivo'], 15, 25, "...") . "</a></td>";
             echo "<td class='list_description'>
                     <input type='hidden' name='apagar' value='{$arquivo['idUploadArquivo']}'>
                     <button class='btn btn-theme' type='button' id='btnRemover' data-toggle='modal' data-target='#confirmApagar' data-message='Deseja realmente remover o arquivo?'>Remover
@@ -38,22 +36,37 @@ function exibePlanilhaCompleta($idPessoa,$idListaDocumento,$pagina)
         echo "
 		</tbody>
 		</table>";
-    }
-    else
-    {
+    } else {
         echo "<p>Não há arquivo(s) inserido(s).<p/><br/>";
     }
 }
 
 $con = bancoMysqli();
 $idProjeto = $_SESSION['idProjeto'];
+$projeto = recuperaDados('projetos', 'id', $idProjeto);
+
+if ($projeto['idAreaAtuacao'] == 22 || $projeto['idAreaAtuacao'] == 13) {
+    $valorMax = 1000000;
+} else {
+    $valorMax = 600000;
+}
+
+$atualizarValor = false;
+
+$sql_total = "SELECT SUM(valorTotal) AS tot FROM orcamento
+                WHERE publicado > 0 AND idProjeto ='{$idProjeto}'
+                ORDER BY idOrcamento";
+
+$queryMax = mysqli_query($con, $sql_total);
+$resultadoMax = mysqli_fetch_array($queryMax)[0];
+
 $usuarioLogado = pegaUsuarioLogado();
 
 $tipoPessoa = '3';
 
 // Gerar documentos
-$server = "http://".$_SERVER['SERVER_NAME']."/promac";
-$http = $server."/pdf/";
+$server = "http://" . $_SERVER['SERVER_NAME'] . "/promac";
+$http = $server . "/pdf/";
 
 if (isset($_POST['insereOrcamento']) || isset($_POST['editaOrcamento'])) {
     $descricao = addslashes($_POST['descricao']);
@@ -61,31 +74,38 @@ if (isset($_POST['insereOrcamento']) || isset($_POST['editaOrcamento'])) {
     $quantidadeUnidade = $_POST['quantidadeUnidade'];
     $valorUnitario = dinheiroDeBr($_POST['valorUnitario']);
     $valorTotal = $valorUnitario * $quantidadeUnidade * $quantidade;
-}
+    $resultadoMax = $resultadoMax + $valorTotal;
 
-if (isset($_POST['insereOrcamento'])) {
-    $observacoes = addslashes($_POST['obs']);
-    $idDespesa = $_POST['idDespesa'];
-    $idUnidadeMedida = $_POST['idUnidadeMedida'];
-
-    $sql_insere = "INSERT INTO `orcamento`(`idProjeto`, `grupo_despesas_id`, `descricao`, `quantidade`, `idUnidadeMedida`, `quantidadeUnidade`, `valorUnitario`, `valorTotal`, `observacoes`, `publicado`) VALUES ('$idProjeto', '$idDespesa', '$descricao', '$quantidade', '$idUnidadeMedida', '$quantidadeUnidade', '$valorUnitario', '$valorTotal', '$observacoes','1')";
-
-    if (mysqli_query($con, $sql_insere)) {
-        $mensagem = "<font color='#01DF3A'><strong>Inserido com sucesso! Utilize o menu para avançar.</strong></font>";
-        gravarLog($sql_insere);
-    } else {
-        $mensagem = "<font color='#FF0000'><strong>Erro ao inserir! Tente novamente.</strong></font>" . $sql_insere;
+    if ($resultadoMax <= $valorMax){
+        $atualizarValor = true;
     }
+
 }
 
-if (isset($_POST['editaOrcamento'])) {
-    $despesas = $_POST['idDespesa'];
-    $und_medida = $_POST['idUnidadeMedida'];
-    $observacoes = $_POST['observacoes'];
-    $idOrcamento = $_POST['editaOrcamento'];
-    $quantidadeUnidade = $_POST['quantidadeUnidade'];
+if (isset($resultadoMax) && $atualizarValor) {
+    if (isset($_POST['insereOrcamento'])) {
+        $observacoes = addslashes($_POST['obs']);
+        $idDespesa = $_POST['idDespesa'];
+        $idUnidadeMedida = $_POST['idUnidadeMedida'];
 
-    $sql_edita = "UPDATE orcamento SET
+        $sql_insere = "INSERT INTO `orcamento`(`idProjeto`, `grupo_despesas_id`, `descricao`, `quantidade`, `idUnidadeMedida`, `quantidadeUnidade`, `valorUnitario`, `valorTotal`, `observacoes`, `publicado`) VALUES ('$idProjeto', '$idDespesa', '$descricao', '$quantidade', '$idUnidadeMedida', '$quantidadeUnidade', '$valorUnitario', '$valorTotal', '$observacoes','1')";
+
+        if (mysqli_query($con, $sql_insere)) {
+            $mensagem = "<font color='#01DF3A'><strong>Inserido com sucesso! Utilize o menu para avançar.</strong></font>";
+            gravarLog($sql_insere);
+        } else {
+            $mensagem = "<font color='#FF0000'><strong>Erro ao inserir! Tente novamente.</strong></font>" . $sql_insere;
+        }
+    }
+
+    if (isset($_POST['editaOrcamento'])) {
+        $despesas = $_POST['idDespesa'];
+        $und_medida = $_POST['idUnidadeMedida'];
+        $observacoes = $_POST['observacoes'];
+        $idOrcamento = $_POST['editaOrcamento'];
+        $quantidadeUnidade = $_POST['quantidadeUnidade'];
+
+        $sql_edita = "UPDATE orcamento SET
 	grupo_despesas_id = '$despesas',
 	descricao = '$descricao',
 	quantidade = '$quantidade',
@@ -96,12 +116,16 @@ if (isset($_POST['editaOrcamento'])) {
 	observacoes = '$observacoes',
 	alteradoPor = '$usuarioLogado'		
 	WHERE idOrcamento = '$idOrcamento'";
-    if (mysqli_query($con, $sql_edita)) {
-        $mensagem = "<font color='#01DF3A'><strong>Editado com sucesso! Utilize o menu para avançar.</strong></font>";
-        gravarLog($sql_edita);
-    } else {
-        $mensagem = "<font color='#FF0000'><strong>Erro ao editar! Tente novamente.</strong></font>";
+        if (mysqli_query($con, $sql_edita)) {
+            $mensagem = "<font color='#01DF3A'><strong>Editado com sucesso! Utilize o menu para avançar.</strong></font>";
+            gravarLog($sql_edita);
+        } else {
+            $mensagem = "<font color='#FF0000'><strong>Erro ao editar! Tente novamente.</strong></font>";
+        }
     }
+} else {
+    $limite = dinheiroParaBr($valorMax);
+    $mensagem = "<font color='#FF0000'><strong>O limite no orçamento é de R$ {$limite}.</strong></font>";
 }
 
 if (isset($_POST['apagaOrcamento'])) {
@@ -115,10 +139,7 @@ if (isset($_POST['apagaOrcamento'])) {
     }
 }
 
-if(isset($_POST['insereOrcamento']) || isset($_POST['editaOrcamento'])) {
-    $sql_total = "SELECT SUM(valorTotal) AS tot FROM orcamento
-                WHERE publicado > 0 AND idProjeto ='$idProjeto'
-                ORDER BY idOrcamento";
+if ((isset($_POST['insereOrcamento']) || isset($_POST['editaOrcamento'])) && $atualizarValor) {
     $query_total = mysqli_query($con, $sql_total);
     $total = mysqli_fetch_array($query_total);
     $valorProjeto = $total['tot'];
@@ -133,58 +154,45 @@ if(isset($_POST['insereOrcamento']) || isset($_POST['editaOrcamento'])) {
     }
 }
 
-if(isset($_POST["enviar"]))
-{
+if (isset($_POST["enviar"])) {
     $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '3' AND idListaDocumento = 38";
-    $query_arquivos = mysqli_query($con,$sql_arquivos);
-    while($arq = mysqli_fetch_array($query_arquivos))
-    {
+    $query_arquivos = mysqli_query($con, $sql_arquivos);
+    while ($arq = mysqli_fetch_array($query_arquivos)) {
         $y = $arq['idListaDocumento'];
         $x = $arq['sigla'];
         $nome_arquivo = isset($_FILES['arquivo']['name'][$x]) ? $_FILES['arquivo']['name'][$x] : null;
         $f_size = isset($_FILES['arquivo']['size'][$x]) ? $_FILES['arquivo']['size'][$x] : null;
 
         //Extensões permitidas
-        $ext = array("PDF","pdf");
+        $ext = array("PDF", "pdf");
 
-        if($f_size > 5242880) // 5MB em bytes
+        if ($f_size > 5242880) // 5MB em bytes
         {
             $mensagem = "<font color='#FF0000'><strong>Erro! Tamanho de arquivo excedido! Tamanho máximo permitido: 05 MB.</strong></font>";
-        }
-        else
-        {
-            if($nome_arquivo != "")
-            {
+        } else {
+            if ($nome_arquivo != "") {
                 $nome_temporario = $_FILES['arquivo']['tmp_name'][$x];
-                $new_name = date("YmdHis")."_".semAcento($nome_arquivo); //Definindo um novo nome para o arquivo
+                $new_name = date("YmdHis") . "_" . semAcento($nome_arquivo); //Definindo um novo nome para o arquivo
                 $hoje = date("Y-m-d H:i:s");
                 $dir = '../uploadsdocs/'; //Diretório para uploads
                 $allowedExts = array(".pdf", ".PDF"); //Extensões permitidas
-                $ext = strtolower(substr($nome_arquivo,-4));
+                $ext = strtolower(substr($nome_arquivo, -4));
 
-                if(in_array($ext, $allowedExts)) //Pergunta se a extensão do arquivo, está presente no array das extensões permitidas
+                if (in_array($ext, $allowedExts)) //Pergunta se a extensão do arquivo, está presente no array das extensões permitidas
                 {
-                    if(move_uploaded_file($nome_temporario, $dir.$new_name))
-                    {
+                    if (move_uploaded_file($nome_temporario, $dir . $new_name)) {
                         $sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('3', '$idProjeto', '$y', '$new_name', '$hoje', '1'); ";
-                        $query = mysqli_query($con,$sql_insere_arquivo);
-                        if($query)
-                        {
+                        $query = mysqli_query($con, $sql_insere_arquivo);
+                        if ($query) {
                             $mensagem = "<font color='#01DF3A'><strong>Arquivo recebido com sucesso!</strong></font>";
                             gravarLog($sql_insere_arquivo);
-                        }
-                        else
-                        {
+                        } else {
                             $mensagem = "<font color='#FF0000'><strong>Erro ao gravar no banco.</strong></font>";
                         }
-                    }
-                    else
-                    {
+                    } else {
                         $mensagem = "<font color='#FF0000'><strong>Erro no upload! Tente novamente.</strong></font>";
                     }
-                }
-                else
-                {
+                } else {
                     $mensagem = "<font color='#FF0000'><strong>Erro no upload! Anexar documentos somente no formato PDF.</strong></font>";
                 }
             }
@@ -192,17 +200,13 @@ if(isset($_POST["enviar"]))
     }
 }
 
-if(isset($_POST['apagar']))
-{
+if (isset($_POST['apagar'])) {
     $idArquivo = $_POST['apagar'];
     $sql_apagar_arquivo = "UPDATE upload_arquivo SET publicado = 0 WHERE idUploadArquivo = '$idArquivo'";
-    if(mysqli_query($con,$sql_apagar_arquivo))
-    {
+    if (mysqli_query($con, $sql_apagar_arquivo)) {
         $mensagem = "<font color='#01DF3A'><strong>Arquivo apagado com sucesso!</strong></font>";
         gravarLog($sql_apagar_arquivo);
-    }
-    else
-    {
+    } else {
         $mensagem = "<font color='#FF0000'><strong>Erro ao apagar arquivo!</strong></font>";
     }
 }
@@ -240,7 +244,8 @@ if(isset($_POST['apagar']))
         </div>
 
         <div class="alert alert-warning">
-            O orçamento deve ser detalhado. Coloque 1 item de despesa por linha do orçamento, não agrupe despesas distintas em uma única linha.
+            O orçamento deve ser detalhado. Coloque 1 item de despesa por linha do orçamento, não agrupe despesas
+            distintas em uma única linha.
         </div>
 
         <div class="row">
@@ -249,7 +254,8 @@ if(isset($_POST['apagar']))
                     <div class="table-responsive list_info">
                         <h6>Upload de Arquivo(s) Somente em PDF com tamanho máximo de 5MB.</h6>
                         <div class="well">
-                            se houver outras fontes de recursos do projeto além do PROMAC, anexe a planilha do projeto completo, indicando com qual fonte de recurso cada rubrica ser
+                            se houver outras fontes de recursos do projeto além do PROMAC, anexe a planilha do projeto
+                            completo, indicando com qual fonte de recurso cada rubrica ser
                         </div>
                         <div class="col-md-offset-2 col-md-8">
                             <form method="POST" action="?perfil=orcamento" class="form-horizontal" role="form"
@@ -329,44 +335,44 @@ if(isset($_POST['apagar']))
                                 <input type="text" class="form-control" name="obs">
                             </div>
 
-                                <div class="col-md-1"><strong>Qtde Unidade </strong>
-                                    <input type="text" class="form-control" name="quantidadeUnidade" required>
-                                </div>
+                            <div class="col-md-1"><strong>Qtde Unidade </strong>
+                                <input type="text" class="form-control" name="quantidadeUnidade" required>
+                            </div>
 
-                                <div class="col-md-2"><strong><br/>Valor Unitário </strong>
-                                    <input type="text" class="form-control" id='valor' name="valorUnitario" required>
-                                </div>
+                            <div class="col-md-2"><strong><br/>Valor Unitário </strong>
+                                <input type="text" class="form-control" id='valor' name="valorUnitario" required>
                             </div>
                         </div>
                     </div>
-                        <!-- Botão para Gravar -->
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-8">
-                                <input type="submit" name="insereOrcamento" value="GRAVAR"
-                                       class="btn btn-theme btn-lg btn-block">
-                            </div>
-                        </div>
-                </form>
-                <!-- Fim Para inserir item de Orçamento -->
-
-                <div class="form-group"><br>
-                    <hr/>
-                </div>
-
             </div>
+            <!-- Botão para Gravar -->
             <div class="form-group">
-                <div class="col-md-offset-2 col-md-8"><br></div>
+                <div class="col-md-offset-2 col-md-8">
+                    <input type="submit" name="insereOrcamento" value="GRAVAR"
+                           class="btn btn-theme btn-lg btn-block">
+                </div>
             </div>
-            <div class="col-md-12">
-                <div class="table-responsive list_info">
-                    <?php
-                    $sql = "SELECT * FROM orcamento
+            </form>
+            <!-- Fim Para inserir item de Orçamento -->
+
+            <div class="form-group"><br>
+                <hr/>
+            </div>
+
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-8"><br></div>
+        </div>
+        <div class="col-md-12">
+            <div class="table-responsive list_info">
+                <?php
+                $sql = "SELECT * FROM orcamento
 							WHERE publicado > 0 AND idProjeto ='$idProjeto'
 							ORDER BY grupo_despesas_id";
-                    $query = mysqli_query($con, $sql);
-                    $num = mysqli_num_rows($query);
-                    if ($num > 0) {
-                        echo "
+                $query = mysqli_query($con, $sql);
+                $num = mysqli_num_rows($query);
+                if ($num > 0) {
+                    echo "
 							<table class='table table-condensed'>
 								<thead>
 									<tr class='list_menu'>
@@ -384,88 +390,86 @@ if(isset($_POST['apagar']))
 									</tr>
 								</thead>
 								<tbody>";
-                        while ($campo = mysqli_fetch_array($query)) {
-                            $despesa = recuperaDados("grupo_despesas", "id", $campo['grupo_despesas_id']);
-                            $medida = recuperaDados("unidade_medida", "idUnidadeMedida", $campo['idUnidadeMedida']);
-                            echo "<tr>";
-                            echo "<td class='list_description'>" . $despesa['despesa']. "</td>";
-                            echo "<td class='list_description'>" . $campo['descricao'] . "</td>";
-                            echo "<td class='list_description'>" . $campo['quantidade'] . "</td>";
-                            echo "<td class='list_description'>" . $medida['unidadeMedida'] . "</td>";
-                            echo "<td class='list_description'>" . $campo['observacoes'] . "</td>";
-                            echo "<td class='list_description'>" . $campo['quantidadeUnidade'] . "</td>";
-                            echo "<td class='list_description'>" . dinheiroParaBr($campo['valorUnitario']) . "</td>";
-                            echo "<td class='list_description'>" . dinheiroParaBr($campo['valorTotal']) . "</td>";
-                            echo "<td class='list_description'>
+                    while ($campo = mysqli_fetch_array($query)) {
+                        $despesa = recuperaDados("grupo_despesas", "id", $campo['grupo_despesas_id']);
+                        $medida = recuperaDados("unidade_medida", "idUnidadeMedida", $campo['idUnidadeMedida']);
+                        echo "<tr>";
+                        echo "<td class='list_description'>" . $despesa['despesa'] . "</td>";
+                        echo "<td class='list_description'>" . $campo['descricao'] . "</td>";
+                        echo "<td class='list_description'>" . $campo['quantidade'] . "</td>";
+                        echo "<td class='list_description'>" . $medida['unidadeMedida'] . "</td>";
+                        echo "<td class='list_description'>" . $campo['observacoes'] . "</td>";
+                        echo "<td class='list_description'>" . $campo['quantidadeUnidade'] . "</td>";
+                        echo "<td class='list_description'>" . dinheiroParaBr($campo['valorUnitario']) . "</td>";
+                        echo "<td class='list_description'>" . dinheiroParaBr($campo['valorTotal']) . "</td>";
+                        echo "<td class='list_description'>
 											<form method='POST' action='?perfil=orcamento'>
 												<input type='hidden' name='apagaOrcamento' value='" . $campo['idOrcamento'] . "' />
 												<button style='margin-top: 13px' class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' data-title='Excluir Etapa?' data-message='Deseja realmente excluir a etapa " . $despesa['despesa'] . "?'>Remover</button>
 											</form>
 										</td>";
-                            echo "</tr>";
-                        }
-                        echo "
+                        echo "</tr>";
+                    }
+                    echo "
 							</tbody>
 							</table>";
 
-                    }
-                    ?>
+                }
+                ?>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Confirmação de Exclusão -->
+    <div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Excluir Arquivo?</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Confirma?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="confirm">Remover</button>
                 </div>
             </div>
         </div>
-
-
-
-
-            <!-- Confirmação de Exclusão -->
-            <div class="modal fade" id="confirmApagar" role="dialog" aria-labelledby="confirmApagarLabel"
-                 aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title">Excluir Arquivo?</h4>
-                        </div>
-                        <div class="modal-body">
-                            <p>Confirma?</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                            <button type="button" class="btn btn-danger" id="confirm">Remover</button>
-                        </div>
-                    </div>
+    </div>
+    <!-- Fim Confirmação de Exclusão -->
+    <!-- Inicio Modal Informações Orçamento -->
+    <div class="modal fade" id="infoOrcamento" role="dialog" aria-labelledby="infoOrcamentoLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Atenção aos limites!!</h4>
+                </div>
+                <div class="modal-body" style="text-align: left;">
+                    <ul class="list-group">
+                        <li class="list-group-item list-group-item-success"><b>Conforme art. 53 do Decreto
+                                58.041/2017</b></li>
+                        <li class="list-group-item">Os projetos culturais poderão acolher despesas de
+                            administração de até 20% (vinte por cento) do valor total do projeto, englobando
+                            gastos administrativos e serviços de captação de recursos.
+                        </li>
+                        <li class="list-group-item">Para fins de composição das despesas de administração,
+                            deverão ser considerados os tetos de 15% (quinze por cento) para gastos
+                            administrativos e de 10% (dez por cento) para o serviço de captação de recursos
+                        </li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
                 </div>
             </div>
-            <!-- Fim Confirmação de Exclusão -->
-            <!-- Inicio Modal Informações Orçamento -->
-            <div class="modal fade" id="infoOrcamento" role="dialog" aria-labelledby="infoOrcamentoLabel"
-                 aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title">Atenção aos limites!!</h4>
-                        </div>
-                        <div class="modal-body" style="text-align: left;">
-                            <ul class="list-group">
-                                <li class="list-group-item list-group-item-success"><b>Conforme art. 53 do Decreto
-                                        58.041/2017</b></li>
-                                <li class="list-group-item">Os projetos culturais poderão acolher despesas de
-                                    administração de até 20% (vinte por cento) do valor total do projeto, englobando
-                                    gastos administrativos e serviços de captação de recursos.
-                                </li>
-                                <li class="list-group-item">Para fins de composição das despesas de administração,
-                                    deverão ser considerados os tetos de 15% (quinze por cento) para gastos
-                                    administrativos e de 10% (dez por cento) para o serviço de captação de recursos
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Fim Modal Informações Orçamento -->
         </div>
+    </div>
+    <!-- Fim Modal Informações Orçamento -->
+    </div>
 </section>
