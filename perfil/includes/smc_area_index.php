@@ -44,6 +44,10 @@ if (isset($_POST['envioComissao'])) {
         case 37:
             $statusEnvio = 38;
             break;
+        case 42:
+        case 44:
+            $statusEnvio = 43;
+            break;
     }
 
 
@@ -330,7 +334,7 @@ if ($pf['idNivelAcesso'] == 2) {
     <?php
 }
 
-$array_status = array(2, 3, 10, 12, 13, 20, 23, 25, 14, 15, 36, 37, 39, 11, 35); //status
+$array_status = array(2, 3, 10, 12, 13, 20, 23, 25, 14, 15, 42, 44, 36, 37, 39, 11, 35); //status
 
 foreach ($array_status as $idStatus) {
     $sqlStatus = "SELECT idEtapaProjeto, etapaProjeto, ordem FROM etapa_projeto WHERE idEtapaProjeto = '$idStatus'";

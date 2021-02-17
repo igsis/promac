@@ -47,7 +47,7 @@
         ?>
 
         <?php
-        $array_envio_comissao = array(2,10,13,20,14,15,23,25,29,31,37,39);
+        $array_envio_comissao = array(2,10,13,20,14,15,23,25,42,44,37,39);
         if(in_array($projeto['idEtapaProjeto'], $array_envio_comissao )) {
         ?>
             <div class="form-group">
@@ -55,7 +55,7 @@
             </div>
             <div class="form-group">
                 <?php
-                $etapas_envio_comissao = array(2,10,13,20,23,25,14,15,37,39);
+                $etapas_envio_comissao = array(2,10,13,20,23,25,14,15,42,44,37,39);
                 if(in_array($projeto['idEtapaProjeto'],$etapas_envio_comissao)) {
                     ?>
                     <!-- Botão Enviar pra Comissão -->
@@ -74,7 +74,7 @@
                 </div>
                 <!-- Botões Aprova/Reprova/Complemento -->
                 <?php
-                $etapas_finais = array(10,20,25,15,39);
+                $etapas_finais = array(10,20,25,15,44,39);
                 if(in_array($projeto['idEtapaProjeto'],$etapas_finais)){
                 ?>
                     <div class="col-md-3">

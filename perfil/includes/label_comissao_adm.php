@@ -169,6 +169,10 @@
             $idArquivo = 60;
             $idListaDocumento = 61;
             break;
+        case 43:
+            $idArquivo = 62;
+            $idListaDocumento = 63;
+            break;
         /*
         * Default provisório até descobrir qual status não está aparecendo o botão
         */
