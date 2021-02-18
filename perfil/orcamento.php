@@ -43,7 +43,7 @@ function exibePlanilhaCompleta($idPessoa, $idListaDocumento, $pagina)
 
 $con = bancoMysqli();
 $idProjeto = $_SESSION['idProjeto'];
-$projeto = recuperaDados('projetos', 'id', $idProjeto);
+$projeto = recuperaDados('projeto', 'idProjeto',    $idProjeto);
 
 if ($projeto['idAreaAtuacao'] == 22 || $projeto['idAreaAtuacao'] == 13) {
     $valorMax = 1000000;
@@ -123,7 +123,7 @@ if (isset($resultadoMax) && $atualizarValor) {
             $mensagem = "<font color='#FF0000'><strong>Erro ao editar! Tente novamente.</strong></font>";
         }
     }
-} else {
+} else if($atualizarValor){
     $limite = dinheiroParaBr($valorMax);
     $mensagem = "<font color='#FF0000'><strong>O limite no orçamento é de R$ {$limite}.</strong></font>";
 }
