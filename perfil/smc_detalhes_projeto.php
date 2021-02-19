@@ -167,6 +167,12 @@ if(isset($_POST['aprovaProjeto']))
             $idStatus = $etapa['idStatus'];
             $etapaValida = true;
             break;
+        case 44:
+            $idEtapaNova = 45;
+            $etapa = recuperaDados("etapa_projeto","idEtapaProjeto",$idEtapaNova);
+            $idStatus = $etapa['idStatus'];
+            $etapaValida = true;
+            break;
         default:
             $etapaValida = false;
             break;
@@ -219,6 +225,12 @@ if(isset($_POST['reprovaProjeto']))
             break;
         case 39:
             $idEtapaNova = 41;
+            $etapa = recuperaDados("etapa_projeto","idEtapaProjeto",$idEtapaNova);
+            $idStatus = $etapa['idStatus'];
+            $etapaValida = true;
+            break;
+        case 44:
+            $idEtapaNova = 46;
             $etapa = recuperaDados("etapa_projeto","idEtapaProjeto",$idEtapaNova);
             $idStatus = $etapa['idStatus'];
             $etapaValida = true;
@@ -330,6 +342,11 @@ if(isset($_POST['envioComissao']))
             break;
         case 39:
             $etapaProjeto = 38;
+            $etapaValida = true;
+            break;
+        case 42:
+        case 44:
+            $etapaProjeto = 43;
             $etapaValida = true;
             break;
         default:

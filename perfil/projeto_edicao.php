@@ -58,6 +58,7 @@ if (isset($_POST['novoPj'])) //tipoePessoa = 2
     $nomeProjeto = addslashes($_POST['nomeProjeto']);
     $idAreaAtuacao = $_POST['idAreaAtuacao'];
     $tags = $_POST['tags'];
+    $avaliaProjeto = $_POST['avaliaProjeto'];
     if (isset($_POST['segmento'])) {
         $segmento = $_POST['segmento'];
     } else {
@@ -74,7 +75,8 @@ if (isset($_POST['novoPj'])) //tipoePessoa = 2
 		`nomeProjeto` = '$nomeProjeto',
 		`idAreaAtuacao` = '$idAreaAtuacao',
         `segmento` = '$segmento',
-		`alteradoPor`   = '$usuarioLogado'
+		`alteradoPor`   = '$usuarioLogado',
+		`avaliaProjeto` = '$avaliaProjeto'
 		WHERE `idProjeto` = '$idProjeto'";
     if (mysqli_query($con, $sql_insere_projeto)) {
         if (count($_FILES) > 0) {

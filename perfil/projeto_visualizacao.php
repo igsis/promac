@@ -239,14 +239,19 @@ $link = $consulta->fetch();
                                 }
                             }
 
-                            /*Exibir botão de solicitação de alteração*/
+                            /*Exibir botão de solicitação de alteração e Revisão de selo de renúncia fiscal e/ou corte orçamentário */
                             if ($projeto['idStatus'] == 3) {
                             ?>
                                 <div class="form-group">
                                     <div class="col-md-offset-2 col-md-8">
                                         <div class="row">
-                                            <div class="form-horizontal col-md-11" >
+                                            <div class="form-horizontal col-md-12" >
                                                 <a style="border-radius: 7px;" class="btn btn-warning btn-block" href="?perfil=alteracao_projeto&idProjeto=<?= $idProjeto ?>">solicitar alteração do projeto</a>
+                                            </div>
+                                        </div><br>
+                                        <div class="row">
+                                            <div class="form-horizontal col-md-12" >
+                                                <a style="border-radius: 7px;" class="btn btn-warning btn-block" href="?perfil=revisao_selo&idProjeto=<?= $idProjeto ?>">Revisão de selo de renúncia fiscal e/ou corte orçamentário</a>
                                             </div>
                                         </div><br>
                                     </div>

@@ -129,6 +129,9 @@ if (isset($_POST['finalizaComissao'])) {
         case 38:
             $idEtapaProjeto = 39;
             break;
+        case 43:
+            $idEtapaProjeto = 44;
+            break;
         default:
             $idEtapaProjeto = $projeto['idEtapaProjeto'];
             break;
