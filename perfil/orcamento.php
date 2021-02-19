@@ -79,7 +79,6 @@ if (isset($_POST['insereOrcamento']) || isset($_POST['editaOrcamento'])) {
     if ($resultadoMax <= $valorMax){
         $atualizarValor = true;
     }
-
 }
 
 if (isset($resultadoMax) && $atualizarValor) {
@@ -123,9 +122,12 @@ if (isset($resultadoMax) && $atualizarValor) {
             $mensagem = "<font color='#FF0000'><strong>Erro ao editar! Tente novamente.</strong></font>";
         }
     }
-} else if($atualizarValor){
-    $limite = dinheiroParaBr($valorMax);
-    $mensagem = "<font color='#FF0000'><strong>O limite no orçamento é de R$ {$limite}.</strong></font>";
+} else if(isset($resultadoMax)){
+    if ($resultadoMax >= $valorMax){
+        $limite = dinheiroParaBr($valorMax);
+        $mensagem = "<font color='#FF0000'><strong>Este valor ultrapassa o limite de orçamento para está linguagem.</strong></font><br>
+                 <font color='#FF0000'><strong>O limite no orçamento é de R$ {$limite}.</strong></font>";
+    }
 }
 
 if (isset($_POST['apagaOrcamento'])) {
