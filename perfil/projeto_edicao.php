@@ -97,18 +97,26 @@ if (isset($_POST['novoPj'])) //tipoePessoa = 2
                         $new_name = date("YmdHis") . "_" . semAcento($nome_arquivo); //Definindo um novo nome para o arquivo
                         $hoje = date("Y-m-d H:i:s");
                         $dir = '../uploadsdocs/'; //Diretório para uploads
+                        $allowedExts = array("jpg", "jpeg", "png"); //Extensões permitidas
+                        $explodeName = explode(".", $nome_arquivo);
+                        $ext = strtolower(end($explodeName));
 
-                        if (move_uploaded_file($nome_temporario, $dir . $new_name)) {
-                            $sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('7', '$idProjeto', '$y', '$new_name', '$hoje', '1'); ";
-                            $query = mysqli_query($con, $sql_insere_arquivo);
-                            if ($query) {
-                                $mensagem = "<font color='#01DF3A'><strong>Arquivo recebido com sucesso!</strong></font>";
-                                gravarLog($sql_insere_arquivo);
+                        //Pergunta se a extensão do arquivo, está presente no array das extensões permitidas
+                        if(in_array($ext, $allowedExts)) {
+                            if (move_uploaded_file($nome_temporario, $dir . $new_name)) {
+                                $sql_insere_arquivo = "INSERT INTO `upload_arquivo` (`idTipo`, `idPessoa`, `idListaDocumento`, `arquivo`, `dataEnvio`, `publicado`) VALUES ('7', '$idProjeto', '$y', '$new_name', '$hoje', '1'); ";
+                                $query = mysqli_query($con, $sql_insere_arquivo);
+                                if ($query) {
+                                    $mensagem = "<font color='#01DF3A'><strong>Arquivo recebido com sucesso!</strong></font>";
+                                    gravarLog($sql_insere_arquivo);
+                                } else {
+                                    $mensagem = "<font color='#FF0000'><strong>Erro ao gravar no banco.</strong></font>";
+                                }
                             } else {
-                                $mensagem = "<font color='#FF0000'><strong>Erro ao gravar no banco.</strong></font>";
+                                $mensagem = "<font color='#FF0000'><strong>Erro no upload! Tente novamente.</strong></font>";
                             }
                         } else {
-                            $mensagem = "<font color='#FF0000'><strong>Erro no upload! Tente novamente.</strong></font>";
+                            $mensagem = "<font color='#FF0000'><strong>Erro no upload! Formato do arquivo não aceito.</strong></font>";
                         }
                     }
                 }
