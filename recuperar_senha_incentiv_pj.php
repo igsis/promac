@@ -14,7 +14,7 @@ if (isset($_POST['enviarEmail'])) {
     $num = mysqli_num_rows($query);
     if ($num > 0) {
         $pf = recuperaDados("incentivador_pessoa_juridica", "email", $email);
-        $mensagem = enviaEmail($email, base64_encode($pf['idPf']), base64_encode('incentivador_pessoa_juridica'));
+        $mensagem = enviaEmail($email, base64_encode($pf['idPj']), base64_encode('incentivador_pessoa_juridica'));
     } else {
         $mensagem = "<font color='#ff0000'><strong>E-mail não encontrado em nossa base de dados.</strong></font>";
     }
