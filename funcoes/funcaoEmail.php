@@ -17,17 +17,17 @@ function enviaEmail($destinatario, $id, $tipo) {
         $mail->Host = 'smtp.gmail.com';
         $mail->setLanguage('pt');
         $mail->SMTPAuth = true;
-        $mail->Username = "no.reply.smcsistemas@gmail.com";
-        $mail->Password = "dec1935!";
+        $mail->Username = "no.reply.teste@gmail.com";
+        $mail->Password = "teste!";
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
 
 //        DEBUG
-//        $mail->SMTPDebug =  SMTP::DEBUG_SERVER;
-//        $mail->SMTPDebug = 3;
-//        $mail->Debugoutput = 'html';
+        $mail->SMTPDebug =  SMTP::DEBUG_SERVER;
+        $mail->SMTPDebug = 3;
+        $mail->Debugoutput = 'html';
 
-        $mail->setFrom('no.reply.smcsistemas@gmail.com','PROMAC');
+        $mail->setFrom('no.reply.teste@gmail.com','PROMAC');
         $mail->addReplyTo('no-reply@promac.com.br');
 
         $mail->addAddress($destinatario);
