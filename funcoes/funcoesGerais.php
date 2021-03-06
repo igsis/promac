@@ -2336,7 +2336,7 @@ function retornaDocumentosObrigatoriosProponente($tipoPessoa, $id = null)
         if ($imposto == 1) {
             array_push($listaDocumentos, 'doc.idListaDocumento NOT IN (35,36)');
         } elseif ($imposto == 2) {
-            array_push($listaDocumentos, 'doc.idListaDocumento NOT IN (53,36)');
+            array_push($listaDocumentos, 'doc.idListaDocumento NOT IN (53,36,30)');
         }
     }
 
