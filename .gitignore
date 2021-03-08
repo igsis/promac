@@ -2,3 +2,4 @@ uploadsdocs/*
 uploadssmc/*
 .idea/*
 funcoes/funcoesConecta.php
+funcoes/funcaoEmail.php
