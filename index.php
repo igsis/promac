@@ -237,6 +237,7 @@ $tipoPessoa = '6';
 					<tr>
                         <td style="color: #ccc"><i class="fa fa-phone-square"></i> Dúvidas: <br>Sobre cadastros: cadastrospromac@prefeitura.sp.gov.br<br>Sobre projetos: projetospromac@prefeitura.sp.gov.br<br>Sobre incentivo e abatimento fiscal: incentivopromac@gmail.com<br>Sobre prestação de contas: prestacaocontaspromac@prefeitura.sp.gov.br</td>
 						<td style="color: #ccc; text-align: center">2018 @ Pro-Mac - Programa Municipal de Apoio a Projetos Culturais<br/>Secretaria Municipal de Cultura<br/>Prefeitura de São Paulo</td>
+                        <td style="width: 20%; text-align: right"><img src="visual/images/pin_promac_pq.png" alt="Logo Promac"/>
 					</tr>
                     <tr>
                         <td colspan="3" style="color: #ccc; text-align: center; font-size: x-small"><br/><i>Supervisão de Tecnologia da Informação - Sistemas de Informação</i></td>
