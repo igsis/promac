@@ -80,7 +80,7 @@ $tipoPessoa = '6';
 						<p style="text-align: justify">
                             <strong>Cadastro de proponente:</strong> aberto o ano todo.<br/>
                             <strong>Cadastro de incentivador:</strong> aberto o ano todo.<br/>
-                            <strong>Inscrição de projeto:</strong> abertas de 9h de 08/03/2021 às 23h59 de 31/05/2020. Confira o Edital PROMAC 2021 no botão Normativos ao lado.<br/>
+                            <strong>Inscrição de projeto:</strong> abertas de 9h de 08/03/2021 às 23h59 de 31/05/2021. Confira o Edital PROMAC 2021 no botão Normativos ao lado.<br/>
                             <strong>Captação de recursos:</strong> aberta de 10/03/2021 a 12/11/2021 (ou enquanto houver saldo disponível para captação).
                         </p>
 
@@ -115,7 +115,7 @@ $tipoPessoa = '6';
                                     <div class="well">
                                         <h6>Edital Vigentes</h6>
                                         <ul class="list-group">
-                                            <li class="list-group-item"><a href="pdf/Edital_PROMAC_2020.pdf" target="_blank">Edital Promac 2021</a></li>
+                                            <li class="list-group-item"><a href="pdf/Edital_PROMAC_2021.pdf" target="_blank">Edital Promac 2021</a></li>
                                         </ul>
                                     </div>
 
