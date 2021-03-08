@@ -23,9 +23,9 @@ function enviaEmail($destinatario, $id, $tipo) {
         $mail->Port = 587;
 
 //        DEBUG
-        $mail->SMTPDebug =  SMTP::DEBUG_SERVER;
-        $mail->SMTPDebug = 3;
-        $mail->Debugoutput = 'html';
+//        $mail->SMTPDebug =  SMTP::DEBUG_SERVER;
+//        $mail->SMTPDebug = 3;
+//        $mail->Debugoutput = 'html';
 
         $mail->setFrom('no.reply.teste@gmail.com','PROMAC');
         $mail->addReplyTo('no-reply@promac.com.br');
