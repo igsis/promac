@@ -140,11 +140,13 @@ if (isset($_POST['insereAtuacao'])) {
     $idPf = $_SESSION['idUser'];
     $nomeProjeto = $_POST['nomeProjeto'];
     $idAreaAtuacao = $_POST['idAreaAtuacao'];
+    $avaliaProjeto = $_POST['avaliaProjeto'];
     $tags = isset($_POST['tags']) ? $_POST['tags'] : "";
     $sql_insere_projeto = "UPDATE projeto SET
 		nomeProjeto = '$nomeProjeto',
 		idAreaAtuacao = '$idAreaAtuacao',
-		alteradoPor   = '$usuarioLogado' 
+		alteradoPor   = '$usuarioLogado' ,
+       `avaliaProjeto` = '$avaliaProjeto'
 		WHERE idProjeto = '$idProjeto'";
     if (mysqli_query($con, $sql_insere_projeto)) {
         if (count($_FILES) > 0) {
