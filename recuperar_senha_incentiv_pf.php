@@ -31,7 +31,7 @@ if (isset($_POST['enviarEmail'])) {
                     <hr>
 
                     <!-- Solicitando E-mail -->
-                    <form method="POST" action="./recuperar_senha_pf.php">
+                    <form method="POST" action="./recuperar_senha_incentiv_pf.php">
                         <div class="col-md-offset-4 col-md-4">
                             <div class="form-group">
                                 <label>Digite Seu E-mail:</label>
