@@ -112,11 +112,11 @@ $pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
 						<?php
                             if ($pj['imposto'] == 1)
                             {
-                                $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND idListaDocumento NOT IN (35) AND publicado = '1'";
+                                $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND idListaDocumento NOT IN (35,36) AND publicado = '1'";
                             }
                             elseif ($pj['imposto'] == 2)
                             {
-                                $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND idListaDocumento NOT IN (53) AND publicado = '1'";
+                                $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND idListaDocumento NOT IN (53,30) AND publicado = '1'";
                             }
                             elseif ($pj['imposto'] == 3)
                             {
@@ -124,7 +124,7 @@ $pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
                             }
                             else
                             {
-                                $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND idListaDocumento NOT IN (35, 53) AND publicado = '1'";
+                                $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND idListaDocumento NOT IN (35, 53, 30, 36) AND publicado = '1'";
                             }
 							$documentos = [];
 							$query_arquivos = mysqli_query($con,$sql_arquivos);

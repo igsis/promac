@@ -2334,9 +2334,9 @@ function retornaDocumentosObrigatoriosProponente($tipoPessoa, $id = null)
     } elseif ($tipoPessoa == 5) {
         $imposto = $conexao->query("SELECT imposto FROM incentivador_pessoa_juridica WHERE idPj = '$id'")->fetch_assoc()['imposto'];
         if ($imposto == 1) {
-            array_push($listaDocumentos, 'doc.idListaDocumento <> 35');
+            array_push($listaDocumentos, 'doc.idListaDocumento NOT IN (35,36)');
         } elseif ($imposto == 2) {
-            array_push($listaDocumentos, 'doc.idListaDocumento <> 53');
+            array_push($listaDocumentos, 'doc.idListaDocumento NOT IN (53,36,30)');
         }
     }
 

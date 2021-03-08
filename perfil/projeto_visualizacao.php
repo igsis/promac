@@ -45,7 +45,7 @@ function DiasUteis() {
 
     $contadorUteis = 0; //essa variavel vai contar os dias uteis
 
-   while( $contadorUteis < 5 ){
+   while( $contadorUteis < 15 ){
 
       $dtSuaData->setTimestamp(strtotime('+1 weekday', $dtSuaData->getTimestamp()));
 
