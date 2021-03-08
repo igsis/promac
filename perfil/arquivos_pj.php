@@ -10,7 +10,7 @@ $http = $server."/pdf/";
 
 if(isset($_POST["enviar"]))
 {
-	$sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa'";
+	$sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' and publicado = 1";
 	$query_arquivos = mysqli_query($con,$sql_arquivos);
 	while($arq = mysqli_fetch_array($query_arquivos))
 	{
@@ -118,9 +118,9 @@ $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
                                 $res = mysqli_fetch_array($resultado);
 
                                 if ($res[0] == 1){
-                                    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND idListaDocumento IN (7,9,59,8,11,12,13,14,15,17,10)";
+                                    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND idListaDocumento IN (7,9,59,8,11,12,13,14,15,17,10) and publicado = 1";
                                 }else{
-                                    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND idListaDocumento IN (7,9,59,8,10,11,12,13,14,15)";
+                                    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND idListaDocumento IN (7,9,59,8,10,11,12,13,14,15) and publicado = 1";
                                 }
 								$query_arquivos = mysqli_query($con,$sql_arquivos);
 								while($arq = mysqli_fetch_array($query_arquivos))

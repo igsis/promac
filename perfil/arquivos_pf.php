@@ -10,7 +10,7 @@ $http = $server."/pdf/";
 
 if(isset($_POST["enviar"]))
 {
-	$sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa'";
+	$sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' and publicado = 1";
 	$query_arquivos = mysqli_query($con,$sql_arquivos);
 	while($arq = mysqli_fetch_array($query_arquivos))
 	{
@@ -113,7 +113,7 @@ $pf = recuperaDados("pessoa_fisica","idPf",$idPf);
 						<form method="POST" action="?perfil=arquivos_pf" enctype="multipart/form-data">
 							<?php
 								$documentos = [];
-								$sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa'";
+								$sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' and publicado = 1";
 								$query_arquivos = mysqli_query($con,$sql_arquivos);
 								while($arq = mysqli_fetch_array($query_arquivos))
 								{									
