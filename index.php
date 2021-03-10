@@ -131,7 +131,7 @@ $tipoPessoa = '6';
                                     <div class="well">
                                         <h6>Manuais e Instruções</h6>
                                         <ul class="list-group">
-                                            <li class="list-group-item"><a href="pdf/mini_manual_incentivador.pdf" target="_blank">Mini Manual do Incentivador</a></li>
+<!--                                            <li class="list-group-item"><a href="pdf/mini_manual_incentivador.pdf" target="_blank">Mini Manual do Incentivador</a></li>-->
                                             <li class="list-group-item"><a href="pdf/Mapa_Equipamentos_Culturais_07-01-2019.pdf" target="_blank">Mapa de Equipamentos Culturais</a></li>
                                         </ul>
                                     </div>
