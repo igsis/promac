@@ -141,7 +141,7 @@ if (isset($_POST['apagaOrcamento'])) {
     }
 }
 
-if ((isset($_POST['insereOrcamento']) || isset($_POST['editaOrcamento'])) && $atualizarValor) {
+if ((isset($_POST['insereOrcamento']) || isset($_POST['editaOrcamento'])) || isset($_POST['apagaOrcamento'])) {
     $query_total = mysqli_query($con, $sql_total);
     $total = mysqli_fetch_array($query_total);
     $valorProjeto = $total['tot'];

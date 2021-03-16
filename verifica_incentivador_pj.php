@@ -56,7 +56,7 @@
                     <p>SMC ainda não consegue operacionalizar o incentivo fiscal proveniente do ISS de empresas que
                         recolhem o ISS diretamente na fonte. Se esse é o caso da sua empresa, pedimos que aguarde, por
                         gentileza. Estamos estudando como operacionalizar esses casos junto à Secretaria da Fazenda.
-                        Dúvidas sobre o assunto podem ser tratadas no cadastropromac@prefeitura.sp.gov.br. </p>
+                        Dúvidas sobre o assunto podem ser tratadas no cadastrospromac@prefeitura.sp.gov.br. </p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-theme btn-md btn-block" data-dismiss="modal">Ok</button>
