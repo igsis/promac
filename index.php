@@ -120,7 +120,7 @@ $tipoPessoa = '6';
                                         <p><b>Modelos de Termos de Responsabilidade</b></p>
                                         <ul class="list-group">
                                             <li class="list-group-item"><a href="pdf/MODELO_TERMO_DE_RESPONSABILIDADE_PROJETOS_APROVADOS_EM_2020_SEM_RECURSOS_EM_CONTA.docx" target="_blank">Projetos Aprovados em 2020 Sem Recursos em Conta</a></li>
-                                            <li class="list-group-item"><a href="pdf/MODELO_TERMO_DE_RESPONSABILIDADE_PROJETOS_APROVADOS_EM_2020_COM_RECURSOS_EM_CONTA.docx" target="_blank">Projetos Aprovados em 2020 Com Recursos em Conta Projetos Aprovados em 2020 Com Recursos em Conta  (Enviar extrato da conta juntamente com esse modelo preenchido)</a></li>
+                                            <li class="list-group-item"><a href="pdf/MODELO_TERMO_DE_RESPONSABILIDADE_PROJETOS_APROVADOS_EM_2020_COM_RECURSOS_EM_CONTA.docx" target="_blank">Projetos Aprovados em 2020 Com Recursos em Conta  <small>(Enviar extrato da conta juntamente com esse modelo preenchido)</small></a></li>
                                             <li class="list-group-item"><a href="pdf/MODELO_TERMO_DE_RESPONSABILIDADE_PROJETOS_APROVADOS_EM_2021_SEM_RECURSOS_EM_CONTA.docx" target="_blank">Projetos Aprovados em 2021 Sem Recursos em Conta</a></li>
                                         </ul>
                                     </div>
