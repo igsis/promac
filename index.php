@@ -120,7 +120,7 @@ $tipoPessoa = '6';
                                         <p><b>Modelos de Termos de Responsabilidade</b></p>
                                         <ul class="list-group">
                                             <li class="list-group-item"><a href="pdf/MODELO_TERMO_DE_RESPONSABILIDADE_PROJETOS_APROVADOS_EM_2020_SEM_RECURSOS_EM_CONTA.docx" target="_blank">Projetos Aprovados em 2020 Sem Recursos em Conta</a></li>
-                                            <li class="list-group-item"><a href="pdf/MODELO_TERMO_DE_RESPONSABILIDADE_PROJETOS_APROVADOS_EM_2020_COM_RECURSOS_EM_CONTA.docx" target="_blank">Projetos Aprovados em 2020 Com Recursos em Conta</a></li>
+                                            <li class="list-group-item"><a href="pdf/MODELO_TERMO_DE_RESPONSABILIDADE_PROJETOS_APROVADOS_EM_2020_COM_RECURSOS_EM_CONTA.docx" target="_blank">Projetos Aprovados em 2020 Com Recursos em Conta  <small>(Enviar extrato da conta juntamente com esse modelo preenchido)</small></a></li>
                                             <li class="list-group-item"><a href="pdf/MODELO_TERMO_DE_RESPONSABILIDADE_PROJETOS_APROVADOS_EM_2021_SEM_RECURSOS_EM_CONTA.docx" target="_blank">Projetos Aprovados em 2021 Sem Recursos em Conta</a></li>
                                         </ul>
                                     </div>
@@ -237,7 +237,7 @@ $tipoPessoa = '6';
                     <div class="alert alert-danger">
                         <h5 style="color: red">COMUNICADO sobre os Termos de Responsabilidade</h5>
                         <p style="color: red">
-                            Devido à atualização trazida pelo Edital PROMAC 2021, <b>existem modelos diferentes do Termo de Responsabilidade de Execução de Projeto Cultural:</b> para projetos aprovados em 2020 e que não captaram recursos ainda, para aqueles aprovados em 2020 que já captaram algum recurso e para os projetos que serão aprovados em 2021. Diferem entre eles apenas os cabeçalhos preenchidos com os números dos processos correspondentes a cada edital e as tabelas para preenchimento com valores de captação. As cláusulas permanecem as mesmas. Os modelos encontram-se na seção Normativos ao lado, favor atentar qual modelo deve ser usado para seu projeto.
+                            Devido à atualização trazida pelo Edital PROMAC 2021, <b>existem modelos diferentes do Termo de Responsabilidade de Execução de Projeto Cultural:</b> para projetos aprovados em 2020 e que não captaram recursos ainda, para aqueles aprovados em 2020 que já captaram algum recurso e para os projetos que serão aprovados em 2021. Diferem entre eles apenas os cabeçalhos preenchidos com os números dos processos correspondentes a cada edital e as tabelas para preenchimento com valores de captação. As cláusulas permanecem as mesmas. Os modelos encontram-se na seção Normativos ao lado, favor atentar qual modelo deve ser usado para seu projeto. <b>Os projetos aprovados em 2020 e que já tem algum recurso em conta devem enviar também, junto do Termo de Responsabilidade adequado, um extrato atualizado da conta do projeto para facilitar a análise do Contrato de Incentivo.</b>
                         </p>
                     </div>
                 </div>
