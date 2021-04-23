@@ -117,6 +117,8 @@ $tipoPessoa = '6';
                                         <h6>Edital Vigente e Modelos</h6>
                                         <ul class="list-group">
                                             <li class="list-group-item"><a href="pdf/Edital_PROMAC_2021.pdf" target="_blank">Edital Promac 2021</a></li>
+                                            <li class="list-group-item"><a href="pdf/DECLARAÇÃO_CCM_PF.docx" target="_blank">Declaração CCM - Pessoa Física</a></li>
+                                            <li class="list-group-item"><a href="pdf/DECLARAÇÃO_CCM_PJ.docx" target="_blank">Declaração CCM - Pessoa Jurídica</a></li>
                                         </ul>
                                         <p><b>Modelos de Termos de Responsabilidade</b></p>
                                         <ul class="list-group">
