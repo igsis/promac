@@ -79,6 +79,11 @@ if(isset($_POST["enviar"]))
 						{
 							$mensagem = "<font color='#01DF3A'><strong>Arquivo recebido com sucesso!</strong></font>";
 							gravarLog($sql_insere_arquivo);
+
+							// Script para evitar reenvio dos arquivos qdo user atualiza a pagina logo após o envio
+                            $urlAtual = urlAtual();
+                            echo "<script>window.location = '$urlAtual';</script>";
+
 						}
 						else
 						{

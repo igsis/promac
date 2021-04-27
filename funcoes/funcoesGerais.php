@@ -2324,6 +2324,8 @@ function retornaDocumentosObrigatoriosProponente($tipoPessoa, $id = null)
     $listaDocumentos = [
         'doc.idListaDocumento <> 27',
         'doc.idListaDocumento <> 10',
+        'doc.idListaDocumento <> 6',
+        'doc.idListaDocumento <> 15',
     ];
 
     if ($tipoPessoa == 2) {
@@ -2478,6 +2480,10 @@ function arquivosExiste($urlArquivo, $extensao = '.php')
 {
     $file = $urlArquivo . $extensao;
     $file_headers = @get_headers($file);
+    if (!$file_headers){
+        return false;
+    }
+
     if ($file_headers[0] == 'HTTP/1.1 404 Not Found'):
         return false;
     endif;

@@ -86,6 +86,10 @@ if(isset($_POST["enviar"]))
 						{
 							$mensagem = "<font color='#01DF3A'><strong>Arquivo recebido com sucesso!</strong></font>";
 							gravarLog($sql_insere_arquivo);
+
+                            // Script para evitar reenvio dos arquivos qdo user atualiza a pagina logo após o envio
+                            $urlAtual = urlAtual();
+                            echo "<script>window.location = '$urlAtual';</script>";
 						}
 						else
 						{
@@ -201,7 +205,7 @@ endif;
                                 if ($res[0] == 1){
                                     $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND idListaDocumento IN (7,9,59,8,11,12,13,14,15,17,10)";
                                 }else{
-                                    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND idListaDocumento IN (7,9,59,10,8,11,12,13,14,15)";
+                                    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND idListaDocumento IN (7,9,59,10,8,11,12,13,14)";
                                 }
                                 $query_arquivos = mysqli_query($con,$sql_arquivos);
                                 while($arq = mysqli_fetch_array($query_arquivos)) {
@@ -236,18 +240,22 @@ endif;
 
                                                 $urlArquivo = $http.$documento->idListaDocumento;
                                                 echo "<tr>";
-                                                if(arquivosExiste($urlArquivo)){
-                                                    echo "<td class='list_description path'>";
 
-                                                            $path = selecionaArquivoAnexo($http, $documento->idListaDocumento);
+                                                /** Bloco retirado por causar lentidao no sistema */
+//                                                if(arquivosExiste($urlArquivo)){
+//                                                    echo "<td class='list_description path'>";
+//
+//                                                            $path = selecionaArquivoAnexo($http, $documento->idListaDocumento);
+//
+//                                                        echo "<a href='$path' target='_blank'>$documento->nomeDocumento</a>";
+//
+//                                                    echo "</td>";
+//
+//                                                }else{
+//                                                    echo "<td class='list_description'><label>$documento->nomeDocumento</label></td>";
+//                                                }
 
-                                                        echo "<a href='$path' target='_blank'>$documento->nomeDocumento</a>";
-
-                                                    echo "</td>";
-
-                                                }else{
-                                                    echo "<td class='list_description'><label>$documento->nomeDocumento</label></td>";
-                                                }
+                                                echo "<td class='list_description'><label>$documento->nomeDocumento</label></td>";
 
                                                 echo 	"<td class='list_description'><input type='file' name='arquivo[$documento->sigla]'></td>";
                                                 echo "</tr>";
