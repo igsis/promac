@@ -12,8 +12,11 @@ if(isset($_POST['cadastraNovoPj']))
 		$mensagem = "<font color='#FF0000'><strong>Por favor, preencha todos os campos.</strong></font>";
 	} else {
         $verificaEmail = $con->query("SELECT email FROM incentivador_pessoa_juridica WHERE email = '$email'")->num_rows;
+        $verificaCnpj = $con->query("SELECT cnpj FROM incentivador_pessoa_juridica WHERE cnpj = '$busca'")->num_rows;
         if ($verificaEmail != 0) {
             $mensagem = "<font color='#FF0000'><strong>O e-mail informado existe em outro cadastro. Utilize outro e-mail para prosseguir.</strong></font>";
+        } elseif ($verificaCnpj != 0) {
+            $mensagem = "<font color='#FF0000'><strong>O CNPJ informado existe em outro cadastro. Utilize outro CNPJ para prosseguir.</strong></font>";
         } else {
             if(($_POST['senha01'] != "") AND (strlen($_POST['senha01']) >= 5)) {
                 if($_POST['senha01'] == $_POST['senha02']) {

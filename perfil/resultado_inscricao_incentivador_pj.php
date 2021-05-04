@@ -203,14 +203,13 @@ if(isset($_POST['apagar']))
 						<div class="table-responsive list_info"><h6>Upload de Arquivo(s) Somente em PDF</h6>
 						<form method="POST" action="?perfil=resultado_inscricao_incentivador_pj" enctype="multipart/form-data">
 							<?php
-								$documentos = [];
                                 if ($pj['imposto'] == 1)
                                 {
-                                    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND idListaDocumento NOT IN (35) AND publicado = '1'";
+                                    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND idListaDocumento NOT IN (35,36) AND publicado = '1'";
                                 }
                                 elseif ($pj['imposto'] == 2)
                                 {
-                                    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND idListaDocumento NOT IN (53) AND publicado = '1'";
+                                    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND idListaDocumento NOT IN (53,30) AND publicado = '1'";
                                 }
                                 elseif ($pj['imposto'] == 3)
                                 {
@@ -218,8 +217,9 @@ if(isset($_POST['apagar']))
                                 }
                                 else
                                 {
-                                    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND idListaDocumento NOT IN (35, 53) AND publicado = '1'";
+                                    $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND idListaDocumento NOT IN (35, 53, 30, 36) AND publicado = '1'";
                                 }
+                                $documentos = [];
 								$query_arquivos = mysqli_query($con,$sql_arquivos);									
 								while($arq = mysqli_fetch_array($query_arquivos))
 								{
