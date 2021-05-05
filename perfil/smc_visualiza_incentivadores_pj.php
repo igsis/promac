@@ -210,6 +210,24 @@ if(isset($_POST['nota']))
 }
 
 $pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
+
+switch ($pj['imposto']) {
+    case 1:
+        $imposto = "ISS";
+        break;
+
+    case 2:
+        $imposto = "IPTU";
+        break;
+
+    case 3:
+        $imposto = "ISS e IPTU";
+        break;
+
+    default:
+        $imposto = "Imposto não selecionado";
+        break;
+}
 ?>
 
 <section id="list_items" class="home-section bg-white">
@@ -245,6 +263,7 @@ $pj = recuperaDados("incentivador_pessoa_juridica","idPj",$idPj);
 			<p align="justify"><strong>Estado:</strong> <?php echo isset($pj['estado']) ? $pj['estado'] : null; ?></p>
 			<p align="justify"><strong>CEP:</strong> <?php echo isset($pj['cep']) ? $pj['cep'] : null; ?></p>
 			<p align="justify"><strong>Data da Inscrição:</strong> <?php echo isset($pj['dataInscricao']) ? exibirDataHoraBr($pj['dataInscricao']) : null; ?></p>
+			<p align="justify"><strong>Tipo de imposto escolhido:</strong> <?=  $imposto ?> </p>
 		</div>
 
 		<div class = "page-header">
