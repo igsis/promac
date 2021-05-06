@@ -47,6 +47,10 @@ if(isset($_POST["enviar"]))
 						{
 							$mensagem = "<font color='#01DF3A'><strong>Arquivo(s) recebido(s) com sucesso! <br> Avance para a próxima tela para confirmar sua inscrição.</strong></font>";
 							gravarLog($sql_insere_arquivo);
+
+                            // Script para evitar reenvio dos arquivos qdo user atualiza a pagina logo após o envio
+                            $urlAtual = urlAtual();
+                            echo "<script>window.location = '$urlAtual';</script>";
 						}
 						else
 						{
@@ -159,18 +163,22 @@ $pj = recuperaDados("pessoa_juridica","idPj",$idPj);
 
 												$urlArquivo = $http.$documento->idListaDocumento;
 												echo "<tr>";
-												if(arquivosExiste($urlArquivo)){ 
-													echo "<td class='list_description path'>";
 
-															$path = selecionaArquivoAnexo($http, $documento->idListaDocumento);  
-													
-														echo "<a href='$path' target='_blank'>$documento->nomeDocumento</a>";
-													
-													echo "</td>";
-												
-												}else{
-													echo "<td class='list_description'><label>$documento->nomeDocumento</label></td>";
-												}
+                                                /** Bloco retirado por causar lentidao no sistema */
+//												if(arquivosExiste($urlArquivo)){
+//													echo "<td class='list_description path'>";
+//
+//															$path = selecionaArquivoAnexo($http, $documento->idListaDocumento);
+//
+//														echo "<a href='$path' target='_blank'>$documento->nomeDocumento</a>";
+//
+//													echo "</td>";
+//
+//												}else{
+//													echo "<td class='list_description'><label>$documento->nomeDocumento</label></td>";
+//												}
+
+                                                echo "<td class='list_description'><label>$documento->nomeDocumento</label></td>";
 
 												echo 	"<td class='list_description'><input type='file' name='arquivo[$documento->sigla]'></td>";
 												echo "</tr>";

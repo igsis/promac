@@ -109,6 +109,7 @@ $tipoPessoa = '6';
                                             <li class="list-group-item"><a href="pdf/Retificação_Art31_Decreto.pdf" target="_blank">Retificação do inciso III do Art. 31 do Decreto nº 59.119/2019</a></li>
                                             <li class="list-group-item"><a href="pdf/Portaria_SF_procedimentos_contabeis_incentivador.pdf">Portaria SF nº 173/2018 - Procedimentos Contábeis</a></li>
                                             <li class="list-group-item"><a href="pdf/Portaria_SMC_prestacao_contas.pdf">Portaria Conjunta SMC/SF nº 92/2018 - Prestação de Contas</a></li>
+                                            <li class="list-group-item"><a href="pdf/ANEXOS-PRESTACAO-DE-CONTAS-PROMAC.xlsx">Anexos da Portaria de Prestação de Contas</a></li>
                                         </ul>
                                     </div>
 
@@ -116,12 +117,18 @@ $tipoPessoa = '6';
                                         <h6>Edital Vigente e Modelos</h6>
                                         <ul class="list-group">
                                             <li class="list-group-item"><a href="pdf/Edital_PROMAC_2021.pdf" target="_blank">Edital Promac 2021</a></li>
+                                            <li class="list-group-item"><a href="pdf/DECLARAÇÃO_CCM_PF.docx" target="_blank">Declaração CCM - Pessoa Física</a></li>
+                                            <li class="list-group-item"><a href="pdf/DECLARAÇÃO_CCM_PJ.docx" target="_blank">Declaração CCM - Pessoa Jurídica</a></li>
                                         </ul>
                                         <p><b>Modelos de Termos de Responsabilidade</b></p>
                                         <ul class="list-group">
                                             <li class="list-group-item"><a href="pdf/MODELO_TERMO_DE_RESPONSABILIDADE_PROJETOS_APROVADOS_EM_2020_SEM_RECURSOS_EM_CONTA.docx" target="_blank">Projetos Aprovados em 2020 Sem Recursos em Conta</a></li>
                                             <li class="list-group-item"><a href="pdf/MODELO_TERMO_DE_RESPONSABILIDADE_PROJETOS_APROVADOS_EM_2020_COM_RECURSOS_EM_CONTA.docx" target="_blank">Projetos Aprovados em 2020 Com Recursos em Conta  <small>(Enviar extrato da conta juntamente com esse modelo preenchido)</small></a></li>
                                             <li class="list-group-item"><a href="pdf/MODELO_TERMO_DE_RESPONSABILIDADE_PROJETOS_APROVADOS_EM_2021_SEM_RECURSOS_EM_CONTA.docx" target="_blank">Projetos Aprovados em 2021 Sem Recursos em Conta</a></li>
+                                        </ul>
+                                        <p><b>Modelos de Solicitação de Alteração de Projeto</b></p>
+                                        <ul class="list-group">
+                                            <li class="list-group-item"><a href="pdf/MODELOS_DE_SOLICITACAO_DE_ALTERACAO_DE_PROJETO_PROMAC.pdf" target="_blank">Modelos de Solicitação de Alteração de Projeto</a></li>
                                         </ul>
                                     </div>
 
@@ -140,6 +147,7 @@ $tipoPessoa = '6';
                                         <ul class="list-group">
                                             <li class="list-group-item"><a href="pdf/Mini_Manual_do_Incentivador_2021.pdf" target="_blank">Mini Manual do Incentivador 2021</a></li>
                                             <li class="list-group-item"><a href="pdf/Mapa_Equipamentos_Culturais_07-01-2019.pdf" target="_blank">Mapa de Equipamentos Culturais</a></li>
+                                            <li class="list-group-item"><a href="pdf/EQUIPAMENTOS_CULTURAIS_FAIXAS_E_ENDERECOS.pdf" target="_blank">Lista de Equipamentos Culturais da SMC e CEUS com Endereços e Faixas de Renúncia Fiscal</a></li>
                                         </ul>
                                     </div>
 
