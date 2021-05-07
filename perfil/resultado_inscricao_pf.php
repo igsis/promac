@@ -306,7 +306,7 @@ if(isset($_POST['apagar']))
                                       WHERE idPessoa = '$idPf' AND publicado = 1 AND idTipo= 1";
                      if ($resuldato = mysqli_query($con,$query_valida)){
                          $num_linhas = mysqli_num_rows($resuldato);
-                         if ($num_linhas == 7){
+                         if ($num_linhas == 6){
                              ?>
                              <form class="form-horizontal" role="form" action="?perfil=resultado_inscricao_pf" method="post">
                                  <input type="submit" name="liberacao" value="Concluir inscrição do proponente" class="btn btn-theme btn-lg btn-block">
