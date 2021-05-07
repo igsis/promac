@@ -270,7 +270,7 @@ if ($pf['idNivelAcesso'] == 2) {
     </div>
 
     <?php
-    $sql = "SELECT * FROM incentivador_pessoa_juridica WHERE liberado = 1";
+    $sql = "SELECT * FROM incentivador_pessoa_juridica WHERE liberado = 1 ORDER BY idPj DESC";
     $query = mysqli_query($con, $sql);
     $num = mysqli_num_rows($query);
     ?>
