@@ -196,7 +196,7 @@ if(isset($_POST['apagar']))
                                 <form method="POST" action="?perfil=resultado_inscricao_pf" enctype="multipart/form-data">
                                     <?php
                                         $documentos = [];
-                                        $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND publicado = 1";
+                                            $sql_arquivos = "SELECT * FROM lista_documento WHERE idTipoUpload = '$tipoPessoa' AND publicado = 1";
                                         $query_arquivos = mysqli_query($con,$sql_arquivos);
                                         $num_arquivos = mysqli_num_rows($query_arquivos);
                                         while($arq = mysqli_fetch_array($query_arquivos))
@@ -307,7 +307,7 @@ if(isset($_POST['apagar']))
                                       WHERE idPessoa = '$idPf' AND publicado = 1 AND idTipo= 1";
                      if ($resuldato = mysqli_query($con,$query_valida)){
                          $num_linhas = mysqli_num_rows($resuldato);
-                         if ($num_linhas == $num_arquivos){
+                         if ($num_linhas >= $num_arquivos){
                              ?>
                              <form class="form-horizontal" role="form" action="?perfil=resultado_inscricao_pf" method="post">
                                  <input type="submit" name="liberacao" value="Concluir inscrição do proponente" class="btn btn-theme btn-lg btn-block">
