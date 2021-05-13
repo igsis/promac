@@ -300,22 +300,26 @@ if(isset($_POST['apagar']))
                         if($numRow == 8)
                         {
 				    */
-				    $qtdDocumentos = ($pj['imposto'] == 3 ? 9 : 8);
+//				    $qtdDocumentos = ($pj['imposto'] == 3 ? 9 : 8);
 				    switch ($pj['imposto']) {
                         case 1:
-                            $query_valida = "SELECT * FROM upload_arquivo WHERE idPessoa = '$idPj' AND publicado = 1 AND idTipo = 5 AND idListaDocumento NOT IN (35) AND publicado = '1'";
+                            $query_valida = "SELECT * FROM upload_arquivo WHERE idPessoa = '$idPj' AND publicado = 1 AND idTipo = 5 AND idListaDocumento NOT IN (35, 36) AND publicado = '1'";
+                            $qtdDocumentos = $con->query("SELECT * FROM `promac`.`lista_documento` WHERE idTipoUpload IN ('5') AND idListaDocumento NOT IN ('35', '36')")->num_rows;
                             break;
 
                         case 2:
                             $query_valida = "SELECT * FROM upload_arquivo WHERE idPessoa = '$idPj' AND publicado = 1 AND idTipo = 5 AND idListaDocumento NOT IN (53) AND publicado = '1'";
+                            $qtdDocumentos = $con->query("SELECT * FROM `promac`.`lista_documento` WHERE idTipoUpload IN ('5') AND idListaDocumento NOT IN ('30', '53')")->num_rows;
                             break;
 
                         case 3:
                             $query_valida = $sql_arquivos = "SELECT * FROM upload_arquivo WHERE idPessoa = '$idPj' AND publicado = 1 AND idTipo = 5 AND publicado = '1'";
+                            $qtdDocumentos = $con->query("SELECT * FROM `promac`.`lista_documento` WHERE idTipoUpload IN ('5')")->num_rows;
                             break;
 
                         default:
                             $query_valida = "SELECT * FROM upload_arquivo WHERE idPessoa = '$idPj' AND publicado = 1 AND idTipo = 5 AND idListaDocumento NOT IN (35, 53) AND publicado = '1'";
+                            $qtdDocumentos = $con->query("SELECT * FROM `promac`.`lista_documento` WHERE idTipoUpload IN ('5') AND idListaDocumento NOT IN ('30', '35', '36', '53')")->num_rows;
                             break;
                     }
                     
