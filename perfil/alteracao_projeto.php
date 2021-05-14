@@ -116,6 +116,8 @@ if(isset($_POST["enviar"]))
 						if($query)
 						{
 							$mensagem = "<font color='#01DF3A'><strong>Arquivo recebido com sucesso!</strong></font>";
+
+							$sql_insere_arquivo .= " Arquivo: alteracao_projeto.php";
 							gravarLog($sql_insere_arquivo);
 							gravarLog($sql_status);
 						}

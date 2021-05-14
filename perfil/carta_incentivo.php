@@ -79,7 +79,9 @@ if(isset($_POST['enviar'])) {
                         if ($query) {
 
                             $mensagem = "<font color='#01DF3A'><strong>Arquivo recebido com sucesso!</strong></font>";
-                            // gravarLog($sql_insere_arquivo);
+
+                            $sql_insere_arquivo .= " Arquivo: carta_incentivo.php";
+                            gravarLog($sql_insere_arquivo);
 
                         } else {
                             $mensagem = "<font color='#FF0000'><strong>Erro ao gravar no banco.</strong></font>";

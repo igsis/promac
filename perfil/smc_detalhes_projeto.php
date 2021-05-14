@@ -596,6 +596,8 @@ if(isset($_POST["enviar"]))
                             $query_insere_data = mysqli_query($con,$sql_insere_data);
                             echo $sql_insere_data;
                             $mensagem = "<font color='#01DF3A'><strong>Arquivo recebido com sucesso!</strong></font>";
+
+                            $sql_insere_arquivo .= " Arquivo: smc_detalhes_projeto.php";
                             gravarLog($sql_insere_arquivo);
                         }
                         else

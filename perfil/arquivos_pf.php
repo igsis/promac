@@ -46,6 +46,8 @@ if(isset($_POST["enviar"]))
 						if($query)
 						{
 							$mensagem = "<font color='#01DF3A'><strong>Arquivo(s) recebido(s) com sucesso!<br> Avance para a próxima tela para confirmar sua inscrição.</strong></font>";
+
+							$sql_insere_arquivo .= " Arquivo: arquivos_pf.php";
 							gravarLog($sql_insere_arquivo);
 
                             // Script para evitar reenvio dos arquivos qdo user atualiza a pagina logo após o envio

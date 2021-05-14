@@ -78,6 +78,8 @@ if(isset($_POST["enviar"]))
 						if($query)
 						{
 							$mensagem = "<font color='#01DF3A'><strong>Arquivo recebido com sucesso!</strong></font>";
+
+							$sql_insere_arquivo .= " Arquivo: resultado_inscricao_incentivador_pj.php";
 							gravarLog($sql_insere_arquivo);
 
 							// Script para evitar reenvio dos arquivos qdo user atualiza a pagina logo após o envio

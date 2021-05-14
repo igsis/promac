@@ -187,6 +187,8 @@ if (isset($_POST["enviar"])) {
                                 $query_insere_data = mysqli_query($con, $sql_insere_data);
                             }
                             $mensagem = "<font color='#01DF3A'><strong>Arquivo recebido com sucesso!</strong></font>";
+
+                            $sql_insere_arquivo .= " Arquivo: comissao_detalhes_projeto.php";
                             gravarLog($sql_insere_arquivo);
                         } else {
                             $mensagem = "<font color='#FF0000'><strong>Erro ao gravar no banco.</strong></font>";

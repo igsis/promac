@@ -42,6 +42,8 @@ if(isset($_POST["enviar"]))
 						if($query)
 						{
 							$mensagem = "<font color='#01DF3A'><strong>Arquivo(s) recebido(s) com sucesso, utilize o menu para concluir e enviar sua inscrição para a SMC</strong></font>";
+
+							$sql_insere_arquivo .= " Arquivo: arquivos_incentivador_pj.php";
 							gravarLog($sql_insere_arquivo);
 
                             // Script para evitar reenvio dos arquivos qdo user atualiza a pagina logo após o envio
