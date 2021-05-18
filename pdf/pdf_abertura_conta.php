@@ -19,7 +19,7 @@ class PDF extends FPDF
         // Arial italic 8
         $this->SetFont('Arial','',8);
         // Page number
-        $this->Cell(0,10,utf8_decode('Rua Libero Badaró, 340 - 3º andar - Telefone: 3397-0063/0228 - E-mail: admpromac@prefeitura.sp.gov.br'),0,0,'C');
+        $this->Cell(0,10,utf8_decode('Rua Libero Badaró, 340 - 3º andar - Telefone: 3397-0063/0228 - E-mail: projetospromac@prefeitura.sp.gov.br.com / incentivopromac@gmail.com'),0,0,'C');
     }
 }
 setlocale(LC_TIME, 'portuguese');
@@ -95,20 +95,20 @@ $pdf->ln();
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','', 13);
-$pdf->Cell(170,9,utf8_decode("OFÍCIO PARA ABERTURA DE CONTA CORRENTE NO BANCO DO BRASIL "),0,1,'C');
+$pdf->Cell(170,9,utf8_decode("OFÍCIO PARA ABERTURA DE CONTA CORRENTE"),0,1,'C');
 
 $pdf->Ln();
 $pdf->Ln();
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','', 11);
-$pdf->MultiCell(170,$l,utf8_decode("Sr(a). Gerente do Banco do Brasil,"));
+$pdf->MultiCell(170,$l,utf8_decode("Sr(a). Gerente ,"));
 
 $pdf->Ln();
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','', 11);
-$pdf->MultiCell(170,$l,utf8_decode("A Secretaria Municipal de Cultura da Cidade de São Paulo encaminha o proponente $proponente, CPF/CNPJ nº $documento, aprovado com o projeto ''$nomeProjeto'' no Programa Municipal de Incentivo à Cultura - Pro-Mac, instituído pela Lei nº 15.948/2013 e regulamentado pelo Decreto nº 59.119/2019, para efetuar a abertura de uma conta corrente dirigida ao projeto cultural supramencionado."));
+$pdf->MultiCell(170,$l,utf8_decode("A SECRETARIA MUNICIPAL DE CULTURA de São Paulo encaminha o proponente $proponente, aprovado com o projeto ''$nomeProjeto'' no Programa Municipal de Incentivo à Cultura - PROMAC, instituído pela Lei nº 15.948/2013 e regulamentado pelo Decreto nº 59.119/2019, para efetuar a abertura de uma conta corrente dirigida ao projeto cultural supramencionado."));
 
 $pdf->ln();
 
