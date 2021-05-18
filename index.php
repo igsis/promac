@@ -80,7 +80,7 @@ $tipoPessoa = '6';
 						<p style="text-align: justify">
                             <strong>Cadastro de proponente:</strong> aberto o ano todo.<br/>
                             <strong>Cadastro de incentivador:</strong> aberto o ano todo.<br/>
-                            <strong>Inscrição de projeto:</strong> abertas de 9h de 08/03/2021 às 23h59 de 31/05/2021. Confira o Edital PROMAC 2021 no botão Normativos ao lado.<br/>
+                            <strong>Inscrição de projeto:</strong> abertas de 9h de 08/03/2021 às 19h de 30/06/2021. Confira o Edital PROMAC 2021 no botão Normativos ao lado.<br/>
                             <strong>Captação de recursos:</strong> aberta de 10/03/2021 a 12/11/2021 (ou enquanto houver saldo disponível para captação).
                         </p>
 
@@ -117,6 +117,7 @@ $tipoPessoa = '6';
                                         <h6>Edital Vigente e Modelos</h6>
                                         <ul class="list-group">
                                             <li class="list-group-item"><a href="pdf/Edital_PROMAC_2021.pdf" target="_blank">Edital Promac 2021</a></li>
+                                            <li class="list-group-item"><a href="pdf/Comunicado_Prorrogacao_PROMAC 2021.pdf" target="_blank">Comunicado Prorrogação Promac 2021</a></li>
                                             <li class="list-group-item"><a href="pdf/DECLARAÇÃO_CCM_PF.docx" target="_blank">Declaração CCM - Pessoa Física</a></li>
                                             <li class="list-group-item"><a href="pdf/DECLARAÇÃO_CCM_PJ.docx" target="_blank">Declaração CCM - Pessoa Jurídica</a></li>
                                         </ul>
@@ -148,6 +149,7 @@ $tipoPessoa = '6';
                                             <li class="list-group-item"><a href="pdf/Mini_Manual_do_Incentivador_2021.pdf" target="_blank">Mini Manual do Incentivador 2021</a></li>
                                             <li class="list-group-item"><a href="pdf/Mapa_Equipamentos_Culturais_07-01-2019.pdf" target="_blank">Mapa de Equipamentos Culturais</a></li>
                                             <li class="list-group-item"><a href="pdf/EQUIPAMENTOS_CULTURAIS_FAIXAS_E_ENDERECOS.pdf" target="_blank">Lista de Equipamentos Culturais da SMC e CEUS com Endereços e Faixas de Renúncia Fiscal</a></li>
+                                            <li class="list-group-item"><a href="pdf/COMO_USAR_O_GEOSAMPA_PARA_CONSULTAR_DISTRITO.pdf" target="_blank">Como usar o Geosampa para localizar o distrito de um endereço?</a></li>
                                         </ul>
                                     </div>
 
@@ -241,6 +243,14 @@ $tipoPessoa = '6';
                     </div>
                     <!-- Fim Modal Incentivador -->
 				</div>
+                <div class="row">
+                    <div class="alert alert-danger">
+                        <h5 style="color: red">Comunicado sobre prazo de inscrição de projetos no Edital PROMAC 2021:</h5>
+                        <p style="color: red">
+                            Conforme publicação em Diário Oficial da Cidade de 15/05/21, a inscrição de projetos no Edital PROMAC 2021 poderá ser feita até as 19h do dia 30/06/21. No entanto, não deixe para última hora, para evitar sobrecarga no sistema e grande fila de análise na Comissão Julgadora de Projetos.
+                        </p>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="alert alert-danger">
                         <h5 style="color: red">COMUNICADO sobre os Termos de Responsabilidade</h5>
