@@ -1,5 +1,5 @@
-uploadsdocs/*
-uploadssmc/*
-.idea/*
-funcoes/funcoesConecta.php
-funcoes/funcaoEmail.php
+/.idea
+/uploadsdocs/*
+/uploads/*
+!/uploads/.gitkeep
+
