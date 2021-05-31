@@ -12,12 +12,8 @@ class PessoaFisicaModel extends ValidacaoModel
         unset($dados['_method']);
         unset($dados['pagina']);
 
-        if (isset($dados['atracao_id'])) {
-            unset($dados['atracao_id']);
-        }
-
-        if (isset($dados['pedido_id_c'])) {
-            unset($dados['pedido_id_c']);
+        if (isset($dados['projeto_id'])) {
+            unset($dados['projeto_id']);
         }
 
         /* executa limpeza nos campos */
@@ -30,10 +26,6 @@ class PessoaFisicaModel extends ValidacaoModel
                         $campo = substr($campo, 3);
                         $dadosLimpos['pf'][$campo] = MainModel::limparString($post);
                         break;
-                    case "bc":
-                        $campo = substr($campo, 3);
-                        $dadosLimpos['bc'][$campo] = MainModel::limparString($post);
-                        break;
                     case "en":
                         $campo = substr($campo, 3);
                         $dadosLimpos['en'][$campo] = MainModel::limparString($post);
@@ -43,73 +35,15 @@ class PessoaFisicaModel extends ValidacaoModel
                             $dadosLimpos['telefones'][$campo]['telefone'] = MainModel::limparString($post);
                         }
                         break;
-                    case "ni":
+                    case "lei":
                         $campo = substr($campo, 3);
-                        $dadosLimpos['ni'][$campo] = MainModel::limparString($post);
-                        break;
-                    case "dr":
-                        $campo = substr($campo, 3);
-                        $dadosLimpos['dr'][$campo] = MainModel::limparString($post);
-                        break;
-                    case "of":
-                        $campo = substr($campo, 3);
-                        $dadosLimpos['of'][$campo] = MainModel::limparString($post);
-                        break;
-                    case "dt":
-                        $campo = substr($campo, 3);
-                        $dadosLimpos['dt'][$campo] = MainModel::limparString($post);
-                        break;
-                    case "fm":
-                        $campo = substr($campo, 3);
-                        $dadosLimpos['fm'][$campo] = MainModel::limparString($post);
+                        $dadosLimpos['lei'][$campo] = MainModel::limparString($post);
                         break;
                 }
             }
         }
 
         return $dadosLimpos;
-    }
-
-    protected function getDadosAdcFom($dados)
-    {
-        if (count($dados) < 3):
-            $sql = "SELECT `{$dados[0]}` FROM `{$dados[0]}s` WHERE id = '{$dados[1]}'";
-        else:
-            $sql = "SELECT {$dados[0]} FROM `{$dados[1]}` WHERE id = '{$dados[2]}'";
-        endif;
-
-            return $this->consultaSimples($sql)->fetch(PDO::FETCH_COLUMN);
-        }
-
-    protected function getFomDados($id)
-    {
-        $sql = "SELECT
-                    pf.id,
-                    pf.nome,
-                    pf.rg,
-                    pf.cpf,
-                    pf.data_nascimento,
-                    pf.email,
-                    pe.*,
-                    fpd.rede_social,
-                    fpd.subprefeitura_id,
-                    fpd.genero_id,
-                    fpd.etnia_id,
-                    fpd.grau_instrucao_id
-                FROM pessoa_fisicas AS pf
-                LEFT JOIN pf_enderecos pe on pf.id = pe.pessoa_fisica_id
-                LEFT JOIN fom_pf_dados AS fpd on pf.id = fpd.pessoa_fisicas_id
-                WHERE pf.id = '$id'";
-
-        $dados = DbModel::consultaSimples($sql)->fetch(PDO::FETCH_ASSOC);
-
-        $telefones = DbModel::consultaSimples("SELECT * FROM pf_telefones WHERE pessoa_fisica_id = '$id'")->fetchAll(PDO::FETCH_ASSOC);
-
-        foreach ($telefones as $key => $telefone) {
-            $dados['telefones']['tel_' . $key] = $telefone['telefone'];
-        }
-
-        return $dados;
     }
     
     /**

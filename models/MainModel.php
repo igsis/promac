@@ -122,11 +122,16 @@ class MainModel extends DbModel
      * @return string
      * <p>Retorna a mensagem decriptada</p>
      */
-    protected function decryption($string) {
-        $key = hash('sha256', SECRET_KEY);
-        $iv = substr(hash('sha256', SECRET_IV), 0, 16);
-        $output = openssl_decrypt(base64_decode($string), METHOD, $key, 0, $iv);
-        return $output;
+    protected function decryption($string)
+    {
+        if (strlen($string) > 10) {
+            $key = hash('sha256', SECRET_KEY);
+            $iv = substr(hash('sha256', SECRET_IV), 0, 16);
+            $output = openssl_decrypt(base64_decode($string), METHOD, $key, 0, $iv);
+            return $output;
+        } else{
+            return $string;
+        }
     }
 
     /**
