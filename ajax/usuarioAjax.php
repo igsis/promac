@@ -17,6 +17,9 @@ if (isset($_POST['_method'])) {
     elseif ($_POST['_method'] == "trocaSenhaUsuario"){
         echo $insUsuario->trocaSenha($_POST, $_POST['id']);
     }
+    elseif ($_POST['_method'] == "insereLoginPf"){
+        echo $insUsuario->insereLoginPf($_POST['tipo_cadastro']);
+    }
 } else {
     include_once "../config/destroySession.php";
 }

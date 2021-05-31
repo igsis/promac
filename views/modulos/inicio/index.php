@@ -181,7 +181,7 @@
                 txtLogin.attr('type', 'text');
                 txtLogin.val('');
                 txtLogin.mask("999.999.999-99");
-                modalLogin.find('#linkCadastro').attr('href', 'cadastro_pf&tipo=incentivador');
+                modalLogin.find('#linkCadastro').attr('href', 'cadastro_pf&tipo=incentivador_pf');
                 break;
 
             case 'incentivador_pj':
@@ -190,7 +190,7 @@
                 txtLogin.attr('type', 'text');
                 txtLogin.val('');
                 txtLogin.mask("99.999.999/9999-99");
-                modalLogin.find('#linkCadastro').attr('href', 'cadastro_pj&tipo=incentivador');
+                modalLogin.find('#linkCadastro').attr('href', 'cadastro_pj&tipo=incentivador_pj');
                 break;
 
             default:
