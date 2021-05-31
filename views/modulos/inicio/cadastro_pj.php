@@ -1,5 +1,14 @@
 <?php
-$url = 'http://' . $_SERVER['HTTP_HOST'] . '/capac/api/verificadorEmail.php';
+$url = 'http://' . $_SERVER['HTTP_HOST'] . '/promac/api/verificadorEmail.php';
+
+if ($_GET['tipo'] == 'pj') {
+    $tipo_cadastro = 1;
+} elseif ($_GET['tipo'] == 'incentivador_pj') {
+    $tipo_cadastro = 2;
+} else {
+    echo '<script> window.location.href="'. SERVERURL .'" </script>';
+}
+
 ?>
 <div class="login-page">
     <div class="card">
@@ -12,20 +21,43 @@ $url = 'http://' . $_SERVER['HTTP_HOST'] . '/capac/api/verificadorEmail.php';
         <div class="card-body register-card-body">
             <h5 class="login-box-msg">Efetue seu Cadastro</h5>
             <p class="card-text"><span style="text-align: justify; display:block;"> Confira seus dados antes de clicar no botão "Cadastrar".</span></p>
+
+            <?php if ($tipo_cadastro == 1): ?>
+                <div class="alert alert-danger">
+                    <h5><i class="icon fas fa-exclamation-triangle"></i> Atenção!</h5>
+                    <p>O cadastrado Pessoa Jurídica Pessoa Jurídica não pode ser orgão público.</p>
+                </div>
+            <?php endif ?>
+
             <form class="needs-validation formulario-ajax" data-form="save"
-                  action="<?= SERVERURL ?>ajax/usuarioAjax.php" method="post">
-                <input type="hidden" name="_method" value="insereNovoUsuario">
+                  action="<?= SERVERURL ?>ajax/usuarioAjax.php" method="post" id="formularioPj">
+                <input type="hidden" name="_method" value="insereLoginPj">
+                <input type="hidden" name="tipo_cadastro" value="<?= $tipo_cadastro ?>">
+
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" name="nome" placeholder="Nome Completo" required>
+                    <input type="text" class="form-control" name="razao_social" placeholder="Razão Social" required>
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-user"></span>
                         </div>
                     </div>
                     <div class="invalid-feedback">
-                        <strong>Insira seu Nome Completo</strong>
+                        <strong>Insira a Razão Social</strong>
                     </div>
                 </div>
+
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" name="cnpj" placeholder="CNPJ" id="cnpj" required maxlength="18" onkeypress="mask(this,'##.###.###/####-##')">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-id-card"></span>
+                        </div>
+                    </div>
+                    <div class="invalid-feedback">
+                        <strong>Insira um CNPJ válido</strong>
+                    </div>
+                </div>
+
                 <div class="input-group mb-3" id="divEmail">
                     <input type="email" class="form-control" name="email" placeholder="Email" required id="email">
                     <div class="input-group-append">
@@ -35,18 +67,6 @@ $url = 'http://' . $_SERVER['HTTP_HOST'] . '/capac/api/verificadorEmail.php';
                     </div>
                     <div class="invalid-feedback">
                         <strong>Email já cadastrado</strong>
-                    </div>
-                </div>
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" name="telefone" placeholder="Telefone"
-                           onkeyup="mascara( this, mtel );" maxlength="15" required>
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-phone"></span>
-                        </div>
-                    </div>
-                    <div class="invalid-feedback">
-                        <strong>Insira um Telefone Válido</strong>
                     </div>
                 </div>
                 <div class="input-group mb-3">

@@ -20,6 +20,9 @@ if (isset($_POST['_method'])) {
     elseif ($_POST['_method'] == "insereLoginPf"){
         echo $insUsuario->insereLoginPf($_POST['tipo_cadastro']);
     }
+    elseif ($_POST['_method'] == "insereLoginPj"){
+        echo $insUsuario->insereLoginPj($_POST['tipo_cadastro']);
+    }
 } else {
     include_once "../config/destroySession.php";
 }

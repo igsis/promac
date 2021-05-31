@@ -268,4 +268,72 @@ class UsuarioController extends UsuarioModel
         }
         return MainModel::sweetAlert($alerta);
     }
+
+    public function insereLoginPj($tipo_cadastro)
+    {
+        if ($tipo_cadastro == 1) {
+            $tabela = "proponente_pjs";
+        } else {
+            $tabela = "incentivador_pjs";
+        }
+        unset($_POST['tipo_cadastro']);
+
+        $erro = false;
+        $dados = [];
+        foreach ($_POST as $campo => $post) {
+            if (($campo != "senha2") && ($campo != "_method")) {
+                $dados[$campo] = MainModel::limparString($post);
+            }
+        }
+
+        // Valida Senha
+        if ($_POST['senha'] != $_POST['senha2']) {
+            $erro = true;
+            $alerta = [
+                'alerta' => 'simples',
+                'titulo' => "Erro!",
+                'texto' => "As senhas inseridas não conferem. Tente novamente",
+                'tipo' => "error"
+            ];
+        }
+
+        // Valida email unique
+        $consultaEmail = DbModel::consultaSimples("SELECT email FROM $tabela WHERE email = '{$dados['email']}'");
+        if ($consultaEmail->rowCount() >= 1) {
+            $erro = true;
+            $alerta = [
+                'alerta' => 'simples',
+                'titulo' => "Erro!",
+                'texto' => "Email inserido já cadastrado. Tente novamente.",
+                'tipo' => "error"
+            ];
+        }
+
+        // Valida cpf unique
+        $consultaEmail = DbModel::consultaSimples("SELECT cnpj FROM $tabela WHERE cnpj = '{$dados['cnpj']}'");
+        if ($consultaEmail->rowCount() >= 1) {
+            $erro = true;
+            $alerta = [
+                'alerta' => 'simples',
+                'titulo' => "Erro!",
+                'texto' => "CNPJ inserido já cadastrado. Tente novamente.",
+                'tipo' => "error"
+            ];
+        }
+
+        if (!$erro) {
+            $dados['senha'] = MainModel::encryption($dados['senha']);
+            $insere = DbModel::insert($tabela, $dados);
+            if ($insere) {
+                $alerta = [
+                    'alerta' => 'sucesso',
+                    'titulo' => 'Usuário Cadastrado!',
+                    'texto' => 'Usuário cadastrado com Sucesso!',
+                    'tipo' => 'success',
+                    'location' => SERVERURL
+                ];
+            }
+        }
+        return MainModel::sweetAlert($alerta);
+    }
 }
