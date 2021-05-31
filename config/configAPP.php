@@ -1,11 +1,11 @@
 <?php
     define('SERVER', "localhost");
 
-    define('DB1', "capac_new");
+    define('DB1', "new_promac");
     define('USER1', "root", true);
     define('PASS1', "", true);
 
-    define('DB2', "siscontrat");
+    define('DB2', "promac");
     define('USER2', "root", true);
     define('PASS2', "", true);
 

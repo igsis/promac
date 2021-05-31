@@ -5,15 +5,11 @@ class ViewsModel
 {
     protected function verificaModulo ($mod) {
         $modulos = [
-            "eventos",
+            "fomentos",
             "formacao",
             "inicio",
             "jovemMonitor",
             "oficina",
-            "pessoaFisica",
-            "pessoaJurídica",
-            "agendao",
-            "fomentos",
         ];
 
         if (in_array($mod, $modulos)) {
@@ -36,6 +32,8 @@ class ViewsModel
             'atracao_cadastro',
             'atracao_lista',
             'cadastro',
+            'cadastro_pf',
+            'cadastro_pj',
             'complemento_oficina_cadastro',
             'demais_anexos',
             'edita',
@@ -85,6 +83,10 @@ class ViewsModel
             $conteudo = "login";
         } elseif ($modulo == "cadastro") {
             $conteudo = "cadastro";
+        } elseif ($modulo == "cadastro_pf") {
+            $conteudo = "cadastro_pf";
+        } elseif ($modulo == "cadastro_pj") {
+            $conteudo = "cadastro_pj";
         } elseif ($modulo == "index") {
             $conteudo = "login";
         } elseif ($modulo == "fomento_edital") {
