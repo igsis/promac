@@ -10,7 +10,7 @@ require_once "../config/configAPP.php";
 // CONSULTA
 require_once "../controllers/EventoController.php";
 $eventoObj = new EventoController();
-session_start(['name' => 'cpc']);
+session_start(['name' => 'prmc']);
 $idEvento = $_SESSION['origem_id_c'];
 $evento = $eventoObj->recuperaEvento($idEvento);
 

@@ -3,7 +3,7 @@ $pedidoAjax = true;
 require_once "../config/configGeral.php";
 
 if (isset($_POST['_method'])) {
-    session_start(['name' => 'cpc']);
+    session_start(['name' => 'prmc']);
     require_once "../controllers/EventoController.php";
     $insEvento = new EventoController();
 

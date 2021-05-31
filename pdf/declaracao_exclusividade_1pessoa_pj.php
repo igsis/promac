@@ -10,7 +10,7 @@ require_once "../config/configAPP.php";
 // CONSULTA
 require_once "../controllers/EventoController.php";
 $eventoObj = new EventoController();
-session_start(['name' => 'cpc']);
+session_start(['name' => 'prmc']);
 $idEvento = $eventoObj->descriptografia($_SESSION['origem_id_c']);
 $eventos = $eventoObj->consultaSimples("
     SELECT pf.nome AS lider_nome, pf.rg AS lider_rg, pf.cpf AS lider_cpf, pj.razao_social, rl1.nome AS rep1_nome, rl1.rg AS rep1_rg, rl1.cpf AS rep1_cpf, rl2.nome AS rep2_nome, rl2.rg AS rep2_rg, rl2.cpf AS rep2_cpf, a.integrantes, a.nome_atracao

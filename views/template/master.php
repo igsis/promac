@@ -49,20 +49,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
 $view = $template->exibirViewController();
 if ($view == 'index'):
     require_once "./views/modulos/inicio/index.php";
-elseif ($view == 'login'):
-    require_once "./views/modulos/inicio/login.php";
 elseif ($view == 'cadastro'):
     require_once "./views/modulos/inicio/cadastro.php";
-elseif ($view == 'fomento_edital'):
-    require_once "./views/modulos/inicio/fomento_edital.php";
-elseif ($view == 'formacao_edital'):
-    require_once "./views/modulos/inicio/formacao_edital.php";
+elseif ($view == 'cadastro_pf'):
+    require_once "./views/modulos/inicio/cadastro_pf.php";
+elseif ($view == 'cadastro_pj'):
+    require_once "./views/modulos/inicio/cadastro_pj.php";
 elseif ($view == 'recupera_senha'):
     require_once "./views/modulos/inicio/recupera_senha.php";
 elseif($view == 'resete_senha'):
     require_once "./views/modulos/inicio/resete_senha.php";
 else:
-    session_start(['name' => 'cpc']);
+    session_start(['name' => 'prmc']);
     require_once "./controllers/UsuarioController.php";
     $usuario = new UsuarioController();
 
