@@ -1,7 +1,7 @@
 <?php
     define('SERVER', "localhost");
 
-    define('DB1', "new_promac");
+    define('DB1', "promac_new");
     define('USER1', "root", true);
     define('PASS1', "", true);
 

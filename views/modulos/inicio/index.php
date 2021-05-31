@@ -36,18 +36,17 @@
                                     <button type="button" class="btn btn-outline-dark toastsDefaultDefault"><i class="fas fa-bullhorn"></i> Comunicados</button>
 
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-outline-dark"><i class="fas fa-user"></i> Acesse o sistema aqui</button>
-                                        <button type="button" class="btn btn-outline-dark dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
-                                            <span class="sr-only">Toggle Dropdown</span>
+                                        <button type="button" class="btn btn-outline-dark dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-user"></i> Acesse o sistema aqui
                                         </button>
                                         <div class="dropdown-menu" role="menu" style="">
-                                            <a class="dropdown-item" href="#">Proponente Pessoa Física</a>
-                                            <a class="dropdown-item" href="#">Proponente Pessoa Jurídica</a>
+                                            <button class="btn dropdown-item" onclick="modalLogin('pf')">Proponente Pessoa Física</button>
+                                            <button class="btn dropdown-item" onclick="modalLogin('pj')">Proponente Pessoa Jurídica</button>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Incentivador Pessoa Física</a>
-                                            <a class="dropdown-item" href="#">Incentivador Pessoa Jurídica</a>
+                                            <button class="btn dropdown-item" onclick="modalLogin('incentivador_pf')">Incentivador Pessoa Física</button>
+                                            <button class="btn dropdown-item" onclick="modalLogin('incentivador_pj')">Incentivador Pessoa Jurídica</button>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Administrativo</a>
+                                            <button class="btn dropdown-item" onclick="modalLogin('adm')">Administrativo</button>
                                         </div>
                                     </div>
                                 </div>
@@ -120,3 +119,92 @@
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalLogin" tabindex="-1" role="dialog" aria-labelledby="modalLoginLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLoginLabel">Acesso</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="POST" action="" id="formLogin">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="login" id="labelLogin">Login:</label>
+                        <input class="form-control" type="text" id="txtLogin" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="senha">Senha:</label>
+                        <input class="form-control" type="password" id="senha" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-secondary" href="" id="linkCadastro">Cadastro? Click Aqui</a>
+                    <button type="submit" class="btn btn-primary">Acessar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function modalLogin(tipo_acesso) {
+        let modalLogin = $('#modalLogin');
+        let txtLogin = $("#txtLogin");
+
+        switch (tipo_acesso) {
+            case 'pf':
+                modalLogin.find('.modal-title').text('Acesso Proponente Pessoa Física');
+                modalLogin.find('#formLogin').attr('action', 'aeoo');
+                modalLogin.find('#labelLogin').text('CPF:');
+                txtLogin.attr('type', 'text');
+                txtLogin.val('');
+                txtLogin.mask("999.999.999-99");
+                modalLogin.find('#linkCadastro').attr('href', 'cadastro_pf&tipo=pf');
+                break;
+
+            case 'pj':
+                modalLogin.find('.modal-title').text('Acesso Proponente Pessoa Jurídica');
+                modalLogin.find('#labelLogin').text('CNPJ:');
+                txtLogin.attr('type', 'text');
+                txtLogin.val('');
+                txtLogin.mask("99.999.999/9999-99");
+                modalLogin.find('#linkCadastro').attr('href', 'cadastro_pj&tipo=pj');
+                break;
+
+            case 'incentivador_pf':
+                modalLogin.find('.modal-title').text('Acesso Incentivador Pessoa Física');
+                modalLogin.find('#labelLogin').text('CPF:');
+                txtLogin.attr('type', 'text');
+                txtLogin.val('');
+                txtLogin.mask("999.999.999-99");
+                modalLogin.find('#linkCadastro').attr('href', 'cadastro_pf&tipo=incentivador');
+                break;
+
+            case 'incentivador_pj':
+                modalLogin.find('.modal-title').text('Acesso Incentivador Pessoa Jurídica');
+                modalLogin.find('#labelLogin').text('CNPJ:');
+                txtLogin.attr('type', 'text');
+                txtLogin.val('');
+                txtLogin.mask("99.999.999/9999-99");
+                modalLogin.find('#linkCadastro').attr('href', 'cadastro_pj&tipo=incentivador');
+                break;
+
+            default:
+                modalLogin.find('.modal-title').text('Acesso Administrativo');
+                modalLogin.find('#labelLogin').text('Email:');
+                txtLogin.val('');
+                txtLogin.attr('type', 'email');
+                txtLogin.unmask();
+                modalLogin.find('#linkCadastro').attr('href', 'cadastro');
+                break;
+        }
+
+        modalLogin.modal({
+            show: true
+        });
+    }
+</script>
