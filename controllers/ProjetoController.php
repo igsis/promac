@@ -2,12 +2,12 @@
 if ($pedidoAjax) {
     require_once "../models/ProjetoModel.php";
     require_once '../controllers/PessoaJuridicaController.php';
-    require_once '../controllers/PessoaFisicaController.php';
+    require_once '../controllers/ProponentePfController.php';
     require_once '../controllers/FomentoController.php';
 } else {
     require_once "./models/ProjetoModel.php";
     require_once './controllers/PessoaJuridicaController.php';
-    require_once './controllers/PessoaFisicaController.php';
+    require_once './controllers/ProponentePfController.php';
     require_once './controllers/FomentoController.php';
 }
 
@@ -122,9 +122,9 @@ class ProjetoController extends ProjetoModel
         if (!isset($_SESSION['origem_id_c'])){
             if (isset($_POST['id'])) {
                 $idPf = $_POST['id'];
-                $idPf = (new PessoaFisicaController)->editaPessoaFisica($idPf,"",true);
+                $idPf = (new ProponentePfController)->editaProponentePf($idPf,"",true);
             } else {
-                $idPf = (new PessoaFisicaController)->inserePessoaFisica("", true);
+                $idPf = (new ProponentePfController)->insereProponentePf("", true);
             }
             if ($idPf) {
                 $_SESSION['origem_id_c'] = MainModel::encryption($idPf);
@@ -157,7 +157,7 @@ class ProjetoController extends ProjetoModel
             }
         } else {
             $idPf = MainModel::decryption($_SESSION['origem_id_c']);
-            (new PessoaFisicaController)->editaPessoaFisica($_SESSION['origem_id_c'],"",true);
+            (new ProponentePfController)->editaProponentePf($_SESSION['origem_id_c'],"",true);
             if ($idPf) {
                 $projeto = ProjetoModel::updatePjProjeto(1);
                 if ($projeto) {

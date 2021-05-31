@@ -1,10 +1,10 @@
 <?php
 //CONTROLLERS
-require_once "./controllers/PessoaFisicaController.php";
+require_once "./controllers/ProponentePfController.php";
 
 $projetoObj = new ProjetoController();
 $fomentoObj = new FomentoController();
-$pfObj = new PessoaFisicaController();
+$pfObj = new ProponentePfController();
 
 //Pessoa Física
 $pf = $pfObj->recuperaPessoaFisicaFom(MainModel::encryption($projeto['pessoa_fisica_id']));

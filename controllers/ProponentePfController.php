@@ -1,15 +1,21 @@
 <?php
 if ($pedidoAjax) {
-    require_once "../models/PessoaFisicaModel.php";
+    require_once "../models/ProponentePfModel.php";
 } else {
-    require_once "./models/PessoaFisicaModel.php";
+    require_once "./models/ProponentePfModel.php";
 }
 
-class PessoaFisicaController extends PessoaFisicaModel
+class ProponentePfController extends ProponentePfModel
 {
-    public function inserePessoaFisica($pagina,$retornaId = false){
-
-        $dadosLimpos = PessoaFisicaModel::limparStringPF($_POST);
+    /**
+     * <p>Função para inserir Proponente Pessoa Física</p>
+     * @param $pagina
+     * @param false $retornaId
+     * @return string
+     */
+    public function insereProponentePf($pagina, $retornaId = false):string
+    {
+        $dadosLimpos = ProponentePfModel::limparStringPF($_POST);
 
         /* cadastro */
         $insere = DbModel::insert('pessoa_fisicas', $dadosLimpos['pf']);
@@ -64,11 +70,17 @@ class PessoaFisicaController extends PessoaFisicaModel
         return MainModel::sweetAlert($alerta);
     }
 
-    /* edita */
-    public function editaPessoaFisica($id,$pagina,$retornaId = false){
+    /**
+     * @param int|string $id
+     * @param $pagina
+     * @param false $retornaId
+     * @return string
+     */
+    public function editaProponentePf($id, $pagina, $retornaId = false):string
+    {
         $idDecryp = MainModel::decryption($id);
 
-        $dadosLimpos = PessoaFisicaModel::limparStringPF($_POST);
+        $dadosLimpos = ProponentePfModel::limparStringPF($_POST);
 
         $edita = DbModel::update('pessoa_fisicas', $dadosLimpos['pf'], $idDecryp);
         if ($edita) {
@@ -137,7 +149,8 @@ class PessoaFisicaController extends PessoaFisicaModel
         return MainModel::sweetAlert($alerta);
     }
 
-    public function recuperaPessoaFisica($id) {
+    public function recuperaProponentePf($id)
+    {
         $id = MainModel::decryption($id);
         $pf = DbModel::consultaSimples(
             "SELECT pf.*, n2.nacionalidade, pl.lei 
@@ -174,7 +187,7 @@ class PessoaFisicaController extends PessoaFisicaModel
         if ($tipo == "string") {
             $proponente_pf_id = MainModel::decryption($proponente_pf_id);
         }
-        return PessoaFisicaModel::validaPfModel($proponente_pf_id, $validacaoTipo, $evento_id,$tipo_documentos);
+        return ProponentePfModel::validaPfModel($proponente_pf_id, $validacaoTipo, $evento_id,$tipo_documentos);
     }
 
 }
