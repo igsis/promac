@@ -1,6 +1,6 @@
 <?php
-define('SERVERURL', "http://{$_SERVER['HTTP_HOST']}/capac/");
-define('NOMESIS', "CAPAC");
+define('SERVERURL', "http://{$_SERVER['HTTP_HOST']}/promac/");
+define('NOMESIS', "PROMAC");
 define('SMTP', 'no.replay@teste.com');
 define('SENHASMTP', 'senha');
 date_default_timezone_set('America/Fortaleza');
