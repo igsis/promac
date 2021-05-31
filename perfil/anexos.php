@@ -208,12 +208,12 @@ if(isset($_POST['apagar']))
 											if(arquivosExiste($urlArquivo)): ?>	
 											  <td class="list_description path">
                                                 <?php
-                                                 $path = selecionaArquivoAnexo(
-                                                  $http, $arq['idListaDocumento']); ?>
-                                                  <a href='<?=$path?>'  
-                                                  	 target="_blank">
+//                                                 $path = selecionaArquivoAnexo(
+//                                                  $http, $arq['idListaDocumento']); ?>
+<!--                                                  <a href='--><?php ////$path ?><!--'  -->
+<!--                                                  	 target="_blank">-->
                                                      <?=$arq['documento'] ?> 	
-                                                  </a>
+<!--                                                  </a>-->
                                               </td>	
                                             <?php else: ?>
                                               <td class="list_description path">
