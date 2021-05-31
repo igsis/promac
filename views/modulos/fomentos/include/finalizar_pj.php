@@ -1,6 +1,6 @@
 <?php
 
-$pjObj = new PessoaJuridicaController();
+$pjObj = new ProponentePjController();
 $repObj = new RepresentanteController();
 
 //Pessoa Juridica
