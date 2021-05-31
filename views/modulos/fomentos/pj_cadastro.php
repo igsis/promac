@@ -1,5 +1,5 @@
 <?php
-require_once "./controllers/PessoaJuridicaController.php";
+require_once "./controllers/ProponentePjController.php";
 
 if (isset($_GET['id'])) {
     $_SESSION['origem_id_c'] = $id = $_GET['id'];
@@ -9,7 +9,7 @@ if (isset($_GET['id'])) {
     $id = null;
 }
 
-$insPessoaJuridica = new PessoaJuridicaController();
+$insPessoaJuridica = new ProponentePjController();
 
 if ($id) {
     $pj = $insPessoaJuridica->recuperaPessoaJuridica($id);

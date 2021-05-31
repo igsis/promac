@@ -1,7 +1,7 @@
 <?php
-require_once "./controllers/PessoaFisicaController.php";
+require_once "./controllers/ProponentePfController.php";
 
-$pfObjeto =  new PessoaFisicaController();
+$pfObjeto =  new ProponentePfController();
 
 if (isset($_GET['id'])) {
     $_SESSION['origem_id_c'] = $id = $_GET['id'];

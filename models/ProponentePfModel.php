@@ -5,7 +5,7 @@ if ($pedidoAjax) {
     require_once "./models/ValidacaoModel.php";
 }
 
-class PessoaFisicaModel extends ValidacaoModel
+class ProponentePfModel extends ValidacaoModel
 {
     protected function limparStringPF($dados)
     {
