@@ -15,7 +15,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-    <title>CAPAC | SMC</title>
+    <title><?= NOMESIS ?> | SMC</title>
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="<?= SERVERURL ?>views/plugins/fontawesome-free/css/all.min.css">
     <!-- Theme style -->
@@ -32,7 +32,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     <!-- jQuery -->
     <script src="<?= SERVERURL ?>views/plugins/jquery/jquery.min.js"></script>
-    <link rel="shortcut icon" href="<?= SERVERURL ?>views/dist/img/AdminLTELogo.png" />
+    <link rel="shortcut icon" href="<?= SERVERURL ?>views/dist/img/pin_promac.png" />
     <!-- Select2 -->
     <link rel="stylesheet" href="<?= SERVERURL ?>views/plugins/select2/css/select2.min.css">
     <link rel="stylesheet" href="<?= SERVERURL ?>views/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
@@ -59,6 +59,8 @@ elseif ($view == 'recupera_senha'):
     require_once "./views/modulos/inicio/recupera_senha.php";
 elseif($view == 'resete_senha'):
     require_once "./views/modulos/inicio/resete_senha.php";
+elseif($view == 'normativos'):
+    require_once "./views/modulos/inicio/normativos.php";
 else:
     session_start(['name' => 'prmc']);
     require_once "./controllers/UsuarioController.php";
