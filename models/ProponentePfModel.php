@@ -56,7 +56,7 @@ class ProponentePfModel extends ValidacaoModel
      */
     protected function validaPfModel($pessoa_fisica_id, $validacaoTipo, $evento_id, $tipo_documentos = null)
     {
-        $pf = DbModel::getInfo("pessoa_fisicas", $pessoa_fisica_id)->fetchObject();
+        $pf = DbModel::getInfo("proponente_pfs", $pessoa_fisica_id)->fetchObject();
 
         switch ($validacaoTipo) {
             case 1:
