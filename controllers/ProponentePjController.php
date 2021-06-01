@@ -125,7 +125,11 @@ class ProponentePjController extends ProponentePjModel
         }
     }
 
-    public function recuperaPessoaJuridica($id)
+    /**
+     * @param $id
+     * @return object
+     */
+    public function recuperaProponentePJ($id)
     {
         $id = MainModel::decryption($id);
         $pj = DbModel::consultaSimples(
@@ -140,7 +144,7 @@ class ProponentePjController extends ProponentePjModel
             $pj['telefones']['tel_' . $key] = $telefone['telefone'];
         }
 
-        return $pj;
+        return (object)$pj;
     }
 
     /**

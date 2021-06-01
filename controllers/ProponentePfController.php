@@ -174,7 +174,7 @@ class ProponentePfController extends ProponentePfModel
         foreach ($telefones as $key => $telefone) {
             $pf['telefones']['tel_'.$key] = $telefone['telefone'];
         }
-        return $pf;
+        return (object)$pf;
     }
 
     /**
