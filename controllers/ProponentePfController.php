@@ -15,7 +15,7 @@ class ProponentePfController extends ProponentePfModel
      */
     public function insereProponentePf($pagina, $retornaId = false):string
     {
-        $dadosLimpos = ProponentePfModel::limparStringPF($_POST);
+        $dadosLimpos = ProponentePfModel::limparStringRepresentante($_POST);
 
         /* cadastro */
         $insere = DbModel::insert('pessoa_fisicas', $dadosLimpos['pf']);
@@ -82,7 +82,7 @@ class ProponentePfController extends ProponentePfModel
 
         $dadosLimpos = ProponentePfModel::limparStringPF($_POST);
 
-        $edita = DbModel::update('pessoa_fisicas', $dadosLimpos['pf'], $idDecryp);
+        $edita = DbModel::update('proponente_pfs', $dadosLimpos['pf'], $idDecryp);
         if ($edita) {
 
             if (isset($dadosLimpos['en'])) {

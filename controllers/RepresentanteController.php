@@ -1,137 +1,186 @@
 <?php
 if ($pedidoAjax) {
-    require_once "../models/MainModel.php";
+    require_once "../models/RepresentanteModel.php";
 } else {
-    require_once "./models/MainModel.php";
+    require_once "./models/RepresentanteModel.php";
 }
 
-class RepresentanteController extends MainModel
+class RepresentanteController extends RepresentanteModel
 {
-    public function insereRepresentante($pagina){
-        /* executa limpeza nos campos */
-        $dados = [];
-        unset($_POST['cadastrar']);
-        unset($_POST['_method']);
-        unset($_POST['pagina']);
-        foreach ($_POST as $campo => $post) {
-            if (($campo != "idPj") && ($campo != "representante")) {
-                $dados[$campo] = MainModel::limparString($post);
-            }
-        }
-        /* ./limpeza */
+    /**
+     * <p>Função para inserir Representante Legal</p>
+     * @param $pagina
+     * @param $tabela <p>proponente_pjs ou incentivador_pjs</p>
+     * @param false $retornaId
+     * @return string
+     */
+    public function insereRepresentante($pagina, $tabela, bool $retornaId = false):string
+    {
+        $idPj = MainModel::decryption($_POST['idPj']);
+        unset($_POST['idPj']);
+        $dadosLimpos = RepresentanteModel::limparStringRepresentante($_POST);
 
         /* cadastro */
-        $insere = DbModel::insert('representante_legais', $dados);
-        $idPj = MainModel::decryption($_POST['idPj']);
-        if ($insere) {
+        $insere = DbModel::insert('representante_legais', $dadosLimpos['rep']);
+        if ($insere->rowCount()>0) {
             $id = DbModel::connection()->lastInsertId();
-            $rep = $_POST['representante'];
-            $pj_dados = [
-                'representante_legal'.$rep.'_id' => $id
-            ];
-            $edita_pj = DbModel::update('pessoa_juridicas',$pj_dados,$idPj);
-            if ($edita_pj){
+
+            if (isset($dadosLimpos['en'])) {
+                if (count($dadosLimpos['en']) > 0) {
+                    $dadosLimpos['en']['representante_id'] = $id;
+                    DbModel::insert('representante_enderecos', $dadosLimpos['en']);
+                }
+            }
+
+            if (count($dadosLimpos['telefones'])>0){
+                foreach ($dadosLimpos['telefones'] as $telefone){
+                    $telefone['representante_id'] = $id;
+                    DbModel::insert('representante_telefones', $telefone);
+                }
+            }
+
+            if (isset($dadosLimpos['lei'])){
+                if (count($dadosLimpos['lei']) > 0) {
+                    $dadosLimpos['lei']['representante_id'] = $id;
+                    DbModel::insert('representante_leis', $dadosLimpos['lei']);
+                }
+            }
+
+            $pj_dados = ['representante_legal_id' => $id];
+            DbModel::update($tabela,$pj_dados,$idPj);
+
+            if($retornaId){
+                return $id;
+            } else{
                 $alerta = [
                     'alerta' => 'sucesso',
-                    'titulo' => 'Representante Legal',
-                    'texto' => 'Representante Legal cadastrado com sucesso!',
+                    'titulo' => 'Pessoa Física',
+                    'texto' => 'Pessoa Física cadastrada com sucesso!',
                     'tipo' => 'success',
-                    'location' => SERVERURL.$pagina.'/representante_cadastro&id='.MainModel::encryption($id).'&idPj='.MainModel::encryption($idPj)
+                    'location' => SERVERURL.$pagina.'&id='.MainModel::encryption($id)
                 ];
-            }
-            else{
-                $alerta = [
-                    'alerta' => 'simples',
-                    'titulo' => 'Erro!',
-                    'texto' => 'Erro ao salvar!',
-                    'tipo' => 'error',
-                    'location' => SERVERURL.$pagina.'/pj_cadastro&id='.MainModel::encryption($idPj)
-                ];
+                return MainModel::sweetAlert($alerta);
             }
         }
-        else{
+        else {
+            $pagina = explode("/",$pagina);
             $alerta = [
                 'alerta' => 'simples',
                 'titulo' => 'Erro!',
                 'texto' => 'Erro ao salvar!',
                 'tipo' => 'error',
-                'location' => SERVERURL.$pagina.'/pj_cadastro&id='.MainModel::encryption($idPj)
+                'location' => SERVERURL.$pagina[0].'/proponente'
             ];
         }
         /* ./cadastro */
         return MainModel::sweetAlert($alerta);
     }
 
-    /* edita */
-    public function editaRepresentante($id,$pagina){
+    /**
+     * <p>Função para editar Representante Legal</p>
+     * @param int|string $id
+     * @param $pagina
+     * @param $tabela <p>proponente_pjs ou incentivador_pjs</p>
+     * @param false $retornaId
+     * @return string
+     */
+    public function editaRepresentante($id, $pagina, $tabela, $retornaId = false):string
+    {
         $idDecryp = MainModel::decryption($id);
         $idPj = MainModel::decryption($_POST['idPj']);
-
-        unset($_POST['_method']);
-        unset($_POST['pagina']);
-        unset($_POST['id']);
         unset($_POST['idPj']);
+        $dadosLimpos = RepresentanteModel::limparStringRepresentante($_POST);
 
-        foreach ($_POST as $campo => $post) {
-            if (($campo != "idPj") && ($campo != "representante")) {
-                $dados[$campo] = MainModel::limparString($post);
-            }
-        }
-
-        $edita = DbModel::update('representante_legais', $dados, $idDecryp);
+        $edita = DbModel::update('representante_legais', $dadosLimpos['rep'], $idDecryp);
         if ($edita) {
-            $rep = $_POST['representante'];
-            $pj_dados = [
-                'representante_legal'.$rep.'_id' => MainModel::decryption($id)
-            ];
-            $edita_pj = DbModel::update('pessoa_juridicas',$pj_dados,$idPj);
-            if ($edita_pj){
+            if (isset($dadosLimpos['en'])) {
+                if (count($dadosLimpos['en']) > 0) {
+                    $endereco_existe = DbModel::consultaSimples("SELECT * FROM representante_enderecos WHERE representante_legal_id = '$idDecryp'");
+                    if ($endereco_existe->rowCount() > 0) {
+                        DbModel::updateEspecial('representante_enderecos', $dadosLimpos['en'], "representante_legal_id", $idDecryp);
+                    } else {
+                        $dadosLimpos['en']['representante_legal_id'] = $idDecryp;
+                        DbModel::insert('representante_enderecos', $dadosLimpos['en']);
+                    }
+                }
+            }
+
+            if (isset($dadosLimpos['telefones'])){
+                if (count($dadosLimpos['telefones'])>0){
+                    $telefone_existe = DbModel::consultaSimples("SELECT * FROM representante_telefones WHERE representante_legal_id = '$idDecryp'");
+
+                    if ($telefone_existe->rowCount()>0){
+                        DbModel::deleteEspecial('representante_telefones', "representante_legal_id",$idDecryp);
+                    }
+                    foreach ($dadosLimpos['telefones'] as $telefone){
+                        $telefone['representante_legal_id'] = $idDecryp;
+                        DbModel::insert('representante_telefones', $telefone);
+                    }
+                }
+            }
+
+            if (isset($dadosLimpos['lei'])){
+                if (count($dadosLimpos['lei']) > 0) {
+                    $detalhe_existe = DbModel::consultaSimples("SELECT * FROM representante_leis WHERE representante_legal_id = '$idDecryp'");
+                    if ($detalhe_existe->rowCount() > 0) {
+                        DbModel::updateEspecial('representante_leis', $dadosLimpos['lei'], "representante_legal_id", $idDecryp);
+                    } else {
+                        $dadosLimpos['lei']['representante_legal_id'] = $idDecryp;
+                        DbModel::insert('representante_leis', $dadosLimpos['lei']);
+                    }
+                }
+            }
+
+            $pj_dados = ['representante_legal_id' => $id];
+            DbModel::update($tabela,$pj_dados,$idPj);
+
+            if($retornaId){
+                return $idDecryp;
+            } else{
                 $alerta = [
                     'alerta' => 'sucesso',
-                    'titulo' => 'Representante Legal',
-                    'texto' => 'Representante Legal editado com sucesso!',
+                    'titulo' => 'Pessoa Física',
+                    'texto' => 'Pessoa Física editada com sucesso!',
                     'tipo' => 'success',
-                    'location' => SERVERURL.$pagina.'/representante_cadastro&id='.$id.'&idPj='.MainModel::encryption($idPj)
+                    'location' => SERVERURL.$pagina.'&id='.$id
                 ];
+                return MainModel::sweetAlert($alerta);
             }
-            else{
-                $alerta = [
-                    'alerta' => 'simples',
-                    'titulo' => 'Erro!',
-                    'texto' => 'Erro ao salvar!',
-                    'tipo' => 'error',
-                    'location' => SERVERURL.$pagina.'/representante_cadastro&id='.$id.'&idPj='.MainModel::encryption($idPj)
-                ];
-            }
+
         } else {
+            $pagina = explode("/",$pagina);
             $alerta = [
                 'alerta' => 'simples',
                 'titulo' => 'Erro!',
                 'texto' => 'Erro ao salvar!',
                 'tipo' => 'error',
-                'location' => SERVERURL.$pagina.'/representante_cadastro&id='.$id.'&idPj='.MainModel::encryption($idPj)
+                'location' => SERVERURL.$pagina[0].'/proponente'
             ];
         }
         return MainModel::sweetAlert($alerta);
     }
 
-    public function removeRepresentante($pagina){
+    /**
+     * <p>Remove o Representante da Pessoa Jurídica</p>
+     * @param $pagina
+     * @param $tabela
+     * @return string
+     */
+    public function removeRepresentante($pagina,$tabela):string
+    {
         unset($_POST['_method']);
         unset($_POST['pagina']);
 
         $idPj = MainModel::decryption($_POST['idPj']);
-        $rep = $_POST['representante'];
-        $pj_dados = [
-            'representante_legal'.$rep.'_id' => NULL
-        ];
-        $remove_rep = DbModel::update('pessoa_juridicas',$pj_dados,$idPj);
+        $pj_dados = ['representante_legal_id' => NULL];
+        $remove_rep = DbModel::update($tabela,$pj_dados,$idPj);
         if ($remove_rep){
             $alerta = [
                 'alerta' => 'sucesso',
                 'titulo' => 'Representante Legal',
                 'texto' => 'Representante Legal removido com sucesso!',
                 'tipo' => 'success',
-                'location' => SERVERURL.$pagina.'/pj_cadastro&id='.MainModel::encryption($idPj)
+                'location' => SERVERURL.$pagina.'&id='.MainModel::encryption($idPj)
             ];
         }
         else{
@@ -140,44 +189,31 @@ class RepresentanteController extends MainModel
                 'titulo' => 'Erro!',
                 'texto' => 'Erro ao remover!',
                 'tipo' => 'error',
-                'location' => SERVERURL.$pagina.'/pj_cadastro&id='.MainModel::encryption($idPj)
+                'location' => SERVERURL.$pagina.'&id='.MainModel::encryption($idPj)
             ];
         }
         return MainModel::sweetAlert($alerta);
     }
 
-    public function recuperaRepresentante($id) {
+    /**
+     * <p>Recupera os dados do Representante Legal</p>
+     * @param $id
+     * @return bool|PDOStatement
+     */
+    public function recuperaRepresentante($id)
+    {
         $id = MainModel::decryption($id);
-        $representante = DbModel::getInfo('representante_legais',$id);
-        return $representante;
+        return DbModel::getInfo('representante_legais',$id);
     }
 
-    public function getCPF($cpf){
-        $consulta_pf_cpf = DbModel::consultaSimples("SELECT id, cpf FROM representante_legais WHERE cpf = '$cpf'");
-        return $consulta_pf_cpf;
+    /**
+     * <p>Recupera o id do Representante através do CPF</p>
+     * @param $cpf
+     * @return false|PDOStatement
+     */
+    public function getCPF($cpf)
+    {
+        return DbModel::consultaSimples("SELECT id, cpf FROM representante_legais WHERE cpf = '$cpf'");
     }
 
-    public function insereRepresentanteOficina($dados, $idPj) {
-        foreach ($dados as $campo => $post) {
-            $dados[$campo] = MainModel::limparString($post);
-        }
-
-        $consulta = DbModel::consultaSimples("SELECT * FROM representante_legais WHERE cpf = '{$dados['cpf']}'");
-        if ($consulta->rowCount() > 0) {
-            $representante_id = $consulta->fetchObject()->id;
-            $dadosPj = [
-                'representante_legal1_id' => $representante_id
-            ];
-            $update = DbModel::update('pessoa_juridicas', $dadosPj, $idPj);
-        } else {
-            $insert = DbModel::insert('representante_legais', $dados);
-            if ($insert->rowCount() > 0) {
-                $representante_id = DbModel::connection()->lastInsertId();
-                $dadosPj = [
-                    'representante_legal1_id' => $representante_id
-                ];
-                $update = DbModel::update('pessoa_juridicas', $dadosPj, $idPj);
-            }
-        }
-    }
 }
