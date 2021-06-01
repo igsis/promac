@@ -5,11 +5,12 @@ class ViewsModel
 {
     protected function verificaModulo ($mod) {
         $modulos = [
-            "fomentos",
-            "formacao",
             "inicio",
-            "jovemMonitor",
-            "oficina",
+            "inscricao",
+            "projeto",
+            "coordenadoria",
+            "smc",
+            "consulta"
         ];
 
         if (in_array($mod, $modulos)) {
@@ -25,49 +26,25 @@ class ViewsModel
 
     protected function exibirViewModel($view, $modulo = "") {
         $whitelist = [
-            'anexos',
-            'anexos_lider',
-            'anexos_proponente',
-            'arquivos_com_prod',
-            'atracao_cadastro',
-            'atracao_lista',
-            'cadastro',
             'cadastro_pf',
             'cadastro_pj',
-            'complemento_oficina_cadastro',
-            'demais_anexos',
-            'edita',
-            'evento_cadastro',
-            'evento_lista',
             'finalizar',
-            'fomento_edital',
-            'formacao_edital',
-            'informacoes_complementares_cadastro',
             'inicio',
-            'lider',
-            'lider_cadastro',
             'login',
             'logout',
-            'pf_cadastro',
-            'pj_cadastro',
-            'produtor_cadastro',
-            'programa',
-            'projeto_cadastro',
-            'projeto_lista',
-            'proponentePj',
-            'proponentePf',
-            'proponente_lista',
-            'representante',
-            'representante_cadastro',
+            'normativos',
             'recupera_senha',
             'resete_senha',
-            'nucleo_artistico_lista',
-            'nucleo_artistico_cadastro',
-            'pf_busca',
-            'pf_dados_cadastro',
-            'pf_endereco_cadastro',
-            'pf_banco_cadastro',
-            'formacao_cadastro'
+            'incentivador_pf_cadastro',
+            'incentivador_pf_documentos',
+            'incentivador_pj_cadastro',
+            'incentivador_pj_documentos',
+            'proponente_pf_cadastro',
+            'proponente_pf_documentos',
+            'proponente_pj_cadastro',
+            'proponente_pj_documentos',
+            'representante',
+            'representante_cadastro'
         ];
         if (self::verificaModulo($modulo)) {
             if (in_array($view, $whitelist)) {
@@ -89,10 +66,8 @@ class ViewsModel
             $conteudo = "cadastro_pj";
         } elseif ($modulo == "index") {
             $conteudo = "login";
-        } elseif ($modulo == "fomento_edital") {
-            $conteudo = "fomento_edital";
-        } elseif ($modulo == "formacao_edital") {
-            $conteudo = "formacao_edital";
+        } elseif ($modulo == "normativos") {
+            $conteudo = "normativos";
         } elseif ($modulo == "recupera_senha") {
             $conteudo = "recupera_senha";
         } elseif ($modulo == "resete_senha") {
@@ -111,11 +86,17 @@ class ViewsModel
                 $menu = "./views/modulos/$modulo/include/menu.php";
             } else {
                 switch ($_SESSION['modulo_c']) {
-                    case 5:
-                        $menu = "./views/modulos/formacao/include/menu.php";
+                    case 1:
+                        $menu = "./views/modulos/inscricao/include/menu_proponente_pf.php";
                         break;
-                    case 6:
-                        $menu = "./views/modulos/fomentos/include/menu.php";
+                    case 2:
+                        $menu = "./views/modulos/inscricao/include/menu_proponente_pj.php";
+                        break;
+                    case 3:
+                        $menu = "./views/modulos/inscricao/include/menu_incentivador_pf.php";
+                        break;
+                    case 4:
+                        $menu = "./views/modulos/inscricao/include/menu_incentivador_pj.php";
                         break;
                     default:
                         $menu = "./views/template/menuExemplo.php";
