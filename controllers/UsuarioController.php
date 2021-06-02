@@ -79,8 +79,12 @@ class UsuarioController extends UsuarioModel
         return header("Location: ".SERVERURL);
     }
 
-    public function insereUsuario($dados) {
+    public function insereUsuario() {
         $erro = false;
+
+        $token = $_POST['token'];
+        unset($_POST['token']);
+
         $dados = [];
         foreach ($_POST as $campo => $post) {
             if (($campo != "senha2") && ($campo != "_method")) {
@@ -100,6 +104,20 @@ class UsuarioController extends UsuarioModel
         }
 
         // Valida email unique
+        $nivel_acesso = DbModel::consultaSimples("SELECT id FROM nivel_acessos WHERE token = '$token'")->fetchColumn();
+        if (!$nivel_acesso) {
+            $erro = true;
+            $alerta = [
+                'alerta' => 'simples',
+                'titulo' => "Erro!",
+                'texto' => "Código de acesso inválido. Tente novamente.",
+                'tipo' => "error"
+            ];
+        } else {
+            $dados['nivel_acesso_id'] = $nivel_acesso;
+        }
+
+        // Valida token de cadastro
         $consultaEmail = DbModel::consultaSimples("SELECT email FROM usuarios WHERE email = '{$dados['email']}'");
         if ($consultaEmail->rowCount() >= 1) {
             $erro = true;

@@ -1,5 +1,5 @@
 <?php
-$url = 'http://' . $_SERVER['HTTP_HOST'] . '/promac/api/verificadorEmail.php';
+$url = SERVERURL.'api/verificadorEmail.php';
 
 if ($_GET['tipo'] == 'pj') {
     $tipo_cadastro = "proponente_pjs";
