@@ -5,7 +5,7 @@ if ($pedidoAjax) {
     require_once "./models/ValidacaoModel.php";
 }
 
-class ProponentePfModel extends ValidacaoModel
+class IncentivadorPfModel extends ValidacaoModel
 {
     protected function limparStringPF($dados)
     {
@@ -35,10 +35,6 @@ class ProponentePfModel extends ValidacaoModel
                             $dadosLimpos['telefones'][$campo]['telefone'] = MainModel::limparString($post);
                         }
                         break;
-                    case "lei":
-                        $campo = substr($campo, 3);
-                        $dadosLimpos['lei'][$campo] = MainModel::limparString($post);
-                        break;
                 }
             }
         }
@@ -49,14 +45,14 @@ class ProponentePfModel extends ValidacaoModel
     /**
      * @param int $pessoa_fisica_id
      * @param int $validacaoTipo
-     * <p>1 - Proponente<br>
+     * <p>1 - Incentivador<br>
      * 2 - Líder<br>
      * 3 - Formação</p>
      * @return array|bool
      */
     protected function validaPfModel($pessoa_fisica_id, $validacaoTipo, $evento_id, $tipo_documentos = null)
     {
-        $pf = DbModel::getInfo("proponente_pfs", $pessoa_fisica_id)->fetchObject();
+        $pf = DbModel::getInfo("incentivador_pfs", $pessoa_fisica_id)->fetchObject();
 
         switch ($validacaoTipo) {
             case 1:
@@ -146,7 +142,7 @@ class ProponentePfModel extends ValidacaoModel
                     $erros = [];
                 }
                 $erros['drt']['bol'] = true;
-                $erros['drt']['motivo'] = 'Proponente não possui DRT cadastrado';
+                $erros['drt']['motivo'] = 'Incentivador não possui DRT cadastrado';
             };
         }
 

@@ -1,36 +1,36 @@
 <?php
 if ($pedidoAjax) {
-    require_once "../models/ProponentePjModel.php";
+    require_once "../models/IncentivadorPjModel.php";
 } else {
-    require_once "./models/ProponentePjModel.php";
+    require_once "./models/IncentivadorPjModel.php";
 }
 
-class ProponentePjController extends ProponentePjModel
+class IncentivadorPjController extends IncentivadorPjModel
 {
     /**
-     * <p>Função para inserir Proponente Pessoa Jurídica</p>
+     * <p>Função para inserir Incentivador Pessoa Jurídica</p>
      * @param $pagina
      * @param false $retornaId
      * @return string
      */
-    public function insereProponentePj($pagina, $retornaId = false):string
+    public function insereIncentivadorPj($pagina, bool $retornaId = false):string
     {
-        $dadosLimpos = ProponentePjModel::limparStringPJ($_POST);
+        $dadosLimpos = IncentivadorPjModel::limparStringPJ($_POST);
 
         /* cadastro */
-        $insere = DbModel::insert('proponente_pjs', $dadosLimpos['pj']);
+        $insere = DbModel::insert('incentivador_pjs', $dadosLimpos['pj']);
         if ($insere->rowCount()>0) {
             $id = DbModel::connection()->lastInsertId();
 
             if (count($dadosLimpos['en'])>0){
-                $dadosLimpos['en']['proponente_pj_id'] = $id;
-                DbModel::insert('proponente_pj_enderecos', $dadosLimpos['en']);
+                $dadosLimpos['en']['incentivador_pj_id'] = $id;
+                DbModel::insert('incentivador_pj_enderecos', $dadosLimpos['en']);
             }
 
             if (count($dadosLimpos['telefones'])>0){
                 foreach ($dadosLimpos['telefones'] as $telefone){
-                    $telefone['proponente_pj_id'] = $id;
-                    DbModel::insert('proponente_pj_telefones', $telefone);
+                    $telefone['incentivador_pj_id'] = $id;
+                    DbModel::insert('incentivador_pj_telefones', $telefone);
                 }
             }
 
@@ -42,7 +42,7 @@ class ProponentePjController extends ProponentePjModel
                     'titulo' => 'Pessoa Jurídica',
                     'texto' => 'Pessoa Jurídica cadastrada com sucesso!',
                     'tipo' => 'success',
-                    'location' => SERVERURL.$pagina.'/pj_cadastro&id='.MainModel::encryption($id)
+                    'location' => SERVERURL.$pagina.'&id='.MainModel::encryption($id)
                 ];
                 return MainModel::sweetAlert($alerta);
             }
@@ -53,51 +53,50 @@ class ProponentePjController extends ProponentePjModel
                 'titulo' => 'Erro!',
                 'texto' => 'Erro ao salvar!',
                 'tipo' => 'error',
-                'location' => SERVERURL.$pagina.'/proponente'
+                'location' => SERVERURL.$pagina.'/incentivador'
             ];
             return MainModel::sweetAlert($alerta);
         }
-        /* ./cadastro */
     }
 
     /**
-     * <p>Função para editar Proponente Pessoa Jurídica</p>
+     * <p>Função para editar Incentivador Pessoa Jurídica</p>
      * @param $id
      * @param $pagina
      * @param false $retornaId
      * @return string
      */
-    public function editaProponentePj($id, $pagina, $retornaId = false):string
+    public function editaIncentivadorPj($id, $pagina, bool $retornaId = false):string
     {
         $idDecryp = MainModel::decryption($_POST['id']);
 
-        $dadosLimpos = ProponentePjModel::limparStringPJ($_POST);
+        $dadosLimpos = IncentivadorPjModel::limparStringPJ($_POST);
 
-        $edita = DbModel::update('proponente_pjs', $dadosLimpos['pj'], $idDecryp);
+        $edita = DbModel::update('incentivador_pjs', $dadosLimpos['pj'], $idDecryp);
         if ($edita) {
 
             if (isset($dadosLimpos['en'])) {
                 if (count($dadosLimpos['en']) > 0) {
-                    $endereco_existe = DbModel::consultaSimples("SELECT * FROM proponente_pj_enderecos WHERE proponente_pj_id = '$idDecryp'");
+                    $endereco_existe = DbModel::consultaSimples("SELECT * FROM incentivador_pj_enderecos WHERE incentivador_pj_id = '$idDecryp'");
                     if ($endereco_existe->rowCount() > 0) {
-                        DbModel::updateEspecial('proponente_pj_enderecos', $dadosLimpos['en'], "proponente_pj_id", $idDecryp);
+                        DbModel::updateEspecial('incentivador_pj_enderecos', $dadosLimpos['en'], "incentivador_pj_id", $idDecryp);
                     } else {
-                        $dadosLimpos['en']['proponente_pj_id'] = $idDecryp;
-                        DbModel::insert('proponente_pj_enderecos', $dadosLimpos['en']);
+                        $dadosLimpos['en']['incentivador_pj_id'] = $idDecryp;
+                        DbModel::insert('incentivador_pj_enderecos', $dadosLimpos['en']);
                     }
                 }
             }
 
             if (count($dadosLimpos['telefones'])>0){
-                $telefone_existe = DbModel::consultaSimples("SELECT * FROM proponente_pj_telefones WHERE proponente_pj_id = '$idDecryp'");
+                $telefone_existe = DbModel::consultaSimples("SELECT * FROM incentivador_pj_telefones WHERE incentivador_pj_id = '$idDecryp'");
 
                 if ($telefone_existe->rowCount()>0){
-                    DbModel::deleteEspecial('proponente_pj_telefones', "proponente_pj_id",$idDecryp);
+                    DbModel::deleteEspecial('incentivador_pj_telefones', "incentivador_pj_id",$idDecryp);
                 }
 
                 foreach ($dadosLimpos['telefones'] as $telefone){
-                    $telefone['proponente_pj_id'] = $idDecryp;
-                    DbModel::insert('proponente_pj_telefones', $telefone);
+                    $telefone['incentivador_pj_id'] = $idDecryp;
+                    DbModel::insert('incentivador_pj_telefones', $telefone);
                 }
             }
 
@@ -109,7 +108,7 @@ class ProponentePjController extends ProponentePjModel
                     'titulo' => 'Pessoa Jurídica',
                     'texto' => 'Pessoa Jurídica editada com sucesso!',
                     'tipo' => 'success',
-                    'location' => SERVERURL.$pagina.'/pj_cadastro&id='.$id
+                    'location' => SERVERURL.$pagina.'&id='.$id
                 ];
                 return MainModel::sweetAlert($alerta);
             }
@@ -119,26 +118,28 @@ class ProponentePjController extends ProponentePjModel
                 'titulo' => 'Erro!',
                 'texto' => 'Erro ao salvar!',
                 'tipo' => 'error',
-                'location' => SERVERURL.$pagina.'/proponente'
+                'location' => SERVERURL.$pagina.'/incentivador'
             ];
             return MainModel::sweetAlert($alerta);
         }
     }
 
     /**
+     * <p>Recupera os dados do Incentivador</p>
      * @param $id
-     * @return object
+     * @return array|mixed
      */
-    public function recuperaProponentePJ($id)
+    public function recuperaIncentivadorPj($id)
     {
         $id = MainModel::decryption($id);
         $pj = DbModel::consultaSimples(
-            "SELECT * FROM proponente_pjs AS pj
-            LEFT JOIN proponente_pj_enderecos pe on pj.id = pe.proponente_pj_id
+            "SELECT pj.*, pe.*, im.imposto FROM incentivador_pjs AS pj
+            LEFT JOIN incentivador_pj_enderecos pe on pj.id = pe.incentivador_pj_id
+            LEFT JOIN impostos im on pj.imposto_id = im.id
             WHERE pj.id = '$id'
         ");
         $pj = $pj->fetch(PDO::FETCH_ASSOC);
-        $telefones = DbModel::consultaSimples("SELECT * FROM proponente_pj_telefones WHERE proponente_pj_id = '$id'")->fetchAll(PDO::FETCH_ASSOC);
+        $telefones = DbModel::consultaSimples("SELECT * FROM incentivador_pj_telefones WHERE incentivador_pj_id = '$id'")->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($telefones as $key => $telefone) {
             $pj['telefones']['tel_' . $key] = $telefone['telefone'];
@@ -148,20 +149,21 @@ class ProponentePjController extends ProponentePjModel
     }
 
     /**
+     * Recupera o id do Incentivador através do CNPJ</p>
      * @param $cnpj
      * @return false|PDOStatement
      */
     public function getCNPJ($cnpj)
     {
-        return DbModel::consultaSimples("SELECT id, cnpj FROM proponente_pjs WHERE cnpj = '$cnpj'");
+        return DbModel::consultaSimples("SELECT id, cnpj FROM incentivador_pjs WHERE cnpj = '$cnpj'");
     }
 
     /**
-     * @param $proponente_pj_id
-     * <p>Recebe o ID do proponente PJ já decriptado</p>
+     * @param $incentivador_pj_id
+     * <p>Recebe o ID do incentivador PJ já decriptado</p>
      * @return array|bool
      */
-    public function validaPj($proponente_pj_id) {
-        return ProponentePjModel::validaPjModel($proponente_pj_id);
+    public function validaPj($incentivador_pj_id) {
+        return IncentivadorPjModel::validaPjModel($incentivador_pj_id);
     }
 }

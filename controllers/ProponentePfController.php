@@ -13,12 +13,12 @@ class ProponentePfController extends ProponentePfModel
      * @param false $retornaId
      * @return string
      */
-    public function insereProponentePf($pagina, $retornaId = false):string
+    public function insereProponentePf($pagina, bool $retornaId = false):string
     {
-        $dadosLimpos = ProponentePfModel::limparStringPF($_POST);
+        $dadosLimpos = ProponentePfModel::limparStringpf($_POST);
 
         /* cadastro */
-        $insere = DbModel::insert('pessoa_fisicas', $dadosLimpos['pf']);
+        $insere = DbModel::insert('proponente_pfs', $dadosLimpos['pf']);
         if ($insere->rowCount()>0) {
             $id = DbModel::connection()->lastInsertId();
 
@@ -82,7 +82,7 @@ class ProponentePfController extends ProponentePfModel
 
         $dadosLimpos = ProponentePfModel::limparStringPF($_POST);
 
-        $edita = DbModel::update('pessoa_fisicas', $dadosLimpos['pf'], $idDecryp);
+        $edita = DbModel::update('proponente_pfs', $dadosLimpos['pf'], $idDecryp);
         if ($edita) {
 
             if (isset($dadosLimpos['en'])) {
@@ -149,11 +149,16 @@ class ProponentePfController extends ProponentePfModel
         return MainModel::sweetAlert($alerta);
     }
 
+    /**
+     * <p>Recupera dados do Proponente</p>
+     * @param $id
+     * @return array|mixed
+     */
     public function recuperaProponentePf($id)
     {
         $id = MainModel::decryption($id);
         $pf = DbModel::consultaSimples(
-            "SELECT pf.*, n2.nacionalidade, pl.lei 
+            "SELECT pf.*, n2.nacionalidade, ec.estado_civil, ge.genero, et.etnia, pe.*, pl.lei 
             FROM proponente_pfs AS pf
             LEFT JOIN nacionalidades n2 on pf.nacionalidade_id = n2.id
             LEFT JOIN estado_civis ec on pf.estado_civil_id = ec.id
@@ -169,9 +174,14 @@ class ProponentePfController extends ProponentePfModel
         foreach ($telefones as $key => $telefone) {
             $pf['telefones']['tel_'.$key] = $telefone['telefone'];
         }
-        return $pf;
+        return (object)$pf;
     }
 
+    /**
+     * <p>Recupera o id do Proponente através do CPF</p>
+     * @param $cpf
+     * @return false|PDOStatement
+     */
     public function getCPF($cpf){
         return DbModel::consultaSimples("SELECT id, cpf FROM proponente_pfs WHERE cpf = '$cpf'");
     }

@@ -172,5 +172,5 @@ unset($_SESSION['modulo']);
 </div>
 <!-- /.content -->
 <?php
-include "fomento_edital.php";
+include "normativos.php";
 ?>

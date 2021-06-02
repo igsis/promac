@@ -5,9 +5,9 @@ if ($pedidoAjax) {
     require_once "./models/ValidacaoModel.php";
 }
 
-class ProponentePfModel extends ValidacaoModel
+class RepresentanteModel extends ValidacaoModel
 {
-    protected function limparStringPF($dados)
+    protected function limparStringRepresentante($dados)
     {
         unset($dados['_method']);
         unset($dados['pagina']);
@@ -20,11 +20,11 @@ class ProponentePfModel extends ValidacaoModel
 
         foreach ($dados as $campo => $post) {
             $dig = explode("_", $campo)[0];
-            if (!empty($dados[$campo]) || ($dig == "pf")) {
+            if (!empty($dados[$campo]) || ($dig == "rep")) {
                 switch ($dig) {
-                    case "pf":
+                    case "rep":
                         $campo = substr($campo, 3);
-                        $dadosLimpos['pf'][$campo] = MainModel::limparString($post);
+                        $dadosLimpos['rep'][$campo] = MainModel::limparString($post);
                         break;
                     case "en":
                         $campo = substr($campo, 3);
@@ -56,7 +56,7 @@ class ProponentePfModel extends ValidacaoModel
      */
     protected function validaPfModel($pessoa_fisica_id, $validacaoTipo, $evento_id, $tipo_documentos = null)
     {
-        $pf = DbModel::getInfo("proponente_pfs", $pessoa_fisica_id)->fetchObject();
+        $pf = DbModel::getInfo("pessoa_fisicas", $pessoa_fisica_id)->fetchObject();
 
         switch ($validacaoTipo) {
             case 1:
