@@ -221,7 +221,7 @@ class ProjetoController extends ProjetoModel
 
     public function listaProjetos(): array
     {
-        $usuario_id = $_SESSION['usuario_id_c'];
+        $usuario_id = $_SESSION['usuario_id_p'];
         $edital_id = MainModel::decryption($_SESSION['edital_c']);
         $sql = "SELECT fe.titulo, fp.* FROM fom_projetos AS fp
                 INNER JOIN  fom_editais AS fe ON fp.fom_edital_id = fe.id

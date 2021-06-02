@@ -7,23 +7,27 @@ if ($pedidoAjax) {
 
 class UsuarioModel extends MainModel
 {
-    protected function getUsuario($dados) {
+    protected function getUsuario($dados, $campo, $coluna) {
         $pdo = parent::connection();
-        $sql = "SELECT * FROM usuarios WHERE email = :email AND senha = :senha";
+        $sql = "SELECT id, $coluna AS 'nome' FROM {$dados['tabela']} WHERE $campo = :login AND senha = :senha";
         $statement = $pdo->prepare($sql);
-        $statement->bindParam(":email", $dados['email']);
+        $statement->bindParam(":login", $dados['login']);
         $statement->bindParam(":senha", $dados['senha']);
         $statement->execute();
         return $statement;
     }
 
-    protected function getEmail($dados) {
+    protected function usuarioExiste($dados, $campo) {
         $pdo = parent::connection();
-        $sql = "SELECT * FROM usuarios WHERE email = :email";
+        $sql = "SELECT id FROM {$dados['tabela']} WHERE $campo = :login";
         $statement = $pdo->prepare($sql);
-        $statement->bindParam(":email", $dados['email']);
+        $statement->bindParam(":login", $dados['login']);
         $statement->execute();
-        return $statement;
+        if ($statement->rowCount() >= 1) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     protected function getExisteEmail($email){

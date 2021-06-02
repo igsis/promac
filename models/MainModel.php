@@ -142,7 +142,7 @@ class MainModel extends DbModel
      */
     protected function gravarLog($descricao) {
         $dadosLog = [
-            'usuario_id' => $_SESSION['usuario_id_c'],
+            'usuario_id' => $_SESSION['usuario_id_p'],
             'ip' => $_SERVER['REMOTE_ADDR'],
             'data' => date('Y-m-d H:i:s'),
             'descricao' => $descricao
