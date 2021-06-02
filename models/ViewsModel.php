@@ -85,7 +85,7 @@ class ViewsModel
             if (is_file("./views/modulos/$modulo/include/menu.php")) {
                 $menu = "./views/modulos/$modulo/include/menu.php";
             } else {
-                switch ($_SESSION['modulo_c']) {
+                switch ($_SESSION['modulo_p']) {
                     case 1:
                         $menu = "./views/modulos/inscricao/include/menu_proponente_pf.php";
                         break;
