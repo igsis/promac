@@ -1,8 +1,8 @@
 <?php
-    if (isset($_POST['email']) && (isset($_POST['senha']))) {
+    if (isset($_POST['login']) && (isset($_POST['senha']))) {
         require_once "./controllers/UsuarioController.php";
         $login = new UsuarioController();
-        echo $login->iniciaSessao();
+        echo $login->iniciaSessao($_POST['tipo_login']);
     }
 ?>
 <!-- /.content-header -->
@@ -124,14 +124,15 @@
                 </button>
             </div>
             <form method="POST" action="" id="formLogin">
+                <input type="hidden" id="tipo_login" name="tipo_login" value="">
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="login" id="labelLogin">Login:</label>
-                        <input class="form-control" type="text" id="txtLogin" required>
+                        <input class="form-control" name="login" type="text" id="txtLogin" required>
                     </div>
                     <div class="form-group">
                         <label for="senha">Senha:</label>
-                        <input class="form-control" type="password" id="senha" required>
+                        <input class="form-control" name="senha" type="password" id="senha" required>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -147,14 +148,17 @@
     function modalLogin(tipo_acesso) {
         let modalLogin = $('#modalLogin');
         let txtLogin = $("#txtLogin");
+        let senha = $("#senha");
+        let tipoLogin = $("#tipo_login");
 
         switch (tipo_acesso) {
             case 'pf':
                 modalLogin.find('.modal-title').text('Acesso Proponente Pessoa Física');
-                modalLogin.find('#formLogin').attr('action', 'aeoo');
                 modalLogin.find('#labelLogin').text('CPF:');
                 txtLogin.attr('type', 'text');
                 txtLogin.val('');
+                senha.val('');
+                tipoLogin.val('proponente_pfs');
                 txtLogin.mask("999.999.999-99");
                 modalLogin.find('#linkCadastro').attr('href', 'cadastro_pf&tipo=pf');
                 break;
@@ -164,6 +168,8 @@
                 modalLogin.find('#labelLogin').text('CNPJ:');
                 txtLogin.attr('type', 'text');
                 txtLogin.val('');
+                senha.val('');
+                tipoLogin.val('proponente_pjs');
                 txtLogin.mask("99.999.999/9999-99");
                 modalLogin.find('#linkCadastro').attr('href', 'cadastro_pj&tipo=pj');
                 break;
@@ -173,6 +179,8 @@
                 modalLogin.find('#labelLogin').text('CPF:');
                 txtLogin.attr('type', 'text');
                 txtLogin.val('');
+                senha.val('');
+                tipoLogin.val('incentivador_pfs');
                 txtLogin.mask("999.999.999-99");
                 modalLogin.find('#linkCadastro').attr('href', 'cadastro_pf&tipo=incentivador_pf');
                 break;
@@ -182,6 +190,8 @@
                 modalLogin.find('#labelLogin').text('CNPJ:');
                 txtLogin.attr('type', 'text');
                 txtLogin.val('');
+                senha.val('');
+                tipoLogin.val('incentivador_pjs');
                 txtLogin.mask("99.999.999/9999-99");
                 modalLogin.find('#linkCadastro').attr('href', 'cadastro_pj&tipo=incentivador_pj');
                 break;
@@ -190,6 +200,8 @@
                 modalLogin.find('.modal-title').text('Acesso Administrativo');
                 modalLogin.find('#labelLogin').text('Email:');
                 txtLogin.val('');
+                senha.val('');
+                tipoLogin.val('usuarios');
                 txtLogin.attr('type', 'email');
                 txtLogin.unmask();
                 modalLogin.find('#linkCadastro').attr('href', 'cadastro');

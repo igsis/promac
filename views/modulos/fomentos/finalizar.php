@@ -96,7 +96,7 @@ $validacaoArquivos = $projetoObj->validaProjeto($idProj, $_SESSION['edital_c']);
                                 class="subtitulos mr-2">Nome do Projeto: </span> <?= $projeto['nome_projeto'] ?>
                         </li>
                         <li class="my-2"><span
-                                class="subtitulos mr-2">Responsável pela inscrição: </span> <?= $_SESSION['nome_c'] ?>
+                                class="subtitulos mr-2">Responsável pela inscrição: </span> <?= $_SESSION['nome_p'] ?>
                         </li>
                         <?php if ($pessoa_tipos_id == 2): ?>
                             <li class="my-2"><span

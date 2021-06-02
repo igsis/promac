@@ -10,48 +10,41 @@ if ($pedidoAjax) {
 class UsuarioController extends UsuarioModel
 {
 
-    public function iniciaSessao($modulo = false, $edital = null) {
-        $email = MainModel::limparString($_POST['email']);
+    public function iniciaSessao($tipo_acesso) {
+        $login = MainModel::limparString($_POST['login']);
         $senha = MainModel::limparString($_POST['senha']);
         $senha = MainModel::encryption($senha);
 
         $dadosLogin = [
-            'email' => $email,
+            'tabela' => $tipo_acesso,
+            'login' => $login,
             'senha' => $senha
         ];
 
-        $consultaEmail = UsuarioModel::getEmail($dadosLogin);
+        if (($tipo_acesso == 'proponente_pfs') || ($tipo_acesso == 'incentivador_pfs')) {
+            $campo = "cpf";
+            $coluna = "nome";
+        } elseif (($tipo_acesso == 'proponente_pjs') || ($tipo_acesso == 'incentivador_pjs')) {
+            $campo = "cnpj";
+            $coluna = "razao_social";
+        } else {
+            $campo = "email";
+            $coluna = "nome";
+        }
 
-        if ($consultaEmail->rowCount() == 1){
-            $consultaUsuario = UsuarioModel::getUsuario($dadosLogin);
+        $usuarioExiste = UsuarioModel::usuarioExiste($dadosLogin, $campo);
+
+        if ($usuarioExiste){
+            $consultaUsuario = UsuarioModel::getUsuario($dadosLogin, $campo, $coluna);
 
             if ($consultaUsuario->rowCount() == 1) {
                 $usuario = $consultaUsuario->fetch();
 
                 session_start(['name' => 'prmc']);
-                $_SESSION['usuario_id_c'] = $usuario['id'];
-                $_SESSION['nome_c'] = $usuario['nome'];
-                $_SESSION['modulo_c'] = $modulo;
+                $_SESSION['usuario_id_p'] = $usuario['id'];
+                $_SESSION['nome_p'] = $usuario['nome'];
 
                 MainModel::gravarLog('Fez Login');
-
-                if (!$modulo) {
-                    return $urlLocation = "<script> window.location='inicio/inicio' </script>";
-                } else {
-                    switch ($modulo){
-                        case 5:
-                            $formacaoObj = new FormacaoController();
-                            $_SESSION['ano_c'] = $formacaoObj->recuperaAnoReferenciaAtual($edital);
-                            return $urlLocation = "<script> window.location='formacao/inicio' </script>";
-                            break;
-                        case 6:
-                            $_SESSION['edital_c'] = $edital;
-                            $EditalObj = new FomentoController();
-                            $_SESSION['tipo_pessoa'] = $EditalObj->recuperaTipoPessoaEdital($edital);
-                            return $urlLocation = "<script> window.location='fomentos/inicio&modulo=$modulo' </script>";
-                            break;
-                    }
-                }
             } else {
                 $alerta = [
                     'alerta' => 'simples',

@@ -50,7 +50,7 @@ $pessoa_tipos_id = $objFomento->recuperaEdital($_SESSION['edital_c'])->pessoa_ti
                           data-form="<?= ($id) ? "update" : "save" ?>">
                         <input type="hidden" name="_method" value="<?= ($id) ? "editar" : "cadastrar" ?>">
                         <input type="hidden" name="pagina" value="fomentos">
-                        <input type="hidden" name="usuario_id" value="<?= $_SESSION['usuario_id_c'] ?>">
+                        <input type="hidden" name="usuario_id" value="<?= $_SESSION['usuario_id_p'] ?>">
                         <input type="hidden" name="pessoa_tipo_id" value="<?= $pessoa_tipos_id ?>">
 
                         <?php if ($id): ?>
@@ -83,7 +83,7 @@ $pessoa_tipos_id = $objFomento->recuperaEdital($_SESSION['edital_c'])->pessoa_ti
                                 <div class="form-group col-md-6">
                                     <label for="usuario_nome">Responsável pela inscrição: *</label>
                                     <input type="text" class="form-control" id="usuario_nome" name="usuario_nome"
-                                           value="<?= $_SESSION['nome_c'] ?>" disabled>
+                                           value="<?= $_SESSION['nome_p'] ?>" disabled>
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label for="valor_projeto">Valor do projeto: *</label>
