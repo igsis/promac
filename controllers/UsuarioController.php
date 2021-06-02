@@ -24,12 +24,23 @@ class UsuarioController extends UsuarioModel
         if (($tipo_acesso == 'proponente_pfs') || ($tipo_acesso == 'incentivador_pfs')) {
             $campo = "cpf";
             $coluna = "nome";
+            if ($tipo_acesso == 'proponente_pfs') {
+                $modulo = "proponente_pf";
+            } elseif ($tipo_acesso == 'incentivador_pfs') {
+                $modulo = "incentivador_pf";
+            }
         } elseif (($tipo_acesso == 'proponente_pjs') || ($tipo_acesso == 'incentivador_pjs')) {
             $campo = "cnpj";
             $coluna = "razao_social";
+            if ($tipo_acesso == 'proponente_pjs') {
+                $modulo = "proponente_pj";
+            } elseif ($tipo_acesso == 'incentivador_pjs') {
+                $modulo = "incentivador_pj";
+            }
         } else {
             $campo = "email";
             $coluna = "nome";
+            $modulo = "smc";
         }
 
         $usuarioExiste = UsuarioModel::usuarioExiste($dadosLogin, $campo);
@@ -43,8 +54,11 @@ class UsuarioController extends UsuarioModel
                 session_start(['name' => 'prmc']);
                 $_SESSION['usuario_id_p'] = $usuario['id'];
                 $_SESSION['nome_p'] = $usuario['nome'];
+                $_SESSION['modulo_p'] = $modulo;
 
                 MainModel::gravarLog('Fez Login');
+
+                return $urlLocation = "<script> window.location='inicio/inicio' </script>";
             } else {
                 $alerta = [
                     'alerta' => 'simples',

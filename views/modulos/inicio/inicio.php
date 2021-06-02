@@ -171,6 +171,3 @@ unset($_SESSION['modulo']);
     </div><!-- /.container-fluid -->
 </div>
 <!-- /.content -->
-<?php
-include "normativos.php";
-?>
