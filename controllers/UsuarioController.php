@@ -203,12 +203,9 @@ class UsuarioController extends UsuarioModel
 
     public function insereLoginPf($tipo_cadastro)
     {
-        if ($tipo_cadastro == 1) {
-            $tabela = "proponente_pfs";
-        } else {
-            $tabela = "incentivador_pfs";
-        }
         unset($_POST['tipo_cadastro']);
+
+        $tabela = $tipo_cadastro;
 
         $erro = false;
         $dados = [];
@@ -271,12 +268,9 @@ class UsuarioController extends UsuarioModel
 
     public function insereLoginPj($tipo_cadastro)
     {
-        if ($tipo_cadastro == 1) {
-            $tabela = "proponente_pjs";
-        } else {
-            $tabela = "incentivador_pjs";
-        }
         unset($_POST['tipo_cadastro']);
+
+        $tabela = $tipo_cadastro;
 
         $erro = false;
         $dados = [];

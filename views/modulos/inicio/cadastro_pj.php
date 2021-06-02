@@ -2,9 +2,9 @@
 $url = 'http://' . $_SERVER['HTTP_HOST'] . '/promac/api/verificadorEmail.php';
 
 if ($_GET['tipo'] == 'pj') {
-    $tipo_cadastro = 1;
+    $tipo_cadastro = "proponente_pjs";
 } elseif ($_GET['tipo'] == 'incentivador_pj') {
-    $tipo_cadastro = 2;
+    $tipo_cadastro = "incentivador_pjs";
 } else {
     echo '<script> window.location.href="'. SERVERURL .'" </script>';
 }
@@ -22,7 +22,7 @@ if ($_GET['tipo'] == 'pj') {
             <h5 class="login-box-msg">Efetue seu Cadastro</h5>
             <p class="card-text"><span style="text-align: justify; display:block;"> Confira seus dados antes de clicar no botão "Cadastrar".</span></p>
 
-            <?php if ($tipo_cadastro == 1): ?>
+            <?php if ($tipo_cadastro == "proponente_pjs"): ?>
                 <div class="alert alert-danger">
                     <h5><i class="icon fas fa-exclamation-triangle"></i> Atenção!</h5>
                     <p>O cadastrado Pessoa Jurídica Pessoa Jurídica não pode ser orgão público.</p>
@@ -32,7 +32,7 @@ if ($_GET['tipo'] == 'pj') {
             <form class="needs-validation formulario-ajax" data-form="save"
                   action="<?= SERVERURL ?>ajax/usuarioAjax.php" method="post" id="formularioPj">
                 <input type="hidden" name="_method" value="insereLoginPj">
-                <input type="hidden" name="tipo_cadastro" value="<?= $tipo_cadastro ?>">
+                <input type="hidden" name="tipo_cadastro" id="tipo_cadastro" value="<?= $tipo_cadastro ?>">
 
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" name="razao_social" placeholder="Razão Social" required>
@@ -58,7 +58,7 @@ if ($_GET['tipo'] == 'pj') {
                     </div>
                 </div>
 
-                <div class="input-group mb-3" id="divEmail">
+                <div class="input-group mb-3">
                     <input type="email" class="form-control" name="email" placeholder="Email" required id="email">
                     <div class="input-group-append">
                         <div class="input-group-text">
@@ -112,22 +112,23 @@ if ($_GET['tipo'] == 'pj') {
 <script>
     const url = `<?= $url ?>`;
     var email = $('#email');
+    var tipoCadastro = $('#tipo_cadastro');
 
     email.blur(function () {
         $.ajax({
             url: url,
             type: 'POST',
-            data: {"email": email.val()},
+            data: {
+                "email": email.val(),
+                "tabela": tipoCadastro.val()
+            },
 
             success: function (data) {
-                let divEmail = document.querySelector('#divEmail');
-                let emailCampo = document.querySelector('#email');
-
                 if (data.ok) {
-                    emailCampo.classList.remove("is-invalid");
+                    email.removeClass("is-invalid");
                     $("#cadastra").attr('disabled', false);
                 } else {
-                    emailCampo.classList.add("is-invalid");
+                    email.addClass("is-invalid");
                     $("#cadastra").attr('disabled', true);
                 }
             }
