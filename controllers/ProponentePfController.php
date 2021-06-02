@@ -158,10 +158,8 @@ class ProponentePfController extends ProponentePfModel
     {
         $id = MainModel::decryption($id);
         $pf = DbModel::consultaSimples(
-            "SELECT pf.*, n2.nacionalidade, ec.estado_civil, ge.genero, et.etnia, pe.*, pl.lei 
+            "SELECT pf.*, ge.genero, et.etnia, pe.*, pl.lei 
             FROM proponente_pfs AS pf
-            LEFT JOIN nacionalidades n2 on pf.nacionalidade_id = n2.id
-            LEFT JOIN estado_civis ec on pf.estado_civil_id = ec.id
             LEFT JOIN generos ge on pf.genero_id = ge.id
             LEFT JOIN etnias et on pf.etnia_id = et.id
             LEFT JOIN proponente_pf_enderecos pe on pf.id = pe.proponente_pf_id
