@@ -1,10 +1,10 @@
 <?php
-$url = 'http://' . $_SERVER['HTTP_HOST'] . '/promac/api/verificadorEmail.php';
+$url = SERVERURL.'api/verificadorEmail.php';
 
 if ($_GET['tipo'] == 'pf') {
-    $tipo_cadastro = 1;
+    $tipo_cadastro = "proponente_pfs";
 } elseif ($_GET['tipo'] == 'incentivador_pf') {
-    $tipo_cadastro = 2;
+    $tipo_cadastro = "incentivador_pfs";
 } else {
     echo '<script> window.location.href="'. SERVERURL .'" </script>';
 }
@@ -22,7 +22,7 @@ if ($_GET['tipo'] == 'pf') {
             <h5 class="login-box-msg">Efetue seu Cadastro</h5>
             <p class="card-text"><span style="text-align: justify; display:block;"> Confira seus dados antes de clicar no botão "Cadastrar".</span></p>
 
-            <?php if ($tipo_cadastro == 1): ?>
+            <?php if ($tipo_cadastro == "proponente_pfs"): ?>
                 <div class="alert alert-danger">
                     <h5><i class="icon fas fa-exclamation-triangle"></i> Atenção!</h5>
                     O cadastrado Pessoa Física não pode ser servidor da SMC e necessita morar há pelo menos 2 anos no
@@ -33,7 +33,7 @@ if ($_GET['tipo'] == 'pf') {
             <form class="needs-validation formulario-ajax" data-form="save"
                   action="<?= SERVERURL ?>ajax/usuarioAjax.php" method="post" id="formularioPf">
                 <input type="hidden" name="_method" value="insereLoginPf">
-                <input type="hidden" name="tipo_cadastro" value="<?= $tipo_cadastro ?>">
+                <input type="hidden" name="tipo_cadastro" id="tipo_cadastro" value="<?= $tipo_cadastro ?>">
 
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" name="nome" placeholder="Nome Completo" required>
@@ -59,7 +59,7 @@ if ($_GET['tipo'] == 'pf') {
                     </div>
                 </div>
 
-                <div class="input-group mb-3" id="divEmail">
+                <div class="input-group mb-3">
                     <input type="email" class="form-control" name="email" placeholder="Email" required id="email">
                     <div class="input-group-append">
                         <div class="input-group-text">
@@ -113,22 +113,23 @@ if ($_GET['tipo'] == 'pf') {
 <script>
     const url = `<?= $url ?>`;
     var email = $('#email');
+    var tipoCadastro = $('#tipo_cadastro');
 
     email.blur(function () {
         $.ajax({
             url: url,
             type: 'POST',
-            data: {"email": email.val()},
+            data: {
+                "email": email.val(),
+                "tabela": tipoCadastro.val()
+            },
 
             success: function (data) {
-                let divEmail = document.querySelector('#divEmail');
-                let emailCampo = document.querySelector('#email');
-
                 if (data.ok) {
-                    emailCampo.classList.remove("is-invalid");
+                    email.removeClass("is-invalid");
                     $("#cadastra").attr('disabled', false);
                 } else {
-                    emailCampo.classList.add("is-invalid");
+                    email.addClass("is-invalid");
                     $("#cadastra").attr('disabled', true);
                 }
             }
