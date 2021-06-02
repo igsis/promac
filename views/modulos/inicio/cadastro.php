@@ -1,5 +1,5 @@
 <?php
-$url = 'http://' . $_SERVER['HTTP_HOST'] . '/capac/api/verificadorEmail.php';
+$url = SERVERURL.'api/verificadorEmail.php';
 ?>
 <div class="login-page">
     <div class="card">
@@ -26,7 +26,7 @@ $url = 'http://' . $_SERVER['HTTP_HOST'] . '/capac/api/verificadorEmail.php';
                         <strong>Insira seu Nome Completo</strong>
                     </div>
                 </div>
-                <div class="input-group mb-3" id="divEmail">
+                <div class="input-group mb-3">
                     <input type="email" class="form-control" name="email" placeholder="Email" required id="email">
                     <div class="input-group-append">
                         <div class="input-group-text">
@@ -47,6 +47,18 @@ $url = 'http://' . $_SERVER['HTTP_HOST'] . '/capac/api/verificadorEmail.php';
                     </div>
                     <div class="invalid-feedback">
                         <strong>Insira um Telefone Válido</strong>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" name="token" placeholder="Código de Acesso"
+                           required>
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-ban"></span>
+                        </div>
+                    </div>
+                    <div class="invalid-feedback">
+                        <strong>Token Inválido</strong>
                     </div>
                 </div>
                 <div class="input-group mb-3">
@@ -97,17 +109,17 @@ $url = 'http://' . $_SERVER['HTTP_HOST'] . '/capac/api/verificadorEmail.php';
         $.ajax({
             url: url,
             type: 'POST',
-            data: {"email": email.val()},
+            data: {
+                "email": email.val(),
+                "tabela": "usuarios"
+            },
 
             success: function (data) {
-                let divEmail = document.querySelector('#divEmail');
-                let emailCampo = document.querySelector('#email');
-
                 if (data.ok) {
-                    emailCampo.classList.remove("is-invalid");
+                    email.removeClass("is-invalid");
                     $("#cadastra").attr('disabled', false);
                 } else {
-                    emailCampo.classList.add("is-invalid");
+                    email.addClass("is-invalid");
                     $("#cadastra").attr('disabled', true);
                 }
             }

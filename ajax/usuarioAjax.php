@@ -7,8 +7,8 @@ if (isset($_POST['_method'])) {
     $insUsuario = new UsuarioController();
 
     if ($_POST['_method'] == "insereNovoUsuario"){
-        if (isset($_POST['nome']) && (isset($_POST['senha']))) {
-            echo $insUsuario->insereUsuario($_POST);
+        if (isset($_POST['nome']) && (isset($_POST['senha'])) && (isset($_POST['token']))) {
+            echo $insUsuario->insereUsuario();
         }
     }
     elseif ($_POST['_method'] == "editaUsuario"){
