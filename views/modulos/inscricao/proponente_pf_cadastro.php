@@ -1,6 +1,6 @@
 <?php
 require_once "./controllers/ProponentePfController.php";
-
+$url_zona = SERVERURL."api/api_distrito_subprefeitura.php";
 /**
  * Lembrar de criar uma função para validar o módulo ou destruir a sessão.
  */
@@ -194,15 +194,15 @@ $pf = $pfObjeto->recuperaProponentePf($id);
                                 <div class="form-group col">
                                     <label for="distrito">Distrito *</label>
                                     <select name="en_distrito_id" id="distrito" class="form-control select2bs4" required>
-                                        <option value="">Selecione uma opção...</option>
-                                        <?php $pfObjeto->geraOpcao('distritos',$pf->distrito_id ?? '') ?>
+                                            <!-- Populando pelo js -->
+                                        <?php //$pfObjeto->geraOpcao('distritos',$pf->distrito_id ?? '') ?>
                                     </select>
                                 </div>
                                 <div class="form-group col">
                                     <label for="subprefeitura">Subprefeitura *</label>
                                     <select name="en_subprefeitura_id" id="subprefeitura" class="form-control select2bs4" required>
-                                        <option value="">Selecione uma opção...</option>
-                                        <?php $pfObjeto->geraOpcao('subprefeituras',$pf->subprefeitura_id ?? '') ?>
+                                        <!-- Populando pelo js -->
+                                        <?php //$pfObjeto->geraOpcao('subprefeituras',$pf->subprefeitura_id ?? '') ?>
                                     </select>
                                 </div>
                             </div>
@@ -227,25 +227,3 @@ $pf = $pfObjeto->recuperaProponentePf($id);
 
 
 <script src="../views/dist/js/cep_api.js"></script>
-
-<script type="text/javascript">
-    $(function() {
-        const Toast = Swal.mixin({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 3000
-        });
-        $('.swalDefaultWarning').show(function() {
-            Toast.fire({
-                type: 'warning',
-                title: 'Em caso de alteração, pressione o botão Gravar para confirmar os dados'
-            })
-        });
-    });
-
-    $(document).ready(function () {
-        $('.nav-link').removeClass('active');
-        $('#dados_cadastrais').addClass('active');
-    });
-</script>
