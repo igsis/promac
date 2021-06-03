@@ -186,23 +186,29 @@ $pf = $pfObjeto->recuperaProponentePf($id);
                             <div class="row">
                                 <div class="form-group col">
                                     <label for="zona">Zona *</label>
-                                    <select name="en_zona_id" id="zona" class="form-control select2bs4" required>
+                                    <select name="en_zona_id" id="zona" class="form-control" required>
                                         <option value="">Selecione uma opção...</option>
                                         <?php $pfObjeto->geraOpcao('zonas',$pf->zona_id ?? '') ?>
                                     </select>
                                 </div>
                                 <div class="form-group col">
                                     <label for="distrito">Distrito *</label>
-                                    <select name="en_distrito_id" id="distrito" class="form-control select2bs4" required>
-                                            <!-- Populando pelo js -->
-                                        <?php //$pfObjeto->geraOpcao('distritos',$pf->distrito_id ?? '') ?>
+                                    <select name="en_distrito_id" id="distrito" class="form-control" required>
+                                        <!-- Populando pelo js -->
+                                        <?php
+                                        if (isset($pf->distrito_id))
+                                            $pfObjeto->geraOpcao('distritos',$pf->distrito_id);
+                                        ?>
                                     </select>
                                 </div>
                                 <div class="form-group col">
                                     <label for="subprefeitura">Subprefeitura *</label>
-                                    <select name="en_subprefeitura_id" id="subprefeitura" class="form-control select2bs4" required>
+                                    <select name="en_subprefeitura_id" id="subprefeitura" class="form-control" required>
                                         <!-- Populando pelo js -->
-                                        <?php //$pfObjeto->geraOpcao('subprefeituras',$pf->subprefeitura_id ?? '') ?>
+                                        <?php
+                                        if (isset($pf->subprefeitura_id))
+                                            $pfObjeto->geraOpcao('subprefeituras',$pf->subprefeitura_id);
+                                        ?>
                                     </select>
                                 </div>
                             </div>

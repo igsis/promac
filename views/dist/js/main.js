@@ -288,9 +288,8 @@ $('#dinheiro').ready(function () {
 
 })
 
-console.log("Olá, mundo");
 
-const url = `http://localhost/promac/api/api_distrito_subprefeitura.php`;
+const url = `../api/api_distrito_subprefeitura.php`;
 let zona = document.querySelector('#zona');
 
 zona.addEventListener('change', async e => {
@@ -313,19 +312,10 @@ let distrito = document.querySelector('#distrito');
 distrito.addEventListener('change', async e => {
     let idDistrito = $('#distrito option:checked').val();
 
-    fetch(`${url}?espaco_id=${idDistrito}`)
+    fetch(`${url}?distrito_id=${idDistrito}`)
         .then(response => response.json())
         .then(subprefeituras => {
             $('#subprefeitura option').remove();
-            if (subprefeituras.length < 1) {
-                $('#subprefeitura').append('<option value="">Não há espaço para esse distrito</option>')
-                    .attr('required', false)
-                    .focus();
-            } else {
-                $('#subprefeitura').append('<option value="">Selecione uma opção...</option>')
-                    .attr('required', true)
-                    .focus();
-            }
 
             for (const subprefeitura of subprefeituras) {
                 $('#subprefeitura').append(`<option value='${subprefeitura.id}'>${subprefeitura.subprefeitura}</option>`)

@@ -20,10 +20,10 @@ if (isset($_GET['zona_id']) || isset($_POST['zona_id'])){
     print_r(json_encode($distritos));
 }
 
-if (isset($_GET['subprefeitura_id'])){
-    $subprefeitura_id = $_GET['subprefeitura_id'];
+if (isset($_GET['distrito_id'])){
+    $distrito_id = $_GET['distrito_id'];
 
-    $subs = $db->consultaSimples("SELECT id, subprefeitura FROM subprefeituras WHERE id = '$subprefeitura_id'")->fetchAll();
+    $subs = $db->consultaSimples("SELECT s.id, s.subprefeitura FROM subprefeituras s INNER JOIN distritos d on s.id = d.subprefeitura_id WHERE d.id = '$distrito_id'")->fetchAll();
 
     print_r(json_encode($subs));
 }
