@@ -52,7 +52,7 @@ class UsuarioController extends UsuarioModel
                 $usuario = $consultaUsuario->fetch();
 
                 session_start(['name' => 'prmc']);
-                $_SESSION['usuario_id_p'] = $usuario['id'];
+                $_SESSION['usuario_id_p'] = MainModel::encryption($usuario['id']);
                 $_SESSION['nome_p'] = $usuario['nome'];
                 $_SESSION['modulo_p'] = $modulo;
 
