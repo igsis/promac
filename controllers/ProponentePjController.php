@@ -19,6 +19,8 @@ class ProponentePjController extends ProponentePjModel
         $idDecryp = MainModel::decryption($_POST['id']);
 
         $dadosLimpos = ProponentePjModel::limparStringPJ($_POST);
+        $dadosLimpos['pj']['cooperativa'] = $dadosLimpos['pj']['cooperativa'] ?? 0;
+        $dadosLimpos['pj']['mei'] = $dadosLimpos['pj']['mei'] ?? 0;
 
         $edita = DbModel::update('proponente_pjs', $dadosLimpos['pj'], $idDecryp);
         if ($edita) {
@@ -56,7 +58,7 @@ class ProponentePjController extends ProponentePjModel
                     'titulo' => 'Pessoa Jurídica',
                     'texto' => 'Pessoa Jurídica editada com sucesso!',
                     'tipo' => 'success',
-                    'location' => SERVERURL.$pagina.'/pj_cadastro&id='.$id
+                    'location' => SERVERURL.$pagina.'&id='.$id
                 ];
                 return MainModel::sweetAlert($alerta);
             }
@@ -66,7 +68,7 @@ class ProponentePjController extends ProponentePjModel
                 'titulo' => 'Erro!',
                 'texto' => 'Erro ao salvar!',
                 'tipo' => 'error',
-                'location' => SERVERURL.$pagina.'/proponente'
+                'location' => SERVERURL.$pagina
             ];
             return MainModel::sweetAlert($alerta);
         }

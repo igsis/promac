@@ -66,7 +66,7 @@ class IncentivadorPjController extends IncentivadorPjModel
                 'titulo' => 'Erro!',
                 'texto' => 'Erro ao salvar!',
                 'tipo' => 'error',
-                'location' => SERVERURL.$pagina.'/incentivador'
+                'location' => SERVERURL.$pagina
             ];
             return MainModel::sweetAlert($alerta);
         }

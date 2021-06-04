@@ -74,7 +74,7 @@ unset($_SESSION['modulo']);
                         <p> </p>
                     </div>
                     <div align="center">
-                        <a href="<?= SERVERURL ?>inscricao/incentivador__pf_cadastro" class="small-box-footer">
+                        <a href="<?= SERVERURL ?>inscricao/incentivador_pf_cadastro" class="small-box-footer">
                             Acesse <i class="fas fa-arrow-circle-right"></i>
                         </a>
                     </div>

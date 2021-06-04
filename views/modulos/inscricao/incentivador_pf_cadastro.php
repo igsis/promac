@@ -1,14 +1,14 @@
 <?php
-require_once "./controllers/ProponentePfController.php";
+require_once "./controllers/IncentivadorPfController.php";
 $url_zona = SERVERURL."api/api_distrito_subprefeitura.php";
 /**
  * Lembrar de criar uma função para validar o módulo ou destruir a sessão.
  */
 
-$pfObjeto =  new ProponentePfController();
+$pfObjeto =  new IncentivadorPfController();
 
 $id = $_SESSION['usuario_id_p'];
-$pf = $pfObjeto->recuperaProponentePf($id);
+$pf = $pfObjeto->recuperaIncentivadorPf($id);
 ?>
 <!-- Content Header (Page header) -->
 <div class="content-header">
@@ -34,7 +34,7 @@ $pf = $pfObjeto->recuperaProponentePf($id);
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form class="form-horizontal formulario-ajax" method="POST" action="<?= SERVERURL ?>ajax/proponentePfAjax.php"
+                    <form class="form-horizontal formulario-ajax" method="POST" action="<?= SERVERURL ?>ajax/incentivadorPfAjax.php"
                           role="form" data-form="<?= ($id) ? "update" : "save" ?>">
                         <input type="hidden" name="_method" value="<?= ($id) ? "editarPf" : "cadastrarPf" ?>">
                         <input type="hidden" name="pagina" value="<?= $_GET['views'] ?>">
@@ -77,59 +77,13 @@ $pf = $pfObjeto->recuperaProponentePf($id);
                                            onkeyup="mascara( this, mtel );"  class="form-control"
                                            placeholder="Digite o telefone" maxlength="15"
                                            value="<?=  $pf->telefones['tel_1'] ?? "" ?>">
-                                </div>
+                                 </div>
                                 <div class="form-group col-md-2">
                                     <label for="telefone2">Telefone #3:</label>
                                     <input type="text" id="telefone2" name="te_telefone_3"
                                            onkeyup="mascara( this, mtel );"  class="form-control telefone"
                                            placeholder="Digite o telefone" maxlength="15"
                                            value="<?=  $pf->telefones['tel_2'] ?? "" ?>">
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="form-group col-md-2">
-                                    <label for="genero">Gênero: *</label>
-                                    <select class="form-control select2bs4" style="width: 100%;" id="genero" name="pf_genero_id" required>
-                                        <option value="">Selecione uma opção...</option>
-                                        <?php
-                                        $pfObjeto->geraOpcao("generos",$pf->genero_id ?? '',true);
-                                        ?>
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-2">
-                                    <label for="etnia">Etnia: *</label>
-                                    <select class="form-control select2bs4" style="width: 100%;" id="etnia" name="pf_etnia_id" required>
-                                        <option value="">Selecione uma opção...</option>
-                                        <?php
-                                        $pfObjeto->geraOpcao("etnias",$pf->etnia_id ?? '',true);
-                                        ?>
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-1">
-                                    <label for="pf_cooperado">Cooperado?</label><br>
-                                    <input type="checkbox" class="checkbox-grid-2" id="pf_cooperado" name="pf_cooperado" value="1"
-                                        <?php
-                                        if (isset($pf->cooperado)){
-                                            if ($pf->cooperado == 1){
-                                                echo 'checked';
-                                            }
-                                        }
-                                        ?>
-                                    >
-                                </div>
-                                <div class="form-group col-md-3"><br>
-                                    <div class="row">
-                                        <div class="col-2" style="text-align: right"><input id="lei" type="checkbox" class="form-control-sm checkbox-grid-2"></div>
-                                        <div class="col"><label for="lei">Você já participou de outras leis de incentivo à cultura?</label></div>
-                                    </div>
-
-
-                                </div>
-                                <div class="form-group col-md">
-                                    <label for="lei_lei">Lei: *</label>
-                                    <input type="text" class="form-control" id="lei_lei" name="le_lei"
-                                           maxlength="70" value="<?= $pf->lei ?? null ?>" required readonly>
                                 </div>
                             </div>
 
@@ -230,3 +184,9 @@ $pf = $pfObjeto->recuperaProponentePf($id);
     </div><!-- /.container-fluid -->
 </div>
 <!-- /.content -->
+<?php
+$javascript = <<<'JS'
+<script src="../views/dist/js/cep_api.js"></script>
+<script src="../views/dist/js/zona_api.js"></script>
+JS;
+?>

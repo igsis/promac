@@ -86,16 +86,16 @@ class ViewsModel
                 $menu = "./views/modulos/$modulo/include/menu.php";
             } else {
                 switch ($_SESSION['modulo_p']) {
-                    case 1:
+                    case "proponente_pf":
                         $menu = "./views/modulos/inscricao/include/menu_proponente_pf.php";
                         break;
-                    case 2:
+                    case "proponente_pj":
                         $menu = "./views/modulos/inscricao/include/menu_proponente_pj.php";
                         break;
-                    case 3:
+                    case "incentivador_pf":
                         $menu = "./views/modulos/inscricao/include/menu_incentivador_pf.php";
                         break;
-                    case 4:
+                    case "incentivador_pj":
                         $menu = "./views/modulos/inscricao/include/menu_incentivador_pj.php";
                         break;
                     default:
