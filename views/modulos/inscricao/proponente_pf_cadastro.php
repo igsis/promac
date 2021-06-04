@@ -1,6 +1,6 @@
 <?php
 require_once "./controllers/ProponentePfController.php";
-
+$url_zona = SERVERURL."api/api_distrito_subprefeitura.php";
 /**
  * Lembrar de criar uma função para validar o módulo ou destruir a sessão.
  */
@@ -34,10 +34,9 @@ $pf = $pfObjeto->recuperaProponentePf($id);
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form class="form-horizontal formulario-ajax" method="POST" action="<?= SERVERURL ?>ajax/formacaoAjax.php"
+                    <form class="form-horizontal formulario-ajax" method="POST" action="<?= SERVERURL ?>ajax/proponentePfAjax.php"
                           role="form" data-form="<?= ($id) ? "update" : "save" ?>">
                         <input type="hidden" name="_method" value="<?= ($id) ? "editarPf" : "cadastrarPf" ?>">
-                        <input type="hidden" name="pf_ultima_atualizacao" value="<?= date('Y-m-d H-i-s') ?>">
                         <input type="hidden" name="pagina" value="<?= $_GET['views'] ?>">
                         <?php if ($id): ?>
                             <input type="hidden" name="id" value="<?= $id ?>">
@@ -193,17 +192,23 @@ $pf = $pfObjeto->recuperaProponentePf($id);
                                     </select>
                                 </div>
                                 <div class="form-group col">
-                                    <label for="subprefeitura">Subprefeitura *</label>
-                                    <select name="en_subprefeitura_id" id="subprefeitura" class="form-control" required>
-                                        <option value="">Selecione uma opção...</option>
-                                        <?php $pfObjeto->geraOpcao('subprefeituras',$pf->subprefeitura_id ?? '') ?>
+                                    <label for="distrito">Distrito *</label>
+                                    <select name="en_distrito_id" id="distrito" class="form-control" required>
+                                        <!-- Populando pelo js -->
+                                        <?php
+                                        if (isset($pf->distrito_id))
+                                            $pfObjeto->geraOpcao('distritos',$pf->distrito_id);
+                                        ?>
                                     </select>
                                 </div>
                                 <div class="form-group col">
-                                    <label for="distrito">Distrito *</label>
-                                    <select name="en_distrito_id" id="distrito" class="form-control" required>
-                                        <option value="">Selecione uma opção...</option>
-                                        <?php $pfObjeto->geraOpcao('distritos',$pf->distrito_id ?? '') ?>
+                                    <label for="subprefeitura">Subprefeitura *</label>
+                                    <select name="en_subprefeitura_id" id="subprefeitura" class="form-control" required>
+                                        <!-- Populando pelo js -->
+                                        <?php
+                                        if (isset($pf->subprefeitura_id))
+                                            $pfObjeto->geraOpcao('subprefeituras',$pf->subprefeitura_id);
+                                        ?>
                                     </select>
                                 </div>
                             </div>
@@ -228,25 +233,3 @@ $pf = $pfObjeto->recuperaProponentePf($id);
 
 
 <script src="../views/dist/js/cep_api.js"></script>
-
-<script type="text/javascript">
-    $(function() {
-        const Toast = Swal.mixin({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 3000
-        });
-        $('.swalDefaultWarning').show(function() {
-            Toast.fire({
-                type: 'warning',
-                title: 'Em caso de alteração, pressione o botão Gravar para confirmar os dados'
-            })
-        });
-    });
-
-    $(document).ready(function () {
-        $('.nav-link').removeClass('active');
-        $('#dados_cadastrais').addClass('active');
-    });
-</script>
