@@ -1,14 +1,14 @@
 <?php
-require_once "./controllers/ProponentePfController.php";
+require_once "./controllers/IncentivadorPfController.php";
 $url_zona = SERVERURL."api/api_distrito_subprefeitura.php";
 /**
  * Lembrar de criar uma função para validar o módulo ou destruir a sessão.
  */
 
-$pfObjeto =  new ProponentePfController();
+$pfObjeto =  new IncentivadorPfController();
 
 $id = $_SESSION['usuario_id_p'];
-$pf = $pfObjeto->recuperaProponentePf($id);
+$pf = $pfObjeto->recuperaIncentivadorPf($id);
 ?>
 <!-- Content Header (Page header) -->
 <div class="content-header">
@@ -105,31 +105,6 @@ $pf = $pfObjeto->recuperaProponentePf($id);
                                         $pfObjeto->geraOpcao("etnias",$pf->etnia_id ?? '',true);
                                         ?>
                                     </select>
-                                </div>
-                                <div class="form-group col-md-1">
-                                    <label for="pf_cooperado">Cooperado?</label><br>
-                                    <input type="checkbox" class="checkbox-grid-2" id="pf_cooperado" name="pf_cooperado" value="1"
-                                        <?php
-                                        if (isset($pf->cooperado)){
-                                            if ($pf->cooperado == 1){
-                                                echo 'checked';
-                                            }
-                                        }
-                                        ?>
-                                    >
-                                </div>
-                                <div class="form-group col-md-3"><br>
-                                    <div class="row">
-                                        <div class="col-2" style="text-align: right"><input id="lei" type="checkbox" class="form-control-sm checkbox-grid-2"></div>
-                                        <div class="col"><label for="lei">Você já participou de outras leis de incentivo à cultura?</label></div>
-                                    </div>
-
-
-                                </div>
-                                <div class="form-group col-md">
-                                    <label for="lei_lei">Lei: *</label>
-                                    <input type="text" class="form-control" id="lei_lei" name="le_lei"
-                                           maxlength="70" value="<?= $pf->lei ?? null ?>" required readonly>
                                 </div>
                             </div>
 
