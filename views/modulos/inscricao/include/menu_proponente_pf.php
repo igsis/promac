@@ -13,13 +13,13 @@ $pf = $pfObj->recuperaProponentePf($_SESSION['usuario_id_p']);
 </li>
 <?php if ($pf->liberado == 0 || $pf->liberado == 3): ?>
     <li class="nav-item">
-        <a href="<?= SERVERURL ?>incricao/proponente_pf_cadastro" class="nav-link" id="proponente_pf_cadastro">
+        <a href="<?= SERVERURL ?>inscricao/proponente_pf_cadastro" class="nav-link" id="proponente_pf_cadastro">
             <i class="far fa-circle nav-icon"></i>
             <p>Dados pessoais</p>
         </a>
     </li>
     <li class="nav-item">
-        <a href="<?= SERVERURL ?>incricao/proponente_pf_documentos" class="nav-link" id="proponente_pf_documentos">
+        <a href="<?= SERVERURL ?>inscricao/proponente_pf_documentos" class="nav-link" id="proponente_pf_documentos">
             <i class="far fa-circle nav-icon"></i>
             <p>Documentos</p>
         </a>

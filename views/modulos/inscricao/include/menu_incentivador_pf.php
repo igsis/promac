@@ -13,13 +13,13 @@ $pj = $pjObj->recuperaIncentivadorPj($_SESSION['usuario_id_p']);
 </li>
 <?php if ($pj->liberado == 0 || $pj->liberado == 3): ?>
     <li class="nav-item">
-        <a href="<?= SERVERURL ?>incricao/incentivador_pf_cadastro" class="nav-link" id="incentivador_pf_cadastro">
+        <a href="<?= SERVERURL ?>inscricao/incentivador_pf_cadastro" class="nav-link" id="incentivador_pf_cadastro">
             <i class="far fa-circle nav-icon"></i>
             <p>Dados pessoais</p>
         </a>
     </li>
     <li class="nav-item">
-        <a href="<?= SERVERURL ?>incricao/incentivador_pf_documentos" class="nav-link" id="incentivador_pf_documentos">
+        <a href="<?= SERVERURL ?>inscricao/incentivador_pf_documentos" class="nav-link" id="incentivador_pf_documentos">
             <i class="far fa-circle nav-icon"></i>
             <p>Documentos</p>
         </a>
