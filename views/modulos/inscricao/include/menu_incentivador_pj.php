@@ -14,7 +14,7 @@
 <li class="nav-item">
     <a href="<?= SERVERURL ?>incricao/representante_cadastro" class="nav-link" id="proponente_pf_cadastro">
         <i class="far fa-circle nav-icon"></i>
-        <p>Dados pessoais</p>
+        <p>Representante legal</p>
     </a>
 </li>
 <li class="nav-item">
