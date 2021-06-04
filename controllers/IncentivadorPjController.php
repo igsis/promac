@@ -8,58 +8,6 @@ if ($pedidoAjax) {
 class IncentivadorPjController extends IncentivadorPjModel
 {
     /**
-     * <p>Função para inserir Incentivador Pessoa Jurídica</p>
-     * @param $pagina
-     * @param false $retornaId
-     * @return string
-     */
-    public function insereIncentivadorPj($pagina, bool $retornaId = false):string
-    {
-        $dadosLimpos = IncentivadorPjModel::limparStringPJ($_POST);
-
-        /* cadastro */
-        $insere = DbModel::insert('incentivador_pjs', $dadosLimpos['pj']);
-        if ($insere->rowCount()>0) {
-            $id = DbModel::connection()->lastInsertId();
-
-            if (count($dadosLimpos['en'])>0){
-                $dadosLimpos['en']['incentivador_pj_id'] = $id;
-                DbModel::insert('incentivador_pj_enderecos', $dadosLimpos['en']);
-            }
-
-            if (count($dadosLimpos['telefones'])>0){
-                foreach ($dadosLimpos['telefones'] as $telefone){
-                    $telefone['incentivador_pj_id'] = $id;
-                    DbModel::insert('incentivador_pj_telefones', $telefone);
-                }
-            }
-
-            if($retornaId){
-                return $id;
-            } else{
-                $alerta = [
-                    'alerta' => 'sucesso',
-                    'titulo' => 'Pessoa Jurídica',
-                    'texto' => 'Pessoa Jurídica cadastrada com sucesso!',
-                    'tipo' => 'success',
-                    'location' => SERVERURL.$pagina.'&id='.MainModel::encryption($id)
-                ];
-                return MainModel::sweetAlert($alerta);
-            }
-        }
-        else {
-            $alerta = [
-                'alerta' => 'simples',
-                'titulo' => 'Erro!',
-                'texto' => 'Erro ao salvar!',
-                'tipo' => 'error',
-                'location' => SERVERURL.$pagina.'/incentivador'
-            ];
-            return MainModel::sweetAlert($alerta);
-        }
-    }
-
-    /**
      * <p>Função para editar Incentivador Pessoa Jurídica</p>
      * @param $id
      * @param $pagina

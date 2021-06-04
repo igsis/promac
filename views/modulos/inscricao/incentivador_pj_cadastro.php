@@ -1,9 +1,9 @@
 <?php
-require_once "./controllers/ProponentePjController.php";
-$pjObjeto =  new ProponentePjController();
+require_once "./controllers/IncentivadorPjController.php";
+$pjObjeto =  new IncentivadorPjController();
 
 $id = $_SESSION['usuario_id_p'];
-$pj = $pjObjeto->recuperaProponentePj($id);
+$pj = $pjObjeto->recuperaIncentivadorPj($id);
 ?>
 <!-- Content Header (Page header) -->
 <div class="content-header">
@@ -29,7 +29,7 @@ $pj = $pjObjeto->recuperaProponentePj($id);
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form class="form-horizontal formulario-ajax" method="POST" action="<?= SERVERURL ?>ajax/proponentePjAjax.php" role="form" data-form="update">
+                    <form class="form-horizontal formulario-ajax" method="POST" action="<?= SERVERURL ?>ajax/incentivadorPjAjax.php" role="form" data-form="update">
                         <input type="hidden" name="_method" value="editarPj">
                         <input type="hidden" name="pagina" value="<?= $_GET['views'] ?>">
                         <?php if ($id): ?>
@@ -37,37 +37,13 @@ $pj = $pjObjeto->recuperaProponentePj($id);
                         <?php endif; ?>
                         <div class="card-body">
                             <div class="row">
-                                <div class="form-group col-md-8">
+                                <div class="form-group col-md-10">
                                     <label for="razao_social">Razão social: *</label>
                                     <input type="text" class="form-control" id="razao_social" name="pj_razao_social" placeholder="Digite o razao_social" maxlength="70" value="<?= $pj->razao_social ?? '' ?>" required>
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label for="cnpj">CNPJ: *</label>
                                     <input type="text" name="pj_cnpj" class="form-control" id="cnpj" value="<?= $pj->cnpj ?? null ?>" readonly>
-                                </div>
-                                <div class="form-group col-md-1">
-                                    <label for="mei">MEI</label><br>
-                                    <input type="checkbox" class="form-control-sm checkbox-grid-2" id="mei" name="pj_mei" value="1"
-                                        <?php
-                                        if (isset($pj->mei)){
-                                            if ($pj->mei == 1){
-                                                echo 'checked';
-                                            }
-                                        }
-                                        ?>
-                                    >
-                                </div>
-                                <div class="form-group col-md-1">
-                                    <label for="cooperativa">Cooperativa</label><br>
-                                    <input type="checkbox" class="form-control-sm checkbox-grid-2" id="cooperativa" name="pj_cooperativa" value="1"
-                                        <?php
-                                        if (isset($pj->cooperativa)){
-                                            if ($pj->cooperativa == 1){
-                                                echo 'checked';
-                                            }
-                                        }
-                                        ?>
-                                    >
                                 </div>
                             </div>
 
@@ -181,6 +157,15 @@ $pj = $pjObjeto->recuperaProponentePj($id);
                                 </div>
                             </div>
 
+                            <div class="row">
+                                <div class="form-group col-md-2">
+                                    <label for="imposto">Imposto</label>
+                                    <select name="pj_imposto_id" id="imposto" class="form-control" required>
+                                        <?php $pjObjeto->geraOpcao('impostos',$pj->imposto_id) ?>
+                                    </select>
+                                </div>
+                            </div>
+
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
@@ -198,7 +183,6 @@ $pj = $pjObjeto->recuperaProponentePj($id);
     </div><!-- /.container-fluid -->
 </div>
 <!-- /.content -->
-
 
 <script src="../views/dist/js/cep_api.js"></script>
 <script src="../views/dist/js/zona_api.js"></script>
