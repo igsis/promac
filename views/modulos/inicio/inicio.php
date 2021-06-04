@@ -83,8 +83,23 @@ switch ($pessoa->liberado){
                         <p><b><?= $nome_empresa ?? null ?></b><br>
                             <b>Documento:</b> <?= $documento ?? null ?> |
                             <b>E-mail:</b> <?= $pessoa->email ?? null ?> |
-                            <b>Telefones:</b> <?= $pessoa->telefones['tel_0'] ?? null . " " .$pessoa->telefones['tel_1'] ?? null. " ".$pessoa->telefones['tel_2'] ?? null ?><br>
-                            <b>Endereço:</b> <?= $pessoa->logradouro.", ".$pessoa->numero." ".$pessoa->complemento." ".$pessoa->bairro.", ".$pessoa->cidade." - ".$pessoa->uf." CEP: ".$pessoa->cep ?>
+                            <b>Telefones:</b>
+                            <?php
+                            if (isset($pessoa->telefones['tel_0'])){
+                                echo $pessoa->telefones['tel_0'] ?? null . " " .$pessoa->telefones['tel_1'] ?? null. " ".$pessoa->telefones['tel_2'] ?? null;
+                            } else{
+                                echo "não cadastrado";
+                            }
+                            ?>
+                            <br>
+                            <b>Endereço:</b>
+                            <?php
+                            if (isset($pessoa->logradouro)){
+                                echo $pessoa->logradouro.", ".$pessoa->numero." ".$pessoa->complemento." ".$pessoa->bairro.", ".$pessoa->cidade." - ".$pessoa->uf." CEP: ".$pessoa->cep;
+                            } else{
+                                echo "não cadastrado";
+                            }
+                            ?>
                         </p>
 
                     </div>
