@@ -106,30 +106,40 @@ $pf = $pfObjeto->recuperaProponentePf($id);
                                         ?>
                                     </select>
                                 </div>
-                                <div class="form-group col-md-1">
-                                    <label for="pf_cooperado">Cooperado?</label><br>
-                                    <input type="checkbox" class="checkbox-grid-2" id="pf_cooperado" name="pf_cooperado" value="1"
-                                        <?php
-                                        if (isset($pf->cooperado)){
-                                            if ($pf->cooperado == 1){
-                                                echo 'checked';
+                                <div class="form-group col-md-2">
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input custom-control-input-primary custom-control-input-outline"
+                                               type="checkbox" name="pf_cooperado" id="pf_cooperado" value="1"
+                                            <?php
+                                            if (isset($pf->cooperado)){
+                                                if ($pf->cooperado == 1){
+                                                    echo 'checked';
+                                                }
                                             }
-                                        }
-                                        ?>
-                                    >
-                                </div>
-                                <div class="form-group col-md-3"><br>
-                                    <div class="row">
-                                        <div class="col-2" style="text-align: right"><input id="lei" type="checkbox" class="form-control-sm checkbox-grid-2"></div>
-                                        <div class="col"><label for="lei">Você já participou de outras leis de incentivo à cultura?</label></div>
+                                            ?>
+                                        >
+                                        <label for="pf_cooperado" class="custom-control-label">Cooperado?</label>
                                     </div>
-
-
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input custom-control-input-primary custom-control-input-outline"
+                                               type="checkbox" id="lei" value="1" onchange="leiCheckbox()"
+                                            <?php
+                                            if (isset($pf->lei)){
+                                                if ($pf->lei != null){
+                                                    echo 'checked';
+                                                }
+                                            }
+                                            ?>
+                                        >
+                                        <label for="lei" class="custom-control-label">Você já participou de outras leis de incentivo à cultura?</label>
+                                    </div>
                                 </div>
                                 <div class="form-group col-md">
                                     <label for="lei_lei">Lei: *</label>
-                                    <input type="text" class="form-control" id="lei_lei" name="lei_lei"
-                                           maxlength="70" value="<?= $pf->lei_lei ?? null ?>" required readonly>
+                                    <input type="text" class="form-control" id="lei_lei" name="le_lei"
+                                           maxlength="70" value="<?= $pf->lei ?? null ?>" required disabled>
                                 </div>
                             </div>
 
@@ -233,42 +243,24 @@ $pf = $pfObjeto->recuperaProponentePf($id);
 <?php
 $javascript = <<<'JS'
 <script src="../views/dist/js/cep_api.js"></script>
-
+<script src="../views/dist/js/zona_api.js"></script>
 <script>
-    const url = `../api/api_distrito_subprefeitura.php`;
-    let zona = document.querySelector('#zona');
-    
-    zona.addEventListener('change', async e => {
-        let idZona = $('#zona option:checked').val();
-    
-        fetch(`${url}?zona_id=${idZona}`)
-            .then(response => response.json())
-            .then(distritos => {
-                $('#distrito option').remove();
-                $('#distrito').append('<option value="">Selecione uma opção...</option>');
-    
-                for (const distrito of distritos) {
-                    $('#distrito').append(`<option value='${distrito.id}'>${distrito.distrito}</option>`).focus();
-                }
-            })
-    })
-    
-    let distrito = document.querySelector('#distrito');
-    
-    distrito.addEventListener('change', async e => {
-        let idDistrito = $('#distrito option:checked').val();
-    
-        fetch(`${url}?distrito_id=${idDistrito}`)
-            .then(response => response.json())
-            .then(subprefeituras => {
-                $('#subprefeitura option').remove();
-    
-                for (const subprefeitura of subprefeituras) {
-                    $('#subprefeitura').append(`<option value='${subprefeitura.id}'>${subprefeitura.subprefeitura}</option>`)
-                }
-    
-            })
-    })
+    function leiCheckbox(){
+        let boxLei = $('#lei').is(':checked');
+        let txtLei = $('#lei_lei')
+
+        if (boxLei) {
+            txtLei.removeAttr('disabled');
+            txtLei.attr('required', true);
+        } else {
+            txtLei.attr('disabled', true);
+            txtLei.removeAttr('required');
+            txtLei.val('');
+        }
+    }
+
+    $(document).ready(leiCheckbox())
+
 </script>
 JS;
 ?>

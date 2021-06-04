@@ -128,8 +128,8 @@ $pf = $pfObjeto->recuperaProponentePf($id);
                                 </div>
                                 <div class="form-group col-md">
                                     <label for="lei_lei">Lei: *</label>
-                                    <input type="text" class="form-control" id="lei_lei" name="lei_lei"
-                                           maxlength="70" value="<?= $pf->lei_lei ?? null ?>" required readonly>
+                                    <input type="text" class="form-control" id="lei_lei" name="le_lei"
+                                           maxlength="70" value="<?= $pf->lei ?? null ?>" required readonly>
                                 </div>
                             </div>
 

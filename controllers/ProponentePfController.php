@@ -81,6 +81,7 @@ class ProponentePfController extends ProponentePfModel
         $idDecryp = MainModel::decryption($id);
 
         $dadosLimpos = ProponentePfModel::limparStringPF($_POST);
+        $dadosLimpos['pf']['cooperado'] = $dadosLimpos['pf']['cooperado'] ?? 0;
 
         $edita = DbModel::update('proponente_pfs', $dadosLimpos['pf'], $idDecryp);
         if ($edita) {
@@ -111,15 +112,20 @@ class ProponentePfController extends ProponentePfModel
                 }
             }
 
+            $lei_existe = DbModel::consultaSimples("SELECT lei FROM proponente_pf_leis WHERE proponente_pf_id = '$idDecryp'")->rowCount();
             if (isset($dadosLimpos['lei'])){
                 if (count($dadosLimpos['lei']) > 0) {
-                    $detalhe_existe = DbModel::consultaSimples("SELECT * FROM proponente_pf_leis WHERE proponente_pf_id = '$idDecryp'");
-                    if ($detalhe_existe->rowCount() > 0) {
+
+                    if ($lei_existe) {
                         DbModel::updateEspecial('proponente_pf_leis', $dadosLimpos['lei'], "proponente_pf_id", $idDecryp);
                     } else {
                         $dadosLimpos['lei']['proponente_pf_id'] = $idDecryp;
                         DbModel::insert('proponente_pf_leis', $dadosLimpos['lei']);
                     }
+                }
+            } else {
+                if ($lei_existe) {
+                    DbModel::deleteEspecial('proponente_pf_leis', 'proponente_pf_id', $idDecryp);
                 }
             }
 

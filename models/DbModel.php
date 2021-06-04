@@ -88,7 +88,7 @@ class DbModel
      * <p>Tabela do banco de dados</p>
      * @param array $data
      * <p>Dados a serem inseridos</p>
-     * @param array $campo
+     * @param string $campo
      * <p>Campo pelo qual deve ser pesquisado o registro</p>
      * @param array|string $campo_id
      * <p><i>Valor</i> do registro a ser atualizado</p>
