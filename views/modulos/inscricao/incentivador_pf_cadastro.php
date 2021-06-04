@@ -34,7 +34,7 @@ $pf = $pfObjeto->recuperaIncentivadorPf($id);
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form class="form-horizontal formulario-ajax" method="POST" action="<?= SERVERURL ?>ajax/proponentePfAjax.php"
+                    <form class="form-horizontal formulario-ajax" method="POST" action="<?= SERVERURL ?>ajax/incentivadorPfAjax.php"
                           role="form" data-form="<?= ($id) ? "update" : "save" ?>">
                         <input type="hidden" name="_method" value="<?= ($id) ? "editarPf" : "cadastrarPf" ?>">
                         <input type="hidden" name="pagina" value="<?= $_GET['views'] ?>">
@@ -77,34 +77,13 @@ $pf = $pfObjeto->recuperaIncentivadorPf($id);
                                            onkeyup="mascara( this, mtel );"  class="form-control"
                                            placeholder="Digite o telefone" maxlength="15"
                                            value="<?=  $pf->telefones['tel_1'] ?? "" ?>">
-                                </div>
+                                 </div>
                                 <div class="form-group col-md-2">
                                     <label for="telefone2">Telefone #3:</label>
                                     <input type="text" id="telefone2" name="te_telefone_3"
                                            onkeyup="mascara( this, mtel );"  class="form-control telefone"
                                            placeholder="Digite o telefone" maxlength="15"
                                            value="<?=  $pf->telefones['tel_2'] ?? "" ?>">
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="form-group col-md-2">
-                                    <label for="genero">Gênero: *</label>
-                                    <select class="form-control select2bs4" style="width: 100%;" id="genero" name="pf_genero_id" required>
-                                        <option value="">Selecione uma opção...</option>
-                                        <?php
-                                        $pfObjeto->geraOpcao("generos",$pf->genero_id ?? '',true);
-                                        ?>
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-2">
-                                    <label for="etnia">Etnia: *</label>
-                                    <select class="form-control select2bs4" style="width: 100%;" id="etnia" name="pf_etnia_id" required>
-                                        <option value="">Selecione uma opção...</option>
-                                        <?php
-                                        $pfObjeto->geraOpcao("etnias",$pf->etnia_id ?? '',true);
-                                        ?>
-                                    </select>
                                 </div>
                             </div>
 
@@ -205,3 +184,9 @@ $pf = $pfObjeto->recuperaIncentivadorPf($id);
     </div><!-- /.container-fluid -->
 </div>
 <!-- /.content -->
+<?php
+$javascript = <<<'JS'
+<script src="../views/dist/js/cep_api.js"></script>
+<script src="../views/dist/js/zona_api.js"></script>
+JS;
+?>

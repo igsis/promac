@@ -111,7 +111,7 @@ class IncentivadorPfController extends IncentivadorPfModel
                 $alerta = [
                     'alerta' => 'sucesso',
                     'titulo' => 'Pessoa Física',
-                    'texto' => 'Pessoa Física editada com sucesso!',
+                    'texto' => 'Incentivador Pessoa Física editada com sucesso!',
                     'tipo' => 'success',
                     'location' => SERVERURL.$pagina.'&id='.$id
                 ];
