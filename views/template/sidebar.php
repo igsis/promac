@@ -26,8 +26,8 @@
             <!-- Add icons to the links using the .nav-icon class
                  with font-awesome or any other icon font library -->
             <?php
-            $menuTitulo = explode("/", $_GET['views']);
-            echo "<li class='nav-header'>".strtoupper($menuTitulo['0'])."</li>";
+           /* $menuTitulo = explode("/", $_GET['views']);
+            echo "<li class='nav-header'>".strtoupper($menuTitulo['0'])."</li>";*/
             $menu = $view->exibirMenuController();
             if ($menu == 'login') {
                 include "./views/template/menuExemplo.php";
