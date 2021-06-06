@@ -2,6 +2,12 @@
 require_once "./controllers/IncentivadorPjController.php";
 $pjObj = new IncentivadorPjController();
 $pj = $pjObj->recuperaIncentivadorPJ($_SESSION['usuario_id_p']);
+
+if (isset($pj->representante_legal_id)){
+    $link_rep = SERVERURL . "inscricao/representante_cadastro?idPj=".$_SESSION['usuario_id_p']."&id=" . (new MainModel)->encryption($pj->representante_legal_id);
+} else{
+    $link_rep = SERVERURL . "inscricao/representante?idPj=".$_SESSION['usuario_id_p'];
+}
 ?>
 
 <li class="nav-header">INSCRIÇÃO</li>
@@ -19,7 +25,7 @@ $pj = $pjObj->recuperaIncentivadorPJ($_SESSION['usuario_id_p']);
         </a>
     </li>
     <li class="nav-item">
-        <a href="<?= SERVERURL ?>inscricao/representante" class="nav-link" id="proponente_pf_cadastro">
+        <a href="<?= $link_rep ?>" class="nav-link" id="representante_cadastro">
             <i class="far fa-circle nav-icon"></i>
             <p>Representante legal</p>
         </a>
