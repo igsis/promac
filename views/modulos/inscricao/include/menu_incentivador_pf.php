@@ -1,7 +1,7 @@
 <?php
-require_once "./controllers/IncentivadorPjController.php";
-$pjObj = new IncentivadorPjController();
-$pj = $pjObj->recuperaIncentivadorPj($_SESSION['usuario_id_p']);
+require_once "./controllers/IncentivadorPfController.php";
+$pfObj = new IncentivadorPfController();
+$pf = $pfObj->recuperaIncentivadorPf($_SESSION['usuario_id_p']);
 ?>
 
 <li class="nav-header">INSCRIÇÃO</li>
@@ -11,7 +11,7 @@ $pj = $pjObj->recuperaIncentivadorPj($_SESSION['usuario_id_p']);
         <p>Início</p>
     </a>
 </li>
-<?php if ($pj->liberado == 0 || $pj->liberado == 3): ?>
+<?php if ($pf->liberado == 0 || $pf->liberado == 3): ?>
     <li class="nav-item">
         <a href="<?= SERVERURL ?>inscricao/incentivador_pf_cadastro" class="nav-link" id="incentivador_pf_cadastro">
             <i class="far fa-circle nav-icon"></i>
