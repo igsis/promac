@@ -131,8 +131,8 @@ class RepresentanteController extends RepresentanteModel
                 }
             }
 
-            /*$pj_dados = ['representante_legal_id' => $id];
-            DbModel::update($tabela,$pj_dados,$idPj);*/
+            $pj_dados = ['representante_legal_id' => $id];
+            DbModel::update($tabela,$pj_dados,$idPj);
 
             if($retornaId){
                 return $idDecryp;

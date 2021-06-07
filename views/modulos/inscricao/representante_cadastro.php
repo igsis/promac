@@ -5,6 +5,12 @@ $repObj = new RepresentanteController();
 $id = $_GET['id'] ?? null;
 $idPj = $_POST['idPj'] ?? $_GET['idPj'];
 
+if (isset($_POST['botao'])){
+    $botao = $_POST['botao'];
+} else{
+    $botao = "Gravar";
+}
+
 if (isset($_POST['cpf'])){
     $documento = $_POST['cpf'];
     $representante = $repObj->getCPF($documento);
@@ -59,6 +65,7 @@ if ($id) {
                         <input type="hidden" name="idPj" value="<?= $idPj ?>">
                         <?php if ($id): ?>
                             <input type="hidden" name="id" value="<?= $id ?>">
+                            <button class="btn swalDefaultWarning"></button>
                         <?php endif; ?>
                         <div class="card-body">
                             <div class="row">
@@ -230,7 +237,7 @@ if ($id) {
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-info float-right">Gravar</button>
+                            <button type="submit" class="btn btn-info float-right"><?= $botao ?></button>
                         </div>
                         <!-- /.card-footer -->
                         <div class="resposta-ajax"></div>
@@ -265,6 +272,23 @@ $javascript = <<<'JS'
 
     $(document).ready(leiCheckbox())
 
+</script>
+
+<script type="text/javascript">
+    $(function() {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 9000
+        });
+        $('.swalDefaultWarning').show(function() {
+            Toast.fire({
+                type: 'warning',
+                title: 'Lembre-se de clicar no botão no rodapé do formulário para gravar a informação'
+            })
+        });
+    });
 </script>
 JS;
 ?>
