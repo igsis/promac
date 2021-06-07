@@ -1,17 +1,18 @@
 <?php
 if ($pedidoAjax) {
     require_once "../models/ArquivoModel.php";
-    require_once "../controllers/FomentoController.php";
     define('UPLOADDIR', "../uploads/");
 } else {
     require_once "./models/ArquivoModel.php";
-    require_once "./controllers/FomentoController.php";
-    require_once "./controllers/FormacaoController.php";
     define('UPLOADDIR', "./uploads/");
 }
 
 class ArquivoController extends ArquivoModel
 {
+    public function listarArquivos($tipo_contratacao){
+        return parent::listaArquivos($tipo_contratacao);
+    }
+
     public function recuperaIdListaDocumento($tipo_documento_id, $fomento = false) {
         if (!$fomento) {
             $sql = "SELECT id FROM lista_documentos WHERE tipo_documento_id = '$tipo_documento_id'";
@@ -24,18 +25,6 @@ class ArquivoController extends ArquivoModel
         }
 
         return DbModel::consultaSimples($sql);
-    }
-
-    public function listarArquivos($tipo_documento_id) {
-        $sql = "SELECT * FROM lista_documentos WHERE tipo_documento_id = '$tipo_documento_id' AND publicado = '1'";
-        return DbModel::consultaSimples($sql);
-    }
-
-    public function listarArquivosFomento($edital_id){
-        $edital_id = MainModel::decryption($edital_id);
-        $sqlTipoContratacao = "SELECT tipo_contratacao_id FROM fom_editais WHERE id = '$edital_id'";
-        $tipo_contratacao_id = DbModel::consultaSimples($sqlTipoContratacao)->fetchColumn();
-        return parent::listaArquivosFomentos($tipo_contratacao_id);
     }
 
     public function listarArquivosLider() {

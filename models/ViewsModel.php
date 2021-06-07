@@ -26,6 +26,7 @@ class ViewsModel
 
     protected function exibirViewModel($view, $modulo = "") {
         $whitelist = [
+            'anexos',
             'cadastro_pf',
             'cadastro_pj',
             'finalizar',

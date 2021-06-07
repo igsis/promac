@@ -99,12 +99,12 @@ class ArquivoModel extends MainModel
         return $erros;
     }
 
-    protected function listaArquivosFomentos($tipo_contratacao_id) {
-        $sql = "SELECT fld.id, fld.sigla, fld.documento, tc.tipo_contratacao, cd.anexo, cd.obrigatorio
-                FROM contratacao_documentos AS cd
-                INNER JOIN fom_lista_documentos AS fld ON fld.id = cd.fom_lista_documento_id
-                INNER JOIN tipos_contratacoes AS tc ON cd.tipo_contratacao_id = tc.id
-                WHERE cd.tipo_contratacao_id = '$tipo_contratacao_id' AND fld.publicado = 1 ORDER BY ordem";
+    protected function listaArquivos($tipo_contratacao_id) {
+        $sql = "SELECT ld.id, ld.sigla, ld.documento, ac.obrigatorio
+                FROM arquivo_cadastros AS ac
+                INNER JOIN lista_documentos AS ld ON ld.id = ac.lista_documento_id
+                INNER JOIN tipo_cadastros AS tc ON ac.tipo_cadastro_id = tc.id
+                WHERE ac.tipo_cadastro_id = '$tipo_contratacao_id' AND ld.publicado = 1";
         $arquivos = DbModel::consultaSimples($sql);
 
         return $arquivos;
