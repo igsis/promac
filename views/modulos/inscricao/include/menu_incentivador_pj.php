@@ -12,14 +12,14 @@ if (isset($pj->representante_legal_id)){
 
 <li class="nav-header">INSCRIÇÃO</li>
 <li class="nav-item">
-    <a href="<?= SERVERURL ?>inicio/inicio" class="nav-link" id="inicio_inicio">
+    <a href="<?= SERVERURL ?>inicio/inicio" class="nav-link" id="inicio">
         <i class="fa fa-info nav-icon"></i>
         <p>Início</p>
     </a>
 </li>
 <?php if ($pj->liberado == 0 || $pj->liberado == 3): ?>
     <li class="nav-item">
-        <a href="<?= SERVERURL ?>inscricao/proponente_pj_cadastro" class="nav-link" id="proponente_pf_cadastro">
+        <a href="<?= SERVERURL ?>inscricao/proponente_pj_cadastro" class="nav-link" id="proponente_pj_cadastro">
             <i class="far fa-circle nav-icon"></i>
             <p>Dados pessoais</p>
         </a>
@@ -31,7 +31,7 @@ if (isset($pj->representante_legal_id)){
         </a>
     </li>
     <li class="nav-item">
-        <a href="<?= SERVERURL ?>inscricao/anexos" class="nav-link" id="proponente_pf_documentos">
+        <a href="<?= SERVERURL ?>inscricao/anexos" class="nav-link" id="anexos">
             <i class="far fa-circle nav-icon"></i>
             <p>Documentos</p>
         </a>
