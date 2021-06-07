@@ -213,7 +213,7 @@ class RepresentanteController extends RepresentanteModel
             WHERE pf.id = '$id'");
 
         $pf = $pf->fetch(PDO::FETCH_ASSOC);
-        $telefones = DbModel::consultaSimples("SELECT * FROM proponente_pf_telefones WHERE proponente_pf_id = '$id'")->fetchAll(PDO::FETCH_ASSOC);
+        $telefones = DbModel::consultaSimples("SELECT * FROM representante_telefones WHERE representante_legal_id = '$id'")->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($telefones as $key => $telefone) {
             $pf['telefones']['tel_'.$key] = $telefone['telefone'];
