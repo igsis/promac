@@ -33,7 +33,7 @@ switch ($_SESSION['modulo_p']){
 switch ($pessoa->liberado){
     case 0:
         $status = "Em elaboração";
-        $btColor = "default";
+        $btColor = "secondary";
         break;
     case 1:
         $status = "Em análise";
@@ -104,7 +104,7 @@ switch ($pessoa->liberado){
 
                     </div>
                     <div style="text-align: center">
-                        <a href="<?= SERVERURL ?>inscricao/proponente_pf_cadastro" class="small-box-footer">
+                        <a href="<?= SERVERURL ?>pdf/resumo_inscricao.php?modulo=<?=$_SESSION['modulo_p']?>&id=<?=$_SESSION['usuario_id_p']?>" class="small-box-footer">
                             Acesse <i class="fas fa-arrow-circle-right"></i>
                         </a>
                     </div>
