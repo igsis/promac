@@ -109,7 +109,6 @@ $tipo_cadastro = $_SESSION['modulo_p'];
                         <table class="table table-striped">
                             <thead>
                             <tr>
-                                <th>Tipo do documento</th>
                                 <th>Nome do documento</th>
                                 <th style="width: 30%">Data de envio</th>
                                 <th style="width: 10%">Ação</th>
