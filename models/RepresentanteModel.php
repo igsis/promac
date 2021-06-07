@@ -31,7 +31,7 @@ class RepresentanteModel extends ValidacaoModel
                             $dadosLimpos['telefones'][$campo]['telefone'] = MainModel::limparString($post);
                         }
                         break;
-                    case "lei":
+                    case "le":
                         $campo = substr($campo, 3);
                         $dadosLimpos['lei'][$campo] = MainModel::limparString($post);
                         break;

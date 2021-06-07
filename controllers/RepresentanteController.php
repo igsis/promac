@@ -54,10 +54,10 @@ class RepresentanteController extends RepresentanteModel
             } else{
                 $alerta = [
                     'alerta' => 'sucesso',
-                    'titulo' => 'Pessoa Física',
-                    'texto' => 'Pessoa Física cadastrada com sucesso!',
+                    'titulo' => 'Representante Legal',
+                    'texto' => 'Representante Legal cadastrado com sucesso!',
                     'tipo' => 'success',
-                    'location' => SERVERURL.$pagina.'&id='.MainModel::encryption($id)
+                    'location' => SERVERURL.$pagina.'&idPj='.MainModel::encryption($idPj).'&id='.MainModel::encryption($id)
                 ];
                 return MainModel::sweetAlert($alerta);
             }
@@ -131,18 +131,18 @@ class RepresentanteController extends RepresentanteModel
                 }
             }
 
-            $pj_dados = ['representante_legal_id' => $id];
-            DbModel::update($tabela,$pj_dados,$idPj);
+            /*$pj_dados = ['representante_legal_id' => $id];
+            DbModel::update($tabela,$pj_dados,$idPj);*/
 
             if($retornaId){
                 return $idDecryp;
             } else{
                 $alerta = [
                     'alerta' => 'sucesso',
-                    'titulo' => 'Pessoa Física',
-                    'texto' => 'Pessoa Física editada com sucesso!',
+                    'titulo' => 'Representante Legal',
+                    'texto' => 'Representante Legal editado com sucesso!',
                     'tipo' => 'success',
-                    'location' => SERVERURL.$pagina.'&id='.$id
+                    'location' => SERVERURL.$pagina.'&idPj='.MainModel::encryption($idPj).'&id='.$id
                 ];
                 return MainModel::sweetAlert($alerta);
             }
@@ -154,7 +154,7 @@ class RepresentanteController extends RepresentanteModel
                 'titulo' => 'Erro!',
                 'texto' => 'Erro ao salvar!',
                 'tipo' => 'error',
-                'location' => SERVERURL.$pagina[0].'/proponente'
+                'location' => SERVERURL.$pagina[0]
             ];
         }
         return MainModel::sweetAlert($alerta);
@@ -180,7 +180,7 @@ class RepresentanteController extends RepresentanteModel
                 'titulo' => 'Representante Legal',
                 'texto' => 'Representante Legal removido com sucesso!',
                 'tipo' => 'success',
-                'location' => SERVERURL.$pagina.'&id='.MainModel::encryption($idPj)
+                'location' => SERVERURL.$pagina.'&idPj='.MainModel::encryption($idPj)
             ];
         }
         else{
@@ -189,7 +189,7 @@ class RepresentanteController extends RepresentanteModel
                 'titulo' => 'Erro!',
                 'texto' => 'Erro ao remover!',
                 'tipo' => 'error',
-                'location' => SERVERURL.$pagina.'&id='.MainModel::encryption($idPj)
+                'location' => SERVERURL.$pagina.'&idPj='.MainModel::encryption($idPj)
             ];
         }
         return MainModel::sweetAlert($alerta);
