@@ -131,8 +131,8 @@ class RepresentanteController extends RepresentanteModel
                 }
             }
 
-            $pj_dados = ['representante_legal_id' => $id];
-            DbModel::update($tabela,$pj_dados,$idPj);
+            /*$pj_dados = ['representante_legal_id' => $id];
+            DbModel::update($tabela,$pj_dados,$idPj);*/
 
             if($retornaId){
                 return $idDecryp;
@@ -180,7 +180,7 @@ class RepresentanteController extends RepresentanteModel
                 'titulo' => 'Representante Legal',
                 'texto' => 'Representante Legal removido com sucesso!',
                 'tipo' => 'success',
-                'location' => SERVERURL.$pagina.'&id='.MainModel::encryption($idPj)
+                'location' => SERVERURL.$pagina.'&idPj='.MainModel::encryption($idPj)
             ];
         }
         else{
@@ -189,7 +189,7 @@ class RepresentanteController extends RepresentanteModel
                 'titulo' => 'Erro!',
                 'texto' => 'Erro ao remover!',
                 'tipo' => 'error',
-                'location' => SERVERURL.$pagina.'&id='.MainModel::encryption($idPj)
+                'location' => SERVERURL.$pagina.'&idPj='.MainModel::encryption($idPj)
             ];
         }
         return MainModel::sweetAlert($alerta);

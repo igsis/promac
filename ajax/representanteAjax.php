@@ -21,7 +21,7 @@ if (isset($_POST['_method'])) {
             echo $repObj->editaRepresentante($_POST['id'], $_POST['pagina'], $tabela);
             break;
         case "removerRep":
-            echo $repObj->removeRepresentante($_POST['pagina'],$tabela);
+            echo $repObj->removeRepresentante("inscricao/representante",$tabela);
     }
 
 } else {

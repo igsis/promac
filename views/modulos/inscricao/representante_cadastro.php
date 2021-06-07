@@ -24,9 +24,18 @@ if ($id) {
 <div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
-            <div class="col-sm-6">
+            <div class="col-sm-9">
                 <h1 class="m-0 text-dark">Representante Legal</h1>
             </div><!-- /.col -->
+            <div class="col-sm-3">
+                <form class="form-horizontal formulario-ajax" method="POST" action="<?= SERVERURL ?>ajax/representanteAjax.php" role="form" data-form="update">
+                    <input type="hidden" name="_method" value="removerRep">
+                    <input type="hidden" name="pagina" value="<?= $_GET['views'] ?>">
+                    <input type="hidden" name="idPj" value="<?= $idPj ?>">
+                    <button type="submit" class="btn btn-danger float-right">Remover Representante</button>
+                    <div class="resposta-ajax"></div>
+                </form>
+            </div>
         </div><!-- /.row -->
     </div><!-- /.container-fluid -->
 </div>

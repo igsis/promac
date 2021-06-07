@@ -4,9 +4,9 @@ $pjObj = new IncentivadorPjController();
 $pj = $pjObj->recuperaIncentivadorPJ($_SESSION['usuario_id_p']);
 
 if (isset($pj->representante_legal_id)){
-    $link_rep = SERVERURL . "inscricao/representante_cadastro?idPj=".$_SESSION['usuario_id_p']."&id=" . (new MainModel)->encryption($pj->representante_legal_id);
+    $link_rep = SERVERURL . "inscricao/representante_cadastro&idPj=".$_SESSION['usuario_id_p']."&id=" . (new MainModel)->encryption($pj->representante_legal_id);
 } else{
-    $link_rep = SERVERURL . "inscricao/representante?idPj=".$_SESSION['usuario_id_p'];
+    $link_rep = SERVERURL . "inscricao/representante&idPj=".$_SESSION['usuario_id_p'];
 }
 ?>
 
