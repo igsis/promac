@@ -78,7 +78,7 @@ class ProponentePjController extends ProponentePjModel
      * @param $id
      * @return object
      */
-    public function recuperaProponentePJ($id)
+    public function recuperaProponentePj($id)
     {
         $id = MainModel::decryption($id);
         $pj = DbModel::consultaSimples(

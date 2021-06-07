@@ -12,19 +12,15 @@ class RepresentanteModel extends ValidacaoModel
         unset($dados['_method']);
         unset($dados['pagina']);
 
-        if (isset($dados['projeto_id'])) {
-            unset($dados['projeto_id']);
-        }
-
         /* executa limpeza nos campos */
 
         foreach ($dados as $campo => $post) {
             $dig = explode("_", $campo)[0];
-            if (!empty($dados[$campo]) || ($dig == "rep")) {
+            if (!empty($dados[$campo]) || ($dig == "pf")) {
                 switch ($dig) {
-                    case "rep":
+                    case "pf":
                         $campo = substr($campo, 3);
-                        $dadosLimpos['rep'][$campo] = MainModel::limparString($post);
+                        $dadosLimpos['pf'][$campo] = MainModel::limparString($post);
                         break;
                     case "en":
                         $campo = substr($campo, 3);

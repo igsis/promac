@@ -21,27 +21,27 @@ class RepresentanteController extends RepresentanteModel
         $dadosLimpos = RepresentanteModel::limparStringRepresentante($_POST);
 
         /* cadastro */
-        $insere = DbModel::insert('representante_legais', $dadosLimpos['rep']);
+        $insere = DbModel::insert('representante_legais', $dadosLimpos['pf']);
         if ($insere->rowCount()>0) {
             $id = DbModel::connection()->lastInsertId();
 
             if (isset($dadosLimpos['en'])) {
                 if (count($dadosLimpos['en']) > 0) {
-                    $dadosLimpos['en']['representante_id'] = $id;
+                    $dadosLimpos['en']['representante_legal_id'] = $id;
                     DbModel::insert('representante_enderecos', $dadosLimpos['en']);
                 }
             }
 
             if (count($dadosLimpos['telefones'])>0){
                 foreach ($dadosLimpos['telefones'] as $telefone){
-                    $telefone['representante_id'] = $id;
+                    $telefone['representante_legal_id'] = $id;
                     DbModel::insert('representante_telefones', $telefone);
                 }
             }
 
             if (isset($dadosLimpos['lei'])){
                 if (count($dadosLimpos['lei']) > 0) {
-                    $dadosLimpos['lei']['representante_id'] = $id;
+                    $dadosLimpos['lei']['representante_legal_id'] = $id;
                     DbModel::insert('representante_leis', $dadosLimpos['lei']);
                 }
             }
@@ -69,7 +69,7 @@ class RepresentanteController extends RepresentanteModel
                 'titulo' => 'Erro!',
                 'texto' => 'Erro ao salvar!',
                 'tipo' => 'error',
-                'location' => SERVERURL.$pagina[0].'/proponente'
+                'location' => SERVERURL.$pagina
             ];
         }
         /* ./cadastro */
@@ -91,7 +91,7 @@ class RepresentanteController extends RepresentanteModel
         unset($_POST['idPj']);
         $dadosLimpos = RepresentanteModel::limparStringRepresentante($_POST);
 
-        $edita = DbModel::update('representante_legais', $dadosLimpos['rep'], $idDecryp);
+        $edita = DbModel::update('representante_legais', $dadosLimpos['pf'], $idDecryp);
         if ($edita) {
             if (isset($dadosLimpos['en'])) {
                 if (count($dadosLimpos['en']) > 0) {
@@ -198,12 +198,27 @@ class RepresentanteController extends RepresentanteModel
     /**
      * <p>Recupera os dados do Representante Legal</p>
      * @param $id
-     * @return bool|PDOStatement
+     * @return array|mixed
      */
     public function recuperaRepresentante($id)
     {
         $id = MainModel::decryption($id);
-        return DbModel::getInfo('representante_legais',$id);
+        $pf = DbModel::consultaSimples(
+            "SELECT pf.*, ge.genero, et.etnia, pe.*, pl.lei 
+            FROM representante_legais AS pf
+            LEFT JOIN generos ge on pf.genero_id = ge.id
+            LEFT JOIN etnias et on pf.etnia_id = et.id
+            LEFT JOIN representante_enderecos pe on pf.id = pe.representante_legal_id
+            LEFT JOIN representante_leis pl on pf.id = pl.representante_legal_id
+            WHERE pf.id = '$id'");
+
+        $pf = $pf->fetch(PDO::FETCH_ASSOC);
+        $telefones = DbModel::consultaSimples("SELECT * FROM proponente_pf_telefones WHERE proponente_pf_id = '$id'")->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($telefones as $key => $telefone) {
+            $pf['telefones']['tel_'.$key] = $telefone['telefone'];
+        }
+        return (object)$pf;
     }
 
     /**
@@ -213,7 +228,7 @@ class RepresentanteController extends RepresentanteModel
      */
     public function getCPF($cpf)
     {
-        return DbModel::consultaSimples("SELECT id, cpf FROM representante_legais WHERE cpf = '$cpf'");
+        return DbModel::consultaSimples("SELECT id, cpf FROM representante_legais WHERE cpf = '$cpf'")->fetchObject();
     }
 
 }
