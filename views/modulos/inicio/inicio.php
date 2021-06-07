@@ -1,27 +1,27 @@
 <?php
 switch ($_SESSION['modulo_p']){
-    case "proponente_pf":
+    case 1:
         require_once "./controllers/ProponentePfController.php";
         $pfObj = new ProponentePfController();
         $pessoa = $pfObj->recuperaProponentePf($_SESSION['usuario_id_p']);
         $nome_empresa = $pessoa->nome;
         $documento = $pessoa->cpf;
         break;
-    case "proponente_pj":
+    case 2:
         require_once "./controllers/ProponentePjController.php";
         $pjObj = new ProponentePjController();
         $pessoa = $pjObj->recuperaProponentePj($_SESSION['usuario_id_p']);
         $nome_empresa = $pessoa->razao_social;
         $documento = $pessoa->cnpj;
         break;
-    case "incentivador_pf":
+    case 3:
         require_once "./controllers/IncentivadorPfController.php";
         $pfObj = new IncentivadorPfController();
         $pessoa = $pfObj->recuperaIncentivadorPf($_SESSION['usuario_id_p']);
         $nome_empresa = $pessoa->nome;
         $documento = $pessoa->cpf;
         break;
-    case "incentivador_pj":
+    case 4:
         require_once "./controllers/IncentivadorPjController.php";
         $pjObj = new IncentivadorPjController();
         $pessoa = $pjObj->recuperaIncentivadorPj($_SESSION['usuario_id_p']);
