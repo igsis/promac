@@ -37,6 +37,7 @@ if ($_SESSION['modulo_p'] == "proponente_pj"){
                         <input type="hidden" name="_method" value="buscar">
                         <input type="hidden" name="pagina" value="<?= $_GET['views'] ?>">
                         <input type="hidden" name="idPj" value="<?= $pj->id?>">
+                        <input type="hidden" name="botao" value="Inserir Representante">
                         <div class="card-body">
                             <div class="row">
                                 <div class="form-group col-md-4">
