@@ -9,7 +9,7 @@ $tipo_cadastro = $_SESSION['modulo_p'];
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Anexos dos documentos</h1>
+                <h1 class="m-0 text-dark">Documentos</h1>
             </div><!-- /.col -->
         </div><!-- /.row -->
     </div><!-- /.container-fluid -->
@@ -131,22 +131,6 @@ $tipo_cadastro = $_SESSION['modulo_p'];
     </div><!-- /.container-fluid -->
 </div>
 <!-- /.content -->
-
-<script>
-    function alerta() {
-        Swal.fire({
-            title: 'FACC - Ficha de Atualização de Cadastro de Credores',
-            html: 'A FACC é um documento necessário para recebimento do cachê. Após inserir seus dados pessoais e os dados bancários, clique no botão para gerar a FACC. <br><span style="color:red">Deve ser impressa, datada e assinada nos campos indicados no documento</span>.<br>Logo após, deve-se digitaliza-la e então anexa-la ao sistema através do campo abaixo.',
-            type: 'warning',
-            allowOutsideClick: false,
-            allowEscapeKey: false,
-            showCancelButton: false,
-            confirmButtonText: 'Confirmar'
-        }).then(function () {
-            window.open('<?= SERVERURL ?>', '_blank');
-        });
-    }
-</script>
 
 <script type="application/javascript">
     $(document).ready(function () {

@@ -59,3 +59,5 @@
     <!-- /.sidebar-menu -->
 </div>
 <!-- /.sidebar -->
+
+<?= $view->retornaMenuAtivo() ?>

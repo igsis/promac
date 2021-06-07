@@ -6,7 +6,7 @@ $pf = $pfObj->recuperaProponentePf($_SESSION['usuario_id_p']);
 
 <li class="nav-header">INSCRIÇÃO</li>
 <li class="nav-item">
-    <a href="<?= SERVERURL ?>inicio/inicio" class="nav-link" id="inicio_inicio">
+    <a href="<?= SERVERURL ?>inicio/inicio" class="nav-link" id="inicio">
         <i class="fa fa-info nav-icon"></i>
         <p>Início</p>
     </a>
@@ -19,7 +19,7 @@ $pf = $pfObj->recuperaProponentePf($_SESSION['usuario_id_p']);
         </a>
     </li>
     <li class="nav-item">
-        <a href="<?= SERVERURL ?>inscricao/anexos" class="nav-link" id="proponente_pf_documentos">
+        <a href="<?= SERVERURL ?>inscricao/anexos" class="nav-link" id="anexos">
             <i class="far fa-circle nav-icon"></i>
             <p>Documentos</p>
         </a>
