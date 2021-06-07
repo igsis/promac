@@ -1,5 +1,5 @@
 <?php
-if ($_SESSION['modulo_p'] == "proponente_pj"){
+if ($_SESSION['modulo_p'] == 2){
     require_once "./controllers/ProponentePjController.php";
     $pjObj = new ProponentePjController();
     $pj = $pjObj->recuperaProponentePj($_SESSION['usuario_id_p']);

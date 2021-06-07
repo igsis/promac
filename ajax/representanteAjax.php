@@ -7,7 +7,7 @@ if (isset($_POST['_method'])) {
     $repObj = new RepresentanteController();
 
     session_start(['name' => 'prmc']);
-    if ($_SESSION['modulo_p'] == "proponente_pj"){
+    if ($_SESSION['modulo_p'] == 2){
         $tabela = "proponente_pjs";
     } else{
         $tabela = "incentivador_pjs";

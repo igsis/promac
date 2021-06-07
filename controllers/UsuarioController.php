@@ -25,17 +25,17 @@ class UsuarioController extends UsuarioModel
             $campo = "cpf";
             $coluna = "nome";
             if ($tipo_acesso == 'proponente_pfs') {
-                $modulo = "proponente_pf";
+                $modulo = 1;
             } elseif ($tipo_acesso == 'incentivador_pfs') {
-                $modulo = "incentivador_pf";
+                $modulo = 3;
             }
         } elseif (($tipo_acesso == 'proponente_pjs') || ($tipo_acesso == 'incentivador_pjs')) {
             $campo = "cnpj";
             $coluna = "razao_social";
             if ($tipo_acesso == 'proponente_pjs') {
-                $modulo = "proponente_pj";
+                $modulo = 2;
             } elseif ($tipo_acesso == 'incentivador_pjs') {
-                $modulo = "incentivador_pj";
+                $modulo = 4;
             }
         } else {
             $campo = "email";
