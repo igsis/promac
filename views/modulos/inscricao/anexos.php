@@ -1,12 +1,8 @@
 <?php
 require_once "./controllers/ArquivoController.php";
-require_once "./controllers/FormacaoController.php";
 $arquivosObj = new ArquivoController();
-$formacaoObj = new FormacaoController();
 
-$idFormacao = $_SESSION['formacao_id_c'];
-
-$form_cargo_id = $formacaoObj->recuperaFormacao($_SESSION['ano_c'], false, $idFormacao)->form_cargo_id;
+$tipo_cadastro = $_SESSION['modulo_p'];
 ?>
 <!-- Content Header (Page header) -->
 <div class="content-header">
@@ -58,39 +54,28 @@ $form_cargo_id = $formacaoObj->recuperaFormacao($_SESSION['ano_c'], false, $idFo
                         <form class="formulario-ajax" method="POST" action="<?= SERVERURL ?>ajax/arquivosAjax.php"
                               data-form="save" enctype="multipart/form-data">
                             <input type="hidden" name="_method" value="enviarArquivo">
-                            <input type="hidden" name="origem_id" value="<?= $idFormacao ?>">
                             <input type="hidden" name="pagina" value="<?= $_GET['views'] ?>">
                             <table class="table table-striped">
                                 <tbody>
                                 <?php
                                 $cont = 0;
-                                $arquivos = $arquivosObj->listarArquivosFormacao($form_cargo_id)->fetchAll(PDO::FETCH_OBJ);
+                                $arquivos = $arquivosObj->listarArquivos($tipo_cadastro)->fetchAll(PDO::FETCH_OBJ);
                                 foreach ($arquivos as $arquivo) {
                                     $obrigatorio = $arquivo->obrigatorio == 0 ? "[Opcional]" : "*";
-                                    if ($arquivosObj->consultaArquivoEnviadoFormacao($arquivo->id, $idFormacao)) {
-                                        ?>
-                                        <tr>
-                                            <td colspan="2">
-                                                <div class="callout callout-success text-center">
-                                                    Arquivo <strong><?="$arquivo->documento" ?></strong> já enviado!
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    <?php } else { ?>
-                                        <tr>
-                                            <td>
-                                                <label for=""><?= "$arquivo->documento $obrigatorio" ?></label>
-                                            </td>
-                                            <td>
-                                                <input type="hidden" name="<?= $arquivo->sigla ?>"
-                                                       value="<?= $arquivo->id ?>">
-                                                <input class="text-center" type='file'
-                                                       name='<?= $arquivo->sigla ?>'><br>
-                                            </td>
-                                        </tr>
-                                        <?php
-                                        $cont++;
-                                    }
+                                    ?>
+                                    <tr>
+                                        <td>
+                                            <label for=""><?= "$arquivo->documento $obrigatorio" ?></label>
+                                        </td>
+                                        <td>
+                                            <input type="hidden" name="<?= $arquivo->sigla ?>"
+                                                   value="<?= $arquivo->id ?>">
+                                            <input class="text-center" type='file'
+                                                   name='<?= $arquivo->sigla ?>'><br>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                    $cont++;
                                 }
 
                                 if ($cont == 0): ?>
@@ -131,39 +116,9 @@ $form_cargo_id = $formacaoObj->recuperaFormacao($_SESSION['ano_c'], false, $idFo
                             </tr>
                             </thead>
                             <tbody>
-                            <?php
-                            $arquivosEnviados = $arquivosObj->listarArquivosEnviadosFormacao($idFormacao);
-                            if ($arquivosEnviados) {
-                                foreach ($arquivosEnviados as $arquivo) {
-                                    ?>
-                                    <tr>
-                                        <td><?= "$arquivo->documento" ?></td>
-                                        <td><a href="<?= SERVERURL . "uploads/" . $arquivo->arquivo ?>"
-                                               target="_blank"><?= mb_strimwidth($arquivo->arquivo, '15', '25', '...') ?></a>
-                                        </td>
-                                        <td><?= $arquivosObj->dataParaBR($arquivo->data) ?></td>
-                                        <td>
-                                            <form class="formulario-ajax" action="<?= SERVERURL ?>ajax/arquivosAjax.php"
-                                                  method="POST" data-form="delete">
-                                                <input type="hidden" name="_method" value="removerArquivo">
-                                                <input type="hidden" name="pagina" value="<?= $_GET['views'] ?>">
-                                                <input type="hidden" name="arquivo_id"
-                                                       value="<?= $arquivosObj->encryption($arquivo->id) ?>">
-                                                <button type="submit" class="btn btn-sm btn-danger">Apagar</button>
-                                                <div class="resposta-ajax"></div>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                    <?php
-                                }
-                            } else {
-                                ?>
                                 <tr>
                                     <td class="text-center" colspan="4">Nenhum arquivo enviado</td>
                                 </tr>
-                                <?php
-                            }
-                            ?>
                             </tbody>
                         </table>
                     </div>

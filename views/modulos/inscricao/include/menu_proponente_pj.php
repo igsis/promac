@@ -30,7 +30,7 @@ if (isset($pj->representante_legal_id)){
         </a>
     </li>
     <li class="nav-item">
-        <a href="<?= SERVERURL ?>inscricao/proponente_pj_documentos" class="nav-link" id="proponente_pf_documentos">
+        <a href="<?= SERVERURL ?>inscricao/anexos" class="nav-link" id="proponente_pf_documentos">
             <i class="far fa-circle nav-icon"></i>
             <p>Documentos</p>
         </a>
