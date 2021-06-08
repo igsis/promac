@@ -3,6 +3,7 @@ require_once "./controllers/ArquivoController.php";
 $arquivosObj = new ArquivoController();
 
 $tipo_cadastro = $_SESSION['modulo_p'];
+$cadastro_id = $_SESSION['usuario_id_p'];
 ?>
 <!-- Content Header (Page header) -->
 <div class="content-header">
@@ -55,6 +56,8 @@ $tipo_cadastro = $_SESSION['modulo_p'];
                               data-form="save" enctype="multipart/form-data">
                             <input type="hidden" name="_method" value="enviarArquivo">
                             <input type="hidden" name="pagina" value="<?= $_GET['views'] ?>">
+                            <input type="hidden" name="tipo_cadastro_id" value="<?= $tipo_cadastro ?>">
+                            <input type="hidden" name="cadastro_id" value="<?= $cadastro_id ?>">
                             <table class="table table-striped">
                                 <tbody>
                                 <?php
@@ -62,29 +65,32 @@ $tipo_cadastro = $_SESSION['modulo_p'];
                                 $arquivos = $arquivosObj->listarArquivos($tipo_cadastro)->fetchAll(PDO::FETCH_OBJ);
                                 foreach ($arquivos as $arquivo) {
                                     $obrigatorio = $arquivo->obrigatorio == 0 ? "[Opcional]" : "*";
-                                    ?>
-                                    <tr>
-                                        <td>
-                                            <label for=""><?= "$arquivo->documento $obrigatorio" ?></label>
-                                        </td>
-                                        <td>
-                                            <input type="hidden" name="<?= $arquivo->sigla ?>"
-                                                   value="<?= $arquivo->id ?>">
-                                            <input class="text-center" type='file'
-                                                   name='<?= $arquivo->sigla ?>'><br>
-                                        </td>
-                                    </tr>
+                                    if ($arquivosObj->consultaArquivoEnviado($arquivo->id, $tipo_cadastro, $cadastro_id)) {
+                                        ?>
+                                        <tr>
+                                            <td colspan="2">
+                                                <div class="callout callout-success text-center">
+                                                    Arquivo <strong><?="$arquivo->documento" ?></strong> já enviado!
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php } else { ?>
+                                        <tr>
+                                            <td>
+                                                <label for=""><?= "$arquivo->documento $obrigatorio" ?></label>
+                                            </td>
+                                            <td>
+                                                <input type="hidden" name="<?= $arquivo->sigla ?>"
+                                                       value="<?= $arquivo->id ?>">
+                                                <input class="text-center" type='file'
+                                                       name='<?= $arquivo->sigla ?>'><br>
+                                            </td>
+                                        </tr>
                                     <?php
                                     $cont++;
+                                    }
                                 }
-
-                                if ($cont == 0): ?>
-                                    <tr>
-                                        <td colspan="2">
-                                            Todos os arquivos já foram enviados!
-                                        </td>
-                                    </tr>
-                                <?php endif; ?>
+                                ?>
                                 </tbody>
                             </table>
                             <input type="submit" class="btn btn-success btn-md btn-block" name="enviar" value='Enviar'>
@@ -109,15 +115,46 @@ $tipo_cadastro = $_SESSION['modulo_p'];
                         <table class="table table-striped">
                             <thead>
                             <tr>
+                                <th>Documento</th>
                                 <th>Nome do documento</th>
                                 <th style="width: 30%">Data de envio</th>
                                 <th style="width: 10%">Ação</th>
                             </tr>
                             </thead>
                             <tbody>
+                            <?php
+                            $arquivosEnviados = $arquivosObj->listarArquivosEnviados($tipo_cadastro, $cadastro_id)->fetchAll(PDO::FETCH_OBJ);
+                            if (count($arquivosEnviados) != 0) {
+                                foreach ($arquivosEnviados as $arquivo) {
+                                    ?>
+                                    <tr>
+                                        <td><?= "$arquivo->documento" ?></td>
+                                        <td><a href="<?= SERVERURL . "uploads/" . $arquivo->arquivo ?>"
+                                               target="_blank"><?= mb_strimwidth($arquivo->arquivo, '15', '25', '...') ?></a>
+                                        </td>
+                                        <td><?= $arquivosObj->dataParaBR($arquivo->data_envio) ?></td>
+                                        <td>
+                                            <form class="formulario-ajax" action="<?= SERVERURL ?>ajax/arquivosAjax.php"
+                                                  method="POST" data-form="delete">
+                                                <input type="hidden" name="_method" value="removerArquivo">
+                                                <input type="hidden" name="pagina" value="<?= $_GET['views'] ?>">
+                                                <input type="hidden" name="arquivo_id"
+                                                       value="<?= $arquivosObj->encryption($arquivo->id) ?>">
+                                                <button type="submit" class="btn btn-sm btn-danger">Apagar</button>
+                                                <div class="resposta-ajax"></div>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                }
+                            } else {
+                                ?>
                                 <tr>
                                     <td class="text-center" colspan="4">Nenhum arquivo enviado</td>
                                 </tr>
+                                <?php
+                            }
+                            ?>
                             </tbody>
                         </table>
                     </div>
