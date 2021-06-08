@@ -8,29 +8,14 @@ if ($pedidoAjax) {
 
 class ArquivoModel extends MainModel
 {
-    protected function separaArquivosComProd($lista_documento_id) {
-        foreach ($_FILES as $file) {
-            $numArquivos = count($file['error']);
-            foreach ($file as $key => $dados) {
-                for ($i = 0; $i < $numArquivos; $i++) {
-                    $arquivos[$i][$key] = $file[$key][$i];
-                }
-            }
-        }
-        foreach ($arquivos as $key => $arquivo) {
-            $arquivos[$key]['lista_documento_id'] = $lista_documento_id;
-        }
-        return $arquivos;
-    }
-
     /**
      * @param $arquivos
      * @param $origem_id
-     * @param $tamanhoMaximo
-     * @param $validaPDF
+     * @param int $tamanhoMaximo
+     * @param bool $validaPDF
      * @return mixed
      */
-    protected function enviaArquivos($arquivos, $origem_id, $tamanhoMaximo, $validaPDF = false, $fomento = false, $formacao = false) {
+    protected function enviaArquivos($arquivos, $tipo_cadastro_id, $cadastro_id, $tamanhoMaximo, $validaPDF = false) {
         foreach ($arquivos as $key => $arquivo) {
             $erros[$key]['bol'] = false;
             if ($arquivo['error'] != 4) {
@@ -40,8 +25,14 @@ class ArquivoModel extends MainModel
                 $lista_documento_id = $arquivo['lista_documento_id'];
                 $explode = explode('.', $nomeArquivo);
                 $extensao = strtolower(end($explode));
+                $extensoes_permitidas = ["doc", "docx", "pdf", "jpg", "jpeg", "png", "pdf"];
 
                 if ($validaPDF && $extensao != 'pdf') {
+                    $erros[$key]['bol'] = true;
+                    $erros[$key]['motivo'] = "Arquivo em formato não aceito";
+                    $erros[$key]['arquivo'] = $nomeArquivo;
+                    continue;
+                } elseif (!in_array($extensao, $extensoes_permitidas)) {
                     $erros[$key]['bol'] = true;
                     $erros[$key]['motivo'] = "Arquivo em formato não aceito";
                     $erros[$key]['arquivo'] = $nomeArquivo;
@@ -54,29 +45,16 @@ class ArquivoModel extends MainModel
 
                 if ($tamanhoArquivo <= $maximoPermitido) {
                     if (move_uploaded_file($arquivoTemp, UPLOADDIR . $novoNome)) {
-                        if ($fomento) {
-                            $tabela = "fom_arquivos";
-                            $dadosInsertArquivo = [
-                                'fom_projeto_id' => $origem_id,
-                                'fom_lista_documento_id' => $lista_documento_id,
-                            ];
-                        } elseif ($formacao){
-                            $tabela = "form_arquivos";
-                            $dadosInsertArquivo = [
-                                'form_cadastro_id' => $origem_id,
-                                'form_lista_documento_id' => $lista_documento_id,
-                            ];
-                        }
-                        else {
-                            $tabela = "arquivos";
-                            $dadosInsertArquivo = [
-                                'origem_id' => $origem_id,
-                                'lista_documento_id' => $lista_documento_id,
-                            ];
-                        }
+
+                        $tabela = "arquivos";
+                        $dadosInsertArquivo = [
+                            'tipo_cadastro_id' => $tipo_cadastro_id,
+                            'cadastro_id' => $cadastro_id,
+                            'lista_documento_id' => $lista_documento_id,
+                        ];
 
                         $dadosInsertArquivo['arquivo'] = $novoNome;
-                        $dadosInsertArquivo['data'] = $dataAtual;
+                        $dadosInsertArquivo['data_envio'] = $dataAtual;
 
                         $insertArquivo = DbModel::insert($tabela, $dadosInsertArquivo);
                         if ($insertArquivo->rowCount() == 0) {
@@ -97,16 +75,5 @@ class ArquivoModel extends MainModel
             }
         }
         return $erros;
-    }
-
-    protected function listaArquivos($tipo_contratacao_id) {
-        $sql = "SELECT ld.id, ld.sigla, ld.documento, ac.obrigatorio
-                FROM arquivo_cadastros AS ac
-                INNER JOIN lista_documentos AS ld ON ld.id = ac.lista_documento_id
-                INNER JOIN tipo_cadastros AS tc ON ac.tipo_cadastro_id = tc.id
-                WHERE ac.tipo_cadastro_id = '$tipo_contratacao_id' AND ld.publicado = 1";
-        $arquivos = DbModel::consultaSimples($sql);
-
-        return $arquivos;
     }
 }
