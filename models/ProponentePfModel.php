@@ -54,84 +54,50 @@ class ProponentePfModel extends ValidacaoModel
      * 3 - Formação</p>
      * @return array|bool
      */
-    protected function validaPfModel($pessoa_fisica_id, $validacaoTipo, $evento_id, $tipo_documentos = null)
+    protected function validaPfModel($cadastro_id, $tipo_cadastro)
     {
-        $pf = DbModel::getInfo("proponente_pfs", $pessoa_fisica_id)->fetchObject();
-
-        switch ($validacaoTipo) {
+        switch ($tipo_cadastro) {
             case 1:
                 $naoObrigatorios = [
-                    'nome_artistico',
-                    'ccm',
-                    'cpf',
-                    'passaporte',
+                    'data_inscricao',
+                    'cooperado',
                 ];
-
-                $validaBanco = ValidacaoModel::validaBanco(1, $pessoa_fisica_id);
-                $validaEndereco = ValidacaoModel::validaEndereco(1, $pessoa_fisica_id);
+                $dados = DbModel::getInfo("proponente_pfs", $cadastro_id)->fetchObject();
                 break;
 
             case 2:
                 $naoObrigatorios = [
-                    'nome_artistico',
-                    'passaporte',
-                    'ccm',
-                    'data_nascimento',
-                    'nacionalidade_id',
+                    'data_inscricao',
                 ];
+                $dados = DbModel::getInfo("proponente_pjs", $cadastro_id)->fetchObject();
                 break;
 
-            case 3: //formação
+            case 3:
                 $naoObrigatorios = [
-                    'nome_artistico',
-                    'ccm',
-                    'passaporte',
+                    'data_inscricao',
                 ];
-
-                $validaBanco = ValidacaoModel::validaBancoFormacao($pessoa_fisica_id);
-                $validaEndereco = ValidacaoModel::validaEndereco(1, $pessoa_fisica_id);
-                $validaDetalhes = ValidacaoModel::validaDetalhes($pessoa_fisica_id);
+                $dados = DbModel::getInfo("incentivador_pfs", $cadastro_id)->fetchObject();
                 break;
-            default:
-                $naoObrigatorios = [];
+
+            case 4:
+                $naoObrigatorios = [
+                    'data_inscricao',
+                ];
+                $dados = DbModel::getInfo("incentivador_pjs", $cadastro_id)->fetchObject();
                 break;
         }
 
-        $validaTelefone = ValidacaoModel::validaTelefone(1, $pessoa_fisica_id);
+        $validaEndereco = ValidacaoModel::validaEndereco($tipo_cadastro, $cadastro_id);
+        $validaTelefone = ValidacaoModel::validaTelefone($tipo_cadastro, $cadastro_id);
+        $erros = ValidacaoModel::retornaMensagem($dados, $naoObrigatorios);
 
-        if ($pf->passaporte != null) {
-            array_push($naoObrigatorios, 'rg');
-        }
-
-
-        $erros = ValidacaoModel::retornaMensagem($pf, $naoObrigatorios);
-
-        if ($validacaoTipo == 3) {
-            if ($validaDetalhes) {
-                if (!isset($erros) || $erros == false) {
-                    $erros = [];
-                }
-                $erros = array_merge($erros, $validaDetalhes);
+        if ($validaEndereco) {
+            if (!isset($erros) || $erros == false) {
+                $erros = [];
             }
+            $erros = array_merge($erros, $validaEndereco);
         }
 
-        if ($validacaoTipo == 1 || $validacaoTipo == 3) {
-            if ($validaEndereco) {
-                if (!isset($erros) || $erros == false) {
-                    $erros = [];
-                }
-                $erros = array_merge($erros, $validaEndereco);
-            }
-        }
-
-        if (($validacaoTipo == 1) || $validacaoTipo == 3) {
-            if ($validaBanco) {
-                if (!isset($erros) || $erros == false) {
-                    $erros = [];
-                }
-                $erros = array_merge($erros, $validaBanco);
-            }
-        }
 
         if ($validaTelefone) {
             if (!isset($erros) || $erros == false) {
@@ -140,17 +106,7 @@ class ProponentePfModel extends ValidacaoModel
             $erros = array_merge($erros, $validaTelefone);
         }
 
-        if ($evento_id != null) {
-            if (MainModel::verificaCenica(MainModel::encryption($evento_id))) {
-                if (!isset($erros) || $erros == false) {
-                    $erros = [];
-                }
-                $erros['drt']['bol'] = true;
-                $erros['drt']['motivo'] = 'Proponente não possui DRT cadastrado';
-            };
-        }
-
-        $validaArquivos = ValidacaoModel::validaArquivos(intval($tipo_documentos), $pessoa_fisica_id);
+        $validaArquivos = ValidacaoModel::validaArquivos(intval($tipo_cadastro), $cadastro_id);
         if ($validaArquivos) {
             if (!isset($erros) || $erros == false) {
                 $erros = [];
