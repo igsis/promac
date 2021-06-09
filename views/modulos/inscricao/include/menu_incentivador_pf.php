@@ -25,7 +25,7 @@ $pf = $pfObj->recuperaIncentivadorPf($_SESSION['usuario_id_p']);
         </a>
     </li>
     <li class="nav-item">
-        <a href="<?= SERVERURL ?>inscricao/finalizar" class="nav-link" id="finalizar">
+        <a href="<?= SERVERURL ?>inscricao/finalizar_pf" class="nav-link" id="finalizar_pf">
             <i class="far fa-circle nav-icon"></i>
             <p>Finalizar inscrição</p>
         </a>

@@ -82,6 +82,7 @@ class ProponentePfController extends ProponentePfModel
 
         $dadosLimpos = ProponentePfModel::limparStringPF($_POST);
         $dadosLimpos['pf']['cooperado'] = $dadosLimpos['pf']['cooperado'] ?? 0;
+        $dadosLimpos['en']['complemento'] = $dadosLimpos['en']['complemento'] ?? "";
 
         $edita = DbModel::update('proponente_pfs', $dadosLimpos['pf'], $idDecryp);
         if ($edita) {
@@ -194,17 +195,17 @@ class ProponentePfController extends ProponentePfModel
     }
 
     /**
-     * @param int|string $proponente_pf_id
-     * @param int $validacaoTipo <p>Deve conter o valor 1 para validação de pessoa física, 2 para validação de líder e 3 para formação</p>
+     * @param int|string $cadastro_id
+     * @param int $tipo_cadastro_id <p>Deve conter o valor 1 para validação de pessoa física, 2 para validação de líder e 3 para formação</p>
      * @param int|null $evento_id
      * @return array|bool
      */
-    public function validaPf($proponente_pf_id, $validacaoTipo, $evento_id = null, $tipo_documentos = null){
-        $tipo = gettype($proponente_pf_id);
+    public function validaPf($cadastro_id, $tipo_cadastro_id){
+        $tipo = gettype($cadastro_id);
         if ($tipo == "string") {
-            $proponente_pf_id = MainModel::decryption($proponente_pf_id);
+            $proponente_pf_id = MainModel::decryption($cadastro_id);
         }
-        return ProponentePfModel::validaPfModel($proponente_pf_id, $validacaoTipo, $evento_id,$tipo_documentos);
+        return ProponentePfModel::validaPfModel($cadastro_id, $tipo_cadastro_id);
     }
 
 }

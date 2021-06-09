@@ -48,12 +48,25 @@ class ValidacaoModel extends MainModel
         }
     }
 
-    protected function validaEndereco($tipoProponente, $id) {
-        if ($tipoProponente == 1) {
-            $proponente = DbModel::consultaSimples("SELECT * FROM pf_enderecos WHERE pessoa_fisica_id = '$id'");
-        } else {
-            $proponente = DbModel::consultaSimples("SELECT * FROM pj_enderecos WHERE pessoa_juridica_id = '$id'");
+    protected function validaEndereco($tipo_cadastro, $id) {
+        switch ($tipo_cadastro) {
+            case 1:
+                $proponente = DbModel::consultaSimples("SELECT * FROM proponente_pf_enderecos WHERE proponente_pf_id = '$id'");
+                break;
+
+            case 2:
+                $proponente = DbModel::consultaSimples("SELECT * FROM proponente_pj_enderecos WHERE proponente_pj_id = '$id'");
+                break;
+
+            case 3:
+                $proponente = DbModel::consultaSimples("SELECT * FROM incentivador_pf_enderecos WHERE incentivador_pf_id = '$id'");
+                break;
+
+            case 4:
+                $proponente = DbModel::consultaSimples("SELECT * FROM incentivador_pj_enderecos WHERE incentivador_pj_id = '$id'");
+                break;
         }
+
         $naoObrigatorios = [
             'complemento'
         ];
@@ -73,12 +86,25 @@ class ValidacaoModel extends MainModel
         }
     }
 
-    protected function validaTelefone($tipoProponente, $id) {
-        if ($tipoProponente == 1) {
-            $proponente = DbModel::consultaSimples("SELECT * FROM pf_telefones WHERE pessoa_fisica_id = '$id'");
-        } else {
-            $proponente = DbModel::consultaSimples("SELECT * FROM pj_telefones WHERE pessoa_juridica_id = '$id'");
+    protected function validaTelefone($tipo_cadastro, $id) {
+        switch ($tipo_cadastro) {
+            case 1:
+                $proponente = DbModel::consultaSimples("SELECT * FROM proponente_pf_telefones WHERE proponente_pf_id = '$id'");
+                break;
+
+            case 2:
+                $proponente = DbModel::consultaSimples("SELECT * FROM proponente_pj_telefones WHERE proponente_pj_id = '$id'");
+                break;
+
+            case 3:
+                $proponente = DbModel::consultaSimples("SELECT * FROM incentivador_pf_telefones WHERE incentivador_pf_id = '$id'");
+                break;
+
+            case 4:
+                $proponente = DbModel::consultaSimples("SELECT * FROM incentivador_pj_telefones WHERE incentivador_pj_id = '$id'");
+                break;
         }
+
         if ($proponente->rowCount() == 0) {
             $erros['telefones']['bol'] = true;
             $erros['telefones']['motivo'] = "Proponente não possui telefone cadastrado";
@@ -174,7 +200,9 @@ class ValidacaoModel extends MainModel
             'nucleo_artistico' => "Nucleo Artistico não foi preenchido",
             'representante_nucleo' => "Representante do Nucleo Artistico não foi preenchido",
             'rg' => 'RG não foi preenchido',
-            'nacionalidade_id' => 'A nacionalidade não foi selecionada'
+            'nacionalidade_id' => 'A nacionalidade não foi selecionada',
+            'genero_id' => 'Genero não selecionado',
+            'etnia_id' => 'Etnia não selecionada',
         ];
 
         if ($camposNaoObrigatorios) {
@@ -203,11 +231,12 @@ class ValidacaoModel extends MainModel
         }
     }
 
-    protected function validaArquivos($tipoDocumento, $origem_id){
+    protected function validaArquivos($tipo_cadastro, $origem_id){
         $sql = "SELECT ld.id, ld.documento, a.arquivo
-                FROM lista_documentos AS ld
-                LEFT JOIN (SELECT * FROM arquivos WHERE publicado = 1 AND origem_id = '$origem_id') AS a on ld.id = a.lista_documento_id
-                WHERE ld.tipo_documento_id = '$tipoDocumento' AND ld.publicado = '1'";
+                FROM arquivo_cadastros AS ac
+                INNER JOIN lista_documentos AS ld ON ac.lista_documento_id = ld.id
+                LEFT JOIN (SELECT * FROM arquivos WHERE publicado = 1 AND cadastro_id = '$origem_id' AND tipo_cadastro_id = '$tipo_cadastro') AS a on ld.id = a.lista_documento_id
+                WHERE ac.tipo_cadastro_id = '$tipo_cadastro' AND ld.publicado = '1'";
         $arquivos = DbModel::consultaSimples($sql)->fetchAll(PDO::FETCH_OBJ);
 
         foreach ($arquivos as $arquivo) {
