@@ -57,26 +57,14 @@ $pdf->AliasNbPages();
 $pdf->AddPage();
 
 $x=20; //DEFINE A MARGEM SUPERIOR
-$l=6; //DEFINE A ALTURA DA LINHA
+$l=7; //DEFINE A ALTURA DA LINHA
 $f=12; //DEFINE TAMANHO DA FONTE
 
-$pdf->SetXY( $x , 25 );// SetXY - DEFINE O X (altura) E O Y (largura) NA
+$pdf->SetXY( $x , 30 );// SetXY - DEFINE O X (altura) E O Y (largura) NA
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial', 'B', 14);
 $pdf->MultiCell(180, $l, utf8_decode("INSCRIÇÃO PROMAC"), 0, 'C');
-
-$pdf->Ln(10);
-
-$pdf->SetX(140);
-$pdf->SetFont('Arial', 'B', $f);
-$pdf->Cell(50, $l, utf8_decode("Data de Inscrição"), 'TLR', 1, 'C');
-
-$pdf->SetX(140);
-$pdf->SetFont('Arial', '', $f);
-$pdf->Cell(50, $l, date('d/m/Y H:i:s', strtotime($pessoa->data_inscricao)), 'LR', 1, 'C');
-$pdf->SetX(140);
-$pdf->Cell(50, $l, utf8_decode($sigla.base64_encode($pessoa->id)), 'BLR', 1, 'C');
 
 $pdf->Ln(10);
 
@@ -123,7 +111,7 @@ if ($modulo == 1 | $modulo == 3){
 } else{
     $pdf->SetX($x);
     $pdf->SetFont('Arial','B', $f);
-    $pdf->Cell(26,$l,utf8_decode('Razão Social:'),0,0,'L');
+    $pdf->Cell(29,$l,utf8_decode('Razão Social:'),0,0,'L');
     $pdf->SetFont('Arial','', $f);
     $pdf->Cell(150,$l,utf8_decode($pessoa->razao_social),0,1,'L');
 
@@ -135,7 +123,8 @@ if ($modulo == 1 | $modulo == 3){
 
     if ($modulo == 2){
         $pdf->SetX($x);
-        $pdf->Cell(13, $l, utf8_decode('MEI:'), 0, 0, 'L');
+        $pdf->SetFont('Arial', 'B', $f);
+        $pdf->Cell(10, $l, utf8_decode('MEI:'), 0, 0, 'L');
         $pdf->SetFont('Arial', '', $f);
         $pdf->Cell(45, $l, utf8_decode($pessoa->mei), 0, 0, 'L');
         $pdf->SetFont('Arial', 'B', $f);
@@ -150,27 +139,29 @@ if ($modulo == 1 | $modulo == 3){
     }
 }
 
-$pdf->SetX($x);
-$pdf->SetFont('Arial', 'B', $f);
-$pdf->Cell(22, $l, utf8_decode("Endereço:"), 0, 0, 'L');
-$pdf->SetFont('Arial', '', $f);
-$pdf->MultiCell(158, $l, utf8_decode($pessoa->logradouro.", ".$pessoa->numero." ".$pessoa->complemento." ".$pessoa->bairro.", ".$pessoa->cidade." - ".$pessoa->uf." CEP: ".$pessoa->cep));
+if(isset($pessoa->logradouro)) {
+    $pdf->SetX($x);
+    $pdf->SetFont('Arial', 'B', $f);
+    $pdf->Cell(22, $l, utf8_decode("Endereço:"), 0, 0, 'L');
+    $pdf->SetFont('Arial', '', $f);
+    $pdf->MultiCell(158, $l, utf8_decode($pessoa->logradouro . ", " . $pessoa->numero . " " . $pessoa->complemento . " " . $pessoa->bairro . ", " . $pessoa->cidade . " - " . $pessoa->uf . " CEP: " . $pessoa->cep));
 
-$pdf->SetX($x);
-$pdf->SetFont('Arial', 'B', $f);
-$pdf->Cell(12, $l, utf8_decode("Zona:"), 0, 0, 'L');
-$pdf->SetFont('Arial', '', $f);
-$pdf->Cell(20, $l, utf8_decode($pessoa->zonas), 0, 0, 'L');
-$pdf->SetFont('Arial', 'B', $f);
-$pdf->Cell(17, $l, utf8_decode("Distrito:"), 0, 0, 'L');
-$pdf->SetFont('Arial', '', $f);
-$pdf->Cell(35, $l, utf8_decode($pessoa->distrito), 0, 0, 'L');
-$pdf->SetFont('Arial', 'B', $f);
-$pdf->Cell(30, $l, utf8_decode("Subprefeitura:"), 0, 0, 'L');
-$pdf->SetFont('Arial', '', $f);
-$pdf->Cell(25, $l, utf8_decode($pessoa->subprefeitura), 0, 1, 'L');
+    $pdf->SetX($x);
+    $pdf->SetFont('Arial', 'B', $f);
+    $pdf->Cell(12, $l, utf8_decode("Zona:"), 0, 0, 'L');
+    $pdf->SetFont('Arial', '', $f);
+    $pdf->Cell(20, $l, utf8_decode($pessoa->zonas), 0, 0, 'L');
+    $pdf->SetFont('Arial', 'B', $f);
+    $pdf->Cell(17, $l, utf8_decode("Distrito:"), 0, 0, 'L');
+    $pdf->SetFont('Arial', '', $f);
+    $pdf->Cell(35, $l, utf8_decode($pessoa->distrito), 0, 0, 'L');
+    $pdf->SetFont('Arial', 'B', $f);
+    $pdf->Cell(30, $l, utf8_decode("Subprefeitura:"), 0, 0, 'L');
+    $pdf->SetFont('Arial', '', $f);
+    $pdf->Cell(25, $l, utf8_decode($pessoa->subprefeitura), 0, 1, 'L');
+}
 
-if ($pessoa->telefones){
+if (isset($pessoa->telefones)){
     $pdf->SetX($x);
     $pdf->SetFont('Arial', 'B', $f);
     $pdf->Cell(25, $l, 'Telefone(s):', '0', '0', 'L');
@@ -189,9 +180,78 @@ $pdf->Ln();
 if ($modulo == 2 | $modulo == 4){
     $pdf->SetX($x);
     $pdf->SetFont('Arial', 'B', $f);
-    $pdf->Cell(180, $l, 'Representante Legal', 'B', 1, 'L');
+    $pdf->Cell(180, $l, 'Representante Legal', 0, 1, 'L');
+
+    $pdf->SetX($x);
+    $pdf->SetFont('Arial', 'B', $f);
+    $pdf->Cell(14, $l, 'Nome:', 0, 0, 'L');
+    $pdf->SetFont('Arial', '', $f);
+    $pdf->MultiCell(120, $l, utf8_decode($representante->nome), 0, 'L', 0);
+
+    $pdf->SetX($x);
+    $pdf->SetFont('Arial', 'B', $f);
+    $pdf->Cell(9, $l, utf8_decode('RG:'), 0, 0, 'L');
+    $pdf->SetFont('Arial', '', $f);
+    $pdf->Cell(50, $l, utf8_decode($representante->rg == NULL ? "Não cadastrado" : $representante->rg), 0, 0, 'L');
+    $pdf->SetFont('Arial', 'B', $f);
+    $pdf->Cell(11, $l, utf8_decode('CPF:'), 0, 0, 'L');
+    $pdf->SetFont('Arial', '', $f);
+    $pdf->Cell(45, $l, utf8_decode($representante->cpf), 0, 1, 'L');
+
+    $pdf->SetX($x);
+    $pdf->SetFont('Arial', 'B', $f);
+    $pdf->Cell(17, $l, utf8_decode('Gênero:'), 0, 0, 'L');
+    $pdf->SetFont('Arial', '', $f);
+    $pdf->Cell(50, $l, utf8_decode($representante->genero), 0, 0, 'L');
+    $pdf->SetFont('Arial', 'B', $f);
+    $pdf->Cell(13, $l, utf8_decode('Etnia:'), 0, 0, 'L');
+    $pdf->SetFont('Arial', '', $f);
+    $pdf->Cell(45, $l, utf8_decode($representante->etnia), 0, 1, 'L');
+
+    if (isset($representante->lei)){
+        $pdf->SetX($x);
+        $pdf->SetFont('Arial','B', $f);
+        $pdf->Cell(9,$l,utf8_decode('Lei:'),0,0,'L');
+        $pdf->SetFont('Arial','', $f);
+        $pdf->Cell(171,$l,utf8_decode($representante->lei),0,1,'L');
+    }
+
+    $pdf->SetX($x);
+    $pdf->SetFont('Arial', 'B', $f);
+    $pdf->Cell(22, $l, utf8_decode("Endereço:"), 0, 0, 'L');
+    $pdf->SetFont('Arial', '', $f);
+    $pdf->MultiCell(158, $l, utf8_decode($representante->logradouro . ", " . $representante->numero . " " . $representante->complemento . " " . $representante->bairro . ", " . $representante->cidade . " - " . $representante->uf . " CEP: " . $representante->cep));
+
+    $pdf->SetX($x);
+    $pdf->SetFont('Arial', 'B', $f);
+    $pdf->Cell(12, $l, utf8_decode("Zona:"), 0, 0, 'L');
+    $pdf->SetFont('Arial', '', $f);
+    $pdf->Cell(20, $l, utf8_decode($representante->zonas), 0, 0, 'L');
+    $pdf->SetFont('Arial', 'B', $f);
+    $pdf->Cell(17, $l, utf8_decode("Distrito:"), 0, 0, 'L');
+    $pdf->SetFont('Arial', '', $f);
+    $pdf->Cell(35, $l, utf8_decode($representante->distrito), 0, 0, 'L');
+    $pdf->SetFont('Arial', 'B', $f);
+    $pdf->Cell(30, $l, utf8_decode("Subprefeitura:"), 0, 0, 'L');
+    $pdf->SetFont('Arial', '', $f);
+    $pdf->Cell(25, $l, utf8_decode($representante->subprefeitura), 0, 1, 'L');
 }
 
-$pdf->Ln();
+$pdf->Ln(20);
+
+$pdf->SetX($x);
+$pdf->Cell(180, $l, "", 'T', 1, 'L');
+$pdf->SetFont('Arial', '', $f-1);
+$pdf->SetTextColor(70,70,70);
+
+$pdf->SetX($x);
+$pdf->Cell(25, $l, $pdf->Image('../views/dist/img/pin_promac_negativo.png',$x,$pdf->GetY(),15), 0, 0, 'L');
+$pdf->Cell(155, $l, utf8_decode("Inscrição realizada em ".date('d/m/Y - H:i:s', strtotime($pessoa->data_inscricao))), 0, 1, 'L');
+
+$pdf->SetX($x+25);
+$pdf->Cell(50, $l, utf8_decode($sigla.$id), 0, 1, 'L');
+
+$pdf->SetX($x+25);
+$pdf->Cell(155, $l, utf8_decode("https://promac.prefeitura.sp.gov.br"), 0, 1, 'L',false,"https://promac.prefeitura.sp.gov.br");
 
 $pdf->Output("resumo_inscricao","I");
