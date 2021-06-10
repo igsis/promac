@@ -135,13 +135,13 @@ class IncentivadorPfController extends IncentivadorPfModel
     {
         $id = MainModel::decryption($id);
         $pf = DbModel::consultaSimples(
-            "SELECT pf.*, z.zonas, d.distrito, s.subprefeitura
-            FROM incentivador_pfs AS pf
-            LEFT JOIN incentivador_pf_enderecos pe on pf.id = pe.incentivador_pf_id
-            LEFT JOIN zonas z on pe.zona_id = z.id
-            LEFT JOIN distritos d on pe.distrito_id = d.id
-            LEFT JOIN subprefeituras s on pe.subprefeitura_id = s.id
-            WHERE pf.id = '$id'");
+            "SELECT inf.*, ie.*, z.zonas, d.distrito, s.subprefeitura 
+            FROM incentivador_pfs AS inf
+            LEFT JOIN incentivador_pf_enderecos ie on inf.id = ie.incentivador_pf_id
+            LEFT JOIN zonas z on ie.zona_id = z.id
+            LEFT JOIN distritos d on ie.distrito_id = d.id
+            LEFT JOIN subprefeituras s on ie.subprefeitura_id = s.id
+            WHERE inf.id = '$id'");
 
         $pf = $pf->fetch(PDO::FETCH_ASSOC);
         $telefones = DbModel::consultaSimples("SELECT * FROM incentivador_pf_telefones WHERE incentivador_pf_id = '$id'")->fetchAll(PDO::FETCH_ASSOC);
@@ -167,12 +167,8 @@ class IncentivadorPfController extends IncentivadorPfModel
      * @param int|null $evento_id
      * @return array|bool
      */
-    public function validaPf($incentivador_pf_id, $validacaoTipo, $evento_id = null, $tipo_documentos = null){
-        $tipo = gettype($incentivador_pf_id);
-        if ($tipo == "string") {
-            $incentivador_pf_id = MainModel::decryption($incentivador_pf_id);
-        }
-        return IncentivadorPfModel::validaPfModel($incentivador_pf_id, $validacaoTipo, $evento_id,$tipo_documentos);
+    public function validaPf($cadastro_id, $tipo_cadastro_id){
+        $cadastro_id = MainModel::decryption($cadastro_id);
+        return IncentivadorPfModel::validaCadastroModel($cadastro_id, $tipo_cadastro_id);
     }
-
 }

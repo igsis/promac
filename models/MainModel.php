@@ -503,6 +503,11 @@ class MainModel extends DbModel
         return $i;
     }
 
+    /**
+     * <p>Limpa o array de erros deixando somente o motivo</p>
+     * @param array $erros
+     * @return array|false
+     */
     public function existeErro($erros){
         $erro = MainModel::in_array_r(true, $erros, true);
         if ($erro) {

@@ -72,7 +72,7 @@ class ValidacaoModel extends MainModel
         ];
         if ($proponente->rowCount() == 0) {
             $erros['enderecos']['bol'] = true;
-            $erros['enderecos']['motivo'] = "Proponente não possui endereço cadastrado";
+            $erros['enderecos']['motivo'] = "Cadastro não possui endereço cadastrado";
 
             return $erros;
         } else {
@@ -107,7 +107,7 @@ class ValidacaoModel extends MainModel
 
         if ($proponente->rowCount() == 0) {
             $erros['telefones']['bol'] = true;
-            $erros['telefones']['motivo'] = "Proponente não possui telefone cadastrado";
+            $erros['telefones']['motivo'] = "Cadastro não possui telefone cadastrado";
 
             return $erros;
         } else {
@@ -144,31 +144,6 @@ class ValidacaoModel extends MainModel
         }
     }
 
-    protected function validaFormacao($idPf)
-    {
-        $idPf = MainModel::decryption($idPf);
-        $formacao = DbModel::consultaSimples("SELECT * FROM form_cadastros WHERE pessoa_fisica_id = '$idPf'");
-
-         if ($formacao->rowCount() == 0) {
-            $erros['detalhes']['bol'] = true;
-            $erros['detalhes']['motivo'] = "Detalhes do programa não inseridos!";
-
-            return $erros;
-        } else {
-             $naoObrigatorios = [
-                 'protocolo',
-                 'data_envio'
-             ];
-            $formacao = $formacao->fetchObject();
-            $erros = ValidacaoModel::retornaMensagem($formacao, $naoObrigatorios);
-        }
-        if (isset($erros)){
-            return $erros;
-        } else {
-            return false;
-        }
-    }
-
     protected function validaRepresentante($id)
     {
         $representante = DbModel::getInfo('representante_legais', $id)->fetchObject();
@@ -189,20 +164,10 @@ class ValidacaoModel extends MainModel
      */
     protected function retornaMensagem($dados, $camposNaoObrigatorios = false){
         $mensagens = [
-            'nome_evento' => "Nome do evento não preenchido",
-            'sinopse' => "Sinopse do evento não preenchida",
-            'representante_legal1_id' => "Empresa não possui Representante Legal cadastrado",
-            'produtor_id' => "Atração não possui Produtor cadastrado",
-            'instituicao' => "Instituição não foi preenchido",
-            'site' => "Site não foi preenchido",
-            'valor_projeto' => "Valor do projeto não foi preenchido",
-            'duracao' => "Duração não foi preenchido",
-            'nucleo_artistico' => "Nucleo Artistico não foi preenchido",
-            'representante_nucleo' => "Representante do Nucleo Artistico não foi preenchido",
-            'rg' => 'RG não foi preenchido',
-            'nacionalidade_id' => 'A nacionalidade não foi selecionada',
-            'genero_id' => 'Genero não selecionado',
-            'etnia_id' => 'Etnia não selecionada',
+            'representante_legal_id' => "Empresa não possui Representante Legal cadastrado",
+            'rg' => 'Campo <strong>RG</strong> não foi preenchido',
+            'genero_id' => '<strong>Gênero</strong> não selecionado',
+            'etnia_id' => '<strong>Etnia</strong> não selecionada',
         ];
 
         if ($camposNaoObrigatorios) {
@@ -236,13 +201,13 @@ class ValidacaoModel extends MainModel
                 FROM arquivo_cadastros AS ac
                 INNER JOIN lista_documentos AS ld ON ac.lista_documento_id = ld.id
                 LEFT JOIN (SELECT * FROM arquivos WHERE publicado = 1 AND cadastro_id = '$origem_id' AND tipo_cadastro_id = '$tipo_cadastro') AS a on ld.id = a.lista_documento_id
-                WHERE ac.tipo_cadastro_id = '$tipo_cadastro' AND ld.publicado = '1'";
+                WHERE ac.tipo_cadastro_id = '$tipo_cadastro' AND ld.publicado = '1' AND ac.obrigatorio = '1'";
         $arquivos = DbModel::consultaSimples($sql)->fetchAll(PDO::FETCH_OBJ);
 
         foreach ($arquivos as $arquivo) {
             if ($arquivo->arquivo == null) {
                 $erros[$arquivo->documento]['bol'] = true;
-                $erros[$arquivo->documento]['motivo'] = $arquivo->documento." não enviado";
+                $erros[$arquivo->documento]['motivo'] = "Arquivo <strong>". $arquivo->documento."</strong> não enviado";
             }
         }
 
@@ -275,30 +240,67 @@ class ValidacaoModel extends MainModel
         }
     }
 
-    protected function validaArquivosFormacao($form_cadastro_id, $cargo){
-        $cargos = [4, 5];
-        if (in_array($cargo, $cargos)) {
-            $busca = "AND fld.documento NOT LIKE '%Coordenação%'";
-        } else {
-            $busca = "";
-        }
-        $sql = "SELECT * FROM formacao_lista_documentos AS fld
-                WHERE fld.publicado = 1 AND fld.obrigatorio = '1' ". $busca ." ORDER BY fld.id";
-        $arquivos = DbModel::consultaSimples($sql, true)->fetchAll(PDO::FETCH_OBJ);
-        foreach ($arquivos as $arquivo) {
-            $idsArquivos[] = $arquivo->id;
+    /**
+     * @param int $pessoa_fisica_id
+     * @param int $validacaoTipo
+     * <p>1 - Proponente<br>
+     * 2 - Líder<br>
+     * 3 - Formação</p>
+     * @return array|bool
+     */
+    protected function validaCadastroModel($cadastro_id, $tipo_cadastro)
+    {
+        switch ($tipo_cadastro) {
+            case 1:
+                $naoObrigatorios = [
+                    'cooperado',
+                ];
+                $dados = DbModel::getInfo("proponente_pfs", $cadastro_id)->fetchObject();
+                break;
+
+            case 2:
+                $dados = DbModel::getInfo("proponente_pjs", $cadastro_id)->fetchObject();
+                break;
+
+            case 3:
+                $dados = DbModel::getInfo("incentivador_pfs", $cadastro_id)->fetchObject();
+                break;
+
+            case 4:
+                $dados = DbModel::getInfo("incentivador_pjs", $cadastro_id)->fetchObject();
+                break;
         }
 
-        $arquivosEnviados = DbModel::consultaSimples("SELECT form_lista_documento_id FROM form_arquivos WHERE form_cadastro_id = '$form_cadastro_id' AND publicado = 1")->fetchAll(PDO::FETCH_COLUMN);
+        $naoObrigatorios[] = 'data_inscricao';
 
-        foreach ($idsArquivos as $key => $valor) {
-            if (!in_array($valor, $arquivosEnviados)) {
-                $erros[$arquivos[$key]->documento]['bol'] = true;
-                $erros[$arquivos[$key]->documento]['motivo'] = $arquivos[$key]->documento." não enviado";
+        $validaEndereco = ValidacaoModel::validaEndereco($tipo_cadastro, $cadastro_id);
+        $validaTelefone = ValidacaoModel::validaTelefone($tipo_cadastro, $cadastro_id);
+        $erros = ValidacaoModel::retornaMensagem($dados, $naoObrigatorios);
+
+        if ($validaEndereco) {
+            if (!isset($erros) || $erros == false) {
+                $erros = [];
             }
+            $erros = array_merge($erros, $validaEndereco);
         }
 
-        if (isset($erros)){
+
+        if ($validaTelefone) {
+            if (!isset($erros) || $erros == false) {
+                $erros = [];
+            }
+            $erros = array_merge($erros, $validaTelefone);
+        }
+
+        $validaArquivos = ValidacaoModel::validaArquivos(intval($tipo_cadastro), $cadastro_id);
+        if ($validaArquivos) {
+            if (!isset($erros) || $erros == false) {
+                $erros = [];
+            }
+            $erros = array_merge($erros, $validaArquivos);
+        }
+
+        if (isset($erros)) {
             return $erros;
         } else {
             return false;
