@@ -201,11 +201,8 @@ class ProponentePfController extends ProponentePfModel
      * @return array|bool
      */
     public function validaPf($cadastro_id, $tipo_cadastro_id){
-        $tipo = gettype($cadastro_id);
-        if ($tipo == "string") {
-            $proponente_pf_id = MainModel::decryption($cadastro_id);
-        }
-        return ProponentePfModel::validaPfModel($cadastro_id, $tipo_cadastro_id);
+        $cadastro_id = MainModel::decryption($cadastro_id);
+        return ProponentePfModel::validaCadastroModel($cadastro_id, $tipo_cadastro_id);
     }
 
 }

@@ -41,7 +41,7 @@ $validacoesPf = $erros ? $pfObj->existeErro($erros) : false;
             </div><!-- /.col -->
         </div><!-- /.row -->
         <?php if ($validacoesPf): ?>
-            <div class="row erro-validacao">
+            <div class="row erro-validacao" id="erros">
                 <div class="col-md-4">
                     <div class="card bg-danger">
                         <div class="card-header">
@@ -140,7 +140,7 @@ $validacoesPf = $erros ? $pfObj->existeErro($erros) : false;
                                     <!-- /.card-header -->
                                     <!-- table start -->
                                     <div class="card-body p-0">
-                                        <table class="table table-bordered table-hover">
+                                        <table class="table table-bordered table-hover table-responsive">
                                             <thead>
                                             <tr>
                                                 <th>Documento</th>
@@ -154,35 +154,50 @@ $validacoesPf = $erros ? $pfObj->existeErro($erros) : false;
                                             $arquivosEnviados = $arquivosObj->listarArquivosEnviados($tipo_cadastro, $usuario_id)->fetchAll(PDO::FETCH_OBJ);
                                             if (count($arquivosEnviados) != 0) {
                                                 foreach ($arquivosEnviados as $arquivo) {
+                                                    $observacoes = $arquivosObj->listarObservacoesArquivo($arquivo->id);
                                                     ?>
-                                                    <tr data-widget="expandable-table" aria-expanded="false">
+                                                    <tr data-widget="expandable-table" aria-expanded="<?= $observacoes ? 'true' : 'false' ?>">
                                                         <td><?= "$arquivo->documento" ?></td>
                                                         <td><a href="<?= SERVERURL . "uploads/" . $arquivo->arquivo ?>"
                                                                target="_blank"><?= mb_strimwidth($arquivo->arquivo, '15', '25', '...') ?></a>
                                                         </td>
                                                         <td><?= $arquivosObj->dataParaBR($arquivo->data_envio) ?></td>
                                                         <td>
-                                                            <form class="formulario-ajax"
-                                                                  action="<?= SERVERURL ?>ajax/arquivosAjax.php"
-                                                                  method="POST" data-form="delete">
-                                                                <input type="hidden" name="_method"
-                                                                       value="removerArquivo">
-                                                                <input type="hidden" name="pagina"
-                                                                       value="<?= $_GET['views'] ?>">
-                                                                <input type="hidden" name="arquivo_id"
-                                                                       value="<?= $arquivosObj->encryption($arquivo->id) ?>">
-                                                                <button type="submit" class="btn btn-sm btn-danger">
-                                                                    Apagar
-                                                                </button>
-                                                                <div class="resposta-ajax"></div>
-                                                            </form>
+                                                            <?php if ($arquivo->status_documento_id == 2): ?>
+                                                                <form class="formulario-ajax"
+                                                                      action="<?= SERVERURL ?>ajax/arquivosAjax.php"
+                                                                      method="POST" data-form="delete">
+                                                                    <input type="hidden" name="_method"
+                                                                           value="removerArquivo">
+                                                                    <input type="hidden" name="pagina"
+                                                                           value="<?= $_GET['views'] ?>">
+                                                                    <input type="hidden" name="arquivo_id"
+                                                                           value="<?= $arquivosObj->encryption($arquivo->id) ?>">
+                                                                    <button type="submit" class="btn btn-sm btn-danger">
+                                                                        Apagar
+                                                                    </button>
+                                                                    <div class="resposta-ajax"></div>
+                                                                </form>
+                                                            <?php else: ?>
+                                                                <span class="badge badge-light">Nenhuma ação disponível</span>
+                                                            <?php endif ?>
                                                         </td>
                                                     </tr>
                                                     <tr class="expandable-body">
                                                         <td colspan="4">
-                                                            <p>
-                                                                <strong>Observação: </strong>Aqui vai vir a observação do arquivo pela SMC
-                                                            </p>
+                                                            <?php if ($observacoes) {
+                                                                foreach ($observacoes as $observacao)
+                                                                ?>
+                                                                    <p>
+                                                                        <strong>Observação: </strong> <?= $observacao ?>
+                                                                    </p>
+                                                                <?php }
+                                                            else {
+                                                            ?>
+                                                                <p class="text-center">
+                                                                    Nenhuma observação para este arquivo
+                                                                </p>
+                                                            <?php } ?>
                                                         </td>
                                                     </tr>
                                                     <?php
@@ -198,7 +213,6 @@ $validacoesPf = $erros ? $pfObj->existeErro($erros) : false;
                                             </tbody>
                                         </table>
                                     </div>
-
                                 </div>
                                 <!-- /.card -->
                             </div>
@@ -217,10 +231,13 @@ $validacoesPf = $erros ? $pfObj->existeErro($erros) : false;
                                 <div class="resposta-ajax"></div>
                             </form>
                         <?php else: ?>
-                            <button class="btn btn-warning btn-block float-right">
-                                Você possui pendencias em seu cadastro. Verifique-as no topo da tela para poder
-                                envia-lo
-                            </button>
+                            <a href="#erros">
+                                <div class="alert alert-warning">
+                                    <h5><i class="icon fas fa-exclamation-triangle"></i> Atenção!</h5>
+                                    Você possui pendencias em seu cadastro. Clique aqui e verifique-as no topo da tela para poder
+                                    envia-lo
+                                </div>
+                            </a>
                         <?php endif ?>
                     </div>
                 </div>

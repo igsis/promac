@@ -23,11 +23,15 @@ class ArquivoController extends ArquivoModel
         $lista_documentos_ids = DbModel::consultaSimples("SELECT lista_documento_id FROM arquivo_cadastros WHERE tipo_cadastro_id = '$tipo_cadastro_id'")->fetchAll(PDO::FETCH_COLUMN);;
 
         $documentos = implode(", ", $lista_documentos_ids);
-        $sql = "SELECT a.id, a.arquivo, a.data_envio, ld.documento FROM arquivos AS a
+        $sql = "SELECT a.id, a.arquivo, a.data_envio, a.status_documento_id, ld.documento FROM arquivos AS a
                 INNER JOIN lista_documentos AS ld on a.lista_documento_id = ld.id
                 WHERE tipo_cadastro_id = '$tipo_cadastro_id' AND `cadastro_id` = '$cadastro_id' AND lista_documento_id IN ($documentos) AND a.publicado = '1'";
 
         return DbModel::consultaSimples($sql);
+    }
+
+    public function listarObservacoesArquivo($arquivo_id) {
+        return DbModel::consultaSimples("SELECT observacao FROM arquivo_observacoes WHERE arquivo_id = '$arquivo_id'")->fetchAll(PDO::FETCH_COLUMN);
     }
 
     public function recuperaIdListaDocumento($tipo_documento_id, $fomento = false) {
