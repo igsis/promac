@@ -72,7 +72,7 @@ class ValidacaoModel extends MainModel
         ];
         if ($proponente->rowCount() == 0) {
             $erros['enderecos']['bol'] = true;
-            $erros['enderecos']['motivo'] = "Proponente não possui endereço cadastrado";
+            $erros['enderecos']['motivo'] = "Cadastro não possui endereço cadastrado";
 
             return $erros;
         } else {
@@ -107,7 +107,7 @@ class ValidacaoModel extends MainModel
 
         if ($proponente->rowCount() == 0) {
             $erros['telefones']['bol'] = true;
-            $erros['telefones']['motivo'] = "Proponente não possui telefone cadastrado";
+            $erros['telefones']['motivo'] = "Cadastro não possui telefone cadastrado";
 
             return $erros;
         } else {

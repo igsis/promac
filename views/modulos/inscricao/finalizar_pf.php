@@ -1,4 +1,10 @@
 <?php
+/**
+ * @var ProponentePfController|IncentivadorPfController $pfObj
+ * @var object $dados
+ * @var bool $proponente
+ */
+
 require_once "./controllers/ArquivoController.php";
 $arquivosObj = new ArquivoController();
 
@@ -14,8 +20,9 @@ if ($tipo_cadastro == 1) {
 } elseif ($tipo_cadastro == 3) {
     $proponente = false;
     require_once "./controllers/IncentivadorPfController.php";
+    $pfObj = new IncentivadorPfController();
 
-
+    $dados = $pfObj->recuperaIncentivadorPf($usuario_id);
 } else {
     echo '<script> window.location.href="'. SERVERURL .'" </script>';
 }
@@ -30,6 +37,7 @@ if ($dados->cep) {
 
 $erros = $pfObj->validaPf(intval($dados->id), $tipo_cadastro);
 $validacoesPf = $erros ? $pfObj->existeErro($erros) : false;
+
 ?>
 
 <!-- Content Header (Page header) -->
