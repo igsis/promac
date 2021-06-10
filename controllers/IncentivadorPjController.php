@@ -81,8 +81,11 @@ class IncentivadorPjController extends IncentivadorPjModel
     {
         $id = MainModel::decryption($id);
         $pj = DbModel::consultaSimples(
-            "SELECT pj.*, pe.*, im.imposto FROM incentivador_pjs AS pj
+            "SELECT pj.*, pe.*, im.imposto, z.zonas, d.distrito, s.subprefeitura FROM incentivador_pjs AS pj
             LEFT JOIN incentivador_pj_enderecos pe on pj.id = pe.incentivador_pj_id
+            LEFT JOIN zonas z on pe.zona_id = z.id
+            LEFT JOIN distritos d on pe.distrito_id = d.id
+            LEFT JOIN subprefeituras s on pe.subprefeitura_id = s.id
             LEFT JOIN impostos im on pj.imposto_id = im.id
             WHERE pj.id = '$id'
         ");

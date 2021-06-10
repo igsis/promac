@@ -43,6 +43,34 @@ class MainModel extends DbModel
     }
 
     /**
+     * <p>checa se o campo do parâmetro possuí algum dado, caso não possua, ele retorna "Não cadastrado"
+     * @param $campo
+     * @return string
+     */
+    public function checaCampo($campo):string
+    {
+        if ($campo == NULL || $campo == '') {
+            return "Não cadastrado";
+        } else {
+            return $campo;
+        }
+    }
+
+    /**
+     * @param $campo
+     * <p>retorna sim para campos valo = 1 e não para campos valor=0</p>
+     * @return string
+     */
+    public function simNao($campo):string
+    {
+        if ($campo == 1 ) {
+            return "Sim";
+        } else {
+            return "Não";
+        }
+    }
+
+    /**
      * <p>Transforma data padrão sql para BR</p>
      * @param string $data
      * <p>Valor deve estar no padrão AAAA-MM-DD</p>

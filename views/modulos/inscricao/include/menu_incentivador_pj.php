@@ -19,7 +19,7 @@ if (isset($pj->representante_legal_id)){
 </li>
 <?php if ($pj->liberado == 0 || $pj->liberado == 3): ?>
     <li class="nav-item">
-        <a href="<?= SERVERURL ?>inscricao/proponente_pj_cadastro" class="nav-link" id="proponente_pj_cadastro">
+        <a href="<?= SERVERURL ?>inscricao/incentivador_pj_cadastro" class="nav-link" id="proponente_pj_cadastro">
             <i class="far fa-circle nav-icon"></i>
             <p>Dados pessoais</p>
         </a>
