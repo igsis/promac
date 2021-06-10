@@ -204,11 +204,14 @@ class RepresentanteController extends RepresentanteModel
     {
         $id = MainModel::decryption($id);
         $pf = DbModel::consultaSimples(
-            "SELECT pf.*, ge.genero, et.etnia, pe.*, pl.lei 
+            "SELECT pf.*, ge.genero, et.etnia, pe.*, pl.lei, z.zonas, d.distrito, s.subprefeitura
             FROM representante_legais AS pf
             LEFT JOIN generos ge on pf.genero_id = ge.id
             LEFT JOIN etnias et on pf.etnia_id = et.id
             LEFT JOIN representante_enderecos pe on pf.id = pe.representante_legal_id
+            LEFT JOIN zonas z on pe.zona_id = z.id
+            LEFT JOIN distritos d on pe.distrito_id = d.id
+            LEFT JOIN subprefeituras s on pe.subprefeitura_id = s.id
             LEFT JOIN representante_leis pl on pf.id = pl.representante_legal_id
             WHERE pf.id = '$id'");
 

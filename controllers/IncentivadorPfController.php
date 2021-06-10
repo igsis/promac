@@ -135,9 +135,12 @@ class IncentivadorPfController extends IncentivadorPfModel
     {
         $id = MainModel::decryption($id);
         $pf = DbModel::consultaSimples(
-            "SELECT *
+            "SELECT pf.*, z.zonas, d.distrito, s.subprefeitura
             FROM incentivador_pfs AS pf
             LEFT JOIN incentivador_pf_enderecos pe on pf.id = pe.incentivador_pf_id
+            LEFT JOIN zonas z on pe.zona_id = z.id
+            LEFT JOIN distritos d on pe.distrito_id = d.id
+            LEFT JOIN subprefeituras s on pe.subprefeitura_id = s.id
             WHERE pf.id = '$id'");
 
         $pf = $pf->fetch(PDO::FETCH_ASSOC);
