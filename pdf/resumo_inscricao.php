@@ -98,7 +98,7 @@ if ($modulo == 1 | $modulo == 3){
         $pdf->SetFont('Arial', 'B', $f);
         $pdf->Cell(25, $l, utf8_decode('Cooperado:'), 0, 0, 'L');
         $pdf->SetFont('Arial', '', $f);
-        $pdf->Cell(45, $l, utf8_decode($pessoa->cooperado), 0, 1, 'L');
+        $pdf->Cell(45, $l, utf8_decode((new MainModel)->simNao($pessoa->cooperado)), 0, 1, 'L');
 
         if (isset($pessoa->lei)){
             $pdf->SetX($x);
@@ -126,14 +126,15 @@ if ($modulo == 1 | $modulo == 3){
         $pdf->SetFont('Arial', 'B', $f);
         $pdf->Cell(10, $l, utf8_decode('MEI:'), 0, 0, 'L');
         $pdf->SetFont('Arial', '', $f);
-        $pdf->Cell(45, $l, utf8_decode($pessoa->mei), 0, 0, 'L');
+        $pdf->Cell(45, $l, utf8_decode((new MainModel)->simNao($pessoa->mei)), 0, 0, 'L');
         $pdf->SetFont('Arial', 'B', $f);
         $pdf->Cell(27, $l, utf8_decode('Cooperativa:'), 0, 0, 'L');
         $pdf->SetFont('Arial', '', $f);
-        $pdf->Cell(45, $l, utf8_decode($pessoa->cooperativa), 0, 1, 'L');
+        $pdf->Cell(45, $l, utf8_decode((new MainModel)->simNao($pessoa->cooperativa)), 0, 1, 'L');
     } else{
         $pdf->SetX($x);
-        $pdf->Cell(15, $l, utf8_decode('Imposto:'), 0, 0, 'L');
+        $pdf->SetFont('Arial', 'B', $f);
+        $pdf->Cell(19, $l, utf8_decode('Imposto:'), 0, 0, 'L');
         $pdf->SetFont('Arial', '', $f);
         $pdf->Cell(45, $l, utf8_decode($pessoa->imposto), 0, 1, 'L');
     }

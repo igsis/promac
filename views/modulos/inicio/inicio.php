@@ -103,11 +103,13 @@ switch ($pessoa->liberado){
                         </p>
 
                     </div>
-                    <div style="text-align: center">
-                        <a href="<?= SERVERURL ?>pdf/resumo_inscricao.php?modulo=<?=$_SESSION['modulo_p']?>&id=<?=$_SESSION['usuario_id_p']?>" class="small-box-footer">
-                            Acesse <i class="fas fa-arrow-circle-right"></i>
-                        </a>
-                    </div>
+                    <?php if ($pessoa->liberado != 0 && $pessoa->data_inscricao != null): ?>
+                        <div style="text-align: center">
+                            <a href="<?= SERVERURL ?>pdf/resumo_inscricao.php?modulo=<?=$_SESSION['modulo_p']?>&id=<?=$_SESSION['usuario_id_p']?>" class="small-box-footer">
+                                Acesse <i class="fas fa-arrow-circle-right"></i>
+                            </a>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
             <div class="col-md-2">
@@ -130,9 +132,9 @@ switch ($pessoa->liberado){
         <!-- ./row -->
         <hr>
         <!-- row -->
+        <!-- Para quando houver área de projetos
         <div class="row">
             <div class="col-md-12">
-                <!-- small card -->
                 <div class="card card-primary card-outline">
                     <div class="card-header">
                         <h3 class="card-title">
@@ -145,7 +147,7 @@ switch ($pessoa->liberado){
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
         <!-- ./row -->
 
     </div><!-- /.container-fluid -->
