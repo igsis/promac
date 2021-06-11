@@ -105,8 +105,7 @@ switch ($pessoa->liberado){
                     </div>
                     <?php if ($pessoa->liberado != 0 && $pessoa->data_inscricao != null): ?>
                         <div style="text-align: center">
-                            <a href="<?= SERVERURL ?>pdf/resumo_inscricao.php?modulo=<?=$_SESSION['modulo_p']?>&id=<?=$_SESSION['usuario_id_p']?>" class="small-box-footer">
-                                Acesse <i class="fas fa-arrow-circle-right"></i>
+                            <a class="small-box-footer" href="<?= SERVERURL ?>pdf/resumo_inscricao.php?modulo=<?=$_SESSION['modulo_p']?>&id=<?=$_SESSION['usuario_id_p']?>" target="_blank">Visualize <i class="fas fa-arrow-circle-right"></i>
                             </a>
                         </div>
                     <?php endif; ?>
