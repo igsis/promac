@@ -36,7 +36,7 @@ if (isset($pj->representante_legal_id)){
         </a>
     </li>
     <li class="nav-item">
-        <a href="<?= SERVERURL ?>inscricao/finalizar" class="nav-link" id="finalizar">
+        <a href="<?= SERVERURL ?>inscricao/finalizar_pj" class="nav-link" id="finalizar_pj">
             <i class="far fa-circle nav-icon"></i>
             <p>Finalizar inscrição</p>
         </a>

@@ -259,6 +259,10 @@ class ValidacaoModel extends MainModel
                 break;
 
             case 2:
+                $naoObrigatorios = [
+                    'mei',
+                    'cooperativa',
+                ];
                 $dados = DbModel::getInfo("proponente_pjs", $cadastro_id)->fetchObject();
                 break;
 

@@ -113,7 +113,7 @@ class ProponentePjController extends ProponentePjModel
      * <p>Recebe o ID do proponente PJ já decriptado</p>
      * @return array|bool
      */
-    public function validaPj($proponente_pj_id) {
-        return ProponentePjModel::validaPjModel($proponente_pj_id);
+    public function validaPj($cadastro_id, $tipo_cadastro_id){
+        return ProponentePjModel::validaCadastroModel($cadastro_id, $tipo_cadastro_id);
     }
 }

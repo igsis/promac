@@ -490,19 +490,6 @@ class MainModel extends DbModel
         return $newstring;
     }
 
-    public function verificaCenica($idEvento)
-    {
-        $idEvento = MainModel::decryption($idEvento);
-        $acoes = DbModel::consultaSimples("SELECT aa.acao_id FROM atracoes AS at INNER JOIN acao_atracao aa on at.id = aa.atracao_id WHERE at.publicado = 1 AND at.evento_id = '$idEvento'")->fetchAll(PDO::FETCH_ASSOC);
-        $i = false;
-        foreach ($acoes as $acao){
-            if ($acao['acao_id'] == 2 || $acao['acao_id'] == 3 || $acao['acao_id'] == 11){
-                $i = true;
-            }
-        }
-        return $i;
-    }
-
     /**
      * <p>Limpa o array de erros deixando somente o motivo</p>
      * @param array $erros
@@ -546,5 +533,22 @@ class MainModel extends DbModel
         } else {
             return false;
         }
+    }
+
+    /**
+     * <p>Retorna o endereço formatado em uma única string - Exemplo: Rua da Esperança, 123 - Vila do Chavez, São Paulo - SP, 01234-000 </p>
+     * @param object $dados
+     * <p>Deve conter os dados <i>logradouro</i>, <i>numero</i>, <i>complemento</i>, <i>bairro</i>, <i>cidade</i>, <i>uf</i> e <i>cep</i> </p>
+     * @return string
+     */
+    public function enderecoParaString($dados)
+    {
+        $endereco = $dados->logradouro . ", " . $dados->numero;
+        if ($dados->complemento){
+            $endereco .= ", " . $dados->complemento;
+        }
+        $endereco .= " - " . $dados->bairro . ", " . $dados->cidade . " - " . $dados->uf . ", " . $dados->cep;
+
+        return $endereco;
     }
 }
