@@ -82,7 +82,7 @@ class ProponentePjController extends ProponentePjModel
     {
         $id = MainModel::decryption($id);
         $pj = DbModel::consultaSimples(
-            "SELECT pj.*, z.zonas, d.distrito, s.subprefeitura FROM proponente_pjs AS pj
+            "SELECT pj.*, pe.*, z.zonas, d.distrito, s.subprefeitura FROM proponente_pjs AS pj
             LEFT JOIN proponente_pj_enderecos pe on pj.id = pe.proponente_pj_id
             LEFT JOIN zonas z on pe.zona_id = z.id
             LEFT JOIN distritos d on pe.distrito_id = d.id

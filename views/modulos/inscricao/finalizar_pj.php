@@ -31,9 +31,15 @@ if ($tipo_cadastro == 2) {
 
 $representante = $representanteObj->recuperaRepresentante($dados->representante_legal_id);
 
+if (isset($representante->cep)) {
+    if ($representante->cep) {
+        $endereco_representante = $pjObj->enderecoParaString($representante);
+    }
+}
+
 if (isset($dados->cep)) {
     if ($dados->cep) {
-        $endereco = $endereco = $pjObj->enderecoParaString($dados);
+        $endereco = $pjObj->enderecoParaString($dados);
     }
 }
 
@@ -140,25 +146,25 @@ $validacoesPf = $erros ? $pjObj->existeErro($erros) : false;
                                             </div>
                                         <?php else: ?>
                                             <strong>Nome:</strong>
-                                            <p class="text-muted"><?= $dados->nome ?></p>
+                                            <p class="text-muted"><?= $representante->nome ?></p>
                                             <hr>
 
                                             <strong>RG:</strong>
-                                            <p class="text-muted"><?= $dados->rg ?></p>
+                                            <p class="text-muted"><?= $representante->rg ?></p>
                                             <hr>
 
                                             <strong>CPF:</strong>
-                                            <p class="text-muted"><?= $dados->cpf ?></p>
+                                            <p class="text-muted"><?= $representante->cpf ?></p>
                                             <hr>
 
                                             <strong>E-mail:</strong>
-                                            <p class="text-muted"><?= $dados->email ?></p>
+                                            <p class="text-muted"><?= $representante->email ?></p>
                                             <hr>
 
                                             <strong>Telefones:</strong>
                                             <p class="text-muted">
                                                 <?php
-                                                if (isset($dados->telefones)) {
+                                                if (isset($representante->telefones)) {
                                                     echo implode(" / ", $dados->telefones);
                                                 }
                                                 ?>
@@ -166,26 +172,21 @@ $validacoesPf = $erros ? $pjObj->existeErro($erros) : false;
                                             <hr>
 
                                             <strong>Endereço:</strong>
-                                            <p class="text-muted"><?= $endereco ?? '' ?></p>
+                                            <p class="text-muted"><?= $endereco_representante ?? '' ?></p>
                                             <hr>
 
-                                            <?php if ($proponente): ?>
-                                                <strong>Cooperado:</strong>
-                                                <p class="text-muted"><?= $pfObj->simNao($dados->cooperado) ?></p>
-                                                <hr>
+                                            <strong>Genero:</strong>
+                                            <p class="text-muted"><?= $representante->genero ?></p>
+                                            <hr>
 
-                                                <strong>Genero:</strong>
-                                                <p class="text-muted"><?= $dados->genero ?></p>
-                                                <hr>
+                                            <strong>Etnia:</strong>
+                                            <p class="text-muted"><?= $representante->etnia ?></p>
+                                            <hr>
 
-                                                <strong>Etnia:</strong>
-                                                <p class="text-muted"><?= $dados->etnia ?></p>
-                                                <hr>
-
-                                                <strong>Já participou de outras leis de incentivo à cultura? Se sim, qual?</strong>
-                                                <p class="text-muted"><?= $dados->lei == null ? "Não" : "Sim, " . $dados->lei ?></p>
-                                                <hr>
-                                            <?php endif; ?>
+                                            <strong>Já participou de outras leis de incentivo à cultura? Se sim,
+                                                qual?</strong>
+                                            <p class="text-muted"><?= $representante->lei == null ? "Não" : "Sim, " . $representante->lei ?></p>
+                                            <hr>
                                         <?php endif ?>
                                     </div>
                                 </div>
