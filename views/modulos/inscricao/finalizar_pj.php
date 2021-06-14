@@ -127,6 +127,10 @@ $validacoesPf = $erros ? $pjObj->existeErro($erros) : false;
                                             <strong>É cooperativa?</strong>
                                             <p class="text-muted"><?= $pjObj->simNao($dados->cooperativa) ?></p>
                                             <hr>
+                                        <?php else: ?>
+                                            <strong>Imposto?</strong>
+                                            <p class="text-muted"><?= $dados->imposto ?></p>
+                                            <hr>
                                         <?php endif; ?>
                                     </div>
                                 </div>
