@@ -82,7 +82,7 @@ class ProponentePjController extends ProponentePjModel
     {
         $id = MainModel::decryption($id);
         $pj = DbModel::consultaSimples(
-            "SELECT pj.*, z.zonas, d.distrito, s.subprefeitura FROM proponente_pjs AS pj
+            "SELECT pj.*, pe.*, z.zonas, d.distrito, s.subprefeitura FROM proponente_pjs AS pj
             LEFT JOIN proponente_pj_enderecos pe on pj.id = pe.proponente_pj_id
             LEFT JOIN zonas z on pe.zona_id = z.id
             LEFT JOIN distritos d on pe.distrito_id = d.id
@@ -113,7 +113,7 @@ class ProponentePjController extends ProponentePjModel
      * <p>Recebe o ID do proponente PJ já decriptado</p>
      * @return array|bool
      */
-    public function validaPj($proponente_pj_id) {
-        return ProponentePjModel::validaPjModel($proponente_pj_id);
+    public function validaPj($cadastro_id, $tipo_cadastro_id){
+        return ProponentePjModel::validaCadastroModel($cadastro_id, $tipo_cadastro_id);
     }
 }

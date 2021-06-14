@@ -28,11 +28,7 @@ if ($tipo_cadastro == 1) {
 }
 
 if ($dados->cep) {
-    $endereco = $dados->logradouro . ", " . $dados->numero;
-    if ($dados->complemento){
-        $endereco .= ", " . $dados->complemento;
-    }
-    $endereco .= " - " . $dados->bairro . ", " . $dados->cidade . " - " . $dados->uf . ", " . $dados->cep;
+    $endereco = $pfObj->enderecoParaString($dados);
 }
 
 $erros = $pfObj->validaPf(intval($dados->id), $tipo_cadastro);
@@ -119,7 +115,7 @@ $validacoesPf = $erros ? $pfObj->existeErro($erros) : false;
 
                                         <?php if ($proponente): ?>
                                             <strong>Cooperado:</strong>
-                                            <p class="text-muted"><?= $dados->cooperado == 1 ? "Sim" : "Não" ?></p>
+                                            <p class="text-muted"><?= $pfObj->simNao($dados->cooperado) ?></p>
                                             <hr>
 
                                             <strong>Genero:</strong>

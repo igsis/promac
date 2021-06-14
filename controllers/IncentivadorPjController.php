@@ -110,11 +110,11 @@ class IncentivadorPjController extends IncentivadorPjModel
     }
 
     /**
-     * @param $incentivador_pj_id
-     * <p>Recebe o ID do incentivador PJ já decriptado</p>
+     * @param $proponente_pj_id
+     * <p>Recebe o ID do proponente PJ já decriptado</p>
      * @return array|bool
      */
-    public function validaPj($incentivador_pj_id) {
-        return IncentivadorPjModel::validaPjModel($incentivador_pj_id);
+    public function validaPj($cadastro_id, $tipo_cadastro_id){
+        return IncentivadorPjController::validaCadastroModel($cadastro_id, $tipo_cadastro_id);
     }
 }

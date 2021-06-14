@@ -168,6 +168,7 @@ class ValidacaoModel extends MainModel
             'rg' => 'Campo <strong>RG</strong> não foi preenchido',
             'genero_id' => '<strong>Gênero</strong> não selecionado',
             'etnia_id' => '<strong>Etnia</strong> não selecionada',
+            'imposto_id' => '<strong>Imposto</strong> não selecionada',
         ];
 
         if ($camposNaoObrigatorios) {
@@ -259,6 +260,10 @@ class ValidacaoModel extends MainModel
                 break;
 
             case 2:
+                $naoObrigatorios = [
+                    'mei',
+                    'cooperativa',
+                ];
                 $dados = DbModel::getInfo("proponente_pjs", $cadastro_id)->fetchObject();
                 break;
 
