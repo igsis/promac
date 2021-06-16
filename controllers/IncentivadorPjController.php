@@ -19,6 +19,7 @@ class IncentivadorPjController extends IncentivadorPjModel
         $idDecryp = MainModel::decryption($_POST['id']);
 
         $dadosLimpos = IncentivadorPjModel::limparStringPJ($_POST);
+        $dadosLimpos['pj']['email_publico'] = $dadosLimpos['pj']['email_publico'] ?? 0;
 
         $edita = DbModel::update('incentivador_pjs', $dadosLimpos['pj'], $idDecryp);
         if ($edita) {
@@ -116,5 +117,11 @@ class IncentivadorPjController extends IncentivadorPjModel
      */
     public function validaPj($cadastro_id, $tipo_cadastro_id){
         return IncentivadorPjController::validaCadastroModel($cadastro_id, $tipo_cadastro_id);
+    }
+
+    public function enviarCadastro($id)
+    {
+        $alerta = MainModel::enviarCadastroModel($id, 4);
+        return MainModel::sweetAlert($alerta);
     }
 }

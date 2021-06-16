@@ -11,6 +11,9 @@ if (isset($_POST['_method'])) {
         case "editarPj":
             echo $pjObj->editaProponentePj($_POST['id'],$_POST['pagina']);
             break;
+        case "envioCadastro":
+            echo $pjObj->enviarCadastro($_POST['id']);
+            break;
     }
 } else {
     include_once "../config/destroySession.php";

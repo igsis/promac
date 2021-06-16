@@ -208,28 +208,7 @@ class ProponentePfController extends ProponentePfModel
 
     public function enviarCadastro($id)
     {
-        $id = MainModel::decryption($id);
-        $dados['data_inscricao'] = date("Y-m-d H:i:s");
-        $dados['liberado'] = 1;
-
-        $update = DbModel::update('proponente_pfs', $dados, $id);
-        if ($update->rowCount() >= 1 || DbModel::connection()->errorCode() == 0) {
-            $alerta = [
-                'alerta' => 'sucesso',
-                'titulo' => 'Cadastro Enviado',
-                'texto' => 'Cadastro enviado com sucesso!',
-                'tipo' => 'success',
-                'location' => SERVERURL.'inicio/inicio',
-                'redirecionamento' => SERVERURL.'pdf/resumo_inscricao.php?modulo=1&id='.MainModel::encryption($id)
-            ];
-        } else {
-            $alerta = [
-                'alerta' => 'simples',
-                'titulo' => 'Erro!',
-                'texto' => 'Erro ao enviar o projeto!',
-                'tipo' => 'error'
-            ];
-        }
+        $alerta = MainModel::enviarCadastroModel($id, 1);
         return MainModel::sweetAlert($alerta);
     }
 }

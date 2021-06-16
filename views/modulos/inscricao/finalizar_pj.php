@@ -17,12 +17,14 @@ if ($tipo_cadastro == 2) {
     $proponente = true;
     require_once "./controllers/ProponentePjController.php";
     $pjObj = new ProponentePjController();
+    $ajax = "proponentePjAjax.php";
 
     $dados = $pjObj->recuperaProponentePj($usuario_id);
 } elseif ($tipo_cadastro == 4) {
     $proponente = false;
     require_once "./controllers/IncentivadorPjController.php";
     $pjObj = new IncentivadorPjController();
+    $ajax = "incentivadorPjAjax.php";
 
     $dados = $pjObj->recuperaIncentivadorPj($usuario_id);
 } else {
@@ -103,6 +105,10 @@ $validacoesPf = $erros ? $pjObj->existeErro($erros) : false;
 
                                         <strong>E-mail:</strong>
                                         <p class="text-muted"><?= $dados->email ?></p>
+                                        <hr>
+
+                                        <strong>E-mail pode ser exibido para Consulta Pública?</strong>
+                                        <p class="text-muted"><?= $pjObj->simNao($dados->email_publico) ?></p>
                                         <hr>
 
                                         <strong>Telefones:</strong>
@@ -289,9 +295,10 @@ $validacoesPf = $erros ? $pjObj->existeErro($erros) : false;
                     <div class="card-footer" id="cardFooter">
                         <?php if (!$erros): ?>
                             <form class="form-horizontal formulario-ajax" method="POST"
-                                  action="<?= SERVERURL ?>ajax/formacaoAjax.php" role="form" data-form="update"
+                                  action="<?= SERVERURL .'ajax/'. $ajax?>" role="form" data-form="update"
                                   id="formEnviar">
-                                <input type="hidden" name="_method" value="envioFormacao">
+                                <input type="hidden" name="_method" value="envioCadastro">
+                                <input type="hidden" name="id" value="<?= $usuario_id ?>">
                                 <button type="submit" class="btn btn-success btn-block float-right" id="cadastra">
                                     Enviar
                                 </button>

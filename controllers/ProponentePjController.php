@@ -21,6 +21,7 @@ class ProponentePjController extends ProponentePjModel
         $dadosLimpos = ProponentePjModel::limparStringPJ($_POST);
         $dadosLimpos['pj']['cooperativa'] = $dadosLimpos['pj']['cooperativa'] ?? 0;
         $dadosLimpos['pj']['mei'] = $dadosLimpos['pj']['mei'] ?? 0;
+        $dadosLimpos['pj']['email_publico'] = $dadosLimpos['pj']['email_publico'] ?? 0;
 
         $edita = DbModel::update('proponente_pjs', $dadosLimpos['pj'], $idDecryp);
         if ($edita) {
@@ -115,5 +116,11 @@ class ProponentePjController extends ProponentePjModel
      */
     public function validaPj($cadastro_id, $tipo_cadastro_id){
         return ProponentePjModel::validaCadastroModel($cadastro_id, $tipo_cadastro_id);
+    }
+
+    public function enviarCadastro($id)
+    {
+        $alerta = MainModel::enviarCadastroModel($id, 2);
+        return MainModel::sweetAlert($alerta);
     }
 }

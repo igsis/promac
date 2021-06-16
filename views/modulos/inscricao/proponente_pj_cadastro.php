@@ -46,7 +46,7 @@ $pj = $pjObjeto->recuperaProponentePj($id);
                                     <input type="text" name="pj_cnpj" class="form-control" id="cnpj" value="<?= $pj->cnpj ?? null ?>" readonly>
                                 </div>
                                 <div class="form-group col-md-1">
-                                    <label for="mei">MEI</label><br>
+                                    <label for="mei">É MEI?</label><br>
                                     <input type="checkbox" class="form-control-sm checkbox-grid-2" id="mei" name="pj_mei" value="1"
                                         <?php
                                         if (isset($pj->mei)){
@@ -58,7 +58,7 @@ $pj = $pjObjeto->recuperaProponentePj($id);
                                     >
                                 </div>
                                 <div class="form-group col-md-1">
-                                    <label for="cooperativa">Cooperativa</label><br>
+                                    <label for="cooperativa">Cooperativa?</label><br>
                                     <input type="checkbox" class="form-control-sm checkbox-grid-2" id="cooperativa" name="pj_cooperativa" value="1"
                                         <?php
                                         if (isset($pj->cooperativa)){
@@ -72,11 +72,26 @@ $pj = $pjObjeto->recuperaProponentePj($id);
                             </div>
 
                             <div class="row">
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-4">
                                     <label for="pj_email">E-mail: *</label>
                                     <input type="email" id="pj_email" name="pj_email" class="form-control"
                                            maxlength="60" placeholder="Digite o E-mail"
                                            value="<?= $pj->email ?? '' ?>" required>
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input custom-control-input-primary custom-control-input-outline"
+                                               type="checkbox" id="email_publico" value="1" name="pj_email_publico"
+                                            <?php
+                                            if (isset($pj->email_publico)){
+                                                if ($pj->email_publico == 1){
+                                                    echo 'checked';
+                                                }
+                                            }
+                                            ?>
+                                        >
+                                        <label for="email_publico" class="custom-control-label">E-mail pode ser exibido para Consulta Pública?</label>
+                                    </div>
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label for="telefone">Telefone #1: *</label>

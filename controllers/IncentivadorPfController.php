@@ -75,6 +75,7 @@ class IncentivadorPfController extends IncentivadorPfModel
         $idDecryp = MainModel::decryption($id);
 
         $dadosLimpos = IncentivadorPfModel::limparStringPF($_POST);
+        $dadosLimpos['pf']['email_publico'] = $dadosLimpos['pf']['email_publico'] ?? 0;
 
         $edita = DbModel::update('incentivador_pfs', $dadosLimpos['pf'], $idDecryp);
         if ($edita) {
@@ -170,5 +171,11 @@ class IncentivadorPfController extends IncentivadorPfModel
     public function validaPf($cadastro_id, $tipo_cadastro_id){
         $cadastro_id = MainModel::decryption($cadastro_id);
         return IncentivadorPfModel::validaCadastroModel($cadastro_id, $tipo_cadastro_id);
+    }
+
+    public function enviarCadastro($id)
+    {
+        $alerta = MainModel::enviarCadastroModel($id, 3);
+        return MainModel::sweetAlert($alerta);
     }
 }

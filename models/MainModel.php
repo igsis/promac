@@ -551,4 +551,45 @@ class MainModel extends DbModel
 
         return $endereco;
     }
+
+    protected function enviarCadastroModel($id, $modulo)
+    {
+        switch ($modulo) {
+            case 1:
+                $tabela = "proponente_pfs";
+                break;
+            case 2:
+                $tabela = "proponente_pjs";
+                break;
+            case 3:
+                $tabela = "incentivador_pfs";
+                break;
+            case 4:
+                $tabela = "incentivador_pjs";
+                break;
+        }
+        $id = MainModel::decryption($id);
+        $dados['data_inscricao'] = date("Y-m-d H:i:s");
+        $dados['liberado'] = 1;
+
+        $update = DbModel::update($tabela, $dados, $id);
+        if ($update->rowCount() >= 1 || DbModel::connection()->errorCode() == 0) {
+            $alerta = [
+                'alerta' => 'sucesso',
+                'titulo' => 'Cadastro Enviado',
+                'texto' => 'Cadastro enviado com sucesso!',
+                'tipo' => 'success',
+                'location' => SERVERURL.'inicio/inicio',
+                'redirecionamento' => SERVERURL.'pdf/resumo_inscricao.php?modulo='.$modulo.'&id='.MainModel::encryption($id)
+            ];
+        } else {
+            $alerta = [
+                'alerta' => 'simples',
+                'titulo' => 'Erro!',
+                'texto' => 'Erro ao enviar o projeto!',
+                'tipo' => 'error'
+            ];
+        }
+        return $alerta;
+    }
 }
