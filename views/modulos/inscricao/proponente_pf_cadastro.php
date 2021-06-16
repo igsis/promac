@@ -58,11 +58,26 @@ $pf = $pfObjeto->recuperaProponentePf($id);
                             </div>
 
                             <div class="row">
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-4">
                                     <label for="pf_email">E-mail: *</label>
                                     <input type="email" id="pf_email" name="pf_email" class="form-control"
                                            maxlength="60" placeholder="Digite o E-mail"
                                            value="<?= $pf->email ?? '' ?>" required>
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input custom-control-input-primary custom-control-input-outline"
+                                               type="checkbox" id="email_publico" value="1" name="pf_email_publico"
+                                            <?php
+                                            if (isset($pf->email_publico)){
+                                                if ($pf->email_publico == 1){
+                                                    echo 'checked';
+                                                }
+                                            }
+                                            ?>
+                                        >
+                                        <label for="email_publico" class="custom-control-label">E-mail pode ser exibido para Consulta Pública?</label>
+                                    </div>
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label for="telefone">Telefone #1: *</label>
@@ -137,7 +152,7 @@ $pf = $pfObjeto->recuperaProponentePf($id);
                                     </div>
                                 </div>
                                 <div class="form-group col-md">
-                                    <label for="lei_lei">Lei: *</label>
+                                    <label for="lei_lei">Nome da Lei: *</label>
                                     <input type="text" class="form-control" id="lei_lei" name="le_lei"
                                            maxlength="70" value="<?= $pf->lei ?? null ?>" required disabled>
                                 </div>

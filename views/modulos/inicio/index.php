@@ -63,12 +63,12 @@
                                         <br>
                                         <strong>Cadastro de proponente:</strong> aberto o ano todo.<br/>
                                         <strong>Cadastro de incentivador:</strong> aberto o ano todo.<br/>
-                                        <strong>Inscrição de projeto:</strong> abertas de 9h de 08/03/2021 às 19h de 30/06/2021. Confira o Edital PROMAC 2021 no botão Normativos ao lado.<br/>
+                                        <strong>Inscrição de projeto:</strong> abertas de 9h de 08/03/2021 às 19h de 30/06/2021. Confira o Edital PROMAC 2021 no botão Normativos acima.<br/>
                                         <strong>Captação de recursos:</strong> aberta de 10/03/2021 a 12/11/2021 (ou enquanto houver saldo disponível para captação).
                                     </p>
 
                                     <p style="text-align: justify">
-                                        O proponente deverá inscrever-se no botão ao lado e após habilitação poderá inscrever o projeto.<br>
+                                        O proponente deverá inscrever-se no botão acima e após habilitação poderá inscrever o projeto.<br>
                                         Para saber como participar, clique em Normativos e se inscreva no menu acima.
                                     </p>
                                 </div>

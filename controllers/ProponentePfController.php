@@ -82,6 +82,7 @@ class ProponentePfController extends ProponentePfModel
 
         $dadosLimpos = ProponentePfModel::limparStringPF($_POST);
         $dadosLimpos['pf']['cooperado'] = $dadosLimpos['pf']['cooperado'] ?? 0;
+        $dadosLimpos['pf']['email_publico'] = $dadosLimpos['pf']['email_publico'] ?? 0;
         $dadosLimpos['en']['complemento'] = $dadosLimpos['en']['complemento'] ?? "";
 
         $edita = DbModel::update('proponente_pfs', $dadosLimpos['pf'], $idDecryp);
@@ -196,8 +197,8 @@ class ProponentePfController extends ProponentePfModel
 
     /**
      * @param int|string $cadastro_id
-     * @param int $tipo_cadastro_id <p>Deve conter o valor 1 para validação de pessoa física, 2 para validação de líder e 3 para formação</p>
-     * @param int|null $evento_id
+     * @param int $tipo_cadastro_id
+     * <p>Deve conter o valor 1 para validação de pessoa física, 2 para validação de líder e 3 para formação</p>
      * @return array|bool
      */
     public function validaPf($cadastro_id, $tipo_cadastro_id){
@@ -205,4 +206,30 @@ class ProponentePfController extends ProponentePfModel
         return ProponentePfModel::validaCadastroModel($cadastro_id, $tipo_cadastro_id);
     }
 
+    public function enviarCadastro($id)
+    {
+        $id = MainModel::decryption($id);
+        $dados['data_inscricao'] = date("Y-m-d H:i:s");
+        $dados['liberado'] = 1;
+
+        $update = DbModel::update('proponente_pfs', $dados, $id);
+        if ($update->rowCount() >= 1 || DbModel::connection()->errorCode() == 0) {
+            $alerta = [
+                'alerta' => 'sucesso',
+                'titulo' => 'Cadastro Enviado',
+                'texto' => 'Cadastro enviado com sucesso!',
+                'tipo' => 'success',
+                'location' => SERVERURL.'inicio/inicio',
+                'redirecionamento' => SERVERURL.'pdf/resumo_inscricao.php?modulo=1&id='.MainModel::encryption($id)
+            ];
+        } else {
+            $alerta = [
+                'alerta' => 'simples',
+                'titulo' => 'Erro!',
+                'texto' => 'Erro ao enviar o projeto!',
+                'tipo' => 'error'
+            ];
+        }
+        return MainModel::sweetAlert($alerta);
+    }
 }

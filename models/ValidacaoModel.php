@@ -169,6 +169,7 @@ class ValidacaoModel extends MainModel
             'genero_id' => '<strong>Gênero</strong> não selecionado',
             'etnia_id' => '<strong>Etnia</strong> não selecionada',
             'imposto_id' => '<strong>Imposto</strong> não selecionada',
+            'email_publico' => 'Opção <strong>Email</strong> não selecionada',
         ];
 
         if ($camposNaoObrigatorios) {
