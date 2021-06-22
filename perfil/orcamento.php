@@ -45,7 +45,7 @@ $con = bancoMysqli();
 $idProjeto = $_SESSION['idProjeto'];
 $projeto = recuperaDados('projeto', 'idProjeto',    $idProjeto);
 
-if ($projeto['idAreaAtuacao'] == 22 || $projeto['idAreaAtuacao'] == 13) {
+if ($projeto['idAreaAtuacao'] == 22 || $projeto['idAreaAtuacao'] == 19) {
     $valorMax = 1000000;
 } else {
     $valorMax = 600000;
