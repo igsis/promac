@@ -99,7 +99,7 @@ $pf = recuperaDados("incentivador_pessoa_fisica","idPf",$idPf);
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
 				<?php 
-				if($pf['liberado'] == NULL)
+				if($pf['liberado'] == NULL OR $pf['liberado'] == 2 OR $pf['liberado'] == 4)
 				{
 				?>
 				<!-- Exibir arquivos -->
