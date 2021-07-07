@@ -46,9 +46,9 @@ $idProjeto = $_SESSION['idProjeto'];
 $projeto = recuperaDados('projeto', 'idProjeto',    $idProjeto);
 
 if ($projeto['idAreaAtuacao'] == 22 || $projeto['idAreaAtuacao'] == 19) {
-    $valorMax = 1000000;
+    $valorMax = doubleval(1000000.00);
 } else {
-    $valorMax = 600000;
+    $valorMax = doubleval(600000.00);
 }
 
 $atualizarValor = false;
@@ -58,7 +58,7 @@ $sql_total = "SELECT SUM(valorTotal) AS tot FROM orcamento
                 ORDER BY idOrcamento";
 
 $queryMax = mysqli_query($con, $sql_total);
-$resultadoMax = mysqli_fetch_array($queryMax)[0];
+$resultadoMax = doubleval(mysqli_fetch_array($queryMax)[0]);
 
 $usuarioLogado = pegaUsuarioLogado();
 
@@ -123,7 +123,7 @@ if (isset($resultadoMax) && $atualizarValor) {
         }
     }
 } else if(isset($resultadoMax)){
-    if ($resultadoMax >= $valorMax){
+    if ($resultadoMax > $valorMax){
         $limite = dinheiroParaBr($valorMax);
         $mensagem = "<font color='#FF0000'><strong>Este valor ultrapassa o limite de orçamento para está linguagem.</strong></font><br>
                  <font color='#FF0000'><strong>O limite no orçamento é de R$ {$limite}.</strong></font>";
